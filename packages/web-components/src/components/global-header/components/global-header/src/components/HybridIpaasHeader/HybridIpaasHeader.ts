@@ -92,7 +92,7 @@ export class HybridIpaasHeader extends LitElement {
     },
   };
 
-  private sessionManager: solisSessionManager | null = null;
+  sessionManager: solisSessionManager | null = null;
 
   constructor() {
     super();

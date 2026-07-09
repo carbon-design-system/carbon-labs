@@ -52,12 +52,13 @@ export default class solisSessionManager {
                 console.log('Solis token refresh skipped (too recent)'); // TODO - this response doesn't yet exist in the backend 
             } else if (response.status === 401 || response.status === 403) {
                 console.error('Solis token refresh unauthorized - triggering logout');
+                this.stopRefreshSchedule();
                 // TODO - trigger logout when logout story is implemented
             } else {
                 console.error('Solis token refresh failed:', response.status)
             }
-        } catch (error) {
-            console.error('Solis token refresh error:', error);
+        } catch (error: any) {
+            console.error('Solis token refresh error:', error.message );
         }
     }
 

@@ -50,10 +50,12 @@ describe('solisSessionManager', () => {
     });
 
     describe('stopRefreshSchedule', () => {
+
         it('does nothing if the token refresh schedule is not running' , () => {
             const clearIntervalStub = sinon.stub(window, 'clearInterval');
             const sessionManager = new solisSessionManager({});
             sessionManager.stopRefreshSchedule();
+            expect(sessionManager.isScheduleRunning()).to.be.false;
             expect(clearIntervalStub).to.not.have.been.called;
         })
 
@@ -102,6 +104,42 @@ describe('solisSessionManager', () => {
             expect(consoleLogStub).to.have.been.calledWith('Solis token refresh successful');
         })
 
+        it('logs a message if the token refresh happened too recently, response status 429', async() => {
+            const fetchStub = sinon.stub(window, 'fetch');
+            fetchStub.resolves(new Response(null, {
+                status: 429,
+                statusText: 'Refresh already in progress'
+            }));
+            const consoleLogStub = sinon.stub(console, 'log');
+            const sessionManager = new solisSessionManager({});
+            await sessionManager.triggerRefresh();
+            expect(consoleLogStub).to.have.been.calledWith('Solis token refresh skipped (too recent)');
+        })
+
+        it('logs an error if the user is not authenticated, response status 401', async() => {
+            const fetchStub = sinon.stub(window, 'fetch');
+            fetchStub.resolves(new Response(null, {
+                status: 401,
+                statusText: 'Not found'
+            }));
+            const consoleErrorStub = sinon.stub(console, 'error');
+            const sessionManager = new solisSessionManager({});
+            await sessionManager.triggerRefresh();
+            expect(consoleErrorStub).to.have.been.calledWith('Solis token refresh unauthorized - triggering logout');
+        })
+
+        it('logs an error if the user is not authenticated, response status 403', async() => {
+            const fetchStub = sinon.stub(window, 'fetch');
+            fetchStub.resolves(new Response(null, {
+                status: 401,
+                statusText: 'Unauthorized'
+            }));
+            const consoleErrorStub = sinon.stub(console, 'error');
+            const sessionManager = new solisSessionManager({});
+            await sessionManager.triggerRefresh();
+            expect(consoleErrorStub).to.have.been.calledWith('Solis token refresh unauthorized - triggering logout');
+        })
+
         it('logs an error if the response status is 500', async() => {
             const fetchStub = sinon.stub(window, 'fetch');
             fetchStub.resolves(new Response(null, {
@@ -112,6 +150,15 @@ describe('solisSessionManager', () => {
             const sessionManager = new solisSessionManager({});
             await sessionManager.triggerRefresh();
             expect(consoleErrorStub).to.have.been.calledWith('Solis token refresh failed:', 500);
+        })
+
+        it('logs an error if the fetch call fails', async() => {
+            const fetchStub = sinon.stub(window, 'fetch');
+            fetchStub.rejects(new Error('Network error'));
+            const consoleErrorStub = sinon.stub(console, 'error');
+            const sessionManager = new solisSessionManager({});
+            await sessionManager.triggerRefresh();
+            expect(consoleErrorStub).to.have.been.calledWith('Solis token refresh error:', 'Network error');
         })
     });
 });

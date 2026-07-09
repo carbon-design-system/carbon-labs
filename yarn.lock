@@ -2130,6 +2130,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/wc-focus-region@workspace:packages/web-components/src/components/focus-region":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/wc-focus-region@workspace:packages/web-components/src/components/focus-region"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.2"
+    "@carbon-labs/utilities": "npm:0.21.0"
+    lit: "npm:^3.2.1"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/wc-global-header@workspace:packages/web-components/src/components/global-header":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/wc-global-header@workspace:packages/web-components/src/components/global-header"

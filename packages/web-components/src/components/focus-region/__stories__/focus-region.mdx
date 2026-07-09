@@ -1,0 +1,123 @@
+import { ArgTypes, Canvas, Markdown, Meta } from '@storybook/addon-docs/blocks';
+import { cdnJs, cdnCss } from '../../../globals/internal/storybook-cdn';
+import meta, * as FocusRegionStories from './focus-region.stories';
+import packageJson from '../package.json';
+
+<Meta of={meta} />
+
+# FocusRegion
+
+- **Initiative owner(s):** Accessibility
+- **Status:** Draft
+- **Target library:** Carbon Labs Web Components
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+## Overview
+
+`clabs-focus-region` wraps a page section and enrolls it in F6/Shift+F6
+landmark keyboard navigation. Users can press **F6** to jump to the next
+region and **Shift+F6** to jump to the previous region, mirroring the
+region-navigation shortcut used in many productivity applications and IDEs.
+
+Each region remembers the last focused element within it, so pressing F6 to
+return to a region restores focus exactly where you left off.
+
+### Key features
+
+- **F6 / Shift+F6 navigation** across all registered regions
+- **Focus location memory** — returns to the last focused element
+- **Modal group support** — restrict navigation to a subset of regions when a
+  dialog is open (set the same `group-id` on all dialog regions and call
+  `pushModal` / `popModal`)
+- **Disabled regions** — set `enabled` to `false` to exclude a region from
+  F6 traversal without removing it from the DOM
+- **One-time navigation hint** — show a dismissable tooltip on first keyboard
+  focus (`show-navigation-hint` attribute)
+- **Semantic host element** — the host is set as the ARIA region landmark;
+  use `role` and `aria-label` / `aria-labelledby` to name it
+
+## Getting started
+
+### JS (via import)
+
+```javascript
+import '@carbon-labs/wc-focus-region/es/index.js';
+```
+
+<Markdown>{`${cdnJs({ components: ['focus-region'] }, packageJson)}`}</Markdown>
+<Markdown>{`${cdnCss()}`}</Markdown>
+
+### HTML
+
+```html
+<clabs-focus-region role="banner" aria-label="Header" default-focus>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+  </nav>
+</clabs-focus-region>
+
+<clabs-focus-region role="main" aria-label="Main content">
+  <h1>Welcome</h1>
+  <input type="text" placeholder="Search…" />
+</clabs-focus-region>
+```
+
+## Component attributes
+
+| Attribute             | Type      | Default    | Description |
+|-----------------------|-----------|------------|-------------|
+| `region-id`           | `string`  | auto-generated | Unique identifier. Set explicitly when you need to reference the region from JavaScript. |
+| `role`                | `string`  | `region`   | ARIA role. Common values: `region`, `main`, `navigation`, `complementary`, `banner`, `contentinfo`. |
+| `aria-label`          | `string`  | —          | **Required.** Accessible name for the region landmark. |
+| `aria-labelledby`     | `string`  | —          | ID of an existing element that names the region (alternative to `aria-label`). |
+| `group-id`            | `string`  | —          | Modal group ID. Restricts F6 navigation to regions sharing the same `group-id` when a modal is active. |
+| `default-focus`       | `boolean` | `false`    | Moves focus into this region on page load. Only the first declared region with this attribute is respected. |
+| `enabled`             | `boolean` | `true`     | When `false`, this region is skipped in F6 navigation. |
+| `show-navigation-hint`| `boolean` | `false`    | Show a dismissable hint on first keyboard focus (shown at most once per session). |
+
+## Keyboard interactions
+
+| Key           | Behaviour |
+|---------------|-----------|
+| `F6`          | Move to the next enabled region (wraps). |
+| `Shift+F6`    | Move to the previous enabled region (wraps). |
+| `Tab`         | Move to the next tabbable element in DOM order — works normally, no trapping. |
+| `Shift+Tab`   | Move to the previous tabbable element in DOM order — works normally. |
+
+## JavaScript API — modal groups
+
+```javascript
+import {
+  modalStackManager,
+} from '@carbon-labs/wc-focus-region/es/src/focus-region-registry.js';
+
+// Open a modal — restricts F6 to regions with group-id="my-dialog"
+modalStackManager.push('my-dialog');
+
+// Close the modal — restores F6 to all regions and focus to the opener
+modalStackManager.pop('my-dialog');
+```
+
+## Stories
+
+### Default
+
+<Canvas of={FocusRegionStories.Default} />
+
+### With Disabled Region
+
+<Canvas of={FocusRegionStories.WithDisabledRegion} />
+
+### Focus Location Tracking
+
+<Canvas of={FocusRegionStories.FocusLocationTracking} />
+
+### With Navigation Hint
+
+<Canvas of={FocusRegionStories.WithNavigationHint} />
+
+## Component API
+
+<ArgTypes of={FocusRegionStories} />

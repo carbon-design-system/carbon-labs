@@ -27,6 +27,10 @@ export default class solisSessionManager {
         }, this.tokenRefreshInterval * 60 * 1000);
     }
 
+    isScheduleRunning(): boolean {
+        return this.refreshIntervalId !== null;
+    }
+
     stopRefreshSchedule() {
         if (this.refreshIntervalId) {
             clearInterval(this.refreshIntervalId);

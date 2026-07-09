@@ -187,7 +187,7 @@ export class HybridIpaasHeader extends LitElement {
 
   private initializeSessionManager() {
     if (!this.sessionManager) {
-      this.sessionManager = new solisSessionManager({ tokenRefreshInterval: this.solisSessionRefreshInterval});
+      this.sessionManager = new solisSessionManager({ tokenRefreshInterval: this.solisSessionRefreshInterval, basePath: this.basePath });
       this.sessionManager.startRefreshSchedule();
     }
   }

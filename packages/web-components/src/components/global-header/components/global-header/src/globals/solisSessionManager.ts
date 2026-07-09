@@ -12,11 +12,13 @@ import { solisSessionManagerConfig } from '../types/Header.types'
 export default class solisSessionManager {
     private refreshIntervalId: number | null = null;
     private tokenRefreshInterval: number;
+    private basePath: string | undefined;
     config: solisSessionManagerConfig;
 
     constructor(config: solisSessionManagerConfig) {
         this.config = config;
         this.tokenRefreshInterval = config.tokenRefreshInterval || 25;
+        this.basePath = config.basePath;
     }
 
     startRefreshSchedule() {
@@ -33,8 +35,9 @@ export default class solisSessionManager {
     } // TODO - remember to call this function when implementing the logout story
 
     async triggerRefresh() {
+        const fetchRoute = this.basePath ? this.basePath + '/v1/solis/session/refresh-token' : '/v1/solis/session/refresh-token';
         try {
-            const response = await fetch('/v1/solis/session/refresh-token', {
+            const response = await fetch(fetchRoute, {
                 method: 'GET',
                 credentials: 'same-origin'
             });

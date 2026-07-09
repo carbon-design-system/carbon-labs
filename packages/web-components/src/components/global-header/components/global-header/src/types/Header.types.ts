@@ -393,4 +393,5 @@ declare global {
 
 export interface solisSessionManagerConfig {
   tokenRefreshInterval?: number;
+  basePath?: string;
 }

@@ -54,7 +54,7 @@ type Story = StoryObj<typeof TimeDisplay>;
 
 // ─── Count-up ────────────────────────────────────────────────────────────────
 
-const jobStartTime = new Date(Date.now() - 3665000); // ~1 hour ago
+const jobStartTime = new Date(Date.now());
 
 export const CountUp: Story = {
   args: {
@@ -68,7 +68,7 @@ export const CountUp: Story = {
 
 // ─── Count-down ──────────────────────────────────────────────────────────────
 
-const sessionEndTime = new Date(Date.now() + 305000); // ~5 minutes away
+const sessionEndTime = new Date(Date.now() + 70000); // ~1 minute, 10 seconds away
 
 export const CountDown: Story = {
   render: (args) => {
@@ -77,7 +77,7 @@ export const CountDown: Story = {
     return (
       <TimeDisplay
         {...args}
-        endTime={new Date(Date.now() + 305000)}
+        endTime={sessionEndTime}
         onComplete={() => setExpired(true)}
         helperText={expired ? 'Session has expired' : 'Please save your work'}
       />
@@ -121,8 +121,7 @@ export const AllFormats: Story = {
               fontSize: '0.75rem',
               marginBlockEnd: '0.5rem',
               textTransform: 'capitalize',
-            }}
-          >
+            }}>
             {fmt}
           </p>
           <TimeDisplay
@@ -193,7 +192,7 @@ export const WithDays: Story = {
   },
 };
 
-export const NoPadding: Story = {
+export const NoZeroPadding: Story = {
   args: {
     mode: 'count-up',
     label: 'Elapsed time',
@@ -221,30 +220,43 @@ export const ThresholdCallbacks: Story = {
           {
             value: 25,
             label: '25 seconds remaining',
-            onReach: (v) => console.log(`[TimeDisplay] threshold reached: ${v}s — starting soon`),
+            onReach: (v) =>
+              console.log(
+                `[TimeDisplay] threshold reached: ${v}s — starting soon`
+              ),
           },
           {
             value: 20,
             label: '20 seconds remaining',
-            onReach: (v) => console.log(`[TimeDisplay] threshold reached: ${v}s — getting closer`),
+            onReach: (v) =>
+              console.log(
+                `[TimeDisplay] threshold reached: ${v}s — getting closer`
+              ),
           },
           {
             value: 15,
             label: '15 seconds remaining',
-            onReach: (v) => console.log(`[TimeDisplay] threshold reached: ${v}s — almost there`),
+            onReach: (v) =>
+              console.log(
+                `[TimeDisplay] threshold reached: ${v}s — almost there`
+              ),
           },
           {
             value: 10,
             label: '10 seconds remaining',
-            onReach: (v) => console.log(`[TimeDisplay] threshold reached: ${v}s — warning`),
+            onReach: (v) =>
+              console.log(`[TimeDisplay] threshold reached: ${v}s — warning`),
           },
           {
             value: 5,
             label: '5 seconds remaining',
-            onReach: (v) => console.log(`[TimeDisplay] threshold reached: ${v}s — critical`),
+            onReach: (v) =>
+              console.log(`[TimeDisplay] threshold reached: ${v}s — critical`),
           },
         ]}
-        onComplete={() => console.log('[TimeDisplay] onComplete — countdown reached zero')}
+        onComplete={() =>
+          console.log('[TimeDisplay] onComplete — countdown reached zero')
+        }
         helperText="Open the browser console to see threshold callbacks fire every 5 seconds"
       />
     );

@@ -19,6 +19,7 @@ import {
   generateAccessibleText,
   formatColonTime,
   validateTimeDisplayProps,
+  warnOnSuspiciousProps,
 } from '../utils/timeUtils';
 
 /**
@@ -49,19 +50,45 @@ export const TimeDisplay: React.FC<TimeDisplayProps> = ({
   const prefix = usePrefix();
   const blockClass = `${prefix}--time-display`;
 
-  const validation = validateTimeDisplayProps(mode, startTime, endTime, duration);
+  // Normalise time inputs to stable ms primitives before any hook call.
+  // This ensures useEffect dep comparison works by value, not by reference,
+  // so the interval only restarts when the actual time value changes.
+  const startTimeMs =
+    startTime != null ? new Date(startTime).getTime() : undefined;
+  const endTimeMs = endTime != null ? new Date(endTime).getTime() : undefined;
+
+  const validation = validateTimeDisplayProps(
+    mode,
+    startTime,
+    endTime,
+    duration,
+    units
+  );
   if (!validation.valid) {
     console.error(`TimeDisplay: ${validation.error}`);
     return null;
   }
+
+  warnOnSuspiciousProps({
+    mode,
+    startTime,
+    endTime,
+    duration,
+    units,
+    format,
+    announcementMode,
+    thresholds,
+    completeLabel,
+    onComplete,
+  });
 
   const effectiveLabelPosition =
     labelPosition ?? (format === 'inline' ? 'inline' : 'top');
 
   const { timeValues, isComplete, announcementText } = useTimeCalculation({
     mode,
-    startTime,
-    endTime,
+    startTime: startTimeMs,
+    endTime: endTimeMs,
     duration,
     onComplete,
     // Always forward thresholds so onReach callbacks fire regardless of

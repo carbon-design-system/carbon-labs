@@ -23,8 +23,10 @@ import {
 
 interface UseTimeCalculationProps {
   mode: TimeDisplayMode;
-  startTime?: Date | number | string;
-  endTime?: Date | number | string;
+  /** Normalised millisecond timestamp — passed from TimeDisplay after parseTimeInput */
+  startTime?: number;
+  /** Normalised millisecond timestamp — passed from TimeDisplay after parseTimeInput */
+  endTime?: number;
   duration?: number;
   onComplete?: () => void;
   thresholds?: TimeThreshold[];
@@ -51,10 +53,10 @@ export function useTimeCalculation({
   announceThresholds = false,
 }: UseTimeCalculationProps): UseTimeCalculationResult {
   const calculateCurrentTimeValues = (now: Date): TimeValues => {
-    if (mode === 'count-up' && startTime) {
+    if (mode === 'count-up' && startTime !== undefined) {
       return calculateElapsedTime(startTime, now);
     }
-    if (mode === 'count-down' && endTime) {
+    if (mode === 'count-down' && endTime !== undefined) {
       return calculateRemainingTime(endTime, now);
     }
     if (mode === 'duration' && duration !== undefined) {
@@ -135,8 +137,7 @@ export function useTimeCalculation({
         clearInterval(intervalRef.current);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mode, onComplete]);
+  }, [mode, onComplete, startTime, endTime]);
 
   // Reset announced thresholds when thresholds prop changes
   useEffect(() => {

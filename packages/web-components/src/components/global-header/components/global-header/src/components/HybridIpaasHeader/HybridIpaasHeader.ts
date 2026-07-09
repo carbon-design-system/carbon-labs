@@ -72,7 +72,7 @@ export class HybridIpaasHeader extends LitElement {
   capabilityProfileFooterLinks: ProfileFooterLinks[] = [];
   @property({ type: Array }) capabilityGlobalActions: GlobalActionConfig[] = [];
   @property({ type: Boolean }) addCookiePreferences = false;
-  @property({ type: Boolean }) solisSessionManagerEnabled = false;
+  @property({ type: Boolean }) solisSessionManagerEnabled = false; // TODO - only needed until we want to enable this feature
   @property({ type: Number }) solisSessionRefreshInterval = 25; // TODO - do we need to make this configurable per capability?
 
   @state()

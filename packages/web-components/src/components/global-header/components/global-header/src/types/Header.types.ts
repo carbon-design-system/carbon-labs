@@ -390,3 +390,8 @@ declare global {
     _solis: solisWindowConfig;
   }
 }
+
+export interface solisSessionManagerConfig {
+  tokenRefreshInterval?: number;
+  basePath?: string;
+}

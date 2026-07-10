@@ -145,7 +145,11 @@ export class HybridIpaasHeader extends LitElement {
       );
 
       this.headerOptions = this.buildHeaderOptions(serverOptions);
-      if (this.solisSessionManagerEnabled && this.headerOptions.profile !== null && this.headerOptions.profile !== undefined) {
+      if (
+        this.solisSessionManagerEnabled &&
+        this.headerOptions.profile !== null &&
+        this.headerOptions.profile !== undefined
+      ) {
         // backend is ready and user is authenticated
         this.initializeSessionManager();
       }
@@ -187,7 +191,10 @@ export class HybridIpaasHeader extends LitElement {
 
   private initializeSessionManager() {
     if (!this.sessionManager) {
-      this.sessionManager = new solisSessionManager({ tokenRefreshInterval: this.solisSessionRefreshInterval, basePath: this.basePath });
+      this.sessionManager = new solisSessionManager({
+        tokenRefreshInterval: this.solisSessionRefreshInterval,
+        basePath: this.basePath,
+      });
       this.sessionManager.startRefreshSchedule();
     }
   }

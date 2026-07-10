@@ -7,59 +7,64 @@
  * LICENSE file in the root directory of this source tree.
  */
 /* eslint jsdoc/require-jsdoc: 0 */
-import { solisSessionManagerConfig } from '../types/Header.types'
+import { solisSessionManagerConfig } from '../types/Header.types';
 
 export default class solisSessionManager {
-    private refreshIntervalId: number | null = null;
-    private tokenRefreshInterval: number;
-    private basePath: string | undefined;
-    config: solisSessionManagerConfig;
+  private refreshIntervalId: number | null = null;
+  private tokenRefreshInterval: number;
+  private basePath: string | undefined;
+  config: solisSessionManagerConfig;
 
-    constructor(config: solisSessionManagerConfig) {
-        this.config = config;
-        this.tokenRefreshInterval = config.tokenRefreshInterval || 25;
-        this.basePath = config.basePath;
+  constructor(config: solisSessionManagerConfig) {
+    this.config = config;
+    this.tokenRefreshInterval = config.tokenRefreshInterval || 25;
+    this.basePath = config.basePath;
+  }
+
+  startRefreshSchedule() {
+    this.refreshIntervalId = window.setInterval(
+      () => {
+        this.triggerRefresh();
+      },
+      this.tokenRefreshInterval * 60 * 1000
+    );
+  }
+
+  isScheduleRunning(): boolean {
+    return this.refreshIntervalId !== null;
+  }
+
+  stopRefreshSchedule() {
+    if (this.refreshIntervalId) {
+      clearInterval(this.refreshIntervalId);
+      this.refreshIntervalId = null;
     }
+  } // TODO - remember to call this function when implementing the logout story
 
-    startRefreshSchedule() {
-        this.refreshIntervalId = window.setInterval(() => {
-            this.triggerRefresh();
-        }, this.tokenRefreshInterval * 60 * 1000);
+  async triggerRefresh() {
+    const fetchRoute = this.basePath
+      ? this.basePath + '/v1/solis/session/refresh-token'
+      : '/v1/solis/session/refresh-token';
+    try {
+      const response = await fetch(fetchRoute, {
+        method: 'GET',
+        credentials: 'same-origin',
+      });
+
+      if (response.ok) {
+        console.log('Solis token refresh successful');
+      } else if (response.status === 429) {
+        // refresh happened too recently
+        console.log('Solis token refresh skipped (too recent)'); // TODO - this response doesn't yet exist in the backend
+      } else if (response.status === 401 || response.status === 403) {
+        console.error('Solis token refresh unauthorized - triggering logout');
+        this.stopRefreshSchedule();
+        // TODO - trigger logout when logout story is implemented
+      } else {
+        console.error('Solis token refresh failed:', response.status);
+      }
+    } catch (error: any) {
+      console.error('Solis token refresh error:', error.message);
     }
-
-    isScheduleRunning(): boolean {
-        return this.refreshIntervalId !== null;
-    }
-
-    stopRefreshSchedule() {
-        if (this.refreshIntervalId) {
-            clearInterval(this.refreshIntervalId);
-            this.refreshIntervalId = null;
-        }
-    } // TODO - remember to call this function when implementing the logout story
-
-    async triggerRefresh() {
-        const fetchRoute = this.basePath ? this.basePath + '/v1/solis/session/refresh-token' : '/v1/solis/session/refresh-token';
-        try {
-            const response = await fetch(fetchRoute, {
-                method: 'GET',
-                credentials: 'same-origin'
-            });
-            
-            if (response.ok) {
-                console.log('Solis token refresh successful');
-            } else if (response.status === 429) { // refresh happened too recently 
-                console.log('Solis token refresh skipped (too recent)'); // TODO - this response doesn't yet exist in the backend 
-            } else if (response.status === 401 || response.status === 403) {
-                console.error('Solis token refresh unauthorized - triggering logout');
-                this.stopRefreshSchedule();
-                // TODO - trigger logout when logout story is implemented
-            } else {
-                console.error('Solis token refresh failed:', response.status)
-            }
-        } catch (error: any) {
-            console.error('Solis token refresh error:', error.message );
-        }
-    }
-
+  }
 }

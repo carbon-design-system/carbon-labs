@@ -278,11 +278,16 @@ describe('HybridIpaasHeader Component', () => {
   });
 
   it('should initialize the solisSessionManager if solisSessionManagerEnabled is true', async () => {
-    fetchStub.resolves(new Response(JSON.stringify(fetchResp), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    }));
-    const startRefreshScheduleStub = sinon.stub(solisSessionManager.prototype, 'startRefreshSchedule');
+    fetchStub.resolves(
+      new Response(JSON.stringify(fetchResp), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    );
+    const startRefreshScheduleStub = sinon.stub(
+      solisSessionManager.prototype,
+      'startRefreshSchedule'
+    );
     const el = await fixture<HybridIpaasHeader>(
       html`<clabs-global-header-hybrid-ipaas
         .fetchHeaders=${{ 'Content-Type': 'application/json' }}
@@ -291,8 +296,8 @@ describe('HybridIpaasHeader Component', () => {
         solisSessionManagerEnabled="true"></clabs-global-header-hybrid-ipaas>`
     );
     await el.updateComplete;
-    await new Promise(resolve => setTimeout(resolve, 200));
-    
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
     expect(el.sessionManager).to.not.be.null;
     expect(startRefreshScheduleStub).to.have.been.calledOnce;
   });

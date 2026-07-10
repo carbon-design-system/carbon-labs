@@ -39,7 +39,7 @@ export default class solisSessionManager {
       clearInterval(this.refreshIntervalId);
       this.refreshIntervalId = null;
     }
-  } // TODO - remember to call this function when implementing the logout story
+  } // TODO - call this function when implementing the logout story
 
   async triggerRefresh() {
     const fetchRoute = this.basePath

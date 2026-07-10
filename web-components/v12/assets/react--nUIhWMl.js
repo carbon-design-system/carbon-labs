@@ -1,1 +1,0 @@
-import{t as e}from"./lib-BfxssiVo.js";export{e as MDXProvider};

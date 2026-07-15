@@ -1,1 +1,0 @@
-import{t as e}from"./lib-zXRV4PvO.js";export{e as MDXProvider};

@@ -1,1 +1,0 @@
-import{t as e}from"./lib-CY2NYTns.js";export{e as MDXProvider};

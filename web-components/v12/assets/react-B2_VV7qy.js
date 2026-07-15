@@ -1,1 +1,0 @@
-import{t as e}from"./lib-DOZJMk9o.js";export{e as MDXProvider};

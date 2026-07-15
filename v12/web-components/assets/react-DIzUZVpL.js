@@ -1,0 +1,1 @@
+import{t as e}from"./lib-CXLuDC8v.js";export{e as MDXProvider};

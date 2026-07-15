@@ -1,1 +1,0 @@
-import{F as e}from"./iframe-DGo_4UE0.js";var t=t=>t??e;export{t};

@@ -14,14 +14,15 @@
     "directory": "packages/global-header"
   },
   "exports": {
-    ".": "./es/wc-global-header.mjs",
+    ".": {
+      "import": "./es/wc-global-header.mjs",
+      "types": "./declarations.d.ts"
+    },
     "./react": "./es/wc-global-header-react.mjs",
-    "./es/*": "./es/*",
-    "./lib/*": "./lib/*"
+    "./es/*": "./es/*"
   },
   "files": [
     "es/",
-    "lib/",
     "declarations.d.ts"
   ],
   "types": "./declarations.d.ts",

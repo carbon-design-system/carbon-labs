@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/wc-global-header",
-  "version": "0.79.0",
+  "version": "0.83.0",
   "author": "Your Name <your@email.com>",
   "publishConfig": {
     "access": "public",
@@ -14,14 +14,15 @@
     "directory": "packages/global-header"
   },
   "exports": {
-    ".": "./es/wc-global-header.mjs",
+    ".": {
+      "default": "./es/wc-global-header.mjs",
+      "types": "./declarations.d.ts"
+    },
     "./react": "./es/wc-global-header-react.mjs",
-    "./es/*": "./es/*",
-    "./lib/*": "./lib/*"
+    "./es/*": "./es/*"
   },
   "files": [
     "es/",
-    "lib/",
     "declarations.d.ts"
   ],
   "types": "./declarations.d.ts",

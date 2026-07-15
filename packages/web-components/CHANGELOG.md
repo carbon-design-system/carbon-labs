@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.160.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.159.0...@carbon-labs/web-components@0.160.0) (2026-07-15)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.159.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.158.0...@carbon-labs/web-components@0.159.0) (2026-07-15)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.158.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.157.0...@carbon-labs/web-components@0.158.0) (2026-07-10)
+
+
+### Features
+
+* **global-header:** Solis token refresh logic ([#1302](https://github.com/carbon-design-system/carbon-labs/issues/1302)) ([01a6a8b](https://github.com/carbon-design-system/carbon-labs/commit/01a6a8ba019b9a942fdc8f41d34cc3e8e2af3828))
+
+
+
+
+
+# [0.157.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.156.0...@carbon-labs/web-components@0.157.0) (2026-07-07)
+
+
+### Features
+
+* **global-header:** Proxy if custom domain ([#1292](https://github.com/carbon-design-system/carbon-labs/issues/1292)) ([c88678d](https://github.com/carbon-design-system/carbon-labs/commit/c88678d4ad1a38cd638d0b1d8098d5156eaea69e))
+
+
+
+
+
 # [0.156.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.155.0...@carbon-labs/web-components@0.156.0) (2026-06-17)
 
 **Note:** Version bump only for package @carbon-labs/web-components

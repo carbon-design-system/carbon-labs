@@ -29,6 +29,8 @@ import '../CommonHeader/CommonHeader';
 
 import styles from '../../index.scss?inline';
 
+import solisSessionManager from '../../globals/solisSessionManager';
+
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
@@ -70,6 +72,8 @@ export class HybridIpaasHeader extends LitElement {
   capabilityProfileFooterLinks: ProfileFooterLinks[] = [];
   @property({ type: Array }) capabilityGlobalActions: GlobalActionConfig[] = [];
   @property({ type: Boolean }) addCookiePreferences = false;
+  @property({ type: Boolean }) solisSessionManagerEnabled = false; // toggle to enable/disable the Solis session manager
+  @property({ type: Number }) solisSessionRefreshInterval = 25; // might not need Solis token refresh interval to be configurable
 
   @state()
   headerOptions: HeaderProps = {
@@ -88,6 +92,8 @@ export class HybridIpaasHeader extends LitElement {
     },
   };
 
+  sessionManager: solisSessionManager | null = null;
+
   constructor() {
     super();
     this._customEventListener = this._customEventListener.bind(this);
@@ -100,6 +106,10 @@ export class HybridIpaasHeader extends LitElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
+    if (this.sessionManager) {
+      this.sessionManager.stopRefreshSchedule();
+      this.sessionManager = null;
+    }
     document.removeEventListener(CUSTOM_EVENT_NAME, this._customEventListener);
   }
 
@@ -135,6 +145,14 @@ export class HybridIpaasHeader extends LitElement {
       );
 
       this.headerOptions = this.buildHeaderOptions(serverOptions);
+      if (
+        this.solisSessionManagerEnabled &&
+        this.headerOptions.profile !== null &&
+        this.headerOptions.profile !== undefined
+      ) {
+        // backend is ready and user is authenticated
+        this.initializeSessionManager();
+      }
     } catch (error) {
       console.error('Failed to load header options:', error);
     }
@@ -168,6 +186,16 @@ export class HybridIpaasHeader extends LitElement {
     } else {
       // backup option in case the cookie script didn't load for some reason
       window.open('https://www.ibm.com/privacy');
+    }
+  }
+
+  private initializeSessionManager() {
+    if (!this.sessionManager) {
+      this.sessionManager = new solisSessionManager({
+        tokenRefreshInterval: this.solisSessionRefreshInterval,
+        basePath: this.basePath,
+      });
+      this.sessionManager.startRefreshSchedule();
     }
   }
 
@@ -224,6 +252,21 @@ export class HybridIpaasHeader extends LitElement {
       tell_me_more_enabled: false,
     };
   }
+
+  protected getHostname(): string {
+    return window.location.hostname;
+  }
+
+  private getBackendProxy(): string | undefined {
+    // Only set backendProxy if the user is NOT on *.ibm.com domain
+    const hostname = this.getHostname();
+    const ibmDomainRegex = /^(.+\.)?ibm\.com$/;
+    if (!ibmDomainRegex.test(hostname)) {
+      return `${this.basePath}/hybrid-ipaas/v1/proxies/solis/backend`;
+    }
+    return undefined;
+  }
+
   private initSolisOptions(env = 'local', forSidekick = false, isProd = true) {
     if (forSidekick) {
       return {
@@ -232,6 +275,7 @@ export class HybridIpaasHeader extends LitElement {
         cdn_hostname: SOLIS_CDN_HOSTNAMES[env],
         deployment_environment: solisDeploymentEnvironment[env] || 'local',
         product_id: 'ipaas',
+        backendProxy: this.getBackendProxy(),
       };
     } else {
       return {
@@ -241,6 +285,7 @@ export class HybridIpaasHeader extends LitElement {
         cdn_hostname: SOLIS_CDN_HOSTNAMES[env],
         deployment_environment: solisDeploymentEnvironment[env] || 'local',
         product_id: 'ipaas',
+        backendProxy: this.getBackendProxy(),
       };
     }
   }

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { Children, cloneElement, isValidElement, useRef } from 'react';
+import React, { Children, isValidElement, useRef } from 'react';
 import classNames from 'classnames';
 import { useDatePicker } from '../hooks/useDatePicker';
 import { Calendar } from './Calendar';
@@ -145,6 +145,8 @@ export function DatePicker({
     startInputRef,
     endInputRef,
     calendarRef,
+    exitSentinelRef,
+    handleExitSentinelFocus,
   } = useDatePicker({
     datePickerType,
     value,
@@ -220,6 +222,20 @@ export function DatePicker({
         child.props.onChange?.(e);
         handleInputChange(e.target.value, isEndInput ? 'to' : 'from');
       },
+      onClick: (e: React.MouseEvent<HTMLInputElement>) => {
+        child.props.onClick?.(e);
+        if (!isOpen) {
+          openCalendar();
+        }
+      },
+      onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => {
+        child.props.onKeyDown?.(e);
+
+        if (!e.defaultPrevented && e.key === 'Tab' && !e.shiftKey && !isOpen) {
+          e.preventDefault();
+          openCalendar();
+        }
+      },
       onIconClick: () => {
         child.props.onIconClick?.();
         handleIconClick();
@@ -236,14 +252,16 @@ export function DatePicker({
         isEndInput && datePickerType === 'range',
     });
 
-    // Use cloneElement with ref separately to avoid TypeScript issues
+    // Preserve the forwarded input ref so focus management targets the actual input element
+    const childWithRef = React.createElement(child.type, {
+      ...child.props,
+      ...enhancedProps,
+      ref: inputRef,
+    });
+
     return (
       <div key={child.props.id} className={containerClasses}>
-        {cloneElement(child, {
-          ...enhancedProps,
-          // @ts-expect-error - ref is valid but TypeScript doesn't recognize it in cloneElement
-          ref: inputRef,
-        })}
+        {childWithRef}
       </div>
     );
   });
@@ -282,6 +300,27 @@ export function DatePicker({
           />
         </div>
       )}
+
+      {/*
+        Exit sentinel: a zero-size, aria-hidden span placed just after the
+        calendar container in the render tree (and therefore in DOM tab order).
+        Normally tabindex="-1" — invisible to Tab.  When the user presses Tab
+        from inside the calendar, the keydown handler briefly sets it to
+        tabindex="0" so the browser delivers that Tab keystroke here naturally.
+        The onFocus handler then closes the calendar and restores tabindex="-1".
+      */}
+      <span
+        ref={exitSentinelRef}
+        tabIndex={-1}
+        aria-hidden={true}
+        onFocus={handleExitSentinelFocus}
+        style={{
+          position: 'absolute',
+          width: 0,
+          height: 0,
+          overflow: 'hidden',
+        }}
+      />
     </div>
   );
 }

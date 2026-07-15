@@ -59,6 +59,11 @@ export type DatePickerMode = 'simple' | 'single' | 'range';
 export type InputType = 'from' | 'to';
 
 /**
+ * Input target for focus restoration
+ */
+export type FocusRestoreTarget = InputType | null;
+
+/**
  * Date picker state machine context
  * Contains all the state needed to manage the datepicker
  * Uses Temporal.PlainDate for robust date handling
@@ -93,6 +98,12 @@ export interface DatePickerContext {
 
   /** The last focused input (for range mode) */
   lastFocusedInput: InputType | null;
+
+  /** The input that should receive focus after a selection-driven close */
+  restoreFocusTo: FocusRestoreTarget;
+
+  /** Whether focus should be restored after the next close/render cycle */
+  shouldRestoreFocus: boolean;
 
   /** Minimum selectable date (using Temporal API) */
   minDate: Temporal.PlainDate | null;

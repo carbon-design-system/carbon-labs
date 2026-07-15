@@ -15,7 +15,7 @@
   },
   "exports": {
     ".": {
-      "import": "./es/wc-global-header.mjs",
+      "default": "./es/wc-global-header.mjs",
       "types": "./declarations.d.ts"
     },
     "./react": "./es/wc-global-header-react.mjs",

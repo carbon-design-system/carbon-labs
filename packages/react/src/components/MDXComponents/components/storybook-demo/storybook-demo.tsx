@@ -96,8 +96,7 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
   // This lets Payload CMS authors opt in via the existing Variant ID field
   // without needing a separate field in the content schema.
   const isLazy =
-    variant?.endsWith('--lazy') ||
-    currentVariantDef?.lazy === true;
+    variant?.endsWith('--lazy') || currentVariantDef?.lazy === true;
   const storyId = variant?.endsWith('--lazy')
     ? variant.slice(0, -'--lazy'.length)
     : variant;

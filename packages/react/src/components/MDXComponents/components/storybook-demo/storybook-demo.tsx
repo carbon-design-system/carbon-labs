@@ -150,8 +150,9 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
     [withPrefix('theme-selector')]: themeSelector && multipleVariants,
   });
 
-  // Use FluidDropdown when fluid prop is true, otherwise use regular Dropdown
+  // Use FluidDropdown (condensed) when fluid prop is true, otherwise use regular Dropdown
   const DropdownComponent = fluid ? FluidDropdown : Dropdown;
+  const fluidProps = fluid ? { isCondensed: true } : {};
 
   return (
     <>
@@ -167,6 +168,7 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
               onChange={onThemeChange}
               initialSelectedItem={themeItems[0]}
               className={border}
+              {...fluidProps}
             />
           </Column>
         )}
@@ -180,6 +182,7 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
               itemToString={(item) => item?.label || ''}
               initialSelectedItem={variants[0]}
               onChange={onVariantChange}
+              {...fluidProps}
             />
           </Column>
         )}

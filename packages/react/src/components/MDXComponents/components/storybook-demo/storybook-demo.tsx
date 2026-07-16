@@ -8,7 +8,7 @@
 import { Column, Dropdown, FluidDropdown, Grid, Link } from '@carbon/react';
 import { clsx } from 'clsx';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { Caption } from '../caption/caption';
 import { MdxComponent } from '../interfaces';
@@ -23,6 +23,12 @@ interface StorybookDemoProps {
   variants?: Array<{
     label: string;
     variant: string;
+    /**
+     * Defer loading this variant's iframe until it enters the viewport.
+     * Use for stories that steal focus or cause scroll jank on mount
+     * (e.g. ActionableNotification, Popover with autoAlign, Menu).
+     */
+    lazy?: boolean | null;
   }> | null;
 }
 
@@ -72,7 +78,7 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
     [withPrefix('wide')]: wide,
   });
 
-  const [theme, setTheme] = useState(themeItems[0]!.src);
+  const [theme, setTheme] = useState(themeItems[0]?.src ?? 'white');
   const onThemeChange = (item: {
     selectedItem: { src: React.SetStateAction<string> };
   }) => {
@@ -82,13 +88,63 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
   const multipleVariants = variants && variants.length > 1;
 
   const [variant, setVariant] = useState(variants?.[0]?.variant);
+  const currentVariantDef = variants?.find((v) => v.variant === variant);
 
-  const onVariantChange = (item: { selectedItem: { variant: string } }) => {
+  // A variant ID ending with "--lazy" (e.g. "components-menu--default--lazy")
+  // opts that variant into deferred iframe loading. The suffix is stripped
+  // before building the Storybook URL so the actual story ID is unaffected.
+  // This lets Payload CMS authors opt in via the existing Variant ID field
+  // without needing a separate field in the content schema.
+  const isLazy =
+    variant?.endsWith('--lazy') ||
+    currentVariantDef?.lazy === true;
+  const storyId = variant?.endsWith('--lazy')
+    ? variant.slice(0, -'--lazy'.length)
+    : variant;
+
+  const onVariantChange = (item: {
+    selectedItem: { label: string; variant: string; lazy?: boolean | null };
+  }) => {
     setVariant(item.selectedItem.variant);
   };
 
   const iframeUrl =
-    url + '/iframe.html?id=' + variant + '&globals=theme:' + theme;
+    url + '/iframe.html?id=' + storyId + '&globals=theme:' + theme;
+
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  // Tracks whether the iframe has entered the viewport at least once.
+  // Reset to false when switching to a new lazy variant so it waits again.
+  const [isVisible, setIsVisible] = useState(!isLazy);
+
+  useEffect(() => {
+    // Non-lazy variants load immediately — no observer needed.
+    if (!isLazy) {
+      setIsVisible(true);
+      return;
+    }
+
+    setIsVisible(false);
+
+    const iframe = iframeRef.current;
+    if (!iframe) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '300px', threshold: 0 }
+    );
+
+    observer.observe(iframe);
+    return () => {
+      observer.disconnect();
+    };
+  }, [isLazy, variant]);
 
   // Only add border separator when BOTH theme and variant selectors are displayed
   const border = clsx({
@@ -132,11 +188,12 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
       <Grid condensed>
         <Column sm={4} md={8} lg={columnWidth} className={demoClassNames}>
           <iframe
+            ref={iframeRef}
             title="Component demo"
             className={withPrefix('iframe')}
-            src={iframeUrl}
+            src={isVisible ? iframeUrl : undefined}
             frameBorder="no"
-            sandbox="allow-forms allow-scripts allow-same-origin"
+            sandbox="allow-forms allow-scripts"
           />
         </Column>
       </Grid>
@@ -181,6 +238,7 @@ StorybookDemo.propTypes = {
   variants: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
+      lazy: PropTypes.bool,
       variant: PropTypes.string.isRequired,
     }).isRequired
   ),

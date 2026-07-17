@@ -12,13 +12,29 @@ import { solisSessionManagerConfig } from '../types/Header.types';
 export default class solisSessionManager {
   private refreshIntervalId: number | null = null;
   private tokenRefreshInterval: number;
+  private idleTimeoutInterval: number;
+  private isIdle: boolean;
+  private idleTimeout: number | undefined;
   private basePath: string | undefined;
+  private activityEvents: string[];
   config: solisSessionManagerConfig;
 
   constructor(config: solisSessionManagerConfig) {
     this.config = config;
     this.tokenRefreshInterval = config.tokenRefreshInterval || 25;
+    this.idleTimeoutInterval = config.idleTimeoutInterval || 28;
     this.basePath = config.basePath;
+    this.activityEvents = [
+      'mousedown',
+      'mousemove',
+      'keypress',
+      'scroll',
+      'touchstart',
+      'click',
+      'focus',
+    ];
+    this.isIdle = false;
+    this.idleTimeout = undefined;
   }
 
   startRefreshSchedule() {
@@ -66,5 +82,24 @@ export default class solisSessionManager {
     } catch (error: any) {
       console.error('Solis token refresh error:', error.message);
     }
+  }
+
+  registerActivityListeners() {
+    this.activityEvents.forEach((eventType) => {
+      document.addEventListener(eventType, () => this.setActive(), {
+        passive: true,
+        capture: true,
+      });
+    });
+  }
+
+  setActive() {
+    this.isIdle = false;
+    clearTimeout(this.idleTimeout);
+    this.idleTimeout = setTimeout(this.setIdle, this.idleTimeoutInterval);
+  }
+
+  setIdle() {
+    this.isIdle = true;
   }
 }

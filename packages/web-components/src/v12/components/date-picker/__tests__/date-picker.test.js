@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import '@carbon/web-components/es/components/date-picker/index.js';
+import '../es/index.js';
 import { fixture, html, expect } from '@open-wc/testing';
 
 describe('cds-date-picker', () => {

@@ -25,6 +25,8 @@ import {
   CUSTOM_EVENT_DETAIL_REFRESH_OPTIONS,
 } from '../../../constant';
 
+import solisSessionManager from '../../../globals/solisSessionManager';
+
 describe('HybridIpaasHeader Component', () => {
   let fetchStub: sinon.SinonStub<
     [input: RequestInfo | URL, init?: RequestInit | undefined],
@@ -38,6 +40,7 @@ describe('HybridIpaasHeader Component', () => {
   });
   afterEach(() => {
     fetchStub.restore();
+    sinon.restore();
   });
 
   const fetchResp = {
@@ -272,6 +275,31 @@ describe('HybridIpaasHeader Component', () => {
       { label: 'Product', text: 'productName' },
       { label: 'Version', text: '2.0.0' },
     ]);
+  });
+
+  it('should initialize the solisSessionManager if solisSessionManagerEnabled is true', async () => {
+    fetchStub.resolves(
+      new Response(JSON.stringify(fetchResp), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    );
+    const startRefreshScheduleStub = sinon.stub(
+      solisSessionManager.prototype,
+      'startRefreshSchedule'
+    );
+    const el = await fixture<HybridIpaasHeader>(
+      html`<clabs-global-header-hybrid-ipaas
+        .fetchHeaders=${{ 'Content-Type': 'application/json' }}
+        basePath="/api"
+        productKey="test-productKey"
+        solisSessionManagerEnabled="true"></clabs-global-header-hybrid-ipaas>`
+    );
+    await el.updateComplete;
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
+    expect(el.sessionManager).to.not.be.null;
+    expect(startRefreshScheduleStub).to.have.been.calledOnce;
   });
 
   it('should handle logoutCallback passed in', async () => {

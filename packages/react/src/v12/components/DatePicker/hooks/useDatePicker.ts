@@ -5,7 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  type RefObject,
+} from 'react';
 import {
   DatePickerStateMachine,
   DatePickerEvent,
@@ -99,6 +105,21 @@ export interface UseDatePickerReturn {
   context: DatePickerContext;
 
   /**
+   * Ref to attach to the exit sentinel element in the render tree.
+   * The sentinel is a visually-hidden, aria-hidden span placed just after the
+   * calendar container.  It has tabindex="-1" by default and is briefly set to
+   * tabindex="0" when Tab is pressed from the calendar so the browser delivers
+   * focus there naturally — no DOM scan needed.
+   */
+  exitSentinelRef: RefObject<HTMLSpanElement>;
+
+  /**
+   * onFocus handler to attach to the exit sentinel element.
+   * Restores tabindex="-1" on the sentinel and closes the calendar if still open.
+   */
+  handleExitSentinelFocus: () => void;
+
+  /**
    * Current state
    */
   state: DatePickerState;
@@ -111,7 +132,7 @@ export interface UseDatePickerReturn {
   /**
    * Send an event to the state machine
    */
-  send: (eventType: string, payload?: any) => void;
+  send: (eventType: string, payload?: unknown) => void;
 
   /**
    * Open the calendar
@@ -192,9 +213,13 @@ export function useDatePicker(
   const startInputRef = useRef<HTMLInputElement>(null);
   const endInputRef = useRef<HTMLInputElement>(null);
   const calendarRef = useRef<HTMLDivElement>(null);
+  // Ref for the exit sentinel — a visually-hidden span placed just after the
+  // calendar container.  See UseDatePickerReturn.exitSentinelRef for details.
+  const exitSentinelRef = useRef<HTMLSpanElement>(null);
 
   // State machine instance (persists across renders)
   const machineRef = useRef<DatePickerStateMachine | null>(null);
+  const suppressOpenOnFocusRef = useRef(false);
 
   // React state for triggering re-renders
   const [context, setContext] = useState<DatePickerContext>(() => {
@@ -242,7 +267,36 @@ export function useDatePicker(
     });
 
     return unsubscribe;
-  }, [onOpen, onClose, context.isOpen]);
+  }, [onOpen, onClose]);
+
+  useEffect(() => {
+    if (!context.shouldRestoreFocus) {
+      return;
+    }
+
+    const targetRef =
+      context.restoreFocusTo === 'to' ? endInputRef : startInputRef;
+
+    const timeoutId = window.setTimeout(() => {
+      suppressOpenOnFocusRef.current = true;
+      targetRef.current?.focus();
+
+      machineRef.current?.updateContext({
+        shouldRestoreFocus: false,
+        restoreFocusTo: null,
+      });
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- machineRef is guaranteed non-null inside this setTimeout: it was set during initialisation and is only cleared in cleanup which runs after unmount, long after any pending timer.
+      setContext(machineRef.current!.getContext());
+
+      queueMicrotask(() => {
+        suppressOpenOnFocusRef.current = false;
+      });
+    }, 0);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [context.shouldRestoreFocus, context.restoreFocusTo]);
 
   // Track previous dates to prevent infinite loops
   const prevDatesRef = useRef<string>('');
@@ -336,34 +390,34 @@ export function useDatePicker(
           // Select start date
           send(DatePickerEvent.RANGE_START_SELECT, { date });
         } else {
-          // Select end date
+          // Select end date — the RANGE_END_SELECT action sets restoreFocusTo
+          // and shouldRestoreFocus; no updateContext needed here
           send(DatePickerEvent.RANGE_END_SELECT, { date });
           if (closeOnSelect) {
-            closeCalendar();
+            send(DatePickerEvent.CALENDAR_CLOSE);
           }
         }
       } else {
-        // Single date selection
+        // Single date selection — the DATE_SELECT action sets restoreFocusTo
+        // and shouldRestoreFocus; no updateContext needed here
         send(DatePickerEvent.DATE_SELECT, { date });
         if (closeOnSelect) {
-          closeCalendar();
+          send(DatePickerEvent.CALENDAR_CLOSE);
         }
       }
     },
-    [
-      datePickerType,
-      context.startDate,
-      context.endDate,
-      closeOnSelect,
-      send,
-      closeCalendar,
-    ]
+    [closeOnSelect, datePickerType, context.startDate, context.endDate, send]
   );
 
   const handleInputFocus = useCallback(
     (inputType: 'from' | 'to' = 'from') => {
       // Send INPUT_FOCUS to transition to FOCUSED state
       send(DatePickerEvent.INPUT_FOCUS, { inputType });
+
+      if (suppressOpenOnFocusRef.current) {
+        return;
+      }
+
       // Then send CALENDAR_OPEN to open the calendar
       // This matches the expected state machine flow: IDLE -> FOCUSED -> CALENDAR_OPEN
       send(DatePickerEvent.CALENDAR_OPEN);
@@ -423,10 +477,6 @@ export function useDatePicker(
 
   // Handle keyboard events
   useEffect(() => {
-    if (!context.isOpen) {
-      return;
-    }
-
     /**
      * Handle keyboard events for calendar navigation
      *
@@ -454,7 +504,7 @@ export function useDatePicker(
         (endInputEl && endInputEl.contains(target));
 
       // Handle Escape key - close calendar (works from anywhere)
-      if (key === 'Escape') {
+      if (key === 'Escape' && context.isOpen) {
         event.preventDefault();
         send(DatePickerEvent.ESCAPE_KEY);
         return;
@@ -465,16 +515,14 @@ export function useDatePicker(
         // Case 1: Tab FROM input -> Focus the calendar container
         if (isFocusInInput && !event.shiftKey) {
           event.preventDefault();
-          // Focus the calendar container which has tabIndex={0}
+          // Focus synchronously — no setTimeout, to avoid a pending timer that
+          // would fire during a later Tab's act() flush and re-focus the calendar
+          // at the wrong time.
           if (calendarEl) {
-            setTimeout(() => {
-              const calendar = calendarEl.querySelector(
-                '.cds--date-picker__calendar'
-              ) as HTMLElement;
-              if (calendar) {
-                calendar.focus();
-              }
-            }, 0);
+            const calendar = calendarEl.querySelector(
+              '.cds--date-picker__calendar'
+            ) as HTMLElement;
+            calendar?.focus();
           }
           return;
         }
@@ -495,15 +543,30 @@ export function useDatePicker(
           return;
         }
 
-        // Case 3: Tab FROM calendar -> Close and move to next element
+        // Case 3: Tab FROM calendar -> activate exit sentinel and let the
+        // browser deliver focus to it naturally.
+        //
+        // The sentinel (<span tabindex="-1"> rendered just after the calendar
+        // container) is briefly set to tabindex="0" here.  The browser then
+        // delivers focus to it as the natural Tab destination, triggering its
+        // onFocus handler which closes the calendar and restores tabindex="-1".
+        //
+        // This replaces the previous document.querySelectorAll walk, which
+        // could not pierce shadow DOM and required manual index arithmetic.
         if (isFocusInCalendar && !event.shiftKey) {
-          // Let the state machine handle closing
           send(DatePickerEvent.TAB_KEY);
-          // Don't prevent default - let browser move focus naturally
+          // Activate sentinel — browser handles the rest, no preventDefault needed.
+          if (exitSentinelRef.current) {
+            exitSentinelRef.current.tabIndex = 0;
+          }
           return;
         }
 
         // For other cases, let default Tab behavior work
+        return;
+      }
+
+      if (!context.isOpen) {
         return;
       }
 
@@ -545,6 +608,30 @@ export function useDatePicker(
     send,
   ]);
 
+  /**
+   * Called when the browser delivers focus to the exit sentinel.
+   * Closes the calendar (state machine already received TAB_KEY in _handleKeyDown)
+   * and immediately restores tabindex="-1" so future Tab presses skip the sentinel.
+   *
+   * TODO (carbon monorepo migration): replace this hand-rolled sentinel with the
+   * upstream Carbon wrapFocus utility, which implements the same start/end sentinel
+   * pattern for focus trapping and exit.
+   * Upstream location: packages/react/src/internal/wrapFocus.ts (wrapFocus /
+   * wrapFocusWithoutSentinels exports).  Note that wrapFocus is designed to trap
+   * focus inside a container (modal pattern) rather than release it; the exit-only
+   * direction we need maps to the endTrapNode path in that utility.
+   */
+  const handleExitSentinelFocus = useCallback(() => {
+    if (exitSentinelRef.current) {
+      exitSentinelRef.current.tabIndex = -1;
+    }
+    // Guard: if the calendar is still open (e.g. sentinel received focus by
+    // means other than our Tab handler), close it now.
+    if (context.isOpen) {
+      send(DatePickerEvent.TAB_KEY);
+    }
+  }, [context.isOpen, send]);
+
   return {
     context,
     state,
@@ -559,5 +646,7 @@ export function useDatePicker(
     startInputRef,
     endInputRef,
     calendarRef,
+    exitSentinelRef,
+    handleExitSentinelFocus,
   };
 }

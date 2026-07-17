@@ -46,6 +46,7 @@ export type {
   DatePickerContext,
   DatePickerMode,
   InputType,
+  FocusRestoreTarget,
   DateSelectPayload,
   InputFocusPayload,
   KeyboardPayload,

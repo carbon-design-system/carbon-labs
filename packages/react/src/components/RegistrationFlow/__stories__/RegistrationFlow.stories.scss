@@ -1,0 +1,34 @@
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/colors' as *;
+
+html,
+body,
+#storybook-root,
+.cds--layout {
+  //block-size: 100%;
+  //overflow: hidden;
+}
+
+.platform-details-content {
+
+  background-color: $background;
+  margin: $spacing-05 calc($spacing-05 * -1) calc($spacing-05 * -1);
+  padding: $spacing-05;
+  border-radius: 0 0 $spacing-05 $spacing-05;
+
+  p,
+  li {
+    @include type-style('label-01');
+  }
+
+  ul {
+    margin-block: $spacing-05;
+
+    li {
+      margin-block-start: $spacing-02;
+      padding-inline-start: $spacing-06;
+    }
+  }
+}

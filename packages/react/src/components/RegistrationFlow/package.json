@@ -1,0 +1,43 @@
+{
+  "name": "@carbon-labs/react-registration-flow",
+  "version": "0.0.1",
+  "author": "Your Name <your@email.com>",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "type": "module",
+  "description": "Carbon Labs - Registration Flow",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "src/components/RegistrationFlow"
+  },
+  "types": "./es/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./es/index.js",
+      "require": "./lib/index.js"
+    },
+    "./es/": "./es/",
+    "./lib/": "./lib/",
+    "./scss/": "./scss/"
+  },
+  "files": [
+    "es",
+    "lib",
+    "scss"
+  ],
+  "scripts": {
+    "build": "node ../../../tasks/build.js",
+    "clean": "rimraf es lib scss"
+  },
+  "devDependencies": {
+    "@carbon-labs/utilities": "canary"
+  },
+  "dependencies": {
+    "@carbon/styles": "^1.110.1",
+    "classnames": "^2.5.1"
+  }
+}

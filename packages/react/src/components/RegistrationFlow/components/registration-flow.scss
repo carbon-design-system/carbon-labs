@@ -1,0 +1,246 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon setting imports
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/colors' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/components/button' as *;
+@use '@carbon/styles/scss/motion' as *;
+@use '@carbon/styles/scss/utilities' as *;
+@use '@carbon/utilities/scss/carousel';
+
+$prefix: 'clabs' !default;
+
+.#{$prefix}--registration-flow__container {
+  display: flex;
+  flex-direction: column;
+  background-size: cover;
+  background-position: bottom;
+  block-size: 100%;
+  overflow-y: auto;
+}
+
+.#{$prefix}--registration-flow__body {
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: $spacing-06;
+  inline-size: 30rem;
+
+  .carousel__live-region {
+    // display: none;
+    z-index: 10000;
+  }
+}
+
+
+
+/* * * * * * * * * * * | MASTHEAD | * * * * * * * * * * */
+.#{$prefix}--registration-flow__masthead {
+  min-block-size: $spacing-09;
+  padding-inline: $spacing-10;
+  border-block-end: 1px solid $border-subtle-01;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: $background;
+}
+
+.#{$prefix}--registration-flow__masthead-logo-container {
+  display: flex;
+  align-items: center;
+  padding: 0 $spacing-08;
+  block-size: 100%;
+}
+
+.#{$prefix}--registration-flow__masthead-logo {
+  g {
+    fill: $layer-selected-inverse
+  }
+}
+
+/* * * * * * * * * * * | GREETING | * * * * * * * * * * */
+.#{$prefix}--registration-flow__greeting {
+  padding-inline: $spacing-07;
+  // text-align: center;
+
+  p {
+    @include type-style('body-compact-01');
+  }
+}
+
+.#{$prefix}--registration-flow__greeting-heading {
+  color: $blue-60;
+}
+
+.#{$prefix}--registration-flow__greeting-container {}
+
+
+
+/* * * * * * * * * * * | VIEW CONTAINER | * * * * * * * * * * */
+
+.#{$prefix}--registration-flow__viewcontainer {
+  display: flex;
+  flex-direction: column;
+  padding: $spacing-06 $spacing-05 $spacing-07 $spacing-07;
+  border-radius: $spacing-05;
+  gap: $spacing-06;
+  background-color: $background;
+  box-shadow: 0 $spacing-01 $spacing-05 1px $border-subtle;
+}
+
+/* * * * * * * * * * * | VIEW STACK | * * * * * * * * * * */
+.#{$prefix}--registration-flow__viewstack {
+  block-size: 100%;
+}
+
+.#{$prefix}--registration-flow__view {
+  display: flex;
+  flex-direction: column;
+  padding-inline-end: $spacing-05;
+}
+
+.#{$prefix}--registration-flow__view-internals {}
+
+.#{$prefix}--registration-flow__view-footer {
+  display: flex;
+  flex-direction: row;
+  gap: 1px;
+  inline-size: 100%;
+  margin-block-start: auto;
+  padding-block-start: $spacing-07;
+  align-items: flex-end;
+  justify-self: flex-end;
+
+  .cds--btn {
+    flex: 1;
+
+    &:only-child {
+      margin-inline-start: auto;
+      max-inline-size: 50%;
+    }
+  }
+}
+
+/* * * * * * * * * * * | STEP INDICATOR | * * * * * * * * * * */
+.#{$prefix}--registration-flow__step-indicator {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: $spacing-02;
+  inline-size: 100%;
+
+
+
+
+  // ALL STEPS
+  &-step,
+  &-step-current {
+    position: relative;
+    inline-size: 100%;
+    @include type-style('label-01');
+    color: $text-helper;
+    padding-block-start: $spacing-02;
+    // border-top: $spacing-02 solid $border-subtle-01;
+  }
+
+  // DEFAULT STEP
+  &-step {
+    border-top: $spacing-02 solid $border-subtle-01;
+  }
+
+  // CURRENT STEP
+  &-step-current {
+    border-top: $spacing-02 solid $border-subtle-02;
+
+    >.#{$prefix}--registration-flow__step-indicator-step-current-progress {
+      position: absolute;
+      top: calc($spacing-02 * -1);
+      border-top: $spacing-02 solid $border-interactive
+    }
+  }
+
+  // COMPLETE STEP
+  &-step-complete {
+    border-top: $spacing-02 solid $border-interactive
+  }
+}
+
+/* * * * * * * * * * * | DETAILS | * * * * * * * * * * */
+
+.#{$prefix}--details {
+  background-color: $gray-10;
+  padding: $spacing-05;
+  border-radius: $spacing-05;
+  border: 1px solid $border-subtle;
+
+  &[open]>summary::after {
+    transform: rotate(180deg);
+  }
+
+  summary {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    gap: $spacing-05;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  summary::after {
+    content: '';
+    width: $spacing-05;
+    height: $spacing-03;
+    //background: url('/summaryArrow.svg') no-repeat;
+    background-size: contain;
+    transition: 0.2s;
+    margin: $spacing-03;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  &-subtitle {
+    @include type-style('label-01');
+    color: $text-helper;
+    margin-block-start: $spacing-02;
+  }
+
+  &-content {
+    background-color: $background;
+    margin: $spacing-05 calc($spacing-05 * -1) calc($spacing-05 * -1);
+    padding: $spacing-05;
+    border-radius: 0 0 $spacing-05 $spacing-05;
+
+    p,
+    li {
+      @include type-style('label-01');
+    }
+
+    ul {
+      margin-block: $spacing-05;
+
+      li {
+        margin-block-start: $spacing-02;
+        padding-inline-start: $spacing-06;
+      }
+    }
+
+    .cds--btn {
+      inline-size: 100%;
+      max-inline-size: none;
+      margin-block-start: $spacing-03;
+      border-radius: $spacing-02;
+    }
+  }
+}

@@ -1,0 +1,152 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as RegistrationFlowStories from './RegistrationFlow.stories';
+import * as DetailStories from './Details.stories';
+import * as RegistrationContentStories from './RegistrationContent.stories';
+import * as RegistrationMastheadStories from './RegistrationMasthead.stories';
+import * as RegistrationGreetingStories from './RegistrationGreeting.stories';
+import * as RegistrationViewContainerStories from './RegistrationViewContainer.stories';
+import * as RegistrationStepIndicatorStories from './RegistrationStepIndicator.stories';
+import * as RegistrationViewStackStories from './RegistrationViewStack.stories';
+import * as RegistrationViewStories from './RegistrationView.stories';
+import * as RegistrationViewFooterStories from './RegistrationViewFooter.stories';
+
+<Meta isTemplate />
+
+# RegistrationFlow
+
+- **Initiative owner(s):** Jeff Longshore
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/RegistrationFlow)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/RegistrationFlow)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Getting started](#getting-started)
+- [Component APIs](#component-apis)
+  - [RegistrationFlow API](#registrationflow-api)
+  - [RegistrationMasthead API](#registrationmasthead-api)
+  - [RegistrationContent API](#registrationcontent-api)
+  - [RegistrationGreeting API](#registrationgreeting-api)
+  - [RegistrationViewContainer API](#registrationviewcontainer-api)
+  - [RegistrationStepIndicator API](#registrationstepindicator-api)
+  - [RegistrationViewStack API](#registrationviewstack-api)
+  - [RegistrationView API](#registrationview-api)
+  - [RegistrationViewFooter API](#registrationviewfooter-api)
+  - [Detail API](#detail-api)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+The RegistrationFlow is a set of components to standardize the registration flow
+to a product.
+
+<Canvas of={RegistrationFlowStories.Default} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-registration-flow
+```
+
+### JS (via import)
+
+```javascript
+import { RegistrationFlow } from '@carbon-labs/react-registration-flow/es/index';
+
+function App() {
+  return (
+    <RegistrationFlow backgroundImage="./images/background.png">
+      <RegistrationMasthead />
+      <RegistrationContent>
+        <RegistrationGreeting
+          title="IBM Product"
+          description="Description here"
+        />
+        <RegistrationViewContainer title="Registration title here">
+          <RegistrationStepIndicator
+            currentIndex={0}
+            progress={0}
+            stepLabels={['Flow 1', 'Flow 2']}
+          />
+          <RegistrationViewStack id="ViewStackContainer">
+            <RegistrationView>...</RegistrationView>
+            <RegistrationView>...</RegistrationView>
+          </RegistrationViewStack>
+        </RegistrationViewContainer>
+      </RegistrationContent>
+    </RegistrationFlow>
+  );
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-registration-flow/scss/registration-flow';
+```
+
+## Component APIs
+
+### RegistrationFlow API
+
+<ArgTypes of={RegistrationFlowStories.Default} />
+
+### RegistrationMasthead API
+
+(no props needed)
+
+### RegistrationContent API
+
+<ArgTypes of={RegistrationContentStories.RegistrationContentStory} />
+
+### RegistrationGreeting API
+
+<ArgTypes of={RegistrationGreetingStories.RegistrationGreetingStory} />
+
+### RegistrationViewContainer API
+
+<ArgTypes
+  of={RegistrationViewContainerStories.RegistrationViewContainerStory}
+/>
+
+### RegistrationStepIndicator API
+
+<ArgTypes
+  of={RegistrationStepIndicatorStories.RegistrationStepIndicatorStory}
+/>
+
+### RegistrationViewStack API
+
+<ArgTypes of={RegistrationViewStackStories.RegistrationViewStackStory} />
+
+### RegistrationView API
+
+<ArgTypes of={RegistrationViewStories.RegistrationViewStory} />
+
+### RegistrationViewFooter API
+
+<ArgTypes of={RegistrationViewFooterStories.RegistrationViewFooterStory} />
+
+### Detail API
+
+<ArgTypes of={DetailStories.DetailStory} />

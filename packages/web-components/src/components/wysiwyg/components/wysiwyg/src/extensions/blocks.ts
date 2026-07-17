@@ -8,13 +8,12 @@
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
 import { html } from 'lit';
-import type { TemplateResult } from 'lit';
 import CodeBlock from '@carbon/icons/es/code-block/16.js';
 import Quotes from '@carbon/icons/es/quotes/16.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
 import { BASE_CLASS } from '../constants.js';
-import type { ToolbarSize } from '../types.js';
-import { iconButton } from './button-helper.js';
+import type { ExtensionWithToolbar, ToolbarSize } from '../types.js';
+import { cmdButton } from './button-helper.js';
 import TiptapCodeBlock from '@tiptap/extension-code-block';
 import TiptapBlockquote from '@tiptap/extension-blockquote';
 import { Node, mergeAttributes } from '@tiptap/core';
@@ -75,66 +74,32 @@ const Blockquote = TiptapBlockquote.extend({
 });
 
 /**
- * Interface for the Blocks extension with toolbar rendering capability.
- * @extends {Extension<any>}
- */
-export interface BlocksExtension extends Extension<any> {
-  /**
-   * Renders the blocks toolbar controls.
-   * @param {Editor | null} editor - The TipTap editor instance
-   * @param {ToolbarSize} [toolbarSize='md'] - Size of the toolbar buttons
-   * @returns {TemplateResult} Lit template for the blocks toolbar
-   */
-  toolbarRender: (
-    editor: Editor | null,
-    toolbarSize?: ToolbarSize
-  ) => TemplateResult;
-}
-
-/**
  * Blocks extension for code blocks and blockquotes.
  * Provides toolbar controls for inserting code blocks and blockquotes.
- * @type {BlocksExtension}
  */
 export const Blocks = Extension.create({
   name: 'blocks',
-  /**
-   * Adds the code block, blockquote, and cite extensions.
-   * @returns {Array} Array of TipTap extensions
-   */
+  /** Adds the code block, blockquote, and cite extensions */
   addExtensions: () => [TiptapCodeBlock, Blockquote, Cite],
-}) as unknown as BlocksExtension;
+}) as unknown as ExtensionWithToolbar;
 
 /**
  * Renders the blocks toolbar with code block and blockquote controls.
  * @param {Editor | null} editor - The TipTap editor instance
  * @param {ToolbarSize} toolbarSize - Size of the toolbar buttons
- * @returns {TemplateResult} Lit template for the blocks toolbar
  */
 Blocks.toolbarRender = (
   editor: Editor | null,
   toolbarSize: ToolbarSize = 'md'
 ) => html`
   <div class="${BASE_CLASS}__toolbar-group">
-    ${iconButton(
-      CodeBlock,
-      () => editor?.chain().focus().toggleCodeBlock().run(),
-      toolbarSize,
-      {
-        disabled: !editor?.can().toggleCodeBlock(),
-        selected: editor?.isActive('codeBlock'),
-        tooltip: 'Code Block',
-      }
-    )}
-    ${iconButton(
-      Quotes,
-      () => editor?.chain().focus().toggleBlockquote().run(),
-      toolbarSize,
-      {
-        disabled: !editor?.can().toggleBlockquote(),
-        selected: editor?.isActive('blockquote'),
-        tooltip: 'Blockquote',
-      }
-    )}
+    ${cmdButton(CodeBlock, editor, 'toggleCodeBlock', toolbarSize, {
+      active: 'codeBlock',
+      tooltip: 'Code Block',
+    })}
+    ${cmdButton(Quotes, editor, 'toggleBlockquote', toolbarSize, {
+      active: 'blockquote',
+      tooltip: 'Blockquote',
+    })}
   </div>
 `;

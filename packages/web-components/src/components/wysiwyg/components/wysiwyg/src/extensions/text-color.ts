@@ -8,7 +8,6 @@
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
 import { html } from 'lit';
-import type { TemplateResult } from 'lit';
 import { createRef, ref } from 'lit/directives/ref.js';
 import TextColorIcon from '@carbon/icons/es/text--color/16.js';
 import TextHighlight16 from '@carbon/icons/es/text--highlight/16.js';
@@ -19,8 +18,8 @@ import '@carbon/web-components/es/components/icon-button/index.js';
 import '@carbon/web-components/es/components/popover/index.js';
 import '@carbon/web-components/es/components/layer/index.js';
 import { BASE_CLASS } from '../constants.js';
-import type { ToolbarSize } from '../types.js';
-import { iconButton } from './button-helper.js';
+import type { ExtensionWithToolbar, ToolbarSize } from '../types.js';
+import { cmdButton, iconButton } from './button-helper.js';
 import {
   setupPopoverContent,
   togglePopover,
@@ -62,13 +61,6 @@ const styles = `
   }
 `;
 
-export interface TextColorExtension extends Extension<any> {
-  toolbarRender: (
-    editor: Editor | null,
-    toolbarSize?: ToolbarSize
-  ) => TemplateResult;
-}
-
 export const TextColor = Extension.create({
   name: 'textColor',
   /**
@@ -82,7 +74,7 @@ export const TextColor = Extension.create({
       multicolor: false,
     }),
   ],
-}) as unknown as TextColorExtension;
+}) as unknown as ExtensionWithToolbar;
 
 /**
  * Renders the text color toolbar with color picker and text decoration controls.
@@ -95,6 +87,8 @@ TextColor.toolbarRender = (
 ) => {
   const colorPopover = createRef<any>();
   const highlightPopover = createRef<any>();
+  /** Closes the highlight popover */
+  const closeHighlight = () => closePopover(highlightPopover);
   const color =
     editor?.getAttributes('textStyle')?.color || 'var(--cds-text-primary)';
   const disabled = !editor?.can().setColor('#000000');
@@ -163,45 +157,29 @@ TextColor.toolbarRender = (
             ${ref(setupPopoverContent)}
             class="${BASE_CLASS}__highlight">
             <clabs-roving-tabindex>
-              ${iconButton(
+              ${cmdButton(
                 TextHighlight16,
-                () => {
-                  editor?.chain().focus().toggleHighlight().run();
-                  closePopover(highlightPopover);
-                },
+                editor,
+                'toggleHighlight',
                 toolbarSize,
                 {
-                  disabled: !editor?.can().toggleHighlight(),
-                  selected: editor?.isActive('highlight'),
+                  active: 'highlight',
                   tooltip: 'Mark',
+                  onDone: closeHighlight,
                 }
               )}
-              ${iconButton(
-                Subtract,
-                () => {
-                  editor?.chain().focus().toggleMark('deleteMark').run();
-                  closePopover(highlightPopover);
-                },
-                toolbarSize,
-                {
-                  disabled: !editor?.can().toggleMark('deleteMark'),
-                  selected: editor?.isActive('deleteMark'),
-                  tooltip: 'Delete',
-                }
-              )}
-              ${iconButton(
-                Add,
-                () => {
-                  editor?.chain().focus().toggleMark('insertMark').run();
-                  closePopover(highlightPopover);
-                },
-                toolbarSize,
-                {
-                  disabled: !editor?.can().toggleMark('insertMark'),
-                  selected: editor?.isActive('insertMark'),
-                  tooltip: 'Insert',
-                }
-              )}
+              ${cmdButton(Subtract, editor, 'toggleMark', toolbarSize, {
+                args: ['deleteMark'],
+                active: 'deleteMark',
+                tooltip: 'Delete',
+                onDone: closeHighlight,
+              })}
+              ${cmdButton(Add, editor, 'toggleMark', toolbarSize, {
+                args: ['insertMark'],
+                active: 'insertMark',
+                tooltip: 'Insert',
+                onDone: closeHighlight,
+              })}
             </clabs-roving-tabindex>
           </cds-popover-content>
         </cds-popover>

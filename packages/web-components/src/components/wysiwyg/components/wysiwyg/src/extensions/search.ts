@@ -10,13 +10,15 @@ import type { Editor } from '@tiptap/core';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
 import { Decoration, DecorationSet } from '@tiptap/pm/view';
 import { html } from 'lit';
-import type { TemplateResult } from 'lit';
 import { ref } from 'lit/directives/ref.js';
 import '@carbon/web-components/es/components/search/index.js';
 import '@carbon/web-components/es/components/tag/index.js';
-import { BASE_CLASS } from '../constants';
-import type { ToolbarSize } from '../types.js';
-import type { EditorComponent } from '../types';
+import { BASE_CLASS } from '../constants.js';
+import type {
+  EditorComponent,
+  ExtensionWithToolbar,
+  ToolbarSize,
+} from '../types.js';
 
 interface SearchState {
   searchTerm: string;
@@ -33,6 +35,20 @@ const EMPTY_SEARCH_STATE: SearchState = {
 };
 
 const editorSearchState = new WeakMap<Editor, SearchState>();
+
+/**
+ * Gets (or lazily creates) the search state for an editor.
+ * @param {Editor} editor - Editor instance
+ * @returns {SearchState} The search state
+ */
+const getState = (editor: Editor): SearchState => {
+  let state = editorSearchState.get(editor);
+  if (!state) {
+    state = { ...EMPTY_SEARCH_STATE };
+    editorSearchState.set(editor, state);
+  }
+  return state;
+};
 
 const searchToolbarStyles = `
   .${BASE_CLASS}__toolbar-group--search {
@@ -94,10 +110,7 @@ const createSearchPlugin = (editor: Editor) =>
     },
     props: {
       decorations({ doc }) {
-        const state = editorSearchState.get(editor) ?? {
-          ...EMPTY_SEARCH_STATE,
-        };
-        editorSearchState.set(editor, state);
+        const state = getState(editor);
 
         if (!state.currentSearchTerm) {
           state.matchCount = 0;
@@ -137,13 +150,6 @@ const createSearchPlugin = (editor: Editor) =>
     },
   });
 
-export interface SearchExtension extends Extension<any> {
-  toolbarRender: (
-    editor: Editor | null,
-    toolbarSize?: ToolbarSize
-  ) => TemplateResult;
-}
-
 export const Search = Extension.create({
   name: 'search',
   /** Add extensions */
@@ -161,10 +167,7 @@ export const Search = Extension.create({
         const { state } = this.editor;
         const { from, to } = state.selection;
         const selectedText = state.doc.textBetween(from, to, ' ');
-        const s = editorSearchState.get(this.editor) ?? {
-          ...EMPTY_SEARCH_STATE,
-        };
-        editorSearchState.set(this.editor, s);
+        const s = getState(this.editor);
         if (!s.searchInputElement) {
           return true;
         }
@@ -182,7 +185,7 @@ export const Search = Extension.create({
       },
     };
   },
-}) as unknown as SearchExtension;
+}) as unknown as ExtensionWithToolbar;
 
 /**
  * Render search toolbar
@@ -197,20 +200,26 @@ Search.toolbarRender = (
     return html``;
   }
 
-  const state = editorSearchState.get(editor) ?? { ...EMPTY_SEARCH_STATE };
-  editorSearchState.set(editor, state);
+  const state = getState(editor);
+  const component = (editor as any).component as EditorComponent | undefined;
+
+  /**
+   * Applies a new search term and re-renders the editor and toolbar
+   * @param {string} term - Search term
+   */
+  const setTerm = (term: string) => {
+    state.searchTerm = state.currentSearchTerm = term;
+    editor.view.updateState(editor.view.state);
+    component?.requestUpdate?.();
+  };
 
   /**
    * Handle search input
    * @param {Event} e - Input event
    */
   const handleSearchInput = (e: Event) => {
-    state.searchTerm = state.currentSearchTerm = (e.target as any).value;
-    editor.view.updateState(editor.view.state);
-    ((editor as any).component as EditorComponent)?.requestUpdate?.();
-    const highlight = (
-      (editor as any).component as EditorComponent
-    )?.shadowRoot?.querySelector('.search-highlight');
+    setTerm((e.target as any).value);
+    const highlight = component?.shadowRoot?.querySelector('.search-highlight');
     highlight &&
       requestAnimationFrame(() => highlight.scrollIntoView({ block: 'start' }));
   };
@@ -221,9 +230,7 @@ Search.toolbarRender = (
    */
   const handleClear = (e: CustomEvent) => {
     if (e.detail.value === '') {
-      state.searchTerm = state.currentSearchTerm = '';
-      editor.view.updateState(editor.view.state);
-      ((editor as any).component as EditorComponent)?.requestUpdate?.();
+      setTerm('');
     }
   };
 

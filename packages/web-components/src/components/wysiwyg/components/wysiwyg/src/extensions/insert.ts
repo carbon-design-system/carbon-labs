@@ -8,7 +8,6 @@
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
 import { html } from 'lit';
-import type { TemplateResult } from 'lit';
 import { createRef, ref } from 'lit/directives/ref.js';
 import LinkIcon from '@carbon/icons/es/link/16.js';
 import ImageIcon from '@carbon/icons/es/image/16.js';
@@ -19,7 +18,7 @@ import '@carbon/web-components/es/components/popover/index.js';
 import '@carbon/web-components/es/components/text-input/index.js';
 import '@carbon/web-components/es/components/layer/index.js';
 import { BASE_CLASS } from '../constants.js';
-import type { ToolbarSize } from '../types.js';
+import type { ExtensionWithToolbar, ToolbarSize } from '../types.js';
 import { iconButton } from './button-helper.js';
 import {
   setupPopoverContent,
@@ -140,12 +139,37 @@ const styles = `
   }
 `;
 
-export interface InsertExtension extends Extension<any> {
-  toolbarRender: (
-    editor: Editor | null,
-    toolbarSize?: ToolbarSize
-  ) => TemplateResult;
-}
+/**
+ * Normalizes and validates a user-entered URL.
+ * Prepends https:// when no protocol is present.
+ * @param {string | undefined} value - Raw input value
+ * @returns {string | null} The normalized URL, or null if empty/invalid
+ */
+const normalizeUrl = (value?: string): string | null => {
+  const trimmed = value?.trim();
+  if (!trimmed) {
+    return null;
+  }
+  const url = /^https?:\/\//.test(trimmed) ? trimmed : `https://${trimmed}`;
+  try {
+    new URL(url);
+    return url;
+  } catch {
+    return null;
+  }
+};
+
+/**
+ * Wraps an apply callback so it runs on Enter.
+ * @param {Function} apply - Callback to run
+ * @returns {Function} Keydown handler
+ */
+const onEnter = (apply: () => void) => (e: KeyboardEvent) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    apply();
+  }
+};
 
 export const Insert = Extension.create({
   name: 'insert',
@@ -178,7 +202,7 @@ export const Insert = Extension.create({
       },
     } as any),
   ],
-}) as unknown as InsertExtension;
+}) as unknown as ExtensionWithToolbar;
 
 /**
  * Renders the insert toolbar with link and image controls.
@@ -193,6 +217,26 @@ Insert.toolbarRender = (
   const linkInput = createRef<any>();
   const imagePopover = createRef<any>();
   const imageInput = createRef<any>();
+
+  /** Sets a link on the current selection from the link input value */
+  const applyLink = () => {
+    const href = normalizeUrl(linkInput.value?.value);
+    if (!href || !editor || editor.state.selection.empty) {
+      return;
+    }
+    editor.chain().focus().setLink({ href }).run();
+    closePopover(linkPopover);
+  };
+
+  /** Inserts an image from the image input value */
+  const applyImage = () => {
+    const src = normalizeUrl(imageInput.value?.value);
+    if (!src || !editor) {
+      return;
+    }
+    editor.chain().focus().setImage({ src }).run();
+    closePopover(imagePopover);
+  };
 
   return html`
     <style>
@@ -228,52 +272,10 @@ Insert.toolbarRender = (
                 .size=${toolbarSize as any}
                 placeholder="Paste link"
                 .value=${editor?.getAttributes('link').href ?? ''}
-                @keydown=${(e: KeyboardEvent) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    if (!editor || editor.state.selection.empty) {
-                      return;
-                    }
-                    const value = linkInput.value?.value?.trim() ?? '';
-                    if (!value) {
-                      return;
-                    }
-                    const href = /^https?:\/\//.test(value)
-                      ? value
-                      : `https://${value}`;
-                    try {
-                      new URL(href);
-                    } catch {
-                      return;
-                    }
-                    editor.chain().focus().setLink({ href }).run();
-                    closePopover(linkPopover);
-                  }
-                }}></cds-text-input>
-              ${iconButton(
-                SaveIcon,
-                () => {
-                  if (!editor || editor.state.selection.empty) {
-                    return;
-                  }
-                  const value = linkInput.value?.value?.trim() ?? '';
-                  if (!value) {
-                    return;
-                  }
-                  const href = /^https?:\/\//.test(value)
-                    ? value
-                    : `https://${value}`;
-                  try {
-                    new URL(href);
-                  } catch {
-                    return;
-                  }
-                  editor.chain().focus().setLink({ href }).run();
-                  closePopover(linkPopover);
-                },
-                toolbarSize,
-                { tooltip: 'Insert' }
-              )}
+                @keydown=${onEnter(applyLink)}></cds-text-input>
+              ${iconButton(SaveIcon, applyLink, toolbarSize, {
+                tooltip: 'Insert',
+              })}
               ${iconButton(
                 TrashCanIcon,
                 () => {
@@ -316,52 +318,10 @@ Insert.toolbarRender = (
                 label="Image"
                 .size=${toolbarSize as any}
                 placeholder="Paste image URL"
-                @keydown=${(e: KeyboardEvent) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    if (!editor) {
-                      return;
-                    }
-                    const value = imageInput.value?.value?.trim() ?? '';
-                    if (!value) {
-                      return;
-                    }
-                    const src = /^https?:\/\//.test(value)
-                      ? value
-                      : `https://${value}`;
-                    try {
-                      new URL(src);
-                    } catch {
-                      return;
-                    }
-                    editor.chain().focus().setImage({ src }).run();
-                    closePopover(imagePopover);
-                  }
-                }}></cds-text-input>
-              ${iconButton(
-                SaveIcon,
-                () => {
-                  if (!editor) {
-                    return;
-                  }
-                  const value = imageInput.value?.value?.trim() ?? '';
-                  if (!value) {
-                    return;
-                  }
-                  const src = /^https?:\/\//.test(value)
-                    ? value
-                    : `https://${value}`;
-                  try {
-                    new URL(src);
-                  } catch {
-                    return;
-                  }
-                  editor.chain().focus().setImage({ src }).run();
-                  closePopover(imagePopover);
-                },
-                toolbarSize,
-                { tooltip: 'Insert' }
-              )}
+                @keydown=${onEnter(applyImage)}></cds-text-input>
+              ${iconButton(SaveIcon, applyImage, toolbarSize, {
+                tooltip: 'Insert',
+              })}
             </clabs-roving-tabindex>
           </cds-popover-content>
         </cds-popover>

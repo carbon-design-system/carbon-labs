@@ -7,6 +7,7 @@
 
 import { html } from 'lit';
 import type { TemplateResult } from 'lit';
+import type { Editor } from '@tiptap/core';
 import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 import {
   TOOLTIP_ENTER_DELAY_MS,
@@ -67,3 +68,51 @@ export const iconButton = (
     <span slot="tooltip-content">${options.tooltip}</span>
   </cds-icon-button>
 `;
+
+/**
+ * Options for the command button helper
+ */
+export interface CmdButtonOptions extends Omit<
+  IconButtonOptions,
+  'disabled' | 'selected'
+> {
+  /** isActive() query — mark/node name or attributes object */
+  active?: string | object;
+  /** Arguments passed to the editor command */
+  args?: unknown[];
+  /** Called after the command executes (e.g. to close a popover) */
+  onDone?: () => void;
+}
+
+/**
+ * Icon button wired to a TipTap editor command. Runs
+ * `editor.chain().focus().<cmd>(...args).run()` on click, derives `disabled`
+ * from `editor.can().<cmd>(...args)` and `selected` from `editor.isActive(active)`.
+ *
+ * @param {any} icon - Carbon icon to display
+ * @param {Editor | null} editor - The TipTap editor instance
+ * @param {string} cmd - Editor command name
+ * @param {ToolbarSize} toolbarSize - Size of the button
+ * @param {CmdButtonOptions} options - Additional button options
+ * @returns {TemplateResult} Lit template for the icon button
+ */
+export const cmdButton = (
+  icon: any,
+  editor: Editor | null,
+  cmd: string,
+  toolbarSize: ToolbarSize,
+  { active, args = [], onDone, ...options }: CmdButtonOptions
+): TemplateResult =>
+  iconButton(
+    icon,
+    () => {
+      (editor?.chain().focus() as any)?.[cmd](...args).run();
+      onDone?.();
+    },
+    toolbarSize,
+    {
+      ...options,
+      disabled: !(editor?.can() as any)?.[cmd](...args),
+      selected: active ? editor?.isActive(active as any) : undefined,
+    }
+  );

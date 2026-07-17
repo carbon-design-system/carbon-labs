@@ -8,7 +8,6 @@
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
 import { html } from 'lit';
-import type { TemplateResult } from 'lit';
 import { createRef, ref } from 'lit/directives/ref.js';
 import Table from '@carbon/icons/es/table/16.js';
 import TableAdd from '@carbon/icons/es/table--add/16.js';
@@ -22,9 +21,9 @@ import '@carbon/web-components/es/components/icon-button/index.js';
 import '@carbon/web-components/es/components/popover/index.js';
 import '@carbon/web-components/es/components/layer/index.js';
 import { BASE_CLASS } from '../constants.js';
-import type { ToolbarSize } from '../types.js';
+import type { ExtensionWithToolbar, ToolbarSize } from '../types.js';
 import { setupPopoverContent, togglePopover } from './popover-utils.js';
-import { iconButton } from './button-helper.js';
+import { cmdButton, iconButton } from './button-helper.js';
 import '../roving-tabindex.js';
 import { Table as TiptapTable } from '@tiptap/extension-table';
 import { TableRow } from '@tiptap/extension-table-row';
@@ -37,13 +36,6 @@ const styles = `
     grid-template-columns: repeat(4, 1fr);
   }
 `;
-
-export interface TablesExtension extends Extension<any> {
-  toolbarRender: (
-    editor: Editor | null,
-    toolbarSize?: ToolbarSize
-  ) => TemplateResult;
-}
 
 export const Tables = Extension.create({
   name: 'tables',
@@ -59,7 +51,18 @@ export const Tables = Extension.create({
     TableHeader,
     TableCell,
   ],
-}) as unknown as TablesExtension;
+}) as unknown as ExtensionWithToolbar;
+
+const TABLE_ACTIONS = [
+  [ColumnInsert, 'addColumnBefore', 'Add Column Before', 'ghost'],
+  [ColumnInsert, 'addColumnAfter', 'Add Column After', 'ghost'],
+  [ColumnDelete, 'deleteColumn', 'Delete Column', 'danger-ghost'],
+  [TableSplit, 'mergeCells', 'Merge Cells', 'ghost'],
+  [RowInsert, 'addRowBefore', 'Add Row Before', 'ghost'],
+  [RowInsert, 'addRowAfter', 'Add Row After', 'ghost'],
+  [RowDelete, 'deleteRow', 'Delete Row', 'danger-ghost'],
+  [TableSplit, 'splitCell', 'Split Cell', 'ghost'],
+] as const;
 
 /**
  * Renders the tables toolbar with table manipulation controls.
@@ -73,6 +76,16 @@ Tables.toolbarRender = (
   const popover = createRef<any>();
   /** Close popover */
   const close = () => popover.value?.toggleAttribute('open', false);
+  /** Insert a 3x3 table with header row, replacing any selection */
+  const insertTable = () => {
+    editor
+      ?.chain()
+      .focus()
+      .deleteSelection()
+      .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+      .run();
+    close();
+  };
   return html`
     <style>
       ${styles}
@@ -91,157 +104,29 @@ Tables.toolbarRender = (
                   slot="content"
                   ${ref(setupPopoverContent)}>
                   <clabs-roving-tabindex>
-                    ${iconButton(
-                      ColumnInsert,
-                      () => {
-                        editor?.chain().focus().addColumnBefore().run();
-                        close();
-                      },
-                      toolbarSize,
-                      {
-                        disabled: !editor?.can().addColumnBefore(),
-                        tooltip: 'Add Column Before',
-                        kind: 'ghost',
-                      }
+                    ${TABLE_ACTIONS.map(([icon, cmd, tooltip, kind]) =>
+                      cmdButton(icon, editor, cmd, toolbarSize, {
+                        tooltip,
+                        kind,
+                        onDone: close,
+                      })
                     )}
-                    ${iconButton(
-                      ColumnInsert,
-                      () => {
-                        editor?.chain().focus().addColumnAfter().run();
-                        close();
-                      },
-                      toolbarSize,
-                      {
-                        disabled: !editor?.can().addColumnAfter(),
-                        tooltip: 'Add Column After',
-                        kind: 'ghost',
-                      }
-                    )}
-                    ${iconButton(
-                      ColumnDelete,
-                      () => {
-                        editor?.chain().focus().deleteColumn().run();
-                        close();
-                      },
-                      toolbarSize,
-                      {
-                        disabled: !editor?.can().deleteColumn(),
-                        tooltip: 'Delete Column',
-                        kind: 'danger-ghost',
-                      }
-                    )}
-                    ${iconButton(
-                      TableSplit,
-                      () => {
-                        editor?.chain().focus().mergeCells().run();
-                        close();
-                      },
-                      toolbarSize,
-                      {
-                        disabled: !editor?.can().mergeCells(),
-                        tooltip: 'Merge Cells',
-                        kind: 'ghost',
-                      }
-                    )}
-                    ${iconButton(
-                      RowInsert,
-                      () => {
-                        editor?.chain().focus().addRowBefore().run();
-                        close();
-                      },
-                      toolbarSize,
-                      {
-                        disabled: !editor?.can().addRowBefore(),
-                        tooltip: 'Add Row Before',
-                        kind: 'ghost',
-                      }
-                    )}
-                    ${iconButton(
-                      RowInsert,
-                      () => {
-                        editor?.chain().focus().addRowAfter().run();
-                        close();
-                      },
-                      toolbarSize,
-                      {
-                        disabled: !editor?.can().addRowAfter(),
-                        tooltip: 'Add Row After',
-                        kind: 'ghost',
-                      }
-                    )}
-                    ${iconButton(
-                      RowDelete,
-                      () => {
-                        editor?.chain().focus().deleteRow().run();
-                        close();
-                      },
-                      toolbarSize,
-                      {
-                        disabled: !editor?.can().deleteRow(),
-                        tooltip: 'Delete Row',
-                        kind: 'danger-ghost',
-                      }
-                    )}
-                    ${iconButton(
-                      TableSplit,
-                      () => {
-                        editor?.chain().focus().splitCell().run();
-                        close();
-                      },
-                      toolbarSize,
-                      {
-                        disabled: !editor?.can().splitCell(),
-                        tooltip: 'Split Cell',
-                        kind: 'ghost',
-                      }
-                    )}
-                    ${iconButton(
-                      TableAdd,
-                      () => {
-                        editor
-                          ?.chain()
-                          .focus()
-                          .deleteSelection()
-                          .insertTable({
-                            rows: 3,
-                            cols: 3,
-                            withHeaderRow: true,
-                          })
-                          .run();
-                        close();
-                      },
-                      toolbarSize,
-                      { tooltip: 'Insert Table', kind: 'ghost' }
-                    )}
-                    ${iconButton(
-                      TrashCan,
-                      () => {
-                        editor?.chain().focus().deleteTable().run();
-                        close();
-                      },
-                      toolbarSize,
-                      {
-                        disabled: !editor?.can().deleteTable(),
-                        tooltip: 'Delete Table',
-                        kind: 'danger-ghost',
-                      }
-                    )}
+                    ${iconButton(TableAdd, insertTable, toolbarSize, {
+                      tooltip: 'Insert Table',
+                      kind: 'ghost',
+                    })}
+                    ${cmdButton(TrashCan, editor, 'deleteTable', toolbarSize, {
+                      tooltip: 'Delete Table',
+                      kind: 'danger-ghost',
+                      onDone: close,
+                    })}
                   </clabs-roving-tabindex>
                 </cds-popover-content>
               </cds-popover>
             `
-          : iconButton(
-              TableAdd,
-              () =>
-                editor
-                  ?.chain()
-                  .focus()
-                  .deleteSelection()
-                  .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
-                  .run(),
-              toolbarSize,
-              { tooltip: 'Insert Table' }
-            )}
+          : iconButton(TableAdd, insertTable, toolbarSize, {
+              tooltip: 'Insert Table',
+            })}
       </cds-layer>
     </div>
   `;

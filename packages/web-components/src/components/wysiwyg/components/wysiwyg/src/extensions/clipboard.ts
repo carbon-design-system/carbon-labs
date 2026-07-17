@@ -8,25 +8,30 @@
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
 import { html } from 'lit';
-import type { TemplateResult } from 'lit';
 import Copy from '@carbon/icons/es/copy/16.js';
 import Cut from '@carbon/icons/es/cut/16.js';
 import Paste from '@carbon/icons/es/paste/16.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
 import { BASE_CLASS } from '../constants.js';
-import type { ToolbarSize } from '../types.js';
+import type { ExtensionWithToolbar, ToolbarSize } from '../types.js';
 import { iconButton } from './button-helper.js';
-
-export interface ClipboardExtension extends Extension<any> {
-  toolbarRender: (
-    editor: Editor | null,
-    toolbarSize?: ToolbarSize
-  ) => TemplateResult;
-}
 
 export const Clipboard = Extension.create({
   name: 'clipboard',
-}) as unknown as ClipboardExtension;
+}) as unknown as ExtensionWithToolbar;
+
+/**
+ * Returns the currently selected text in the editor.
+ * @param {Editor | null} editor - The TipTap editor instance
+ * @returns {string} Selected text, or empty string
+ */
+const selectedText = (editor: Editor | null): string => {
+  if (!editor) {
+    return '';
+  }
+  const { from, to } = editor.state.selection;
+  return editor.state.doc.textBetween(from, to, ' ');
+};
 
 /**
  * Renders the clipboard toolbar with copy, cut, and paste controls.
@@ -41,11 +46,7 @@ Clipboard.toolbarRender = (
     ${iconButton(
       Copy,
       () => {
-        const { from, to } = editor?.state.selection ?? {};
-        const text =
-          from !== undefined && to !== undefined && editor
-            ? editor.state.doc.textBetween(from, to, ' ')
-            : '';
+        const text = selectedText(editor);
         if (text) {
           navigator.clipboard.writeText(text);
         }
@@ -56,11 +57,7 @@ Clipboard.toolbarRender = (
     ${iconButton(
       Cut,
       async () => {
-        const { from, to } = editor?.state.selection ?? {};
-        const text =
-          from !== undefined && to !== undefined && editor
-            ? editor.state.doc.textBetween(from, to, ' ')
-            : '';
+        const text = selectedText(editor);
         if (text) {
           await navigator.clipboard.writeText(text);
           editor?.chain().focus().deleteSelection().run();

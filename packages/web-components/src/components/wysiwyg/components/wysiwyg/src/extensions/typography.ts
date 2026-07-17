@@ -8,10 +8,9 @@
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
 import { html } from 'lit';
-import type { TemplateResult } from 'lit';
 import '@carbon/web-components/es/components/dropdown/index.js';
 import { BASE_CLASS } from '../constants.js';
-import type { ToolbarSize } from '../types.js';
+import type { ExtensionWithToolbar, ToolbarSize } from '../types.js';
 import Heading from '@tiptap/extension-heading';
 import HardBreak from '@tiptap/extension-hard-break';
 import HorizontalRule from '@tiptap/extension-horizontal-rule';
@@ -37,13 +36,6 @@ const styles = `
   }
 `;
 
-export interface TypographyExtension extends Extension<any> {
-  toolbarRender: (
-    editor: Editor | null,
-    toolbarSize?: ToolbarSize
-  ) => TemplateResult;
-}
-
 export const Typography = Extension.create({
   name: 'typography',
   /**
@@ -57,7 +49,7 @@ export const Typography = Extension.create({
     HardBreak,
     HorizontalRule,
   ],
-}) as unknown as TypographyExtension;
+}) as unknown as ExtensionWithToolbar;
 
 /**
  * Renders the typography toolbar with level dropdown.

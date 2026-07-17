@@ -8,10 +8,9 @@
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
 import { html } from 'lit';
-import type { TemplateResult } from 'lit';
 import '@carbon/web-components/es/components/dropdown/index.js';
 import { BASE_CLASS } from '../constants.js';
-import type { ToolbarSize } from '../types.js';
+import type { ExtensionWithToolbar, ToolbarSize } from '../types.js';
 import { FontFamily } from '@tiptap/extension-font-family';
 import { TextStyle } from '@tiptap/extension-text-style';
 
@@ -38,13 +37,6 @@ const styles = `
   }
 `;
 
-export interface TypefaceExtension extends Extension<any> {
-  toolbarRender: (
-    editor: Editor | null,
-    toolbarSize?: ToolbarSize
-  ) => TemplateResult;
-}
-
 export const Typeface = Extension.create({
   name: 'typeface',
   /** Adds the font family extensions */
@@ -52,7 +44,7 @@ export const Typeface = Extension.create({
     TextStyle,
     FontFamily.configure({ types: ['textStyle'] }),
   ],
-}) as unknown as TypefaceExtension;
+}) as unknown as ExtensionWithToolbar;
 
 /**
  * Renders the typeface toolbar with font family dropdown.

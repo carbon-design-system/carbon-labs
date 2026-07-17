@@ -8,21 +8,13 @@
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
 import { html } from 'lit';
-import type { TemplateResult } from 'lit';
 import Undo from '@carbon/icons/es/undo/16.js';
 import Redo from '@carbon/icons/es/redo/16.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
 import { BASE_CLASS } from '../constants.js';
-import type { ToolbarSize } from '../types.js';
-import { iconButton } from './button-helper.js';
+import type { ExtensionWithToolbar, ToolbarSize } from '../types.js';
+import { cmdButton } from './button-helper.js';
 import { history, undo, redo } from '@tiptap/pm/history';
-
-export interface HistoryExtension extends Extension<any> {
-  toolbarRender?: (
-    editor: Editor | null,
-    toolbarSize?: ToolbarSize
-  ) => TemplateResult;
-}
 
 export const History = Extension.create({
   name: 'history',
@@ -59,7 +51,7 @@ export const History = Extension.create({
       'Shift-Mod-z': () => (this.editor.commands as any).redo(),
     };
   },
-}) as unknown as HistoryExtension;
+}) as unknown as ExtensionWithToolbar;
 
 /**
  * Renders the history toolbar with undo and redo controls.
@@ -71,23 +63,7 @@ History.toolbarRender = (
   toolbarSize: ToolbarSize = 'md'
 ) => html`
   <div class="${BASE_CLASS}__toolbar-group">
-    ${iconButton(
-      Undo,
-      () => (editor as any)?.chain().focus().undo().run(),
-      toolbarSize,
-      {
-        disabled: !(editor as any)?.can().undo(),
-        tooltip: 'Undo',
-      }
-    )}
-    ${iconButton(
-      Redo,
-      () => (editor as any)?.chain().focus().redo().run(),
-      toolbarSize,
-      {
-        disabled: !(editor as any)?.can().redo(),
-        tooltip: 'Redo',
-      }
-    )}
+    ${cmdButton(Undo, editor, 'undo', toolbarSize, { tooltip: 'Undo' })}
+    ${cmdButton(Redo, editor, 'redo', toolbarSize, { tooltip: 'Redo' })}
   </div>
 `;

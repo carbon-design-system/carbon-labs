@@ -8,7 +8,6 @@
 import { Extension, Mark, mergeAttributes } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
 import { html } from 'lit';
-import type { TemplateResult } from 'lit';
 import TextBold from '@carbon/icons/es/text--bold/16.js';
 import TextItalic from '@carbon/icons/es/text--italic/16.js';
 import TextUnderline from '@carbon/icons/es/text--underline/16.js';
@@ -16,8 +15,8 @@ import TextStrikethrough from '@carbon/icons/es/text--strikethrough/16.js';
 import Code from '@carbon/icons/es/code/16.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
 import { BASE_CLASS } from '../constants.js';
-import type { ToolbarSize } from '../types.js';
-import { iconButton } from './button-helper.js';
+import type { ExtensionWithToolbar, ToolbarSize } from '../types.js';
+import { cmdButton } from './button-helper.js';
 import Bold from '@tiptap/extension-bold';
 import Italic from '@tiptap/extension-italic';
 import Underline from '@tiptap/extension-underline';
@@ -70,13 +69,6 @@ const StrikeCustom = Strike.extend({
   },
 });
 
-export interface TextFormattingExtension extends Extension<any> {
-  toolbarRender: (
-    editor: Editor | null,
-    toolbarSize?: ToolbarSize
-  ) => TemplateResult;
-}
-
 export const TextFormatting = Extension.create({
   name: 'textFormatting',
   /** Adds the text formatting extensions (bold, italic, underline, strike, code) */
@@ -89,7 +81,15 @@ export const TextFormatting = Extension.create({
     Delete,
     InsertMark,
   ],
-}) as unknown as TextFormattingExtension;
+}) as unknown as ExtensionWithToolbar;
+
+const BUTTONS = [
+  [TextBold, 'toggleBold', 'bold', 'Bold'],
+  [TextItalic, 'toggleItalic', 'italic', 'Italic'],
+  [TextUnderline, 'toggleUnderline', 'underline', 'Underline'],
+  [TextStrikethrough, 'toggleStrike', 'strike', 'Strikethrough'],
+  [Code, 'toggleCode', 'code', 'Code'],
+] as const;
 
 /**
  * Renders the text formatting toolbar with formatting controls.
@@ -101,55 +101,8 @@ TextFormatting.toolbarRender = (
   toolbarSize: ToolbarSize = 'md'
 ) => html`
   <div class="${BASE_CLASS}__toolbar-group">
-    ${iconButton(
-      TextBold,
-      () => editor?.chain().focus().toggleBold().run(),
-      toolbarSize,
-      {
-        disabled: !editor?.can().toggleBold(),
-        selected: editor?.isActive('bold'),
-        tooltip: 'Bold',
-      }
-    )}
-    ${iconButton(
-      TextItalic,
-      () => editor?.chain().focus().toggleItalic().run(),
-      toolbarSize,
-      {
-        disabled: !editor?.can().toggleItalic(),
-        selected: editor?.isActive('italic'),
-        tooltip: 'Italic',
-      }
-    )}
-    ${iconButton(
-      TextUnderline,
-      () => editor?.chain().focus().toggleUnderline().run(),
-      toolbarSize,
-      {
-        disabled: !editor?.can().toggleUnderline(),
-        selected: editor?.isActive('underline'),
-        tooltip: 'Underline',
-      }
-    )}
-    ${iconButton(
-      TextStrikethrough,
-      () => editor?.chain().focus().toggleStrike().run(),
-      toolbarSize,
-      {
-        disabled: !editor?.can().toggleStrike(),
-        selected: editor?.isActive('strike'),
-        tooltip: 'Strikethrough',
-      }
-    )}
-    ${iconButton(
-      Code,
-      () => editor?.chain().focus().toggleCode().run(),
-      toolbarSize,
-      {
-        disabled: !editor?.can().toggleCode(),
-        selected: editor?.isActive('code'),
-        tooltip: 'Code',
-      }
+    ${BUTTONS.map(([icon, cmd, active, tooltip]) =>
+      cmdButton(icon, editor, cmd, toolbarSize, { active, tooltip })
     )}
   </div>
 `;

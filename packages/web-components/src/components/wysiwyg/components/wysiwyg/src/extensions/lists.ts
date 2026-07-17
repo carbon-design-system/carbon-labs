@@ -8,7 +8,6 @@
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
 import { html } from 'lit';
-import type { TemplateResult } from 'lit';
 import ListBulleted from '@carbon/icons/es/list--bulleted/16.js';
 import ListNumbered from '@carbon/icons/es/list--numbered/16.js';
 import ListChecked from '@carbon/icons/es/list--checked/16.js';
@@ -16,8 +15,8 @@ import IndentLess from '@carbon/icons/es/text--indent--less/16.js';
 import IndentMore from '@carbon/icons/es/text--indent--more/16.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
 import { BASE_CLASS } from '../constants.js';
-import type { ToolbarSize } from '../types.js';
-import { iconButton } from './button-helper.js';
+import type { ExtensionWithToolbar, ToolbarSize } from '../types.js';
+import { cmdButton } from './button-helper.js';
 import BulletList from '@tiptap/extension-bullet-list';
 import OrderedList from '@tiptap/extension-ordered-list';
 import ListItem from '@tiptap/extension-list-item';
@@ -49,13 +48,6 @@ const styles = `
   }
 `;
 
-export interface ListsExtension extends Extension<any> {
-  toolbarRender: (
-    editor: Editor | null,
-    toolbarSize?: ToolbarSize
-  ) => TemplateResult;
-}
-
 export const Lists = Extension.create({
   name: 'lists',
   /** Adds the list extensions (bullet, ordered, task lists) */
@@ -68,7 +60,13 @@ export const Lists = Extension.create({
       nested: true,
     }),
   ],
-}) as unknown as ListsExtension;
+}) as unknown as ExtensionWithToolbar;
+
+const BUTTONS = [
+  [ListBulleted, 'toggleBulletList', 'bulletList', 'Bullet List'],
+  [ListNumbered, 'toggleOrderedList', 'orderedList', 'Numbered List'],
+  [ListChecked, 'toggleTaskList', 'taskList', 'Task List'],
+] as const;
 
 /**
  * Renders the lists toolbar with list type and indentation controls.
@@ -83,53 +81,16 @@ Lists.toolbarRender = (
     ${styles}
   </style>
   <div class="${BASE_CLASS}__toolbar-group">
-    ${iconButton(
-      ListBulleted,
-      () => editor?.chain().focus().toggleBulletList().run(),
-      toolbarSize,
-      {
-        disabled: !editor?.can().toggleBulletList(),
-        selected: editor?.isActive('bulletList'),
-        tooltip: 'Bullet List',
-      }
+    ${BUTTONS.map(([icon, cmd, active, tooltip]) =>
+      cmdButton(icon, editor, cmd, toolbarSize, { active, tooltip })
     )}
-    ${iconButton(
-      ListNumbered,
-      () => editor?.chain().focus().toggleOrderedList().run(),
-      toolbarSize,
-      {
-        disabled: !editor?.can().toggleOrderedList(),
-        selected: editor?.isActive('orderedList'),
-        tooltip: 'Numbered List',
-      }
-    )}
-    ${iconButton(
-      ListChecked,
-      () => editor?.chain().focus().toggleTaskList().run(),
-      toolbarSize,
-      {
-        disabled: !editor?.can().toggleTaskList(),
-        selected: editor?.isActive('taskList'),
-        tooltip: 'Task List',
-      }
-    )}
-    ${iconButton(
-      IndentLess,
-      () => editor?.chain().focus().liftListItem('listItem').run(),
-      toolbarSize,
-      {
-        disabled: !editor?.can().liftListItem('listItem'),
-        tooltip: 'Indent Less',
-      }
-    )}
-    ${iconButton(
-      IndentMore,
-      () => editor?.chain().focus().sinkListItem('listItem').run(),
-      toolbarSize,
-      {
-        disabled: !editor?.can().sinkListItem('listItem'),
-        tooltip: 'Indent More',
-      }
-    )}
+    ${cmdButton(IndentLess, editor, 'liftListItem', toolbarSize, {
+      args: ['listItem'],
+      tooltip: 'Indent Less',
+    })}
+    ${cmdButton(IndentMore, editor, 'sinkListItem', toolbarSize, {
+      args: ['listItem'],
+      tooltip: 'Indent More',
+    })}
   </div>
 `;

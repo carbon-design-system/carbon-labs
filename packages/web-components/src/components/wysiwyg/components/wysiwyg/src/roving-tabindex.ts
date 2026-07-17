@@ -88,6 +88,12 @@ export class ClabsRovingTabindex extends LitElement {
     );
   }
 
+  private applyTabStops(items: HTMLElement[]) {
+    items.forEach(
+      (item, index) => (item.tabIndex = index === this.activeIndex ? 0 : -1)
+    );
+  }
+
   private refresh() {
     const items = this.getItems();
 
@@ -95,9 +101,7 @@ export class ClabsRovingTabindex extends LitElement {
       this.activeIndex = items.findIndex((el) => this.isEnabled(el));
     }
 
-    items.forEach(
-      (item, index) => (item.tabIndex = index === this.activeIndex ? 0 : -1)
-    );
+    this.applyTabStops(items);
   }
 
   private move(direction: 1 | -1, edge?: 'start' | 'end') {
@@ -117,9 +121,7 @@ export class ClabsRovingTabindex extends LitElement {
 
       if (this.isEnabled(items[index])) {
         this.activeIndex = index;
-        items.forEach(
-          (item, idx) => (item.tabIndex = idx === this.activeIndex ? 0 : -1)
-        );
+        this.applyTabStops(items);
         items[index].focus();
         return;
       }
@@ -160,9 +162,7 @@ export class ClabsRovingTabindex extends LitElement {
 
     if (index >= 0) {
       this.activeIndex = index;
-      items.forEach(
-        (item, idx) => (item.tabIndex = idx === this.activeIndex ? 0 : -1)
-      );
+      this.applyTabStops(items);
       return;
     }
 
@@ -170,9 +170,7 @@ export class ClabsRovingTabindex extends LitElement {
       this.activeIndex = items.findIndex((el) => this.isEnabled(el));
 
       if (this.activeIndex >= 0) {
-        items.forEach(
-          (item, idx) => (item.tabIndex = idx === this.activeIndex ? 0 : -1)
-        );
+        this.applyTabStops(items);
         items[this.activeIndex].focus();
       }
     }

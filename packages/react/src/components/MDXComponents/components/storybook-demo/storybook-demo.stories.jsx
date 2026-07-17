@@ -94,11 +94,13 @@ WithFluidDropdown.args = {
 const actionableNotificationVariants = [
   {
     label: 'Default',
-    variant: 'components-notifications-actionable--default--lazy',
+    variant: 'components-notifications-actionable--default',
+    lazy: true,
   },
   {
     label: 'Low contrast',
-    variant: 'components-notifications-actionable--low-contrast--lazy',
+    variant: 'components-notifications-actionable--low-contrast',
+    lazy: true,
   },
 ];
 
@@ -145,7 +147,8 @@ TabIndexTest.storyName = 'Tab index test (iframe below fold)';
 const popoverVariants = [
   {
     label: 'Experimental auto-align',
-    variant: 'components-popover--experimental-auto-align--lazy',
+    variant: 'components-popover--experimental-auto-align',
+    lazy: true,
   },
 ];
 
@@ -190,10 +193,10 @@ TabIndexTestPopover.args = {
 TabIndexTestPopover.storyName = 'Tab index test — popover (iframe below fold)';
 
 /**
- * Same 110vh spacer pattern but uses plain Button variants — no --lazy suffix,
- * no lazy:true flag. The iframe should load immediately when the page renders
- * (not deferred), confirming that lazy loading does not leak onto components
- * that have not opted in.
+ * Same 110vh spacer pattern but uses plain Button variants — no lazy:true flag.
+ * The iframe should load immediately when the page renders (not deferred),
+ * confirming that lazy loading does not leak onto components that have not
+ * opted in.
  *
  * How to verify:
  * 1. Open this story.
@@ -214,7 +217,7 @@ export const NoLazyLeakTest = (args) => (
         borderBottom: '1px dashed #8d8d8d',
       }}>
       <p style={{ fontFamily: 'sans-serif', color: '#525252' }}>
-        ↓ Scroll down — the Button iframe below has NO lazy flag. It should
+        ↓ Scroll down — the Button iframe below has no lazy:true flag. It should
         already be loaded before you get here (check the Network tab). Lazy
         loading must not leak onto variants that have not opted in.
       </p>

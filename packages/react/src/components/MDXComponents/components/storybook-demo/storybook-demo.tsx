@@ -90,16 +90,8 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
   const [variant, setVariant] = useState(variants?.[0]?.variant);
   const currentVariantDef = variants?.find((v) => v.variant === variant);
 
-  // A variant ID ending with "--lazy" (e.g. "components-menu--default--lazy")
-  // opts that variant into deferred iframe loading. The suffix is stripped
-  // before building the Storybook URL so the actual story ID is unaffected.
-  // This lets Payload CMS authors opt in via the existing Variant ID field
-  // without needing a separate field in the content schema.
-  const isLazy =
-    variant?.endsWith('--lazy') || currentVariantDef?.lazy === true;
-  const storyId = variant?.endsWith('--lazy')
-    ? variant.slice(0, -'--lazy'.length)
-    : variant;
+  const isLazy = currentVariantDef?.lazy === true;
+  const storyId = variant;
 
   const onVariantChange = (item: {
     selectedItem: { label: string; variant: string; lazy?: boolean | null };
@@ -152,7 +144,6 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
 
   // Use FluidDropdown (condensed) when fluid prop is true, otherwise use regular Dropdown
   const DropdownComponent = fluid ? FluidDropdown : Dropdown;
-  const fluidProps = fluid ? { isCondensed: true } : {};
 
   return (
     <>
@@ -168,7 +159,7 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
               onChange={onThemeChange}
               initialSelectedItem={themeItems[0]}
               className={border}
-              {...fluidProps}
+              isCondensed={!!fluid}
             />
           </Column>
         )}
@@ -182,7 +173,7 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
               itemToString={(item) => item?.label || ''}
               initialSelectedItem={variants[0]}
               onChange={onVariantChange}
-              {...fluidProps}
+              isCondensed={!!fluid}
             />
           </Column>
         )}

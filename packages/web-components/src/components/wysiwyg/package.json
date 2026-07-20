@@ -1,0 +1,87 @@
+{
+  "name": "@carbon-labs/wc-wysiwyg",
+  "version": "0.0.1",
+  "author": "Your Name <your@email.com>",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "description": "Carbon Labs - wysiwyg component",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "packages/wysiwyg"
+  },
+  "keywords": [
+    "carbon",
+    "carbon-labs",
+    "web-components",
+    "wysiwyg",
+    "rich-text-editor",
+    "editor",
+    "tiptap",
+    "text-editor",
+    "content-editor"
+  ],
+  "exports": {
+    ".": {
+      "default": "./src/index.js"
+    },
+    "./es/*": "./es/*",
+    "./lib/*": "./lib/*"
+  },
+  "files": [
+    "es/",
+    "lib/"
+  ],
+  "types": "./src/index.d.ts",
+  "customElements": "custom-elements.json",
+  "scripts": {
+    "build": "node ../../../tasks/build.js",
+    "build:dist": "rm -rf dist && rollup --config ../../../tasks/build-dist.js",
+    "build:dist:canary": "rm -rf dist && rollup --config ../../../tasks/build-dist.js --configCanary",
+    "clean": "rimraf es lib"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.23.2",
+    "@carbon-labs/utilities": "0.28.0",
+    "@carbon/element-styles": "^0.2.5",
+    "@carbon/web-components": "^2.40.0",
+    "@tiptap/core": "3.25.0",
+    "@tiptap/extension-blockquote": "3.25.0",
+    "@tiptap/extension-bold": "3.25.0",
+    "@tiptap/extension-bullet-list": "3.25.0",
+    "@tiptap/extension-code": "3.25.0",
+    "@tiptap/extension-code-block": "3.25.0",
+    "@tiptap/extension-color": "3.25.0",
+    "@tiptap/extension-document": "3.25.0",
+    "@tiptap/extension-font-family": "3.25.0",
+    "@tiptap/extension-hard-break": "3.25.0",
+    "@tiptap/extension-heading": "3.25.0",
+    "@tiptap/extension-highlight": "3.25.0",
+    "@tiptap/extension-horizontal-rule": "3.25.0",
+    "@tiptap/extension-image": "3.25.0",
+    "@tiptap/extension-italic": "3.25.0",
+    "@tiptap/extension-link": "3.25.0",
+    "@tiptap/extension-list": "3.25.0",
+    "@tiptap/extension-list-item": "3.25.0",
+    "@tiptap/extension-ordered-list": "3.25.0",
+    "@tiptap/extension-paragraph": "3.25.0",
+    "@tiptap/extension-strike": "3.25.0",
+    "@tiptap/extension-table": "3.25.0",
+    "@tiptap/extension-table-cell": "3.25.0",
+    "@tiptap/extension-table-header": "3.25.0",
+    "@tiptap/extension-table-row": "3.25.0",
+    "@tiptap/extension-task-item": "3.25.0",
+    "@tiptap/extension-task-list": "3.25.0",
+    "@tiptap/extension-text": "3.25.0",
+    "@tiptap/extension-text-align": "3.25.0",
+    "@tiptap/extension-text-style": "3.25.0",
+    "@tiptap/extension-underline": "3.25.0",
+    "@tiptap/pm": "3.25.0"
+  },
+  "devDependencies": {
+    "@tiptap/markdown": "3.25.0"
+  }
+}

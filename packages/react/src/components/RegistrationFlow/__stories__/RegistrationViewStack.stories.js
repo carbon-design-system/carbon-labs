@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import mdx from './RegistrationFlow.mdx';
 import '../components/registration-flow.scss';
 import { Button } from '@carbon/react';
@@ -29,7 +29,7 @@ export default {
 };
 
 /**
- * Default story for RegistrationFlow
+ * Default story for RegistrationViewStack
  */
 export const RegistrationViewStackStory = () => {
   const viewStackRef = useRef(null);

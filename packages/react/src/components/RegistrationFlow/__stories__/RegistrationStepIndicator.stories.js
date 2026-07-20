@@ -11,7 +11,7 @@ import mdx from './RegistrationFlow.mdx';
 import '../components/registration-flow.scss';
 import { RegistrationStepIndicator } from '../components/RegistrationStepIndicator';
 import './RegistrationFlow.stories.scss';
-
+import React from 'react';
 export default {
   title: 'Components/RegistrationFlow',
   tags: ['squad', 'incubating'],
@@ -24,7 +24,7 @@ export default {
 };
 
 /**
- * Default story for RegistrationFlow
+ * Default story for RegistrationStepIndicator
  */
 export const RegistrationStepIndicatorStory = () => {
   return (

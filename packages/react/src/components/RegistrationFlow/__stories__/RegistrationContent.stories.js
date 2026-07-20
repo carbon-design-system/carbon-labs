@@ -9,6 +9,7 @@
 
 import mdx from './RegistrationFlow.mdx';
 import '../components/registration-flow.scss';
+import React from 'react';
 import { RegistrationContent } from '../components/RegistrationContent';
 import './RegistrationFlow.stories.scss';
 

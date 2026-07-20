@@ -10,6 +10,7 @@
 import mdx from './RegistrationFlow.mdx';
 import '../components/registration-flow.scss';
 import { Button } from '@carbon/react';
+import React from 'react';
 import { Details } from '../components/Details';
 import './RegistrationFlow.stories.scss';
 
@@ -25,7 +26,7 @@ export default {
 };
 
 /**
- * Default story for RegistrationFlow
+ * Default story for Detail
  */
 export const DetailStory = () => {
   return (

@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import mdx from './RegistrationFlow.mdx';
 import { RegistrationFlow } from '../components/RegistrationFlow';
 import { RegistrationMasthead } from '../components/RegistrationMasthead';
@@ -45,18 +45,19 @@ export const Default = () => {
   useEffect(() => {
     const container = document.getElementById('ViewStackContainer');
     const config = {
+      /** @param {object} endData - view change end event data */
       onViewChangeEnd: (endData) => {
         const numerator = endData.currentIndex + 1;
         const denominator = endData.totalViews;
         const percentage = numerator / denominator;
-        if (!isNaN(percentage)) {
+        if (!isNaN(percentage) && denominator !== 0) {
           setViewStackProgress(percentage);
         }
       },
       excludeSwipeSupport: true,
       useMaxHeight: true,
     };
-    console.log('INIT NOW....');
+
     viewStackRef.current = initCarousel(container, config);
   }, []);
 

@@ -12,7 +12,7 @@ import '../components/registration-flow.scss';
 import { Button } from '@carbon/react';
 import { RegistrationViewFooter } from '../components/RegistrationViewFooter';
 import './RegistrationFlow.stories.scss';
-
+import React from 'react';
 export default {
   title: 'Components/RegistrationFlow',
   tags: ['squad', 'incubating'],
@@ -25,7 +25,7 @@ export default {
 };
 
 /**
- * Default story for RegistrationFlow
+ * Default story for RegistrationViewFooter
  */
 export const RegistrationViewFooterStory = () => {
   return (

@@ -11,7 +11,7 @@ import mdx from './RegistrationFlow.mdx';
 import '../components/registration-flow.scss';
 import { RegistrationView } from '../components/RegistrationView';
 import './RegistrationFlow.stories.scss';
-
+import React from 'react';
 export default {
   title: 'Components/RegistrationFlow',
   tags: ['squad', 'incubating'],
@@ -24,7 +24,7 @@ export default {
 };
 
 /**
- * Default story for RegistrationFlow
+ * Default story for RegistrationView
  */
 export const RegistrationViewStory = () => {
   return (

@@ -1,0 +1,1 @@
+var e={elem:`svg`,attrs:{xmlns:`http://www.w3.org/2000/svg`,viewBox:`0 0 16 16`,fill:`currentColor`,width:16,height:16},content:[{elem:`path`,attrs:{d:`M3 9 3.7 9.7 7.5 5.9 7.5 15 8.5 15 8.5 5.9 12.3 9.7 13 9 8 4z`}},{elem:`path`,attrs:{d:`M3,4V2h10v2h1V2c0-0.6-0.4-1-1-1H3C2.4,1,2,1.4,2,2v2H3z`}}],name:`upload`,size:16};export{e as t};

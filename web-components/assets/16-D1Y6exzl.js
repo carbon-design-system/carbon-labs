@@ -1,0 +1,1 @@
+var e={elem:`svg`,attrs:{xmlns:`http://www.w3.org/2000/svg`,viewBox:`0 0 32 32`,fill:`currentColor`,width:16,height:16},content:[{elem:`path`,attrs:{d:`M8 15H24V17H8z`}}],name:`subtract`,size:16};export{e as t};

@@ -13,10 +13,6 @@ export default {
   title: 'Components/MDX Components/StorybookDemo',
   component: StorybookDemo,
   argTypes: {
-    fluid: {
-      control: 'boolean',
-      description: 'Use FluidDropdown instead of regular Dropdown',
-    },
     lazy: {
       control: 'boolean',
       description: 'Defer iframe loading until it enters the viewport',
@@ -84,16 +80,6 @@ Default.args = {
   themeSelector: true,
   wide: false,
   tall: false,
-  fluid: false,
-  lazy: false,
-};
-
-export const WithFluidDropdown = Template.bind({});
-WithFluidDropdown.args = {
-  themeSelector: true,
-  wide: true,
-  tall: true,
-  fluid: true,
   lazy: false,
 };
 
@@ -144,7 +130,6 @@ TabIndexTest.args = {
   themeSelector: true,
   wide: false,
   tall: false,
-  fluid: false,
   lazy: true,
 };
 TabIndexTest.storyName = 'Tab index test (iframe below fold)';
@@ -192,7 +177,6 @@ TabIndexTestPopover.args = {
   themeSelector: true,
   wide: false,
   tall: true,
-  fluid: false,
   lazy: true,
 };
 TabIndexTestPopover.storyName = 'Tab index test — popover (iframe below fold)';
@@ -238,7 +222,6 @@ NoLazyLeakTest.args = {
   themeSelector: true,
   wide: false,
   tall: false,
-  fluid: false,
   lazy: false,
 };
 NoLazyLeakTest.storyName = 'No lazy leak test — button (iframe below fold)';

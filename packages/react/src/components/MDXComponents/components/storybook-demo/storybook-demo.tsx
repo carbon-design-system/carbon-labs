@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Column, Dropdown, FluidDropdown, Grid, Link } from '@carbon/react';
+import { Column, FluidDropdown, Grid, Link } from '@carbon/react';
 import { clsx } from 'clsx';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
@@ -18,7 +18,6 @@ interface StorybookDemoProps {
   tall?: boolean | null;
   themeSelector?: boolean | null;
   wide?: boolean | null;
-  fluid?: boolean | null;
   /**
    * Defer loading the iframe until it enters the viewport.
    * Use for demos that contain stories that steal focus or cause scroll jank
@@ -44,7 +43,6 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
   tall,
   themeSelector,
   wide,
-  fluid,
   lazy,
   url,
   variants,
@@ -138,38 +136,39 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
     [withPrefix('theme-selector')]: themeSelector && multipleVariants,
   });
 
-  // Use FluidDropdown (condensed) when fluid prop is true, otherwise use regular Dropdown
-  const DropdownComponent = fluid ? FluidDropdown : Dropdown;
-
   return (
     <>
       <Grid condensed className={withPrefix('demo-dropdowns')}>
         {themeSelector && (
           <Column sm={2} md={4}>
-            <DropdownComponent
+            <FluidDropdown
               id="theme-selector"
               titleText="Theme selector"
               label="theme"
               items={themeItems}
-              itemToString={(item) => item?.label || ''}
+              itemToString={(item: { label?: string } | null) =>
+                item?.label || ''
+              }
               onChange={onThemeChange}
               initialSelectedItem={themeItems[0]}
               className={border}
-              isCondensed={!!fluid}
+              isCondensed
             />
           </Column>
         )}
         {multipleVariants && (
           <Column sm={2} md={4}>
-            <DropdownComponent
+            <FluidDropdown
               id="variant-selector"
               titleText="Variant selector"
               label="variant"
               items={variants}
-              itemToString={(item) => item?.label || ''}
+              itemToString={(item: { label?: string } | null) =>
+                item?.label || ''
+              }
               initialSelectedItem={variants[0]}
               onChange={onVariantChange}
-              isCondensed={!!fluid}
+              isCondensed
             />
           </Column>
         )}
@@ -205,10 +204,6 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
 };
 
 StorybookDemo.propTypes = {
-  /**
-   * Use FluidDropdown instead of regular Dropdown for selectors
-   */
-  fluid: PropTypes.bool,
   /**
    * Defer loading the iframe until it enters the viewport
    */

@@ -20,17 +20,17 @@ $prefix: 'clabs' !default;
 .#{$prefix}--registration-flow__container {
   display: flex;
   flex-direction: column;
-  background-size: cover;
   background-position: bottom;
+  background-size: cover;
   block-size: 100%;
   overflow-y: auto;
 }
 
 .#{$prefix}--registration-flow__body {
   display: flex;
+  flex-direction: column;
   align-self: center;
   justify-content: center;
-  flex-direction: column;
   gap: $spacing-06;
   inline-size: 30rem;
 
@@ -40,17 +40,15 @@ $prefix: 'clabs' !default;
   }
 }
 
-
-
 /* * * * * * * * * * * | MASTHEAD | * * * * * * * * * * */
 .#{$prefix}--registration-flow__masthead {
-  min-block-size: $spacing-09;
-  padding-inline: $spacing-10;
-  border-block-end: 1px solid $border-subtle-01;
-  width: 100%;
   display: flex;
   align-items: center;
   background-color: $background;
+  border-block-end: 1px solid $border-subtle-01;
+  inline-size: 100%;
+  min-block-size: $spacing-09;
+  padding-inline: $spacing-10;
 }
 
 .#{$prefix}--registration-flow__masthead-logo-container {
@@ -62,7 +60,7 @@ $prefix: 'clabs' !default;
 
 .#{$prefix}--registration-flow__masthead-logo {
   g {
-    fill: $layer-selected-inverse
+    fill: $layer-selected-inverse;
   }
 }
 
@@ -70,7 +68,6 @@ $prefix: 'clabs' !default;
 .#{$prefix}--registration-flow__greeting {
   padding-inline: $spacing-07;
   // text-align: center;
-
   p {
     @include type-style('body-compact-01');
   }
@@ -80,9 +77,9 @@ $prefix: 'clabs' !default;
   color: $blue-60;
 }
 
-.#{$prefix}--registration-flow__greeting-container {}
-
-
+.#{$prefix}--registration-flow__greeting-container {
+  // placeholder
+}
 
 /* * * * * * * * * * * | VIEW CONTAINER | * * * * * * * * * * */
 
@@ -91,9 +88,9 @@ $prefix: 'clabs' !default;
   flex-direction: column;
   padding: $spacing-06 $spacing-05 $spacing-07 $spacing-07;
   border-radius: $spacing-05;
-  gap: $spacing-06;
   background-color: $background;
   box-shadow: 0 $spacing-01 $spacing-05 1px $border-subtle;
+  gap: $spacing-06;
 }
 
 /* * * * * * * * * * * | VIEW STACK | * * * * * * * * * * */
@@ -107,17 +104,19 @@ $prefix: 'clabs' !default;
   padding-inline-end: $spacing-05;
 }
 
-.#{$prefix}--registration-flow__view-internals {}
+.#{$prefix}--registration-flow__view-internals {
+  // placeholder
+}
 
 .#{$prefix}--registration-flow__view-footer {
   display: flex;
   flex-direction: row;
+  align-items: flex-end;
   gap: 1px;
   inline-size: 100%;
+  justify-self: flex-end;
   margin-block-start: auto;
   padding-block-start: $spacing-07;
-  align-items: flex-end;
-  justify-self: flex-end;
 
   .cds--btn {
     flex: 1;
@@ -132,64 +131,63 @@ $prefix: 'clabs' !default;
 /* * * * * * * * * * * | STEP INDICATOR | * * * * * * * * * * */
 .#{$prefix}--registration-flow__step-indicator {
   display: grid;
+  gap: $spacing-02;
   grid-auto-columns: minmax(0, 1fr);
   grid-auto-flow: column;
-  gap: $spacing-02;
   inline-size: 100%;
-
-
-
 
   // ALL STEPS
   &-step,
   &-step-current {
     position: relative;
-    inline-size: 100%;
+
     @include type-style('label-01');
+
     color: $text-helper;
+    inline-size: 100%;
     padding-block-start: $spacing-02;
-    // border-top: $spacing-02 solid $border-subtle-01;
+    // border-block-start: $spacing-02 solid $border-subtle-01;
   }
 
   // DEFAULT STEP
   &-step {
-    border-top: $spacing-02 solid $border-subtle-01;
+    border-block-start: $spacing-02 solid $border-subtle-01;
   }
 
   // CURRENT STEP
   &-step-current {
-    border-top: $spacing-02 solid $border-subtle-02;
+    border-block-start: $spacing-02 solid $border-subtle-02;
 
-    >.#{$prefix}--registration-flow__step-indicator-step-current-progress {
+    > .#{$prefix}--registration-flow__step-indicator-step-current-progress {
       position: absolute;
-      top: calc($spacing-02 * -1);
-      border-top: $spacing-02 solid $border-interactive
+      border-block-start: $spacing-02 solid $border-interactive;
+      inset-block-start: calc($spacing-02 * -1);
     }
   }
 
   // COMPLETE STEP
   &-step-complete {
-    border-top: $spacing-02 solid $border-interactive
+    border-block-start: $spacing-02 solid $border-interactive;
   }
 }
 
 /* * * * * * * * * * * | DETAILS | * * * * * * * * * * */
 
 .#{$prefix}--details {
-  background-color: $gray-10;
   padding: $spacing-05;
-  border-radius: $spacing-05;
   border: 1px solid $border-subtle;
+  border-radius: $spacing-05;
+  background-color: $gray-10;
 
-  &[open]>summary::after {
+  &[open] > summary::after {
     transform: rotate(180deg);
   }
 
   summary {
-    list-style: none;
     display: flex;
     justify-content: space-between;
     gap: $spacing-05;
+    list-style: none;
 
     &:hover {
       cursor: pointer;
@@ -197,13 +195,18 @@ $prefix: 'clabs' !default;
   }
 
   summary::after {
-    content: '';
-    width: $spacing-05;
-    height: $spacing-03;
-    //background: url('/summaryArrow.svg') no-repeat;
-    background-size: contain;
-    transition: 0.2s;
     margin: $spacing-03;
+    background-size: contain;
+    block-size: $spacing-03;
+    //background: url('/summaryArrow.svg') no-repeat;
+    content: '';
+    inline-size: $spacing-05;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+
+    transition: 0.2s;
   }
 
   summary::-webkit-details-marker {
@@ -212,15 +215,16 @@ $prefix: 'clabs' !default;
 
   &-subtitle {
     @include type-style('label-01');
+
     color: $text-helper;
     margin-block-start: $spacing-02;
   }
 
   &-content {
-    background-color: $background;
-    margin: $spacing-05 calc($spacing-05 * -1) calc($spacing-05 * -1);
     padding: $spacing-05;
     border-radius: 0 0 $spacing-05 $spacing-05;
+    margin: $spacing-05 calc($spacing-05 * -1) calc($spacing-05 * -1);
+    background-color: $background;
 
     p,
     li {
@@ -230,6 +234,7 @@ $prefix: 'clabs' !default;
     ul {
       margin-block: $spacing-05;
 
+      // stylelint-disable-next-line
       li {
         margin-block-start: $spacing-02;
         padding-inline-start: $spacing-06;
@@ -237,10 +242,10 @@ $prefix: 'clabs' !default;
     }
 
     .cds--btn {
-      inline-size: 100%;
-      max-inline-size: none;
-      margin-block-start: $spacing-03;
       border-radius: $spacing-02;
+      inline-size: 100%;
+      margin-block-start: $spacing-03;
+      max-inline-size: none;
     }
   }
 }

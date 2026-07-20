@@ -10,13 +10,11 @@
 @use '@carbon/styles/scss/type' as *;
 @use '@carbon/colors' as *;
 
-
 .platform-details-content {
-
-  background-color: $background;
-  margin: $spacing-05 calc($spacing-05 * -1) calc($spacing-05 * -1);
   padding: $spacing-05;
   border-radius: 0 0 $spacing-05 $spacing-05;
+  margin: $spacing-05 calc($spacing-05 * -1) calc($spacing-05 * -1);
+  background-color: $background;
 
   p,
   li {

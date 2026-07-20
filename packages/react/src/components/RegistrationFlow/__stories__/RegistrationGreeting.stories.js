@@ -7,10 +7,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useRef, useEffect, useState } from 'react';
 import mdx from './RegistrationFlow.mdx';
 import '../components/registration-flow.scss';
-import { Button } from '@carbon/react';
 import { RegistrationGreeting } from '../components/RegistrationGreeting';
 import './RegistrationFlow.stories.scss';
 

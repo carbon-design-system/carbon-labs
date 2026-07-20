@@ -8,7 +8,6 @@
  */
 import React, { ReactNode } from 'react';
 import { usePrefix } from '@carbon-labs/utilities/usePrefix';
-import { Content } from '@carbon/react';
 /** Primary UI component for user interaction */
 
 interface RegistrationFlowProps extends React.HTMLAttributes<HTMLDivElement> {

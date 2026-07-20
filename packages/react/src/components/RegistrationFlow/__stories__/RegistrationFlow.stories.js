@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import mdx from './RegistrationFlow.mdx';
 import { RegistrationFlow } from '../components/RegistrationFlow';
 import { RegistrationMasthead } from '../components/RegistrationMasthead';
@@ -21,7 +21,6 @@ import { RegistrationViewFooter } from '../components/RegistrationViewFooter';
 import '../components/registration-flow.scss';
 import urxBg from './images/urx-bg-full.png';
 import { initCarousel } from '@carbon/utilities';
-//import { initCarousel } from '../components/utilities/carousel';
 import { Button, Checkbox, FormGroup, Stack, TextInput } from '@carbon/react';
 import { Details } from '../components/Details';
 import './RegistrationFlow.stories.scss';

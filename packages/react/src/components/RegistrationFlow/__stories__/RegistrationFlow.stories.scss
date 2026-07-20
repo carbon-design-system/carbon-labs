@@ -3,13 +3,6 @@
 @use '@carbon/styles/scss/type' as *;
 @use '@carbon/colors' as *;
 
-html,
-body,
-#storybook-root,
-.cds--layout {
-  //block-size: 100%;
-  //overflow: hidden;
-}
 
 .platform-details-content {
 

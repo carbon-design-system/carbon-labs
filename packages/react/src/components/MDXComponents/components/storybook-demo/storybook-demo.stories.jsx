@@ -17,6 +17,10 @@ export default {
       control: 'boolean',
       description: 'Use FluidDropdown instead of regular Dropdown',
     },
+    lazy: {
+      control: 'boolean',
+      description: 'Defer iframe loading until it enters the viewport',
+    },
     themeSelector: {
       control: 'boolean',
       description: 'Display theme selector dropdown',
@@ -81,6 +85,7 @@ Default.args = {
   wide: false,
   tall: false,
   fluid: false,
+  lazy: false,
 };
 
 export const WithFluidDropdown = Template.bind({});
@@ -89,18 +94,17 @@ WithFluidDropdown.args = {
   wide: true,
   tall: true,
   fluid: true,
+  lazy: false,
 };
 
 const actionableNotificationVariants = [
   {
     label: 'Default',
     variant: 'components-notifications-actionable--default',
-    lazy: true,
   },
   {
     label: 'Low contrast',
     variant: 'components-notifications-actionable--low-contrast',
-    lazy: true,
   },
 ];
 
@@ -141,6 +145,7 @@ TabIndexTest.args = {
   wide: false,
   tall: false,
   fluid: false,
+  lazy: true,
 };
 TabIndexTest.storyName = 'Tab index test (iframe below fold)';
 
@@ -148,7 +153,6 @@ const popoverVariants = [
   {
     label: 'Experimental auto-align',
     variant: 'components-popover--experimental-auto-align',
-    lazy: true,
   },
 ];
 
@@ -189,6 +193,7 @@ TabIndexTestPopover.args = {
   wide: false,
   tall: true,
   fluid: false,
+  lazy: true,
 };
 TabIndexTestPopover.storyName = 'Tab index test — popover (iframe below fold)';
 
@@ -234,5 +239,6 @@ NoLazyLeakTest.args = {
   wide: false,
   tall: false,
   fluid: false,
+  lazy: false,
 };
 NoLazyLeakTest.storyName = 'No lazy leak test — button (iframe below fold)';

@@ -19,16 +19,16 @@ interface StorybookDemoProps {
   themeSelector?: boolean | null;
   wide?: boolean | null;
   fluid?: boolean | null;
+  /**
+   * Defer loading the iframe until it enters the viewport.
+   * Use for demos that contain stories that steal focus or cause scroll jank
+   * on mount (e.g. ActionableNotification, Popover with autoAlign, Menu).
+   */
+  lazy?: boolean | null;
   url: string;
   variants?: Array<{
     label: string;
     variant: string;
-    /**
-     * Defer loading this variant's iframe until it enters the viewport.
-     * Use for stories that steal focus or cause scroll jank on mount
-     * (e.g. ActionableNotification, Popover with autoAlign, Menu).
-     */
-    lazy?: boolean | null;
   }> | null;
 }
 
@@ -45,6 +45,7 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
   themeSelector,
   wide,
   fluid,
+  lazy,
   url,
   variants,
 }) => {
@@ -88,28 +89,23 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
   const multipleVariants = variants && variants.length > 1;
 
   const [variant, setVariant] = useState(variants?.[0]?.variant);
-  const currentVariantDef = variants?.find((v) => v.variant === variant);
-
-  const isLazy = currentVariantDef?.lazy === true;
-  const storyId = variant;
 
   const onVariantChange = (item: {
-    selectedItem: { label: string; variant: string; lazy?: boolean | null };
+    selectedItem: { label: string; variant: string };
   }) => {
     setVariant(item.selectedItem.variant);
   };
 
   const iframeUrl =
-    url + '/iframe.html?id=' + storyId + '&globals=theme:' + theme;
+    url + '/iframe.html?id=' + variant + '&globals=theme:' + theme;
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
   // Tracks whether the iframe has entered the viewport at least once.
-  // Reset to false when switching to a new lazy variant so it waits again.
-  const [isVisible, setIsVisible] = useState(!isLazy);
+  const [isVisible, setIsVisible] = useState(!lazy);
 
   useEffect(() => {
-    // Non-lazy variants load immediately — no observer needed.
-    if (!isLazy) {
+    // Non-lazy demos load immediately — no observer needed.
+    if (!lazy) {
       setIsVisible(true);
       return;
     }
@@ -135,7 +131,7 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
     return () => {
       observer.disconnect();
     };
-  }, [isLazy, variant]);
+  }, [lazy, variant]);
 
   // Only add border separator when BOTH theme and variant selectors are displayed
   const border = clsx({
@@ -214,6 +210,10 @@ StorybookDemo.propTypes = {
    */
   fluid: PropTypes.bool,
   /**
+   * Defer loading the iframe until it enters the viewport
+   */
+  lazy: PropTypes.bool,
+  /**
    * Storybook demo height
    */
   tall: PropTypes.bool,
@@ -231,7 +231,6 @@ StorybookDemo.propTypes = {
   variants: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
-      lazy: PropTypes.bool,
       variant: PropTypes.string.isRequired,
     }).isRequired
   ),

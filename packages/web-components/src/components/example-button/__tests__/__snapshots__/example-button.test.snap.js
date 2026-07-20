@@ -18,7 +18,7 @@ snapshots[
 /* end snapshot clabs-example-button should render with cds-button minimum attributes */
 snapshots["clabs-example-button should render with cds-button minimum attributes"] = 
 `<clabs-example-button
-  danger-description="danger"
+  danger-description=""
   has-main-content=""
   kind="primary"
   size="lg"

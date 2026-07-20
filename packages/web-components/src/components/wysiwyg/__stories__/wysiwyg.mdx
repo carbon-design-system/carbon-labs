@@ -1,0 +1,667 @@
+import { ArgTypes, Markdown, Meta } from '@storybook/addon-docs/blocks';
+import { cdnJs, cdnCss } from '../../../globals/internal/storybook-cdn';
+import meta from './wysiwyg.stories';
+import packageJson from '../package.json';
+
+<Meta of={meta} />
+
+# Wysiwyg
+
+- **Initiative owner(s):** Nandan Devadula
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** Nandan Devadula
+- **Support channel:** `#carbon-labs`
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/web-components/wysiwyg)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/web-components/wysiwyg)
+
+## Overview
+
+A rich text editor component built on [TipTap](https://tiptap.dev/) with Carbon
+Design System styling. Provides text formatting, lists, tables, alignment,
+colors, search, and extensible functionality through a modular extension system.
+
+### Problem Statement
+
+Modern web applications require rich text editing for content creation,
+documentation, and collaborative editing. The Carbon Labs WYSIWYG editor
+provides a fully-featured rich text editor with Carbon Design System
+integration, web component architecture for framework-agnostic usage, and
+TipTap's extension system for customization.
+
+## Getting started
+
+Here's a quick example to get you started.
+
+### JS (via import)
+
+```javascript
+import '@carbon-labs/wc-wysiwyg/es/index.js';
+
+// Import extensions you want to use
+import {
+  TextFormatting,
+  Typography,
+  Lists,
+  History,
+} from '@carbon-labs/wc-wysiwyg/es/index.js';
+```
+
+### Styles
+
+You'll also need to import the theming tokens from `@carbon/styles` either from
+npm or from our CDN helpers. Checkout our Stackblitz example above to see how
+that is implemented.
+
+<Markdown>{`${cdnJs({ components: ['wysiwyg'] }, packageJson)}`}</Markdown>
+<Markdown>{`${cdnCss()}`}</Markdown>
+
+### HTML
+
+```html
+<clabs-wysiwyg id="editor" toolbar-size="md" content="<p>Start typing...</p>">
+</clabs-wysiwyg>
+
+<script type="module">
+  const editor = document.getElementById('editor');
+
+  // Set extensions
+  editor.extensions = [TextFormatting, Typography, Lists, History];
+
+  // Listen for content changes
+  editor.addEventListener('content-change', (e) => {
+    console.log('HTML:', e.detail);
+  });
+</script>
+```
+
+## Extensions
+
+The editor's functionality is provided through extensions. Each extension adds
+specific features and toolbar controls.
+
+### Available Extensions
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Extension</th>
+      <th>Description</th>
+      <th>Features</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>
+        <code>History</code>
+      </td>
+      <td>Undo/redo functionality</td>
+      <td>Undo, redo buttons with keyboard shortcuts</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>
+        <code>TextFormatting</code>
+      </td>
+      <td>Basic text formatting</td>
+      <td>Bold, italic, underline, strikethrough, code</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>
+        <code>Typography</code>
+      </td>
+      <td>Heading and paragraph styles</td>
+      <td>H1-H6, paragraph dropdown</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>
+        <code>Lists</code>
+      </td>
+      <td>List formatting</td>
+      <td>Bullet, numbered, task lists with indentation</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>
+        <code>Tables</code>
+      </td>
+      <td>Table editing</td>
+      <td>Insert, edit, merge/split cells, add/delete rows/columns</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>
+        <code>Alignment</code>
+      </td>
+      <td>Text alignment</td>
+      <td>Left, center, right, justify</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>
+        <code>TextColor</code>
+      </td>
+      <td>Text colors and highlights</td>
+      <td>Carbon token colors, highlighting, semantic marks</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>
+        <code>Search</code>
+      </td>
+      <td>In-editor search</td>
+      <td>Real-time search with match highlighting</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>
+        <code>Blocks</code>
+      </td>
+      <td>Code and quote blocks</td>
+      <td>Code blocks, blockquotes</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>
+        <code>Insert</code>
+      </td>
+      <td>Links and images</td>
+      <td>Insert/edit links and images</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>
+        <code>Typeface</code>
+      </td>
+      <td>Font family selection</td>
+      <td>IBM Plex fonts and common typefaces</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>
+        <code>Clipboard</code>
+      </td>
+      <td>Clipboard operations</td>
+      <td>Copy, cut, and paste controls</td>
+    </tr>
+  </tbody>
+</table>
+
+### Extension Usage
+
+```javascript
+editor.extensions = [
+  History, // Always recommended
+  TextFormatting,
+  Typography,
+  Lists,
+  // Add more as needed
+];
+```
+
+## Keyboard Shortcuts
+
+The editor supports standard keyboard shortcuts for formatting and navigation.
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Action</th>
+      <th>Windows/Linux</th>
+      <th>Mac</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colSpan="4">
+        <strong>Text Formatting</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Bold</td>
+      <td>
+        <code>Ctrl+B</code>
+      </td>
+      <td>
+        <code>Cmd+B</code>
+      </td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Italic</td>
+      <td>
+        <code>Ctrl+I</code>
+      </td>
+      <td>
+        <code>Cmd+I</code>
+      </td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Underline</td>
+      <td>
+        <code>Ctrl+U</code>
+      </td>
+      <td>
+        <code>Cmd+U</code>
+      </td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Strikethrough</td>
+      <td>
+        <code>Ctrl+Shift+S</code>
+      </td>
+      <td>
+        <code>Cmd+Shift+S</code>
+      </td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Code (inline)</td>
+      <td>
+        <code>Ctrl+E</code>
+      </td>
+      <td>
+        <code>Cmd+E</code>
+      </td>
+    </tr>
+    <tr>
+      <td colSpan="4">
+        <strong>Typography</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Heading 1</td>
+      <td>
+        <code>Ctrl+Alt+1</code>
+      </td>
+      <td>
+        <code>Cmd+Alt+1</code>
+      </td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Heading 2</td>
+      <td>
+        <code>Ctrl+Alt+2</code>
+      </td>
+      <td>
+        <code>Cmd+Alt+2</code>
+      </td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>Heading 3</td>
+      <td>
+        <code>Ctrl+Alt+3</code>
+      </td>
+      <td>
+        <code>Cmd+Alt+3</code>
+      </td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>Heading 4</td>
+      <td>
+        <code>Ctrl+Alt+4</code>
+      </td>
+      <td>
+        <code>Cmd+Alt+4</code>
+      </td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>Heading 5</td>
+      <td>
+        <code>Ctrl+Alt+5</code>
+      </td>
+      <td>
+        <code>Cmd+Alt+5</code>
+      </td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>Heading 6</td>
+      <td>
+        <code>Ctrl+Alt+6</code>
+      </td>
+      <td>
+        <code>Cmd+Alt+6</code>
+      </td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>Paragraph</td>
+      <td>
+        <code>Ctrl+Alt+0</code>
+      </td>
+      <td>
+        <code>Cmd+Alt+0</code>
+      </td>
+    </tr>
+    <tr>
+      <td colSpan="4">
+        <strong>Lists</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>Bullet List</td>
+      <td>
+        <code>Ctrl+Shift+8</code>
+      </td>
+      <td>
+        <code>Cmd+Shift+8</code>
+      </td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>Numbered List</td>
+      <td>
+        <code>Ctrl+Shift+7</code>
+      </td>
+      <td>
+        <code>Cmd+Shift+7</code>
+      </td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>Task List</td>
+      <td>
+        <code>Ctrl+Shift+9</code>
+      </td>
+      <td>
+        <code>Cmd+Shift+9</code>
+      </td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td>Indent (Sink List Item)</td>
+      <td>
+        <code>Tab</code>
+      </td>
+      <td>
+        <code>Tab</code>
+      </td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>Outdent (Lift List Item)</td>
+      <td>
+        <code>Shift+Tab</code>
+      </td>
+      <td>
+        <code>Shift+Tab</code>
+      </td>
+    </tr>
+    <tr>
+      <td colSpan="4">
+        <strong>Blocks</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>18</td>
+      <td>Blockquote</td>
+      <td>
+        <code>Ctrl+Shift+B</code>
+      </td>
+      <td>
+        <code>Cmd+Shift+B</code>
+      </td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td>Code Block</td>
+      <td>
+        <code>Ctrl+Alt+C</code>
+      </td>
+      <td>
+        <code>Cmd+Alt+C</code>
+      </td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>Hard Break (line break)</td>
+      <td>
+        <code>Shift+Enter</code>
+      </td>
+      <td>
+        <code>Shift+Enter</code>
+      </td>
+    </tr>
+    <tr>
+      <td colSpan="4">
+        <strong>History</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>21</td>
+      <td>Undo</td>
+      <td>
+        <code>Ctrl+Z</code>
+      </td>
+      <td>
+        <code>Cmd+Z</code>
+      </td>
+    </tr>
+    <tr>
+      <td>22</td>
+      <td>Redo</td>
+      <td>
+        <code>Ctrl+Shift+Z</code> or <code>Ctrl+Y</code>
+      </td>
+      <td>
+        <code>Cmd+Shift+Z</code> or <code>Cmd+Y</code>
+      </td>
+    </tr>
+    <tr>
+      <td colSpan="4">
+        <strong>Search</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>23</td>
+      <td>Open Search</td>
+      <td>
+        <code>Ctrl+F</code>
+      </td>
+      <td>
+        <code>Cmd+F</code>
+      </td>
+    </tr>
+    <tr>
+      <td colSpan="4">
+        <strong>General</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>24</td>
+      <td>Select All</td>
+      <td>
+        <code>Ctrl+A</code>
+      </td>
+      <td>
+        <code>Cmd+A</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Markdown Input Rules
+
+The editor supports Markdown-style input patterns that automatically convert to
+formatted content as you type. These work with the base TipTap StarterKit
+extensions.
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Pattern</th>
+      <th>Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colSpan="3"><strong>Headings</strong></td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>
+        <code># </code> + space
+      </td>
+      <td>Heading 1</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>
+        <code>## </code> + space
+      </td>
+      <td>Heading 2</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>
+        <code>### </code> + space
+      </td>
+      <td>Heading 3</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>
+        <code>#### </code> + space
+      </td>
+      <td>Heading 4</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>
+        <code>##### </code> + space
+      </td>
+      <td>Heading 5</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>
+        <code>###### </code> + space
+      </td>
+      <td>Heading 6</td>
+    </tr>
+    <tr>
+      <td colSpan="3"><strong>Lists</strong></td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>
+        <code>* </code> + space
+      </td>
+      <td>Bullet list</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>
+        <code>- </code> + space
+      </td>
+      <td>Bullet list</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>
+        <code>+ </code> + space
+      </td>
+      <td>Bullet list</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>
+        <code>1. </code> + space
+      </td>
+      <td>Numbered list</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>
+        <code>[ ] </code> + space
+      </td>
+      <td>Task list (unchecked)</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>
+        <code>[x] </code> + space
+      </td>
+      <td>Task list (checked)</td>
+    </tr>
+    <tr>
+      <td colSpan="3"><strong>Inline Formatting</strong></td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>
+        <code>text (wrapped in backticks)</code>
+      </td>
+      <td>Inline code</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>
+        `**text**`
+      </td>
+      <td>Bold</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>
+        `*text*` or `_text_`
+      </td>
+      <td>Italic</td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td>
+        <code>~~text~~</code>
+      </td>
+      <td>Strikethrough</td>
+    </tr>
+    <tr>
+      <td colSpan="3"><strong>Blocks</strong></td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>
+        <code>``` </code> + space
+      </td>
+      <td>Code block</td>
+    </tr>
+    <tr>
+      <td>18</td>
+      <td>
+        <code>> </code> + space
+      </td>
+      <td>Blockquote</td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td>
+        <code>---</code> + Enter
+      </td>
+      <td>Horizontal rule (divider)</td>
+    </tr>
+  </tbody>
+</table>
+
+**Note:** Input rules are triggered when you type the pattern and press space or
+Enter. They provide a natural Markdown-like editing experience within the rich
+text editor.

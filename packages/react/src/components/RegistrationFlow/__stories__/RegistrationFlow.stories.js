@@ -19,7 +19,6 @@ import { RegistrationViewStack } from '../components/RegistrationViewStack';
 import { RegistrationView } from '../components/RegistrationView';
 import { RegistrationViewFooter } from '../components/RegistrationViewFooter';
 import '../components/registration-flow.scss';
-import urxBg from './images/urx-bg-full.png';
 import { initCarousel } from '@carbon/utilities';
 import { Button, Checkbox, FormGroup, Stack, TextInput } from '@carbon/react';
 import { Details } from '../components/Details';

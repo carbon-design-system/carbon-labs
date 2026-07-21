@@ -6,7 +6,7 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { Heading, Section, SectionProps } from '@carbon/react';
 import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 

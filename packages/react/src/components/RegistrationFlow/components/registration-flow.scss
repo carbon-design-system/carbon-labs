@@ -67,6 +67,7 @@ $prefix: 'clabs' !default;
 /* * * * * * * * * * * | GREETING | * * * * * * * * * * */
 .#{$prefix}--registration-flow__greeting {
   padding-inline: $spacing-07;
+
   // text-align: center;
   p {
     @include type-style('body-compact-01');
@@ -158,7 +159,7 @@ $prefix: 'clabs' !default;
   &-step-current {
     border-block-start: $spacing-02 solid $border-subtle-02;
 
-    > .#{$prefix}--registration-flow__step-indicator-step-current-progress {
+    >.#{$prefix}--registration-flow__step-indicator-step-current-progress {
       position: absolute;
       border-block-start: $spacing-02 solid $border-interactive;
       inset-block-start: calc($spacing-02 * -1);
@@ -177,9 +178,9 @@ $prefix: 'clabs' !default;
   padding: $spacing-05;
   border: 1px solid $border-subtle;
   border-radius: $spacing-05;
-  background-color: $gray-10;
+  background-color: $layer-01;
 
-  &[open] > summary::after {
+  &[open]>summary::after {
     transform: rotate(180deg);
   }
 

@@ -7,6 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import React from 'react';
 import { Heading, Section, SectionProps } from '@carbon/react';
 import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 

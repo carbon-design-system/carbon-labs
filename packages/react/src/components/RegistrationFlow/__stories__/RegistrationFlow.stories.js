@@ -62,7 +62,7 @@ export const Default = () => {
   }, []);
 
   return (
-    <RegistrationFlow backgroundImage={urxBg}>
+    <RegistrationFlow>
       <RegistrationMasthead />
       <RegistrationContent>
         <RegistrationGreeting

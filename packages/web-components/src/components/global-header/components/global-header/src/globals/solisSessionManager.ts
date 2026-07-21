@@ -14,9 +14,10 @@ export default class solisSessionManager {
   private tokenRefreshInterval: number;
   private idleTimeoutInterval: number;
   private isIdle: boolean;
-  private idleTimeout: number | undefined;
+  private idleTimeout: ReturnType<typeof setTimeout> | undefined;
   private basePath: string | undefined;
   private activityEvents: string[];
+  private boundSetActive: () => void;
   config: solisSessionManagerConfig;
 
   constructor(config: solisSessionManagerConfig) {
@@ -35,6 +36,7 @@ export default class solisSessionManager {
     ];
     this.isIdle = false;
     this.idleTimeout = undefined;
+    this.boundSetActive = () => this.setActive();
   }
 
   startRefreshSchedule() {
@@ -86,8 +88,16 @@ export default class solisSessionManager {
 
   registerActivityListeners() {
     this.activityEvents.forEach((eventType) => {
-      document.addEventListener(eventType, () => this.setActive(), {
+      document.addEventListener(eventType, this.boundSetActive, {
         passive: true,
+        capture: true,
+      });
+    });
+  }
+
+  unregisterActivityListeners() {
+    this.activityEvents.forEach((eventType) => {
+      document.removeEventListener(eventType, this.boundSetActive, {
         capture: true,
       });
     });
@@ -96,10 +106,18 @@ export default class solisSessionManager {
   setActive() {
     this.isIdle = false;
     clearTimeout(this.idleTimeout);
-    this.idleTimeout = setTimeout(this.setIdle, this.idleTimeoutInterval);
+    this.idleTimeout = setTimeout(
+      () => this.setIdle,
+      this.idleTimeoutInterval * 60 * 1000
+    );
   }
 
   setIdle() {
     this.isIdle = true;
+    // check session status incase another tab is still active, before triggering soft logout
+  }
+
+  isTabIdle(): boolean {
+    return this.isIdle;
   }
 }

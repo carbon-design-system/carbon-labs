@@ -175,6 +175,6 @@ Scenario('Solis components render', async ({ I }) => {
   I.wait(2);
   I.see('Observability');
   I.see('Community');
-  I.click(locate('#ibm-automation-cds-solis-switcher-button')); // Close the Solis switcher
-  I.dontSee('Observability'); // Solis switcher is closed
+  I.click(locate('#ibm-automation-cds-solis-switcher-button')); //Close the Solis switcher
+  I.dontSee('Observability'); //Solis switcher is closed
 });

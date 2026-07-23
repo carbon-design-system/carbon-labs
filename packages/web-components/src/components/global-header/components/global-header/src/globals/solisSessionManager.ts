@@ -114,7 +114,7 @@ export default class solisSessionManager {
 
   setIdle() {
     this.isIdle = true;
-    // check session status incase another tab is still active, before triggering soft logout
+    // TODO - check session status incase another tab is still active, before triggering soft logout
   }
 
   isTabIdle(): boolean {

@@ -15,6 +15,9 @@ describe('ClickOutsideHandler', () => {
   let outsideElement: HTMLDivElement;
 
   beforeEach(() => {
+    // Use fake timers so setTimeout(0) inside attach() is controllable
+    vi.useFakeTimers();
+
     // Create test DOM elements
     container = document.createElement('div');
     container.id = 'test-container';
@@ -23,18 +26,13 @@ describe('ClickOutsideHandler', () => {
     outsideElement = document.createElement('div');
     outsideElement.id = 'outside-element';
     document.body.appendChild(outsideElement);
-
-    // Clear all timers
-    vi.clearAllTimers();
   });
 
   afterEach(() => {
-    // Clean up DOM
+    // Restore real timers and clean up DOM
+    vi.useRealTimers();
     document.body.removeChild(container);
     document.body.removeChild(outsideElement);
-
-    // Clear all timers
-    vi.clearAllTimers();
   });
 
   describe('Basic Functionality', () => {
@@ -50,6 +48,7 @@ describe('ClickOutsideHandler', () => {
       });
 
       handler.attach();
+      vi.runAllTimers(); // flush the setTimeout(0) delay inside attach()
 
       // Simulate click outside
       outsideElement.click();
@@ -70,6 +69,7 @@ describe('ClickOutsideHandler', () => {
       });
 
       handler.attach();
+      vi.runAllTimers(); // flush the setTimeout(0) delay inside attach()
 
       // Simulate click inside
       container.click();
@@ -104,7 +104,6 @@ describe('ClickOutsideHandler', () => {
      * Test that the handler respects the attachDelay configuration
      */
     it('should respect attachDelay', () => {
-      vi.useFakeTimers();
       const onOutsideClick = vi.fn();
       const handler = new ClickOutsideHandler({
         isOpen: true,
@@ -130,14 +129,12 @@ describe('ClickOutsideHandler', () => {
       expect(onOutsideClick).toHaveBeenCalledTimes(1);
 
       handler.detach();
-      vi.useRealTimers();
     });
 
     /**
      * Test that the handler uses a default delay of 0 when not specified
      */
     it('should use default delay of 0', () => {
-      vi.useFakeTimers();
       const onOutsideClick = vi.fn();
       const handler = new ClickOutsideHandler({
         isOpen: true,
@@ -157,14 +154,12 @@ describe('ClickOutsideHandler', () => {
       expect(onOutsideClick).toHaveBeenCalledTimes(1);
 
       handler.detach();
-      vi.useRealTimers();
     });
 
     /**
      * Test that the opening click doesn't immediately close the handler when using delay
      */
     it('should prevent opening click from closing when using delay', () => {
-      vi.useFakeTimers();
       const onOutsideClick = vi.fn();
       const handler = new ClickOutsideHandler({
         isOpen: true,
@@ -193,7 +188,6 @@ describe('ClickOutsideHandler', () => {
 
       document.body.removeChild(openButton);
       handler.detach();
-      vi.useRealTimers();
     });
   });
 
@@ -231,6 +225,7 @@ describe('ClickOutsideHandler', () => {
       handler.attach();
       handler.attach(); // Second attach should be ignored
       handler.attach(); // Third attach should be ignored
+      vi.runAllTimers(); // flush the setTimeout(0) delay inside attach()
 
       outsideElement.click();
 
@@ -263,7 +258,6 @@ describe('ClickOutsideHandler', () => {
      * Test that detaching cancels any pending attachment timers
      */
     it('should cancel pending attachment on detach', () => {
-      vi.useFakeTimers();
       const onOutsideClick = vi.fn();
       const handler = new ClickOutsideHandler({
         isOpen: true,
@@ -281,8 +275,6 @@ describe('ClickOutsideHandler', () => {
       // Click should not trigger (attachment was cancelled)
       outsideElement.click();
       expect(onOutsideClick).not.toHaveBeenCalled();
-
-      vi.useRealTimers();
     });
   });
 
@@ -299,6 +291,7 @@ describe('ClickOutsideHandler', () => {
       });
 
       handler.attach();
+      vi.runAllTimers(); // flush the setTimeout(0) delay inside attach()
 
       // Click when open - should trigger
       outsideElement.click();
@@ -336,6 +329,7 @@ describe('ClickOutsideHandler', () => {
       });
 
       handler.attach();
+      vi.runAllTimers(); // flush the setTimeout(0) delay inside attach()
 
       // Click second container - should trigger (not in first container)
       secondContainer.click();
@@ -369,6 +363,7 @@ describe('ClickOutsideHandler', () => {
       });
 
       handler.attach();
+      vi.runAllTimers(); // flush the setTimeout(0) delay inside attach()
 
       // Click - should call first callback
       outsideElement.click();
@@ -400,6 +395,7 @@ describe('ClickOutsideHandler', () => {
       });
 
       handler.attach();
+      vi.runAllTimers(); // flush the setTimeout(0) delay inside attach()
 
       // Update multiple properties
       handler.updateConfig({
@@ -437,6 +433,7 @@ describe('ClickOutsideHandler', () => {
       });
 
       handler.attach();
+      vi.runAllTimers(); // flush the setTimeout(0) delay inside attach()
 
       // Create a nested element that stops propagation
       const nested = document.createElement('div');
@@ -501,6 +498,7 @@ describe('ClickOutsideHandler', () => {
       expect(handler.isAttached()).toBe(false);
 
       handler.attach();
+      vi.runAllTimers(); // flush the setTimeout(0) delay inside attach()
       expect(handler.isAttached()).toBe(true);
 
       handler.detach();
@@ -511,7 +509,6 @@ describe('ClickOutsideHandler', () => {
      * Test that isPending() reports the correct pending status
      */
     it('should report pending status correctly', () => {
-      vi.useFakeTimers();
       const handler = new ClickOutsideHandler({
         isOpen: true,
         containsNode: (node) => container.contains(node),
@@ -530,7 +527,6 @@ describe('ClickOutsideHandler', () => {
       expect(handler.isAttached()).toBe(true);
 
       handler.detach();
-      vi.useRealTimers();
     });
   });
 
@@ -550,6 +546,7 @@ describe('ClickOutsideHandler', () => {
       });
 
       handler.attach();
+      vi.runAllTimers(); // flush the setTimeout(0) delay inside attach()
 
       // Should not throw
       outsideElement.click();
@@ -579,6 +576,7 @@ describe('ClickOutsideHandler', () => {
       });
 
       handler.attach();
+      vi.runAllTimers(); // flush the setTimeout(0) delay inside attach()
 
       // Click inside shadow DOM - should not trigger
       shadowChild.click();
@@ -596,7 +594,6 @@ describe('ClickOutsideHandler', () => {
      * Test that the handler handles rapid open/close cycles correctly
      */
     it('should handle rapid open/close cycles', () => {
-      vi.useFakeTimers();
       const onOutsideClick = vi.fn();
       const handler = new ClickOutsideHandler({
         isOpen: true,
@@ -620,7 +617,6 @@ describe('ClickOutsideHandler', () => {
       expect(onOutsideClick).toHaveBeenCalledTimes(1);
 
       handler.detach();
-      vi.useRealTimers();
     });
   });
 });

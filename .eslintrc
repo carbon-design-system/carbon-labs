@@ -23,6 +23,9 @@
         "**/__tests__/**/*.ts",
         "**/__tests__/**/*.js"
       ],
+      "globals": {
+        "Temporal": "readonly"
+      },
       "rules": {
         "jsdoc/require-jsdoc": [
           2,

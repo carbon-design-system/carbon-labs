@@ -34,6 +34,7 @@ const stateTransitions: TransitionMap = {
   [DatePickerState.FOCUSED]: {
     [DatePickerEventEnum.INPUT_BLUR]: DatePickerState.IDLE,
     [DatePickerEventEnum.CALENDAR_OPEN]: DatePickerState.CALENDAR_OPEN,
+    [DatePickerEventEnum.CALENDAR_ICON_CLICK]: DatePickerState.CALENDAR_OPEN,
     [DatePickerEventEnum.DISABLE]: DatePickerState.DISABLED,
   },
   [DatePickerState.CALENDAR_OPEN]: {
@@ -86,6 +87,7 @@ const stateTransitions: TransitionMap = {
   [DatePickerState.DATE_SELECTED]: {
     [DatePickerEventEnum.CALENDAR_CLOSE]: DatePickerState.IDLE,
     [DatePickerEventEnum.INPUT_FOCUS]: DatePickerState.FOCUSED,
+    [DatePickerEventEnum.CALENDAR_ICON_CLICK]: DatePickerState.CALENDAR_OPEN,
   },
   [DatePickerState.DISABLED]: {
     [DatePickerEventEnum.ENABLE]: DatePickerState.IDLE,
@@ -138,6 +140,8 @@ export class DatePickerStateMachine {
       isReadonly: false,
       isInvalid: false,
       lastFocusedInput: null,
+      restoreFocusTo: null,
+      shouldRestoreFocus: false,
       minDate: null,
       maxDate: null,
       dateFormat: 'm/d/Y',

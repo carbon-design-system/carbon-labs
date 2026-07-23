@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-date-picker@0.10.0...@carbon-labs/react-date-picker@0.11.0) (2026-07-15)
+
+
+### Bug Fixes
+
+* **datepicker:** fix to focus management per issue 1174 ([#1280](https://github.com/carbon-design-system/carbon-labs/issues/1280)) ([1bcb702](https://github.com/carbon-design-system/carbon-labs/commit/1bcb702216f56645470439a237d4c7889a45e7db))
+
+
+
+
+
 # [0.10.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-date-picker@0.9.0...@carbon-labs/react-date-picker@0.10.0) (2026-05-15)
 
 **Note:** Version bump only for package @carbon-labs/react-date-picker

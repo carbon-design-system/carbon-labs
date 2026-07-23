@@ -6,7 +6,7 @@
  */
 
 import { LitElement, html } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, query } from 'lit/decorators.js';
 import { prefix } from '../../temp-imports/globals/settings';
 import FormMixin from '../../temp-imports/globals/mixins/form';
 import HostListenerMixin from '../../temp-imports/globals/mixins/host-listener';
@@ -80,9 +80,20 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
   private _clickOutsideHandler: ClickOutsideHandler | null = null;
 
   /**
+   * Pending input target for post-render focus restoration
+   */
+  private _pendingRestoreFocusTo: 'from' | 'to' | null = null;
+
+  /**
    * Timestamp of when calendar was last closed via Tab key
    */
   private _lastTabCloseTime = 0;
+
+  /**
+   * True while programmatic focus restoration is in progress after date
+   * selection. Prevents the INPUT_FOCUS handler from auto-reopening the calendar.
+   */
+  private _restoringFocus = false;
 
   /**
    * @returns The effective date picker mode, determined by the child `<cds-date-picker-input>`.
@@ -152,16 +163,31 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
       const { inputType } = event.detail || {};
       this._adapter.send(DatePickerEvent.INPUT_FOCUS, { inputType });
 
-      // Don't auto-open calendar if we JUST closed it via Tab key (within 100ms)
-      // This prevents the immediate reopen when Tab moves focus to input,
-      // but allows normal opening after that brief window
+      // Don't auto-open calendar if focus was restored programmatically after
+      // date selection, or if it was JUST closed via Tab key (within 100ms).
       const timeSinceTabClose = Date.now() - this._lastTabCloseTime;
-      const shouldSkipOpen = timeSinceTabClose < 100;
-
-      if (!shouldSkipOpen) {
-        // Open calendar when input is focused (matching current Carbon behavior)
+      if (!this._restoringFocus && timeSinceTabClose >= 100) {
         this._adapter.send(DatePickerEvent.CALENDAR_OPEN);
       }
+    }
+  };
+
+  /**
+   * Handles input click event from date-picker-input.
+   * When the input already has focus, clicking it does not fire a new focus
+   * event.  This handler ensures the calendar reopens on click even when focus
+   * is already on the input.
+   *
+   * @param {CustomEvent} event - The click event
+   */
+  @HostListener('eventInputClick')
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore: The decorator refers to this method, but TS thinks this method is not referred to
+  private _handleInputClick = (event: CustomEvent) => {
+    if (this._adapter && !this.disabled && !this.readonly && !this.open) {
+      const { inputType } = event.detail || {};
+      this._adapter.send(DatePickerEvent.INPUT_FOCUS, { inputType });
+      this._adapter.send(DatePickerEvent.CALENDAR_OPEN);
     }
   };
 
@@ -356,6 +382,34 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
         )
       );
     }
+
+    if (context.shouldRestoreFocus && context.restoreFocusTo) {
+      this._pendingRestoreFocusTo = context.restoreFocusTo;
+      this.updateComplete.then(() => {
+        const targetSelector =
+          this._pendingRestoreFocusTo === 'to'
+            ? (this.constructor as typeof CDSDatePicker).selectorInputTo
+            : (this.constructor as typeof CDSDatePicker).selectorInputFrom;
+
+        // @ts-expect-error - querySelector is available from HTMLElement
+        const targetInput = this.querySelector(
+          targetSelector
+        ) as CDSDatePickerInput | null;
+
+        // Guard against the INPUT_FOCUS handler auto-reopening the calendar
+        // when focus is restored programmatically after date selection.
+        this._restoringFocus = true;
+        (targetInput as any)?.input?.focus();
+        this._restoringFocus = false;
+
+        this._adapter?.updateContext({
+          shouldRestoreFocus: false,
+          restoreFocusTo: null,
+        });
+
+        this._pendingRestoreFocusTo = null;
+      });
+    }
   };
 
   /**
@@ -496,6 +550,8 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    * Releases the date picker state machine.
    */
   private _releaseDatePicker() {
+    this._pendingRestoreFocusTo = null;
+
     if (this._adapter) {
       this._adapter.destroy();
       this._adapter = null;
@@ -628,6 +684,23 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
         target.closest?.('cds-date-picker-calendar') !== null ||
         composedPath.includes(calendar);
 
+      // Case 0: Tab FROM input while closed -> reopen calendar and keep focus on input
+      if (
+        !this.open &&
+        (isOnFirstInput || isOnSecondInput) &&
+        !event.shiftKey
+      ) {
+        event.preventDefault();
+        event.stopPropagation();
+        this._lastTabCloseTime = 0;
+        this._adapter.send(DatePickerEvent.INPUT_FOCUS, {
+          inputType: isOnSecondInput ? 'to' : 'from',
+        });
+        this._adapter.send(DatePickerEvent.CALENDAR_OPEN);
+        this.requestUpdate();
+        return;
+      }
+
       // Case 1: Tab FROM first input -> Focus calendar (if open)
       if (this.open && isOnFirstInput && !event.shiftKey) {
         event.preventDefault();
@@ -695,30 +768,27 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
         return;
       }
 
-      // Case 4: Tab FROM calendar -> Move to second input (range) or close (single)
+      // Case 4: Tab FROM calendar -> Move to second input (range) or exit via sentinel
       if (this.open && isFocusInCalendar && !event.shiftKey) {
-        event.preventDefault();
-
-        // In range mode, check which input was last focused
+        // In range mode, move to the second input first
         if (this._mode === DATE_PICKER_MODE.RANGE) {
           const context = this._adapter?.getContext();
           const lastFocused = context?.lastFocusedInput;
 
-          // If we were on the first input, move to second input
           if (lastFocused === 'from' && inputTo) {
+            event.preventDefault();
             (inputTo as any).input?.focus();
             return;
           }
         }
 
-        // Otherwise (single mode or after second input in range mode), close and move to next element
-        // Record the time when calendar was closed via Tab
+        // Single mode (or range after second input): activate the exit sentinel
+        // so the browser delivers Tab to it naturally, then the sentinel's focus
+        // handler closes the calendar and removes itself from the tab order.
+        // No preventDefault — the browser handles the Tab traversal.
         this._lastTabCloseTime = Date.now();
-
         this._adapter.send(DatePickerEvent.TAB_KEY);
-
-        // Find and focus the next tabbable element after this date picker
-        this._focusNextElement(false);
+        this._activateExitSentinel();
         return;
       }
     }
@@ -776,52 +846,56 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
   };
 
   /**
-   * Find and focus the next tabbable element after the date picker
-   * @param {boolean} backwards - Whether to tab backwards (Shift+Tab)
+   * A ref to the exit sentinel element rendered at the bottom of the shadow root.
+   * It sits just after the calendar container in DOM order.  Normally it has
+   * tabindex="-1" so it is invisible to Tab.  When the user presses Tab from
+   * inside the calendar, _activateExitSentinel() sets it to tabindex="0" so
+   * the browser delivers the Tab keystroke to it naturally — no DOM scan needed.
+   * The focus handler then closes the calendar and restores tabindex="-1".
+   *
+   * Uses a CSS class rather than an id to avoid any document-level id concerns
+   * (shadow-DOM ids are already scoped, but a class is more conventional for
+   * internal Lit @query targets and matches the cds-- naming pattern used
+   * throughout this file).
+   *
+   * TODO (carbon monorepo migration): replace this hand-rolled sentinel with the
+   * upstream Carbon wrapFocus utility, which implements the same start/end sentinel
+   * pattern for focus trapping and exit.
+   * Upstream location: packages/react/src/internal/wrapFocus.ts (wrapFocus /
+   * wrapFocusWithoutSentinels exports).  Note that wrapFocus is designed to trap
+   * focus inside a container (modal pattern) rather than release it; the exit-only
+   * direction we need maps to the endTrapNode path in that utility.
    */
-  private _focusNextElement(backwards = false) {
-    // Get all tabbable elements in the document
-    const tabbableSelector =
-      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
-    const allTabbable = Array.from(
-      document.querySelectorAll(tabbableSelector)
-    ) as HTMLElement[];
+  @query(`.${prefix}--date-picker__exit-sentinel`)
+  private _exitSentinelNode!: HTMLElement;
 
-    // Find the index of this date picker component
-    const currentIndex = allTabbable.findIndex(
-      (el) => this.contains(el) || el === this
-    );
-
-    if (currentIndex === -1) {
-      return; // Couldn't find current element
-    }
-
-    // Find the next element after all elements within this date picker
-    let nextIndex = currentIndex;
-
-    if (backwards) {
-      // Tab backwards - find previous element before this date picker
-      for (let i = currentIndex - 1; i >= 0; i--) {
-        if (!this.contains(allTabbable[i])) {
-          nextIndex = i;
-          break;
-        }
-      }
-    } else {
-      // Tab forwards - find next element after this date picker
-      for (let i = currentIndex + 1; i < allTabbable.length; i++) {
-        if (!this.contains(allTabbable[i])) {
-          nextIndex = i;
-          break;
-        }
-      }
-    }
-
-    // Focus the next element
-    if (nextIndex !== currentIndex && allTabbable[nextIndex]) {
-      allTabbable[nextIndex].focus();
+  /**
+   * Temporarily make the exit sentinel tabbable so the browser's native Tab
+   * handling delivers focus to it after the calendar.
+   */
+  private _activateExitSentinel() {
+    if (this._exitSentinelNode) {
+      this._exitSentinelNode.tabIndex = 0;
     }
   }
+
+  /**
+   * Handle focus arriving on the exit sentinel.
+   * Close the calendar, then immediately remove the sentinel from the tab order
+   * so that a subsequent Tab from outside the date picker skips it entirely.
+   */
+  private _handleExitSentinelFocus = () => {
+    // Deactivate sentinel first so it is skipped on all future Tab presses.
+    if (this._exitSentinelNode) {
+      this._exitSentinelNode.tabIndex = -1;
+    }
+    // The TAB_KEY event was already sent in _handleKeyDown before the sentinel
+    // was activated; the calendar will already be closing / closed.
+    // Ensure the open flag is consistent.
+    if (this.open) {
+      this._adapter?.send(DatePickerEvent.TAB_KEY);
+    }
+  };
 
   /**
    * Lifecycle callback when element is connected
@@ -840,7 +914,9 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
        */
       containsNode: (node: Node) => {
         return (
-          this.contains(node) || (this.shadowRoot?.contains(node) ?? false)
+          node === (this as unknown as Node) ||
+          this.contains(node) ||
+          (this.shadowRoot?.contains(node) ?? false)
         );
       },
       /**
@@ -910,6 +986,10 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
         }
       }
 
+      if (changedProperties.has('closeOnSelect')) {
+        this._adapter.updateContext({ closeOnSelect: this.closeOnSelect });
+      }
+
       if (
         changedProperties.has('disabled') ||
         changedProperties.has('readonly')
@@ -976,11 +1056,6 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
         : [];
 
     return html`
-      <a
-        class="${prefix}--visually-hidden"
-        href="javascript:void 0"
-        role="navigation"
-        tabindex="-1"></a>
       <slot @slotchange="${handleSlotChange}"></slot>
       <div
         id="floating-menu-container"
@@ -1007,11 +1082,18 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
             `
           : ''}
       </div>
-      <a
-        class="${prefix}--visually-hidden"
-        href="javascript:void 0"
-        role="navigation"
-        tabindex="-1"></a>
+      <!--
+        Exit sentinel: sits just after the calendar container in shadow-DOM tab
+        order.  Normally tabindex="-1" (invisible to Tab).  _activateExitSentinel()
+        sets it to tabindex="0" when the user presses Tab from the calendar, so the
+        browser delivers that Tab keystroke here naturally.  The focus handler then
+        closes the calendar and restores tabindex="-1".
+      -->
+      <span
+        class="${prefix}--date-picker__exit-sentinel"
+        tabindex="-1"
+        aria-hidden="true"
+        @focus="${this._handleExitSentinelFocus}"></span>
     `;
   }
 
@@ -1114,6 +1196,13 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    */
   static get eventInputBlur() {
     return `${prefix}-date-picker-input-blur`;
+  }
+
+  /**
+   * The name of the custom event fired when an input is clicked.
+   */
+  static get eventInputClick() {
+    return `${prefix}-date-picker-input-click`;
   }
 
   static styles = styles;

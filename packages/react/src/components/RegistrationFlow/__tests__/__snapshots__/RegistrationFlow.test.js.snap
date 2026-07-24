@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RegistrationFlow renders as expected - Component API should match snapshot 1`] = `
+<div>
+  <div
+    class="clabs--registration-flow__container"
+  />
+</div>
+`;

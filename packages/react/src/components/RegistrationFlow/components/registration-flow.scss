@@ -1,0 +1,252 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon setting imports
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/colors' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/components/button' as *;
+@use '@carbon/styles/scss/motion' as *;
+@use '@carbon/styles/scss/utilities' as *;
+@use '@carbon/utilities/scss/carousel';
+
+$prefix: 'clabs' !default;
+
+.#{$prefix}--registration-flow__container {
+  display: flex;
+  flex-direction: column;
+  background-position: bottom;
+  background-size: cover;
+  block-size: 100%;
+  overflow-y: auto;
+}
+
+.#{$prefix}--registration-flow__body {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-content: center;
+  gap: $spacing-06;
+  inline-size: 30rem;
+
+  .carousel__live-region {
+    // display: none;
+    z-index: 10000;
+  }
+}
+
+/* * * * * * * * * * * | MASTHEAD | * * * * * * * * * * */
+.#{$prefix}--registration-flow__masthead {
+  display: flex;
+  align-items: center;
+  background-color: $background;
+  border-block-end: 1px solid $border-subtle-01;
+  inline-size: 100%;
+  min-block-size: $spacing-09;
+  padding-inline: $spacing-10;
+}
+
+.#{$prefix}--registration-flow__masthead-logo-container {
+  display: flex;
+  align-items: center;
+  padding: 0 $spacing-08;
+  block-size: 100%;
+}
+
+.#{$prefix}--registration-flow__masthead-logo {
+  g {
+    fill: $layer-selected-inverse;
+  }
+}
+
+/* * * * * * * * * * * | GREETING | * * * * * * * * * * */
+.#{$prefix}--registration-flow__greeting {
+  padding-inline: $spacing-07;
+
+  // text-align: center;
+  p {
+    @include type-style('body-compact-01');
+  }
+}
+
+.#{$prefix}--registration-flow__greeting-heading {
+  color: $blue-60;
+}
+
+.#{$prefix}--registration-flow__greeting-container {
+  // placeholder
+}
+
+/* * * * * * * * * * * | VIEW CONTAINER | * * * * * * * * * * */
+
+.#{$prefix}--registration-flow__viewcontainer {
+  display: flex;
+  flex-direction: column;
+  padding: $spacing-06 $spacing-05 $spacing-07 $spacing-07;
+  border-radius: $spacing-05;
+  background-color: $background;
+  box-shadow: 0 $spacing-01 $spacing-05 1px $border-subtle;
+  gap: $spacing-06;
+}
+
+/* * * * * * * * * * * | VIEW STACK | * * * * * * * * * * */
+.#{$prefix}--registration-flow__viewstack {
+  block-size: 100%;
+}
+
+.#{$prefix}--registration-flow__view {
+  display: flex;
+  flex-direction: column;
+  padding-inline-end: $spacing-05;
+}
+
+.#{$prefix}--registration-flow__view-internals {
+  // placeholder
+}
+
+.#{$prefix}--registration-flow__view-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 1px;
+  inline-size: 100%;
+  justify-self: flex-end;
+  margin-block-start: auto;
+  padding-block-start: $spacing-07;
+
+  .cds--btn {
+    flex: 1;
+
+    &:only-child {
+      margin-inline-start: auto;
+      max-inline-size: 50%;
+    }
+  }
+}
+
+/* * * * * * * * * * * | STEP INDICATOR | * * * * * * * * * * */
+.#{$prefix}--registration-flow__step-indicator {
+  display: grid;
+  gap: $spacing-02;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  inline-size: 100%;
+
+  // ALL STEPS
+  &-step,
+  &-step-current {
+    position: relative;
+
+    @include type-style('label-01');
+
+    color: $text-helper;
+    inline-size: 100%;
+    padding-block-start: $spacing-02;
+    // border-block-start: $spacing-02 solid $border-subtle-01;
+  }
+
+  // DEFAULT STEP
+  &-step {
+    border-block-start: $spacing-02 solid $border-subtle-01;
+  }
+
+  // CURRENT STEP
+  &-step-current {
+    border-block-start: $spacing-02 solid $border-subtle-02;
+
+    > .#{$prefix}--registration-flow__step-indicator-step-current-progress {
+      position: absolute;
+      border-block-start: $spacing-02 solid $border-interactive;
+      inset-block-start: calc($spacing-02 * -1);
+    }
+  }
+
+  // COMPLETE STEP
+  &-step-complete {
+    border-block-start: $spacing-02 solid $border-interactive;
+  }
+}
+
+/* * * * * * * * * * * | DETAILS | * * * * * * * * * * */
+
+.#{$prefix}--details {
+  padding: $spacing-05;
+  border: 1px solid $border-subtle;
+  border-radius: $spacing-05;
+  background-color: $layer-01;
+
+  &[open] > summary::after {
+    transform: rotate(180deg);
+  }
+
+  summary {
+    display: flex;
+    justify-content: space-between;
+    gap: $spacing-05;
+    list-style: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  summary::after {
+    margin: $spacing-03;
+    background-size: contain;
+    block-size: $spacing-03;
+    //background: url('/summaryArrow.svg') no-repeat;
+    content: '';
+    inline-size: $spacing-05;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+
+    transition: 0.2s;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  &-subtitle {
+    @include type-style('label-01');
+
+    color: $text-helper;
+    margin-block-start: $spacing-02;
+  }
+
+  &-content {
+    padding: $spacing-05;
+    border-radius: 0 0 $spacing-05 $spacing-05;
+    margin: $spacing-05 calc($spacing-05 * -1) calc($spacing-05 * -1);
+    background-color: $background;
+
+    p,
+    li {
+      @include type-style('label-01');
+    }
+
+    ul {
+      margin-block: $spacing-05;
+
+      // stylelint-disable-next-line
+      li {
+        margin-block-start: $spacing-02;
+        padding-inline-start: $spacing-06;
+      }
+    }
+
+    .cds--btn {
+      border-radius: $spacing-02;
+      inline-size: 100%;
+      margin-block-start: $spacing-03;
+      max-inline-size: none;
+    }
+  }
+}

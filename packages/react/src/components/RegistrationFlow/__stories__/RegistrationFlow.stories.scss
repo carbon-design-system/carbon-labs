@@ -1,0 +1,32 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/colors' as *;
+
+.platform-details-content {
+  padding: $spacing-05;
+  border-radius: 0 0 $spacing-05 $spacing-05;
+  margin: $spacing-05 calc($spacing-05 * -1) calc($spacing-05 * -1);
+  background-color: $background;
+
+  p,
+  li {
+    @include type-style('label-01');
+  }
+
+  ul {
+    margin-block: $spacing-05;
+
+    li {
+      margin-block-start: $spacing-02;
+      padding-inline-start: $spacing-06;
+    }
+  }
+}

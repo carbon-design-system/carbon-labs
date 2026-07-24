@@ -288,6 +288,10 @@ describe('HybridIpaasHeader Component', () => {
       solisSessionManager.prototype,
       'startRefreshSchedule'
     );
+    const registerActivityListenersStub = sinon.stub(
+      solisSessionManager.prototype,
+      'registerActivityListeners'
+    );
     const el = await fixture<HybridIpaasHeader>(
       html`<clabs-global-header-hybrid-ipaas
         .fetchHeaders=${{ 'Content-Type': 'application/json' }}
@@ -300,6 +304,7 @@ describe('HybridIpaasHeader Component', () => {
 
     expect(el.sessionManager).to.not.be.null;
     expect(startRefreshScheduleStub).to.have.been.calledOnce;
+    expect(registerActivityListenersStub).to.have.been.calledOnce;
   });
 
   it('should handle logoutCallback passed in', async () => {

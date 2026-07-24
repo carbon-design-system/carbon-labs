@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Column, Dropdown, FluidDropdown, Grid, Link } from '@carbon/react';
+import { Column, FluidDropdown, Grid, Link } from '@carbon/react';
 import { clsx } from 'clsx';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { Caption } from '../caption/caption';
 import { MdxComponent } from '../interfaces';
@@ -18,7 +18,12 @@ interface StorybookDemoProps {
   tall?: boolean | null;
   themeSelector?: boolean | null;
   wide?: boolean | null;
-  fluid?: boolean | null;
+  /**
+   * Defer loading the iframe until it enters the viewport.
+   * Use for demos that contain stories that steal focus or cause scroll jank
+   * on mount (e.g. ActionableNotification, Popover with autoAlign, Menu).
+   */
+  lazy?: boolean | null;
   url: string;
   variants?: Array<{
     label: string;
@@ -38,7 +43,7 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
   tall,
   themeSelector,
   wide,
-  fluid,
+  lazy,
   url,
   variants,
 }) => {
@@ -72,7 +77,7 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
     [withPrefix('wide')]: wide,
   });
 
-  const [theme, setTheme] = useState(themeItems[0]!.src);
+  const [theme, setTheme] = useState(themeItems[0]?.src ?? 'white');
   const onThemeChange = (item: {
     selectedItem: { src: React.SetStateAction<string> };
   }) => {
@@ -83,48 +88,87 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
 
   const [variant, setVariant] = useState(variants?.[0]?.variant);
 
-  const onVariantChange = (item: { selectedItem: { variant: string } }) => {
+  const onVariantChange = (item: {
+    selectedItem: { label: string; variant: string };
+  }) => {
     setVariant(item.selectedItem.variant);
   };
 
   const iframeUrl =
     url + '/iframe.html?id=' + variant + '&globals=theme:' + theme;
 
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  // Tracks whether the iframe has entered the viewport at least once.
+  const [isVisible, setIsVisible] = useState(!lazy);
+
+  useEffect(() => {
+    // Non-lazy demos load immediately — no observer needed.
+    if (!lazy) {
+      setIsVisible(true);
+      return;
+    }
+
+    setIsVisible(false);
+
+    const iframe = iframeRef.current;
+    if (!iframe) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '300px', threshold: 0 }
+    );
+
+    observer.observe(iframe);
+    return () => {
+      observer.disconnect();
+    };
+  }, [lazy, variant]);
+
   // Only add border separator when BOTH theme and variant selectors are displayed
   const border = clsx({
     [withPrefix('theme-selector')]: themeSelector && multipleVariants,
   });
-
-  // Use FluidDropdown when fluid prop is true, otherwise use regular Dropdown
-  const DropdownComponent = fluid ? FluidDropdown : Dropdown;
 
   return (
     <>
       <Grid condensed className={withPrefix('demo-dropdowns')}>
         {themeSelector && (
           <Column sm={2} md={4}>
-            <DropdownComponent
+            <FluidDropdown
               id="theme-selector"
               titleText="Theme selector"
               label="theme"
               items={themeItems}
-              itemToString={(item) => item?.label || ''}
+              itemToString={(item: { label?: string } | null) =>
+                item?.label || ''
+              }
               onChange={onThemeChange}
               initialSelectedItem={themeItems[0]}
               className={border}
+              isCondensed
             />
           </Column>
         )}
         {multipleVariants && (
           <Column sm={2} md={4}>
-            <DropdownComponent
+            <FluidDropdown
               id="variant-selector"
               titleText="Variant selector"
               label="variant"
               items={variants}
-              itemToString={(item) => item?.label || ''}
+              itemToString={(item: { label?: string } | null) =>
+                item?.label || ''
+              }
               initialSelectedItem={variants[0]}
               onChange={onVariantChange}
+              isCondensed
             />
           </Column>
         )}
@@ -132,11 +176,12 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
       <Grid condensed>
         <Column sm={4} md={8} lg={columnWidth} className={demoClassNames}>
           <iframe
+            ref={iframeRef}
             title="Component demo"
             className={withPrefix('iframe')}
-            src={iframeUrl}
+            src={isVisible ? iframeUrl : undefined}
             frameBorder="no"
-            sandbox="allow-forms allow-scripts allow-same-origin"
+            sandbox="allow-forms allow-scripts"
           />
         </Column>
       </Grid>
@@ -160,9 +205,9 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
 
 StorybookDemo.propTypes = {
   /**
-   * Use FluidDropdown instead of regular Dropdown for selectors
+   * Defer loading the iframe until it enters the viewport
    */
-  fluid: PropTypes.bool,
+  lazy: PropTypes.bool,
   /**
    * Storybook demo height
    */

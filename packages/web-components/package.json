@@ -83,7 +83,7 @@
     "storybook-addon-accessibility-checker": ">=9.2.0-rc.0",
     "through2": "^4.0.2",
     "typescript": "^5.2.2",
-    "vite": "^8.0.12",
+    "vite": "^6.4.3",
     "vite-plugin-lit-css": "^3.0.0"
   },
   "msw": {

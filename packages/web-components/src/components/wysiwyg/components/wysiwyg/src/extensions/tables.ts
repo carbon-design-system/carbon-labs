@@ -7,6 +7,7 @@
 
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
+import { TextSelection } from '@tiptap/pm/state';
 import { html } from 'lit';
 import { createRef, ref } from 'lit/directives/ref.js';
 import Table from '@carbon/icons/es/table/16.js';
@@ -76,13 +77,24 @@ Tables.toolbarRender = (
   const popover = createRef<any>();
   /** Close popover */
   const close = () => popover.value?.toggleAttribute('open', false);
-  /** Insert a 3x3 table with header row, replacing any selection */
+  /** Insert a 3x3 table with header row, replacing any selection, then place
+   *  the cursor in a new paragraph after the table so the user can exit it. */
   const insertTable = () => {
     editor
       ?.chain()
       .focus()
       .deleteSelection()
       .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+      .command(({ tr, state, dispatch }) => {
+        // $from is inside the table — after(1) gives the position just past it.
+        const end = state.selection.$from.after(1);
+        if (!tr.doc.nodeAt(end)) {
+          tr.insert(end, state.schema.nodes.paragraph.create());
+        }
+        tr.setSelection(TextSelection.near(tr.doc.resolve(end + 1)));
+        dispatch?.(tr);
+        return true;
+      })
       .run();
     close();
   };

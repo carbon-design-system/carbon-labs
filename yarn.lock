@@ -1987,7 +1987,7 @@ __metadata:
     style-loader: "npm:^4.0.0"
     ts-jest: "npm:^29.2.5"
     typescript: "npm:^5.2.2"
-    typescript-config-carbon: "npm:^0.9.0"
+    typescript-config-carbon: "npm:^0.10.0"
     webpack: "npm:^5.97.0"
   peerDependencies:
     react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
@@ -31970,12 +31970,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript-config-carbon@npm:^0.9.0":
-  version: 0.9.0
-  resolution: "typescript-config-carbon@npm:0.9.0"
+"typescript-config-carbon@npm:^0.10.0":
+  version: 0.10.0
+  resolution: "typescript-config-carbon@npm:0.10.0"
   dependencies:
     typescript: "npm:^5.7.3"
-  checksum: 10c0/98a97b0949ec0661ce1db1db0ac5a0489d53df25ebc9c5b73e408af11365c78fb2d8cacdc91ef24934f429cc3c57d486a50459453b026b985e85591526d5d29f
+  checksum: 10c0/4a452738441508727200c013136124237e295dbf3a88a8d827b8515aedfcfdcf1e697d11fb85f02e2e221b1b9df516a1105bb5bf1e6145ea213969babf95567f
   languageName: node
   linkType: hard
 

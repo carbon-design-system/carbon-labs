@@ -23,7 +23,6 @@ import {
   calculateFlexRatio,
   formatSplitRatio,
   isWithinDistance,
-  triggerHapticFeedback,
   createCustomEvent,
   safeClosest,
   safeQuerySelectorAll,
@@ -254,7 +253,6 @@ class ResizerHandleTemplate extends LitElement {
         DOUBLE_TAP.MAX_DISTANCE_PX
       )
     ) {
-      triggerHapticFeedback(DOUBLE_TAP.VIBRATION_MS);
       this.resetSizes(e as unknown as MouseEvent);
       this._lastTapTime = 0;
       return true;

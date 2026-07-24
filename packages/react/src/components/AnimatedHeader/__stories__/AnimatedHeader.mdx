@@ -43,6 +43,9 @@ import AnimatedHeader from '../components/AnimatedHeader/AnimatedHeader';
     - [Icon Button](#icon-button)
     - [Ghost Button](#ghost-button)
     - [Carousel (coming soon)](#carousel-coming-soon)
+  - [Tooltips](#tooltips)
+    - [Title Tooltip](#title-tooltip)
+    - [Description Tooltip](#description-tooltip)
   - [Accessibility](#accessibility)
     - [Tile ARIA Labels](#tile-aria-labels)
     - [Tasks Dropdown ARIA Label](#tasks-dropdown-aria-label)
@@ -84,11 +87,12 @@ very subtle to not distract users from performing their tasks.
 
 ### Anatomy
 
-**Title:** Welcomes the user (Welcome, username)
+**Title:** Welcomes the user (Welcome, username). Optionally displays a tooltip
+on hover.
 
 **Content:** Short sentence in max. 3 lines related to product context; Action
 button (optional). It is recommended to display content on cards to achieve
-highest contrast to the background.
+highest contrast to the background. Optionally displays a tooltip on hover.
 
 **Visual / brand image:** Line-style illustration (Lottie or static)
 
@@ -434,6 +438,47 @@ export const headerActionCarouselConfig = {
 
 ---
 
+### Tooltips
+
+The AnimatedHeader supports optional tooltips for both the title and description
+text. These tooltips display the full text on hover, which is useful when text
+might be truncated or when you want to provide additional context.
+
+#### Title Tooltip
+
+Enable the title tooltip using the `showTitleTooltip` prop. When enabled,
+hovering over the title (e.g., "Welcome, Drew") will display a tooltip with the
+full text.
+
+```jsx
+<AnimatedHeader
+  userName="Drew"
+  welcomeText="Welcome"
+  showTitleTooltip={true}
+  // ... other props
+/>
+```
+
+#### Description Tooltip
+
+Enable the description tooltip using the `showDescriptionTooltip` prop. When
+enabled, hovering over the description text will display a tooltip with the full
+description.
+
+```jsx
+<AnimatedHeader
+  description="Train, deploy, validate, and govern AI models responsibly."
+  showDescriptionTooltip={true}
+  // ... other props
+/>
+```
+
+> **Note:** Both tooltip props default to `false`. Enable them only when needed,
+> such as when text truncation is a concern or when additional context would
+> benefit users.
+
+---
+
 ### Accessibility
 
 To ensure a fully accessible experience, provide `aria-label`s directly in your
@@ -614,6 +659,8 @@ Example of Animated Header with all prop types enabled.
   tasksControllerConfig={tasksControllerConfigDropdown as TasksControllerConfig}
   contentSwitcherConfig={contentSwitcherConfig}
   headerActionConfig={headerActionGhostConfig}
+  showTitleTooltip={false}
+  showDescriptionTooltip={false}
   isLoading={false}
   tileClickHandler={handleTileClicks}
 />

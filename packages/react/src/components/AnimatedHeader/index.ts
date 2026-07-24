@@ -30,6 +30,7 @@ export type {
 } from './components/WorkspaceSelector/WorkspaceSelector';
 export type { TasksControllerConfig } from './components/TasksController/TasksController';
 export type { HeaderActionConfig } from './components/HeaderAction/header-action.types';
+export type { HeaderCarouselConfig } from './components/HeaderCarousel/header-carousel.types';
 export type { ContentSwitcherConfig } from './components/ContentSwitcherSelector/ContentSwitcherSelector';
 
 export {

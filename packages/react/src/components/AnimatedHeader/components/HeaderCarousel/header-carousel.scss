@@ -1,0 +1,115 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/styles/scss/motion' as *;
+@use '@carbon/styles/scss/type' as *;
+
+$prefix: 'clabs--animated-header__carousel' !default;
+
+:root {
+  --cds-tooltip-padding-block: #{$spacing-01};
+  --cds-popover-caret-width: #{$spacing-03};
+  --cds-popover-caret-height: #{$spacing-02};
+  --cds-popover-offset: #{$spacing-03};
+}
+
+.#{$prefix} {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 $spacing-05;
+  gap: $spacing-05;
+  min-block-size: 2.5rem;
+
+  // Trailing separator — same pattern as HeaderAction's ::after
+  &::after {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    background-color: $border-subtle;
+    block-size: $spacing-06;
+    content: '';
+    inline-size: 0.0625rem;
+    inset-inline-end: 0;
+  }
+
+  // Buttons sit above the separator pseudo-element
+  button.cds--btn,
+  button.cds--icon-button {
+    z-index: 3;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition:
+      opacity 500ms linear,
+      visibility 500ms linear;
+  }
+
+  &[data-expanded='true'] {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+
+  &[data-expanded='false'] {
+    opacity: 0;
+    pointer-events: none;
+    user-select: none;
+    visibility: hidden;
+  }
+}
+
+.#{$prefix}__dots {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-03;
+
+  .cds--popover-content {
+    @include type-style('body-compact-01');
+  }
+}
+
+.#{$prefix}__dot {
+  display: block;
+  padding: 0;
+  border: 1px solid $border-inverse;
+  border-radius: 50%;
+  background: transparent;
+  block-size: $spacing-03;
+  cursor: pointer;
+  inline-size: $spacing-03;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition:
+      background-color 150ms motion(standard, productive),
+      border-color 150ms motion(standard, productive);
+  }
+
+  &:focus {
+    outline: 2px solid $focus;
+    outline-offset: 2px;
+  }
+
+  &--active {
+    border-color: $border-inverse;
+    background: $icon-primary;
+  }
+}
+
+// Visually hidden live region
+.#{$prefix}__live-region {
+  position: absolute;
+  overflow: hidden;
+  block-size: 1px;
+  clip: rect(0, 0, 0, 0);
+  inline-size: 1px;
+  white-space: nowrap;
+}

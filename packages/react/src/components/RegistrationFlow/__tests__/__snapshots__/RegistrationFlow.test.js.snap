@@ -4,6 +4,7 @@ exports[`RegistrationFlow renders as expected - Component API should match snaps
 <div>
   <div
     class="clabs--registration-flow__container"
+    style="background-image: url(test-file-stub);"
   />
 </div>
 `;

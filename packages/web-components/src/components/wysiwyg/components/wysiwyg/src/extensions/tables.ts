@@ -76,8 +76,7 @@ Tables.toolbarRender = (
   const popover = createRef<any>();
   /** Close popover */
   const close = () => popover.value?.toggleAttribute('open', false);
-  /** Insert a 3x3 table with header row, replacing any selection, then place
-   *  the cursor in a new paragraph after the table so the user can exit it. */
+  /** Insert a 3x3 table with header row, replacing any selection */
   const insertTable = () => {
     editor
       ?.chain()

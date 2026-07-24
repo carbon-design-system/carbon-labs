@@ -173,8 +173,10 @@ Scenario('Solis components render', async ({ I }) => {
   I.seeElement(locate('#ibm-automation-cds-solis-switcher-button'));
   I.click(locate('#ibm-automation-cds-solis-switcher-button'));
   I.wait(3);
-  I.see('Observability');
+  // I.see('Observability');
+  I.see('Instana');
   I.see('Community');
   I.click(locate('#ibm-automation-cds-solis-switcher-button')); //Close the Solis switcher
-  I.dontSee('Observability'); //Solis switcher is closed
+  // I.dontSee('Observability');
+  I.dontSee('Instana'); //Solis switcher is closed
 });

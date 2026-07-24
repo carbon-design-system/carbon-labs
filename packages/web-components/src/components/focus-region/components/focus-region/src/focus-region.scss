@@ -1,0 +1,50 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+
+$prefix: 'clabs' !default;
+
+// The component uses light DOM, so styles target the custom element directly.
+clabs-focus-region {
+  display: block;
+
+  &:focus {
+    outline: 2px solid $focus;
+    outline-offset: 2px;
+  }
+}
+
+// Portal wrapper — positions the cds-actionable-notification at top-center
+.#{$prefix}--focus-region-hint-portal {
+  position: fixed;
+  top: $spacing-05;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+
+  cds-actionable-notification {
+    min-width: 480px;
+    max-width: 600px;
+  }
+}
+
+// Visually hidden utility for the ARIA live region
+.#{$prefix}--visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

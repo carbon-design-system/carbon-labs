@@ -1794,6 +1794,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-focus-region@workspace:packages/react/src/components/FocusRegion":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-focus-region@workspace:packages/react/src/components/FocusRegion"
+  dependencies:
+    "@carbon-labs/utilities": "npm:canary"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-plane-stack-3d@workspace:packages/react/src/components/PlaneStack3D":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-plane-stack-3d@workspace:packages/react/src/components/PlaneStack3D"
@@ -2047,6 +2055,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/utilities@npm:canary":
+  version: 0.14.1-canary.387
+  resolution: "@carbon-labs/utilities@npm:0.14.1-canary.387"
+  dependencies:
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+  checksum: 10c0/17f791a40f4f55689924b355fdecbfb254abd99325e1aee86ef96b7adb95e57d5be0b0eb928083137a6bad8a667d1bdfe33af2946502fa48434a133fb43756a3
+  languageName: node
+  linkType: hard
+
 "@carbon-labs/vscode-snippets@workspace:packages/vscode-snippets":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/vscode-snippets@workspace:packages/vscode-snippets"
@@ -2142,6 +2160,16 @@ __metadata:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.28.0"
     "@carbon/web-components": "npm:^2.41.0"
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/wc-focus-region@workspace:packages/web-components/src/components/focus-region":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/wc-focus-region@workspace:packages/web-components/src/components/focus-region"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.2"
+    "@carbon-labs/utilities": "npm:0.21.0"
+    lit: "npm:^3.2.1"
   languageName: unknown
   linkType: soft
 

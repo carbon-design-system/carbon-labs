@@ -1,0 +1,1 @@
+import{t as e}from"./if-defined-BNXx_dq_.js";var t=t=>e(t===``?void 0:t??void 0);export{t};

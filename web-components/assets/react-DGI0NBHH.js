@@ -1,1 +1,0 @@
-import{t as e}from"./lib-C6Fu7zdd.js";export{e as MDXProvider};

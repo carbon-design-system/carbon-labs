@@ -1,0 +1,1 @@
+import{t as e}from"./lib-DwuFC3tE.js";export{e as MDXProvider};

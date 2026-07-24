@@ -1,1 +1,0 @@
-import{$t as e}from"./diagramElement-C208M90L.js";function t(e,t){e.accDescr&&t.setAccDescription?.(e.accDescr),e.accTitle&&t.setAccTitle?.(e.accTitle),e.title&&t.setDiagramTitle?.(e.title)}e(t,`populateCommonDb`);export{t};

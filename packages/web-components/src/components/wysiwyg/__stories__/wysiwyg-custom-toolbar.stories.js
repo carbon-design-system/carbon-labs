@@ -49,6 +49,14 @@ const CustomTable = {
               ?.chain()
               .focus()
               .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+              .command(({ tr, state, dispatch }) => {
+                const end = state.selection.$from.after(1);
+                if (!tr.doc.nodeAt(end)) {
+                  tr.insert(end, state.schema.nodes.paragraph.create());
+                }
+                dispatch?.(tr);
+                return true;
+              })
               .run()}>
           ${iconLoader(Table, { slot: 'icon' })}
           <span slot="tooltip-content">Insert Table</span>

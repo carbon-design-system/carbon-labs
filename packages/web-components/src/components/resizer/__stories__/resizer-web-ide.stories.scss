@@ -10,7 +10,7 @@
 
 #main-content {
   position: unset;
-  padding: 0 !important;
+  padding: 0;
 }
 
 .web-ide {
@@ -91,7 +91,7 @@
     }
 
     &--collapsed {
-      inline-size: 0 !important;
+      inline-size: 0;
       min-inline-size: 0;
       visibility: hidden;
     }
@@ -228,7 +228,7 @@
     }
 
     &--collapsed {
-      block-size: 0 !important;
+      block-size: 0;
       min-block-size: 0;
       visibility: hidden;
     }

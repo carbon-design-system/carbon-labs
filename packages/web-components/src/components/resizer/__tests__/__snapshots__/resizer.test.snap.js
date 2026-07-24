@@ -47,3 +47,26 @@ snapshots[
 </clabs-resizer-grid>
 `;
 /* end snapshot clabs-resizer-grid should render clabs-resizer-grid */
+snapshots["clabs-resizer-handle should render clabs-resizer-handle"] = 
+`<clabs-resizer-handle
+  aria-live="assertive"
+  aria-orientation="horizontal"
+  aria-valuemax="100"
+  aria-valuemin="0"
+  aria-valuenow="50"
+  role="separator"
+  tabindex="0"
+>
+</clabs-resizer-handle>
+`;
+/* end snapshot clabs-resizer-handle should render clabs-resizer-handle */
+
+snapshots["clabs-resizer-handle-pivot should render clabs-resizer-handle-pivot"] = 
+`<clabs-resizer-handle-pivot
+  position=""
+  slot="pivot"
+>
+</clabs-resizer-handle-pivot>
+`;
+/* end snapshot clabs-resizer-handle-pivot should render clabs-resizer-handle-pivot */
+

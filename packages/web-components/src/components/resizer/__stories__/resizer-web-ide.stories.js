@@ -354,7 +354,27 @@ function makeResizerHandlers({
     }
   };
 
-  return { onStart, onDrag, onEnd, onReset };
+  /**
+   * Handles Home/End keys: jumps the adjacent element to its min or max size.
+   * The component fires these keys but cannot resolve min/max without a grid,
+   * so the story handles them directly here.
+   * @param {KeyboardEvent} e - The native keydown event on the handle element
+   */
+  const onKeyDown = (e) => {
+    if (e.key !== 'Home' && e.key !== 'End') {
+      return;
+    }
+    const el = getEl(e.currentTarget);
+    if (!el) {
+      return;
+    }
+    el.style.transition = transition;
+    el.style[prop] =
+      e.key === 'Home' ? `${min}px` : `${max ? max() : 9999}px`;
+    updateResizerAria(e.currentTarget, ariaOrientation);
+  };
+
+  return { onStart, onDrag, onEnd, onReset, onKeyDown };
 }
 
 /**
@@ -372,6 +392,7 @@ export const WebIDE = (args) => {
       explorer: false,
       outline: false,
     },
+    sizes: {},
     activeView: VIEWS.EXPLORER,
     tabs: [
       { id: 'App.tsx', label: 'App.tsx', content: FILE_CONTENTS['App.tsx'] },
@@ -411,12 +432,44 @@ export const WebIDE = (args) => {
   styleEl.textContent = storyStyles;
   root.appendChild(styleEl);
 
+  /** Selector and CSS property for each collapsible panel. */
+  const panelMeta = {
+    primarySidebar: { selector: '.web-ide__primary-sidebar', prop: 'inlineSize' },
+    secondarySidebar: { selector: '.web-ide__secondary-sidebar', prop: 'inlineSize' },
+    panel: { selector: '.web-ide__panel', prop: 'blockSize' },
+  };
+
+  /**
+   * Sets the inline size/blockSize on a panel element directly, preserving the
+   * last user-resized value across collapse/expand cycles.
+   * @param {string} key - Key of the panel in state.collapsed
+   * @param {boolean} collapse - Whether to collapse (true) or expand (false)
+   */
+  const applyCollapse = (key, collapse) => {
+    const meta = panelMeta[key];
+    if (!meta) {
+      return;
+    }
+    const el = root.querySelector(meta.selector);
+    if (!el) {
+      return;
+    }
+    if (collapse) {
+      state.sizes[key] = el.style[meta.prop];
+      el.style[meta.prop] = '0';
+    } else {
+      el.style[meta.prop] = state.sizes[key] ?? '';
+    }
+  };
+
   /**
    * Toggles the collapsed state of the named panel and triggers a re-render.
    * @param {string} key - Key of the panel in state.collapsed to toggle
    */
   const togglePanel = (key) => {
-    state.collapsed[key] = !state.collapsed[key];
+    const collapsing = !state.collapsed[key];
+    applyCollapse(key, collapsing);
+    state.collapsed[key] = collapsing;
     rerender();
   };
 
@@ -425,7 +478,10 @@ export const WebIDE = (args) => {
    * @param {string} view - View identifier (e.g. VIEWS.EXPLORER)
    */
   const handleViewToggle = (view) => {
-    if (state.activeView === view && !state.collapsed.primarySidebar) {
+    const collapsing =
+      state.activeView === view && !state.collapsed.primarySidebar;
+    applyCollapse('primarySidebar', collapsing);
+    if (collapsing) {
       state.collapsed.primarySidebar = true;
     } else {
       state.activeView = view;
@@ -630,7 +686,8 @@ export const WebIDE = (args) => {
                   @resize-start=${explorerHandlers.onStart}
                   @resize-drag=${explorerHandlers.onDrag}
                   @resize-end=${explorerHandlers.onEnd}
-                  @resize-reset=${explorerHandlers.onReset}>
+                  @resize-reset=${explorerHandlers.onReset}
+                  @keydown=${explorerHandlers.onKeyDown}>
                 </clabs-resizer-handle>
                 <div
                   class="web-ide__section web-ide__section--outline ${collapsed.outline
@@ -672,7 +729,8 @@ export const WebIDE = (args) => {
           @resize-start=${primaryHandlers.onStart}
           @resize-drag=${primaryHandlers.onDrag}
           @resize-end=${primaryHandlers.onEnd}
-          @resize-reset=${primaryHandlers.onReset}>
+          @resize-reset=${primaryHandlers.onReset}
+          @keydown=${primaryHandlers.onKeyDown}>
         </clabs-resizer-handle>
 
         <div class="web-ide__main-content">
@@ -727,7 +785,8 @@ ${tab.content}</pre
             @resize-start=${panelHandlers.onStart}
             @resize-drag=${panelHandlers.onDrag}
             @resize-end=${panelHandlers.onEnd}
-            @resize-reset=${panelHandlers.onReset}>
+            @resize-reset=${panelHandlers.onReset}
+            @keydown=${panelHandlers.onKeyDown}>
           </clabs-resizer-handle>
 
           <div
@@ -784,7 +843,8 @@ ${tab.content}</pre
           @resize-start=${secondaryHandlers.onStart}
           @resize-drag=${secondaryHandlers.onDrag}
           @resize-end=${secondaryHandlers.onEnd}
-          @resize-reset=${secondaryHandlers.onReset}>
+          @resize-reset=${secondaryHandlers.onReset}
+          @keydown=${secondaryHandlers.onKeyDown}>
         </clabs-resizer-handle>
 
         <div

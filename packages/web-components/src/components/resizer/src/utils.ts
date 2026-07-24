@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { ResizerAxis, Position } from './types.js';
+import type { Position } from './types.js';
 
 /**
  * Calculate the ratio for flex sizing
@@ -34,29 +34,6 @@ export function formatSplitRatio(percentage: number): string {
 }
 
 /**
- * Determine axis from slot name or cursor style
- * @param {string | null} slot - Slot attribute value
- * @param {string} [cursor] - Computed cursor style
- * @returns {ResizerAxis} Determined axis
- */
-export function determineAxis(
-  slot: string | null,
-  cursor?: string
-): ResizerAxis {
-  if (slot === 'handle-vertical') {
-    return 'y';
-  }
-  if (slot === 'handle-horizontal') {
-    return 'x';
-  }
-  // Fallback to cursor detection
-  if (cursor && cursor.includes('ew')) {
-    return 'x';
-  }
-  return 'y'; // Default
-}
-
-/**
  * Check if two positions are within distance threshold
  * @param {Position} pos1 - First position
  * @param {Position} pos2 - Second position
@@ -71,24 +48,6 @@ export function isWithinDistance(
   const dx = Math.abs(pos1.x - pos2.x);
   const dy = Math.abs(pos1.y - pos2.y);
   return dx < threshold && dy < threshold;
-}
-
-/**
- * Safely query selector with error handling
- * @param {Element | Document} root - Root element to query from
- * @param {string} selector - CSS selector
- * @returns {T | null} Found element or null
- */
-export function safeQuerySelector<T extends HTMLElement = HTMLElement>(
-  root: Element | Document,
-  selector: string
-): T | null {
-  try {
-    return root.querySelector<T>(selector);
-  } catch (error) {
-    console.error(`Error querying selector "${selector}":`, error);
-    return null;
-  }
 }
 
 /**
@@ -159,15 +118,4 @@ export function createCustomEvent<T = any>(
     detail,
     ...options,
   });
-}
-
-/**
- * Get orientation from axis
- * @param {ResizerAxis} axis - Resize axis
- * @returns {'horizontal' | 'vertical'} ARIA orientation value
- */
-export function getOrientationFromAxis(
-  axis: ResizerAxis
-): 'horizontal' | 'vertical' {
-  return axis === 'x' ? 'vertical' : 'horizontal';
 }

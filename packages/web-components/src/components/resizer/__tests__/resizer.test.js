@@ -176,7 +176,6 @@ describe('clabs-resizer-handle', function () {
 
     const { detail } = await oneEvent(handle, 'resize-start');
     expect(detail).to.exist;
-    expect(detail.axis).to.exist;
     expect(detail.startPosition).to.exist;
     expect(detail.startPosition.x).to.equal(100);
     expect(detail.startPosition.y).to.equal(100);
@@ -205,7 +204,6 @@ describe('clabs-resizer-handle', function () {
 
     const { detail } = await oneEvent(handle, 'resize-drag');
     expect(detail).to.exist;
-    expect(detail.axis).to.exist;
     expect(detail.delta).to.exist;
     expect(detail.position).to.exist;
   });
@@ -233,7 +231,6 @@ describe('clabs-resizer-handle', function () {
 
     const { detail } = await oneEvent(handle, 'resize-end');
     expect(detail).to.exist;
-    expect(detail.axis).to.exist;
     expect(detail.delta).to.be.a('number');
   });
 

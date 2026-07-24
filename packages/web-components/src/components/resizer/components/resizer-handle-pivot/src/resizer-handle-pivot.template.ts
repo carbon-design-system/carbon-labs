@@ -8,10 +8,10 @@
  */
 
 import { LitElement, html } from 'lit';
-// @ts-ignore
+import { property } from 'lit/decorators.js';
 import styles from './resizer-handle-pivot.scss?inline';
 
-/** Public interface of <resize-handle> */
+/** Public interface of <clabs-resizer-handle> */
 interface ResizerHandle extends HTMLElement {
   startDrag(e: PointerEvent): void;
   resetSizes(e: MouseEvent): void;
@@ -25,47 +25,104 @@ interface ResizerHandle extends HTMLElement {
 class ResizerHandlePivotTemplate extends LitElement {
   static styles = styles;
 
+  /**
+   * ID of the `clabs-resizer-handle` this pivot controls.
+   * When set, the pivot drives that handle regardless of DOM structure —
+   * works in both declarative (grid) and imperative layouts.
+   */
+  @property({ type: String, reflect: true })
+  for?: string;
+
   private _cachedHandle: ResizerHandle | null = null;
 
   /**
-   * Get the sibling resizer handle controlled by this pivot
-   * @returns {ResizerHandle | null} The sibling resizer handle
+   * Resolve the `clabs-resizer-handle` this pivot controls.
+   *
+   * Priority order:
+   * 1. `for` attribute — explicit ID lookup on the document root.
+   * 2. Inline shadow DOM — pivot rendered by `<clabs-resizer-handle pivot="…">`;
+   *    walks the grid structure starting from the shadow host to find the paired
+   *    horizontal handle in the outer grid (declarative mode only).
+   * 3. Parent-element slot traversal — legacy child-slot path.
+   *
+   * @returns {ResizerHandle | null} The handle to control, or null.
    */
   private getHandle(): ResizerHandle | null {
     // Return cached handle if available
     if (this._cachedHandle) {
       return this._cachedHandle;
     }
-    // Get the vertical handle that contains this pivot
+
+    // 1. Explicit `for` attribute — highest priority, works everywhere.
+    //    Search the immediate root first (ShadowRoot or Document), then fall
+    //    back to the main document so pivots rendered inside a handle's own
+    //    shadow root can still reach handles in the light DOM.
+    if (this.for) {
+      const root = this.getRootNode() as Document | ShadowRoot;
+      const localTarget = (root as any).getElementById
+        ? (root as Document).getElementById(this.for)
+        : (root as ShadowRoot).querySelector(`#${CSS.escape(this.for)}`);
+      const target =
+        localTarget ??
+        (root !== document ? document.getElementById(this.for) : null);
+      if (target && target.tagName?.toLowerCase() === 'clabs-resizer-handle') {
+        this._cachedHandle = target as ResizerHandle;
+        return this._cachedHandle;
+      }
+    }
+
+    // 2. Inline mode: pivot lives inside the handle's own shadow root
+    const root = this.getRootNode();
+    if (root instanceof ShadowRoot) {
+      const host = root.host as ResizerHandle;
+      if (host && host.tagName?.toLowerCase() === 'clabs-resizer-handle') {
+        // Walk the grid structure from the host to find the outer horizontal handle
+        const verticalHandle = host as HTMLElement;
+        const innerGrid = verticalHandle.closest('clabs-resizer-grid');
+        if (innerGrid) {
+          const panel = innerGrid.closest('clabs-resizer-panel');
+          if (panel) {
+            const outerGrid = panel.closest('clabs-resizer-grid');
+            if (outerGrid) {
+              const horizontalHandle = outerGrid.querySelector(
+                'clabs-resizer-handle[slot="handle-horizontal"]'
+              ) as ResizerHandle | null;
+              this._cachedHandle = horizontalHandle;
+              return horizontalHandle;
+            }
+          }
+        }
+        // Imperative mode without grid context: return null — the pivot is an
+        // extended grab area; the host's own pointerdown handles the drag.
+        return null;
+      }
+    }
+
+    // 3. Declarative / child-slot mode: pivot is a slotted child of the handle
     const verticalHandle = this.parentElement;
     if (!verticalHandle) {
       return null;
     }
 
-    // Get the inner grid that contains the vertical handle
     const innerGrid = verticalHandle.closest('clabs-resizer-grid');
     if (!innerGrid) {
       return null;
     }
 
-    // Get the panel that contains the inner grid
     const panel = innerGrid.closest('clabs-resizer-panel');
     if (!panel) {
       return null;
     }
 
-    // Get the outer grid that contains the panel
     const outerGrid = panel.closest('clabs-resizer-grid');
     if (!outerGrid) {
       return null;
     }
 
-    // Find the horizontal handle in the outer grid
     const horizontalHandle = outerGrid.querySelector(
       'clabs-resizer-handle[slot="handle-horizontal"]'
     ) as ResizerHandle | null;
 
-    // Cache the handle for later use (e.g., in disconnectedCallback)
     this._cachedHandle = horizontalHandle;
     return horizontalHandle;
   }
@@ -75,12 +132,24 @@ class ResizerHandlePivotTemplate extends LitElement {
    */
   connectedCallback(): void {
     super.connectedCallback();
-    this.setAttribute('slot', 'pivot');
     this.addEventListener('pointerdown', this.handlePointerDown);
     this.addEventListener('pointerenter', this.handlePointerEnter);
     this.addEventListener('pointerleave', this.handlePointerLeave);
     this.addEventListener('dblclick', this.resetSizes);
-    this.setAttribute('position', (this.parentElement as any).pivot);
+
+    // Inline mode: rendered inside the handle's shadow DOM — no slot needed
+    // and no `pivot` property to read from parentElement.
+    const root = this.getRootNode();
+    const isInlineShadow =
+      root instanceof ShadowRoot &&
+      (root.host as HTMLElement)?.tagName?.toLowerCase() ===
+        'clabs-resizer-handle';
+
+    if (!isInlineShadow) {
+      // Declarative / child-slot mode
+      this.setAttribute('slot', 'pivot');
+      this.setAttribute('position', (this.parentElement as any)?.pivot ?? '');
+    }
   }
 
   /**

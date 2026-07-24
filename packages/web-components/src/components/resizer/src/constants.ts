@@ -15,8 +15,6 @@ export const DOUBLE_TAP = {
   MAX_TIME_MS: 300,
   /** Maximum distance between taps to be considered a double-tap (px) */
   MAX_DISTANCE_PX: 24,
-  /** Haptic feedback duration for double-tap (ms) */
-  VIBRATION_MS: 8,
 } as const;
 
 /**

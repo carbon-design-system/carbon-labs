@@ -108,6 +108,7 @@ export class HybridIpaasHeader extends LitElement {
     super.disconnectedCallback();
     if (this.sessionManager) {
       this.sessionManager.stopRefreshSchedule();
+      this.sessionManager.unregisterActivityListeners();
       this.sessionManager = null;
     }
     document.removeEventListener(CUSTOM_EVENT_NAME, this._customEventListener);
@@ -196,6 +197,7 @@ export class HybridIpaasHeader extends LitElement {
         basePath: this.basePath,
       });
       this.sessionManager.startRefreshSchedule();
+      this.sessionManager.registerActivityListeners();
     }
   }
 

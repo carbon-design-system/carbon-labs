@@ -150,6 +150,7 @@
     &:hover {
       background-color: var(--cds-layer-hover-02);
     }
+
     &:active {
       background-color: var(--cds-background-active);
     }
@@ -169,9 +170,9 @@
   }
 
   &__section-content {
+    overflow: auto;
     background-color: var(--cds-layer);
     block-size: -webkit-fill-available;
-    overflow: auto;
     font-size: 13px;
     line-height: 1.5;
   }
@@ -262,15 +263,19 @@
   &__panel-text--secondary {
     color: var(--cds-text-secondary);
   }
+
   &__panel-text--success {
     color: var(--cds-support-success);
   }
+
   &__panel-text--link {
     color: var(--cds-link-primary);
   }
+
   &__panel-line--spaced {
     margin-block-start: var(--cds-spacing-03);
   }
+
   &__panel-line {
     margin-block-start: var(--cds-spacing-02);
   }

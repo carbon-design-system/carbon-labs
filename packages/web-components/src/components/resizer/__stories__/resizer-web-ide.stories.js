@@ -369,8 +369,7 @@ function makeResizerHandlers({
       return;
     }
     el.style.transition = transition;
-    el.style[prop] =
-      e.key === 'Home' ? `${min}px` : `${max ? max() : 9999}px`;
+    el.style[prop] = e.key === 'Home' ? `${min}px` : `${max ? max() : 9999}px`;
     updateResizerAria(e.currentTarget, ariaOrientation);
   };
 
@@ -434,8 +433,14 @@ export const WebIDE = (args) => {
 
   /** Selector and CSS property for each collapsible panel. */
   const panelMeta = {
-    primarySidebar: { selector: '.web-ide__primary-sidebar', prop: 'inlineSize' },
-    secondarySidebar: { selector: '.web-ide__secondary-sidebar', prop: 'inlineSize' },
+    primarySidebar: {
+      selector: '.web-ide__primary-sidebar',
+      prop: 'inlineSize',
+    },
+    secondarySidebar: {
+      selector: '.web-ide__secondary-sidebar',
+      prop: 'inlineSize',
+    },
     panel: { selector: '.web-ide__panel', prop: 'blockSize' },
   };
 

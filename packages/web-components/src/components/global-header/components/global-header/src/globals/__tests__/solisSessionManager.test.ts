@@ -197,4 +197,62 @@ describe('solisSessionManager', () => {
       );
     });
   });
+
+  describe('registerActivityListeners', () => {
+    let clock;
+
+    beforeEach(() => {
+      clock = sinon.useFakeTimers({
+        toFake: ['setTimeout', 'clearTimeout'],
+      });
+    });
+
+    afterEach(() => {
+      clock.restore();
+    });
+
+    it('registers an event listener for each activity event', () => {
+      const addEventListenerStub = sinon.stub(document, 'addEventListener');
+      const sessionManager = new solisSessionManager({});
+
+      sessionManager.registerActivityListeners();
+      expect(addEventListenerStub.callCount).to.equal(7);
+    });
+
+    it('resets idle state when an activity event is dispatched', () => {
+      const sessionManager = new solisSessionManager({});
+
+      sessionManager['isIdle'] = true;
+
+      sessionManager.registerActivityListeners();
+      document.dispatchEvent(new Event('click'));
+
+      expect(sessionManager.isTabIdle()).to.be.false;
+    });
+  });
+
+  describe('unregisterActivityListeners', () => {
+    let clock;
+
+    beforeEach(() => {
+      clock = sinon.useFakeTimers({
+        toFake: ['setTimeout', 'clearTimeout'],
+      });
+    });
+
+    afterEach(() => {
+      clock.restore();
+    });
+
+    it('removes the event listeners from each activity event', () => {
+      const removeEventListenerStub = sinon.stub(
+        document,
+        'removeEventListener'
+      );
+      const sessionManager = new solisSessionManager({});
+      sessionManager.registerActivityListeners();
+      sessionManager.unregisterActivityListeners();
+      expect(removeEventListenerStub.callCount).to.equal(7);
+    });
+  });
 });

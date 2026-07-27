@@ -1834,6 +1834,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-registration-flow@workspace:packages/react/src/components/RegistrationFlow":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-registration-flow@workspace:packages/react/src/components/RegistrationFlow"
+  dependencies:
+    "@carbon-labs/utilities": "workspace:^"
+    "@carbon/styles": "npm:^1.110.1"
+    classnames: "npm:^2.5.1"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-resizer@npm:^0.20.0":
   version: 0.20.0
   resolution: "@carbon-labs/react-resizer@npm:0.20.0"
@@ -2032,7 +2042,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon-labs/utilities@npm:0.28.0, @carbon-labs/utilities@workspace:packages/utilities":
+"@carbon-labs/utilities@npm:0.28.0, @carbon-labs/utilities@workspace:^, @carbon-labs/utilities@workspace:packages/utilities":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/utilities@workspace:packages/utilities"
   dependencies:

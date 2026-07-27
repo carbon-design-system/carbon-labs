@@ -69,6 +69,11 @@ const config = {
     );
 
     config.module.rules.push({
+      test: /\.svg$/,
+      type: 'asset/resource',
+    });
+
+    config.module.rules.push({
       test: /\.s?css$/,
       sideEffects: true,
       use: [

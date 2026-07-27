@@ -19,7 +19,7 @@ import { initCarousel } from '@carbon/utilities';
 
 export default {
   title: 'Components/RegistrationFlow',
-  tags: ['squad', 'incubating'],
+  tags: ['squad', 'incubating', '!dev'],
   component: RegistrationViewStack,
   parameters: {
     docs: {

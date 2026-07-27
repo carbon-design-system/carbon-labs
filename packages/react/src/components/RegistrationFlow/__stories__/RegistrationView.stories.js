@@ -14,7 +14,7 @@ import './RegistrationFlow.stories.scss';
 import React from 'react';
 export default {
   title: 'Components/RegistrationFlow',
-  tags: ['squad', 'incubating'],
+  tags: ['squad', 'incubating', '!dev'],
   component: RegistrationView,
   parameters: {
     docs: {

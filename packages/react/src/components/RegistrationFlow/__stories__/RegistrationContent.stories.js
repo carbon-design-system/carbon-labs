@@ -15,7 +15,7 @@ import './RegistrationFlow.stories.scss';
 
 export default {
   title: 'Components/RegistrationFlow',
-  tags: ['squad', 'incubating'],
+  tags: ['squad', 'incubating', '!dev'],
   component: RegistrationContent,
   parameters: {
     docs: {

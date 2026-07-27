@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.193.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.192.0...@carbon-labs/react@0.193.0) (2026-07-25)
+
+
+### Features
+
+* **UIShell:** expose depth on SideNavMenu button as data-depth attribute ([#1321](https://github.com/carbon-design-system/carbon-labs/issues/1321)) ([37e1f8d](https://github.com/carbon-design-system/carbon-labs/commit/37e1f8d8481ae756d2a40cf64d2a7141e80bab1f))
+
+
+
+
+
 # [0.192.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.191.0...@carbon-labs/react@0.192.0) (2026-07-23)
 
 

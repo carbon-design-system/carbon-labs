@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.194.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.193.0...@carbon-labs/react@0.194.0) (2026-07-27)
+
+
+### Features
+
+* registration flow ([#1309](https://github.com/carbon-design-system/carbon-labs/issues/1309)) ([83756e4](https://github.com/carbon-design-system/carbon-labs/commit/83756e4655067489d9ae5c73d80910ef809beead))
+
+
+
+
+
+# [0.193.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.192.0...@carbon-labs/react@0.193.0) (2026-07-25)
+
+
+### Features
+
+* **UIShell:** expose depth on SideNavMenu button as data-depth attribute ([#1321](https://github.com/carbon-design-system/carbon-labs/issues/1321)) ([37e1f8d](https://github.com/carbon-design-system/carbon-labs/commit/37e1f8d8481ae756d2a40cf64d2a7141e80bab1f))
+
+
+
+
+
+# [0.192.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.191.0...@carbon-labs/react@0.192.0) (2026-07-23)
+
+
+### Features
+
+* add lazy loading for components which needs inital focus on page load ([#1307](https://github.com/carbon-design-system/carbon-labs/issues/1307)) ([cbc9d7a](https://github.com/carbon-design-system/carbon-labs/commit/cbc9d7ac5bfcf9e17f2966ba4adb3856adcd9b16))
+
+
+
+
+
+# [0.191.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.190.0...@carbon-labs/react@0.191.0) (2026-07-15)
+
+
+### Bug Fixes
+
+* **datepicker:** fix to focus management per issue 1174 ([#1280](https://github.com/carbon-design-system/carbon-labs/issues/1280)) ([1bcb702](https://github.com/carbon-design-system/carbon-labs/commit/1bcb702216f56645470439a237d4c7889a45e7db))
+
+
+
+
+
 # [0.190.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.189.0...@carbon-labs/react@0.190.0) (2026-07-06)
 
 

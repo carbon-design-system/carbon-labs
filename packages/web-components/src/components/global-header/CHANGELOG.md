@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.84.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.83.0...@carbon-labs/wc-global-header@0.84.0) (2026-07-24)
+
+
+### Features
+
+* **global-header:** Solis idle timeout ([#1313](https://github.com/carbon-design-system/carbon-labs/issues/1313)) ([a480b53](https://github.com/carbon-design-system/carbon-labs/commit/a480b53848bd21d1438fc4cf01b8df5a2afe9313))
+
+
+
+
+
+# [0.83.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.82.0...@carbon-labs/wc-global-header@0.83.0) (2026-07-15)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.82.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.81.0...@carbon-labs/wc-global-header@0.82.0) (2026-07-15)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.81.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.80.0...@carbon-labs/wc-global-header@0.81.0) (2026-07-10)
+
+
+### Features
+
+* **global-header:** Solis token refresh logic ([#1302](https://github.com/carbon-design-system/carbon-labs/issues/1302)) ([01a6a8b](https://github.com/carbon-design-system/carbon-labs/commit/01a6a8ba019b9a942fdc8f41d34cc3e8e2af3828))
+
+
+
+
+
 # [0.80.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.79.0...@carbon-labs/wc-global-header@0.80.0) (2026-07-07)
 
 

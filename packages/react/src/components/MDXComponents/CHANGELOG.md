@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.27.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.26.0...@carbon-labs/mdx-components@0.27.0) (2026-07-23)
+
+
+### Features
+
+* add lazy loading for components which needs inital focus on page load ([#1307](https://github.com/carbon-design-system/carbon-labs/issues/1307)) ([cbc9d7a](https://github.com/carbon-design-system/carbon-labs/commit/cbc9d7ac5bfcf9e17f2966ba4adb3856adcd9b16))
+
+
+
+
+
 # [0.26.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.25.0...@carbon-labs/mdx-components@0.26.0) (2026-05-19)
 
 

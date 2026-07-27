@@ -12,9 +12,9 @@ export default {
   title: 'Components/MDX Components/StorybookDemo',
   component: StorybookDemo,
   argTypes: {
-    fluid: {
+    lazy: {
       control: 'boolean',
-      description: 'Use FluidDropdown instead of regular Dropdown',
+      description: 'Defer iframe loading until it enters the viewport',
     },
     themeSelector: {
       control: 'boolean',
@@ -79,13 +79,5 @@ Default.args = {
   themeSelector: true,
   wide: false,
   tall: false,
-  fluid: false,
-};
-
-export const WithFluidDropdown = Template.bind({});
-WithFluidDropdown.args = {
-  themeSelector: true,
-  wide: true,
-  tall: true,
-  fluid: true,
+  lazy: false,
 };

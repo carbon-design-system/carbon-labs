@@ -113,7 +113,7 @@ export const TagInput = ({
 
   const tags = value;
   const inputRef = useRef<HTMLInputElement>(null);
-  const tagRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const tagRefs = useRef<(HTMLLIElement | null)[]>([]);
   const [focusedTagIndex, setFocusedTagIndex] = useState<number | null>(null);
   const [liveMessage, setLiveMessage] = useState('');
 

@@ -32,7 +32,7 @@ interface StorybookDemoProps {
 }
 
 /**
- * The `<StorybookDemo>` component displays an iframe embed for the storybook story
+ * The `<StorybookDemo>` component displays an iframe embed for the Storybook story
  * for a component. It has the option to show different variants and themes. It also has a
  * `wide` prop to span the full width, and `tall` for larger components. If you would like
  * to use the theme selector, please use the Carbon React Storybook url,

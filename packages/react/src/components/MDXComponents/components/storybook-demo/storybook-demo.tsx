@@ -97,8 +97,10 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
   const iframeUrl =
     url + '/iframe.html?id=' + variant + '&globals=theme:' + theme;
 
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  // Tracks whether the iframe has entered the viewport at least once.
+  // For lazy demos, observe the Link below the iframe — once it enters the
+  // viewport the user has scrolled the whole component into view, so it's
+  // safe to load the iframe without causing a scroll jump.
+  const linkRef = useRef<HTMLAnchorElement>(null);
   const [isVisible, setIsVisible] = useState(!lazy);
 
   useEffect(() => {
@@ -110,8 +112,8 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
 
     setIsVisible(false);
 
-    const iframe = iframeRef.current;
-    if (!iframe) {
+    const link = linkRef.current;
+    if (!link) {
       return;
     }
 
@@ -122,10 +124,10 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
           observer.disconnect();
         }
       },
-      { rootMargin: '300px', threshold: 0 }
+      { rootMargin: '0px', threshold: 0 }
     );
 
-    observer.observe(iframe);
+    observer.observe(link);
     return () => {
       observer.disconnect();
     };
@@ -176,7 +178,6 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
       <Grid condensed>
         <Column sm={4} md={8} lg={columnWidth} className={demoClassNames}>
           <iframe
-            ref={iframeRef}
             title="Component demo"
             className={withPrefix('iframe')}
             src={isVisible ? iframeUrl : undefined}
@@ -191,6 +192,7 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
             This live demo contains only a preview of functionality and styles
             available for this component. View the{' '}
             <Link
+              ref={linkRef}
               href={`${url}/?path=/story/${variant}&globals=theme:${theme}`}>
               full demo
             </Link>{' '}

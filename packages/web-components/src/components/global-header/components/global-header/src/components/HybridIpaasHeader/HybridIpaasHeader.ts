@@ -74,6 +74,7 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: Boolean }) addCookiePreferences = false;
   @property({ type: Boolean }) solisSessionManagerEnabled = false; // toggle to enable/disable the Solis session manager
   @property({ type: Number }) solisSessionRefreshInterval = 25; // might not need Solis token refresh interval to be configurable
+  @property({ type: Number }) solisIdleTimeoutInterval = 28; // might not need Solis idle timeout interval to be configurable
 
   @state()
   headerOptions: HeaderProps = {
@@ -194,6 +195,7 @@ export class HybridIpaasHeader extends LitElement {
     if (!this.sessionManager) {
       this.sessionManager = new solisSessionManager({
         tokenRefreshInterval: this.solisSessionRefreshInterval,
+        idleTimeoutInterval: this.solisIdleTimeoutInterval,
         basePath: this.basePath,
       });
       this.sessionManager.startRefreshSchedule();

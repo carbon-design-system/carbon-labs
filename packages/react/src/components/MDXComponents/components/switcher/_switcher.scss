@@ -1,0 +1,118 @@
+/*
+ * Copyright IBM Corp. 2022, 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/spacing' as spacing;
+@use '@carbon/react/scss/colors' as colors;
+@use '@carbon/react/scss/type' as type;
+@use '@carbon/react/scss/breakpoint' as breakpoint;
+@use '@carbon/react/scss/motion' as motion;
+
+@use '../utils' as *;
+
+// ----------------------------------------------------------------------------
+// Nav container
+// ----------------------------------------------------------------------------
+
+.#{with-prefix('switcher')} {
+  position: fixed;
+  z-index: 10000;
+  inset-block-start: 48px;
+  inset-inline-end: 0;
+  block-size: 100%;
+  inline-size: 16rem;
+  overflow-y: hidden;
+  max-block-size: var(--#{with-prefix('switcher-max-height')}, 0px);
+  background-color: colors.$gray-100;
+  border-inline-start: 1px solid colors.$gray-80;
+  color: colors.$white-0;
+  transform: translateX(16rem);
+  transition: all motion.$duration-fast-02 motion(exit);
+
+  @include breakpoint.breakpoint('lg') {
+    transform: translateX(0);
+    block-size: auto;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li:first-of-type {
+    margin-block-start: spacing.$spacing-05;
+  }
+
+  li:last-of-type {
+    margin-block-end: spacing.$spacing-05;
+  }
+}
+
+// ----------------------------------------------------------------------------
+// Open state
+// ----------------------------------------------------------------------------
+
+.#{with-prefix('switcher--open')} {
+  transform: translateX(0);
+  border-block-end: 1px solid colors.$gray-80;
+  box-shadow: -2px 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all motion.$duration-moderate-01 motion(entrance);
+
+  @include breakpoint.breakpoint('lg') {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+  }
+}
+
+// ----------------------------------------------------------------------------
+// Section divider
+// ----------------------------------------------------------------------------
+
+.#{with-prefix('switcher-divider')} {
+  margin: spacing.$spacing-07 spacing.$spacing-05 spacing.$spacing-03
+    spacing.$spacing-05;
+  padding-block-end: spacing.$spacing-02;
+  border-block-end: 1px solid colors.$gray-70;
+  color: colors.$gray-70;
+
+  span {
+    @include type.type-style('label-01');
+
+    color: colors.$gray-30;
+  }
+}
+
+// ----------------------------------------------------------------------------
+// Link
+// ----------------------------------------------------------------------------
+
+.#{with-prefix('switcher-link')} {
+  @include type.type-style('heading-01');
+
+  display: flex;
+  justify-content: space-between;
+  padding: 6px spacing.$spacing-05;
+  color: colors.$gray-30;
+  text-decoration: none;
+
+  &:hover {
+    background-color: #353535;
+    color: colors.$gray-10;
+  }
+
+  &:focus {
+    outline: 2px solid colors.$white-0;
+    outline-offset: -2px;
+  }
+}
+
+.#{with-prefix('switcher-link--disabled')} {
+  @include type.type-style('heading-01');
+
+  display: block;
+  padding: 6px spacing.$spacing-05;
+  color: colors.$gray-60;
+}

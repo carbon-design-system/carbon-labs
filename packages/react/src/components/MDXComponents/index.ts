@@ -41,6 +41,11 @@ export { PageTable } from './components/page-table/page-table';
 export { Preview } from './components/preview/preview';
 export { ResourceCard } from './components/resource-card/resource-card';
 export { StorybookDemo } from './components/storybook-demo/storybook-demo';
+export {
+  Switcher,
+  SwitcherDivider,
+  SwitcherLink,
+} from './components/switcher/switcher';
 export { Tab } from './components/tabs/tab';
 export { Tabs } from './components/tabs/tabs';
 export { Title } from './components/title/title';

@@ -1,0 +1,1 @@
+import{t as e}from"./lib-CERGfbNt.js";export{e as MDXProvider};

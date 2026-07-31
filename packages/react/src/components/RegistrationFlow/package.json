@@ -1,7 +1,6 @@
 {
   "name": "@carbon-labs/react-registration-flow",
-  "version": "0.0.1",
-  "author": "Your Name <your@email.com>",
+  "version": "0.2.0",
   "publishConfig": {
     "access": "public",
     "provenance": true

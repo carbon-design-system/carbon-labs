@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.28.0...@carbon-labs/mdx-components@0.29.0) (2026-07-29)
+
+
+### Bug Fixes
+
+* move ref from iframe to link ([#1329](https://github.com/carbon-design-system/carbon-labs/issues/1329)) ([277d901](https://github.com/carbon-design-system/carbon-labs/commit/277d9018bed04a19b0bb336447672bb9770663d2))
+
+
+
+
+
+# [0.28.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.27.0...@carbon-labs/mdx-components@0.28.0) (2026-07-29)
+
+**Note:** Version bump only for package @carbon-labs/mdx-components
+
+
+
+
+
 # [0.27.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.26.0...@carbon-labs/mdx-components@0.27.0) (2026-07-23)
 
 

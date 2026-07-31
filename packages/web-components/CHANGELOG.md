@@ -3,6 +3,61 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.165.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.164.0...@carbon-labs/web-components@0.165.0) (2026-07-30)
+
+
+### Bug Fixes
+
+* **global-header:** Pass Solis idle timeout down from header ([#1332](https://github.com/carbon-design-system/carbon-labs/issues/1332)) ([800525c](https://github.com/carbon-design-system/carbon-labs/commit/800525c4bded575dbe9fa4b6d7599f88a94d5013))
+
+
+
+
+
+# [0.164.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.163.0...@carbon-labs/web-components@0.164.0) (2026-07-28)
+
+
+### Bug Fixes
+
+* **global-header:** skip Solis CDN content assertions in CI ([#1328](https://github.com/carbon-design-system/carbon-labs/issues/1328)) ([0b83d3f](https://github.com/carbon-design-system/carbon-labs/commit/0b83d3f807881eb92bf29c1d6c67f77ef91ae9bf))
+
+
+
+
+
+# [0.163.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.162.0...@carbon-labs/web-components@0.163.0) (2026-07-24)
+
+
+### Features
+
+* **global-header:** Solis idle timeout ([#1313](https://github.com/carbon-design-system/carbon-labs/issues/1313)) ([a480b53](https://github.com/carbon-design-system/carbon-labs/commit/a480b53848bd21d1438fc4cf01b8df5a2afe9313))
+
+
+
+
+
+# [0.162.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.161.0...@carbon-labs/web-components@0.162.0) (2026-07-20)
+
+
+### Features
+
+* **clabs-wysiwyg:** add wysiwyg editor component ([#1269](https://github.com/carbon-design-system/carbon-labs/issues/1269)) ([375ecf6](https://github.com/carbon-design-system/carbon-labs/commit/375ecf677496b9746f480d7b076a05ccf46bf81d))
+
+
+
+
+
+# [0.161.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.160.0...@carbon-labs/web-components@0.161.0) (2026-07-15)
+
+
+### Bug Fixes
+
+* **datepicker:** fix to focus management per issue 1174 ([#1280](https://github.com/carbon-design-system/carbon-labs/issues/1280)) ([1bcb702](https://github.com/carbon-design-system/carbon-labs/commit/1bcb702216f56645470439a237d4c7889a45e7db))
+
+
+
+
+
 # [0.160.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.159.0...@carbon-labs/web-components@0.160.0) (2026-07-15)
 
 **Note:** Version bump only for package @carbon-labs/web-components

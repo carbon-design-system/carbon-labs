@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.198.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.197.0...@carbon-labs/react@0.198.0) (2026-07-30)
+
+
+### Bug Fixes
+
+* **global-header:** Pass Solis idle timeout down from header ([#1332](https://github.com/carbon-design-system/carbon-labs/issues/1332)) ([800525c](https://github.com/carbon-design-system/carbon-labs/commit/800525c4bded575dbe9fa4b6d7599f88a94d5013))
+
+
+
+
+
 # [0.197.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.196.0...@carbon-labs/react@0.197.0) (2026-07-29)
 
 

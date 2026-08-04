@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tooltip } from '@carbon/react';
 import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import { AriaLabels } from '../AnimatedHeader/types';
@@ -37,10 +37,12 @@ const HeaderTitle: React.FC<HeaderTitleProps> = ({
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__title`;
 
-  const currentLang =
-    typeof window !== 'undefined'
-      ? document.documentElement.lang || 'en'
-      : 'en';
+  const [currentLang, setCurrentLang] = useState('en');
+
+  useEffect(() => {
+    setCurrentLang(document.documentElement.lang || 'en');
+  }, []);
+
   const isNameFirst = NAME_FIRST_LANGS.includes(currentLang.slice(0, 2));
 
   return (

@@ -6,7 +6,7 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import lottie, { AnimationItem } from 'lottie-web';
 import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 
@@ -24,7 +24,16 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
 
   const animationContainer = useRef<HTMLDivElement>(null);
   const animRef = useRef<AnimationItem | null>(null);
-  const isReduced = window.matchMedia('(prefers-reduced-motion)').matches;
+  const [isReduced, setIsReduced] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion)');
+    setIsReduced(mq.matches);
+
+    const handler = (e: MediaQueryListEvent) => setIsReduced(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
 
   useEffect(() => {
     // Make sure any prior instance is destroyed before creating a new one

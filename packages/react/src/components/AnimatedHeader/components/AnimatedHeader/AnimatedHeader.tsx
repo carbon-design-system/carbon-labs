@@ -92,14 +92,12 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
         <div className={`${blockClass}__container--gradient`} />
 
         {headerAnimation ? (
-          typeof window !== 'undefined' && (
-            <Suspense fallback={null}>
-              <AnimatedBackground
-                headerAnimation={headerAnimation}
-                isOpen={isOpen}
-              />
-            </Suspense>
-          )
+          <Suspense fallback={null}>
+            <AnimatedBackground
+              headerAnimation={headerAnimation}
+              isOpen={isOpen}
+            />
+          </Suspense>
         ) : (
           <StaticBackground headerStatic={headerStatic} />
         )}

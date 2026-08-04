@@ -21,47 +21,23 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
         <div
           class="clabs--animated-header__title-and-actions"
         >
-          <span
-            class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--bottom cds--tooltip"
+          <h1
+            aria-label="Welcome, Drew"
+            class="clabs--animated-header__title"
+            data-expanded="true"
           >
-            <div
-              class="cds--tooltip-trigger__wrapper"
-            >
-              <h1
-                aria-label="Welcome, Drew"
-                aria-labelledby="tooltip-:r0:"
-                class="clabs--animated-header__title"
-                data-expanded="true"
-              >
-                <span
-                  class="clabs--animated-header__title-first"
-                >
-                  Welcome
-                  , 
-                </span>
-                <span
-                  class="clabs--animated-header__title-second"
-                >
-                  Drew
-                </span>
-              </h1>
-            </div>
             <span
-              aria-hidden="true"
-              class="cds--popover"
-              id="tooltip-:r0:"
-              role="tooltip"
+              class="clabs--animated-header__title-first"
             >
-              <span
-                class="cds--popover-content cds--tooltip-content"
-              >
-                Welcome, Drew
-              </span>
-              <span
-                class="cds--popover-caret"
-              />
+              Welcome
+              , 
             </span>
-          </span>
+            <span
+              class="clabs--animated-header__title-second"
+            >
+              Drew
+            </span>
+          </h1>
         </div>
       </div>
       <div
@@ -83,8 +59,8 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
           >
             <label
               class="cds--label cds--visually-hidden"
-              for="downshift-:r3:-toggle-button"
-              id="downshift-:r3:-label"
+              for="downshift-:r1:-toggle-button"
+              id="downshift-:r1:-label"
             >
               Label
             </label>
@@ -94,12 +70,12 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
             >
               <button
                 aria-activedescendant=""
-                aria-controls="downshift-:r3:-menu"
+                aria-controls="downshift-:r1:-menu"
                 aria-expanded="false"
                 aria-haspopup="listbox"
                 aria-label="Select a task group"
                 class="cds--list-box__field"
-                id="downshift-:r3:-toggle-button"
+                id="downshift-:r1:-toggle-button"
                 role="combobox"
                 tabindex="0"
                 title="AI Prompt Tile w/ two glass tiles"
@@ -135,9 +111,9 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                 </div>
               </button>
               <ul
-                aria-labelledby="downshift-:r3:-label"
+                aria-labelledby="downshift-:r1:-label"
                 class="cds--list-box__menu"
-                id="downshift-:r3:-menu"
+                id="downshift-:r1:-menu"
                 role="listbox"
               />
             </div>
@@ -156,8 +132,8 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
           >
             <label
               class="cds--label cds--visually-hidden"
-              for="downshift-:r5:-toggle-button"
-              id="downshift-:r5:-label"
+              for="downshift-:r3:-toggle-button"
+              id="downshift-:r3:-label"
             >
               Label
             </label>
@@ -167,12 +143,12 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
             >
               <button
                 aria-activedescendant=""
-                aria-controls="downshift-:r5:-menu"
+                aria-controls="downshift-:r3:-menu"
                 aria-expanded="false"
                 aria-haspopup="listbox"
                 aria-label="Select a workspace"
                 class="cds--list-box__field"
-                id="downshift-:r5:-toggle-button"
+                id="downshift-:r3:-toggle-button"
                 role="combobox"
                 tabindex="0"
                 title="Select workspace"
@@ -208,9 +184,9 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                 </div>
               </button>
               <ul
-                aria-labelledby="downshift-:r5:-label"
+                aria-labelledby="downshift-:r3:-label"
                 class="cds--list-box__menu"
-                id="downshift-:r5:-menu"
+                id="downshift-:r3:-menu"
                 role="listbox"
               />
             </div>
@@ -275,13 +251,13 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                 </svg>
                 <div
                   class="cds--ai-label"
-                  id="AILabel-:r6:"
+                  id="AILabel-:r4:"
                 >
                   <span
                     class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--auto-align cds--autoalign cds--popover--bottom cds--toggletip cds--autoalign"
                   >
                     <button
-                      aria-controls="id-:r7:"
+                      aria-controls="id-:r5:"
                       aria-expanded="false"
                       aria-label="AI Show information"
                       class="cds--toggletip-button cds--ai-label__button cds--ai-label__button--xs cds--ai-label__button--default"
@@ -348,7 +324,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                     class="cds--tooltip-trigger__wrapper"
                   >
                     <button
-                      aria-labelledby="tooltip-:ra:"
+                      aria-labelledby="tooltip-:r8:"
                       class="clabs--animated-header__ai-prompt-tile--icon-button  cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--disabled cds--btn--icon-only"
                       disabled=""
                       type="button"
@@ -372,7 +348,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                   <span
                     aria-hidden="true"
                     class="cds--popover"
-                    id="tooltip-:ra:"
+                    id="tooltip-:r8:"
                     role="tooltip"
                   >
                     <span

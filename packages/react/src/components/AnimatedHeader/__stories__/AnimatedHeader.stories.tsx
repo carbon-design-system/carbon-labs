@@ -254,6 +254,18 @@ const sharedArgTypes = {
     control: { type: 'boolean' },
     table: { category: 'Content Switcher' },
   },
+  showTitleTooltip: {
+    description:
+      'Show tooltip on hover for the header title (userName and welcomeText). Useful when text might be truncated.',
+    control: { type: 'boolean' },
+    table: { category: 'Tooltips' },
+  },
+  showDescriptionTooltip: {
+    description:
+      'Show tooltip on hover for the description text. Useful when text might be truncated or when additional context is needed.',
+    control: { type: 'boolean' },
+    table: { category: 'Tooltips' },
+  },
 };
 
 /* ------------------------------ Shared Args ------------------------------ */
@@ -282,6 +294,8 @@ const sharedArgs = {
   headerActionConfig: 1,
   contentSwitcherConfig: 0,
   contentSwitcherLowContrast: false,
+  showTitleTooltip: false,
+  showDescriptionTooltip: false,
 };
 
 /* ------------------------------ Stories ------------------------------ */

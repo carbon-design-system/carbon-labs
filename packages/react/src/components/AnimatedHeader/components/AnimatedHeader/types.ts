@@ -24,3 +24,7 @@ export interface AriaLabels {
   expandButton?: string;
   tilesContainer?: string;
 }
+
+export interface HeaderTitleConfig {
+  showTooltip?: boolean;
+}

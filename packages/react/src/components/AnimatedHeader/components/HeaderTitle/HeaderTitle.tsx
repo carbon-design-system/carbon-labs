@@ -8,7 +8,9 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { Tooltip } from '@carbon/react';
+// Tooltip removed: it called useId() which generated dynamic aria-labelledby
+// IDs that differed between server and client, causing hydration mismatches.
+// The aria-label on <h1> already provides the same accessible text.
 import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import { AriaLabels } from '../AnimatedHeader/types';
 
@@ -40,30 +42,31 @@ const HeaderTitle: React.FC<HeaderTitleProps> = ({
   const [currentLang, setCurrentLang] = useState('en');
 
   useEffect(() => {
-    setCurrentLang(document.documentElement.lang || 'en');
+    setCurrentLang(
+      (typeof document !== 'undefined' && document.documentElement.lang) || 'en'
+    );
   }, []);
 
   const isNameFirst = NAME_FIRST_LANGS.includes(currentLang.slice(0, 2));
 
   return (
-    <Tooltip align="bottom" label={`${welcomeText}, ${userName}`}>
-      <h1
-        className={blockClass}
-        data-expanded={headerExpanded}
-        aria-label={ariaLabels?.welcome ?? `${welcomeText}, ${userName}`}>
-        {isNameFirst ? (
-          <>
-            <span className={`${blockClass}-first`}>{userName}, </span>
-            <span className={`${blockClass}-second`}>{welcomeText}</span>
-          </>
-        ) : (
-          <>
-            <span className={`${blockClass}-first`}>{welcomeText}, </span>
-            <span className={`${blockClass}-second`}>{userName}</span>
-          </>
-        )}
-      </h1>
-    </Tooltip>
+    <h1
+      className={blockClass}
+      data-expanded={headerExpanded}
+      aria-label={ariaLabels?.welcome ?? `${welcomeText}, ${userName}`}
+      title={`${welcomeText}, ${userName}`}>
+      {isNameFirst ? (
+        <>
+          <span className={`${blockClass}-first`}>{userName}, </span>
+          <span className={`${blockClass}-second`}>{welcomeText}</span>
+        </>
+      ) : (
+        <>
+          <span className={`${blockClass}-first`}>{welcomeText}, </span>
+          <span className={`${blockClass}-second`}>{userName}</span>
+        </>
+      )}
+    </h1>
   );
 };
 

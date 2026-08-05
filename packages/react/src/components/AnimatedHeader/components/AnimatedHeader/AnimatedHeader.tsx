@@ -6,7 +6,7 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import React, { lazy, Suspense, useState } from 'react';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Column, Button } from '@carbon/react';
 import { ChevronUp, ChevronDown } from '@carbon/icons-react';
@@ -79,6 +79,13 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   const blockClass = `${prefix}--animated-header`;
 
   const [isOpen, setIsOpen] = useState(true);
+  // Track whether we have hydrated. The animated background is suppressed on
+  // the first render so that the server HTML and the initial client render are
+  // identical — avoiding a Suspense-driven tree mismatch.
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   const handleButtonCollapseClick = () => {
     setIsOpen(!isOpen);
@@ -92,12 +99,14 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
         <div className={`${blockClass}__container--gradient`} />
 
         {headerAnimation ? (
-          <Suspense fallback={null}>
-            <AnimatedBackground
-              headerAnimation={headerAnimation}
-              isOpen={isOpen}
-            />
-          </Suspense>
+          hasMounted ? (
+            <Suspense fallback={null}>
+              <AnimatedBackground
+                headerAnimation={headerAnimation}
+                isOpen={isOpen}
+              />
+            </Suspense>
+          ) : null
         ) : (
           <StaticBackground headerStatic={headerStatic} />
         )}
@@ -116,7 +125,9 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
               <div className={`${blockClass}__actions`}>
                 <ContentSwitcherSelector
                   contentSwitcherConfig={contentSwitcherConfig}
-                  isLoading={isLoading || contentSwitcherConfig.isLoading}
+                  isLoading={
+                    !hasMounted || isLoading || contentSwitcherConfig.isLoading
+                  }
                   headerExpanded={isOpen}
                 />
               </div>
@@ -142,7 +153,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
             {tasksControllerConfig && (
               <TasksController
                 tasksControllerConfig={tasksControllerConfig}
-                isLoading={isLoading}
+                isLoading={!hasMounted || isLoading}
                 allTileGroups={allTileGroups}
                 selectedTileGroup={selectedTileGroup}
                 setSelectedTileGroup={setSelectedTileGroup}
@@ -160,7 +171,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                 <WorkspaceSelector
                   workspaceSelectorConfig={workspaceSelectorConfig}
                   userName={userName}
-                  isLoading={isLoading}
+                  isLoading={!hasMounted || isLoading}
                 />
               </div>
             )}
@@ -183,7 +194,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                     {...rest}
                     open={isOpen}
                     productName={productName}
-                    isLoading={isLoading || tile.isLoading}
+                    isLoading={!hasMounted || isLoading || tile.isLoading}
                     disabledTaskLabel={disabledTaskLabel}
                     onClick={
                       hasAction

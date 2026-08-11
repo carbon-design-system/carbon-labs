@@ -25,3 +25,6 @@ export type { UniversalPromptBarProps } from './UniversalPromptBar/UniversalProm
 
 export { MotionAvatar }          from './MotionAvatar/MotionAvatar';
 export type { MotionAvatarProps, MotionAvatarState, MotionAvatarSize } from './MotionAvatar/MotionAvatar';
+
+export { ProcessingDots } from './ProcessingDots/ProcessingDots';
+export type { ProcessingDotsProps, ProcessingDotsMode, ProcessingDotsHandle } from './ProcessingDots/ProcessingDots';

@@ -1,0 +1,46 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * ProcessingDots component styles.
+ * Minimal — all animation is driven by the Web Animations API in the TSX.
+ * Stroke colour follows Carbon theme via data-carbon-theme selectors.
+ */
+
+.root {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.svg {
+  width: 32px;
+  height: 32px;
+  display: block;
+  overflow: visible; /* allow dots to briefly grow beyond viewBox during peak */
+}
+
+/* ── Dot base ───────────────────────────────────────────────────────────────── */
+.dot {
+  fill: none;
+  /* r and stroke-width are set to 0 in JSX; WAAPI controls them at runtime */
+}
+
+/* ── Stroke colour — matches Carbon Labs exactly ────────────────────────────── */
+:root .dot,
+[data-carbon-theme='white'] .dot,
+[data-carbon-theme='g10'] .dot {
+  stroke: #001141; /* IBM Blue 90 ($blue-90) */
+}
+
+[data-carbon-theme='g90'] .dot,
+[data-carbon-theme='g100'] .dot {
+  stroke: #f4f4f4; /* IBM Gray 10 ($gray-10) */
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .dot {
+    animation: none !important;
+    transition: none !important;
+  }
+}

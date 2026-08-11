@@ -9,7 +9,7 @@ export { SkeletonLoader }        from './SkeletonLoader/SkeletonLoader';
 export type { SkeletonLoaderProps, SkeletonLayout } from './SkeletonLoader/SkeletonLoader.types';
 
 export { Processing }            from './Processing/Processing';
-export type { ProcessingProps, ProcessingStatus, ProcessingSize } from './Processing/Processing.types';
+export type { ProcessingProps, ProcessingMode, ProcessingHandle } from './Processing/Processing';
 
 export { ContentSwitcher }       from './ContentSwitcher/ContentSwitcher';
 export type { ContentSwitcherProps, ContentSwitcherOption, ContentSwitcherSize } from './ContentSwitcher/ContentSwitcher.types';
@@ -25,6 +25,3 @@ export type { UniversalPromptBarProps } from './UniversalPromptBar/UniversalProm
 
 export { MotionAvatar }          from './MotionAvatar/MotionAvatar';
 export type { MotionAvatarProps, MotionAvatarState, MotionAvatarSize } from './MotionAvatar/MotionAvatar';
-
-export { ProcessingDots } from './ProcessingDots/ProcessingDots';
-export type { ProcessingDotsProps, ProcessingDotsMode, ProcessingDotsHandle } from './ProcessingDots/ProcessingDots';

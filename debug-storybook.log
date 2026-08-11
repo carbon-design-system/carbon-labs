@@ -1,0 +1,20 @@
+[13:35:17.869] [INFO] storybook v10.5.7
+[13:35:18.058] [DEBUG] Getting package.json info for /Users/molasov/Documents/Motion-Components/package.json...
+[13:35:18.346] [DEBUG] Could not determine @babel/preset-env version in use. In case of runtime errors with @babel/preset-env, you may need to set the babelRemoveBugfixes feature flag in your `main.ts` file.
+[13:35:18.517] [DEBUG] Serving static files from node_modules/@chromatic-com/storybook/assets at /addon-visual-tests-assets
+[13:35:18.517] [INFO] Starting...
+[13:35:18.614] [ERROR] [38;2;241;97;97mError: Build failed with 2 errors:
+.storybook/manager.ts:8:23: ERROR: Could not resolve "@storybook/manager-api"
+.storybook/manager.ts:9:23: ERROR: Could not resolve "@storybook/theming/create"[39m
+    at failureErrorWithLog (./node_modules/esbuild/lib/main.js:1467:15)
+    at ./node_modules/esbuild/lib/main.js:926:25
+    at runOnEndCallbacks (./node_modules/esbuild/lib/main.js:1307:45)
+    at buildResponseToResult (./node_modules/esbuild/lib/main.js:924:7)
+    at ./node_modules/esbuild/lib/main.js:951:16
+    at responseCallbacks.<computed> (./node_modules/esbuild/lib/main.js:603:9)
+    at handleIncomingPacket (./node_modules/esbuild/lib/main.js:658:12)
+    at Socket.readFromStdout (./node_modules/esbuild/lib/main.js:581:7)
+    at Socket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+[13:35:18.615] [WARN] Broken build, fix the error above.
+You may need to refresh the browser.

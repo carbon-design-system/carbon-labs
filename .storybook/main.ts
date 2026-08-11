@@ -8,6 +8,7 @@
 import type { StorybookConfig } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
+  staticDirs: ['../public'],
   stories: [
     '../src/**/*.mdx',
     '../src/**/*.stories.@(ts|tsx)',

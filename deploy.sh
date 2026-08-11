@@ -1,34 +1,43 @@
 #!/usr/bin/env bash
 # deploy.sh — build Storybook and commit output to the gh-pages branch.
-# Run via: npm run deploy
-# After this script finishes, open GitHub Desktop and click Push origin.
+# Run: npm run deploy
+# Then open GitHub Desktop and push both branches.
 
 set -e
 
 REPO_ROOT="$(cd "$(dirname "$0")" && pwd)"
-BUILD_DIR="$REPO_ROOT/storybook-static"
+STAGE_DIR="/tmp/mc-storybook-deploy"
 
-echo "▸ Building Storybook..."
-npm run build-storybook --silent
+echo "Building Storybook..."
+cd "$REPO_ROOT"
+npx storybook build -o storybook-static --quiet
 
-echo "▸ Switching to gh-pages branch..."
+echo "Staging build output..."
+rm -rf "$STAGE_DIR"
+cp -R "$REPO_ROOT/storybook-static" "$STAGE_DIR"
+touch "$STAGE_DIR/.nojekyll"
+
+echo "Switching to gh-pages..."
 git checkout gh-pages
 
-echo "▸ Replacing build output..."
+echo "Replacing build output..."
+# Remove everything EXCEPT .git and node_modules (node_modules is untracked
+# on gh-pages so git won't touch it, and we need it when we switch back)
 find . -maxdepth 1 \
   ! -name '.' \
   ! -name '.git' \
   ! -name '.gitignore' \
+  ! -name 'node_modules' \
   -exec rm -rf {} +
 
-cp -R "$BUILD_DIR"/. .
-touch .nojekyll
+cp -R "$STAGE_DIR"/. .
+rm -rf "$STAGE_DIR"
 
-echo "▸ Committing..."
+echo "Committing..."
 git add .
-git commit -m "Deploy Storybook $(date '+%Y-%m-%d %H:%M')" || echo "Nothing to commit."
+git commit -m "Deploy Storybook $(date '+%Y-%m-%d %H:%M')" || echo "Nothing new to commit."
 
-echo "▸ Returning to main..."
+echo "Returning to main..."
 git checkout main
 
 echo ""

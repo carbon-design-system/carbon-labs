@@ -14,7 +14,7 @@ const theme = create({
   // Brand
   brandTitle: 'Motion Components',
   brandUrl: '/',
-  brandImage: '/logo.svg',   // place your logo at public/logo.svg
+  brandImage: './logo.svg',
   brandTarget: '_self',
 });
 

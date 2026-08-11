@@ -9,6 +9,10 @@ import type { StorybookConfig } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
   staticDirs: ['../public'],
+  viteFinal: async (config) => {
+    config.base = '/Motion-Components/';
+    return config;
+  },
   stories: [
     '../src/**/*.mdx',
     '../src/**/*.stories.@(ts|tsx)',

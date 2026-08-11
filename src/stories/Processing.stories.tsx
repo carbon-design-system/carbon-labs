@@ -67,13 +67,13 @@ const triggerBtnStyle: React.CSSProperties = {
   borderRadius: '2px',
 };
 
-function LoadingDemo({ loop }: { loop: boolean }) {
+function LoadingDemo() {
   const handle = useRef<ProcessingHandle>(null);
   const [key, setKey] = useState(0);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <Processing key={key} ref={handle} mode="loading" loop={loop} label="Processing" />
+      <Processing key={key} ref={handle} mode="loading" loop label="Processing" />
       <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1.5rem' }}>
         <button
           onClick={() => handle.current?.triggerOut()}
@@ -93,13 +93,8 @@ function LoadingDemo({ loop }: { loop: boolean }) {
 }
 
 export const LoadingLoop: Story = {
-  name: 'Loading — loop',
-  render: () => <LoadingDemo loop={true} />,
-};
-
-export const LoadingNoLoop: Story = {
-  name: 'Loading — no loop',
-  render: () => <LoadingDemo loop={false} />,
+  name: 'Loading',
+  render: () => <LoadingDemo />,
 };
 
 // ── Formation modes ───────────────────────────────────────────────────────────

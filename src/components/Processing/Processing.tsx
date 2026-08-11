@@ -6,13 +6,20 @@
  * Visually identical to Carbon Labs Processing component:
  *   https://labs.carbondesignsystem.com/?path=/docs/react_components-processing--overview
  *
- * Pure CSS animation — no Web Animations API.
- * Dots are stroked circles, not filled, matching the reference exactly.
+ * All animation runs through the Web Animations API.
+ *
+ * Timing mirrors the Carbon Labs SCSS exactly:
+ *   load-in  1 000 ms, stagger 167 ms (dots 0 / 1 / 2 at 0 / 167 / 334 ms)
+ *   loop     1 000 ms per cycle, same stagger
+ *   unload   100 ms per dot, 50 ms stagger
+ *
+ * triggerOut uses commitStyles() to freeze the browser's own compositor value
+ * into the element's inline style, then animates from that frozen value to 0.
+ * No manual bezier re-implementation — the browser is the single source of truth.
  *
  * Extended modes:
- *   "triangle" — dots arc clockwise into a rotating equilateral triangle
- *   "square"   — dots arc clockwise into a rotating square (4th dot spawns)
- *   "out"      — plays the unload sequence immediately
+ *   "triangle" — dots arc into a rotating equilateral triangle
+ *   "square"   — dots arc into a rotating square (4th dot spawns)
  */
 
 import {
@@ -24,7 +31,7 @@ import {
 } from 'react';
 import styles from './Processing.module.css';
 
-// ─── Constants ────────────────────────────────────────────────────────────────
+// ─── Geometry ─────────────────────────────────────────────────────────────────
 
 const SVG_CX = 16;
 const SVG_CY = 16;
@@ -36,7 +43,7 @@ const vAt = (deg: number, r = R_SHAPE) => ({
   cy: SVG_CY + r * Math.sin(toRad(deg)),
 });
 
-// Carbon Labs cx positions
+// Resting cx positions — matches Carbon Labs (8, 16, 24)
 const BASE = [
   { cx: 8,  cy: 16 },
   { cx: 16, cy: 16 },
@@ -46,13 +53,34 @@ const BASE = [
 const TRI = [vAt(-90), vAt(30), vAt(150)];
 const SQ  = [vAt(0), vAt(90), vAt(180), vAt(270)];
 
-// WAAPI constants
-const STAGGER  = 167;
-const FORM_DUR = 700;
-const ROT_MS   = 6000;
-const OUT_DUR  = 600;
-const R_RS_N   = 0.875; // numeric resting radius for setAttribute
-const EI = 'cubic-bezier(0, 0, 0.3, 1)';
+// ─── Timing — mirrors Carbon Labs SCSS exactly ────────────────────────────────
+
+const STAGGER     = 167;  // ms stagger between dots (Carbon Labs: 0 / 167 / 334)
+const LOAD_DUR    = 1000; // load-in duration per dot
+const LOOP_DUR    = 1000; // loop cycle duration per dot
+const OUT_STAGGER = 50;   // ms stagger between dots for the out animation
+const OUT_DUR     = 100;  // out animation per dot
+const FORM_DUR    = 700;  // formation arc duration
+const ROT_MS      = 6000; // formation rotation period
+
+// Carbon Labs dot radii (numeric)
+const R_RS_N = 0.875;
+const R_MX_N = 2.5;
+
+// String forms for WAAPI keyframes
+const R0   = '0px';
+const R_RS = `${R_RS_N}px`;
+const R_MX = `${R_MX_N}px`;
+
+// Carbon Labs stroke widths
+const SW0 = '0';
+const SW1 = '1.72';
+
+// Easings — applied per-keyframe so each segment has its own curve,
+// matching how Carbon Labs SCSS uses animation-timing-function per keyframe.
+const EI  = 'cubic-bezier(0, 0, 0.3, 1)';   // ease-in  (growth segments)
+const EO  = 'cubic-bezier(0.4, 0.14, 1, 1)'; // ease-out (unload)
+const LIN = 'linear';                         // neutral hold segments
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -71,6 +99,7 @@ export interface ProcessingHandle {
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
+/** Animate cx/cy along a clockwise arc at R_SHAPE. */
 function arcTo(
   el: SVGCircleElement,
   fx: number, fy: number,
@@ -102,25 +131,22 @@ function arcTo(
 export const Processing = forwardRef<ProcessingHandle, ProcessingProps>(
   function Processing({ mode = 'loading', loop = true, label = 'Processing', className }, ref) {
 
-    const rootRef  = useRef<HTMLDivElement>(null);
-    const d0 = useRef<SVGCircleElement>(null);
-    const d1 = useRef<SVGCircleElement>(null);
-    const d2 = useRef<SVGCircleElement>(null);
-    const d3 = useRef<SVGCircleElement>(null);
+    const d0  = useRef<SVGCircleElement>(null);
+    const d1  = useRef<SVGCircleElement>(null);
+    const d2  = useRef<SVGCircleElement>(null);
+    const d3  = useRef<SVGCircleElement>(null);
     const grp = useRef<SVGGElement>(null);
 
     const anims  = useRef<Animation[]>([]);
     const rotRef = useRef<Animation | null>(null);
-    const timer  = useRef<ReturnType<typeof setTimeout> | null>(null);
     const alive  = useRef(true);
 
-    // ── cleanup ──────────────────────────────────────────────────────────────
+    // ── helpers ───────────────────────────────────────────────────────────────
 
     const stopAll = useCallback(() => {
       anims.current.forEach(a => { try { a.cancel(); } catch {} });
       anims.current = [];
       if (rotRef.current) { try { rotRef.current.cancel(); } catch {} rotRef.current = null; }
-      if (timer.current)  { clearTimeout(timer.current); timer.current = null; }
     }, []);
 
     const track = useCallback((a: Animation) => {
@@ -131,107 +157,188 @@ export const Processing = forwardRef<ProcessingHandle, ProcessingProps>(
       return a;
     }, []);
 
-    const dotArr = useCallback(
-      (count = 3): SVGCircleElement[] =>
-        [d0.current!, d1.current!, d2.current!, d3.current!].slice(0, count) as SVGCircleElement[],
-      [],
-    );
+    const dots3 = useCallback((): SVGCircleElement[] =>
+      [d0.current!, d1.current!, d2.current!], []);
 
-    // ── formation modes (WAAPI) ───────────────────────────────────────────────
+    // ── single-dot animators ──────────────────────────────────────────────────
 
-    const formShape = useCallback(
-      async (verts: typeof TRI | typeof SQ) => {
-        stopAll();
-        const count = verts.length;
-        const dot4 = d3.current!;
+    /**
+     * Load-in for one dot: 0 → peak → resting.
+     * startTime: absolute document-timeline time the animation should begin.
+     */
+    const animateLoadIn = useCallback((dot: SVGCircleElement, startTime: number) => {
+      const anim = track(dot.animate(
+        [
+          { r: R0,   strokeWidth: SW0, offset: 0,     easing: EI  },
+          { r: R_MX, strokeWidth: SW1, offset: 0.25,  easing: EI  },
+          { r: R_RS, strokeWidth: SW1, offset: 0.833, easing: LIN },
+          { r: R_RS, strokeWidth: SW1, offset: 1                   },
+        ],
+        { duration: LOAD_DUR, fill: 'forwards' },
+      ));
+      anim.startTime = startTime;
+      return anim;
+    }, [track]);
 
-        // Remove CSS animation classes — formation uses WAAPI
-        if (rootRef.current) {
-          rootRef.current.removeAttribute('data-anim');
-        }
+    /**
+     * One loop pulse for one dot: resting → peak → resting.
+     * startTime: absolute document-timeline time the animation should begin.
+     */
+    const animateLoopCycle = useCallback((dot: SVGCircleElement, startTime: number): Animation => {
+      const anim = track(dot.animate(
+        [
+          { r: R_RS, offset: 0,     easing: EI  },
+          { r: R_MX, offset: 0.25,  easing: EI  },
+          { r: R_RS, offset: 0.917, easing: LIN },
+          { r: R_RS, offset: 1                   },
+        ],
+        { duration: LOOP_DUR, fill: 'forwards' },
+      ));
+      anim.startTime = startTime;
+      return anim;
+    }, [track]);
 
-        // Reset dots to base positions
-        const allDots = dotArr(3);
-        allDots.forEach((dot, i) => {
-          dot.setAttribute('cx', `${BASE[i].cx}`);
-          dot.setAttribute('cy', `${BASE[i].cy}`);
-          dot.setAttribute('r', `${R_RS_N}`);
-          dot.setAttribute('stroke-width', '1.72');
-        });
+    /**
+     * Shrink one dot from its current committed inline-style r to 0.
+     *
+     * The caller must have already called commitStyles() + cancel() on all
+     * running animations so that the element's inline style.r holds the true
+     * visual value. We start this animation with an implicit "from" so the
+     * browser reads that committed value directly — no manual r computation.
+     *
+     * startTime: absolute document-timeline time for this out animation.
+     */
+    const animateOut = useCallback((dot: SVGCircleElement, startTime: number) => {
+      // Read the committed r from inline style (set by commitStyles() before cancel).
+      // Fall back to the presentation attribute if the inline style is empty.
+      const committedR = dot.style.r || dot.getAttribute('r') || '0px';
+      const rNum = parseFloat(committedR);
 
-        if (count === 4) {
-          dot4.setAttribute('cx', '16');
-          dot4.setAttribute('cy', '16');
-          dot4.setAttribute('r', `${R_RS_N}`);
-          dot4.setAttribute('stroke-width', '1.72');
-          dot4.style.display = '';
-        }
+      track(dot.animate(
+        [
+          { r: committedR, strokeWidth: rNum > 0.01 ? SW1 : SW0 },
+          { r: R0,         strokeWidth: SW0 },
+        ],
+        { duration: OUT_DUR, fill: 'forwards', easing: EO },
+      )).startTime = startTime;
+    }, [track]);
 
-        const dots = dotArr(count);
-        const movePs: Promise<unknown>[] = [];
+    // ── phase sequences ───────────────────────────────────────────────────────
 
-        dots.forEach((dot, i) => {
-          const from = i < 3 ? BASE[i] : { cx: 16, cy: 16 };
-          const to   = verts[i];
-          const a = arcTo(dot, from.cx, from.cy, to.cx, to.cy, FORM_DUR, EI, STAGGER * i);
-          track(a);
-          movePs.push(a.finished);
-        });
+    /**
+     * Load-in then loop (forever or one cycle then out).
+     *
+     * Every animation is pinned to an absolute document-timeline startTime so
+     * tab-switching (which defers .finished callbacks) cannot drift the stagger.
+     *
+     * Chain per dot:
+     *   load-in   startTime = t0 + STAGGER*i
+     *   loop n    startTime = t0 + STAGGER*i + LOAD_DUR + LOOP_DUR*n
+     */
+    const runLoading = useCallback((loopForever: boolean) => {
+      const ds = dots3();
+      const t0 = document.timeline.currentTime as number;
 
-        await Promise.all(movePs).catch(() => {});
+      ds.forEach((d, i) => animateLoadIn(d, t0 + STAGGER * i));
+
+      const loopDot = (d: SVGCircleElement, idx: number, cycleIndex: number) => {
         if (!alive.current) return;
 
-        if (grp.current) {
-          rotRef.current = grp.current.animate(
-            [
-              { transform: 'rotate(0deg)',   transformOrigin: '16px 16px' },
-              { transform: 'rotate(360deg)', transformOrigin: '16px 16px' },
-            ],
-            { duration: ROT_MS, iterations: Infinity, easing: 'linear' },
-          );
-        }
-      },
-      [dotArr, stopAll, track],
-    );
+        const absStart = t0 + STAGGER * idx + LOAD_DUR + LOOP_DUR * cycleIndex;
+        const anim = animateLoopCycle(d, absStart);
+
+        void anim.finished.then(() => {
+          if (!alive.current) return;
+          if (loopForever) {
+            loopDot(d, idx, cycleIndex + 1);
+          } else {
+            // no-loop path: browser commitStyles handles r snapshot
+            const outStart = (document.timeline.currentTime as number) + OUT_STAGGER * idx;
+            try { anim.commitStyles(); } catch {}
+            anim.cancel();
+            animateOut(d, outStart);
+          }
+        }).catch(() => {});
+      };
+
+      ds.forEach((d, i) => loopDot(d, i, 0));
+    }, [dots3, animateLoadIn, animateLoopCycle, animateOut]);
+
+    /** Arc dots into a formation then spin. */
+    const formShape = useCallback(async (verts: typeof TRI | typeof SQ) => {
+      stopAll();
+      const count = verts.length;
+      const dot4  = d3.current!;
+
+      dots3().forEach((d, i) => {
+        d.setAttribute('cx', `${BASE[i].cx}`);
+        d.setAttribute('cy', `${BASE[i].cy}`);
+        d.setAttribute('r', `${R_RS_N}`);
+        d.setAttribute('stroke-width', SW1);
+      });
+
+      if (count === 4) {
+        dot4.setAttribute('cx', '16');
+        dot4.setAttribute('cy', '16');
+        dot4.setAttribute('r', `${R_RS_N}`);
+        dot4.setAttribute('stroke-width', SW1);
+        dot4.style.display = '';
+      }
+
+      const allDots = count === 4
+        ? [d0.current!, d1.current!, d2.current!, dot4]
+        : dots3();
+
+      const arcs = allDots.map((d, i) => {
+        const from = i < 3 ? BASE[i] : { cx: 16, cy: 16 };
+        return arcTo(d, from.cx, from.cy, verts[i].cx, verts[i].cy, FORM_DUR, EI, STAGGER * i);
+      });
+      arcs.forEach(a => track(a));
+
+      await Promise.all(arcs.map(a => a.finished)).catch(() => {});
+      if (!alive.current) return;
+
+      if (grp.current) {
+        rotRef.current = grp.current.animate(
+          [
+            { transform: 'rotate(0deg)',   transformOrigin: '16px 16px' },
+            { transform: 'rotate(360deg)', transformOrigin: '16px 16px' },
+          ],
+          { duration: ROT_MS, iterations: Infinity, easing: 'linear' },
+        );
+      }
+    }, [dots3, stopAll, track]);
 
     // ── imperative handle ─────────────────────────────────────────────────────
 
     useImperativeHandle(ref, () => ({
       triggerOut: () => {
-        const dots = [d0.current, d1.current, d2.current].filter(Boolean) as SVGCircleElement[];
+        const ds = dots3();
+        const now = document.timeline.currentTime as number;
 
-        // Snapshot the current computed r and stroke-width from the live CSS animation
-        // so the WAAPI unload starts exactly where the CSS left off.
-        const snapshots = dots.map(dot => {
-          const computed = getComputedStyle(dot);
-          const r  = parseFloat(computed.getPropertyValue('r'))  || R_RS_N;
-          const sw = parseFloat(computed.getPropertyValue('stroke-width')) || 1.72;
-          return { r, sw };
+        // commitStyles() freezes the browser's current compositor value of every
+        // animated property into the element's inline style.  We do this while
+        // animations are still running (fill:'forwards' is live), then cancel
+        // them.  The inline style now holds the true visual r at this exact frame.
+        ds.forEach(d => {
+          // Collect all active animations on this element and commit + cancel.
+          const active = d.getAnimations();
+          active.forEach(a => {
+            try { a.commitStyles(); } catch {}
+            try { a.cancel(); } catch {}
+          });
         });
 
-        // Cancel CSS animation by clearing data-anim, then cancel any WAAPI anims
-        if (rootRef.current) rootRef.current.removeAttribute('data-anim');
+        // Cancel the shared animation list too (formation arcs, rotation, etc.)
         stopAll();
-
-        // Reset positions in case formation mode moved dots
-        dots.forEach((dot, i) => {
-          dot.setAttribute('cx', `${BASE[i].cx}`);
-          dot.setAttribute('cy', `${BASE[i].cy}`);
-        });
-        if (d3.current) d3.current.style.display = 'none';
         if (grp.current) grp.current.style.transform = '';
+        if (d3.current)  d3.current.style.display = 'none';
 
-        // Play WAAPI unload: shrink directly from current size to 0, left to right.
-        // No peak — just a smooth ease-in collapse matching the loop timing.
-        dots.forEach((dot, i) => {
-          const { r, sw } = snapshots[i];
-          track(dot.animate(
-            [
-              { r: `${r}px`, strokeWidth: `${sw}`, offset: 0 },
-              { r: '0px',    strokeWidth: '0',     offset: 1 },
-            ],
-            { duration: OUT_DUR, delay: STAGGER * i, easing: EI, fill: 'forwards' },
-          ));
+        // Animate each dot from its committed inline-style r → 0.
+        ds.forEach((d, i) => {
+          d.setAttribute('cx', `${BASE[i].cx}`);
+          d.setAttribute('cy', `${BASE[i].cy}`);
+          animateOut(d, now + OUT_STAGGER * i);
         });
       },
     }));
@@ -241,29 +348,32 @@ export const Processing = forwardRef<ProcessingHandle, ProcessingProps>(
     useEffect(() => {
       alive.current = true;
 
+      // Reset all dots to invisible baseline.
+      [d0, d1, d2, d3].forEach(r => {
+        if (!r.current) return;
+        // Clear any committed inline styles from a previous triggerOut.
+        r.current.style.r = '';
+        r.current.style.strokeWidth = '';
+        r.current.setAttribute('r', '0');
+        r.current.setAttribute('stroke-width', '0');
+      });
+      if (d3.current) d3.current.style.display = 'none';
+      if (grp.current) grp.current.style.transform = '';
+
       if (mode === 'loading') {
-        // Pure CSS — just set data-anim attribute, CSS does the rest
-        if (rootRef.current) {
-          rootRef.current.setAttribute('data-anim', loop ? 'loop' : 'no-loop');
-        }
-        // Reset dots to starting state for CSS animation
-        [d0, d1, d2].forEach((ref, i) => {
-          if (ref.current) {
-            ref.current.setAttribute('cx', `${BASE[i].cx}`);
-            ref.current.setAttribute('cy', `${BASE[i].cy}`);
-            ref.current.setAttribute('r', '0');
-            ref.current.setAttribute('stroke-width', '0');
-          }
-        });
-        if (d3.current) d3.current.style.display = 'none';
+        void runLoading(loop);
       } else if (mode === 'triangle') {
         void formShape(TRI);
       } else if (mode === 'square') {
         void formShape(SQ);
       } else if (mode === 'out') {
-        if (rootRef.current) {
-          rootRef.current.setAttribute('data-anim', 'out');
-        }
+        // Start from resting size — set baseline then animate out immediately.
+        const t0 = document.timeline.currentTime as number;
+        dots3().forEach((d, i) => {
+          d.setAttribute('r', R_RS);
+          d.setAttribute('stroke-width', SW1);
+          animateOut(d, t0 + OUT_STAGGER * i);
+        });
       }
 
       return () => {
@@ -277,7 +387,6 @@ export const Processing = forwardRef<ProcessingHandle, ProcessingProps>(
 
     return (
       <div
-        ref={rootRef}
         className={`${styles.root}${className ? ` ${className}` : ''}`}
         role="status"
         aria-label={label}

@@ -1,0 +1,36 @@
+{
+  "name": "carbon-motion-workshop",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build -o storybook-static"
+  },
+  "dependencies": {
+    "@carbon/react": "^1.71.0",
+    "@carbon/styles": "^1.71.0",
+    "clsx": "^2.1.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@carbon/layout": "^11.30.0",
+    "@carbon/themes": "^11.39.0",
+    "@chromatic-com/storybook": "^5.0.0",
+    "@storybook/addon-a11y": "^10.4.2",
+    "@storybook/addon-docs": "^10.4.2",
+    "@storybook/addon-themes": "^10.4.2",
+    "@storybook/react": "^10.4.2",
+    "@storybook/react-vite": "^10.4.2",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.5",
+    "@vitejs/plugin-react": "^4.5.2",
+    "storybook": "^10.4.2",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  }
+}

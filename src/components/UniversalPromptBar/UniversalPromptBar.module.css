@@ -1,0 +1,84 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * UniversalPromptBar component styles.
+ */
+
+.root {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  min-height: var(--cmw-prompt-height, 3rem);
+  background: var(--cmw-prompt-bg, #f4f4f4);
+  border-bottom: 1px solid var(--cmw-prompt-border, #8d8d8d);
+  transition:
+    background-color 100ms var(--cmw-easing-standard),
+    border-color     100ms var(--cmw-easing-standard);
+}
+
+.root:hover:not(.disabled) {
+  background: var(--cmw-prompt-bg-hover, #e8e8e8);
+}
+
+.root:focus-within {
+  border-bottom-color: var(--cmw-prompt-border-focus, #0f62fe);
+  outline: 2px solid var(--cmw-focus, #0f62fe);
+  outline-offset: -2px;
+}
+
+/* ── Disabled ───────────────────────────────────────────────────────────── */
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Input ──────────────────────────────────────────────────────────────── */
+.input {
+  flex: 1;
+  min-width: 0;
+  padding: 0 1rem;
+  border: none;
+  background: transparent;
+  color: var(--cmw-prompt-text, #161616);
+  font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.29;
+  outline: none;
+  cursor: inherit;
+}
+
+.input::placeholder {
+  color: var(--cmw-prompt-placeholder, #a8a8a8);
+}
+
+.input:disabled {
+  cursor: not-allowed;
+}
+
+/* ── Submit button ──────────────────────────────────────────────────────── */
+.submitButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  color: var(--cmw-icon-interactive, #0f62fe);
+  cursor: pointer;
+  transition: background-color 100ms var(--cmw-easing-standard);
+}
+
+.submitButton:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.submitButton:focus-visible {
+  outline: 2px solid var(--cmw-focus, #0f62fe);
+  outline-offset: -2px;
+}
+
+.submitButton:disabled {
+  color: var(--cmw-text-placeholder, #a8a8a8);
+  cursor: not-allowed;
+}

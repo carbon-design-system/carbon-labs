@@ -1,0 +1,14 @@
+/**
+ * Carbon Motion Workshop — global styles entry point.
+ *
+ * Imports Carbon base styles and the custom --cmw-* token layer.
+ * This file is imported once in .storybook/preview.tsx and in src/main.tsx.
+ */
+
+/* Carbon base reset and global styles */
+@import '@carbon/styles/css/styles.css';
+
+/* Custom --cmw-* token layer */
+@import './tokens/index.css';
+@import './tokens/themes.css';
+@import './tokens/motion.css';

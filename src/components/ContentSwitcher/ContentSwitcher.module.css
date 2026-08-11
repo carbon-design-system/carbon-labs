@@ -1,0 +1,71 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * ContentSwitcher component styles.
+ */
+
+.root {
+  display: inline-flex;
+  position: relative;
+  background: var(--cmw-switcher-bg, #e0e0e0);
+  border: 1px solid var(--cmw-switcher-border, #e0e0e0);
+}
+
+/* ── Size variants ──────────────────────────────────────────────────────── */
+.sm { height: 2rem; }
+.md { height: 2.5rem; }
+.lg { height: 3rem; }
+
+/* ── Button ─────────────────────────────────────────────────────────────── */
+.button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+  border: none;
+  border-right: 1px solid var(--cmw-switcher-border, #e0e0e0);
+  background: transparent;
+  color: var(--cmw-switcher-text, #525252);
+  font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--cmw-switcher-transition, 110ms) var(--cmw-switcher-easing, ease),
+    color           var(--cmw-switcher-transition, 110ms) var(--cmw-switcher-easing, ease);
+  z-index: 1;
+  min-width: 4rem;
+}
+
+.button:last-child {
+  border-right: none;
+}
+
+.button:hover:not(.buttonSelected):not(:disabled) {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--cmw-focus, #0f62fe);
+  outline-offset: -2px;
+  z-index: 2;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ── Selected state ─────────────────────────────────────────────────────── */
+.buttonSelected {
+  background: var(--cmw-switcher-bg-selected, #c6c6c6);
+  color: var(--cmw-switcher-text-selected, #161616);
+  font-weight: 500;
+}
+
+/* ── Label ──────────────────────────────────────────────────────────────── */
+.label {
+  pointer-events: none;
+}

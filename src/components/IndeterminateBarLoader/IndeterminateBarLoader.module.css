@@ -1,0 +1,59 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * IndeterminateBarLoader component styles.
+ */
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+/* ── Label ──────────────────────────────────────────────────────────────── */
+.label {
+  font-size: 0.75rem;
+  line-height: 1.33;
+  color: var(--cmw-text-secondary, #525252);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Track ──────────────────────────────────────────────────────────────── */
+.track {
+  position: relative;
+  width: 100%;
+  height: var(--cmw-bar-height, 0.25rem);
+  background: var(--cmw-bar-track, #e0e0e0);
+  overflow: hidden;
+}
+
+/* ── Fill bar ───────────────────────────────────────────────────────────── */
+.fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 40%;
+  background: var(--cmw-bar-fill, #0f62fe);
+  transform: translateX(-100%);
+  animation:
+    slide var(--cmw-bar-cycle-duration, 1400ms) var(--cmw-bar-easing, ease) infinite;
+}
+
+@keyframes slide {
+  0%   { transform: translateX(-100%); }
+  50%  { transform: translateX(150%); }
+  100% { transform: translateX(250%); }
+}

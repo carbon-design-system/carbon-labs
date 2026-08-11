@@ -1,0 +1,63 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Introduction" />
+
+# Carbon Motion Workshop
+
+A component exploration workspace for **Carbon v12** motion and interaction patterns.
+Components here are in-progress proposals — some evolving existing Carbon v11
+components, others net-new work. All are reviewable by any IBMer via the GitHub Pages URL.
+
+---
+
+## Components in this workspace
+
+| Component | Status | Description |
+|-----------|--------|-------------|
+| **SkeletonLoader** | 🚧 In progress | Progressive-reveal skeleton with staggered animation |
+| **Processing** | 🚧 In progress | In-progress state indicator with status transitions |
+| **ContentSwitcher** | 🚧 In progress | Segmented control with sliding indicator |
+| **LoadingSpinner** | 🚧 In progress | Indeterminate circular spinner |
+| **IndeterminateBarLoader** | 🚧 In progress | Linear indeterminate progress bar |
+| **UniversalPromptBar** | 🚧 In progress | AI prompt input bar |
+| **MotionAvatar** | 🚧 In progress | Animated presence indicator for AI states |
+
+---
+
+## Token layer
+
+All components consume the `--cmw-*` custom property layer defined in `src/tokens/`.
+These map onto Carbon v12 design tokens where they exist, and define custom values
+where Carbon v12 hasn't yet shipped.
+
+See the **Tokens** docs page for the full reference.
+
+---
+
+## Running locally
+
+```bash
+cd carbon-motion-workshop
+npm install
+npm run storybook
+```
+
+Storybook starts at [http://localhost:6006](http://localhost:6006).
+
+---
+
+## How to review
+
+Use the **background switcher** in the Storybook toolbar to toggle between
+`white`, `g10`, `g90`, and `g100` themes. The `data-carbon-theme` attribute
+updates automatically so all `--cmw-*` tokens switch with it.
+
+Use the **Controls** panel to adjust every exposed prop interactively.
+
+---
+
+## Resources
+
+- [Carbon Design System](https://carbondesignsystem.com/)
+- [Carbon React Components](https://react.carbondesignsystem.com/)
+- [IBM Design Language — Motion](https://www.ibm.com/design/language/animation/overview/)

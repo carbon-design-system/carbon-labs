@@ -1,0 +1,123 @@
+/**
+ * Carbon Motion Workshop — motion tokens.
+ *
+ * Durations and easing curves are derived from the IBM Design Language
+ * Motion specification. Where Carbon v12 exposes equivalent tokens they
+ * are referenced via --cds-*; otherwise raw values are used with a comment
+ * noting the IDL Motion spec source.
+ *
+ * Reference:
+ *   https://www.ibm.com/design/language/animation/overview/
+ *   https://carbondesignsystem.com/guidelines/motion/overview/
+ *
+ * Naming convention:
+ *   --cmw-duration-{tier}-{number}   (e.g. --cmw-duration-fast-01)
+ *   --cmw-easing-{purpose}           (e.g. --cmw-easing-entrance)
+ *   --cmw-stagger-{name}             (e.g. --cmw-stagger-step)
+ */
+
+:root {
+  /* ─── Duration tokens ────────────────────────────────────────────────── */
+  /* IBM Motion: fast-01 = 70ms  (micro-interactions, icon state changes)   */
+  --cmw-duration-fast-01:    70ms;
+  /* IBM Motion: fast-02 = 110ms (small utility animations)                 */
+  --cmw-duration-fast-02:    110ms;
+  /* IBM Motion: moderate-01 = 150ms (expandable, reveal)                   */
+  --cmw-duration-moderate-01: 150ms;
+  /* IBM Motion: moderate-02 = 240ms (larger surface transitions)           */
+  --cmw-duration-moderate-02: 240ms;
+  /* IBM Motion: slow-01 = 400ms (background fills, page-level)             */
+  --cmw-duration-slow-01:    400ms;
+  /* IBM Motion: slow-02 = 700ms (very large areas, orchestrated sequences) */
+  --cmw-duration-slow-02:    700ms;
+
+  /* ─── Easing curves ──────────────────────────────────────────────────── */
+  /*
+   * IBM Motion productive curves — use for UI chrome, utility animations.
+   * Standard (enter + exit symmetric), entrance, exit.
+   */
+  --cmw-easing-standard:     cubic-bezier(0.20, 0.00, 0.38, 0.90);
+  --cmw-easing-entrance:     cubic-bezier(0.00, 0.00, 0.38, 0.90);
+  --cmw-easing-exit:         cubic-bezier(0.20, 0.00, 1.00, 0.90);
+
+  /*
+   * IBM Motion expressive curves — use for hero moments and emphasis.
+   */
+  --cmw-easing-expressive-standard:  cubic-bezier(0.40, 0.14, 0.30, 1.00);
+  --cmw-easing-expressive-entrance:  cubic-bezier(0.00, 0.00, 0.30, 1.00);
+  --cmw-easing-expressive-exit:      cubic-bezier(0.40, 0.14, 1.00, 1.00);
+
+  /* ─── Skeleton-specific motion ───────────────────────────────────────── */
+  /* Initial fade-in duration (from 0 → peak opacity on mount)              */
+  --cmw-skeleton-fade-in-duration:   500ms;
+  /* Per-block stagger delay step                                            */
+  --cmw-skeleton-stagger-step:       50ms;
+  /* Loop cycle duration (peak → trough → peak)                             */
+  --cmw-skeleton-loop-duration:      1000ms;
+  /* Easing for the skeleton pulse — uses productive standard curve          */
+  --cmw-skeleton-easing:             var(--cmw-easing-standard);
+
+  /* ─── Processing indicator ───────────────────────────────────────────── */
+  --cmw-processing-spin-duration:    700ms;
+  --cmw-processing-transition:       var(--cmw-duration-moderate-01);
+
+  /* ─── Content Switcher ───────────────────────────────────────────────── */
+  /* Sliding indicator transition                                            */
+  --cmw-switcher-transition:         var(--cmw-duration-fast-02);
+  --cmw-switcher-easing:             var(--cmw-easing-standard);
+
+  /* ─── Loading Spinner ────────────────────────────────────────────────── */
+  --cmw-spinner-spin-duration:       690ms; /* ~same as Carbon's spinner    */
+  --cmw-spinner-easing:              linear;
+
+  /* ─── Indeterminate Bar ──────────────────────────────────────────────── */
+  --cmw-bar-cycle-duration:          1400ms;
+  --cmw-bar-easing:                  var(--cmw-easing-standard);
+
+  /* ─── Universal Prompt Bar ───────────────────────────────────────────── */
+  --cmw-prompt-focus-duration:       var(--cmw-duration-fast-01);
+  --cmw-prompt-submit-duration:      var(--cmw-duration-fast-02);
+
+  /* ─── Motion Avatar ──────────────────────────────────────────────────── */
+  --cmw-avatar-idle-duration:        2400ms;   /* slow gentle pulse          */
+  --cmw-avatar-thinking-duration:    900ms;    /* orbit cycle                */
+  --cmw-avatar-responding-duration:  600ms;    /* wave cycle                 */
+  --cmw-avatar-transition-duration:  var(--cmw-duration-moderate-02);
+  --cmw-avatar-easing:               var(--cmw-easing-expressive-standard);
+
+  /* ─── Reduced-motion overrides ───────────────────────────────────────── */
+  /*
+   * All animation hooks read --cmw-motion-ok at runtime.
+   * When prefers-reduced-motion: reduce is active, durations collapse to
+   * near-zero and loops are disabled. Components must also check the
+   * useReducedMotion hook to skip loop scheduling entirely.
+   */
+  --cmw-motion-ok: 1; /* 1 = full motion; overridden to 0 below            */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --cmw-motion-ok: 0;
+
+    --cmw-skeleton-fade-in-duration:  0.01ms;
+    --cmw-skeleton-stagger-step:      0ms;
+    --cmw-skeleton-loop-duration:     0.01ms;
+
+    --cmw-processing-spin-duration:   0.01ms;
+    --cmw-processing-transition:      0.01ms;
+
+    --cmw-switcher-transition:        0.01ms;
+
+    --cmw-spinner-spin-duration:      0.01ms;
+
+    --cmw-bar-cycle-duration:         0.01ms;
+
+    --cmw-prompt-focus-duration:      0.01ms;
+    --cmw-prompt-submit-duration:     0.01ms;
+
+    --cmw-avatar-idle-duration:       0.01ms;
+    --cmw-avatar-thinking-duration:   0.01ms;
+    --cmw-avatar-responding-duration: 0.01ms;
+    --cmw-avatar-transition-duration: 0.01ms;
+  }
+}

@@ -1,0 +1,96 @@
+/**
+ * Carbon Motion Workshop — per-theme token overrides.
+ *
+ * Uses [data-carbon-theme] attribute selectors so overrides activate
+ * automatically when the Storybook background switcher (or app code) sets
+ * the attribute on <html>.
+ *
+ * Only tokens that differ from the :root defaults need to be listed here.
+ * All other tokens continue to reference --cds-* and update automatically
+ * as Carbon's CDS tokens change with the theme.
+ */
+
+/* ── White theme ──────────────────────────────────────────────────────────
+   Same as :root defaults (Carbon white is the baseline).
+   Declared explicitly so the mapping is visible in code reviews.          */
+[data-carbon-theme='white'] {
+  --cmw-skeleton-bg:              #e8e8e8;
+  --cmw-skeleton-element:         #c6c6c6;
+  --cmw-skeleton-opacity-peak:    0.8;
+  --cmw-skeleton-opacity-trough:  0.2;
+}
+
+/* ── G10 theme ────────────────────────────────────────────────────────────
+   Light cool-grey background. Skeleton blocks are slightly more opaque
+   to maintain contrast on the lighter surface.                             */
+[data-carbon-theme='g10'] {
+  --cmw-skeleton-bg:              #e0e0e0;
+  --cmw-skeleton-element:         #c6c6c6;
+  --cmw-skeleton-opacity-peak:    0.8;
+  --cmw-skeleton-opacity-trough:  0.2;
+
+  --cmw-switcher-bg:              #e0e0e0;
+  --cmw-switcher-bg-selected:     #c6c6c6;
+}
+
+/* ── G10 AI variant ───────────────────────────────────────────────────────
+   Blue-tinted skeleton for AI loading states on light backgrounds.
+   Uses a custom data attribute to keep this distinct from the standard
+   g10 theme; a component sets data-carbon-theme="g10-ai" when in AI mode. */
+[data-carbon-theme='g10-ai'] {
+  --cmw-skeleton-bg:              #c8daff;
+  --cmw-skeleton-element:         #b8d1ff;
+  --cmw-skeleton-opacity-peak:    0.4;
+  --cmw-skeleton-opacity-trough:  0.15;
+
+  --cmw-avatar-bg-idle:           #edf4ff;
+  --cmw-avatar-border-idle:       #97c1ff;
+}
+
+/* ── G90 theme ────────────────────────────────────────────────────────────
+   Dark theme. Skeleton and UI chrome colours invert.                       */
+[data-carbon-theme='g90'] {
+  --cmw-skeleton-bg:              #525252;
+  --cmw-skeleton-element:         #6f6f6f;
+  --cmw-skeleton-opacity-peak:    0.6;
+  --cmw-skeleton-opacity-trough:  0.15;
+
+  --cmw-switcher-bg:              #525252;
+  --cmw-switcher-bg-selected:     #6f6f6f;
+  --cmw-switcher-text:            #c6c6c6;
+  --cmw-switcher-text-selected:   #f4f4f4;
+  --cmw-switcher-border:          #525252;
+
+  --cmw-prompt-bg:                #393939;
+  --cmw-prompt-bg-hover:          #474747;
+  --cmw-prompt-border:            #6f6f6f;
+
+  --cmw-avatar-bg-idle:           #393939;
+  --cmw-avatar-bg-thinking:       #00327a;
+  --cmw-avatar-bg-responding:     #004144;
+  --cmw-avatar-border-idle:       #525252;
+}
+
+/* ── G100 theme ───────────────────────────────────────────────────────────
+   Darkest theme. Most prominent skeleton contrast needed.                  */
+[data-carbon-theme='g100'] {
+  --cmw-skeleton-bg:              #393939;
+  --cmw-skeleton-element:         #525252;
+  --cmw-skeleton-opacity-peak:    0.4;
+  --cmw-skeleton-opacity-trough:  0.8;
+
+  --cmw-switcher-bg:              #393939;
+  --cmw-switcher-bg-selected:     #525252;
+  --cmw-switcher-text:            #a8a8a8;
+  --cmw-switcher-text-selected:   #f4f4f4;
+  --cmw-switcher-border:          #393939;
+
+  --cmw-prompt-bg:                #262626;
+  --cmw-prompt-bg-hover:          #333333;
+  --cmw-prompt-border:            #525252;
+
+  --cmw-avatar-bg-idle:           #262626;
+  --cmw-avatar-bg-thinking:       #001d6c;
+  --cmw-avatar-bg-responding:     #022b30;
+  --cmw-avatar-border-idle:       #393939;
+}

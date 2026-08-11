@@ -1,0 +1,110 @@
+/**
+ * Carbon Motion Workshop — base token definitions.
+ *
+ * All custom properties use the --cmw- prefix (Carbon Motion Workshop).
+ * Where a Carbon v12 / CDS token already exists, the value references
+ * --cds-* so the two systems stay in sync automatically.
+ * Where Carbon v12 hasn't shipped a token yet, raw values are used and
+ * marked with a TODO comment so they can be wired up once available.
+ *
+ * Naming convention:
+ *   --cmw-{category}-{variant?}-{state?}
+ *   e.g. --cmw-skeleton-bg, --cmw-skeleton-shimmer, --cmw-interactive-focus
+ *
+ * This file defines fallback values. Per-theme overrides live in themes.css.
+ */
+
+:root {
+  /* ─── Surface / background ────────────────────────────────────────────── */
+  --cmw-background:          var(--cds-background, #ffffff);
+  --cmw-background-inverse:  var(--cds-background-inverse, #393939);
+  --cmw-layer-01:            var(--cds-layer-01, #f4f4f4);
+  --cmw-layer-02:            var(--cds-layer-02, #ffffff);
+  --cmw-layer-03:            var(--cds-layer-03, #f4f4f4);
+
+  /* ─── Text ───────────────────────────────────────────────────────────── */
+  --cmw-text-primary:        var(--cds-text-primary, #161616);
+  --cmw-text-secondary:      var(--cds-text-secondary, #525252);
+  --cmw-text-placeholder:    var(--cds-text-placeholder, #a8a8a8);
+  --cmw-text-on-color:       var(--cds-text-on-color, #ffffff);
+  --cmw-text-inverse:        var(--cds-text-inverse, #ffffff);
+
+  /* ─── Interactive ────────────────────────────────────────────────────── */
+  --cmw-interactive:         var(--cds-interactive, #0f62fe);
+  --cmw-interactive-hover:   var(--cds-button-primary-hover, #0353e9);
+  --cmw-interactive-active:  var(--cds-button-primary-active, #002d9c);
+  --cmw-focus:               var(--cds-focus, #0f62fe);
+  --cmw-focus-inset:         var(--cds-focus-inset, #ffffff);
+
+  /* ─── Border ─────────────────────────────────────────────────────────── */
+  --cmw-border-subtle:       var(--cds-border-subtle-01, #e0e0e0);
+  --cmw-border-strong:       var(--cds-border-strong-01, #8d8d8d);
+  --cmw-border-interactive:  var(--cds-border-interactive, #0f62fe);
+
+  /* ─── Icon ───────────────────────────────────────────────────────────── */
+  --cmw-icon-primary:        var(--cds-icon-primary, #161616);
+  --cmw-icon-secondary:      var(--cds-icon-secondary, #525252);
+  --cmw-icon-on-color:       var(--cds-icon-on-color, #ffffff);
+  --cmw-icon-interactive:    var(--cds-link-primary, #0f62fe);
+
+  /* ─── Skeleton ───────────────────────────────────────────────────────── */
+  /*
+   * Skeleton tokens don't yet have a Carbon v12 equivalent for all variants.
+   * The base token maps to the nearest CDS skeleton token.
+   * The AI gradient variants are custom until Carbon v12 ships them.
+   */
+  --cmw-skeleton-bg:         var(--cds-skeleton-background, #e8e8e8);
+  --cmw-skeleton-element:    var(--cds-skeleton-element, #c6c6c6);
+  /* Opacity at peak (fully visible) and trough (most transparent) of the pulse */
+  --cmw-skeleton-opacity-peak:    0.8;
+  --cmw-skeleton-opacity-trough:  0.2;
+  /* Corner radius — 0 by default, 8px when rounded-corners variant is active */
+  --cmw-skeleton-radius:          0px;
+
+  /* AI / gradient skeleton variant — TODO: wire to Carbon v12 AI tokens when available */
+  --cmw-skeleton-ai-bg:           #c8daff; /* IBM Blue 20 */
+  --cmw-skeleton-ai-shimmer:      rgba(184, 211, 255, 0.6); /* IBM Blue 10 @ 60% */
+  --cmw-skeleton-ai-opacity-peak:   0.4;
+  --cmw-skeleton-ai-opacity-trough: 0.15;
+
+  /* ─── Processing / status ────────────────────────────────────────────── */
+  --cmw-status-active:       var(--cds-support-info, #0043ce);
+  --cmw-status-complete:     var(--cds-support-success, #198038);
+  --cmw-status-error:        var(--cds-support-error, #da1e28);
+  --cmw-status-warning:      var(--cds-support-warning, #f1c21b);
+
+  /* ─── Content Switcher ───────────────────────────────────────────────── */
+  --cmw-switcher-bg:              var(--cds-layer-accent-01, #e0e0e0);
+  --cmw-switcher-bg-selected:     var(--cds-layer-selected-01, #c6c6c6);
+  --cmw-switcher-text:            var(--cds-text-secondary, #525252);
+  --cmw-switcher-text-selected:   var(--cds-text-primary, #161616);
+  --cmw-switcher-border:          var(--cds-border-subtle-01, #e0e0e0);
+  --cmw-switcher-height:          2.5rem;
+
+  /* ─── Loading Spinner ────────────────────────────────────────────────── */
+  --cmw-spinner-track:       var(--cds-border-subtle-01, #e0e0e0);
+  --cmw-spinner-fill:        var(--cds-interactive, #0f62fe);
+
+  /* ─── Indeterminate Bar Loader ───────────────────────────────────────── */
+  --cmw-bar-track:           var(--cds-border-subtle-01, #e0e0e0);
+  --cmw-bar-fill:            var(--cds-interactive, #0f62fe);
+  --cmw-bar-height:          0.25rem; /* 4px */
+
+  /* ─── Universal Prompt Bar ───────────────────────────────────────────── */
+  --cmw-prompt-bg:           var(--cds-field-01, #f4f4f4);
+  --cmw-prompt-bg-hover:     var(--cds-field-hover-01, #e8e8e8);
+  --cmw-prompt-border:       var(--cds-border-strong-01, #8d8d8d);
+  --cmw-prompt-border-focus: var(--cds-focus, #0f62fe);
+  --cmw-prompt-text:         var(--cds-text-primary, #161616);
+  --cmw-prompt-placeholder:  var(--cds-text-placeholder, #a8a8a8);
+  --cmw-prompt-height:       3rem; /* 48px */
+
+  /* ─── Motion Avatar ──────────────────────────────────────────────────── */
+  /* TODO: wire to Carbon v12 AI avatar tokens when available */
+  --cmw-avatar-bg-idle:        var(--cds-layer-02, #ffffff);
+  --cmw-avatar-bg-thinking:    #d0e2ff; /* IBM Blue 10 */
+  --cmw-avatar-bg-responding:  #d9fbfb; /* IBM Teal 10 */
+  --cmw-avatar-border-idle:    var(--cds-border-subtle-01, #e0e0e0);
+  --cmw-avatar-border-thinking:   #0043ce; /* IBM Blue 60 */
+  --cmw-avatar-border-responding: #009d9a; /* IBM Teal 50 */
+}

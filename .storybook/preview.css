@@ -1,0 +1,23 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/*
+ * Storybook-only preview styles.
+ * Resets the page background set by the app shell so the
+ * Storybook background switcher controls the canvas colour.
+ */
+
+:root {
+  /* override app-shell body background for the Storybook canvas */
+  background: initial !important;
+}
+
+body {
+  /* use Carbon layer token directly so the canvas matches the active theme */
+  background: var(--cds-background, #ffffff);
+  color: var(--cds-text-primary, #161616);
+}

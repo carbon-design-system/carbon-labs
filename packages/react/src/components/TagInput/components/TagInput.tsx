@@ -21,6 +21,12 @@ import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 
 interface TagInputProps {
   id: string;
+  /**
+   * Accessible label for the text input field.
+   * Rendered visually hidden — required for screen reader support.
+   * Defaults to "Add tag".
+   */
+  labelText?: string;
   placeholder?: string;
   size?: 'sm' | 'md' | 'lg';
   /**
@@ -68,14 +74,14 @@ interface TagInputProps {
 }
 
 const KEYS = {
-  ENTER: 13,
-  BACKSPACE: 8,
-  DELETE: 46,
-  ARROW_LEFT: 37,
-  ARROW_RIGHT: 39,
-  ESCAPE: 27,
-  HOME: 36,
-  END: 35,
+  ENTER: 'Enter',
+  BACKSPACE: 'Backspace',
+  DELETE: 'Delete',
+  ARROW_LEFT: 'ArrowLeft',
+  ARROW_RIGHT: 'ArrowRight',
+  ESCAPE: 'Escape',
+  HOME: 'Home',
+  END: 'End',
 } as const;
 
 const MIN_INPUT_WIDTH = 200;
@@ -96,6 +102,7 @@ const measureTextWidth = (text: string, font: string): number => {
 
 export const TagInput = ({
   id,
+  labelText = 'Add tag',
   placeholder = 'Type values and press enter key',
   size = 'md',
   value = [],
@@ -106,8 +113,9 @@ export const TagInput = ({
 
   const tags = value;
   const inputRef = useRef<HTMLInputElement>(null);
-  const tagRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const tagRefs = useRef<(HTMLLIElement | null)[]>([]);
   const [focusedTagIndex, setFocusedTagIndex] = useState<number | null>(null);
+  const [liveMessage, setLiveMessage] = useState('');
 
   // Update refs array when tags change
   useEffect(() => {
@@ -146,8 +154,12 @@ export const TagInput = ({
   const addTag = useCallback(
     (inputValue: string) => {
       const trimmedValue = inputValue.trim();
+      const newTags = [...tags, trimmedValue];
 
-      updateTags([...tags, trimmedValue]);
+      updateTags(newTags);
+      setLiveMessage(
+        `Tag "${trimmedValue}" added. ${newTags.length} ${newTags.length === 1 ? 'tag' : 'tags'} total.`
+      );
     },
     [tags, updateTags]
   );
@@ -155,15 +167,26 @@ export const TagInput = ({
   // Remove the last tag
   const removeLastTag = useCallback(() => {
     if (tags.length > 0) {
-      updateTags(tags.slice(0, -1));
+      const removed = tags[tags.length - 1];
+      const newTags = tags.slice(0, -1);
+
+      updateTags(newTags);
+      setLiveMessage(
+        `Tag "${removed}" removed. ${newTags.length} ${newTags.length === 1 ? 'tag' : 'tags'} remaining.`
+      );
     }
   }, [tags, updateTags]);
 
   // Remove tag at specific index with smart focus management
   const removeTag = useCallback(
     (index: number) => {
+      const removed = tags[index];
       const newTags = tags.filter((_, i) => i !== index);
+
       updateTags(newTags);
+      setLiveMessage(
+        `Tag "${removed}" removed. ${newTags.length} ${newTags.length === 1 ? 'tag' : 'tags'} remaining.`
+      );
 
       // Smart focus management after removal
       if (newTags.length === 0) {
@@ -193,7 +216,7 @@ export const TagInput = ({
       const target = e.target as HTMLInputElement;
       const { value, selectionStart } = target;
 
-      switch (e.keyCode) {
+      switch (e.key) {
         case KEYS.ENTER:
           e.preventDefault();
           if (value.trim()) {
@@ -233,8 +256,8 @@ export const TagInput = ({
 
   // Handle keyboard events on tag wrappers
   const handleTagKeyDown = useCallback(
-    (e: KeyboardEvent<HTMLDivElement>, index: number) => {
-      switch (e.keyCode) {
+    (e: KeyboardEvent<HTMLLIElement>, index: number) => {
+      switch (e.key) {
         case KEYS.ARROW_LEFT:
           e.preventDefault();
           if (index > 0) {
@@ -285,42 +308,61 @@ export const TagInput = ({
     [tags.length, removeTag]
   );
 
+  const tagInstructionsId = `${id}-tag-instructions`;
+
   return (
     <div
       className={`${prefix}--tag-input__container`}
-      role="listbox"
-      aria-label="Tag list">
-      {tags.map((tag, index) => {
-        const handleRemove = () => removeTag(index);
+      role="group"
+      aria-label="Tag input">
+      <span id={tagInstructionsId} className={`${prefix}--tag-input__sr-only`}>
+        Press Delete or Backspace to remove. Arrow keys to navigate between
+        tags. Escape to return to input.
+      </span>
+      <span
+        aria-live="polite"
+        aria-atomic="true"
+        className={`${prefix}--tag-input__sr-only`}>
+        {liveMessage}
+      </span>
+      {tags.length > 0 && (
+        <ul
+          className={`${prefix}--tag-input__tags-list`}
+          role="list"
+          aria-label="Added tags">
+          {tags.map((tag, index) => {
+            const handleRemove = () => removeTag(index);
 
-        return (
-          <div
-            key={`${tag}-${index}`}
-            ref={(el) => {
-              tagRefs.current[index] = el;
-            }}
-            className={`${prefix}--tag-input__tag-wrapper`}
-            tabIndex={-1}
-            role="option"
-            aria-label={`Tag: ${tag}. Press Delete or Backspace to remove, Arrow keys to navigate, Escape to return to input`}
-            aria-selected={focusedTagIndex === index}
-            onKeyDown={(e) => handleTagKeyDown(e, index)}
-            onFocus={() => setFocusedTagIndex(index)}
-            onBlur={() => setFocusedTagIndex(null)}>
-            {renderTag ? (
-              renderTag(tag, index, handleRemove)
-            ) : (
-              <DismissibleTag
-                id={`${id}-tag-${index}`}
-                text={tag}
-                title="Remove tag"
-                size={size}
-                onClose={handleRemove}
-              />
-            )}
-          </div>
-        );
-      })}
+            return (
+              <li
+                key={`${tag}-${index}`}
+                ref={(el) => {
+                  tagRefs.current[index] = el;
+                }}
+                className={`${prefix}--tag-input__tag-wrapper`}
+                tabIndex={-1}
+                role="listitem"
+                aria-label={tag}
+                aria-describedby={tagInstructionsId}
+                onKeyDown={(e) => handleTagKeyDown(e, index)}
+                onFocus={() => setFocusedTagIndex(index)}
+                onBlur={() => setFocusedTagIndex(null)}>
+                {renderTag ? (
+                  renderTag(tag, index, handleRemove)
+                ) : (
+                  <DismissibleTag
+                    id={`${id}-tag-${index}`}
+                    text={tag}
+                    title="Remove tag"
+                    size={size}
+                    onClose={handleRemove}
+                  />
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      )}
       <TextInput
         ref={inputRef}
         autoComplete="off"
@@ -329,7 +371,8 @@ export const TagInput = ({
         placeholder={placeholder}
         onKeyDown={handleInputKeyDown}
         size={size}
-        labelText=""
+        labelText={labelText}
+        hideLabel
         style={{ '--input-width': `${inputWidth}px` } as React.CSSProperties}
       />
     </div>

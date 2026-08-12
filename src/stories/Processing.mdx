@@ -69,6 +69,35 @@ Load-in then arcs three dots into an equilateral triangle.
 <Processing mode="triangle" />
 ```
 
+#### Square formation
+
+Load-in then grows a fourth dot and arcs all four into a square.
+
+```jsx
+<Processing mode="square" />
+```
+
+#### Wiggle
+
+Trigger a left-to-right bob animation on the three loading dots via the imperative handle.
+
+```jsx
+import { useRef } from 'react';
+import { Processing } from '@mike-olasov/motion-components';
+import type { ProcessingHandle } from '@mike-olasov/motion-components';
+
+function App() {
+  const ref = useRef<ProcessingHandle>(null);
+
+  return (
+    <>
+      <Processing ref={ref} loop />
+      <button onClick={() => ref.current?.triggerWiggle()}>Wiggle</button>
+    </>
+  );
+}
+```
+
 #### Imperative handle
 
 Use a ref to trigger animations programmatically — for example, forming a triangle when an async operation completes.

@@ -114,33 +114,29 @@ export const Loading: Story = {
   },
 };
 
+// ── Formation demos ───────────────────────────────────────────────────────────
+// Shared timing: load-in → 2 pulse loops → trigger → 2 s hold → triggerOut → restart
+const FORMATION_TRIGGER_AT = LOAD_IN_END + LOOP_DUR * PULSE_CYCLES; // 3400 ms
+const HOLD                 = 2000;                                    // 2 s hold
+
 // ── Triangle demo ─────────────────────────────────────────────────────────────
-// load-in → 2 pulse loops → triggerTriangle → 1 s hold → triggerOut → restart
-// Timing (all ms):
-//   triggerTriangle fires at: LOAD_IN_END + LOOP_DUR * PULSE_CYCLES = 3400
-//   triangle settles at:      3400 + FORM_DUR + FORM_STAGGER*2 = 4200
-//   triggerOut fires at:      4200 + 1000 = 5200
-//   restart at:               5200 + OUT_SETTLE = 5900
+// settle = FORM_DUR + FORM_STAGGER*2 = 800 ms after trigger
 
 function TriangleDemo() {
   const handle = useRef<ProcessingHandle>(null);
   const [key, setKey] = useState(0);
 
   useEffect(() => {
-    const triangleAt = LOAD_IN_END + LOOP_DUR * PULSE_CYCLES;           // 3400
-    const settledAt  = triangleAt + FORM_DUR + FORM_STAGGER * 2;        // 4200
-    const outAt      = settledAt + 1000;                                 // 5200
-    const restartAt  = outAt + OUT_SETTLE;                               // 5700 (≈5900 with gap)
+    const triggerAt = FORMATION_TRIGGER_AT;                              // 3400
+    const settledAt = triggerAt + FORM_DUR + FORM_STAGGER * 2;          // 4200
+    const outAt     = settledAt + HOLD;                                  // 6200
+    const restartAt = outAt + OUT_SETTLE;                                // 6900
 
-    const triangleTimer = setTimeout(() => { handle.current?.triggerTriangle(); }, triangleAt);
-    const outTimer      = setTimeout(() => { handle.current?.triggerOut(); },      outAt);
-    const restartTimer  = setTimeout(() => { setKey(k => k + 1); },                restartAt);
+    const triggerTimer = setTimeout(() => { handle.current?.triggerTriangle(); }, triggerAt);
+    const outTimer     = setTimeout(() => { handle.current?.triggerOut(); },      outAt);
+    const restartTimer = setTimeout(() => { setKey(k => k + 1); },                restartAt);
 
-    return () => {
-      clearTimeout(triangleTimer);
-      clearTimeout(outTimer);
-      clearTimeout(restartTimer);
-    };
+    return () => { clearTimeout(triggerTimer); clearTimeout(outTimer); clearTimeout(restartTimer); };
   }, [key]);
 
   return <Processing key={key} ref={handle} mode="loading" loop label="Processing" />;
@@ -152,7 +148,78 @@ export const Triangle: Story = {
     docs: {
       description: {
         story:
-          'Demonstrates the triangle formation: dots load in, pulse twice, then arc into an equilateral triangle, hold, and shrink out.',
+          'Demonstrates the triangle formation: dots load in, pulse twice, then arc into an equilateral triangle, hold for 2 s, and shrink out.',
+      },
+    },
+  },
+};
+
+// ── Square demo ───────────────────────────────────────────────────────────────
+// settle = FORM_DUR + FORM_STAGGER*3 = 850 ms after trigger (4 dots)
+
+function SquareDemo() {
+  const handle = useRef<ProcessingHandle>(null);
+  const [key, setKey] = useState(0);
+
+  useEffect(() => {
+    const triggerAt = FORMATION_TRIGGER_AT;                              // 3400
+    const settledAt = triggerAt + FORM_DUR + FORM_STAGGER * 3;          // 4250
+    const outAt     = settledAt + HOLD;                                  // 6250
+    const restartAt = outAt + OUT_SETTLE;                                // 6950
+
+    const triggerTimer = setTimeout(() => { handle.current?.triggerSquare(); }, triggerAt);
+    const outTimer     = setTimeout(() => { handle.current?.triggerOut(); },     outAt);
+    const restartTimer = setTimeout(() => { setKey(k => k + 1); },               restartAt);
+
+    return () => { clearTimeout(triggerTimer); clearTimeout(outTimer); clearTimeout(restartTimer); };
+  }, [key]);
+
+  return <Processing key={key} ref={handle} mode="loading" loop label="Processing" />;
+}
+
+export const Square: Story = {
+  render: () => <SquareDemo />,
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Demonstrates the square formation: dots load in, pulse twice, then a fourth dot grows in and all four arc into a square, hold for 2 s, and shrink out.',
+      },
+    },
+  },
+};
+
+// ── Wiggle demo ───────────────────────────────────────────────────────────────
+// wiggle completes = 400 ms per dot + FORM_STAGGER*4*2 = 800 ms total
+// hold 2 s after wiggle completes
+
+function WiggleDemo() {
+  const handle = useRef<ProcessingHandle>(null);
+  const [key, setKey] = useState(0);
+
+  useEffect(() => {
+    const triggerAt  = FORMATION_TRIGGER_AT;                             // 3400
+    const wiggleDone = triggerAt + 400 + FORM_STAGGER * 4 * 2;          // 4200
+    const outAt      = wiggleDone + HOLD;                                // 6200
+    const restartAt  = outAt + OUT_SETTLE;                               // 6900
+
+    const triggerTimer = setTimeout(() => { handle.current?.triggerWiggle(); }, triggerAt);
+    const outTimer     = setTimeout(() => { handle.current?.triggerOut(); },     outAt);
+    const restartTimer = setTimeout(() => { setKey(k => k + 1); },               restartAt);
+
+    return () => { clearTimeout(triggerTimer); clearTimeout(outTimer); clearTimeout(restartTimer); };
+  }, [key]);
+
+  return <Processing key={key} ref={handle} mode="loading" loop label="Processing" />;
+}
+
+export const Wiggle: Story = {
+  render: () => <WiggleDemo />,
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Demonstrates the wiggle: dots load in, pulse twice, then each dot bobs up and back with a left-to-right stagger, hold for 2 s, and shrink out.',
       },
     },
   },

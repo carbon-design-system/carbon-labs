@@ -10,13 +10,15 @@
  *
  * Modes (prop-based):
  *   "loading"  — three-dot load-in then infinite loop
- *   "triangle" — load-in then formation into an equilateral triangle
+ *   "triangle" — load-in then arcs into an equilateral triangle
+ *   "square"   — load-in then arcs into a square (four dots)
  *   "out"      — immediate shrink-to-zero from resting size
  *
  * Imperative handle:
- *   triggerOut()       — interrupt and shrink from wherever the dots are
- *   triggerFormation() — move three dots into a triangle immediately
- *   triggerSquare()    — grow a fourth dot and move all four into a square
+ *   triggerOut()      — interrupt and shrink from wherever the dots are
+ *   triggerTriangle() — arc three dots into a triangle immediately (50 ms stagger)
+ *   triggerSquare()   — grow a fourth dot and arc all four into a square (50 ms stagger)
+ *   triggerWiggle()   — bob each dot up 6 px and back (200 ms stagger, 400 ms per dot)
  */
 
 import {
@@ -98,21 +100,28 @@ const LIN = 'linear';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-export type ProcessingMode = 'loading' | 'triangle' | 'out';
+export type ProcessingMode = 'loading' | 'triangle' | 'square' | 'out' | 'wiggle';
 
 export interface ProcessingProps {
+  /** Animation state. Controls which sequence runs on mount. @defaultValue 'loading' */
   mode?: ProcessingMode;
+  /** Whether the loading loop repeats indefinitely. Only applies in `loading` mode. @defaultValue true */
   loop?: boolean;
+  /** Accessible label for the status region. @defaultValue 'Processing' */
   label?: string;
+  /** Additional CSS class applied to the root element. */
   className?: string;
 }
 
 export interface ProcessingHandle {
+  /** Shrink all visible dots to zero from their current positions. */
   triggerOut: () => void;
-  /** Immediately starts the triangle slide + arc formation from current positions. */
-  triggerFormation: () => void;
-  /** Grows dot 3 from zero and moves all four dots into a square formation. */
+  /** Arc the three dots into an equilateral triangle immediately. 50 ms left-to-right stagger. */
+  triggerTriangle: () => void;
+  /** Grow a fourth dot and arc all four into a square. 50 ms left-to-right stagger. */
   triggerSquare: () => void;
+  /** Bob each dot up 6 px and back. 200 ms left-to-right stagger, 400 ms per dot. */
+  triggerWiggle: () => void;
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -423,7 +432,7 @@ export const Processing = forwardRef<ProcessingHandle, ProcessingProps>(
         }, OUT_STAGGER * (ds.length - 1) + OUT_DUR);
       },
 
-      triggerFormation: () => {
+      triggerTriangle: () => {
         if (!alive.current) return;
         const ds         = dots3();
         const phaseStart = document.timeline.currentTime as number;
@@ -493,6 +502,26 @@ export const Processing = forwardRef<ProcessingHandle, ProcessingProps>(
           startInfiniteRotation(rampDeg);
         }).catch(() => {});
       },
+
+      triggerWiggle: () => {
+        if (!alive.current) return;
+        const ds         = dots3();
+        const phaseStart = document.timeline.currentTime as number;
+
+        ds.forEach((d, i) => {
+          const fromCy = parseFloat(d.getAttribute('cy') ?? `${BASE[i].cy}`);
+          const anim = d.animate(
+            [
+              { offset: 0,   cy: `${fromCy}px`,      easing: EF  },
+              { offset: 0.5, cy: `${fromCy - 6}px`,  easing: EF  },
+              { offset: 1,   cy: `${fromCy}px`                    },
+            ],
+            { duration: 400, fill: 'forwards' },
+          );
+          anim.startTime = phaseStart + FORM_STAGGER * 4 * i;
+          track(anim);
+        });
+      },
     }));
 
     // ── mode effect ───────────────────────────────────────────────────────────
@@ -514,6 +543,8 @@ export const Processing = forwardRef<ProcessingHandle, ProcessingProps>(
         void runLoading(loop);
       } else if (mode === 'triangle') {
         void runTriangle();
+      } else if (mode === 'square') {
+        void runLoading(true); // load-in + pulse, then triggerSquare fires below
       } else if (mode === 'out') {
         const t0 = document.timeline.currentTime as number;
         dots3().forEach((d, i) => {

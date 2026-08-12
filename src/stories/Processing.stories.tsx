@@ -13,41 +13,31 @@ import s from './Processing.stories.module.css';
 const meta = {
   title: 'Components/Processing',
   component: Processing,
-  tags: ['autodocs'],
+  tags: [],
   parameters: {
     layout: 'centered',
     docs: {
       description: {
-        component: `
-Animated dot loading indicator with shape-formation transforms.
-
-**Modes:**
-- \`loading\` — three-dot load-in then infinite loop
-- \`triangle\` — load-in then staggered arcs into an equilateral triangle
-- \`square\` — load-in then formation into a square (four dots)
-- \`out\` — immediate shrink-to-zero from resting size
-
-**Imperative handle:**
-- \`triggerTriangle()\` — immediately arcs three dots into a triangle (50 ms stagger)
-- \`triggerSquare()\` — grows a fourth dot and moves all four into a square
-- \`triggerOut()\` — interrupt and shrink from wherever the dots are
-        `.trim(),
+        component:
+          'Processing indicates that data is being loaded or an action is in progress. Use the imperative handle to trigger shape formations or interrupt the animation at any point.',
       },
     },
   },
   argTypes: {
     mode: {
       control: 'select',
-      options: ['loading', 'triangle', 'square', 'out'],
-      description: 'Animation state',
+      options: ['loading', 'triangle', 'square', 'out', 'wiggle'],
+      description:
+        "`'loading'` — load-in then pulse loop | `'triangle'` — load-in then arc into a triangle | `'square'` — load-in then arc into a square | `'out'` — shrink to zero immediately | `'wiggle'` — imperative-only, set via triggerWiggle()",
+      table: { defaultValue: { summary: "'loading'" } },
     },
     loop: {
       control: 'boolean',
-      description: 'Whether the loading loop repeats (loading mode only)',
+      table: { defaultValue: { summary: 'true' } },
     },
     label: {
       control: 'text',
-      description: 'Accessible label for screen readers',
+      table: { defaultValue: { summary: "'Processing'" } },
     },
   },
 } satisfies Meta<typeof Processing>;
@@ -73,30 +63,38 @@ function SqrIcon() {
   );
 }
 
-// ── Processing — auto-play ────────────────────────────────────────────────────
-// Plays load-in → 2 pulse loops → out, then repeats indefinitely.
-// Timing (all ms):
-//   load-in ends (last dot):  STAGGER*2 + LOAD_DUR = 400 + 1000 = 1400
-//   2 loop cycles (last dot): LOOP_DUR * 2 = 2000
-//   triggerOut fires at:      1400 + 2000 = 3400
-//   out finishes (last dot):  OUT_STAGGER*2 + OUT_DUR = 100 + 100 = 200
-//   gap before restart:       300
-const LOAD_IN_END  = 200 * 2 + 1000; // STAGGER*2 + LOAD_DUR
-const PULSE_CYCLES = 2;
-const OUT_SETTLE   = 200 * 2 + 100 + 300; // OUT_STAGGER*2 + OUT_DUR + gap
+function WiggleIcon() {
+  return (
+    <svg width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+      <path d="M1 6 Q2.5 1 4 4 Q5.5 7 7 4 Q8.5 1 11 2" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
 
-function AutoPlayDemo() {
+// ── Timing constants ──────────────────────────────────────────────────────────
+// Mirrors component internals (not exported from component).
+const LOAD_IN_END  = 200 * 2 + 1000; // STAGGER*2 + LOAD_DUR = 1400 ms
+const PULSE_CYCLES = 2;
+const OUT_SETTLE   = 200 * 2 + 100 + 300; // OUT_STAGGER*2 + OUT_DUR + gap = 700 ms
+const LOOP_DUR     = 1000;            // one pulse cycle
+const FORM_DUR     = 700;             // triangle/square formation duration
+const FORM_STAGGER = 50;              // per-dot stagger for formation
+
+// ── Loading demo ──────────────────────────────────────────────────────────────
+// load-in → 2 pulse loops → triggerOut → restart
+
+function LoadingDemo() {
   const handle = useRef<ProcessingHandle>(null);
   const [key, setKey] = useState(0);
 
   useEffect(() => {
     const triggerTimer = setTimeout(() => {
       handle.current?.triggerOut();
-    }, LOAD_IN_END + 1000 * PULSE_CYCLES);
+    }, LOAD_IN_END + LOOP_DUR * PULSE_CYCLES);
 
     const restartTimer = setTimeout(() => {
       setKey(k => k + 1);
-    }, LOAD_IN_END + 1000 * PULSE_CYCLES + OUT_SETTLE);
+    }, LOAD_IN_END + LOOP_DUR * PULSE_CYCLES + OUT_SETTLE);
 
     return () => { clearTimeout(triggerTimer); clearTimeout(restartTimer); };
   }, [key]);
@@ -104,9 +102,60 @@ function AutoPlayDemo() {
   return <Processing key={key} ref={handle} mode="loading" loop label="Processing" />;
 }
 
-export const Default: Story = {
-  name: 'Processing',
-  render: () => <AutoPlayDemo />,
+export const Loading: Story = {
+  render: () => <LoadingDemo />,
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Demonstrates the default loading state: three dots load in, pulse twice, then shrink out and restart.',
+      },
+    },
+  },
+};
+
+// ── Triangle demo ─────────────────────────────────────────────────────────────
+// load-in → 2 pulse loops → triggerTriangle → 1 s hold → triggerOut → restart
+// Timing (all ms):
+//   triggerTriangle fires at: LOAD_IN_END + LOOP_DUR * PULSE_CYCLES = 3400
+//   triangle settles at:      3400 + FORM_DUR + FORM_STAGGER*2 = 4200
+//   triggerOut fires at:      4200 + 1000 = 5200
+//   restart at:               5200 + OUT_SETTLE = 5900
+
+function TriangleDemo() {
+  const handle = useRef<ProcessingHandle>(null);
+  const [key, setKey] = useState(0);
+
+  useEffect(() => {
+    const triangleAt = LOAD_IN_END + LOOP_DUR * PULSE_CYCLES;           // 3400
+    const settledAt  = triangleAt + FORM_DUR + FORM_STAGGER * 2;        // 4200
+    const outAt      = settledAt + 1000;                                 // 5200
+    const restartAt  = outAt + OUT_SETTLE;                               // 5700 (≈5900 with gap)
+
+    const triangleTimer = setTimeout(() => { handle.current?.triggerTriangle(); }, triangleAt);
+    const outTimer      = setTimeout(() => { handle.current?.triggerOut(); },      outAt);
+    const restartTimer  = setTimeout(() => { setKey(k => k + 1); },                restartAt);
+
+    return () => {
+      clearTimeout(triangleTimer);
+      clearTimeout(outTimer);
+      clearTimeout(restartTimer);
+    };
+  }, [key]);
+
+  return <Processing key={key} ref={handle} mode="loading" loop label="Processing" />;
+}
+
+export const Triangle: Story = {
+  render: () => <TriangleDemo />,
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Demonstrates the triangle formation: dots load in, pulse twice, then arc into an equilateral triangle, hold, and shrink out.',
+      },
+    },
+  },
 };
 
 // ── Processing — interactive controls ────────────────────────────────────────
@@ -137,6 +186,10 @@ function InteractiveDemo() {
         >
           <SqrIcon />
           Square
+        </button>
+        <button onClick={() => handle.current?.triggerWiggle()} className={s.btn}>
+          <WiggleIcon />
+          Wiggle
         </button>
         <button onClick={() => handle.current?.triggerOut()} className={`${s.btn} ${s.btnDanger}`}>
           Out ↓

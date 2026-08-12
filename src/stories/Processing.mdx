@@ -1,0 +1,87 @@
+import { Meta, Canvas, Controls } from '@storybook/addon-docs/blocks';
+import * as Stories from './Processing.stories';
+
+<Meta of={Stories} />
+
+# Processing
+
+Processing indicates that data is being loaded or an action is in progress. It is used in chat interfaces, async operations, and anywhere the user should wait for a response. Inspired by the Carbon Design System loading pattern, this component extends it with shape formation transforms and an imperative animation API.
+
+## Overview
+
+<Canvas of={Stories.Loading} />
+
+_Ex. The loading state in a chat shell interface._
+
+## Using Processing in Figma
+
+A Figma component kit for Processing is currently in development. When available, it will include all four modes and both light and dark theme variants matching the Carbon dot colour tokens.
+
+> **Note:** Dot stroke colour is driven by `--cds-text-primary` in white/g10 themes and a lighter token in g90/g100 themes, so the component automatically adapts when you switch Storybook themes.
+
+## Getting started
+
+```bash
+yarn add @mike-olasov/motion-components
+# or
+npm install @mike-olasov/motion-components
+```
+
+## JS (via import)
+
+```jsx
+import { Processing } from '@mike-olasov/motion-components';
+
+function App() {
+  return <Processing loop />;
+}
+
+export default App;
+```
+
+## SCSS
+
+In your styles file import:
+
+```scss
+@use '@mike-olasov/motion-components/scss/processing';
+```
+
+## Component API
+
+<Controls of={Stories.Loading} />
+
+## Example usages
+
+#### Basic loop
+
+Loops indefinitely until interrupted.
+
+```jsx
+<Processing loop />
+```
+
+#### Triangle formation
+
+Load-in then arcs three dots into an equilateral triangle.
+
+```jsx
+<Processing mode="triangle" />
+```
+
+#### Imperative handle
+
+Use a ref to trigger animations programmatically — for example, forming a triangle when an async operation completes.
+
+```jsx
+import { useRef } from 'react';
+import { Processing } from '@mike-olasov/motion-components';
+import type { ProcessingHandle } from '@mike-olasov/motion-components';
+
+function App() {
+  const ref = useRef<ProcessingHandle>(null);
+
+  // When your async work finishes, call triggerTriangle() on the ref:
+  return <Processing ref={ref} loop />;
+}
+```

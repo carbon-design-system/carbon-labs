@@ -114,7 +114,7 @@ export function useSkeletonAnimation(
     const { peak, trough } = getThemeOpacity(blocks[0]);
     let mounted = true;
 
-    const fadeInPromises = blocks.map((block, i) => {
+    const fadeInAnims = blocks.map((block, i) => {
       const anim = animateOpacity({
         element: block,
         fromOpacity: 0,
@@ -127,7 +127,9 @@ export function useSkeletonAnimation(
       return anim.finished;
     });
 
-    Promise.all(fadeInPromises).then(() => {
+    // Use allSettled so a cancelled fade-in (AbortError from fill:'forwards' +
+    // cancel) does not prevent the loop from starting on the next mount cycle.
+    Promise.allSettled(fadeInAnims).then(() => {
       if (!mounted) return;
 
       // ── Loop cycle ────────────────────────────────────────────────────
@@ -162,7 +164,7 @@ export function useSkeletonAnimation(
 
       // First loop fires slightly earlier (1.5 s sooner than subsequent ones)
       scheduleLoop(totalLoopMs - overlapMs - 1500);
-    }).catch(() => { /* component unmounted — ignore */ });
+    });
 
     return () => {
       mounted = false;

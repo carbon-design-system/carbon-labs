@@ -13,7 +13,7 @@ import s from './Processing.stories.module.css';
 const meta = {
   title: 'Components/Processing',
   component: Processing,
-  tags: ['autodocs'],
+  tags: ['!autodocs'],
   parameters: {
     layout: 'centered',
     docs: {

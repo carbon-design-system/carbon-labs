@@ -14,7 +14,7 @@ import s from './SkeletonLayout.stories.module.css';
 const meta = {
   title: 'Components/SkeletonLayout',
   component: SkeletonLayout,
-  tags: ['autodocs'],
+  tags: ['!autodocs'],
   parameters: {
     layout: 'fullscreen',
     docs: {

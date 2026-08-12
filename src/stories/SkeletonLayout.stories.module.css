@@ -1,0 +1,306 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * SkeletonLayout story styles — real content placeholders for the
+ * full-page reveal demo. All colours reference --cds-* tokens so they
+ * respond correctly when the Storybook theme switcher changes.
+ */
+
+/* ── Wrapper ─────────────────────────────────────────────────────────────── */
+.demoRoot {
+  padding: 2rem;
+  background-color: var(--cds-background, #f4f4f4);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* ── Two stacked layers — skeleton beneath, content on top ───────────────── */
+/* Use a single-cell grid so both layers share exactly the same origin and
+   width without any position/padding doubling.                               */
+.layerStack {
+  display: grid;
+}
+
+.skeletonLayer,
+.contentLayer {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+
+.contentLayer {
+  /* pointer-events off — zones become interactive as they fade in via WAAPI */
+  pointer-events: none;
+}
+
+/* ── Shared content layout — mirrors the skeleton zone structure ─────────── */
+/* gap and flex-direction must match .layoutFullPage in SkeletonLayout.module.css */
+.contentRoot {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.cHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  /* opacity controlled by JS inline style + WAAPI — no CSS default needed */
+}
+
+.cNavBar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  height: 3rem;
+  /* border-box so the border doesn't push total height above 3rem */
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--cds-border-subtle-01, #e0e0e0);
+}
+
+.cNavLogo {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cds-text-primary, #161616);
+  letter-spacing: 0.01em;
+}
+
+.cNavLinks {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cNavLinks li {
+  font-size: 0.875rem;
+  color: var(--cds-text-secondary, #525252);
+}
+
+.cBreadcrumb {
+  font-size: 0.75rem;
+  color: var(--cds-text-secondary, #525252);
+}
+
+/* ── Hero ────────────────────────────────────────────────────────────────── */
+.cHero {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+/* Mixed layout — subtle AI blue tint on the hero surface to match the
+   blue-tinted skeleton that cross-fades into it.
+   Uses Blue 10 bg / Blue 30 border, matching the white-theme AI tokens. */
+:global([data-content-ai]) .cHeroPanel {
+  background-color: #d0e2ff; /* IBM Blue 10 — matches --cmw-skeleton-ai-bg on white */
+  border-color: #a6c8ff;     /* IBM Blue 30 — matches --cmw-skeleton-ai-element */
+}
+
+.cHeroText {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  /* Matches .fpHeroText gap */
+  gap: 0.75rem;
+}
+
+.cHeroTitle {
+  font-size: 1.75rem;
+  font-weight: 300;
+  color: var(--cds-text-primary, #161616);
+  margin: 0;
+  /* line-height 1.25 → rendered height = 1.75 × 1.25 = 2.1875rem ≈ 2.25rem skeleton block */
+  line-height: 1.25;
+}
+
+.cHeroSub {
+  font-size: 0.875rem;
+  color: var(--cds-text-secondary, #525252);
+  margin: 0;
+}
+
+.cHeroPanel {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 10rem;
+  background-color: var(--cds-layer-02, #ffffff);
+  border: 1px solid var(--cds-border-subtle-01, #e0e0e0);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cHeroPanelLabel {
+  font-size: 0.75rem;
+  color: var(--cds-text-placeholder, #a8a8a8);
+}
+
+/* ── Cards ───────────────────────────────────────────────────────────────── */
+.cCards {
+  display: flex;
+  gap: 1rem;
+}
+
+.cCard {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background-color: var(--cds-layer-01, #f4f4f4);
+  border: 1px solid var(--cds-border-subtle-01, #e0e0e0);
+  padding: 1rem;
+  /* box-sizing border-box so padding+border are included in the flex height,
+     keeping total card height at ~7.5rem to match .fpCardBlock */
+  box-sizing: border-box;
+  min-height: 7.5rem;
+}
+
+/* Mixed layout — 8px rounded cards to match the skeleton zone treatment */
+.cCardRounded {
+  border-radius: 8px;
+}
+
+.cCardTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cds-text-primary, #161616);
+  margin: 0;
+}
+
+.cCardBody {
+  font-size: 0.8125rem;
+  color: var(--cds-text-secondary, #525252);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.cCardValue {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--cds-text-primary, #161616);
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+/* ── Table ───────────────────────────────────────────────────────────────── */
+/* No border-top here — the skeleton .fpTableHeader already carries it and
+   both are visible simultaneously during the cross-fade.                    */
+.cTable {
+  display: flex;
+  flex-direction: column;
+}
+
+.cTableHeader {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid var(--cds-border-subtle-01, #e0e0e0);
+}
+
+.cTableHeaderCell {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--cds-text-secondary, #525252);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cTableRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1rem;
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--cds-border-subtle-01, #e0e0e0);
+}
+
+.cTableCell {
+  font-size: 0.875rem;
+  color: var(--cds-text-primary, #161616);
+}
+
+.cTableCellMuted {
+  font-size: 0.875rem;
+  color: var(--cds-text-secondary, #525252);
+}
+
+/* ── Custom layout (SkeletonBlock story) ─────────────────────────────────── */
+
+/* 2-column grid: fixed sidebar + fluid main */
+.clRoot {
+  display: grid;
+  grid-template-columns: 14rem 1fr;
+  gap: 2rem;
+  width: 100%;
+  align-items: start;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────────────────── */
+.clSidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  /* min-height keeps the skeleton and real-content sidebar the same height */
+  min-height: 20rem;
+}
+
+.clSidebarTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cds-text-primary, #161616);
+  margin: 0;
+}
+
+.clSidebarLine {
+  font-size: 0.8125rem;
+  color: var(--cds-text-secondary, #525252);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.clSidebarMuted {
+  font-size: 0.75rem;
+  color: var(--cds-text-placeholder, #a8a8a8);
+  margin: 0;
+}
+
+/* Placeholder for an AI summary / insight panel in the sidebar */
+.clSidebarPanel {
+  flex: 1 1 auto;
+  min-height: 7.5rem;
+  background-color: var(--cds-layer-02, #ffffff);
+  border: 1px solid var(--cds-border-subtle-01, #e0e0e0);
+  border-radius: 2px;
+}
+
+/* ── Main column ─────────────────────────────────────────────────────────── */
+.clMain {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  min-width: 0;
+}
+
+/* Hero text zone — matches .fpHeroText gap */
+.clHero {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* 3-column metric cards row */
+.clCards {
+  display: flex;
+  gap: 1rem;
+}
+
+.clFooter {
+  font-size: 0.75rem;
+  color: var(--cds-text-secondary, #525252);
+  margin: 0;
+}

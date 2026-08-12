@@ -1,0 +1,167 @@
+import { Meta, Canvas, Controls } from '@storybook/addon-docs/blocks';
+import * as Stories from './SkeletonLayout.stories';
+
+<Meta of={Stories} />
+
+# SkeletonLayout
+
+SkeletonLayout renders progressively-revealed placeholder blocks for complex page layouts while
+real content loads. Blocks animate in with a staggered fade and pulse continuously until content
+replaces them.
+
+There are two ways to use it:
+
+1. **Built-in layout variants** — drop-in, zero configuration, covers the most common page shapes.
+2. **`SkeletonBlock` composition** — bring your own structure; build any arbitrary layout from
+   typed primitive blocks. The animation is automatic.
+
+---
+
+## Default layout
+
+<Canvas of={Stories.DefaultLayout} />
+
+_Header → hero → 4-up cards → data table. All zones use the neutral block treatment._
+
+## Mixed layout
+
+<Canvas of={Stories.MixedLayout} />
+
+_Hero zone: AI blue. Cards zone: 8 px rounded corners. Header + table: neutral._
+
+## Custom layout (SkeletonBlock)
+
+<Canvas of={Stories.CustomLayout} />
+
+_A 2-column sidebar + main layout — entirely composed from `SkeletonBlock` primitives.
+No built-in variant exists for this shape; the product team defines it inline._
+
+---
+
+## Component API
+
+<Controls of={Stories.DefaultLayout} />
+
+---
+
+## SkeletonBlock API
+
+`SkeletonBlock` is the primitive you use when the built-in variants don't fit your page shape.
+Drop it anywhere inside a `<SkeletonLayout>` — the parent's animation hook picks it up
+automatically via the `data-skeleton-block` attribute.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `SkeletonBlockVariant` | `'line'` | Visual size/shape (see table below) |
+| `order` | `number` | — | **Required.** Stagger position (0 = first) |
+| `zone` | `string` | — | Zone name for cross-fade orchestration |
+| `ai` | `boolean` | `false` | AI blue-tint on this block |
+| `rounded` | `boolean` | `false` | 8 px corner radius on this block |
+| `className` | `string` | — | Extra class name |
+
+### Block variants
+
+| Variant | Height | Width | Typical use |
+|---------|--------|-------|-------------|
+| `line` | 0.875 rem | max 10 rem | Body text line |
+| `line-short` | 0.875 rem | max 6 rem | Label or caption |
+| `title` | 1.5 rem | max 12 rem | Section heading |
+| `title-lg` | 2.25 rem | max 16 rem | Page h1 |
+| `panel` | 10 rem | max 15 rem | Medium content area |
+| `panel-hero` | 10 rem | flex-fill | Wide hero panel |
+| `panel-sm` | 7.5 rem | max 12.5 rem | Small card panel |
+| `nav` | 3 rem | 100% | Navigation bar |
+| `breadcrumb` | 0.875 rem | 8 rem | Breadcrumb stub |
+| `card` | 7.5 rem | flex-fill | Card surface |
+| `table-row` | 2.625 rem | 100% | Table row (no fill) |
+
+---
+
+## Composing a custom layout
+
+```tsx
+import { SkeletonLayout, SkeletonBlock } from '@carbon-motion-workshop/components';
+
+function MyPageSkeleton() {
+  return (
+    <SkeletonLayout>
+      <div style={{ display: 'grid', gridTemplateColumns: '14rem 1fr', gap: '2rem' }}>
+
+        {/* Sidebar — AI zone */}
+        <div data-fp-zone="sidebar" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+          <SkeletonBlock variant="title"    order={0} zone="sidebar" ai />
+          <SkeletonBlock variant="line"     order={1} zone="sidebar" ai />
+          <SkeletonBlock variant="line"     order={2} zone="sidebar" ai />
+          <SkeletonBlock variant="panel-sm" order={3} zone="sidebar" ai />
+        </div>
+
+        {/* Main — nav + hero + rounded cards */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+          <div data-fp-zone="nav">
+            <SkeletonBlock variant="nav" order={4} zone="nav" />
+          </div>
+          <div data-fp-zone="hero" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <SkeletonBlock variant="title-lg" order={5} zone="hero" />
+            <SkeletonBlock variant="line"     order={6} zone="hero" />
+          </div>
+          <div data-fp-zone="cards" style={{ display: 'flex', gap: '1rem' }}>
+            <SkeletonBlock variant="card" order={7} zone="cards" rounded />
+            <SkeletonBlock variant="card" order={8} zone="cards" rounded />
+            <SkeletonBlock variant="card" order={9} zone="cards" rounded />
+          </div>
+        </div>
+
+      </div>
+    </SkeletonLayout>
+  );
+}
+```
+
+### Cross-fade on reveal (advanced)
+
+The `data-fp-zone` attribute on wrapper elements is the hook for reveal orchestration.
+Query `[data-fp-zone="<name>"]` from your skeleton root ref, cancel its animations,
+then animate `opacity → 0` while fading in the matching real-content zone.
+See `FullPageDemo` / `CustomLayoutDemo` in the story source for the full pattern.
+
+---
+
+## Using `useSkeletonAnimation` directly
+
+If you need full control over the DOM, skip `SkeletonLayout` entirely and drive the
+animation yourself:
+
+```tsx
+import { useSkeletonAnimation } from '@carbon-motion-workshop/components';
+
+function MySkeleton() {
+  const ref = useRef<HTMLDivElement>(null);
+  useSkeletonAnimation(ref);
+
+  return (
+    <div ref={ref} aria-busy="true" aria-label="Loading">
+      {/* Any elements with data-skeleton-block + data-order will animate */}
+      <div data-skeleton-block data-order="0" style={{ height: '3rem', background: 'var(--cmw-skeleton-element)' }} />
+      <div data-skeleton-block data-order="1" style={{ height: '1rem', background: 'var(--cmw-skeleton-element)' }} />
+    </div>
+  );
+}
+```
+
+---
+
+## Token reference
+
+| Token | Default | Purpose |
+|-------|---------|---------|
+| `--cmw-skeleton-bg` | `#e8e8e8` | Block fill — neutral |
+| `--cmw-skeleton-element` | `#c6c6c6` | Cell stub fill — neutral |
+| `--cmw-skeleton-ai-bg` | `#d0e2ff` (Blue 10) | Block fill — AI (white baseline) |
+| `--cmw-skeleton-ai-element` | `#a6c8ff` (Blue 30) | Cell stub fill — AI |
+| `--cmw-skeleton-opacity-peak` | `0.3` | Pulse peak opacity |
+| `--cmw-skeleton-opacity-trough` | `0.15` | Pulse trough opacity |
+| `--cmw-skeleton-radius` | `0px` | Block corner radius |
+
+All tokens have per-theme overrides in `src/tokens/themes.css`. AI tokens step from
+pale blue (light themes) to saturated mid-blue (dark themes) to maintain consistent
+contrast across all four Carbon themes.

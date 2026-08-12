@@ -48,14 +48,20 @@
   --cmw-easing-expressive-exit:      cubic-bezier(0.40, 0.14, 1.00, 1.00);
 
   /* ─── Skeleton-specific motion ───────────────────────────────────────── */
-  /* Initial fade-in duration (from 0 → peak opacity on mount)              */
-  --cmw-skeleton-fade-in-duration:   500ms;
-  /* Per-block stagger delay step                                            */
-  --cmw-skeleton-stagger-step:       50ms;
+  /* Initial fade-in duration (from 0 → peak opacity on mount)
+   * 750ms per element (original 500ms × 1.5 — 50% slower).
+   * Stagger is sized so the last of 17 blocks finishes at exactly 1500ms:
+   *   750 + 16 × 47ms = 1502ms ≈ 1500ms.                                   */
+  --cmw-skeleton-fade-in-duration:   750ms;
+  /* Per-block stagger delay step — 47ms keeps total window at ~1500ms      */
+  --cmw-skeleton-stagger-step:       47ms;
   /* Loop cycle duration (peak → trough → peak)                             */
   --cmw-skeleton-loop-duration:      1000ms;
   /* Easing for the skeleton pulse — uses productive standard curve          */
   --cmw-skeleton-easing:             var(--cmw-easing-standard);
+  /* Content reveal — skeleton out + content in simultaneously over 200ms   */
+  --cmw-skeleton-reveal-duration:    200ms;
+  --cmw-skeleton-reveal-easing:      var(--cmw-easing-entrance);
 
   /* ─── Processing indicator ───────────────────────────────────────────── */
   --cmw-processing-spin-duration:    700ms;
@@ -102,6 +108,7 @@
     --cmw-skeleton-fade-in-duration:  0.01ms;
     --cmw-skeleton-stagger-step:      0ms;
     --cmw-skeleton-loop-duration:     0.01ms;
+    --cmw-skeleton-reveal-duration:   0.01ms;
 
     --cmw-processing-spin-duration:   0.01ms;
     --cmw-processing-transition:      0.01ms;

@@ -55,15 +55,19 @@
    */
   --cmw-skeleton-bg:         var(--cds-skeleton-background, #e8e8e8);
   --cmw-skeleton-element:    var(--cds-skeleton-element, #c6c6c6);
-  /* Opacity at peak (fully visible) and trough (most transparent) of the pulse */
-  --cmw-skeleton-opacity-peak:    0.8;
-  --cmw-skeleton-opacity-trough:  0.2;
+  /* Opacity at peak (fully visible) and trough (most transparent) of the pulse.
+   * Per-theme overrides in themes.css tune these for each surface.           */
+  --cmw-skeleton-opacity-peak:    0.3;
+  --cmw-skeleton-opacity-trough:  0.15;
   /* Corner radius — 0 by default, 8px when rounded-corners variant is active */
   --cmw-skeleton-radius:          0px;
 
-  /* AI / gradient skeleton variant — TODO: wire to Carbon v12 AI tokens when available */
-  --cmw-skeleton-ai-bg:           #c8daff; /* IBM Blue 20 */
-  --cmw-skeleton-ai-shimmer:      rgba(184, 211, 255, 0.6); /* IBM Blue 10 @ 60% */
+  /* AI skeleton variant — TODO: wire to Carbon v12 AI tokens when available.
+   * Per-theme overrides in themes.css choose the right blue for each surface:
+   *   light themes → pale blue (hint, not shout)
+   *   dark themes  → saturated mid-blue (glows against dark surface)           */
+  --cmw-skeleton-ai-bg:           #d0e2ff; /* IBM Blue 10 — white fallback, block fill  */
+  --cmw-skeleton-ai-element:      #a6c8ff; /* IBM Blue 30 — white fallback, cell stubs  */
   --cmw-skeleton-ai-opacity-peak:   0.4;
   --cmw-skeleton-ai-opacity-trough: 0.15;
 

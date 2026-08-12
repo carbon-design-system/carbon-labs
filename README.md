@@ -7,7 +7,7 @@ built with React + TypeScript + Storybook.
 
 | Component | Description |
 |-----------|-------------|
-| **SkeletonLoader** | Progressive-reveal skeleton with staggered animation |
+| **SkeletonLayout** | Progressive-reveal skeleton with staggered animation |
 | **Processing** | In-progress state indicator with status transitions |
 | **ContentSwitcher** | Segmented control with keyboard navigation |
 | **LoadingSpinner** | Indeterminate circular spinner |

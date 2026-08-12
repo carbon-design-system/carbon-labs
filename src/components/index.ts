@@ -5,8 +5,14 @@
  * Import from here to get all components in one import.
  */
 
-export { SkeletonLoader }        from './SkeletonLoader/SkeletonLoader';
-export type { SkeletonLoaderProps, SkeletonLayout } from './SkeletonLoader/SkeletonLoader.types';
+export { SkeletonLayout, SkeletonBlock } from './SkeletonLayout/SkeletonLayout';
+export type {
+  SkeletonLayoutProps,
+  SkeletonLayoutVariant,
+  SkeletonBlockProps,
+  SkeletonBlockVariant,
+} from './SkeletonLayout/SkeletonLayout.types';
+export { useSkeletonAnimation } from '../hooks/useSkeletonAnimation';
 
 export { Processing }            from './Processing/Processing';
 export type { ProcessingProps, ProcessingMode, ProcessingHandle } from './Processing/Processing';

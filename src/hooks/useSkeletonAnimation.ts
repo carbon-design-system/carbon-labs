@@ -2,7 +2,7 @@
  * Copyright IBM Corp. 2025
  *
  * useSkeletonAnimation — progressive fade-in + continuous opacity pulse loop
- * for the SkeletonLoader component.
+ * for the SkeletonLayout component.
  *
  * Ports the stagger + loop pattern from the vanilla prototype (script.js)
  * into a React hook, reading all timing values from --cmw-* tokens so that
@@ -25,10 +25,10 @@ const TOKEN = {
   easing:  '--cmw-skeleton-easing',
 } as const;
 
-/** Fallback values if tokens are unavailable */
+/** Fallback values if tokens are unavailable — must match motion.css defaults */
 const FALLBACK = {
-  fadeIn:  500,
-  stagger: 50,
+  fadeIn:  750,
+  stagger: 47,
   loop:    1000,
   easing:  'cubic-bezier(0.20, 0.00, 0.38, 0.90)',
 } as const;
@@ -69,9 +69,9 @@ function getThemeOpacity(el: HTMLElement): { peak: number; trough: number } {
 }
 
 /**
- * Attach to a SkeletonLoader root element. Returns a cleanup function.
+ * Attach to a SkeletonLayout root element. Returns a cleanup function.
  *
- * @param rootRef - ref to the root <div> of the SkeletonLoader
+ * @param rootRef - ref to the root <div> of the SkeletonLayout
  */
 export function useSkeletonAnimation(
   rootRef: React.RefObject<HTMLElement | null>,
@@ -101,10 +101,10 @@ export function useSkeletonAnimation(
     const loopDuration   = readDurationToken(TOKEN.loop,    FALLBACK.loop);
     const easing         = readEasingToken(TOKEN.easing,    FALLBACK.easing);
 
-    // If reduced motion, snap to peak opacity with no loop
+    // If reduced motion, snap to full opacity with no loop — blocks must be
+    // clearly legible for users who may also have low vision.
     if (reducedMotion) {
-      const { peak } = getThemeOpacity(blocks[0]);
-      blocks.forEach((b) => { b.style.opacity = String(peak); });
+      blocks.forEach((b) => { b.style.opacity = '1'; });
       return;
     }
 

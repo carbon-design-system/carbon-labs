@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-tag-input@0.5.0...@carbon-labs/react-tag-input@0.6.0) (2026-08-12)
+
+
+### Bug Fixes
+
+* **TagInput:** resolve accessibility audit findings ([#1330](https://github.com/carbon-design-system/carbon-labs/issues/1330)) ([44d7fe3](https://github.com/carbon-design-system/carbon-labs/commit/44d7fe3da03551aca206cb4fdd002cc33b02d753))
+
+
+
+
+
 # [0.5.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-tag-input@0.4.0...@carbon-labs/react-tag-input@0.5.0) (2026-05-15)
 
 **Note:** Version bump only for package @carbon-labs/react-tag-input

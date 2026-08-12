@@ -18,7 +18,12 @@ exports.config = {
       browser: 'chrome',
       desiredCapabilities: {
         chromeOptions: {
-          args: ['--disable-gpu', '--no-sandbox', '--window-size=1440,700'],
+          args: [
+            '--headless',
+            '--disable-gpu',
+            '--no-sandbox',
+            '--window-size=1440,700',
+          ],
         },
       },
     },
@@ -27,9 +32,7 @@ exports.config = {
   mocha: {},
   name: 'wc-global-header',
   plugins: {
-    pauseOnFail: {
-      enabled: true,
-    },
+    pauseOnFail: {},
     retryFailedStep: {
       enabled: true,
     },

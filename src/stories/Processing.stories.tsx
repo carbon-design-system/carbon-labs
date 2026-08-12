@@ -24,10 +24,11 @@ Animated dot loading indicator with shape-formation transforms.
 **Modes:**
 - \`loading\` — three-dot load-in then infinite loop
 - \`triangle\` — load-in then staggered arcs into an equilateral triangle
+- \`square\` — load-in then formation into a square (four dots)
 - \`out\` — immediate shrink-to-zero from resting size
 
 **Imperative handle:**
-- \`triggerFormation()\` — moves three dots into a triangle immediately
+- \`triggerTriangle()\` — immediately arcs three dots into a triangle (50 ms stagger)
 - \`triggerSquare()\` — grows a fourth dot and moves all four into a square
 - \`triggerOut()\` — interrupt and shrink from wherever the dots are
         `.trim(),
@@ -37,7 +38,7 @@ Animated dot loading indicator with shape-formation transforms.
   argTypes: {
     mode: {
       control: 'select',
-      options: ['loading', 'triangle', 'out'],
+      options: ['loading', 'triangle', 'square', 'out'],
       description: 'Animation state',
     },
     loop: {
@@ -123,7 +124,7 @@ function InteractiveDemo() {
       <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1.5rem' }}>
         <button
           disabled={formed}
-          onClick={() => { handle.current?.triggerFormation(); setFormed(true); }}
+          onClick={() => { handle.current?.triggerTriangle(); setFormed(true); }}
           className={s.btn}
         >
           <TriIcon />

@@ -185,6 +185,7 @@ export const Processing = forwardRef<ProcessingHandle, ProcessingProps>(
     const alive   = useRef(true);
     const loopGen = useRef(0); // bump to retire pulse chains without cancelling mid-cycle
     const loadT0  = useRef(0); // document-timeline origin set by runLoading
+    const formed  = useRef(false); // true once triggerTriangle/triggerSquare has fired
 
     // ── helpers ───────────────────────────────────────────────────────────────
 
@@ -434,6 +435,7 @@ export const Processing = forwardRef<ProcessingHandle, ProcessingProps>(
 
       triggerTriangle: () => {
         if (!alive.current) return;
+        formed.current = true;
         const ds         = dots3();
         const phaseStart = document.timeline.currentTime as number;
         const rampDeg    = startRotationRamp(3, phaseStart);
@@ -457,6 +459,7 @@ export const Processing = forwardRef<ProcessingHandle, ProcessingProps>(
 
       triggerSquare: () => {
         if (!alive.current) return;
+        formed.current = true;
         const ds3        = dots3();
         const dot3       = d3.current!;
         const phaseStart = document.timeline.currentTime as number;
@@ -504,7 +507,7 @@ export const Processing = forwardRef<ProcessingHandle, ProcessingProps>(
       },
 
       triggerWiggle: () => {
-        if (!alive.current) return;
+        if (!alive.current || formed.current) return;
         const ds         = dots3();
         const phaseStart = document.timeline.currentTime as number;
 
@@ -528,6 +531,7 @@ export const Processing = forwardRef<ProcessingHandle, ProcessingProps>(
 
     useEffect(() => {
       alive.current = true;
+      formed.current = false;
 
       // Reset all dots to invisible baseline, clearing any committed inline styles.
       dots4().forEach((d, i) => {

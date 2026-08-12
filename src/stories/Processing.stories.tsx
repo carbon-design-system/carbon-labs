@@ -254,7 +254,7 @@ function InteractiveDemo() {
           <SqrIcon />
           Square
         </button>
-        <button onClick={() => handle.current?.triggerWiggle()} className={s.btn}>
+        <button disabled={formed} onClick={() => handle.current?.triggerWiggle()} className={s.btn}>
           <WiggleIcon />
           Wiggle
         </button>

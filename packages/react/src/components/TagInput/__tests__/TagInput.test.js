@@ -82,7 +82,7 @@ describe('TagInput', () => {
 
       const input = screen.getByPlaceholderText('Type and press Enter');
       await userEvent.type(input, 'NewTag');
-      fireEvent.keyDown(input, { key: 'Enter', code: 'Enter', keyCode: 13 });
+      fireEvent.keyDown(input, { key: 'Enter' });
 
       expect(onTagsChange).toHaveBeenCalledWith(['NewTag']);
     });
@@ -107,7 +107,7 @@ describe('TagInput', () => {
 
       const input = screen.getByPlaceholderText('Type and press Enter');
       await userEvent.type(input, '  NewTag  ');
-      fireEvent.keyDown(input, { key: 'Enter', code: 'Enter', keyCode: 13 });
+      fireEvent.keyDown(input, { key: 'Enter' });
 
       expect(onTagsChange).toHaveBeenCalledWith(['NewTag']);
     });
@@ -120,7 +120,7 @@ describe('TagInput', () => {
 
       const input = screen.getByPlaceholderText('Type and press Enter');
       await userEvent.type(input, 'NewTag');
-      fireEvent.keyDown(input, { key: 'Enter', code: 'Enter', keyCode: 13 });
+      fireEvent.keyDown(input, { key: 'Enter' });
 
       expect(input.value).toBe('');
     });
@@ -133,7 +133,7 @@ describe('TagInput', () => {
       );
 
       const input = screen.getByPlaceholderText('Type and press Enter');
-      fireEvent.keyDown(input, { keyCode: 8 }); // Backspace
+      fireEvent.keyDown(input, { key: 'Backspace' }); // Backspace
 
       expect(onTagsChange).toHaveBeenCalledWith(['Tag1', 'Tag2']);
     });
@@ -147,7 +147,7 @@ describe('TagInput', () => {
 
       const input = screen.getByPlaceholderText('Type and press Enter');
       await userEvent.type(input, 'text');
-      fireEvent.keyDown(input, { keyCode: 8 }); // Backspace
+      fireEvent.keyDown(input, { key: 'Backspace' }); // Backspace
 
       expect(onTagsChange).not.toHaveBeenCalled();
     });
@@ -174,7 +174,7 @@ describe('TagInput', () => {
 
       const input = screen.getByPlaceholderText('Type and press Enter');
       input.setSelectionRange(0, 0); // Set cursor at start
-      fireEvent.keyDown(input, { keyCode: 37 }); // ArrowLeft
+      fireEvent.keyDown(input, { key: 'ArrowLeft' }); // ArrowLeft
 
       // Check if last tag wrapper is focused
       const tagWrappers = document.querySelectorAll(
@@ -188,7 +188,7 @@ describe('TagInput', () => {
       render(<TagInput {...defaultProps} value={tags} />);
 
       const input = screen.getByPlaceholderText('Type and press Enter');
-      fireEvent.keyDown(input, { keyCode: 36 }); // Home
+      fireEvent.keyDown(input, { key: 'Home' }); // Home
 
       const tagWrappers = document.querySelectorAll(
         '.clabs--tag-input__tag-wrapper'
@@ -208,11 +208,11 @@ describe('TagInput', () => {
       tagWrappers[0].focus();
 
       // Press ArrowRight to move to next tag
-      fireEvent.keyDown(tagWrappers[0], { keyCode: 39 }); // ArrowRight
+      fireEvent.keyDown(tagWrappers[0], { key: 'ArrowRight' }); // ArrowRight
       expect(document.activeElement).toBe(tagWrappers[1]);
 
       // Press ArrowLeft to move back
-      fireEvent.keyDown(tagWrappers[1], { keyCode: 37 }); // ArrowLeft
+      fireEvent.keyDown(tagWrappers[1], { key: 'ArrowLeft' }); // ArrowLeft
       expect(document.activeElement).toBe(tagWrappers[0]);
     });
 
@@ -229,7 +229,7 @@ describe('TagInput', () => {
       tagWrappers[2].focus();
 
       // Press ArrowRight
-      fireEvent.keyDown(tagWrappers[2], { keyCode: 39 }); // ArrowRight
+      fireEvent.keyDown(tagWrappers[2], { key: 'ArrowRight' }); // ArrowRight
       expect(document.activeElement).toBe(input);
     });
 
@@ -248,7 +248,7 @@ describe('TagInput', () => {
       tagWrappers[1].focus();
 
       // Press Delete
-      fireEvent.keyDown(tagWrappers[1], { keyCode: 46 }); // Delete
+      fireEvent.keyDown(tagWrappers[1], { key: 'Delete' }); // Delete
       expect(onTagsChange).toHaveBeenCalledWith(['Tag1', 'Tag3']);
     });
 
@@ -267,7 +267,7 @@ describe('TagInput', () => {
       tagWrappers[1].focus();
 
       // Press Backspace
-      fireEvent.keyDown(tagWrappers[1], { keyCode: 8 }); // Backspace
+      fireEvent.keyDown(tagWrappers[1], { key: 'Backspace' }); // Backspace
       expect(onTagsChange).toHaveBeenCalledWith(['Tag1', 'Tag3']);
     });
 
@@ -284,7 +284,7 @@ describe('TagInput', () => {
       tagWrappers[1].focus();
 
       // Press Escape
-      fireEvent.keyDown(tagWrappers[1], { keyCode: 27 }); // Escape
+      fireEvent.keyDown(tagWrappers[1], { key: 'Escape' }); // Escape
       expect(document.activeElement).toBe(input);
     });
 
@@ -300,7 +300,7 @@ describe('TagInput', () => {
       tagWrappers[2].focus();
 
       // Press Home
-      fireEvent.keyDown(tagWrappers[2], { keyCode: 36 }); // Home
+      fireEvent.keyDown(tagWrappers[2], { key: 'Home' }); // Home
       expect(document.activeElement).toBe(tagWrappers[0]);
     });
 
@@ -317,7 +317,7 @@ describe('TagInput', () => {
       tagWrappers[0].focus();
 
       // Press End
-      fireEvent.keyDown(tagWrappers[0], { keyCode: 35 }); // End
+      fireEvent.keyDown(tagWrappers[0], { key: 'End' }); // End
       expect(document.activeElement).toBe(input);
     });
   });
@@ -384,8 +384,8 @@ describe('TagInput', () => {
       render(<TagInput {...defaultProps} value={['Tag1']} />);
 
       const container = document.querySelector('.clabs--tag-input__container');
-      expect(container).toHaveAttribute('role', 'listbox');
-      expect(container).toHaveAttribute('aria-label', 'Tag list');
+      expect(container).toHaveAttribute('role', 'group');
+      expect(container).toHaveAttribute('aria-label', 'Tag input');
     });
 
     it('should have proper ARIA attributes on tag wrappers', () => {
@@ -394,39 +394,88 @@ describe('TagInput', () => {
       const tagWrapper = document.querySelector(
         '.clabs--tag-input__tag-wrapper'
       );
-      expect(tagWrapper).toHaveAttribute('role', 'option');
+      expect(tagWrapper).toHaveAttribute('role', 'listitem');
       expect(tagWrapper).toHaveAttribute('tabIndex', '-1');
-      expect(tagWrapper).toHaveAttribute('aria-selected', 'false');
+      expect(tagWrapper).not.toHaveAttribute('aria-selected');
+      expect(tagWrapper).toHaveAttribute(
+        'aria-describedby',
+        'test-tag-input-tag-instructions'
+      );
     });
 
-    it('should update aria-selected when tag is focused', () => {
+    it('should render a shared instructions hint for screen readers', () => {
       render(<TagInput {...defaultProps} value={['Tag1', 'Tag2']} />);
 
+      const hint = document.getElementById('test-tag-input-tag-instructions');
+      expect(hint).toBeInTheDocument();
+      expect(hint.textContent).toMatch(/Delete or Backspace/i);
+      expect(hint.textContent).toMatch(/Arrow keys/i);
+      expect(hint.textContent).toMatch(/Escape/i);
+
+      // All tag wrappers point to the same hint element
       const tagWrappers = document.querySelectorAll(
         '.clabs--tag-input__tag-wrapper'
       );
-
-      // Focus first tag
-      fireEvent.focus(tagWrappers[0]);
-      expect(tagWrappers[0]).toHaveAttribute('aria-selected', 'true');
-
-      // Focus second tag
-      fireEvent.focus(tagWrappers[1]);
-      expect(tagWrappers[1]).toHaveAttribute('aria-selected', 'true');
+      tagWrappers.forEach((wrapper) => {
+        expect(wrapper).toHaveAttribute(
+          'aria-describedby',
+          'test-tag-input-tag-instructions'
+        );
+      });
     });
 
-    it('should have descriptive aria-label on tag wrappers', () => {
+    it('should render tags inside a list element', () => {
+      render(<TagInput {...defaultProps} value={['Tag1', 'Tag2']} />);
+
+      const list = document.querySelector('[role="list"]');
+      expect(list).toBeInTheDocument();
+      expect(list).toHaveAttribute('aria-label', 'Added tags');
+
+      const items = list.querySelectorAll('.clabs--tag-input__tag-wrapper');
+      expect(items).toHaveLength(2);
+    });
+
+    it('should have the tag text as aria-label on tag wrappers', () => {
       render(<TagInput {...defaultProps} value={['TestTag']} />);
 
       const tagWrapper = document.querySelector(
         '.clabs--tag-input__tag-wrapper'
       );
-      const ariaLabel = tagWrapper.getAttribute('aria-label');
+      expect(tagWrapper).toHaveAttribute('aria-label', 'TestTag');
+    });
 
-      expect(ariaLabel).toContain('TestTag');
-      expect(ariaLabel).toContain('Delete');
-      expect(ariaLabel).toContain('Backspace');
-      expect(ariaLabel).toContain('Arrow keys');
+    it('should announce tag addition to screen readers', async () => {
+      const onTagsChange = jest.fn();
+      render(
+        <TagInput {...defaultProps} value={[]} onTagsChange={onTagsChange} />
+      );
+
+      const input = screen.getByPlaceholderText('Type and press Enter');
+      await userEvent.type(input, 'React');
+      fireEvent.keyDown(input, { key: 'Enter' });
+
+      const liveRegion = document.querySelector('[aria-live="polite"]');
+      expect(liveRegion).toBeInTheDocument();
+      expect(liveRegion.textContent).toMatch(/React.*added/i);
+      expect(liveRegion.textContent).toMatch(/1 tag total/i);
+    });
+
+    it('should announce tag removal to screen readers', () => {
+      const onTagsChange = jest.fn();
+      render(
+        <TagInput
+          {...defaultProps}
+          value={['React', 'TypeScript']}
+          onTagsChange={onTagsChange}
+        />
+      );
+
+      const closeButtons = screen.getAllByLabelText('Remove tag');
+      fireEvent.click(closeButtons[0]);
+
+      const liveRegion = document.querySelector('[aria-live="polite"]');
+      expect(liveRegion.textContent).toMatch(/React.*removed/i);
+      expect(liveRegion.textContent).toMatch(/1 tag remaining/i);
     });
 
     it('should remove tabindex from close buttons', () => {
@@ -460,7 +509,7 @@ describe('TagInput', () => {
       // Should not throw error
       expect(() => {
         fireEvent.change(input, { target: { value: 'NewTag' } });
-        fireEvent.keyDown(input, { keyCode: 13 }); // Enter
+        fireEvent.keyDown(input, { key: 'Enter' }); // Enter
       }).not.toThrow();
     });
 
@@ -473,11 +522,11 @@ describe('TagInput', () => {
       const input = screen.getByPlaceholderText('Type and press Enter');
 
       await userEvent.type(input, 'Tag1');
-      fireEvent.keyDown(input, { key: 'Enter', code: 'Enter', keyCode: 13 });
+      fireEvent.keyDown(input, { key: 'Enter' });
       await userEvent.type(input, 'Tag2');
-      fireEvent.keyDown(input, { key: 'Enter', code: 'Enter', keyCode: 13 });
+      fireEvent.keyDown(input, { key: 'Enter' });
       await userEvent.type(input, 'Tag3');
-      fireEvent.keyDown(input, { key: 'Enter', code: 'Enter', keyCode: 13 });
+      fireEvent.keyDown(input, { key: 'Enter' });
 
       expect(onTagsChange).toHaveBeenCalledTimes(3);
     });
@@ -497,7 +546,7 @@ describe('TagInput', () => {
       tagWrappers[1].focus();
 
       // Remove it
-      fireEvent.keyDown(tagWrappers[1], { keyCode: 46 }); // Delete
+      fireEvent.keyDown(tagWrappers[1], { key: 'Delete' }); // Delete
 
       // After removal, focus should be managed (either on next tag or input)
       expect(document.activeElement).toBeTruthy();
@@ -513,7 +562,7 @@ describe('TagInput', () => {
       const specialTag = 'tag@#$%^&*()';
 
       await userEvent.type(input, specialTag);
-      fireEvent.keyDown(input, { key: 'Enter', code: 'Enter', keyCode: 13 });
+      fireEvent.keyDown(input, { key: 'Enter' });
 
       expect(onTagsChange).toHaveBeenCalledWith([specialTag]);
     });

@@ -3,10 +3,21 @@
 exports[`TagInput renders as expected - Component API should match snapshot 1`] = `
 <div>
   <div
-    aria-label="Tag list"
+    aria-label="Tag input"
     class="clabs--tag-input__container"
-    role="listbox"
+    role="group"
   >
+    <span
+      class="clabs--tag-input__sr-only"
+      id="test-tag-input-tag-instructions"
+    >
+      Press Delete or Backspace to remove. Arrow keys to navigate between tags. Escape to return to input.
+    </span>
+    <span
+      aria-atomic="true"
+      aria-live="polite"
+      class="clabs--tag-input__sr-only"
+    />
     <div
       class="cds--form-item clabs--tag-input__field cds--text-input-wrapper"
     >
@@ -14,10 +25,12 @@ exports[`TagInput renders as expected - Component API should match snapshot 1`] 
         class="cds--text-input__label-wrapper"
       >
         <label
-          class="cds--label"
+          class="cds--label cds--visually-hidden"
           dir="auto"
           for="test-tag-input"
-        />
+        >
+          Add tag
+        </label>
       </div>
       <div
         class="cds--text-input__field-outer-wrapper"

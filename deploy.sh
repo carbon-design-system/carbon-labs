@@ -10,7 +10,7 @@ STAGE_DIR="/tmp/mc-storybook-deploy"
 
 echo "Building Storybook..."
 cd "$REPO_ROOT"
-npx storybook build -o storybook-static --quiet
+npx storybook build -o storybook-static
 
 echo "Staging build output..."
 rm -rf "$STAGE_DIR"

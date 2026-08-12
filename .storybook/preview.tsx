@@ -96,8 +96,14 @@ const themeDecorator: Decorator = (Story, context) => {
       theme = 'system';
     }
 
+    // Apply the Carbon class-based theme tokens (e.g. .cds--g90) so that
+    // --cds-* custom properties update correctly — Carbon's stylesheet scopes
+    // token overrides under class selectors, not data attributes.
+    const CDS_THEME_CLASSES = ['cds--white', 'cds--g10', 'cds--g90', 'cds--g100'];
+    CDS_THEME_CLASSES.forEach(c => document.documentElement.classList.remove(c));
     if (theme !== 'system') {
       document.documentElement.setAttribute('data-carbon-theme', theme);
+      document.documentElement.classList.add(`cds--${theme}`);
     } else {
       document.documentElement.removeAttribute('data-carbon-theme');
     }

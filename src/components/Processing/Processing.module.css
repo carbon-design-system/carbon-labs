@@ -33,9 +33,17 @@
   stroke: #001141; /* $blue-90 */
 }
 
+[data-carbon-theme='g10-ai'] .dot {
+  stroke: #0043ce; /* $blue-60 — AI accent on light surface */
+}
+
 [data-carbon-theme='g90'] .dot,
 [data-carbon-theme='g100'] .dot {
   stroke: #f4f4f4; /* $gray-10 */
+}
+
+[data-carbon-theme='g100-ai'] .dot {
+  stroke: #78a9ff; /* $blue-40 — AI accent on dark surface */
 }
 
 /* ── Reduced motion ─────────────────────────────────────────────────────────── */

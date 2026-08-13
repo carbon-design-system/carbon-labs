@@ -74,6 +74,10 @@ const themeDecorator: Decorator = (Story, context) => {
     ) {
       theme = 'white';
     } else if (
+      backgroundValue === 'g10-ai'
+    ) {
+      theme = 'g10-ai';
+    } else if (
       backgroundValue === g10.background ||
       backgroundValue === 'g10'
     ) {
@@ -83,6 +87,10 @@ const themeDecorator: Decorator = (Story, context) => {
       backgroundValue === 'g90'
     ) {
       theme = 'g90';
+    } else if (
+      backgroundValue === 'g100-ai'
+    ) {
+      theme = 'g100-ai';
     } else if (
       backgroundValue === g100.background ||
       backgroundValue === 'g100'
@@ -99,19 +107,22 @@ const themeDecorator: Decorator = (Story, context) => {
     // Apply the Carbon class-based theme tokens (e.g. .cds--g90) so that
     // --cds-* custom properties update correctly — Carbon's stylesheet scopes
     // token overrides under class selectors, not data attributes.
+    // AI variants reuse their base theme's CDS class for token inheritance.
     const CDS_THEME_CLASSES = ['cds--white', 'cds--g10', 'cds--g90', 'cds--g100'];
     CDS_THEME_CLASSES.forEach(c => document.documentElement.classList.remove(c));
     if (theme !== 'system') {
       document.documentElement.setAttribute('data-carbon-theme', theme);
-      document.documentElement.classList.add(`cds--${theme}`);
+      // AI variants inherit their base theme's CDS token class
+      const cdsClass = theme === 'g10-ai' ? 'cds--g10' : theme === 'g100-ai' ? 'cds--g100' : `cds--${theme}`;
+      document.documentElement.classList.add(cdsClass);
     } else {
       document.documentElement.removeAttribute('data-carbon-theme');
     }
 
     const themeMapping =
-      theme === 'white' || theme === 'g10'
+      theme === 'white' || theme === 'g10' || theme === 'g10-ai'
         ? 'light'
-        : theme === 'g90' || theme === 'g100'
+        : theme === 'g90' || theme === 'g100' || theme === 'g100-ai'
           ? 'dark'
           : 'system';
 
@@ -159,10 +170,12 @@ const preview: Preview = {
     backgrounds: {
       grid: { cellSize: 8, opacity: 0.5 },
       options: {
-        white: { name: 'white', value: white.background },
-        g10: { name: 'g10', value: g10.background },
-        g90: { name: 'g90', value: g90.background },
-        g100: { name: 'g100', value: g100.background },
+        white:    { name: 'white',    value: white.background },
+        g10:      { name: 'g10',      value: g10.background },
+        'g10-ai': { name: 'g10 AI',   value: g10.background },
+        g90:      { name: 'g90',      value: g90.background },
+        g100:     { name: 'g100',     value: g100.background },
+        'g100-ai':{ name: 'g100 AI',  value: g100.background },
       },
     },
     a11y: {

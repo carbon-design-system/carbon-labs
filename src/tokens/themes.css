@@ -52,6 +52,32 @@
   --cmw-avatar-border-idle:       #97c1ff;
 }
 
+/* ── G100 AI variant ──────────────────────────────────────────────────────
+   Full AI-mode theme on the darkest surface — builds on g100 dark tokens. */
+[data-carbon-theme='g100-ai'] {
+  --cmw-skeleton-bg:              var(--cds-skeleton-background, #393939);
+  --cmw-skeleton-element:         var(--cds-skeleton-element, #525252);
+  --cmw-skeleton-opacity-peak:    0.25;
+  --cmw-skeleton-opacity-trough:  0.15;
+  --cmw-skeleton-ai-bg:           #4589ff; /* IBM Blue 50 */
+  --cmw-skeleton-ai-element:      #a6c8ff; /* IBM Blue 30 — visible on near-black */
+
+  --cmw-switcher-bg:              #393939;
+  --cmw-switcher-bg-selected:     #525252;
+  --cmw-switcher-text:            #a8a8a8;
+  --cmw-switcher-text-selected:   #f4f4f4;
+  --cmw-switcher-border:          #393939;
+
+  --cmw-prompt-bg:                #262626;
+  --cmw-prompt-bg-hover:          #333333;
+  --cmw-prompt-border:            #525252;
+
+  --cmw-avatar-bg-idle:           #001d6c; /* IBM Blue 90 tint — AI idle on dark */
+  --cmw-avatar-bg-thinking:       #001d6c;
+  --cmw-avatar-bg-responding:     #022b30;
+  --cmw-avatar-border-idle:       #0043ce; /* IBM Blue 60 — AI accent ring */
+}
+
 /* ── G90 theme ────────────────────────────────────────────────────────────
    Dark (#393939) background — saturated blue needed to glow against dark. */
 [data-carbon-theme='g90'] {

@@ -15,14 +15,19 @@
 
 import { useCallback, useEffect, useRef } from 'react';
 
-/** Read a CSS custom property from the document root as a number (ms). */
+/** Read a CSS custom property from the document root as a number (ms).
+ *  Handles both "750ms" and ".75s" / "0.75s" — CSS minifiers may convert
+ *  ms values to the shorter seconds form (e.g. 750ms → .75s). */
 export function readDurationToken(token: string, fallbackMs: number): number {
   if (typeof window === 'undefined') return fallbackMs;
   const raw = getComputedStyle(document.documentElement)
     .getPropertyValue(token)
     .trim();
-  // Values are like "500ms" or "0.01ms"
-  return raw ? parseFloat(raw) : fallbackMs;
+  if (!raw) return fallbackMs;
+  const n = parseFloat(raw);
+  if (isNaN(n)) return fallbackMs;
+  // If the value ends with 's' but NOT 'ms', it's in seconds — convert to ms
+  return raw.endsWith('ms') ? n : n * 1000;
 }
 
 /** Read a CSS custom property from the document root as a string. */

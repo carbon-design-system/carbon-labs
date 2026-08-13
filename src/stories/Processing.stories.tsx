@@ -39,6 +39,11 @@ const meta = {
       control: 'text',
       table: { defaultValue: { summary: "'Processing'" } },
     },
+    ai: {
+      control: 'boolean',
+      description: 'Apply AI colour treatment (blue-60 on light themes, blue-40 on dark themes).',
+      table: { defaultValue: { summary: 'false' } },
+    },
   },
 } satisfies Meta<typeof Processing>;
 
@@ -227,7 +232,7 @@ export const Wiggle: Story = {
 
 // ── Processing — interactive controls ────────────────────────────────────────
 
-function InteractiveDemo() {
+function InteractiveDemo({ ai = false }: { ai?: boolean }) {
   const handle = useRef<ProcessingHandle>(null);
   const [key, setKey] = useState(0);
   const [formed, setFormed] = useState(false);
@@ -236,7 +241,7 @@ function InteractiveDemo() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <Processing key={key} ref={handle} mode="loading" loop label="Processing" />
+      <Processing key={key} ref={handle} mode="loading" loop label="Processing" ai={ai} />
       <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1.5rem' }}>
         <button
           disabled={formed}
@@ -271,5 +276,5 @@ function InteractiveDemo() {
 
 export const Interactive: Story = {
   name: 'Interactive controls',
-  render: () => <InteractiveDemo />,
+  render: (args) => <InteractiveDemo ai={args.ai} />,
 };

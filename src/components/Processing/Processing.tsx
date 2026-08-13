@@ -109,6 +109,8 @@ export interface ProcessingProps {
   loop?: boolean;
   /** Accessible label for the status region. @defaultValue 'Processing' */
   label?: string;
+  /** Apply AI colour treatment: blue-60 on light themes, blue-40 on dark themes. @defaultValue false */
+  ai?: boolean;
   /** Additional CSS class applied to the root element. */
   className?: string;
 }
@@ -172,7 +174,7 @@ function buildFormationFrames(
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export const Processing = forwardRef<ProcessingHandle, ProcessingProps>(
-  function Processing({ mode = 'loading', loop = true, label = 'Processing', className }, ref) {
+  function Processing({ mode = 'loading', loop = true, label = 'Processing', ai = false, className }, ref) {
 
     const d0  = useRef<SVGCircleElement>(null);
     const d1  = useRef<SVGCircleElement>(null);
@@ -572,6 +574,7 @@ export const Processing = forwardRef<ProcessingHandle, ProcessingProps>(
         className={`${styles.root}${className ? ` ${className}` : ''}`}
         role="status"
         aria-label={label}
+        {...(ai ? { 'data-ai': '' } : {})}
       >
         <svg className={styles.svg} viewBox="0 0 32 32" aria-hidden="true" focusable="false">
           <g ref={grp}>

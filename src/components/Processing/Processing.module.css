@@ -46,10 +46,10 @@
   stroke: #002d9c; /* $blue-80 */
 }
 
-/* Dark themes: Blue 30 — soft AI accent on g90 / g100 surfaces */
+/* Dark themes: Blue 20 — soft AI accent on g90 / g100 surfaces */
 [data-carbon-theme='g90'] [data-ai] .dot,
 [data-carbon-theme='g100'] [data-ai] .dot {
-  stroke: #a6c8ff; /* $blue-30 */
+  stroke: #d0e2ff; /* $blue-20 */
 }
 
 /* ── Reduced motion ─────────────────────────────────────────────────────────── */

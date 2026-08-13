@@ -43,7 +43,7 @@ const meta = {
     },
     ai: {
       control: 'boolean',
-      description: 'Apply AI colour treatment to the dots: blue-80 on light themes (white, g10), blue-30 on dark themes (g90, g100).',
+      description: 'Apply AI colour treatment to the dots: blue-80 on light themes (white, g10), blue-20 on dark themes (g90, g100).',
       table: { defaultValue: { summary: 'false' } },
     },
   },

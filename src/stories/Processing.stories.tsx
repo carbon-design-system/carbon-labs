@@ -28,20 +28,22 @@ const meta = {
       control: 'select',
       options: ['loading', 'triangle', 'square', 'out', 'wiggle'],
       description:
-        "`'loading'` — load-in then pulse loop | `'triangle'` — load-in then arc into a triangle | `'square'` — load-in then arc into a square | `'out'` — shrink to zero immediately | `'wiggle'` — imperative-only, set via triggerWiggle()",
+        "`'loading'` — three dots load in then pulse in a loop | `'triangle'` — load in then arc into an equilateral triangle | `'square'` — load in then grow a fourth dot and arc into a square | `'out'` — shrink all dots to zero immediately | `'wiggle'` — bob each dot up and back (trigger via `handle.triggerWiggle()`)",
       table: { defaultValue: { summary: "'loading'" } },
     },
     loop: {
       control: 'boolean',
+      description: 'Repeat the pulse loop indefinitely. Only applies in `loading` mode — formation modes (`triangle`, `square`) run once and hold.',
       table: { defaultValue: { summary: 'true' } },
     },
     label: {
       control: 'text',
+      description: 'Accessible label announced by screen readers via `aria-label` on the status region.',
       table: { defaultValue: { summary: "'Processing'" } },
     },
     ai: {
       control: 'boolean',
-      description: 'Apply AI colour treatment (blue-60 on light themes, blue-40 on dark themes).',
+      description: 'Apply AI colour treatment to the dots: blue-80 on light themes (white, g10), blue-30 on dark themes (g90, g100).',
       table: { defaultValue: { summary: 'false' } },
     },
   },

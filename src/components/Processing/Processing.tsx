@@ -109,7 +109,7 @@ export interface ProcessingProps {
   loop?: boolean;
   /** Accessible label for the status region. @defaultValue 'Processing' */
   label?: string;
-  /** Apply AI colour treatment: blue-60 on light themes, blue-40 on dark themes. @defaultValue false */
+  /** Apply AI colour treatment: blue-80 on light themes, blue-30 on dark themes. @defaultValue false */
   ai?: boolean;
   /** Additional CSS class applied to the root element. */
   className?: string;

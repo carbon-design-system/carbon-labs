@@ -39,14 +39,14 @@
 }
 
 /* ── AI colour treatment ─────────────────────────────────────────────────────── */
-/* Light themes: Blue 70 — AI accent on white / g10 surfaces */
+/* Light themes: Blue 80 — deep AI accent on white / g10 surfaces */
 :root [data-ai] .dot,
 [data-carbon-theme='white'] [data-ai] .dot,
 [data-carbon-theme='g10'] [data-ai] .dot {
-  stroke: #0043ce; /* $blue-70 */
+  stroke: #002d9c; /* $blue-80 */
 }
 
-/* Dark themes: Blue 30 — AI accent on g90 / g100 surfaces */
+/* Dark themes: Blue 30 — soft AI accent on g90 / g100 surfaces */
 [data-carbon-theme='g90'] [data-ai] .dot,
 [data-carbon-theme='g100'] [data-ai] .dot {
   stroke: #a6c8ff; /* $blue-30 */

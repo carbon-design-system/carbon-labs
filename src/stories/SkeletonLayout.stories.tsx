@@ -28,17 +28,18 @@ const meta = {
     layout: {
       control: 'select',
       options: ['hero', 'cards-3', 'cards-4', 'full-page', 'mixed-page'],
-      description: 'Layout variant to render',
+      description:
+        "`'hero'` — nav + breadcrumb + hero panel + 3 body lines | `'cards-3'` — three equal-width cards | `'cards-4'` — four equal-width cards | `'full-page'` — nav, hero, cards, and table rows with zone-based reveal | `'mixed-page'` — full-page layout with an AI-tinted hero zone and rounded cards",
       table: { defaultValue: { summary: "'hero'" } },
     },
     aiVariant: {
       control: 'boolean',
-      description: 'Activates the AI blue-tint on all blocks (component-level override)',
+      description: 'Apply the AI blue-tint (`--cmw-skeleton-ai-bg`) to every block in the layout. For per-block AI styling, use the `ai` prop directly on individual `<SkeletonBlock>` components.',
       table: { defaultValue: { summary: 'false' } },
     },
     cornerRadius: {
       control: 'boolean',
-      description: 'Apply 8 px corner radius to all blocks (component-level override)',
+      description: 'Apply an 8 px corner radius to every block in the layout. For per-block control, use the `rounded` prop directly on individual `<SkeletonBlock>` components.',
       table: { defaultValue: { summary: 'false' } },
     },
   },

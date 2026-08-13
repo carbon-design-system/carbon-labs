@@ -1,1 +1,0 @@
-import{t as e}from"./lib-Ca4zkDm3.js";export{e as MDXProvider};

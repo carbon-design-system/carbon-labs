@@ -1,0 +1,1 @@
+import{t as e}from"./lib-Gzke2Ok3.js";export{e as MDXProvider};

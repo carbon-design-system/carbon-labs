@@ -1,0 +1,1 @@
+import{F as e}from"./iframe-BKOfH077.js";var t=t=>t??e;export{t};

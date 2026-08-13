@@ -124,11 +124,15 @@ export function useSkeletonAnimation(
         delay: i * staggerStep,
       });
       activeAnimations.current.push(anim);
+      // Commit final opacity to inline style so it survives animation removal
+      anim.finished.then(() => {
+        if (mounted) block.style.opacity = String(peak);
+      }).catch(() => { /* cancelled — leave as-is */ });
       return anim.finished;
     });
 
-    // Use allSettled so a cancelled fade-in (AbortError from fill:'forwards' +
-    // cancel) does not prevent the loop from starting on the next mount cycle.
+    // Use allSettled so a cancelled fade-in does not prevent the loop from
+    // starting on the next mount cycle.
     Promise.allSettled(fadeInAnims).then(() => {
       if (!mounted) return;
 
@@ -141,8 +145,8 @@ export function useSkeletonAnimation(
         loopTimerRef.current = setTimeout(() => {
           if (!mounted) return;
 
-          const loopAnims = blocks.map((block, i) =>
-            block.animate(
+          const loopAnims = blocks.map((block, i) => {
+            const anim = block.animate(
               [
                 { opacity: peak,   offset: 0 },
                 { opacity: trough, offset: 0.5 },
@@ -152,10 +156,15 @@ export function useSkeletonAnimation(
                 duration: loopDuration,
                 delay: i * staggerStep,
                 easing,
-                fill: 'forwards',
+                fill: 'none',
               },
-            ),
-          );
+            );
+            // Commit peak opacity so the block doesn't snap back to 0 between loops
+            anim.finished.then(() => {
+              if (mounted) block.style.opacity = String(peak);
+            }).catch(() => { /* cancelled */ });
+            return anim;
+          });
           activeAnimations.current.push(...loopAnims);
 
           scheduleLoop(totalLoopMs - overlapMs + 500);

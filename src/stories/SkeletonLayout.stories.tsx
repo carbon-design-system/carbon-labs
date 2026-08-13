@@ -254,7 +254,7 @@ function FullPageDemo({
           const contentEl = contentRef.current?.querySelector<HTMLElement>(
             `[data-content-zone="${zone}"]`,
           );
-          if (contentEl) {
+          if (contentEl?.isConnected) {
             contentEl.animate(
               [{ opacity: 0 }, { opacity: 1 }],
               { duration: tl.reveal, easing: tl.revealEasing, fill: 'forwards' },
@@ -265,7 +265,7 @@ function FullPageDemo({
           const skeletonZoneEl = skeletonRef.current?.querySelector<HTMLElement>(
             `[data-fp-zone="${zone}"]`,
           );
-          if (skeletonZoneEl) {
+          if (skeletonZoneEl?.isConnected) {
             const currentOpacity = parseFloat(getComputedStyle(skeletonZoneEl).opacity);
             skeletonZoneEl.getAnimations({ subtree: true }).forEach((a) => a.cancel());
             skeletonZoneEl.animate(
@@ -284,6 +284,7 @@ function FullPageDemo({
     const allRevealedMs = tl.revealAt + (ZONES.length - 1) * tl.zoneStagger + tl.reveal;
     const restartTimer = setTimeout(() => {
       contentZones.forEach((el) => {
+        if (!el.isConnected) return;
         el.animate(
           [{ opacity: 1 }, { opacity: 0 }],
           { duration: tl.reveal, easing: tl.easing, fill: 'forwards' },
@@ -486,7 +487,7 @@ function CustomLayoutDemo() {
           const contentEl = contentRef.current?.querySelector<HTMLElement>(
             `[data-content-zone="${zone}"]`,
           );
-          if (contentEl) {
+          if (contentEl?.isConnected) {
             contentEl.animate(
               [{ opacity: 0 }, { opacity: 1 }],
               { duration: tl.reveal, easing: tl.revealEasing, fill: 'forwards' },
@@ -496,7 +497,7 @@ function CustomLayoutDemo() {
           const skeletonZoneEl = skeletonRef.current?.querySelector<HTMLElement>(
             `[data-fp-zone="${zone}"]`,
           );
-          if (skeletonZoneEl) {
+          if (skeletonZoneEl?.isConnected) {
             const currentOpacity = parseFloat(getComputedStyle(skeletonZoneEl).opacity);
             skeletonZoneEl.getAnimations({ subtree: true }).forEach((a) => a.cancel());
             skeletonZoneEl.animate(
@@ -514,6 +515,7 @@ function CustomLayoutDemo() {
     const allRevealedMs = tl.revealAt + (CUSTOM_ZONES.length - 1) * tl.zoneStagger + tl.reveal;
     const restartTimer = setTimeout(() => {
       contentZones.forEach((el) => {
+        if (!el.isConnected) return;
         el.animate(
           [{ opacity: 1 }, { opacity: 0 }],
           { duration: tl.reveal, easing: tl.easing, fill: 'forwards' },

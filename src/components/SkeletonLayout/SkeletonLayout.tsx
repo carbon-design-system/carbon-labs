@@ -93,7 +93,7 @@ export function SkeletonBlock({
 
 function HeroLayout() {
   return (
-    <div className={styles.layoutHero} aria-label="Loading content">
+    <div className={styles.layoutHero}>
       <div
         className={cx(styles.block, styles.textBlock)}
         data-skeleton-block
@@ -114,7 +114,7 @@ function HeroLayout() {
 
 function Cards3Layout() {
   return (
-    <div className={styles.layoutCards3} aria-label="Loading content">
+    <div className={styles.layoutCards3}>
       {[0, 1, 2].map((i) => (
         <article key={i} className={styles.card}>
           <div
@@ -139,7 +139,7 @@ function Cards3Layout() {
 
 function Cards4Layout() {
   return (
-    <div className={styles.layoutCards4} aria-label="Loading content">
+    <div className={styles.layoutCards4}>
       {[0, 1, 2, 3].map((i) => (
         <article key={i} className={styles.card}>
           <div
@@ -185,7 +185,7 @@ export const FULL_PAGE_ZONES = {
  */
 function MixedPageLayout() {
   return (
-    <div className={styles.layoutFullPage} aria-label="Loading content">
+    <div className={styles.layoutFullPage}>
 
       {/* ── Header zone (default) ──────────────────────────────────────── */}
       <div className={styles.fpHeader} data-fp-zone="header">
@@ -265,7 +265,7 @@ function MixedPageLayout() {
 
 function FullPageLayout() {
   return (
-    <div className={styles.layoutFullPage} aria-label="Loading content">
+    <div className={styles.layoutFullPage}>
 
       {/* ── Header zone ───────────────────────────────────────────── */}
       {/* div not header — skeleton zones are not real landmarks       */}
@@ -377,13 +377,13 @@ export function SkeletonLayout({
   return (
     <div
       ref={rootRef}
+      role="status"
       className={cx(
         styles.root,
         aiVariant && styles.aiVariant,
         cornerRadius && styles.rounded,
         className,
       )}
-      aria-busy="true"
       aria-label="Loading"
     >
       {/* When children are provided they replace the built-in layout variant.

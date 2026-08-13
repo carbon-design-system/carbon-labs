@@ -29,6 +29,7 @@
   opacity: 0;
   background-color: var(--cmw-skeleton-element, #c6c6c6);
   border-radius: var(--cmw-skeleton-radius, 0px);
+  will-change: opacity;
   transition: background-color 200ms ease;
 }
 
@@ -36,6 +37,7 @@
    container is the animation target but must not paint a filled rect.      */
 .blockBorder {
   opacity: 0;
+  will-change: opacity;
 }
 
 /* ── AI variant ─────────────────────────────────────────────────────────── */

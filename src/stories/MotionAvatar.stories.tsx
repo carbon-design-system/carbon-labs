@@ -1,11 +1,14 @@
 /**
  * Copyright IBM Corp. 2025
  *
- * MotionAvatar stories.
+ * MotionAvatar stories — DEX (Db2 Genius Hub) avatar.
  */
 
+import { useEffect, useRef, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { MotionAvatar } from '../components/MotionAvatar/MotionAvatar';
+import { MotionAvatar, type DexHandle, type MotionAvatarSize } from '../components/MotionAvatar/MotionAvatar';
+
+type AvatarMode = 'load' | 'idle' | 'thinking' | 'out';
 
 const meta = {
   title: 'Components/MotionAvatar',
@@ -15,67 +18,134 @@ const meta = {
     docs: {
       description: {
         component:
-          'Animated presence indicator for AI interaction states. Idles with a gentle pulse, shifts to an orbiting ring while thinking, and emits a wave ripple while responding.',
+          'DEX — the Db2 Genius Hub avatar. Three gradient-stroked rings that animate through Load, Idle, Thinking, and Unload states via an imperative `DexHandle` ref.',
       },
     },
   },
   argTypes: {
-    state: {
-      control: 'select',
-      options: ['idle', 'thinking', 'responding'],
-      description: 'Current AI presence state',
-    },
     size: {
       control: 'select',
-      options: ['sm', 'md', 'lg'],
-      description: 'Visual size',
+      options: ['sm', 'md', 'lg'] satisfies MotionAvatarSize[],
+      description: 'Visual size of the avatar',
+    },
+    // Custom story-level controls — not component props.
+    // @ts-expect-error — intentional extra arg not on MotionAvatarProps
+    mode: {
+      control: 'select',
+      options: ['load', 'idle', 'thinking', 'out'] satisfies AvatarMode[],
+      description: 'Animation mode — fires the corresponding imperative method',
     },
     label: {
       control: 'text',
-      description: 'Accessible label (overrides the default state label)',
+      description: 'Accessible label override',
     },
+    // Hide props that aren't meaningful in the interactive demo.
+    state:     { table: { disable: true } },
+    className: { table: { disable: true } },
   },
 } satisfies Meta<typeof MotionAvatar>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
-export const Idle: Story = {
-  args: { state: 'idle', size: 'md' },
+// Extend the story args with the custom `mode` field.
+type Story = StoryObj<typeof meta> & { args?: { mode?: AvatarMode } };
+
+// ── Button styles ─────────────────────────────────────────────────────────────
+
+const btnBase: React.CSSProperties = {
+  padding: '0.375rem 0.75rem',
+  background: 'transparent',
+  border: '1px solid var(--cds-text-primary, #f4f4f4)',
+  color: 'var(--cds-text-primary, #f4f4f4)',
+  cursor: 'pointer',
+  fontSize: '0.875rem',
 };
 
-export const Thinking: Story = {
-  args: { state: 'thinking', size: 'md' },
+const btnDanger: React.CSSProperties = {
+  ...btnBase,
+  border: '1px solid var(--cds-support-error, #da1e28)',
+  color: 'var(--cds-support-error, #da1e28)',
 };
 
-export const Responding: Story = {
-  args: { state: 'responding', size: 'md' },
-};
+// ── Interactive demo component ────────────────────────────────────────────────
 
-export const AllStates: Story = {
-  name: 'All states — side by side',
-  render: () => (
-    <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-      <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-        <MotionAvatar state="idle" size="lg" />
-        <span style={{ fontSize: '0.75rem' }}>Idle</span>
+interface DemoProps {
+  size:  MotionAvatarSize;
+  mode:  AvatarMode;
+  label: string | undefined;
+}
+
+function DexInteractiveDemo({ size, mode: modeProp, label }: DemoProps) {
+  const handle  = useRef<DexHandle>(null);
+  const [key, setKey] = useState(0);
+
+  // Fire the imperative method whenever the mode arg changes (including initial render).
+  // The key-based remount resets the component, then the effect fires the new mode.
+  useEffect(() => {
+    switch (modeProp) {
+      case 'load':     handle.current?.load();     break;
+      case 'idle':     handle.current?.idle();     break;
+      case 'thinking': handle.current?.thinking(); break;
+      case 'out':      handle.current?.out();      break;
+    }
+  }, [modeProp, key]);
+
+  const fire = (m: AvatarMode) => {
+    switch (m) {
+      case 'load':     handle.current?.load();     break;
+      case 'idle':     handle.current?.idle();     break;
+      case 'thinking': handle.current?.thinking(); break;
+      case 'out':      handle.current?.out();      break;
+    }
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
+      <MotionAvatar key={key} ref={handle} size={size} state="idle" label={label} />
+
+      {/* Primary mode buttons */}
+      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <button style={btnBase}   onClick={() => fire('load')}>     Load ↓     </button>
+        <button style={btnBase}   onClick={() => fire('idle')}>     Idle ◎     </button>
+        <button style={btnBase}   onClick={() => fire('thinking')}> Thinking ≈ </button>
+        <button style={btnDanger} onClick={() => fire('out')}>      Out ↑      </button>
       </div>
-      <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-        <MotionAvatar state="thinking" size="lg" />
-        <span style={{ fontSize: '0.75rem' }}>Thinking</span>
-      </div>
-      <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-        <MotionAvatar state="responding" size="lg" />
-        <span style={{ fontSize: '0.75rem' }}>Responding</span>
-      </div>
+
+      {/* Remount */}
+      <button
+        style={{ ...btnBase, fontSize: '0.75rem', opacity: 0.6 }}
+        onClick={() => setKey(k => k + 1)}
+      >
+        Remount ⟳
+      </button>
     </div>
+  );
+}
+
+// ── Story ─────────────────────────────────────────────────────────────────────
+
+export const InteractiveControls: Story = {
+  name: 'DEX - Interactive Controls',
+  args: { size: 'lg', mode: 'load' } as never,
+  parameters: {
+    docs: {
+      description: {
+        story: [
+          '**Load ↓** — three-ring entrance with gradient flare and 3D foreshortening.',
+          '**Idle ◎** — rings orbit at different speeds (infinite loop).',
+          '**Thinking ≈** — rings spin 360° with a y-axis squish and gradient arc.',
+          '**Out ↑** — rings shrink to nothing, staggered small → medium → outer.',
+          '**Remount ⟳** — tears down and re-mounts the component; Load auto-plays on mount.',
+          'Use the **size** and **mode** controls in the panel below, or click the buttons.',
+        ].join(' · '),
+      },
+    },
+  },
+  render: (args) => (
+    <DexInteractiveDemo
+      size={(args.size ?? 'lg') as MotionAvatarSize}
+      mode={((args as never as { mode?: AvatarMode }).mode ?? 'load')}
+      label={args.label}
+    />
   ),
-};
-
-export const Small: Story = {
-  args: { state: 'thinking', size: 'sm' },
-};
-
-export const Large: Story = {
-  args: { state: 'responding', size: 'lg' },
 };

@@ -8,86 +8,26 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
   flex-shrink: 0;
   position: relative;
-  overflow: hidden;
-  transition:
-    background-color var(--cmw-avatar-transition-duration, 240ms) var(--cmw-avatar-easing, ease),
-    border-color     var(--cmw-avatar-transition-duration, 240ms) var(--cmw-avatar-easing, ease);
 }
 
 /* ── Sizes ──────────────────────────────────────────────────────────────── */
-.sm { width: 1.5rem;  height: 1.5rem;  border-width: 1px; }
-.md { width: 2.5rem;  height: 2.5rem;  border-width: 1px; }
-.lg { width: 4rem;    height: 4rem;    border-width: 2px; }
+.sm { width: 1.5rem;  height: 1.5rem; }
+.md { width: 2.5rem;  height: 2.5rem; }
+.lg { width: 4rem;    height: 4rem; }
 
-.root {
-  border-style: solid;
+/* ── DEX SVG ────────────────────────────────────────────────────────────── */
+.dexSvg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }
 
-/* ── State: idle ────────────────────────────────────────────────────────── */
-.idle {
-  background-color: var(--cmw-avatar-bg-idle, #ffffff);
-  border-color: var(--cmw-avatar-border-idle, #e0e0e0);
-}
-
-/* ── State: thinking ────────────────────────────────────────────────────── */
-.thinking {
-  background-color: var(--cmw-avatar-bg-thinking, #d0e2ff);
-  border-color: var(--cmw-avatar-border-thinking, #0043ce);
-  animation: orbit var(--cmw-avatar-thinking-duration, 900ms) linear infinite;
-}
-
-/* ── State: responding ──────────────────────────────────────────────────── */
-.responding {
-  background-color: var(--cmw-avatar-bg-responding, #d9fbfb);
-  border-color: var(--cmw-avatar-border-responding, #009d9a);
-}
-
-/* ── Idle pulse ─────────────────────────────────────────────────────────── */
-.idlePulse {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: inherit;
-  animation: pulse var(--cmw-avatar-idle-duration, 2400ms) var(--cmw-easing-expressive-standard, ease) infinite;
-  pointer-events: none;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1);    opacity: 0.7; }
-  50%       { transform: scale(1.15); opacity: 0; }
-}
-
-/* ── Thinking orbit ring ────────────────────────────────────────────────── */
-@keyframes orbit {
-  to { transform: rotate(360deg); }
-}
-
-/* ── Responding wave ────────────────────────────────────────────────────── */
-.wave {
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  border: 2px solid var(--cmw-avatar-border-responding, #009d9a);
-  opacity: 0;
-  animation: wave var(--cmw-avatar-responding-duration, 600ms) var(--cmw-easing-expressive-exit, ease-out) infinite;
-  pointer-events: none;
-}
-
-@keyframes wave {
-  0%   { transform: scale(1);    opacity: 0.6; }
-  100% { transform: scale(1.4);  opacity: 0; }
-}
-
-/* ── Inner glyph ────────────────────────────────────────────────────────── */
-.glyph {
-  position: relative;
-  z-index: 1;
-  fill: var(--cmw-icon-interactive, #0f62fe);
-  transition: fill var(--cmw-avatar-transition-duration, 240ms) var(--cmw-avatar-easing, ease);
-}
+/* No pre-mount CSS transform on any ring — WAAPI owns the transform from
+   the first mount effect. The translate-rotate-translate pattern in every
+   WAAPI keyframe guarantees the correct (16,16) pivot. */
 
 /* ── SR-only status ─────────────────────────────────────────────────────── */
 .srOnly {

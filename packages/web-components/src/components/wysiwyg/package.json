@@ -47,7 +47,7 @@
     "@babel/runtime": "^7.23.2",
     "@carbon-labs/utilities": "0.28.0",
     "@carbon/element-styles": "^0.2.5",
-    "@carbon/web-components": "^2.59.0",
+    "@carbon/web-components": "^2.40.0",
     "@tiptap/core": "3.25.0",
     "@tiptap/extension-blockquote": "3.25.0",
     "@tiptap/extension-bold": "3.25.0",

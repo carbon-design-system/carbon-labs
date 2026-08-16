@@ -29,10 +29,15 @@ export default {
       control: 'text',
       description: 'Initial content of the editor',
     },
+    readonly: {
+      control: 'boolean',
+      description: 'Disable editing and hide the toolbar',
+    },
   },
   args: {
     toolbarSize: 'md',
     content: demoContent,
+    readonly: false,
   },
   decorators: [
     (story) => html`
@@ -60,8 +65,12 @@ export const Default = {
       <clabs-wysiwyg
         .extensions=${allExtensions}
         .content=${args.content}
+        ?readonly=${args.readonly}
         @content-change=${(e) => {
           console.log('content-change', e);
+        }}
+        @files-change=${(e) => {
+          console.log('files-change', e);
         }}
         toolbar-size=${args.toolbarSize}>
       </clabs-wysiwyg>

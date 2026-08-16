@@ -55,7 +55,7 @@ export interface ExtensionWithToolbar<T = any> extends Extension<T> {
    * @param toolbarSize - Size of the toolbar buttons
    * @returns Lit template for the toolbar
    */
-  toolbarRender: (
+  toolbarRender?: (
     editor: Editor | null,
     toolbarSize?: ToolbarSize
   ) => TemplateResult;

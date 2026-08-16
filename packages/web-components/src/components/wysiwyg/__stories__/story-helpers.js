@@ -17,6 +17,8 @@ import { History } from '../components/wysiwyg/src/extensions/history.js';
 import { Blocks } from '../components/wysiwyg/src/extensions/blocks.js';
 import { Insert } from '../components/wysiwyg/src/extensions/insert.js';
 import { Typeface } from '../components/wysiwyg/src/extensions/typeface.js';
+import { FontSize } from '../components/wysiwyg/src/extensions/font-size.js';
+import { FileUpload } from '../components/wysiwyg/src/extensions/file-upload.js';
 import { Clipboard } from '../components/wysiwyg/src/extensions/clipboard.js';
 
 /**
@@ -27,9 +29,11 @@ export const allExtensions = /** @type {any} */ ([
   History,
   Clipboard,
   Typeface,
+  FontSize,
   TextFormatting,
   TextColor,
   Insert,
+  FileUpload,
   Blocks,
   Typography,
   Lists,
@@ -163,6 +167,9 @@ export const demoContent = `
   <p><span style="font-family: 'Helvetica';">Helvetica</span> - Clean sans-serif</p>
   <p><span style="font-family: 'Times New Roman';">Times New Roman</span> - Traditional serif</p>
   <p><span style="font-family: 'Courier New';">Courier New</span> - Classic monospace</p>
+
+  <h2>Font Sizes</h2>
+  <p><span style="font-size: 12px;">12px</span> · <span style="font-size: 16px;">16px (default)</span> · <span style="font-size: 24px;">24px</span> · <span style="font-size: 32px;">32px</span></p>
   
   <h2>Text Alignment</h2>
   <p style="text-align: left;">Left aligned text - Standard alignment for most content. This is the default alignment used throughout documents.</p>
@@ -364,7 +371,7 @@ console.log(message);</code></pre>
     <li>Create new lists and tables</li>
     <li>Insert links and images</li>
     <li>Change text alignment and colors</li>
-    <li>Switch between different font families</li>
+    <li>Switch between different font families and sizes</li>
     <li>Use the search feature to find content</li>
     <li>Experiment with undo/redo operations</li>
   </ol>

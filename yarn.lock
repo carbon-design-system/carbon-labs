@@ -2445,16 +2445,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icons@npm:^11.70.0, @carbon/icons@npm:^11.82.0":
-  version: 11.82.0
-  resolution: "@carbon/icons@npm:11.82.0"
-  dependencies:
-    "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/2949bb1be4c4a55984f50ae05cf6303eb4aafeb3543aac66b6ec9e98f7a9dafdd3f0ce7ef945faff1cb569a5f2698b1afeefd41f2018f60ddfbf844c27843dfd
-  languageName: node
-  linkType: hard
-
-"@carbon/icons@npm:^11.84.0":
+"@carbon/icons@npm:^11.70.0, @carbon/icons@npm:^11.84.0":
   version: 11.84.0
   resolution: "@carbon/icons@npm:11.84.0"
   dependencies:
@@ -2647,26 +2638,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/web-components@npm:^2.41.0, @carbon/web-components@npm:^2.47.0, @carbon/web-components@npm:^2.50.0":
-  version: 2.56.0
-  resolution: "@carbon/web-components@npm:2.56.0"
-  dependencies:
-    "@carbon/icon-helpers": "npm:10.47.0"
-    "@carbon/icons": "npm:^11.82.0"
-    "@carbon/styles": "npm:^1.108.0"
-    "@carbon/utilities": "npm:^0.17.0"
-    "@floating-ui/dom": "npm:^1.6.3"
-    "@ibm/telemetry-js": "npm:^1.10.2"
-    "@lit/context": "npm:^1.1.3"
-    flatpickr: "npm:*"
-    lit: "npm:^3.1.0"
-    lodash-es: "npm:^4.17.21"
-    tslib: "npm:^2.6.3"
-  checksum: 10c0/14b90612126c4ad26bb5b5fc19d64fc0790d14a20f70c9c4b19f301c30617547d2517224de32f5353139cfc734d4b93eda1c7d860803f73305fb64d219d0f1a8
-  languageName: node
-  linkType: hard
-
-"@carbon/web-components@npm:^2.59.0":
+"@carbon/web-components@npm:^2.41.0, @carbon/web-components@npm:^2.47.0, @carbon/web-components@npm:^2.50.0, @carbon/web-components@npm:^2.59.0":
   version: 2.59.0
   resolution: "@carbon/web-components@npm:2.59.0"
   dependencies:
@@ -21805,12 +21777,6 @@ __metadata:
   checksum: 10c0/effb03cad7c89dfa5bd4f6989364bfc79994c2042ec5966cb9b95990e2edee5cd8969ddf42616a0373ac49fac1403437deaf6e9050fbbaa3546093a59b9ac94e
   languageName: node
   linkType: hard
-
-"lib-64a98d@workspace:packages/react/src/components/AnimatedHeader/lib":
-  version: 0.0.0-use.local
-  resolution: "lib-64a98d@workspace:packages/react/src/components/AnimatedHeader/lib"
-  languageName: unknown
-  linkType: soft
 
 "libnpmaccess@npm:10.0.3":
   version: 10.0.3

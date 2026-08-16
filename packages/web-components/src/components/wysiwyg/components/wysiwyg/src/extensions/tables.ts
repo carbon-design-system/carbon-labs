@@ -263,10 +263,7 @@ Tables.toolbarRender = (
               tooltip: 'Insert Table',
             })}
       </cds-layer>
-      <cds-menu
-        ${ref(menuRef)}
-        size="xs"
-        @cds-menu-closed=${closeCtxMenu}>
+      <cds-menu ${ref(menuRef)} size="xs" @cds-menu-closed=${closeCtxMenu}>
         ${TABLE_CONTEXT_MENU.map((item) =>
           item === null
             ? html`<cds-menu-item-divider></cds-menu-item-divider>`

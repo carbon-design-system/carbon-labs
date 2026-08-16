@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.167.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.166.0...@carbon-labs/web-components@0.167.0) (2026-08-13)
+
+
+### Features
+
+* **global-header:** Remove product name from intial Hybrid iPaas Header options ([#1337](https://github.com/carbon-design-system/carbon-labs/issues/1337)) ([5033ad3](https://github.com/carbon-design-system/carbon-labs/commit/5033ad339cf600fd8ae9e186ef2e7eba5351735a))
+
+
+
+
+
+# [0.166.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.165.0...@carbon-labs/web-components@0.166.0) (2026-08-04)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.165.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.164.0...@carbon-labs/web-components@0.165.0) (2026-07-30)
+
+
+### Bug Fixes
+
+* **global-header:** Pass Solis idle timeout down from header ([#1332](https://github.com/carbon-design-system/carbon-labs/issues/1332)) ([800525c](https://github.com/carbon-design-system/carbon-labs/commit/800525c4bded575dbe9fa4b6d7599f88a94d5013))
+
+
+
+
+
+# [0.164.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.163.0...@carbon-labs/web-components@0.164.0) (2026-07-28)
+
+
+### Bug Fixes
+
+* **global-header:** skip Solis CDN content assertions in CI ([#1328](https://github.com/carbon-design-system/carbon-labs/issues/1328)) ([0b83d3f](https://github.com/carbon-design-system/carbon-labs/commit/0b83d3f807881eb92bf29c1d6c67f77ef91ae9bf))
+
+
+
+
+
 # [0.163.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.162.0...@carbon-labs/web-components@0.163.0) (2026-07-24)
 
 

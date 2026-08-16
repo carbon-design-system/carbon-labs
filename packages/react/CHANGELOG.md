@@ -3,6 +3,96 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.201.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.200.0...@carbon-labs/react@0.201.0) (2026-08-13)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.200.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.198.0...@carbon-labs/react@0.200.0) (2026-08-12)
+
+
+### Bug Fixes
+
+* **TagInput:** resolve accessibility audit findings ([#1330](https://github.com/carbon-design-system/carbon-labs/issues/1330)) ([44d7fe3](https://github.com/carbon-design-system/carbon-labs/commit/44d7fe3da03551aca206cb4fdd002cc33b02d753))
+
+
+
+
+
+# [0.199.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.198.0...@carbon-labs/react@0.199.0) (2026-08-11)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.198.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.197.0...@carbon-labs/react@0.198.0) (2026-07-30)
+
+
+### Bug Fixes
+
+* **global-header:** Pass Solis idle timeout down from header ([#1332](https://github.com/carbon-design-system/carbon-labs/issues/1332)) ([800525c](https://github.com/carbon-design-system/carbon-labs/commit/800525c4bded575dbe9fa4b6d7599f88a94d5013))
+
+
+
+
+
+# [0.197.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.196.0...@carbon-labs/react@0.197.0) (2026-07-29)
+
+
+### Bug Fixes
+
+* move ref from iframe to link ([#1329](https://github.com/carbon-design-system/carbon-labs/issues/1329)) ([277d901](https://github.com/carbon-design-system/carbon-labs/commit/277d9018bed04a19b0bb336447672bb9770663d2))
+
+
+
+
+
+# [0.196.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.195.0...@carbon-labs/react@0.196.0) (2026-07-29)
+
+
+### Bug Fixes
+
+* removed default author field ([#1326](https://github.com/carbon-design-system/carbon-labs/issues/1326)) ([51a4b1b](https://github.com/carbon-design-system/carbon-labs/commit/51a4b1b5674af2d27b9137e67643e9f255a76f1c))
+
+
+
+
+
+# [0.195.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.194.0...@carbon-labs/react@0.195.0) (2026-07-29)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.194.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.193.0...@carbon-labs/react@0.194.0) (2026-07-27)
+
+
+### Features
+
+* registration flow ([#1309](https://github.com/carbon-design-system/carbon-labs/issues/1309)) ([83756e4](https://github.com/carbon-design-system/carbon-labs/commit/83756e4655067489d9ae5c73d80910ef809beead))
+
+
+
+
+
+# [0.193.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.192.0...@carbon-labs/react@0.193.0) (2026-07-25)
+
+
+### Features
+
+* **UIShell:** expose depth on SideNavMenu button as data-depth attribute ([#1321](https://github.com/carbon-design-system/carbon-labs/issues/1321)) ([37e1f8d](https://github.com/carbon-design-system/carbon-labs/commit/37e1f8d8481ae756d2a40cf64d2a7141e80bab1f))
+
+
+
+
+
 # [0.192.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.191.0...@carbon-labs/react@0.192.0) (2026-07-23)
 
 

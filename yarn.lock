@@ -2206,7 +2206,7 @@ __metadata:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.28.0"
     "@carbon/element-styles": "npm:^0.2.5"
-    "@carbon/web-components": "npm:^2.40.0"
+    "@carbon/web-components": "npm:^2.59.0"
     "@tiptap/core": "npm:3.25.0"
     "@tiptap/extension-blockquote": "npm:3.25.0"
     "@tiptap/extension-bold": "npm:3.25.0"
@@ -2444,6 +2444,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@carbon/icons@npm:^11.84.0":
+  version: 11.84.0
+  resolution: "@carbon/icons@npm:11.84.0"
+  dependencies:
+    "@ibm/telemetry-js": "npm:^1.5.0"
+  checksum: 10c0/a8aeded9247b82708fef809ceb1c58193e207b228317d8fe5c739eb40f8823a4b23d0155b3fc049a5f4e35d7817952a5470990dd80abb8d28825938f89e3aa00
+  languageName: node
+  linkType: hard
+
 "@carbon/layout@npm:^11.43.0, @carbon/layout@npm:^11.52.0":
   version: 11.52.0
   resolution: "@carbon/layout@npm:11.52.0"
@@ -2628,7 +2637,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/web-components@npm:^2.40.0, @carbon/web-components@npm:^2.41.0, @carbon/web-components@npm:^2.47.0, @carbon/web-components@npm:^2.50.0":
+"@carbon/web-components@npm:^2.41.0, @carbon/web-components@npm:^2.47.0, @carbon/web-components@npm:^2.50.0":
   version: 2.56.0
   resolution: "@carbon/web-components@npm:2.56.0"
   dependencies:
@@ -2644,6 +2653,25 @@ __metadata:
     lodash-es: "npm:^4.17.21"
     tslib: "npm:^2.6.3"
   checksum: 10c0/14b90612126c4ad26bb5b5fc19d64fc0790d14a20f70c9c4b19f301c30617547d2517224de32f5353139cfc734d4b93eda1c7d860803f73305fb64d219d0f1a8
+  languageName: node
+  linkType: hard
+
+"@carbon/web-components@npm:^2.59.0":
+  version: 2.59.0
+  resolution: "@carbon/web-components@npm:2.59.0"
+  dependencies:
+    "@carbon/icon-helpers": "npm:10.47.0"
+    "@carbon/icons": "npm:^11.84.0"
+    "@carbon/styles": "npm:^1.111.0"
+    "@carbon/utilities": "npm:^0.17.0"
+    "@floating-ui/dom": "npm:^1.6.3"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    "@lit/context": "npm:^1.1.3"
+    flatpickr: "npm:*"
+    lit: "npm:^3.1.0"
+    lodash-es: "npm:^4.17.21"
+    tslib: "npm:^2.6.3"
+  checksum: 10c0/91648d2381dcc44905d6527d3226d946d037dbd879d89c911943ad90ffc4d25710c736d2bf604d4cc4e177c1cdf611f0d561a2be805a1c68cef4aaf6e7d6d982
   languageName: node
   linkType: hard
 

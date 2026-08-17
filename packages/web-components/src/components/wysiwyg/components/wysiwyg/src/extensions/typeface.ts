@@ -34,6 +34,7 @@ const styles = `
   .${BASE_CLASS}__toolbar-group--typeface cds-dropdown {
     inline-size: 100%;
     --cds-border-strong: transparent;
+    --cds-border-subtle: transparent;
   }
 `;
 
@@ -68,6 +69,7 @@ Typeface.toolbarRender = (
       <cds-dropdown
         label="Font"
         hide-label
+        autoalign
         title-text="Select font family"
         .size=${toolbarSize as any}
         .value=${currentFont}

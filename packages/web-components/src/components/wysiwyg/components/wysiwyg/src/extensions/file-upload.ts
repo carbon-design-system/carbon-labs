@@ -320,6 +320,8 @@ FileUpload.toolbarRender = (
         ${ref(fileInput)}
         class="${BASE_CLASS}__file-input"
         type="file"
+        tabindex="-1"
+        aria-hidden="true"
         multiple
         accept=${FileUpload.accept || ''}
         @change=${(event: Event) => {

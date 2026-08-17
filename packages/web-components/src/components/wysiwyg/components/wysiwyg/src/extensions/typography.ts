@@ -33,6 +33,7 @@ const styles = `
   .${BASE_CLASS}__toolbar-group--typography cds-dropdown {
     inline-size: 100%;
     --cds-border-strong: transparent;
+    --cds-border-subtle: transparent;
   }
 `;
 
@@ -73,6 +74,7 @@ Typography.toolbarRender = (
       <cds-dropdown
         label="Typography"
         hide-label
+        autoalign
         title-text="Select typography level"
         .size=${toolbarSize as any}
         .value=${currentLevel ? `h${currentLevel}` : 'p'}

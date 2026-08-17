@@ -6,6 +6,7 @@
  */
 
 import { html } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import type { TemplateResult } from 'lit';
 import type { Editor } from '@tiptap/core';
 import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
@@ -31,6 +32,10 @@ export interface IconButtonOptions {
   caret?: boolean;
   /** Tab index for the icon */
   iconTabIndex?: string;
+  /** Extra class on the icon button */
+  className?: string;
+  /** Inline style on the icon button */
+  style?: string;
 }
 
 /**
@@ -51,6 +56,8 @@ export const iconButton = (
   options: IconButtonOptions
 ): TemplateResult => html`
   <cds-icon-button
+    class=${ifDefined(options.className)}
+    style=${ifDefined(options.style)}
     kind=${options.kind ?? 'ghost'}
     autoalign
     align="top"

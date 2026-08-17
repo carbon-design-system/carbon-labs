@@ -37,6 +37,7 @@ const styles = `
   .${BASE_CLASS}__toolbar-group--font-size cds-dropdown {
     inline-size: 100%;
     --cds-border-strong: transparent;
+    --cds-border-subtle: transparent;
   }
 `;
 
@@ -70,6 +71,7 @@ FontSize.toolbarRender = (
       <cds-dropdown
         label="Font size"
         hide-label
+        autoalign
         title-text="Select font size"
         .size=${toolbarSize as any}
         .value=${currentSize}

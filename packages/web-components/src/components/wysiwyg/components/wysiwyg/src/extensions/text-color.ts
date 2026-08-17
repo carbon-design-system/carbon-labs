@@ -13,6 +13,7 @@ import TextColorIcon from '@carbon/icons/es/text--color/16.js';
 import TextHighlight16 from '@carbon/icons/es/text--highlight/16.js';
 import Subtract from '@carbon/icons/es/subtract/16.js';
 import Add from '@carbon/icons/es/add/16.js';
+import CheckmarkFilled from '@carbon/icons/es/checkmark--filled/16.js';
 import '@carbon/web-components/es/components/button/index.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
 import '@carbon/web-components/es/components/popover/index.js';
@@ -42,22 +43,40 @@ const colors = [
 ];
 
 const styles = `
-  .${BASE_CLASS}__text-color-boxes {
-    display: flex;
-    flex-wrap: wrap;
-    max-inline-size: calc(var(--cds-spacing-07) * 3 + 2 * var(--cds-spacing-01));
+  .${BASE_CLASS}__text-color[open]::part(content) {
+    display: grid;
     gap: var(--cds-spacing-01);
+    grid-template-columns: repeat(3, 1fr);
     padding: var(--cds-spacing-01);
   }
 
-  .${BASE_CLASS}__text-color[open]::part(content), .${BASE_CLASS}__highlight[open]::part(content) {
+  .${BASE_CLASS}__highlight[open]::part(content) {
     display: flex;
   }
-  
-  .${BASE_CLASS}__text-color-box {
-    inline-size: var(--cds-spacing-07);
-    block-size: var(--cds-spacing-07);
-    cursor: pointer;
+
+  .${BASE_CLASS}__text-color-swatch::part(button) {
+    background-color: var(--${BASE_CLASS}-swatch);
+  }
+
+  .${BASE_CLASS}__text-color-swatch--selected::part(button) {
+    border: 1px solid var(--cds-border-inverse);
+    background-clip: padding-box;
+    box-shadow: inset 0 0 0 1px var(--cds-background);
+  }
+
+  .${BASE_CLASS}__text-color-swatch svg {
+    opacity: 0;
+  }
+
+  .${BASE_CLASS}__text-color-swatch--selected svg {
+    opacity: 1;
+    color: var(--cds-background);
+    fill: currentColor;
+  }
+
+  .${BASE_CLASS}__text-color-swatch--selected svg [data-icon-path='inner-path'] {
+    fill: var(--cds-border-inverse);
+    opacity: 1;
   }
 `;
 
@@ -116,25 +135,33 @@ TextColor.toolbarRender = (
             caret: true,
             iconTabIndex: '-1',
           })}
-          <cds-popover-content slot="content" class="${BASE_CLASS}__text-color">
-            <div class="${BASE_CLASS}__text-color-boxes">
-              ${colors.map(
-                (color) => html`
-                  <div
-                    class="${BASE_CLASS}__text-color-box"
-                    style="background-color: var(--cds-${color})"
-                    title="${color}"
-                    @click=${() => {
-                      editor
-                        ?.chain()
-                        .focus()
-                        .setColor(`var(--cds-${color})`)
-                        .run();
-                      closePopover(colorPopover);
-                    }}></div>
-                `
-              )}
-            </div>
+          <cds-popover-content
+            slot="content"
+            class="${BASE_CLASS}__text-color"
+            ${ref(setupPopoverContent)}>
+            <clabs-roving-tabindex>
+              ${colors.map((token) => {
+                const value = `var(--cds-${token})`;
+                return iconButton(
+                  CheckmarkFilled,
+                  () => {
+                    editor?.chain().focus().setColor(value).run();
+                    closePopover(colorPopover);
+                  },
+                  toolbarSize,
+                  {
+                    tooltip: token.replace(/-/g, ' '),
+                    selected: color === value,
+                    className: `${BASE_CLASS}__text-color-swatch${
+                      color === value
+                        ? ` ${BASE_CLASS}__text-color-swatch--selected`
+                        : ''
+                    }`,
+                    style: `--${BASE_CLASS}-swatch: var(--cds-${token})`,
+                  }
+                );
+              })}
+            </clabs-roving-tabindex>
           </cds-popover-content>
         </cds-popover>
         <cds-popover

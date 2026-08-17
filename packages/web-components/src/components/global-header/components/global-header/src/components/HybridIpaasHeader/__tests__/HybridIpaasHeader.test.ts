@@ -973,5 +973,31 @@ describe('HybridIpaasHeader Component', () => {
       const result = (el as any).getBackendProxy();
       expect(result).to.equal('/hybrid-ipaas/v1/proxies/solis/backend');
     });
+
+    it('should return backendProxy URL when forceBackendProxy is true, even on an ibm.com domain', async () => {
+      const el = await fixture<HybridIpaasHeader>(
+        html`<clabs-global-header-hybrid-ipaas
+          productKey="test-key"
+          basePath="/test"
+          forceBackendProxy></clabs-global-header-hybrid-ipaas>`
+      );
+
+      hostnameStub = sinon.stub(el as any, 'getHostname').returns('ibm.com');
+      const result = (el as any).getBackendProxy();
+      expect(result).to.equal('/test/hybrid-ipaas/v1/proxies/solis/backend');
+    });
+
+    it('should return undefined when forceBackendProxy is false (default) and hostname is ibm.com', async () => {
+      const el = await fixture<HybridIpaasHeader>(
+        html`<clabs-global-header-hybrid-ipaas
+          productKey="test-key"
+          basePath="/test"></clabs-global-header-hybrid-ipaas>`
+      );
+
+      hostnameStub = sinon.stub(el as any, 'getHostname').returns('ibm.com');
+      expect(el.forceBackendProxy).to.be.false;
+      const result = (el as any).getBackendProxy();
+      expect(result).to.be.undefined;
+    });
   });
 });

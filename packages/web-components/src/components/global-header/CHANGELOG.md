@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.89.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.88.0...@carbon-labs/wc-global-header@0.89.0) (2026-08-17)
+
+
+### Features
+
+* Add the ability to toggle the proxy on, defaults to false ([#1344](https://github.com/carbon-design-system/carbon-labs/issues/1344)) ([183b47f](https://github.com/carbon-design-system/carbon-labs/commit/183b47f51e72823853c004cdaf361fedcc39f2c1))
+
+
+
+
+
 # [0.88.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.87.0...@carbon-labs/wc-global-header@0.88.0) (2026-08-13)
 
 

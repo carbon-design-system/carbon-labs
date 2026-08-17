@@ -233,8 +233,8 @@ extension.
 ## Accessibility
 
 The editor contenteditable has `aria-label="Rich text editor"`. The toolbar uses
-a roving tabindex and tooltips. Search and formatting controls have
-visible labels or `label-text`.
+a roving tabindex and tooltips. Search and formatting controls have visible
+labels or `label-text`.
 
 Keyboard shortcuts for the bundled extensions are listed in the Storybook MDX.
 

@@ -121,6 +121,9 @@ export const toolbarGroupPopover = ({
   items,
 }: ToolbarGroupPopoverOptions): TemplateResult => {
   const popover = createRef<any>();
+  /**
+   * Closes the popover and re-renders the toolbar.
+   */
   const onDone = () => {
     closePopover(popover);
     (editor as any)?.component?.requestUpdate?.();

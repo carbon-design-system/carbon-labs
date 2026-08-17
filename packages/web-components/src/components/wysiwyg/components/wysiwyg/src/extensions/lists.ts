@@ -101,15 +101,16 @@ Lists.toolbarRender = (
     </style>
     ${compact
       ? toolbarGroupPopover({
-          icon:
-            (BUTTONS.find(([, , active]) => editor?.isActive(active)) ??
-              BUTTONS[0])[0],
+          icon: (BUTTONS.find(([, , active]) => editor?.isActive(active)) ??
+            BUTTONS[0])[0],
           tooltip: 'Lists',
           toolbarSize,
+          /**
+           * Compact list controls.
+           * @returns {import('lit').TemplateResult} List buttons
+           */
           items: () => buttons,
         })
-      : html`
-          <div class="${BASE_CLASS}__toolbar-group">${buttons}</div>
-        `}
+      : html` <div class="${BASE_CLASS}__toolbar-group">${buttons}</div> `}
   `;
 };

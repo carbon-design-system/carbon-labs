@@ -105,15 +105,18 @@ TextFormatting.toolbarRender = (
   toolbarSize: ToolbarSize = 'md',
   compact = false
 ) => {
+  /**
+   * Formatting buttons. `onDone` closes the compact popover after a command.
+   * @param {() => void} [onDone] - Closes the popover
+   * @returns {import('lit').TemplateResult[]} Formatting buttons
+   */
   const buttons = (onDone?: () => void) =>
     BUTTONS.map(([icon, cmd, active, tooltip]) =>
       cmdButton(icon, editor, cmd, toolbarSize, { active, tooltip, onDone })
     );
 
   if (!compact) {
-    return html`
-      <div class="${BASE_CLASS}__toolbar-group">${buttons()}</div>
-    `;
+    return html` <div class="${BASE_CLASS}__toolbar-group">${buttons()}</div> `;
   }
 
   const decorations = [

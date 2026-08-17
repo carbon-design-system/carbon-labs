@@ -53,12 +53,14 @@ export interface ExtensionWithToolbar<T = any> extends Extension<T> {
    * Renders the toolbar controls for this extension.
    * @param editor - The TipTap editor instance
    * @param toolbarSize - Size of the toolbar buttons
+   * @param compact - Whether the toolbar is in the compact (mobile) layout
    * @returns Lit template for the toolbar
    */
   toolbarRender?: (
     editor: Editor | null,
-    toolbarSize?: ToolbarSize
-  ) => TemplateResult;
+    toolbarSize?: ToolbarSize,
+    compact?: boolean
+  ) => TemplateResult | null;
 }
 
 /**

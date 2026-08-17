@@ -36,6 +36,8 @@ export interface IconButtonOptions {
   className?: string;
   /** Inline style on the icon button */
   style?: string;
+  /** Custom `slot="icon"` content; used instead of `icon` when set */
+  iconContent?: TemplateResult;
 }
 
 /**
@@ -68,7 +70,8 @@ export const iconButton = (
     ?isselected=${options.selected ?? false}
     ?caret=${options.caret ?? false}
     @click=${onClick}>
-    ${iconLoader(icon, {
+    ${options.iconContent ??
+    iconLoader(icon, {
       slot: 'icon',
       ...(options.iconTabIndex ? { tabIndex: options.iconTabIndex } : {}),
     })}

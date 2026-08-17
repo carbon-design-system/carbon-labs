@@ -15,7 +15,6 @@ import { customElement, state } from 'lit/decorators.js';
 const SELECTORS = [
   'cds-icon-button',
   'cds-button',
-  'cds-dropdown',
   'cds-text-input',
   'cds-search',
 ].join(',');
@@ -129,6 +128,19 @@ export class ClabsRovingTabindex extends LitElement {
   }
 
   private handleKeyDown = (event: KeyboardEvent) => {
+    if (
+      event
+        .composedPath()
+        .some(
+          (node) =>
+            node instanceof HTMLElement &&
+            (node.localName === 'cds-menu' ||
+              node.localName === 'cds-menu-item')
+        )
+    ) {
+      return;
+    }
+
     switch (event.key) {
       case 'ArrowRight':
         event.preventDefault();
@@ -156,9 +168,10 @@ export class ClabsRovingTabindex extends LitElement {
     }
   };
 
-  private handleFocusIn = ({ target }: FocusEvent) => {
+  private handleFocusIn = (event: FocusEvent) => {
     const items = this.getItems();
-    const index = items.indexOf(target as HTMLElement);
+    const path = event.composedPath();
+    const index = items.findIndex((el) => path.includes(el));
 
     if (index >= 0) {
       this.activeIndex = index;

@@ -35,45 +35,54 @@ const selectedText = (editor: Editor | null): string => {
 
 /**
  * Renders the clipboard toolbar with copy, cut, and paste controls.
+ * Hidden on compact (mobile) widths; native OS clipboard gestures remain available.
  * @param {Editor | null} editor - The TipTap editor instance
  * @param {ToolbarSize} toolbarSize - Size of the toolbar buttons
+ * @param {boolean} compact - Whether the toolbar is in the compact layout
  */
 Clipboard.toolbarRender = (
   editor: Editor | null,
-  toolbarSize: ToolbarSize = 'md'
-) => html`
-  <div class="${BASE_CLASS}__toolbar-group">
-    ${iconButton(
-      Copy,
-      () => {
-        const text = selectedText(editor);
-        if (text) {
-          navigator.clipboard.writeText(text);
-        }
-      },
-      toolbarSize,
-      { tooltip: 'Copy' }
-    )}
-    ${iconButton(
-      Cut,
-      async () => {
-        const text = selectedText(editor);
-        if (text) {
-          await navigator.clipboard.writeText(text);
-          editor?.chain().focus().deleteSelection().run();
-        }
-      },
-      toolbarSize,
-      { tooltip: 'Cut' }
-    )}
-    ${iconButton(
-      Paste,
-      async () => {
-        const text = await navigator.clipboard.readText();
-        editor?.chain().focus().insertContent(text).run();
-      },
-      toolbarSize,
-      { tooltip: 'Paste' }
-    )}
-  </div>
-`;
+  toolbarSize: ToolbarSize = 'md',
+  compact = false
+) => {
+  if (compact) {
+    return null;
+  }
+
+  return html`
+    <div class="${BASE_CLASS}__toolbar-group">
+      ${iconButton(
+        Copy,
+        () => {
+          const text = selectedText(editor);
+          if (text) {
+            navigator.clipboard.writeText(text);
+          }
+        },
+        toolbarSize,
+        { tooltip: 'Copy' }
+      )}
+      ${iconButton(
+        Cut,
+        async () => {
+          const text = selectedText(editor);
+          if (text) {
+            await navigator.clipboard.writeText(text);
+            editor?.chain().focus().deleteSelection().run();
+          }
+        },
+        toolbarSize,
+        { tooltip: 'Cut' }
+      )}
+      ${iconButton(
+        Paste,
+        async () => {
+          const text = await navigator.clipboard.readText();
+          editor?.chain().focus().insertContent(text).run();
+        },
+        toolbarSize,
+        { tooltip: 'Paste' }
+      )}
+    </div>
+  `;
+};

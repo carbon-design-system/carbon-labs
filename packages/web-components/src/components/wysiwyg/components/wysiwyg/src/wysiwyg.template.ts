@@ -8,14 +8,14 @@
  */
 
 import { LitElement, html, nothing } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
 import type { PropertyValues } from 'lit';
 import { Editor } from '@tiptap/core';
 import { createRef, ref } from 'lit/directives/ref.js';
 import type { Ref } from 'lit/directives/ref.js';
 /* @ts-ignore */
 import styles from './wysiwyg.scss?inline';
-import { BASE_CLASS } from './constants.js';
+import { BASE_CLASS, COMPACT_TOOLBAR_MAX_WIDTH } from './constants.js';
 import './roving-tabindex.js';
 import type { ExtensionWithToolbar, ToolbarSize } from './types.js';
 
@@ -45,9 +45,27 @@ class Wysiwyg extends LitElement {
   @property({ type: Boolean, reflect: true })
   readonly = false;
 
+  @state()
+  compact = false;
+
   public editor: Editor | null = null;
   private editorRef: Ref<HTMLDivElement> = createRef();
   private toolbarRef: Ref<HTMLDivElement> = createRef();
+  private resizeObserver?: ResizeObserver;
+
+  /**
+   * Observes host width so the toolbar can switch to the compact layout.
+   */
+  connectedCallback() {
+    super.connectedCallback();
+    this.resizeObserver = new ResizeObserver(() => {
+      const compact = this.clientWidth < COMPACT_TOOLBAR_MAX_WIDTH;
+      if (compact !== this.compact) {
+        this.compact = compact;
+      }
+    });
+    this.resizeObserver.observe(this);
+  }
 
   /**
    * Initializes the editor after the component is first rendered.
@@ -116,6 +134,7 @@ class Wysiwyg extends LitElement {
    */
   disconnectedCallback() {
     super.disconnectedCallback();
+    this.resizeObserver?.disconnect();
     this.editor?.destroy();
   }
 
@@ -130,12 +149,18 @@ class Wysiwyg extends LitElement {
             ? nothing
             : html`
                 <div
-                  class="${BASE_CLASS}__toolbar"
+                  class="${BASE_CLASS}__toolbar${this.compact
+                    ? ` ${BASE_CLASS}__toolbar--compact`
+                    : ''}"
                   data-floating-menu-container
                   ${ref(this.toolbarRef)}>
                   <clabs-roving-tabindex>
                     ${this.extensions.map((ext) =>
-                      ext.toolbarRender?.(this.editor, this.toolbarSize)
+                      ext.toolbarRender?.(
+                        this.editor,
+                        this.toolbarSize,
+                        this.compact
+                      )
                     )}
                   </clabs-roving-tabindex>
                 </div>

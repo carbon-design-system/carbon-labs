@@ -7,10 +7,8 @@
 
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
-import { html } from 'lit';
-import '@carbon/web-components/es/components/dropdown/index.js';
-import { BASE_CLASS } from '../constants.js';
 import type { ExtensionWithToolbar, ToolbarSize } from '../types.js';
+import { toolbarMenuButton } from './toolbar-menu-button.js';
 import {
   FontSize as TiptapFontSize,
   TextStyle,
@@ -29,17 +27,14 @@ const FONT_SIZES = [
 
 const DEFAULT_FONT_SIZE = '16px';
 
-const styles = `
-  .${BASE_CLASS}__toolbar-group--font-size {
-    min-inline-size: 6.5rem;
-  }
-
-  .${BASE_CLASS}__toolbar-group--font-size cds-dropdown {
-    inline-size: 100%;
-    --cds-border-strong: transparent;
-    --cds-border-subtle: transparent;
-  }
-`;
+/**
+ * Applies a font size to the current selection.
+ * @param {Editor | null} editor - TipTap editor
+ * @param {string} fontSize - Font size (e.g. `16px`)
+ */
+const applyFontSize = (editor: Editor | null, fontSize: string) => {
+  editor?.chain().focus().setFontSize(fontSize).run();
+};
 
 export const FontSize = Extension.create({
   name: 'clabsFontSize',
@@ -51,40 +46,27 @@ export const FontSize = Extension.create({
 }) as unknown as ExtensionWithToolbar;
 
 /**
- * Renders the font size toolbar dropdown.
+ * Renders the font size toolbar as a menu button.
  * @param {Editor | null} editor - The TipTap editor instance
  * @param {ToolbarSize} toolbarSize - Size of the toolbar buttons
+ * @param {boolean} compact - Whether the toolbar is in the compact layout
  */
 FontSize.toolbarRender = (
   editor: Editor | null,
-  toolbarSize: ToolbarSize = 'md'
+  toolbarSize: ToolbarSize = 'md',
+  compact = false
 ) => {
   const currentSize =
-    editor?.getAttributes('textStyle').fontSize ?? DEFAULT_FONT_SIZE;
+    editor?.getAttributes('textStyle').fontSize || DEFAULT_FONT_SIZE;
 
-  return html`
-    <style>
-      ${styles}
-    </style>
-    <div
-      class="${BASE_CLASS}__toolbar-group ${BASE_CLASS}__toolbar-group--font-size">
-      <cds-dropdown
-        label="Font size"
-        hide-label
-        autoalign
-        title-text="Select font size"
-        .size=${toolbarSize as any}
-        .value=${currentSize}
-        @cds-dropdown-selected=${(e: CustomEvent) => {
-          const fontSize = e.detail.item.value;
-          editor?.chain().focus().setFontSize(fontSize).run();
-        }}>
-        ${FONT_SIZES.map(
-          (size) => html`
-            <cds-dropdown-item value=${size}>${size}</cds-dropdown-item>
-          `
-        )}
-      </cds-dropdown>
-    </div>
-  `;
+  return toolbarMenuButton({
+    label: compact ? currentSize.replace(/px$/i, '') : currentSize,
+    groupLabel: 'Font size',
+    toolbarSize,
+    currentValue: currentSize,
+    editor,
+    options: FONT_SIZES.map((size) => ({ value: size, label: size })),
+    grow: false,
+    onSelect: applyFontSize.bind(null, editor),
+  });
 };

@@ -5,6 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { html } from 'lit';
+import type { TemplateResult } from 'lit';
+import type { Editor } from '@tiptap/core';
+import { createRef, ref } from 'lit/directives/ref.js';
+import { BASE_CLASS } from '../constants.js';
+import type { ToolbarSize } from '../types.js';
+import { iconButton } from './button-helper.js';
+import '../roving-tabindex.js';
+import '@carbon/web-components/es/components/popover/index.js';
+import '@carbon/web-components/es/components/layer/index.js';
+
 /**
  * Shared utility for handling popover behavior across extensions.
  * Provides consistent Escape key handling and focus management.
@@ -80,4 +91,60 @@ export const togglePopover = (popoverRef: any) => {
  */
 export const closePopover = (popoverRef: any) => {
   popoverRef?.value && (popoverRef.value.open = false);
+};
+
+/**
+ * Options for a compact toolbar group popover.
+ */
+export interface ToolbarGroupPopoverOptions {
+  icon?: any;
+  iconContent?: TemplateResult;
+  tooltip: string;
+  toolbarSize: ToolbarSize;
+  selected?: boolean;
+  editor?: Editor | null;
+  items: (onDone: () => void) => TemplateResult | TemplateResult[];
+}
+
+/**
+ * Wraps toolbar buttons in a caret popover for the compact layout.
+ * @param {ToolbarGroupPopoverOptions} options - Popover options
+ * @returns {TemplateResult} Toolbar group
+ */
+export const toolbarGroupPopover = ({
+  icon,
+  iconContent,
+  tooltip,
+  toolbarSize,
+  selected,
+  editor,
+  items,
+}: ToolbarGroupPopoverOptions): TemplateResult => {
+  const popover = createRef<any>();
+  const onDone = () => {
+    closePopover(popover);
+    (editor as any)?.component?.requestUpdate?.();
+  };
+
+  return html`
+    <div class="${BASE_CLASS}__toolbar-group">
+      <cds-layer>
+        <cds-popover ${ref(popover)} tabtip align="bottom" autoalign>
+          ${iconButton(icon, () => togglePopover(popover), toolbarSize, {
+            selected,
+            tooltip,
+            caret: true,
+            iconTabIndex: '-1',
+            iconContent,
+          })}
+          <cds-popover-content
+            slot="content"
+            class="${BASE_CLASS}__toolbar-popover-content"
+            ${ref(setupPopoverContent)}>
+            <clabs-roving-tabindex>${items(onDone)}</clabs-roving-tabindex>
+          </cds-popover-content>
+        </cds-popover>
+      </cds-layer>
+    </div>
+  `;
 };

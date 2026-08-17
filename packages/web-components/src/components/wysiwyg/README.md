@@ -135,7 +135,7 @@ Import only what you need from `@carbon-labs/wc-wysiwyg`:
 | `History`        | Undo/redo (`Ctrl/Cmd+Z`, `Ctrl/Cmd+Shift+Z` or `Y`)                           |
 | `Clipboard`      | Toolbar copy/cut/paste of selected plain text                                 |
 | `TextFormatting` | Bold, italic, underline, strikethrough, inline code                           |
-| `Typography`     | Paragraph and H1–H6 dropdown                                                  |
+| `Typography`     | Paragraph and H1–H6 menu                                                      |
 | `Lists`          | Bullet, numbered, and task lists                                              |
 | `Tables`         | Table insert and cell/row/column operations                                   |
 | `Alignment`      | Left, center, right, justify                                                  |
@@ -143,8 +143,8 @@ Import only what you need from `@carbon-labs/wc-wysiwyg`:
 | `Search`         | Toolbar search, match highlight, next-match cycle (`Ctrl/Cmd+F` to open)      |
 | `Blocks`         | Code block and blockquote                                                     |
 | `Insert`         | Link and image URL popovers; image resize                                     |
-| `Typeface`       | Font family dropdown                                                          |
-| `FontSize`       | Font size dropdown (12px–32px)                                                |
+| `Typeface`       | Font family menu                                                              |
+| `FontSize`       | Font size menu (12px–32px)                                                    |
 | `FileUpload`     | Toolbar upload, drag-and-drop, attachment strip. Optional `FileUpload.accept` |
 
 ### Example with the current exports

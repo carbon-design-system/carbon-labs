@@ -7,10 +7,8 @@
 
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
-import { html } from 'lit';
-import '@carbon/web-components/es/components/dropdown/index.js';
-import { BASE_CLASS } from '../constants.js';
 import type { ExtensionWithToolbar, ToolbarSize } from '../types.js';
+import { toolbarMenuButton } from './toolbar-menu-button.js';
 import { FontFamily } from '@tiptap/extension-font-family';
 import { TextStyle } from '@tiptap/extension-text-style';
 
@@ -26,17 +24,14 @@ const FONT_FAMILIES = [
 
 const DEFAULT_FONT = FONT_FAMILIES[0];
 
-const styles = `
-  .${BASE_CLASS}__toolbar-group--typeface {
-    flex: 1;
-  }
-  
-  .${BASE_CLASS}__toolbar-group--typeface cds-dropdown {
-    inline-size: 100%;
-    --cds-border-strong: transparent;
-    --cds-border-subtle: transparent;
-  }
-`;
+/**
+ * Applies a font family to the current selection.
+ * @param {Editor | null} editor - TipTap editor
+ * @param {string} fontFamily - Font family name
+ */
+const applyFontFamily = (editor: Editor | null, fontFamily: string) => {
+  editor?.chain().focus().setFontFamily(fontFamily).run();
+};
 
 export const Typeface = Extension.create({
   name: 'typeface',
@@ -48,45 +43,32 @@ export const Typeface = Extension.create({
 }) as unknown as ExtensionWithToolbar;
 
 /**
- * Renders the typeface toolbar with font family dropdown.
+ * Renders the typeface toolbar as a menu button.
  * @param {Editor | null} editor - The TipTap editor instance
  * @param {ToolbarSize} toolbarSize - Size of the toolbar buttons
+ * @param {boolean} compact - Whether the toolbar is in the compact layout
  */
 Typeface.toolbarRender = (
   editor: Editor | null,
-  toolbarSize: ToolbarSize = 'md'
+  toolbarSize: ToolbarSize = 'md',
+  compact = false
 ) => {
   const currentFont =
-    editor?.getAttributes('textStyle').fontFamily?.replace(/['"]/g, '') ??
+    editor?.getAttributes('textStyle').fontFamily?.replace(/['"]/g, '') ||
     DEFAULT_FONT;
 
-  return html`
-    <style>
-      ${styles}
-    </style>
-    <div
-      class="${BASE_CLASS}__toolbar-group ${BASE_CLASS}__toolbar-group--typeface">
-      <cds-dropdown
-        label="Font"
-        hide-label
-        autoalign
-        title-text="Select font family"
-        .size=${toolbarSize as any}
-        .value=${currentFont}
-        @cds-dropdown-selected=${(e: CustomEvent) => {
-          const fontFamily = e.detail.item.value;
-          editor?.chain().focus().setFontFamily(fontFamily).run();
-          (e.currentTarget as HTMLElement).style.fontFamily = fontFamily;
-        }}
-        style="font-family: ${currentFont}">
-        ${FONT_FAMILIES.map(
-          (font) => html`
-            <cds-dropdown-item value=${font} style="font-family: ${font}">
-              ${font}
-            </cds-dropdown-item>
-          `
-        )}
-      </cds-dropdown>
-    </div>
-  `;
+  return toolbarMenuButton({
+    label: compact ? 'Family' : currentFont,
+    groupLabel: 'Font',
+    toolbarSize,
+    currentValue: currentFont,
+    editor,
+    style: compact ? undefined : `font-family: ${currentFont}`,
+    options: FONT_FAMILIES.map((font) => ({
+      value: font,
+      label: font,
+      style: `font-family: ${font}`,
+    })),
+    onSelect: applyFontFamily.bind(null, editor),
+  });
 };

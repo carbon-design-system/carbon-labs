@@ -63,6 +63,7 @@ export default {
         #main-content {
           display: flex;
           block-size: 100dvh;
+          padding: 0;
         }
         clabs-wysiwyg {
           flex: 2;

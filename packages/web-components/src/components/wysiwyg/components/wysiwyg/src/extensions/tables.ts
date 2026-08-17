@@ -97,7 +97,19 @@ Tables.toolbarRender = (
   toolbarSize: ToolbarSize = 'md'
 ) => {
   const popover = createRef<any>();
-  const menuRef = createRef<any>();
+  let menuEl: any;
+
+  /**
+   * Carbon `cds-menu` defaults to open; close it on first mount.
+   * @param {Element | undefined} el - Menu element
+   */
+  const bindMenu = (el: Element | undefined) => {
+    menuEl = el;
+    if (el && !el.hasAttribute('data-clabs-closed')) {
+      (el as any).open = false;
+      el.setAttribute('data-clabs-closed', '');
+    }
+  };
 
   /** Close popover */
   const close = () => popover.value?.toggleAttribute('open', false);
@@ -126,8 +138,8 @@ Tables.toolbarRender = (
    * Close the context menu and drop the outside-click listener.
    */
   const closeCtxMenu = () => {
-    if (menuRef.value) {
-      menuRef.value.open = false;
+    if (menuEl) {
+      menuEl.open = false;
     }
     if (_ctxDocClose) {
       document.removeEventListener('pointerdown', _ctxDocClose, true);
@@ -170,7 +182,7 @@ Tables.toolbarRender = (
         return;
       }
       evt.preventDefault();
-      const menu = menuRef.value;
+      const menu = menuEl;
       if (!menu) {
         return;
       }
@@ -205,7 +217,7 @@ Tables.toolbarRender = (
        * @param {Event} downEvt - pointerdown event
        */
       _ctxDocClose = (downEvt: Event) => {
-        if (!menuRef.value || downEvt.composedPath().includes(menuRef.value)) {
+        if (!menuEl || downEvt.composedPath().includes(menuEl)) {
           return;
         }
         closeCtxMenu();
@@ -263,7 +275,7 @@ Tables.toolbarRender = (
               tooltip: 'Insert Table',
             })}
       </cds-layer>
-      <cds-menu ${ref(menuRef)} size="xs" @cds-menu-closed=${closeCtxMenu}>
+      <cds-menu ${ref(bindMenu)} size="xs" @cds-menu-closed=${closeCtxMenu}>
         ${TABLE_CONTEXT_MENU.map((item) =>
           item === null
             ? html`<cds-menu-item-divider></cds-menu-item-divider>`

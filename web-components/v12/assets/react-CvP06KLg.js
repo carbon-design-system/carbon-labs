@@ -1,0 +1,1 @@
+import{t as e}from"./lib-DfVv174I.js";export{e as MDXProvider};

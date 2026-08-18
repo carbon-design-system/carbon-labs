@@ -1,1 +1,0 @@
-import{t as e}from"./lib-DJhrzmDS.js";export{e as MDXProvider};

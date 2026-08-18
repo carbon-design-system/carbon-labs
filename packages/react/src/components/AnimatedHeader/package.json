@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-animated-header",
-  "version": "0.54.0",
+  "version": "0.57.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -31,12 +31,13 @@
   "files": [
     "es",
     "lib",
+    "lib/package.json",
     "scss",
     "assets",
     "telemetry.yml"
   ],
   "scripts": {
-    "build": "node ../../../tasks/build.js",
+    "build": "node ../../../tasks/build.js && node -e \"require('fs').writeFileSync('lib/package.json', JSON.stringify({type:'commonjs'},null,2)+'\\n')\"",
     "clean": "rimraf es lib scss",
     "postinstall": "ibmtelemetry --config=telemetry.yml",
     "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 40597fb8-d0ed-45fb-a95a-5b1751e22c36 --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"

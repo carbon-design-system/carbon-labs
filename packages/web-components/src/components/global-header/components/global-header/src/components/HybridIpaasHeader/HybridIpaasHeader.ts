@@ -72,6 +72,7 @@ export class HybridIpaasHeader extends LitElement {
   capabilityProfileFooterLinks: ProfileFooterLinks[] = [];
   @property({ type: Array }) capabilityGlobalActions: GlobalActionConfig[] = [];
   @property({ type: Boolean }) addCookiePreferences = false;
+  @property({ type: Boolean }) forceBackendProxy = false; // override domain check; always enable the backend proxy when true
   @property({ type: Boolean }) solisSessionManagerEnabled = false; // toggle to enable/disable the Solis session manager
   @property({ type: Number }) solisSessionRefreshInterval = 25; // might not need Solis token refresh interval to be configurable
   @property({ type: Number }) solisIdleTimeoutInterval = 28; // might not need Solis idle timeout interval to be configurable
@@ -81,7 +82,7 @@ export class HybridIpaasHeader extends LitElement {
     ...INITIAL_AUTOMATION_HEADER_PROPS,
     brand: {
       company: 'IBM',
-      product: 'webMethods Hybrid Integration',
+      product: '',
     },
     capabilityName: {
       label: '',
@@ -262,10 +263,11 @@ export class HybridIpaasHeader extends LitElement {
   }
 
   private getBackendProxy(): string | undefined {
-    // Only set backendProxy if the user is NOT on *.ibm.com domain
+    // Always set backendProxy when forceBackendProxy is true, otherwise only
+    // set it when the user is NOT on an *.ibm.com domain.
     const hostname = this.getHostname();
     const ibmDomainRegex = /^(.+\.)?ibm\.com$/;
-    if (!ibmDomainRegex.test(hostname)) {
+    if (this.forceBackendProxy || !ibmDomainRegex.test(hostname)) {
       return `${this.basePath}/hybrid-ipaas/v1/proxies/solis/backend`;
     }
     return undefined;

@@ -1,1 +1,0 @@
-import{t as e}from"./lib-BmfL0Htk.js";export{e as MDXProvider};

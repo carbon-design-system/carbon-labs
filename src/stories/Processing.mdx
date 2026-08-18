@@ -49,32 +49,95 @@ In your styles file import:
 
 ## Component API
 
-<Controls of={Stories.Loading} />
+<Controls of={Stories.Interactive} />
+
+## Proposed v2.0 update
+
+Processing v2.0 extends the current element with reviewer-friendly interactive modes while preserving the existing base loading behavior. The default `loading` experience now remains active until a new mode is triggered, removing the need to differentiate between separate loop and no-loop Labs stories.
+
+### Intended use cases
+
+- Keep `loading` as the default state for waiting, thinking, or background work in progress.
+- Trigger `triangle` or `square` when the system needs to communicate a more expressive state change after loading completes.
+- Use `wiggle` as lightweight feedback when work is still active but you want a brief accent rather than a persistent new formation.
+- Use `out` to intentionally dismiss the indicator when work is complete or cancelled.
+
+### Interaction guidance
+
+- Start in the default loading state, then trigger a new mode only when the product has a meaningful state transition to communicate.
+- Prefer imperative handle methods for transitions so the element can respond to async milestones without remounting the surrounding UI.
+- Treat the new modes as optional enhancements, not replacements for the base indicator.
+- Keep the accessible label aligned with the user-facing status message when embedding Processing in larger workflows.
+
+### Proposed behavior and usage model
+
+The proposed v2.0 surface keeps the current base props and imperative handle intact while clarifying the recommended usage model for these transitions:
+
+- `triggerTriangle()` highlights a completed or elevated in-progress state.
+- `triggerSquare()` introduces a four-dot formation for an alternate expressive state.
+- `triggerWiggle()` provides transient motion feedback without leaving the loading layout.
+- `triggerOut()` cleanly dismisses the current indicator from any visible state.
+
+<Canvas of={Stories.Interactive} />
+
+### Migration guidance
+
+Migration from the current Processing element is additive:
+
+- Existing implementations that use the default loading behavior do not need to change.
+- The v2.0 proposal removes the need for separate loop and no-loop story variants in Labs because Processing now remains in the loading state until another mode is triggered.
+- Existing `label` and `ai` usage stays valid.
+- Teams only need migration work when they want to opt into the new interaction modes by using the imperative handle in response to product events.
+- Adoption can happen incrementally, one mode at a time, without altering the base loading behavior.
 
 ## Example usages
 
-#### Basic loop
+#### Default loading behavior
 
-Loops indefinitely until interrupted.
+Starts in the loading state and remains there until your product triggers a new mode.
 
 ```jsx
-<Processing loop />
+<Processing />
 ```
 
-#### Triangle formation
+#### Transition to triangle
 
-Load-in then arcs three dots into an equilateral triangle.
+Start in the default loading state, then trigger the triangle mode when a product milestone completes.
 
 ```jsx
-<Processing mode="triangle" />
+import { useRef } from 'react';
+import { Processing } from '@mike-olasov/motion-components';
+import type { ProcessingHandle } from '@mike-olasov/motion-components';
+
+function App() {
+  const ref = useRef<ProcessingHandle>(null);
+
+  const handleComplete = () => {
+    ref.current?.triggerTriangle();
+  };
+
+  return <Processing ref={ref} label="Processing" />;
+}
 ```
 
-#### Square formation
+#### Transition to square
 
-Load-in then grows a fourth dot and arcs all four into a square.
+Use the imperative handle when the workflow needs a four-dot formation to communicate a distinct state.
 
 ```jsx
-<Processing mode="square" />
+import { useRef } from 'react';
+import { Processing } from '@mike-olasov/motion-components';
+import type { ProcessingHandle } from '@mike-olasov/motion-components';
+
+function App() {
+  const ref = useRef<ProcessingHandle>(null);
+
+  const handleStateChange = () => {
+    ref.current?.triggerSquare();
+  };
+
+  return <Processing ref={ref} label="Processing" />;
+}
 ```
 
 #### Wiggle
@@ -91,7 +154,7 @@ function App() {
 
   return (
     <>
-      <Processing ref={ref} loop />
+      <Processing ref={ref} />
       <button onClick={() => ref.current?.triggerWiggle()}>Wiggle</button>
     </>
   );
@@ -111,6 +174,6 @@ function App() {
   const ref = useRef<ProcessingHandle>(null);
 
   // When your async work finishes, call triggerTriangle() on the ref:
-  return <Processing ref={ref} loop />;
+  return <Processing ref={ref} />;
 }
 ```

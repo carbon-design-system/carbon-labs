@@ -5,6 +5,7 @@
  */
 
 import { useEffect, useRef, useState } from 'react';
+import { Button } from '@carbon/react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Processing } from '../components/Processing/Processing';
 import type { ProcessingHandle } from '../components/Processing/Processing';
@@ -33,7 +34,8 @@ const meta = {
     },
     loop: {
       control: 'boolean',
-      description: 'Repeat the pulse loop indefinitely. Only applies in `loading` mode — formation modes (`triangle`, `square`) run once and hold.',
+      description:
+        'Legacy compatibility prop. In the proposed v2.0 model, Processing remains in the loading loop until another mode is triggered. Only applies in `loading` mode.',
       table: { defaultValue: { summary: 'true' } },
     },
     label: {
@@ -234,49 +236,96 @@ export const Wiggle: Story = {
 
 // ── Processing — interactive controls ────────────────────────────────────────
 
-function InteractiveDemo({ ai = false }: { ai?: boolean }) {
+function InteractiveDemo({
+  ai = false,
+  label = 'Processing',
+}: {
+  ai?: boolean;
+  label?: string;
+}) {
   const handle = useRef<ProcessingHandle>(null);
   const [key, setKey] = useState(0);
-  const [formed, setFormed] = useState(false);
+  const [activeMode, setActiveMode] = useState<'loading' | 'triangle' | 'square' | 'wiggle' | 'out'>('loading');
 
-  const restart = () => { setKey(k => k + 1); setFormed(false); };
+  const runTriangle = () => {
+    handle.current?.triggerTriangle();
+    setActiveMode('triangle');
+  };
+
+  const runSquare = () => {
+    handle.current?.triggerSquare();
+    setActiveMode('square');
+  };
+
+  const runWiggle = () => {
+    handle.current?.triggerWiggle();
+    setActiveMode('wiggle');
+  };
+
+  const runOut = () => {
+    handle.current?.triggerOut();
+    setActiveMode('out');
+  };
+
+  const restart = () => {
+    setKey(k => k + 1);
+    setActiveMode('loading');
+  };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <Processing key={key} ref={handle} mode="loading" loop label="Processing" ai={ai} />
-      <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1.5rem' }}>
-        <button
-          disabled={formed}
-          onClick={() => { handle.current?.triggerTriangle(); setFormed(true); }}
-          className={s.btn}
-        >
-          <TriIcon />
+    <div className={s.interactiveDemo}>
+      <Processing key={key} ref={handle} mode="loading" loop label={label} ai={ai} />
+      <div className={s.controlsRow}>
+        <Button kind="ghost" size="sm" onClick={runTriangle} renderIcon={TriIcon}>
           Triangle
-        </button>
-        <button
-          disabled={formed}
-          onClick={() => { handle.current?.triggerSquare(); setFormed(true); }}
-          className={s.btn}
-        >
-          <SqrIcon />
+        </Button>
+        <Button kind="ghost" size="sm" onClick={runSquare} renderIcon={SqrIcon}>
           Square
-        </button>
-        <button disabled={formed} onClick={() => handle.current?.triggerWiggle()} className={s.btn}>
-          <WiggleIcon />
+        </Button>
+        <Button kind="ghost" size="sm" onClick={runWiggle} renderIcon={WiggleIcon}>
           Wiggle
-        </button>
-        <button onClick={() => handle.current?.triggerOut()} className={`${s.btn} ${s.btnDanger}`}>
-          Out ↓
-        </button>
-        <button onClick={restart} className={s.btn}>
-          Restart ↺
-        </button>
+        </Button>
+        <Button kind="danger--ghost" size="sm" onClick={runOut}>
+          Out
+        </Button>
+        <Button kind="secondary" size="sm" onClick={restart}>
+          Restart
+        </Button>
       </div>
+      <p className={s.helperText}>
+        Active mode: <strong>{activeMode}</strong>. Use the buttons to preview proposed v2.0 interaction modes without changing the default loading behavior.
+      </p>
     </div>
   );
 }
 
 export const Interactive: Story = {
-  name: 'Interactive controls',
-  render: (args) => <InteractiveDemo ai={args.ai} />,
+  name: 'Interactive controls v2.0 proposal',
+  args: {
+    ai: false,
+    label: 'Processing',
+  },
+  argTypes: {
+    loop: {
+      table: {
+        disable: true,
+      },
+      control: false,
+    },
+    mode: {
+      table: {
+        disable: true,
+      },
+      control: false,
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Proposed v2.0 review surface for Labs: Processing stays in the default loading loop until a new mode is triggered, removing the need for separate loop and no-loop story variants.',
+      },
+    },
+  },
+  render: (args) => <InteractiveDemo ai={args.ai} label={args.label} />,
 };

@@ -18,6 +18,8 @@ export default class solisSessionManager {
   private basePath: string | undefined;
   private activityEvents: string[];
   private boundSetActive: () => void;
+  private softLogoutUrl: string | undefined;
+  private softLogoutCallback: (() => void) | undefined;
   config: solisSessionManagerConfig;
 
   constructor(config: solisSessionManagerConfig) {
@@ -37,6 +39,8 @@ export default class solisSessionManager {
     this.isIdle = false;
     this.idleTimeout = undefined;
     this.boundSetActive = () => this.setActive();
+    this.softLogoutUrl = config.softLogoutUrl;
+    this.softLogoutCallback = config.softLogoutCallback;
   }
 
   startRefreshSchedule() {
@@ -57,7 +61,7 @@ export default class solisSessionManager {
       clearInterval(this.refreshIntervalId);
       this.refreshIntervalId = null;
     }
-  } // TODO - call this function when implementing the logout story
+  }
 
   async triggerRefresh() {
     const fetchRoute = this.basePath
@@ -76,8 +80,7 @@ export default class solisSessionManager {
         console.log('Solis token refresh skipped (too recent)'); // TODO - this response doesn't yet exist in the backend
       } else if (response.status === 401 || response.status === 403) {
         console.error('Solis token refresh unauthorized - triggering logout');
-        this.stopRefreshSchedule();
-        // TODO - trigger logout when logout story is implemented
+        await this.performSoftLogout();
       } else {
         console.error('Solis token refresh failed:', response.status);
       }
@@ -107,17 +110,77 @@ export default class solisSessionManager {
     this.isIdle = false;
     clearTimeout(this.idleTimeout);
     this.idleTimeout = setTimeout(
-      () => this.setIdle,
+      () => this.setIdle(),
       this.idleTimeoutInterval * 60 * 1000
     );
   }
 
-  setIdle() {
+  async setIdle() {
     this.isIdle = true;
-    // TODO - check session status incase another tab is still active, before triggering soft logout
+    const isSessionActive = await this.checkSessionStatus();
+    if (!isSessionActive) {
+      await this.performSoftLogout();
+    }
   }
 
   isTabIdle(): boolean {
     return this.isIdle;
+  }
+
+  async checkSessionStatus() {
+    const fetchRoute = this.basePath
+      ? this.basePath + '/v1/solis/session/session-status'
+      : '/v1/solis/session/session-status';
+    try {
+      const response = await fetch(fetchRoute, {
+        method: 'GET',
+        credentials: 'same-origin',
+      });
+
+      if (response.ok) {
+        console.log('Solis session is active');
+        return true;
+      } else {
+        console.warn('Solis session is inactive');
+        return false;
+      }
+    } catch (error: any) {
+      console.error('Solis session status unknown:', error.message);
+      return false;
+    }
+  }
+
+  async performSoftLogout() {
+    this.stopRefreshSchedule();
+    this.unregisterActivityListeners();
+    const postRoute = this.basePath
+      ? this.basePath + '/v1/solis/session/logout'
+      : '/v1/solis/session/logout';
+    try {
+      const response = await fetch(postRoute, {
+        method: 'POST',
+        credentials: 'same-origin',
+      });
+
+      if (response.ok) {
+        console.log('Solis session logout - successful');
+      } else if (response.status === 401) {
+        console.error('Solis session logout - session already expired');
+      } else {
+        console.error('Solis session logout failed:', response.status);
+      }
+    } catch (error: any) {
+      console.error('Solis session logout error:', error.message);
+    }
+    if (this.softLogoutCallback) {
+      try {
+        await this.softLogoutCallback();
+      } catch (error: any) {
+        console.error('Soft logout failed with error: ', error.message);
+      }
+    }
+    window.location.href =
+      this.softLogoutUrl ??
+      (this.basePath ? `${this.basePath}/logout` : '/logout');
   }
 }

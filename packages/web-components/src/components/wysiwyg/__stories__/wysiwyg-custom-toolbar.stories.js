@@ -39,7 +39,6 @@ export default {
       <style>
         #main-content {
           block-size: 100dvh;
-          padding: 0;
         }
       </style>
       ${story()}

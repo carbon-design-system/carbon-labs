@@ -145,6 +145,7 @@ describe('solisSessionManager', () => {
         })
       );
       const consoleErrorStub = sinon.stub(console, 'error');
+      sinon.stub(solisSessionManager.prototype, 'performSoftLogout');
       const sessionManager = new solisSessionManager({});
       await sessionManager.triggerRefresh();
       expect(consoleErrorStub).to.have.been.calledWith(
@@ -156,11 +157,12 @@ describe('solisSessionManager', () => {
       const fetchStub = sinon.stub(window, 'fetch');
       fetchStub.resolves(
         new Response(null, {
-          status: 401,
+          status: 403,
           statusText: 'Unauthorized',
         })
       );
       const consoleErrorStub = sinon.stub(console, 'error');
+      sinon.stub(solisSessionManager.prototype, 'performSoftLogout');
       const sessionManager = new solisSessionManager({});
       await sessionManager.triggerRefresh();
       expect(consoleErrorStub).to.have.been.calledWith(

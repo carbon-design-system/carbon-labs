@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-example-button@0.27.0...@carbon-labs/wc-example-button@0.28.0) (2026-07-20)
+
+
+### Features
+
+* **clabs-wysiwyg:** add wysiwyg editor component ([#1269](https://github.com/carbon-design-system/carbon-labs/issues/1269)) ([375ecf6](https://github.com/carbon-design-system/carbon-labs/commit/375ecf677496b9746f480d7b076a05ccf46bf81d))
+
+
+
+
+
 # [0.27.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-example-button@0.26.0...@carbon-labs/wc-example-button@0.27.0) (2026-06-02)
 
 **Note:** Version bump only for package @carbon-labs/wc-example-button

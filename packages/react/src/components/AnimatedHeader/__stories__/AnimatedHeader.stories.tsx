@@ -17,6 +17,9 @@ import type { HeaderActionConfig } from '../components/HeaderAction/header-actio
 
 import {
   headerTiles,
+  carouselTileGroups,
+  carouselTileGroups3,
+  carouselTileGroups4,
   tasksControllerConfigButton,
   tasksControllerConfigDropdown,
   tasksControllerConfigLoading,
@@ -254,6 +257,15 @@ const sharedArgTypes = {
     control: { type: 'boolean' },
     table: { category: 'Content Switcher' },
   },
+  carouselConfig: {
+    description:
+      'Carousel pagination controls rendered to the left of "Collapse". When enabled, allTileGroups switches to carousel pages and selectedTileGroup is ignored.',
+    control: {
+      type: 'select',
+      labels: { 0: 'None', 1: '2 pages', 2: '3 pages', 3: '4 pages' },
+    },
+    options: [0, 1, 2, 3],
+  },
 };
 
 /* ------------------------------ Shared Args ------------------------------ */
@@ -282,13 +294,17 @@ const sharedArgs = {
   headerActionConfig: 1,
   contentSwitcherConfig: 0,
   contentSwitcherLowContrast: false,
+  carouselConfig: 0,
 };
 
 /* ------------------------------ Stories ------------------------------ */
 
-export const ThemeG10 = (args) => {
-  const [_, updateArgs] = useArgs();
-
+/**
+ * Shared story render logic. Used by both ThemeG10 and ThemeG100.
+ * Handles wiring for workspace, tile group, tasks controller, content switcher,
+ * header action, and carousel controls.
+ */
+const useStoryWiring = (args, updateArgs) => {
   // Workspace select
   const handleWorkspaceSelect = (e) => {
     updateArgs({
@@ -300,11 +316,60 @@ export const ThemeG10 = (args) => {
     });
   };
 
-  // Tile group select
+  // Tile group select — used by tasksController dropdown and contentSwitcher
   const handleTileGroupSelect = (eOrGroup) => {
     const next = (eOrGroup as any)?.selectedItem ?? eOrGroup;
     updateArgs({ ...args, selectedTileGroup: next });
   };
+
+  // When the user picks a page-count option (1/2/3), persist it so page
+  // navigation (which overwrites carouselConfig with an object) doesn't
+  // lose track of which dataset to use.
+  const carouselSentinel =
+    typeof args.carouselConfig === 'number'
+      ? args.carouselConfig
+      : (args._carouselPageCount ?? 0);
+
+  // Carousel page change — keeps the page-count sentinel in _carouselPageCount
+  // and updates currentPage inside the config object.
+  const handlePageChange = (page: number) => {
+    updateArgs({
+      _carouselPageCount: carouselSentinel,
+      carouselConfig: {
+        ...(typeof args.carouselConfig === 'object' ? args.carouselConfig : {}),
+        ariaLabel: 'Carousel pages',
+        currentPage: page,
+      },
+    });
+  };
+
+  // Resolve carouselConfig: map the select control value (0/1/2/3) to a real
+  // config or null, and inject the live onPageChange callback.
+  const carouselConfigResolved = React.useMemo(() => {
+    const raw = args.carouselConfig;
+    if (!raw || raw === 0) return null;
+    const base =
+      typeof raw === 'object'
+        ? raw
+        : { ariaLabel: 'Carousel pages', currentPage: 0 };
+    return { ...base, onPageChange: handlePageChange };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [args.carouselConfig]);
+
+  // Pick the tile group array that matches the selected page count.
+  // sentinel 1 → 2 pages, 2 → 3 pages, 3 → 4 pages
+  const carouselTileGroupsForCount =
+    carouselSentinel === 2
+      ? carouselTileGroups3
+      : carouselSentinel === 3
+        ? carouselTileGroups4
+        : carouselTileGroups; // default: sentinel 1 → 2 pages
+
+  // When carousel is active, drive allTileGroups from the matching carousel
+  // dataset. selectedTileGroup is unused in that mode.
+  const allTileGroupsResolved = carouselConfigResolved
+    ? carouselTileGroupsForCount
+    : headerTiles;
 
   // Inject dropdown-only TasksController wiring
   const tasksControllerConfigInjected = React.useMemo(() => {
@@ -326,7 +391,7 @@ export const ThemeG10 = (args) => {
   }, [args, updateArgs]);
 
   // HeaderActionConfig mapping
-  const handleHeaderActionConfig: HeaderActionConfig | null =
+  const headerActionConfigResolved: HeaderActionConfig | null =
     React.useMemo(() => {
       const t = args.headerActionConfig;
       if (t === 1) return headerActionIcon;
@@ -334,13 +399,13 @@ export const ThemeG10 = (args) => {
       return null;
     }, [args.headerActionConfig]);
 
+  // ContentSwitcher wiring — uses headerTiles (not carousel pages)
   const contentSwitcherConfigInjected = React.useMemo(() => {
     const base = args.contentSwitcherConfig;
     if (!base) return undefined;
 
     const count: 2 | 3 = base.visibleCount === 3 ? 3 : 2;
 
-    // Build items that update the selectedTileGroup when chosen
     const items = Array.from({ length: count }, (_, i) => ({
       id: base.items?.[i]?.id ?? `opt-${i}`,
       text: headerTiles[i].label,
@@ -348,7 +413,6 @@ export const ThemeG10 = (args) => {
         updateArgs({ ...args, selectedTileGroup: headerTiles[i] }),
     }));
 
-    // Compute selectedIndex based on the currently active group
     const activeIdx = Math.max(
       0,
       Math.min(
@@ -379,19 +443,44 @@ export const ThemeG10 = (args) => {
     args.contentSwitcherLowContrast,
   ]);
 
-  const argsWithSelectors = {
-    ...args,
-    workspaceSelectorConfig: {
-      ...args.workspaceSelectorConfig,
-      setSelectedWorkspace: handleWorkspaceSelect,
-    },
-    setSelectedTileGroup: handleTileGroupSelect,
-    tasksControllerConfig: tasksControllerConfigInjected,
-    contentSwitcherConfig: contentSwitcherConfigInjected,
-    headerActionConfig: handleHeaderActionConfig ?? undefined,
+  return {
+    allTileGroupsResolved,
+    carouselConfigResolved,
+    headerActionConfigResolved,
+    tasksControllerConfigInjected,
+    contentSwitcherConfigInjected,
+    handleWorkspaceSelect,
+    handleTileGroupSelect,
   };
+};
 
-  return <AnimatedHeader {...argsWithSelectors} />;
+export const ThemeG10 = (args) => {
+  const [_, updateArgs] = useArgs();
+  const {
+    allTileGroupsResolved,
+    carouselConfigResolved,
+    headerActionConfigResolved,
+    tasksControllerConfigInjected,
+    contentSwitcherConfigInjected,
+    handleWorkspaceSelect,
+    handleTileGroupSelect,
+  } = useStoryWiring(args, updateArgs);
+
+  return (
+    <AnimatedHeader
+      {...args}
+      allTileGroups={allTileGroupsResolved}
+      carouselConfig={carouselConfigResolved}
+      workspaceSelectorConfig={{
+        ...args.workspaceSelectorConfig,
+        setSelectedWorkspace: handleWorkspaceSelect,
+      }}
+      setSelectedTileGroup={handleTileGroupSelect}
+      tasksControllerConfig={tasksControllerConfigInjected}
+      contentSwitcherConfig={contentSwitcherConfigInjected}
+      headerActionConfig={headerActionConfigResolved ?? undefined}
+    />
+  );
 };
 
 ThemeG10.argTypes = { ...sharedArgTypes };
@@ -399,106 +488,31 @@ ThemeG10.args = { headerAnimation: 3, ...sharedArgs };
 
 export const ThemeG100 = (args) => {
   const [_, updateArgs] = useArgs();
+  const {
+    allTileGroupsResolved,
+    carouselConfigResolved,
+    headerActionConfigResolved,
+    tasksControllerConfigInjected,
+    contentSwitcherConfigInjected,
+    handleWorkspaceSelect,
+    handleTileGroupSelect,
+  } = useStoryWiring(args, updateArgs);
 
-  const handleWorkspaceSelect = (e) => {
-    updateArgs({
-      ...args,
-      workspaceSelectorConfig: {
+  return (
+    <AnimatedHeader
+      {...args}
+      allTileGroups={allTileGroupsResolved}
+      carouselConfig={carouselConfigResolved}
+      workspaceSelectorConfig={{
         ...args.workspaceSelectorConfig,
-        selectedWorkspace: e.selectedItem,
-      },
-    });
-  };
-
-  const handleTileGroupSelect = (eOrGroup) => {
-    const next = (eOrGroup as any)?.selectedItem ?? eOrGroup;
-    updateArgs({ ...args, selectedTileGroup: next });
-  };
-
-  const tasksControllerConfigInjected = React.useMemo(() => {
-    const tc = args.tasksControllerConfig;
-    if (!tc) return tc;
-    if (tc.type === 'dropdown') {
-      return {
-        ...tc,
-        dropdown: {
-          ...tc.dropdown,
-          allTileGroups: headerTiles,
-          selectedTileGroup: args.selectedTileGroup,
-          setSelectedTileGroup: handleTileGroupSelect,
-        },
-      };
-    }
-    return tc;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [args, updateArgs]);
-
-  const handleHeaderActionConfig: HeaderActionConfig | null =
-    React.useMemo(() => {
-      const t = args.headerActionConfig;
-      if (t === 1) return headerActionIcon;
-      if (t === 2) return headerActionGhost;
-      return null;
-    }, [args.headerActionConfig]);
-
-  const contentSwitcherConfigInjected = React.useMemo(() => {
-    const base = args.contentSwitcherConfig;
-    if (!base) return undefined;
-
-    const count: 2 | 3 = base.visibleCount === 3 ? 3 : 2;
-
-    // Build items that update the selectedTileGroup when chosen
-    const items = Array.from({ length: count }, (_, i) => ({
-      id: base.items?.[i]?.id ?? `opt-${i}`,
-      text: headerTiles[i].label,
-      onSelect: () =>
-        updateArgs({ ...args, selectedTileGroup: headerTiles[i] }),
-    }));
-
-    // Compute selectedIndex based on the currently active group
-    const activeIdx = Math.max(
-      0,
-      Math.min(
-        items.findIndex((it, i) => headerTiles[i] === args.selectedTileGroup),
-        items.length - 1
-      )
-    );
-
-    return {
-      ...base,
-      lowContrast:
-        typeof args.contentSwitcherLowContrast === 'boolean'
-          ? args.contentSwitcherLowContrast
-          : base.lowContrast,
-      items,
-      selectedIndex:
-        typeof base.selectedIndex === 'number'
-          ? Math.min(Math.max(base.selectedIndex, 0), items.length - 1)
-          : activeIdx,
-      ariaLabel: base.ariaLabel ?? 'Header actions',
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    args,
-    updateArgs,
-    args.contentSwitcherConfig,
-    args.selectedTileGroup,
-    args.contentSwitcherLowContrast,
-  ]);
-
-  const argsWithSelectors = {
-    ...args,
-    workspaceSelectorConfig: {
-      ...args.workspaceSelectorConfig,
-      setSelectedWorkspace: handleWorkspaceSelect,
-    },
-    setSelectedTileGroup: handleTileGroupSelect,
-    tasksControllerConfig: tasksControllerConfigInjected,
-    contentSwitcherConfig: contentSwitcherConfigInjected,
-    headerActionConfig: handleHeaderActionConfig ?? undefined,
-  };
-
-  return <AnimatedHeader {...argsWithSelectors} />;
+        setSelectedWorkspace: handleWorkspaceSelect,
+      }}
+      setSelectedTileGroup={handleTileGroupSelect}
+      tasksControllerConfig={tasksControllerConfigInjected}
+      contentSwitcherConfig={contentSwitcherConfigInjected}
+      headerActionConfig={headerActionConfigResolved ?? undefined}
+    />
+  );
 };
 
 ThemeG100.argTypes = { ...sharedArgTypes };

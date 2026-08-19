@@ -17,9 +17,9 @@ import type { HeaderActionConfig } from '../components/HeaderAction/header-actio
 
 import {
   headerTiles,
-  carouselTileGroups,
-  carouselTileGroups3,
-  carouselTileGroups4,
+  overflowGlassTileGroup,
+  overflowAiPromptTileGroup,
+  overflowManyTileGroup,
   tasksControllerConfigButton,
   tasksControllerConfigDropdown,
   tasksControllerConfigLoading,
@@ -72,6 +72,9 @@ export default meta;
 /* ------------------------------ ArgTypes ------------------------------ */
 
 const sharedArgTypes = {
+  allTileGroups: {
+    table: { disable: true },
+  },
   description: {
     description:
       'Provide short sentence in max. 3 lines related to product context',
@@ -166,9 +169,12 @@ const sharedArgTypes = {
         6: headerTiles[5].label,
         7: headerTiles[6].label,
         8: headerTiles[7].label,
+        9: overflowGlassTileGroup.label,
+        10: overflowAiPromptTileGroup.label,
+        11: overflowManyTileGroup.label,
       },
     },
-    options: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+    options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     mapping: {
       0: null,
       1: headerTiles[0],
@@ -179,6 +185,9 @@ const sharedArgTypes = {
       6: headerTiles[5],
       7: headerTiles[6],
       8: headerTiles[7],
+      9: overflowGlassTileGroup,
+      10: overflowAiPromptTileGroup,
+      11: overflowManyTileGroup,
     },
   },
   tasksControllerConfig: {
@@ -259,19 +268,14 @@ const sharedArgTypes = {
   },
   carouselConfig: {
     description:
-      'Carousel pagination controls rendered to the left of "Collapse". When enabled, allTileGroups switches to carousel pages and selectedTileGroup is ignored.',
-    control: {
-      type: 'select',
-      labels: { 0: 'None', 1: '2 pages', 2: '3 pages', 3: '4 pages' },
-    },
-    options: [0, 1, 2, 3],
+      'Optional label/accessibility overrides for the carousel pagination controls (ariaLabel, prevButtonLabel, nextButtonLabel). Pagination activates automatically when a TileGroup has more tiles than fit on one page.',
+    control: { type: 'object' },
   },
 };
 
 /* ------------------------------ Shared Args ------------------------------ */
 
 const sharedArgs = {
-  allTileGroups: headerTiles,
   tasksControllerConfig: 1,
   workspaceSelectorConfig: 1,
   description: 'Train, deploy, validate, and govern AI models responsibly.',
@@ -294,7 +298,6 @@ const sharedArgs = {
   headerActionConfig: 1,
   contentSwitcherConfig: 0,
   contentSwitcherLowContrast: false,
-  carouselConfig: 0,
 };
 
 /* ------------------------------ Stories ------------------------------ */
@@ -302,7 +305,7 @@ const sharedArgs = {
 /**
  * Shared story render logic. Used by both ThemeG10 and ThemeG100.
  * Handles wiring for workspace, tile group, tasks controller, content switcher,
- * header action, and carousel controls.
+ * and header action controls.
  */
 const useStoryWiring = (args, updateArgs) => {
   // Workspace select
@@ -321,55 +324,6 @@ const useStoryWiring = (args, updateArgs) => {
     const next = (eOrGroup as any)?.selectedItem ?? eOrGroup;
     updateArgs({ ...args, selectedTileGroup: next });
   };
-
-  // When the user picks a page-count option (1/2/3), persist it so page
-  // navigation (which overwrites carouselConfig with an object) doesn't
-  // lose track of which dataset to use.
-  const carouselSentinel =
-    typeof args.carouselConfig === 'number'
-      ? args.carouselConfig
-      : (args._carouselPageCount ?? 0);
-
-  // Carousel page change — keeps the page-count sentinel in _carouselPageCount
-  // and updates currentPage inside the config object.
-  const handlePageChange = (page: number) => {
-    updateArgs({
-      _carouselPageCount: carouselSentinel,
-      carouselConfig: {
-        ...(typeof args.carouselConfig === 'object' ? args.carouselConfig : {}),
-        ariaLabel: 'Carousel pages',
-        currentPage: page,
-      },
-    });
-  };
-
-  // Resolve carouselConfig: map the select control value (0/1/2/3) to a real
-  // config or null, and inject the live onPageChange callback.
-  const carouselConfigResolved = React.useMemo(() => {
-    const raw = args.carouselConfig;
-    if (!raw || raw === 0) return null;
-    const base =
-      typeof raw === 'object'
-        ? raw
-        : { ariaLabel: 'Carousel pages', currentPage: 0 };
-    return { ...base, onPageChange: handlePageChange };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [args.carouselConfig]);
-
-  // Pick the tile group array that matches the selected page count.
-  // sentinel 1 → 2 pages, 2 → 3 pages, 3 → 4 pages
-  const carouselTileGroupsForCount =
-    carouselSentinel === 2
-      ? carouselTileGroups3
-      : carouselSentinel === 3
-        ? carouselTileGroups4
-        : carouselTileGroups; // default: sentinel 1 → 2 pages
-
-  // When carousel is active, drive allTileGroups from the matching carousel
-  // dataset. selectedTileGroup is unused in that mode.
-  const allTileGroupsResolved = carouselConfigResolved
-    ? carouselTileGroupsForCount
-    : headerTiles;
 
   // Inject dropdown-only TasksController wiring
   const tasksControllerConfigInjected = React.useMemo(() => {
@@ -444,8 +398,6 @@ const useStoryWiring = (args, updateArgs) => {
   ]);
 
   return {
-    allTileGroupsResolved,
-    carouselConfigResolved,
     headerActionConfigResolved,
     tasksControllerConfigInjected,
     contentSwitcherConfigInjected,
@@ -457,8 +409,6 @@ const useStoryWiring = (args, updateArgs) => {
 export const ThemeG10 = (args) => {
   const [_, updateArgs] = useArgs();
   const {
-    allTileGroupsResolved,
-    carouselConfigResolved,
     headerActionConfigResolved,
     tasksControllerConfigInjected,
     contentSwitcherConfigInjected,
@@ -469,8 +419,6 @@ export const ThemeG10 = (args) => {
   return (
     <AnimatedHeader
       {...args}
-      allTileGroups={allTileGroupsResolved}
-      carouselConfig={carouselConfigResolved}
       workspaceSelectorConfig={{
         ...args.workspaceSelectorConfig,
         setSelectedWorkspace: handleWorkspaceSelect,
@@ -489,8 +437,6 @@ ThemeG10.args = { headerAnimation: 3, ...sharedArgs };
 export const ThemeG100 = (args) => {
   const [_, updateArgs] = useArgs();
   const {
-    allTileGroupsResolved,
-    carouselConfigResolved,
     headerActionConfigResolved,
     tasksControllerConfigInjected,
     contentSwitcherConfigInjected,
@@ -501,8 +447,6 @@ export const ThemeG100 = (args) => {
   return (
     <AnimatedHeader
       {...args}
-      allTileGroups={allTileGroupsResolved}
-      carouselConfig={carouselConfigResolved}
       workspaceSelectorConfig={{
         ...args.workspaceSelectorConfig,
         setSelectedWorkspace: handleWorkspaceSelect,
@@ -521,3 +465,4 @@ ThemeG100.globals = {
   backgrounds: { value: '#161616' },
   theme: 'g100',
 };
+

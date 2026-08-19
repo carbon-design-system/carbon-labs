@@ -23,8 +23,8 @@ interface HeaderCarouselProps {
   onPageChange: (page: number) => void;
   /** Whether the header is expanded — hides the control when collapsed */
   headerExpanded: boolean;
-  /** Carousel configuration */
-  config: HeaderCarouselConfig;
+  /** Carousel configuration — optional label/aria overrides */
+  config?: HeaderCarouselConfig | null;
   /** Optional aria label overrides */
   ariaLabels?: AriaLabels;
 }
@@ -41,9 +41,9 @@ const HeaderCarousel: React.FC<HeaderCarouselProps> = ({
   const blockClass = `${prefix}--animated-header__carousel`;
 
   const prevLabel =
-    config.prevButtonLabel ?? ariaLabels?.carouselPrevButton ?? 'Previous page';
+    config?.prevButtonLabel ?? ariaLabels?.carouselPrevButton ?? 'Previous page';
   const nextLabel =
-    config.nextButtonLabel ?? ariaLabels?.carouselNextButton ?? 'Next page';
+    config?.nextButtonLabel ?? ariaLabels?.carouselNextButton ?? 'Next page';
 
   const dotLabelTemplate = ariaLabels?.carouselDot ?? 'Page {n}';
 
@@ -61,7 +61,7 @@ const HeaderCarousel: React.FC<HeaderCarouselProps> = ({
   return (
     <div
       className={blockClass}
-      aria-label={config.ariaLabel}
+      aria-label={config?.ariaLabel}
       data-expanded={headerExpanded}
       aria-hidden={!headerExpanded}>
       {/* Visually hidden live region for screen reader announcements */}

@@ -9,4 +9,6 @@
 
 import Processing from './components/Processing';
 
+export * from './components/Processing';
 export { Processing };
+export default Processing;

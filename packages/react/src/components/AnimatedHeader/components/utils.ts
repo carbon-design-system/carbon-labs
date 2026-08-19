@@ -60,7 +60,7 @@ export const TILE_WIDTH_UNITS: Record<TileVariant, number> = {
  * Splits a flat tile array into pages using greedy bin-filling up to
  * MAX_UNITS_PER_PAGE width-units per page.
  *
- * @param tiles - Flat array of tiles to split into pages.
+ * @param {Tile[]} tiles - Flat array of tiles to split into pages.
  * @example
  * // 4 glass tiles → [[g,g,g,g]]
  * // 5 glass tiles → [[g,g,g,g],[g]]

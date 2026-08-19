@@ -23,6 +23,7 @@ import {
 import { TileGroup } from '../../components/AnimatedHeader/types';
 import type { HeaderActionConfig } from '../../components/HeaderAction/header-action.types';
 import type { ContentSwitcherConfig } from '../../components/ContentSwitcherSelector/ContentSwitcherSelector';
+import type { HeaderCarouselConfig } from '../../components/HeaderCarousel/header-carousel.types';
 import SampleCustomTaskContent from './SampleCustomTaskContent';
 
 export const workspaceData = [
@@ -280,6 +281,195 @@ export const headerTiles: TileGroup[] = [
     ],
   },
 ];
+
+export const carouselTileGroups: TileGroup[] = [
+  {
+    id: 101,
+    label: 'Guided journeys — page 1',
+    tiles: [
+      {
+        tileId: 'journey-1',
+        variant: 'glass',
+        href: '#',
+        title: 'Establish your business vocabulary',
+        subtitle: 'Journey 1',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 1: Establish your business vocabulary',
+      },
+      {
+        tileId: 'journey-2',
+        variant: 'glass',
+        href: '#',
+        title: 'Enrich data with business context',
+        subtitle: 'Journey 2',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 2: Enrich data with business context',
+      },
+      {
+        tileId: 'journey-3',
+        variant: 'glass',
+        href: '#',
+        title: 'Identify data quality issues',
+        subtitle: 'Journey 3',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 3: Identify data quality issues',
+      },
+      {
+        tileId: 'journey-4',
+        variant: 'glass',
+        href: '#',
+        title: 'Create a data product',
+        subtitle: 'Journey 4',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 4: Create a data product',
+      },
+    ],
+  },
+  {
+    id: 102,
+    label: 'Guided journeys — page 2',
+    tiles: [
+      {
+        tileId: 'journey-5',
+        variant: 'glass',
+        href: '#',
+        title: 'A guided journey name goes here',
+        subtitle: 'Journey 5',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 5: A guided journey name goes here',
+      },
+      {
+        tileId: 'journey-6',
+        variant: 'glass',
+        href: '#',
+        title: 'A guided journey name goes here',
+        subtitle: 'Journey 6',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 6: A guided journey name goes here',
+      },
+      {
+        tileId: 'journey-7',
+        variant: 'glass',
+        href: '#',
+        title: 'Another very long long long journey name goes here',
+        subtitle: 'Journey 7',
+        primaryIcon: ArrowRight,
+        ariaLabel:
+          'Journey 7: Another very long long long journey name goes here',
+      },
+      {
+        tileId: 'journey-8',
+        variant: 'glass',
+        href: '#',
+        title: 'A guided journey name goes here',
+        subtitle: 'Journey 8',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 8: A guided journey name goes here',
+      },
+    ],
+  },
+];
+
+export const carouselTileGroups3: TileGroup[] = [
+  ...carouselTileGroups,
+  {
+    id: 103,
+    label: 'Guided journeys — page 3',
+    tiles: [
+      {
+        tileId: 'journey-9',
+        variant: 'glass',
+        href: '#',
+        title: 'Publish and share your data product',
+        subtitle: 'Journey 9',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 9: Publish and share your data product',
+      },
+      {
+        tileId: 'journey-10',
+        variant: 'glass',
+        href: '#',
+        title: 'Monitor data lineage and impact',
+        subtitle: 'Journey 10',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 10: Monitor data lineage and impact',
+      },
+      {
+        tileId: 'journey-11',
+        variant: 'glass',
+        href: '#',
+        title: 'Define data access policies',
+        subtitle: 'Journey 11',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 11: Define data access policies',
+      },
+      {
+        tileId: 'journey-12',
+        variant: 'glass',
+        href: '#',
+        title: 'Classify sensitive data assets',
+        subtitle: 'Journey 12',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 12: Classify sensitive data assets',
+      },
+    ],
+  },
+];
+
+export const carouselTileGroups4: TileGroup[] = [
+  ...carouselTileGroups3,
+  {
+    id: 104,
+    label: 'Guided journeys — page 4',
+    tiles: [
+      {
+        tileId: 'journey-13',
+        variant: 'glass',
+        href: '#',
+        title: 'Automate data pipelines end-to-end',
+        subtitle: 'Journey 13',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 13: Automate data pipelines end-to-end',
+      },
+      {
+        tileId: 'journey-14',
+        variant: 'glass',
+        href: '#',
+        title: 'Set up real-time data streaming',
+        subtitle: 'Journey 14',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 14: Set up real-time data streaming',
+      },
+      {
+        tileId: 'journey-15',
+        variant: 'glass',
+        href: '#',
+        title: 'Build a self-service analytics workspace',
+        subtitle: 'Journey 15',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 15: Build a self-service analytics workspace',
+      },
+      {
+        tileId: 'journey-16',
+        variant: 'glass',
+        href: '#',
+        title: 'Connect and federate external data sources',
+        subtitle: 'Journey 16',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 16: Connect and federate external data sources',
+      },
+    ],
+  },
+];
+
+export const carouselConfig: HeaderCarouselConfig = {
+  ariaLabel: 'Journey pages',
+  prevButtonLabel: 'Previous journey page',
+  nextButtonLabel: 'Next journey page',
+  currentPage: 0,
+};
+
+// ---------------------------------------------------------------------------
 
 export const tasksControllerConfigButton = {
   type: 'button',

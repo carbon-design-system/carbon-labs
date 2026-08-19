@@ -1,1 +1,0 @@
-import{t as e}from"./lib-CKRdFf9o.js";export{e as MDXProvider};

@@ -165,7 +165,7 @@ export default class solisSessionManager {
       if (response.ok) {
         console.log('Solis session logout - successful');
       } else if (response.status === 401) {
-        console.error('Solis session logout - session already expired');
+        console.log('Solis session logout - session already expired');
       } else {
         console.error('Solis session logout failed:', response.status);
       }
@@ -179,8 +179,13 @@ export default class solisSessionManager {
         console.error('Soft logout failed with error: ', error.message);
       }
     }
-    window.location.href =
+    this.redirect(
       this.softLogoutUrl ??
-      (this.basePath ? `${this.basePath}/logout` : '/logout');
+        (this.basePath ? `${this.basePath}/logout` : '/logout')
+    );
+  }
+
+  redirect(url: string) {
+    window.location.href = url;
   }
 }

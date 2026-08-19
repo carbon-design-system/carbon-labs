@@ -93,6 +93,10 @@ $prefix: 'clabs--animated-header__carousel' !default;
       border-color 150ms motion(standard, productive);
   }
 
+  &:hover {
+    background: $layer-active;
+  }
+
   &:focus {
     outline: 2px solid $focus;
     outline-offset: 2px;

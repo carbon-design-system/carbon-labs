@@ -41,7 +41,9 @@ const HeaderCarousel: React.FC<HeaderCarouselProps> = ({
   const blockClass = `${prefix}--animated-header__carousel`;
 
   const prevLabel =
-    config?.prevButtonLabel ?? ariaLabels?.carouselPrevButton ?? 'Previous page';
+    config?.prevButtonLabel ??
+    ariaLabels?.carouselPrevButton ??
+    'Previous page';
   const nextLabel =
     config?.nextButtonLabel ?? ariaLabels?.carouselNextButton ?? 'Next page';
 

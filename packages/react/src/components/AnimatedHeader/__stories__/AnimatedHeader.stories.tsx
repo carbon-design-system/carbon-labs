@@ -465,4 +465,3 @@ ThemeG100.globals = {
   backgrounds: { value: '#161616' },
   theme: 'g100',
 };
-

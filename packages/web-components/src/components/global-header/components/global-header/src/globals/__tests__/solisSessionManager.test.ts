@@ -464,4 +464,33 @@ describe('solisSessionManager', () => {
       expect(unregisterSpy).to.have.been.calledOnce;
     });
   });
+
+  describe('setIdle', () => {
+    it('sets isIdle to true and calls performSoftLogout when session is inactive', async () => {
+      const performSoftLogoutStub = sinon.stub(
+        solisSessionManager.prototype,
+        'performSoftLogout'
+      );
+      sinon
+        .stub(solisSessionManager.prototype, 'checkSessionStatus')
+        .resolves(false);
+      const sessionManager = new solisSessionManager({});
+      await sessionManager.setIdle();
+      expect(sessionManager.isTabIdle()).to.be.true;
+      expect(performSoftLogoutStub).to.have.been.calledOnce;
+    });
+
+    it('does not call performSoftLogout when session is active', async () => {
+      const performSoftLogoutStub = sinon.stub(
+        solisSessionManager.prototype,
+        'performSoftLogout'
+      );
+      sinon
+        .stub(solisSessionManager.prototype, 'checkSessionStatus')
+        .resolves(true);
+      const sessionManager = new solisSessionManager({});
+      await sessionManager.setIdle();
+      expect(performSoftLogoutStub).to.not.have.been.called;
+    });
+  });
 });

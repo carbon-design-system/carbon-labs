@@ -65,28 +65,39 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
   }
 
   /**
-   * The calendar icon.
+   * Handles `click` event on the calendar icon button.
+   * Dispatches a custom event and does NOT move focus to the text input,
+   * matching the React implementation where the icon is a separate button.
+   *
+   * @param {MouseEvent} event - The click event.
    */
-  @query(`.${prefix}--date-picker__icon`)
-  private _iconNode!: SVGElement;
+  private _handleIconButtonClick(event: MouseEvent) {
+    event.stopPropagation();
+    this.dispatchEvent(
+      new CustomEvent(`${prefix}-date-picker-icon-click`, {
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
 
   /**
-   * Handles `click` event on the calendar icon.
-   *
-   * @param {MouseEvent} event - The event.
+   * Handles `click` event on `<input>` in the shadow DOM.
+   * Dispatches a custom event so the parent date picker can reopen the calendar
+   * when the input already has focus (clicking a focused input does not fire
+   * a new `focus` event, so a dedicated click event is required).
    */
-  private _handleClickWrapper(event: MouseEvent) {
-    if (event.target === this._iconNode) {
-      // Dispatch custom event for calendar icon click
-      this.dispatchEvent(
-        new CustomEvent(`${prefix}-date-picker-icon-click`, {
-          bubbles: true,
-          composed: true,
-        })
-      );
-      this.input.focus();
-    }
-  }
+  private _handleInputClick = () => {
+    this.dispatchEvent(
+      new CustomEvent(`${prefix}-date-picker-input-click`, {
+        bubbles: true,
+        composed: true,
+        detail: {
+          inputType: this.kind || 'from',
+        },
+      })
+    );
+  };
 
   /**
    * Handles `input` event on `<input>` in the shadow DOM.
@@ -136,16 +147,23 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
   };
 
   /**
-   * @returns The template for the the calendar icon.
+   * @returns The template for the calendar icon button.
+   * Rendered as a focusable-false button (tabindex="-1") so clicking it does
+   * not move focus to the text input — matching the React implementation.
    */
   private _renderIcon() {
-    return this.kind === DATE_PICKER_INPUT_KIND.SIMPLE
-      ? undefined
-      : iconLoader(Calendar16, {
-          class: `${prefix}--date-picker__icon`,
-          role: 'img',
-          title: 'Open calendar',
-        });
+    if (this.kind === DATE_PICKER_INPUT_KIND.SIMPLE) {
+      return undefined;
+    }
+    return html`<button
+      type="button"
+      class="${prefix}--date-picker__icon"
+      ?disabled="${this.disabled || this.readonly}"
+      aria-label="Open calendar"
+      tabindex="-1"
+      @click="${this._handleIconButtonClick}">
+      ${iconLoader(Calendar16, { focusable: 'false', 'aria-hidden': 'true' })}
+    </button>`;
   }
 
   /**
@@ -301,10 +319,10 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
       value,
       warn,
       warnText,
-      _handleClickWrapper: handleClickWrapper,
       _handleInput: handleInput,
       _handleFocus: handleFocus,
       _handleBlur: handleBlur,
+      _handleInputClick: handleInputClick,
       _hasAILabel: hasAILabel,
     } = this;
 
@@ -371,7 +389,7 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
       <label for="input" class="${labelClasses}">
         <slot name="label-text">${labelText}</slot>
       </label>
-      <div class="${inputWrapperClasses}" @click="${handleClickWrapper}">
+      <div class="${inputWrapperClasses}">
         <span>
           <input
             id="input"
@@ -385,6 +403,7 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
             @input="${handleInput}"
             @focus="${handleFocus}"
             @blur="${handleBlur}"
+            @click="${handleInputClick}"
             ?readonly="${readonly}" />
           ${normalizedProps.icon || this._renderIcon()}
           <slot
@@ -461,6 +480,13 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
    */
   static get aiLabelItem() {
     return `${prefix}-ai-label`;
+  }
+
+  /**
+   * The name of the custom event fired when the input is clicked.
+   */
+  static get inputClickEventName() {
+    return `${prefix}-date-picker-input-click`;
   }
 
   static shadowRootOptions = {

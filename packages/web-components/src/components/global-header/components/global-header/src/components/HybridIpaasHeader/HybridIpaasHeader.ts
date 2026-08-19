@@ -29,6 +29,8 @@ import '../CommonHeader/CommonHeader';
 
 import styles from '../../index.scss?inline';
 
+import solisSessionManager from '../../globals/solisSessionManager';
+
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
@@ -70,13 +72,17 @@ export class HybridIpaasHeader extends LitElement {
   capabilityProfileFooterLinks: ProfileFooterLinks[] = [];
   @property({ type: Array }) capabilityGlobalActions: GlobalActionConfig[] = [];
   @property({ type: Boolean }) addCookiePreferences = false;
+  @property({ type: Boolean }) forceBackendProxy = false; // override domain check; always enable the backend proxy when true
+  @property({ type: Boolean }) solisSessionManagerEnabled = false; // toggle to enable/disable the Solis session manager
+  @property({ type: Number }) solisSessionRefreshInterval = 25; // might not need Solis token refresh interval to be configurable
+  @property({ type: Number }) solisIdleTimeoutInterval = 28; // might not need Solis idle timeout interval to be configurable
 
   @state()
   headerOptions: HeaderProps = {
     ...INITIAL_AUTOMATION_HEADER_PROPS,
     brand: {
       company: 'IBM',
-      product: 'webMethods Hybrid Integration',
+      product: '',
     },
     capabilityName: {
       label: '',
@@ -87,6 +93,8 @@ export class HybridIpaasHeader extends LitElement {
       sidebarLabel: 'Side navigation',
     },
   };
+
+  sessionManager: solisSessionManager | null = null;
 
   constructor() {
     super();
@@ -100,6 +108,11 @@ export class HybridIpaasHeader extends LitElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
+    if (this.sessionManager) {
+      this.sessionManager.stopRefreshSchedule();
+      this.sessionManager.unregisterActivityListeners();
+      this.sessionManager = null;
+    }
     document.removeEventListener(CUSTOM_EVENT_NAME, this._customEventListener);
   }
 
@@ -135,6 +148,14 @@ export class HybridIpaasHeader extends LitElement {
       );
 
       this.headerOptions = this.buildHeaderOptions(serverOptions);
+      if (
+        this.solisSessionManagerEnabled &&
+        this.headerOptions.profile !== null &&
+        this.headerOptions.profile !== undefined
+      ) {
+        // backend is ready and user is authenticated
+        this.initializeSessionManager();
+      }
     } catch (error) {
       console.error('Failed to load header options:', error);
     }
@@ -168,6 +189,18 @@ export class HybridIpaasHeader extends LitElement {
     } else {
       // backup option in case the cookie script didn't load for some reason
       window.open('https://www.ibm.com/privacy');
+    }
+  }
+
+  private initializeSessionManager() {
+    if (!this.sessionManager) {
+      this.sessionManager = new solisSessionManager({
+        tokenRefreshInterval: this.solisSessionRefreshInterval,
+        idleTimeoutInterval: this.solisIdleTimeoutInterval,
+        basePath: this.basePath,
+      });
+      this.sessionManager.startRefreshSchedule();
+      this.sessionManager.registerActivityListeners();
     }
   }
 
@@ -230,10 +263,11 @@ export class HybridIpaasHeader extends LitElement {
   }
 
   private getBackendProxy(): string | undefined {
-    // Only set backendProxy if the user is NOT on *.ibm.com domain
+    // Always set backendProxy when forceBackendProxy is true, otherwise only
+    // set it when the user is NOT on an *.ibm.com domain.
     const hostname = this.getHostname();
     const ibmDomainRegex = /^(.+\.)?ibm\.com$/;
-    if (!ibmDomainRegex.test(hostname)) {
+    if (this.forceBackendProxy || !ibmDomainRegex.test(hostname)) {
       return `${this.basePath}/hybrid-ipaas/v1/proxies/solis/backend`;
     }
     return undefined;

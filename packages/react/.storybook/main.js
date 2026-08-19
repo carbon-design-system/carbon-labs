@@ -15,10 +15,7 @@ const includeV12 = process.env.STORYBOOK_INCLUDE_V12 === 'true';
 
 // Build stories array based on environment variable
 const storiesGlobs = includeV12
-  ? [
-      '../src/v12/**/*.mdx',
-      '../src/v12/**/*.stories.@(js|jsx|mjs|ts|tsx)',
-    ]
+  ? ['../src/v12/**/*.mdx', '../src/v12/**/*.stories.@(js|jsx|mjs|ts|tsx)']
   : [
       '../src/components/**/*.mdx',
       '../src/components/**/*.stories.@(js|jsx|mjs|ts|tsx)',
@@ -67,6 +64,11 @@ const config = {
       __dirname,
       '../../utilities/es'
     );
+
+    config.module.rules.push({
+      test: /\.svg$/,
+      type: 'asset/resource',
+    });
 
     config.module.rules.push({
       test: /\.s?css$/,

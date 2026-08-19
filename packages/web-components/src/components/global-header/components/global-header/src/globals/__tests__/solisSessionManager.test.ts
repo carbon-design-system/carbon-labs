@@ -257,4 +257,61 @@ describe('solisSessionManager', () => {
       expect(removeEventListenerStub.callCount).to.equal(7);
     });
   });
+
+  describe('checkSessionStatus', () => {
+    it('returns true when the session is active (200)', async () => {
+      const fetchStub = sinon.stub(window, 'fetch');
+      fetchStub.resolves(new Response(null, { status: 200, statusText: 'OK' }));
+      const consoleLogStub = sinon.stub(console, 'log');
+      const sessionManager = new solisSessionManager({ basePath: '/api' });
+      const result = await sessionManager.checkSessionStatus();
+      expect(fetchStub).to.have.been.calledOnceWith(
+        '/api/v1/solis/session/session-status',
+        { method: 'GET', credentials: 'same-origin' }
+      );
+      expect(result).to.be.true;
+      expect(consoleLogStub).to.have.been.calledWith('Solis session is active');
+    });
+
+    it('returns true when the session is active and basePath is undefined', async () => {
+      const fetchStub = sinon.stub(window, 'fetch');
+      fetchStub.resolves(new Response(null, { status: 200, statusText: 'OK' }));
+      const consoleLogStub = sinon.stub(console, 'log');
+      const sessionManager = new solisSessionManager({});
+      const result = await sessionManager.checkSessionStatus();
+      expect(fetchStub).to.have.been.calledOnceWith(
+        '/v1/solis/session/session-status',
+        { method: 'GET', credentials: 'same-origin' }
+      );
+      expect(result).to.be.true;
+      expect(consoleLogStub).to.have.been.calledWith('Solis session is active');
+    });
+
+    it('returns false when the session is inactive (401)', async () => {
+      const fetchStub = sinon.stub(window, 'fetch');
+      fetchStub.resolves(
+        new Response(null, { status: 401, statusText: 'Unauthorized' })
+      );
+      const consoleWarnStub = sinon.stub(console, 'warn');
+      const sessionManager = new solisSessionManager({});
+      const result = await sessionManager.checkSessionStatus();
+      expect(result).to.be.false;
+      expect(consoleWarnStub).to.have.been.calledWith(
+        'Solis session is inactive'
+      );
+    });
+
+    it('returns false and logs an error when the fetch call fails', async () => {
+      const fetchStub = sinon.stub(window, 'fetch');
+      fetchStub.rejects(new Error('Network error'));
+      const consoleErrorStub = sinon.stub(console, 'error');
+      const sessionManager = new solisSessionManager({});
+      const result = await sessionManager.checkSessionStatus();
+      expect(result).to.be.false;
+      expect(consoleErrorStub).to.have.been.calledWith(
+        'Solis session status unknown:',
+        'Network error'
+      );
+    });
+  });
 });

@@ -3,29 +3,52 @@
 exports[`Processing renders as expected - Component API should match snapshot 1`] = `
 <div>
   <div
-    class="clabs--processing clabs--processing__linear"
+    aria-label="Processing"
+    class="clabs--processing"
+    role="status"
   >
     <svg
+      aria-hidden="true"
       class="clabs--processing__dots"
+      focusable="false"
       viewBox="0 0 32 32"
     >
-      <circle
-        class="clabs--processing__dot clabs--processing__dot--left"
-        cx="8"
-        cy="16"
-      />
-      <circle
-        class="clabs--processing__dot clabs--processing__dot--center"
-        cx="16"
-        cy="16"
-        r="2"
-      />
-      <circle
-        class="clabs--processing__dot clabs--processing__dot--right"
-        cx="24"
-        cy="16"
-        r="2"
-      />
+      <g
+        class="clabs--processing__group"
+      >
+        <circle
+          class="clabs--processing__dot clabs--processing__dot--left"
+          cx="8"
+          cy="16"
+          r="0"
+          stroke-width="0"
+          style=""
+        />
+        <circle
+          class="clabs--processing__dot clabs--processing__dot--center"
+          cx="16"
+          cy="16"
+          r="0"
+          stroke-width="0"
+          style=""
+        />
+        <circle
+          class="clabs--processing__dot clabs--processing__dot--right"
+          cx="24"
+          cy="16"
+          r="0"
+          stroke-width="0"
+          style=""
+        />
+        <circle
+          class="clabs--processing__dot"
+          cx="24"
+          cy="16"
+          r="0"
+          stroke-width="0"
+          style=""
+        />
+      </g>
     </svg>
   </div>
 </div>

@@ -1,11 +1,6 @@
 import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as ProcessingStories from './Processing.stories';
 import Processing from '../components/Processing';
-import AIChatLoop from './images/ai_chat_loop.gif';
-import NoLoopLight from './images/processing_element_load_unload_light_128x128.gif';
-import NoLoopDark from './images/processing_element_load_unload_dark_128x128.gif';
-import LoopLight from './images/processing_element_loop_light_128x128.gif';
-import LoopDark from './images/processing_element_loop_dark_128x128.gif';
 
 <Meta isTemplate />
 
@@ -30,38 +25,31 @@ import LoopDark from './images/processing_element_loop_dark_128x128.gif';
 
 - [Overview](#overview)
 - [Getting started](#getting-started)
+- [Component API](#component-api)
+- [Proposed v2.0 update](#proposed-v20-update)
+  - [Intended use cases](#intended-use-cases)
+  - [Interaction guidance](#interaction-guidance)
+  - [Proposed behavior and usage model](#proposed-behavior-and-usage-model)
+  - [Migration guidance](#migration-guidance)
+- [Example usages](#example-usages)
 
 {/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
 
 ## Overview
 
-Processing element is used to indicate that data is currently being
-processed/loaded and the user should wait.
+Processing indicates that data is being loaded or an action is in progress. It is used in chat interfaces, async operations, and anywhere the user should wait for a response. Inspired by the Carbon Design System loading pattern, this component extends it with shape formation transforms and an imperative animation API.
 
 <Canvas
-  of={ProcessingStories.LinearLoop}
-  additionalActions={[
-    {
-      title: 'Open in Stackblitz',
-      onClick: () => stackblitzPrefillConfig(ProcessingStories.LinearLoop),
-    },
-  ]}
+  of={ProcessingStories.Loading}
 />
 
-<img src={AIChatLoop} alt="AI chat window example" width={319} />
+_Ex. The loading state in a chat shell interface._
 
-**Ex.** Content processing in a chat shell.
+## Using Processing in Figma
 
-### Using Processing element in Figma
+A Figma component kit for Processing is currently in development. When available, it will include all four modes and both light and dark theme variants matching the Carbon dot colour tokens.
 
-As a designer, you can use the Processing component in Figma to create a more
-interactive prototype. This can be done by downloading the desired `.gif` below
-and adding to Figma.
-
-|             |                                     Light mode (white, g10)                                     |                                    Dark mode (g90, g100)                                    |
-| :---------- | :---------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: |
-| **No Loop** | <div style={{ background: '#ffffff' }}><img src={NoLoopLight} alt="No loop light mode" /></div> | <div style={{background: '#161616'}}><img src={NoLoopDark} alt="No loop dark mode" /></div> |
-| **Loop**    |   <div style={{ background: '#ffffff' }}><img src={LoopLight} alt="Loop light mode" /></div>    |  <div style={{ background: '#161616' }}><img src={LoopDark} alt="Loop dark mode" /></div>   |
+> **Note:** Dot stroke colour is driven by Carbon theme tokens (`$blue-90` in white/g10 themes and `$gray-10` in g90/g100 themes; with AI accents `$blue-80` and `$blue-20`), so the component automatically adapts when you switch Storybook themes.
 
 ## Getting started
 
@@ -88,7 +76,7 @@ export default App;
 
 In your styles file import
 
-```
+```scss
 @use '@carbon/react';
 @use '@carbon-labs/react-processing/scss/processing';
 ```
@@ -97,10 +85,129 @@ In your styles file import
 
 <ArgTypes />
 
+## Proposed v2.0 update
+
+Processing v2.0 extends the current element with reviewer-friendly interactive modes while preserving the existing base loading behavior. The default `loading` experience now remains active until a new mode is triggered, removing the need to differentiate between separate loop and no-loop Labs stories.
+
+### Intended use cases
+
+- Keep `loading` as the default state for waiting, thinking, or background work in progress.
+- Trigger `triangle` or `square` when the system needs to communicate a more expressive state change after loading completes.
+- Use `wiggle` as lightweight feedback when work is still active but you want a brief accent rather than a persistent new formation.
+- Use `out` to intentionally dismiss the indicator when work is complete or cancelled.
+
+### Interaction guidance
+
+- Start in the default loading state, then trigger a new mode only when the product has a meaningful state transition to communicate.
+- Prefer imperative handle methods for transitions so the element can respond to async milestones without remounting the surrounding UI.
+- Treat the new modes as optional enhancements, not replacements for the base indicator.
+- Keep the accessible label aligned with the user-facing status message when embedding Processing in larger workflows.
+
+### Proposed behavior and usage model
+
+The proposed v2.0 surface keeps the current base props and imperative handle intact while clarifying the recommended usage model for these transitions:
+
+- `triggerTriangle()` highlights a completed or elevated in-progress state.
+- `triggerSquare()` introduces a four-dot formation for an alternate expressive state.
+- `triggerWiggle()` provides transient motion feedback without leaving the loading layout.
+- `triggerOut()` cleanly dismisses the current indicator from any visible state.
+
+<Canvas of={ProcessingStories.Interactive} />
+
+### Migration guidance
+
+Migration from the current Processing element is additive:
+
+- Existing implementations that use the default loading behavior do not need to change.
+- The v2.0 proposal removes the need for separate loop and no-loop story variants in Labs because Processing now remains in the loading state until another mode is triggered.
+- Existing `label` and `ai` usage stays valid.
+- Teams only need migration work when they want to opt into the new interaction modes by using the imperative handle in response to product events.
+- Adoption can happen incrementally, one mode at a time, without altering the base loading behavior.
+
 ## Example usages
 
-Example of Processing element w/ loop
+#### Default loading behavior
+
+Starts in the loading state and remains there until your product triggers a new mode.
 
 ```jsx
-<Processing loop />
+<Processing />
+```
+
+#### Transition to triangle
+
+Start in the default loading state, then trigger the triangle mode when a product milestone completes.
+
+```jsx
+import { useRef } from 'react';
+import { Processing } from '@carbon-labs/react-processing';
+import type { ProcessingHandle } from '@carbon-labs/react-processing';
+
+function App() {
+  const ref = useRef<ProcessingHandle>(null);
+
+  const handleComplete = () => {
+    ref.current?.triggerTriangle();
+  };
+
+  return <Processing ref={ref} label="Processing" />;
+}
+```
+
+#### Transition to square
+
+Use the imperative handle when the workflow needs a four-dot formation to communicate a distinct state.
+
+```jsx
+import { useRef } from 'react';
+import { Processing } from '@carbon-labs/react-processing';
+import type { ProcessingHandle } from '@carbon-labs/react-processing';
+
+function App() {
+  const ref = useRef<ProcessingHandle>(null);
+
+  const handleStateChange = () => {
+    ref.current?.triggerSquare();
+  };
+
+  return <Processing ref={ref} label="Processing" />;
+}
+```
+
+#### Wiggle
+
+Trigger a left-to-right bob animation on the three loading dots via the imperative handle.
+
+```jsx
+import { useRef } from 'react';
+import { Processing } from '@carbon-labs/react-processing';
+import type { ProcessingHandle } from '@carbon-labs/react-processing';
+
+function App() {
+  const ref = useRef<ProcessingHandle>(null);
+
+  return (
+    <>
+      <Processing ref={ref} />
+      <button onClick={() => ref.current?.triggerWiggle()}>Wiggle</button>
+    </>
+  );
+}
+```
+
+#### Imperative handle
+
+Use a ref to trigger animations programmatically — for example, forming a triangle when an async operation completes.
+
+```jsx
+import { useRef } from 'react';
+import { Processing } from '@carbon-labs/react-processing';
+import type { ProcessingHandle } from '@carbon-labs/react-processing';
+
+function App() {
+  const ref = useRef<ProcessingHandle>(null);
+
+  // When your async work finishes, call triggerTriangle() on the ref:
+  return <Processing ref={ref} />;
+}
 ```

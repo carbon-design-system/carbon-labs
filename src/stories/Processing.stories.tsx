@@ -5,7 +5,6 @@
  */
 
 import { useEffect, useRef, useState } from 'react';
-import { Button } from '@carbon/react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Processing } from '../components/Processing/Processing';
 import type { ProcessingHandle } from '../components/Processing/Processing';
@@ -53,6 +52,38 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+// ── Button styles (mirrors MotionAvatar story) ────────────────────────────────
+
+const btnBase: React.CSSProperties = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '0.375rem',
+  padding: '0.375rem 0.75rem',
+  background: 'transparent',
+  border: '1px solid var(--cds-text-primary, #161616)',
+  color: 'var(--cds-text-primary, #161616)',
+  cursor: 'pointer',
+  fontSize: '0.875rem',
+};
+
+const btnDanger: React.CSSProperties = {
+  ...btnBase,
+  border: '1px solid var(--cds-support-error, #da1e28)',
+  color: 'var(--cds-support-error, #da1e28)',
+};
+
+const btnDisabled: React.CSSProperties = {
+  ...btnBase,
+  opacity: 0.4,
+  cursor: 'not-allowed',
+};
+
+const btnDangerDisabled: React.CSSProperties = {
+  ...btnDanger,
+  opacity: 0.4,
+  cursor: 'not-allowed',
+};
 
 // ── Shape icons ───────────────────────────────────────────────────────────────
 
@@ -246,6 +277,15 @@ function InteractiveDemo({
   const handle = useRef<ProcessingHandle>(null);
   const [key, setKey] = useState(0);
   const [activeMode, setActiveMode] = useState<'loading' | 'triangle' | 'square' | 'wiggle' | 'out'>('loading');
+  // True only during the initial load-in animation; clears once dots are looping.
+  const [isLoadingIn, setIsLoadingIn] = useState(true);
+
+  // Reset the load-in gate whenever the component remounts (key changes).
+  useEffect(() => {
+    setIsLoadingIn(true);
+    const t = setTimeout(() => setIsLoadingIn(false), LOAD_IN_END);
+    return () => clearTimeout(t);
+  }, [key]);
 
   const runTriangle = () => {
     handle.current?.triggerTriangle();
@@ -272,25 +312,60 @@ function InteractiveDemo({
     setActiveMode('loading');
   };
 
+  // Disabled states:
+  // load-in  → Triangle, Square, Wiggle disabled (dots still entering)
+  // looping  → all three available
+  // triangle → Square, Wiggle disabled
+  // square   → Triangle, Wiggle disabled
+  // wiggle   → none extra disabled
+  // out      → Triangle, Square, Wiggle, Out all disabled
+  const isOut      = activeMode === 'out';
+  const isTriangle = activeMode === 'triangle';
+  const isSquare   = activeMode === 'square';
+
+  const triDisabled    = isLoadingIn || isSquare || isOut;
+  const sqrDisabled    = isLoadingIn || isTriangle || isOut;
+  const wiggleDisabled = isLoadingIn || isTriangle || isSquare || isOut;
+  const outDisabled    = isOut;
+
   return (
     <div className={s.interactiveDemo}>
       <Processing key={key} ref={handle} mode="loading" loop label={label} ai={ai} />
       <div className={s.controlsRow}>
-        <Button kind="ghost" size="sm" onClick={runTriangle} renderIcon={TriIcon}>
-          Triangle
-        </Button>
-        <Button kind="ghost" size="sm" onClick={runSquare} renderIcon={SqrIcon}>
-          Square
-        </Button>
-        <Button kind="ghost" size="sm" onClick={runWiggle} renderIcon={WiggleIcon}>
-          Wiggle
-        </Button>
-        <Button kind="danger--ghost" size="sm" onClick={runOut}>
+        <button
+          style={triDisabled ? btnDisabled : btnBase}
+          disabled={triDisabled}
+          onClick={runTriangle}
+        >
+          <TriIcon /> Triangle
+        </button>
+        <button
+          style={sqrDisabled ? btnDisabled : btnBase}
+          disabled={sqrDisabled}
+          onClick={runSquare}
+        >
+          <SqrIcon /> Square
+        </button>
+        <button
+          style={wiggleDisabled ? btnDisabled : btnBase}
+          disabled={wiggleDisabled}
+          onClick={runWiggle}
+        >
+          <WiggleIcon /> Wiggle
+        </button>
+        <button
+          style={outDisabled ? btnDangerDisabled : btnDanger}
+          disabled={outDisabled}
+          onClick={runOut}
+        >
           Out
-        </Button>
-        <Button kind="secondary" size="sm" onClick={restart}>
-          Restart
-        </Button>
+        </button>
+        <button
+          style={{ ...btnBase, fontSize: '0.75rem', opacity: 0.6 }}
+          onClick={restart}
+        >
+          Restart ⟳
+        </button>
       </div>
       <p className={s.helperText}>
         Active mode: <strong>{activeMode}</strong>. Use the buttons to preview proposed v2.0 interaction modes without changing the default loading behavior.

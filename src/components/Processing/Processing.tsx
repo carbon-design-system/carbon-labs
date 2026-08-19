@@ -86,10 +86,10 @@ const RAMP_LEAD    = 200;  // ms by which rotation ramp finishes before last dot
 // ─── Dot appearance ───────────────────────────────────────────────────────────
 
 const R0   = '0px';
-const R_RS = '0.875px'; // resting radius
-const R_MX = '2.5px';   // peak radius
+const R_RS = '1px';   // resting radius
+const R_MX = '2.5px'; // peak radius
 const SW0  = '0';
-const SW1  = '1.72';    // stroke-width at resting/peak size
+const SW1  = '2';     // stroke-width at resting/peak size
 
 // ─── Easings ─────────────────────────────────────────────────────────────────
 
@@ -150,12 +150,14 @@ function buildFormationFrames(
   let a1 = Math.atan2(target.cy - SVG_CY, target.cx - SVG_CX);
   if (a1 <= a0) a1 += 2 * Math.PI; // ensure clockwise
 
+  // Bake EF easing on every keyframe so the browser treats the whole path as
+  // one continuous curve — no abrupt velocity change at the slide/arc junction.
   const ARC_STEPS = 60;
   const frames: Keyframe[] = [];
 
   if (slideFrac > 0) {
-    frames.push({ offset: 0,         cx: `${fromPos.cx}px`, cy: `${fromPos.cy}px` });
-    frames.push({ offset: slideFrac, cx: `${entryCx}px`,    cy: `${entryCy}px`    });
+    frames.push({ offset: 0,         cx: `${fromPos.cx}px`, cy: `${fromPos.cy}px`, easing: EF });
+    frames.push({ offset: slideFrac, cx: `${entryCx}px`,    cy: `${entryCy}px`,    easing: EF });
   }
 
   for (let i = 0; i <= ARC_STEPS; i++) {
@@ -165,7 +167,8 @@ function buildFormationFrames(
     const r      = R_SHAPE + (R_TRI - R_SHAPE) * t; // spiral inward
     const cx = (i === 0 && slideFrac === 0) ? fromPos.cx : SVG_CX + r * Math.cos(a);
     const cy = (i === 0 && slideFrac === 0) ? fromPos.cy : SVG_CY + r * Math.sin(a);
-    frames.push({ offset, cx: `${cx}px`, cy: `${cy}px` });
+    // Last frame needs no easing (nothing after it)
+    frames.push({ offset, cx: `${cx}px`, cy: `${cy}px`, ...(i < ARC_STEPS ? { easing: EF } : {}) });
   }
 
   return frames;
@@ -257,11 +260,17 @@ export const Processing = forwardRef<ProcessingHandle, ProcessingProps>(
 
     /**
      * Start the rotation ramp on the group: ease-in from 0° over rampDur ms.
+     * The ramp is delayed 100 ms so it doesn't snap on at the exact trigger
+     * instant — the formation moves are already underway and the group starts
+     * rotating smoothly into them.  The 100 ms is subtracted from the available
+     * window so the ramp still finishes at the same absolute time (RAMP_LEAD ms
+     * before the last dot lands).
      * Returns RAMP_DEG so the caller can hand off to the infinite loop later.
      */
+    const ROT_DELAY = 100; // ms to defer ramp start after trigger
     const startRotationRamp = useCallback((nDots: number, phaseStart: number): number => {
       const formWindow = FORM_DUR + FORM_STAGGER * (nDots - 1);
-      const rampDur    = formWindow - RAMP_LEAD;
+      const rampDur    = formWindow - RAMP_LEAD - ROT_DELAY;
       const rampDeg    = (rampDur / ROT_DUR) * 360;
       if (grp.current) {
         const ramp = grp.current.animate(
@@ -271,7 +280,7 @@ export const Processing = forwardRef<ProcessingHandle, ProcessingProps>(
           ],
           { duration: rampDur, fill: 'forwards', easing: EI },
         );
-        ramp.startTime = phaseStart;
+        ramp.startTime = phaseStart + ROT_DELAY;
         track(ramp);
       }
       return rampDeg;

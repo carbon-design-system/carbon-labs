@@ -24,6 +24,7 @@ import {
   CUSTOM_EVENT_DETAIL_REFRESH_OPTIONS,
 } from '../../../constant';
 import mockHeaderOptions from './headeroptions.json';
+import mockHeaderOptionsForRebrand from './headeroptionsforrebrand.json';
 
 /*
  * Initializes MSW
@@ -514,6 +515,31 @@ export const Logo: Story = {
           </svg>
         </div>
       </clabs-global-header-hybrid-ipaas>
+    </div>
+  `,
+};
+
+export const IWHIRebrand: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.get(
+          'http://localhost:6007/hybrid-ipaas/v1/header/options',
+          async () => {
+            await delay();
+            return HttpResponse.json(mockHeaderOptionsForRebrand);
+          }
+        ),
+      ],
+    },
+  },
+  render: () => html`
+    <div role="main">
+      <clabs-global-header-hybrid-ipaas
+        productName="App Connect"
+        productKey="appconnect"
+        productVersion="2.3.4.5"
+        .notificationOpenCallback="${callback}"></clabs-global-header-hybrid-ipaas>
     </div>
   `,
 };

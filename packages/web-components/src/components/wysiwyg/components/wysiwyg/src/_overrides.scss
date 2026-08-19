@@ -1,0 +1,136 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// This file contains override styles that need to come after Carbon's element styles
+// Import this file's content at the end of wysiwyg.scss using a mixin
+
+@use '@carbon/styles/scss/theme';
+
+$prefix: 'clabs';
+$BASE_CLASS: #{$prefix}-wysiwyg;
+$cds-prefix: 'cds';
+
+@mixin overrides {
+  #{$cds-prefix}-layer {
+    display: contents;
+  }
+
+  #{$cds-prefix}-tooltip {
+    display: contents;
+  }
+
+  #{$cds-prefix}-icon-button[disabled][kind='ghost'] {
+    svg {
+      color: theme.$text-disabled;
+    }
+  }
+
+  #{$cds-prefix}-icon-button {
+    display: inline-block;
+
+    svg {
+      pointer-events: none;
+    }
+  }
+
+  // Style content inside ProseMirror
+  .#{$BASE_CLASS}__editor .ProseMirror {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p {
+      max-inline-size: unset;
+    }
+  }
+
+  // Table styles for ProseMirror editor
+  .#{$BASE_CLASS}__editor .ProseMirror {
+    table {
+      overflow: hidden;
+      border: 1px solid theme.$border-subtle;
+      margin: 1rem 0;
+      border-collapse: collapse;
+      inline-size: 100%;
+      table-layout: fixed;
+    }
+
+    table td,
+    table th {
+      position: relative;
+      box-sizing: border-box;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid theme.$border-subtle;
+      background-color: theme.$layer;
+      min-inline-size: 1em;
+      vertical-align: top;
+    }
+
+    table th {
+      background-color: theme.$layer-02;
+      color: theme.$text-primary;
+      font-weight: 600;
+      text-align: start;
+    }
+
+    table .selectedCell {
+      background: theme.$layer-selected;
+    }
+
+    table .column-resize-handle {
+      position: absolute;
+      z-index: 200;
+      background-color: theme.$border-interactive;
+      cursor: col-resize;
+      inline-size: 2px;
+      inset-block: 0 -2px;
+      inset-inline-end: -2px;
+
+      &::before {
+        position: absolute;
+        block-size: 100%;
+        content: '';
+        inline-size: 10px;
+        inset-block-start: 0;
+        inset-inline-start: -2px;
+      }
+    }
+
+    table p {
+      margin: 0;
+    }
+  }
+
+  .#{$BASE_CLASS}__editor,
+  .markdown-editor,
+  .html-editor {
+    scrollbar-color: theme.$border-strong theme.$layer;
+  }
+
+  // AI processing indicator styles
+  .#{$BASE_CLASS}__editor .ProseMirror span.ai-processing {
+    animation: ripple 3000ms linear infinite;
+    background: linear-gradient(
+      90deg,
+      theme.$ai-aura-start 0%,
+      theme.$ai-aura-start 40%,
+      theme.$ai-aura-hover-start 50%,
+      theme.$ai-aura-start 60%,
+      theme.$ai-aura-start 100%
+    );
+    background-position: 250% 0;
+    background-size: 250% 100%;
+  }
+
+  @keyframes ripple {
+    to {
+      background-position: -250% 0;
+    }
+  }
+}

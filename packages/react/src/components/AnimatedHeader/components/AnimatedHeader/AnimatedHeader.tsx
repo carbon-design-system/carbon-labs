@@ -6,7 +6,7 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import React, { lazy, Suspense, useState } from 'react';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Column, Button } from '@carbon/react';
 import { ChevronUp, ChevronDown } from '@carbon/icons-react';
@@ -26,6 +26,8 @@ import ContentSwitcherSelector, {
 } from '../ContentSwitcherSelector/ContentSwitcherSelector';
 import HeaderAction from '../HeaderAction/HeaderAction';
 import type { HeaderActionProps } from '../HeaderAction/header-action.types';
+import type { HeaderCarouselConfig } from '../HeaderCarousel/header-carousel.types';
+import HeaderCarousel from '../HeaderCarousel/HeaderCarousel';
 
 const AnimatedBackground = lazy(
   () => import('../AnimatedBackground/AnimatedBackground')
@@ -50,6 +52,7 @@ export type AnimatedHeaderProps = {
   expandButtonLabel?: string;
   collapseButtonLabel?: string;
   tileClickHandler?: (tile: Tile) => void;
+  carouselConfig?: HeaderCarouselConfig | null;
 } & TasksControllerProps &
   WorkspaceSelectorProps &
   HeaderActionProps;
@@ -67,6 +70,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   welcomeText,
   contentSwitcherConfig,
   headerActionConfig,
+  carouselConfig,
   tasksControllerConfig,
   workspaceSelectorConfig,
   isLoading,
@@ -79,10 +83,27 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   const blockClass = `${prefix}--animated-header`;
 
   const [isOpen, setIsOpen] = useState(true);
+  // Track whether we have hydrated. The animated background is suppressed on
+  // the first render so that the server HTML and the initial client render are
+  // identical — avoiding a Suspense-driven tree mismatch.
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   const handleButtonCollapseClick = () => {
     setIsOpen(!isOpen);
   };
+
+  const currentPage = carouselConfig?.currentPage ?? 0;
+  const onPageChange = carouselConfig?.onPageChange;
+
+  const activeTileGroup = carouselConfig
+    ? allTileGroups?.[currentPage]
+    : selectedTileGroup;
+
+  const totalPages = allTileGroups?.length ?? 0;
+  const showCarousel = !!carouselConfig && totalPages > 1;
 
   return (
     <header className={blockClass} data-expanded={isOpen}>
@@ -92,14 +113,14 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
         <div className={`${blockClass}__container--gradient`} />
 
         {headerAnimation ? (
-          typeof window !== 'undefined' && (
+          hasMounted ? (
             <Suspense fallback={null}>
               <AnimatedBackground
                 headerAnimation={headerAnimation}
                 isOpen={isOpen}
               />
             </Suspense>
-          )
+          ) : null
         ) : (
           <StaticBackground headerStatic={headerStatic} />
         )}
@@ -118,7 +139,9 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
               <div className={`${blockClass}__actions`}>
                 <ContentSwitcherSelector
                   contentSwitcherConfig={contentSwitcherConfig}
-                  isLoading={isLoading || contentSwitcherConfig.isLoading}
+                  isLoading={
+                    !hasMounted || isLoading || contentSwitcherConfig.isLoading
+                  }
                   headerExpanded={isOpen}
                 />
               </div>
@@ -144,7 +167,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
             {tasksControllerConfig && (
               <TasksController
                 tasksControllerConfig={tasksControllerConfig}
-                isLoading={isLoading}
+                isLoading={!hasMounted || isLoading}
                 allTileGroups={allTileGroups}
                 selectedTileGroup={selectedTileGroup}
                 setSelectedTileGroup={setSelectedTileGroup}
@@ -153,7 +176,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
           </Column>
         )}
 
-        {selectedTileGroup && (
+        {activeTileGroup && (
           <Column sm={4} md={8} lg={12} className={`${blockClass}__content`}>
             {!!workspaceSelectorConfig?.allWorkspaces?.length && (
               <div
@@ -162,7 +185,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                 <WorkspaceSelector
                   workspaceSelectorConfig={workspaceSelectorConfig}
                   userName={userName}
-                  isLoading={isLoading}
+                  isLoading={!hasMounted || isLoading}
                 />
               </div>
             )}
@@ -170,7 +193,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
               className={`${blockClass}__tiles-container`}
               aria-label={ariaLabels?.tilesContainer ?? `Feature tiles`}
               role="list">
-              {selectedTileGroup.tiles.map((tile, index) => {
+              {activeTileGroup.tiles.map((tile, index) => {
                 const { tileId, ...rest } = tile as any;
                 const legacyId = (tile as any).id; // old configs
                 const resolvedTileId = tileId ?? legacyId;
@@ -185,7 +208,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                     {...rest}
                     open={isOpen}
                     productName={productName}
-                    isLoading={isLoading || tile.isLoading}
+                    isLoading={!hasMounted || isLoading || tile.isLoading}
                     disabledTaskLabel={disabledTaskLabel}
                     onClick={
                       hasAction
@@ -205,8 +228,20 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
         <div className={`${blockClass}__button-collapse--gradient`} />
 
         <div className={`${blockClass}__button-collapse--container`}>
+          {/* Order: HeaderAction | HeaderCarousel | collapse/expand */}
           {headerActionConfig ? (
             <HeaderAction config={headerActionConfig} headerExpanded={isOpen} />
+          ) : null}
+
+          {showCarousel ? (
+            <HeaderCarousel
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={onPageChange ?? (() => {})}
+              headerExpanded={isOpen}
+              config={carouselConfig}
+              ariaLabels={ariaLabels}
+            />
           ) : null}
 
           <Button
@@ -240,6 +275,18 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
    * Provide custom aria labels for each part of the header.
    */
   ariaLabels: PropTypes.object,
+
+  /**
+   * Configuration object that enables the carousel pagination controls.
+   * `currentPage` and `onPageChange` live inside this config.
+   */
+  carouselConfig: PropTypes.shape({
+    ariaLabel: PropTypes.string,
+    currentPage: PropTypes.number,
+    nextButtonLabel: PropTypes.string,
+    onPageChange: PropTypes.func,
+    prevButtonLabel: PropTypes.string,
+  }),
 
   /**
    * Specify an optional className to be added to your Animated Header

@@ -315,6 +315,7 @@ export interface ReactWrapperProps extends Omit<
   productVersion?: null;
   assistMeKey?: string;
   hasNewNotifications?: boolean;
+  forceBackendProxy?: boolean;
   capabilityProfileFooterLinks?: ProfileFooterLinks[];
   capabilityGlobalActions?: GlobalActionConfig[];
   searchConfigs?: Omit<SearchConfigs, 'callback' | 'submitCallback'>;
@@ -389,4 +390,10 @@ declare global {
   interface Window {
     _solis: solisWindowConfig;
   }
+}
+
+export interface solisSessionManagerConfig {
+  tokenRefreshInterval?: number;
+  idleTimeoutInterval?: number;
+  basePath?: string;
 }

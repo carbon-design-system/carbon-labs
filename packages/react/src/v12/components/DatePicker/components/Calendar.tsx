@@ -347,6 +347,9 @@ export function Calendar({
               key={index}
               type="button"
               className={dayClasses}
+              onMouseDown={(event) => {
+                event.preventDefault();
+              }}
               onClick={() => handleDateClick(date, isDisabled)}
               disabled={isDisabled}
               aria-label={`${monthNames[date.month - 1]} ${date.day}, ${

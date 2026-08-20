@@ -46,6 +46,23 @@ export const actions: ActionMap = {
         focusedDate,
       };
     },
+    /**
+     * Action for INPUT_FOCUS event
+     *
+     * @param {DatePickerContext} _context - The current context (unused)
+     * @param {DatePickerEvent} event - The event
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    INPUT_FOCUS: (
+      _context,
+      event: DatePickerEvent
+    ): Partial<DatePickerContext> => {
+      const payload = event.payload as InputFocusPayload;
+      return {
+        isFocused: true,
+        lastFocusedInput: payload?.inputType || 'from',
+      };
+    },
     /** Action for INPUT_BLUR event */
     INPUT_BLUR: () => ({
       isFocused: false,
@@ -54,10 +71,21 @@ export const actions: ActionMap = {
     OUTSIDE_CLICK: () => ({
       isOpen: false,
       isFocused: false,
+      restoreFocusTo: null,
+      shouldRestoreFocus: false,
     }),
-    /** Action for CALENDAR_CLOSE event */
-    CALENDAR_CLOSE: () => ({
+    /**
+     * Action for CALENDAR_CLOSE event
+     *
+     * @param {DatePickerContext} context - Current context
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    CALENDAR_CLOSE: (context) => ({
       isOpen: false,
+      restoreFocusTo: context.shouldRestoreFocus
+        ? context.restoreFocusTo
+        : null,
+      shouldRestoreFocus: context.shouldRestoreFocus,
     }),
   },
 
@@ -97,6 +125,24 @@ export const actions: ActionMap = {
         focusedDate,
       };
     },
+    /**
+     * Action for CALENDAR_ICON_CLICK event from FOCUSED state
+     * Behaves identically to CALENDAR_OPEN — opens the calendar preserving
+     * any existing viewDate/focusedDate context.
+     *
+     * @param {DatePickerContext} context - Current context
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    CALENDAR_ICON_CLICK: (context) => {
+      const viewDate =
+        context.viewDate || context.startDate || Temporal.Now.plainDateISO();
+      const focusedDate = context.focusedDate || context.startDate || null;
+      return {
+        isOpen: true,
+        viewDate,
+        focusedDate,
+      };
+    },
   },
 
   [DatePickerState.CALENDAR_OPEN]: {
@@ -127,6 +173,8 @@ export const actions: ActionMap = {
     OUTSIDE_CLICK: () => ({
       isOpen: false,
       isFocused: false,
+      restoreFocusTo: null,
+      shouldRestoreFocus: false,
     }),
     /**
      * Action for CALENDAR_ICON_CLICK event
@@ -171,6 +219,8 @@ export const actions: ActionMap = {
         viewDate: startDate, // Set view date to show the selected month
         focusedDate: startDate, // Set focused date to the selected start date
         isOpen: true, // Keep calendar open for selecting end date
+        restoreFocusTo: 'from',
+        shouldRestoreFocus: false,
       };
     },
     /**
@@ -194,7 +244,9 @@ export const actions: ActionMap = {
       return {
         startDate,
         value: plainDateToISOString(startDate),
-        isOpen: false, // Close calendar after selecting date in single mode
+        isOpen: _context.closeOnSelect ? false : _context.isOpen,
+        restoreFocusTo: _context.lastFocusedInput || 'from',
+        shouldRestoreFocus: _context.closeOnSelect,
       };
     },
     /**
@@ -300,6 +352,8 @@ export const actions: ActionMap = {
         startDate: context.focusedDate,
         value: plainDateToISOString(context.focusedDate),
         isOpen: context.closeOnSelect ? false : context.isOpen,
+        restoreFocusTo: context.lastFocusedInput || 'from',
+        shouldRestoreFocus: context.closeOnSelect,
       };
     },
     /**
@@ -554,6 +608,8 @@ export const actions: ActionMap = {
         startDate,
         endDate: null, // Reset end date when selecting a new start
         value: plainDateToISOString(startDate),
+        restoreFocusTo: 'from',
+        shouldRestoreFocus: false,
       };
     },
     /**
@@ -589,6 +645,8 @@ export const actions: ActionMap = {
         )}`,
         isOpen: false, // Always close after selecting end date in range mode
         lastFocusedInput: 'to', // Set to 'to' so the end date input gets updated
+        restoreFocusTo: 'to',
+        shouldRestoreFocus: true,
       };
     },
     /**
@@ -598,6 +656,8 @@ export const actions: ActionMap = {
      */
     ESCAPE_KEY: () => ({
       isOpen: false,
+      restoreFocusTo: null,
+      shouldRestoreFocus: false,
     }),
     /**
      * Action for TAB_KEY event - close calendar
@@ -606,6 +666,8 @@ export const actions: ActionMap = {
      */
     TAB_KEY: () => ({
       isOpen: false,
+      restoreFocusTo: null,
+      shouldRestoreFocus: false,
     }),
     /**
      * Action for ARROW_UP event - move focus up one week
@@ -841,6 +903,8 @@ export const actions: ActionMap = {
           finalEndDate
         )}`,
         isOpen: false, // Always close after selecting end date in range mode
+        restoreFocusTo: 'to',
+        shouldRestoreFocus: true,
       };
     },
     /**
@@ -906,6 +970,8 @@ export const actions: ActionMap = {
           startDate: date,
           value: plainDateToISOString(date),
           isOpen: context.closeOnSelect ? false : context.isOpen,
+          restoreFocusTo: context.lastFocusedInput || 'from',
+          shouldRestoreFocus: context.closeOnSelect,
         };
       }
 
@@ -944,12 +1010,23 @@ export const actions: ActionMap = {
           finalEndDate
         )}`,
         isOpen: context.closeOnSelect ? false : context.isOpen,
+        restoreFocusTo: 'to',
+        shouldRestoreFocus: context.closeOnSelect,
       };
     },
 
-    /** Action for CALENDAR_CLOSE event */
-    CALENDAR_CLOSE: () => ({
+    /**
+     * Action for CALENDAR_CLOSE event
+     *
+     * @param {DatePickerContext} context - Current context
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    CALENDAR_CLOSE: (context) => ({
       isOpen: false,
+      restoreFocusTo: context.shouldRestoreFocus
+        ? context.restoreFocusTo
+        : null,
+      shouldRestoreFocus: context.shouldRestoreFocus,
     }),
   },
 

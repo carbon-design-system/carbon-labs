@@ -23,6 +23,7 @@ import {
 import { TileGroup } from '../../components/AnimatedHeader/types';
 import type { HeaderActionConfig } from '../../components/HeaderAction/header-action.types';
 import type { ContentSwitcherConfig } from '../../components/ContentSwitcherSelector/ContentSwitcherSelector';
+import type { HeaderCarouselConfig } from '../../components/HeaderCarousel/header-carousel.types';
 import SampleCustomTaskContent from './SampleCustomTaskContent';
 
 export const workspaceData = [
@@ -280,6 +281,444 @@ export const headerTiles: TileGroup[] = [
     ],
   },
 ];
+
+export const carouselTileGroups: TileGroup[] = [
+  {
+    id: 101,
+    label: 'Guided journeys — page 1',
+    tiles: [
+      {
+        tileId: 'journey-1',
+        variant: 'glass',
+        href: '#',
+        title: 'Establish your business vocabulary',
+        subtitle: 'Journey 1',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 1: Establish your business vocabulary',
+      },
+      {
+        tileId: 'journey-2',
+        variant: 'glass',
+        href: '#',
+        title: 'Enrich data with business context',
+        subtitle: 'Journey 2',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 2: Enrich data with business context',
+      },
+      {
+        tileId: 'journey-3',
+        variant: 'glass',
+        href: '#',
+        title: 'Identify data quality issues',
+        subtitle: 'Journey 3',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 3: Identify data quality issues',
+      },
+      {
+        tileId: 'journey-4',
+        variant: 'glass',
+        href: '#',
+        title: 'Create a data product',
+        subtitle: 'Journey 4',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 4: Create a data product',
+      },
+    ],
+  },
+  {
+    id: 102,
+    label: 'Guided journeys — page 2',
+    tiles: [
+      {
+        tileId: 'journey-5',
+        variant: 'glass',
+        href: '#',
+        title: 'A guided journey name goes here',
+        subtitle: 'Journey 5',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 5: A guided journey name goes here',
+      },
+      {
+        tileId: 'journey-6',
+        variant: 'glass',
+        href: '#',
+        title: 'A guided journey name goes here',
+        subtitle: 'Journey 6',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 6: A guided journey name goes here',
+      },
+      {
+        tileId: 'journey-7',
+        variant: 'glass',
+        href: '#',
+        title: 'Another very long long long journey name goes here',
+        subtitle: 'Journey 7',
+        primaryIcon: ArrowRight,
+        ariaLabel:
+          'Journey 7: Another very long long long journey name goes here',
+      },
+      {
+        tileId: 'journey-8',
+        variant: 'glass',
+        href: '#',
+        title: 'A guided journey name goes here',
+        subtitle: 'Journey 8',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 8: A guided journey name goes here',
+      },
+    ],
+  },
+];
+
+export const carouselTileGroups3: TileGroup[] = [
+  ...carouselTileGroups,
+  {
+    id: 103,
+    label: 'Guided journeys — page 3',
+    tiles: [
+      {
+        tileId: 'journey-9',
+        variant: 'glass',
+        href: '#',
+        title: 'Publish and share your data product',
+        subtitle: 'Journey 9',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 9: Publish and share your data product',
+      },
+      {
+        tileId: 'journey-10',
+        variant: 'glass',
+        href: '#',
+        title: 'Monitor data lineage and impact',
+        subtitle: 'Journey 10',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 10: Monitor data lineage and impact',
+      },
+      {
+        tileId: 'journey-11',
+        variant: 'glass',
+        href: '#',
+        title: 'Define data access policies',
+        subtitle: 'Journey 11',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 11: Define data access policies',
+      },
+      {
+        tileId: 'journey-12',
+        variant: 'glass',
+        href: '#',
+        title: 'Classify sensitive data assets',
+        subtitle: 'Journey 12',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 12: Classify sensitive data assets',
+      },
+    ],
+  },
+];
+
+export const carouselTileGroups4: TileGroup[] = [
+  ...carouselTileGroups3,
+  {
+    id: 104,
+    label: 'Guided journeys — page 4',
+    tiles: [
+      {
+        tileId: 'journey-13',
+        variant: 'glass',
+        href: '#',
+        title: 'Automate data pipelines end-to-end',
+        subtitle: 'Journey 13',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 13: Automate data pipelines end-to-end',
+      },
+      {
+        tileId: 'journey-14',
+        variant: 'glass',
+        href: '#',
+        title: 'Set up real-time data streaming',
+        subtitle: 'Journey 14',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 14: Set up real-time data streaming',
+      },
+      {
+        tileId: 'journey-15',
+        variant: 'glass',
+        href: '#',
+        title: 'Build a self-service analytics workspace',
+        subtitle: 'Journey 15',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 15: Build a self-service analytics workspace',
+      },
+      {
+        tileId: 'journey-16',
+        variant: 'glass',
+        href: '#',
+        title: 'Connect and federate external data sources',
+        subtitle: 'Journey 16',
+        primaryIcon: ArrowRight,
+        ariaLabel: 'Journey 16: Connect and federate external data sources',
+      },
+    ],
+  },
+];
+
+/**
+ * 5 glass tiles — overflows to 2 pages (4 + 1).
+ * Demonstrates auto-pagination with glass-only tiles.
+ */
+export const overflowGlassTileGroup: TileGroup = {
+  id: 200,
+  label: 'Five glass tiles — auto paginated',
+  tiles: [
+    {
+      tileId: 'overflow-glass-1',
+      variant: 'glass',
+      href: '#',
+      title: 'Establish your business vocabulary',
+      subtitle: 'Journey 1',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 1: Establish your business vocabulary',
+    },
+    {
+      tileId: 'overflow-glass-2',
+      variant: 'glass',
+      href: '#',
+      title: 'Enrich data with business context',
+      subtitle: 'Journey 2',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 2: Enrich data with business context',
+    },
+    {
+      tileId: 'overflow-glass-3',
+      variant: 'glass',
+      href: '#',
+      title: 'Identify data quality issues',
+      subtitle: 'Journey 3',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 3: Identify data quality issues',
+    },
+    {
+      tileId: 'overflow-glass-4',
+      variant: 'glass',
+      href: '#',
+      title: 'Create a data product',
+      subtitle: 'Journey 4',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 4: Create a data product',
+    },
+    {
+      tileId: 'overflow-glass-5',
+      variant: 'glass',
+      href: '#',
+      title: 'Publish and share your data product',
+      subtitle: 'Journey 5',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 5: Publish and share your data product',
+    },
+  ],
+};
+
+/**
+ * 1 aiPrompt + 3 glass tiles — overflows to 2 pages (aiPrompt+2glass, 1glass).
+ * aiPrompt counts as 2 width-units so page 1 fills at: aiPrompt(2) + glass(1) + glass(1) = 4 units.
+ */
+export const overflowAiPromptTileGroup: TileGroup = {
+  id: 201,
+  label: 'AI Prompt + 3 glass tiles — auto paginated',
+  tiles: [
+    {
+      tileId: 'overflow-ai-prompt',
+      variant: 'aiPrompt',
+      href: '#',
+      title: 'Short description of the type of prompt',
+      primaryIcon: Term,
+      ariaLabel: 'Start a conversation with the AI assistant',
+      promptPlaceholder: 'Start chatting...',
+      aiLabelVariant: 'aiLabel',
+    },
+    {
+      tileId: 'overflow-ai-glass-1',
+      variant: 'glass',
+      href: '#',
+      title: 'Enrich data with business context',
+      subtitle: 'Journey 1',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 1: Enrich data with business context',
+    },
+    {
+      tileId: 'overflow-ai-glass-2',
+      variant: 'glass',
+      href: '#',
+      title: 'Identify data quality issues',
+      subtitle: 'Journey 2',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 2: Identify data quality issues',
+    },
+    {
+      tileId: 'overflow-ai-glass-3',
+      variant: 'glass',
+      href: '#',
+      title: 'Create a data product',
+      subtitle: 'Journey 3',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 3: Create a data product',
+    },
+  ],
+};
+
+/**
+ * 15 glass tiles — overflows to 4 pages (4 + 4 + 4 + 3).
+ * Demonstrates multi-page auto-pagination.
+ */
+export const overflowManyTileGroup: TileGroup = {
+  id: 202,
+  label: 'Fifteen glass tiles — auto paginated',
+  tiles: [
+    {
+      tileId: 'overflow-many-1',
+      variant: 'glass',
+      href: '#',
+      title: 'Establish your business vocabulary',
+      subtitle: 'Journey 1',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 1: Establish your business vocabulary',
+    },
+    {
+      tileId: 'overflow-many-2',
+      variant: 'glass',
+      href: '#',
+      title: 'Enrich data with business context',
+      subtitle: 'Journey 2',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 2: Enrich data with business context',
+    },
+    {
+      tileId: 'overflow-many-3',
+      variant: 'glass',
+      href: '#',
+      title: 'Identify data quality issues',
+      subtitle: 'Journey 3',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 3: Identify data quality issues',
+    },
+    {
+      tileId: 'overflow-many-4',
+      variant: 'glass',
+      href: '#',
+      title: 'Create a data product',
+      subtitle: 'Journey 4',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 4: Create a data product',
+    },
+    {
+      tileId: 'overflow-many-5',
+      variant: 'glass',
+      href: '#',
+      title: 'Publish and share your data product',
+      subtitle: 'Journey 5',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 5: Publish and share your data product',
+    },
+    {
+      tileId: 'overflow-many-6',
+      variant: 'glass',
+      href: '#',
+      title: 'Monitor data lineage and impact',
+      subtitle: 'Journey 6',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 6: Monitor data lineage and impact',
+    },
+    {
+      tileId: 'overflow-many-7',
+      variant: 'glass',
+      href: '#',
+      title: 'Define data access policies',
+      subtitle: 'Journey 7',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 7: Define data access policies',
+    },
+    {
+      tileId: 'overflow-many-8',
+      variant: 'glass',
+      href: '#',
+      title: 'Classify sensitive data assets',
+      subtitle: 'Journey 8',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 8: Classify sensitive data assets',
+    },
+    {
+      tileId: 'overflow-many-9',
+      variant: 'glass',
+      href: '#',
+      title: 'Automate data pipelines end-to-end',
+      subtitle: 'Journey 9',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 9: Automate data pipelines end-to-end',
+    },
+    {
+      tileId: 'overflow-many-10',
+      variant: 'glass',
+      href: '#',
+      title: 'Set up real-time data streaming',
+      subtitle: 'Journey 10',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 10: Set up real-time data streaming',
+    },
+    {
+      tileId: 'overflow-many-11',
+      variant: 'glass',
+      href: '#',
+      title: 'Build a self-service analytics workspace',
+      subtitle: 'Journey 11',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 11: Build a self-service analytics workspace',
+    },
+    {
+      tileId: 'overflow-many-12',
+      variant: 'glass',
+      href: '#',
+      title: 'Connect and federate external data sources',
+      subtitle: 'Journey 12',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 12: Connect and federate external data sources',
+    },
+    {
+      tileId: 'overflow-many-13',
+      variant: 'glass',
+      href: '#',
+      title: 'Govern AI models responsibly',
+      subtitle: 'Journey 13',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 13: Govern AI models responsibly',
+    },
+    {
+      tileId: 'overflow-many-14',
+      variant: 'glass',
+      href: '#',
+      title: 'Validate model performance at scale',
+      subtitle: 'Journey 14',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 14: Validate model performance at scale',
+    },
+    {
+      tileId: 'overflow-many-15',
+      variant: 'glass',
+      href: '#',
+      title: 'Deploy models to production',
+      subtitle: 'Journey 15',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 15: Deploy models to production',
+    },
+  ],
+};
+
+export const carouselConfig: HeaderCarouselConfig = {
+  ariaLabel: 'Journey pages',
+  prevButtonLabel: 'Previous journey page',
+  nextButtonLabel: 'Next journey page',
+};
+
+// ---------------------------------------------------------------------------
 
 export const tasksControllerConfigButton = {
   type: 'button',

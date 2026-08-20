@@ -60,8 +60,8 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
           >
             <label
               class="cds--label cds--visually-hidden"
-              for="downshift-:r2:-toggle-button"
-              id="downshift-:r2:-label"
+              for="downshift-:rq:-toggle-button"
+              id="downshift-:rq:-label"
             >
               Label
             </label>
@@ -71,12 +71,12 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
             >
               <button
                 aria-activedescendant=""
-                aria-controls="downshift-:r2:-menu"
+                aria-controls="downshift-:rq:-menu"
                 aria-expanded="false"
                 aria-haspopup="listbox"
                 aria-label="Select a task group"
                 class="cds--list-box__field"
-                id="downshift-:r2:-toggle-button"
+                id="downshift-:rq:-toggle-button"
                 role="combobox"
                 tabindex="0"
                 title="AI Prompt Tile w/ two glass tiles"
@@ -112,9 +112,9 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                 </div>
               </button>
               <ul
-                aria-labelledby="downshift-:r2:-label"
+                aria-labelledby="downshift-:rq:-label"
                 class="cds--list-box__menu"
-                id="downshift-:r2:-menu"
+                id="downshift-:rq:-menu"
                 role="listbox"
               />
             </div>
@@ -133,8 +133,8 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
           >
             <label
               class="cds--label cds--visually-hidden"
-              for="downshift-:r4:-toggle-button"
-              id="downshift-:r4:-label"
+              for="downshift-:rs:-toggle-button"
+              id="downshift-:rs:-label"
             >
               Label
             </label>
@@ -144,12 +144,12 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
             >
               <button
                 aria-activedescendant=""
-                aria-controls="downshift-:r4:-menu"
+                aria-controls="downshift-:rs:-menu"
                 aria-expanded="false"
                 aria-haspopup="listbox"
                 aria-label="Select a workspace"
                 class="cds--list-box__field"
-                id="downshift-:r4:-toggle-button"
+                id="downshift-:rs:-toggle-button"
                 role="combobox"
                 tabindex="0"
                 title="Select workspace"
@@ -185,9 +185,9 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                 </div>
               </button>
               <ul
-                aria-labelledby="downshift-:r4:-label"
+                aria-labelledby="downshift-:rs:-label"
                 class="cds--list-box__menu"
-                id="downshift-:r4:-menu"
+                id="downshift-:rs:-menu"
                 role="listbox"
               />
             </div>
@@ -252,13 +252,13 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                 </svg>
                 <div
                   class="cds--ai-label"
-                  id="AILabel-:r5:"
+                  id="AILabel-:rt:"
                 >
                   <span
                     class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--auto-align cds--autoalign cds--popover--bottom cds--toggletip cds--autoalign"
                   >
                     <button
-                      aria-controls="id-:r6:"
+                      aria-controls="id-:ru:"
                       aria-expanded="false"
                       aria-label="AI Show information"
                       class="cds--toggletip-button cds--ai-label__button cds--ai-label__button--xs cds--ai-label__button--default"
@@ -325,7 +325,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                     class="cds--tooltip-trigger__wrapper"
                   >
                     <button
-                      aria-labelledby="tooltip-:r9:"
+                      aria-labelledby="tooltip-:r11:"
                       class="clabs--animated-header__ai-prompt-tile--icon-button  cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--disabled cds--btn--icon-only"
                       disabled=""
                       type="button"
@@ -349,7 +349,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                   <span
                     aria-hidden="true"
                     class="cds--popover"
-                    id="tooltip-:r9:"
+                    id="tooltip-:r11:"
                     role="tooltip"
                   >
                     <span
@@ -491,6 +491,342 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
       <div
         class="clabs--animated-header__button-collapse--container"
       >
+        <div
+          aria-hidden="false"
+          class="clabs--animated-header__carousel"
+          data-expanded="true"
+        >
+          <span
+            aria-atomic="true"
+            aria-live="polite"
+            class="clabs--animated-header__carousel__live-region"
+          />
+          <span
+            class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip cds--icon-tooltip--disabled"
+          >
+            <div
+              class="cds--tooltip-trigger__wrapper"
+            >
+              <button
+                aria-labelledby="tooltip-:r1:"
+                class="cds--btn cds--btn--xs cds--layout--size-xs cds--btn--ghost cds--btn--disabled cds--btn--icon-only"
+                disabled=""
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M5 8 10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <span
+              aria-hidden="true"
+              class="cds--popover"
+              id="tooltip-:r1:"
+              role="tooltip"
+            >
+              <span
+                class="cds--popover-content cds--tooltip-content"
+              >
+                Previous page
+              </span>
+              <span
+                class="cds--popover-caret"
+              />
+            </span>
+          </span>
+          <div
+            aria-label="Pages"
+            class="clabs--animated-header__carousel__dots"
+            role="group"
+          >
+            <span
+              class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip"
+            >
+              <div
+                class="cds--tooltip-trigger__wrapper"
+              >
+                <button
+                  aria-labelledby="tooltip-:r4:"
+                  aria-pressed="true"
+                  class="clabs--animated-header__carousel__dot clabs--animated-header__carousel__dot--active"
+                  type="button"
+                />
+              </div>
+              <span
+                aria-hidden="true"
+                class="cds--popover"
+                id="tooltip-:r4:"
+                role="tooltip"
+              >
+                <span
+                  class="cds--popover-content cds--tooltip-content"
+                >
+                  Page 1
+                </span>
+                <span
+                  class="cds--popover-caret"
+                />
+              </span>
+            </span>
+            <span
+              class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip"
+            >
+              <div
+                class="cds--tooltip-trigger__wrapper"
+              >
+                <button
+                  aria-labelledby="tooltip-:r6:"
+                  aria-pressed="false"
+                  class="clabs--animated-header__carousel__dot"
+                  type="button"
+                />
+              </div>
+              <span
+                aria-hidden="true"
+                class="cds--popover"
+                id="tooltip-:r6:"
+                role="tooltip"
+              >
+                <span
+                  class="cds--popover-content cds--tooltip-content"
+                >
+                  Page 2
+                </span>
+                <span
+                  class="cds--popover-caret"
+                />
+              </span>
+            </span>
+            <span
+              class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip"
+            >
+              <div
+                class="cds--tooltip-trigger__wrapper"
+              >
+                <button
+                  aria-labelledby="tooltip-:r8:"
+                  aria-pressed="false"
+                  class="clabs--animated-header__carousel__dot"
+                  type="button"
+                />
+              </div>
+              <span
+                aria-hidden="true"
+                class="cds--popover"
+                id="tooltip-:r8:"
+                role="tooltip"
+              >
+                <span
+                  class="cds--popover-content cds--tooltip-content"
+                >
+                  Page 3
+                </span>
+                <span
+                  class="cds--popover-caret"
+                />
+              </span>
+            </span>
+            <span
+              class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip"
+            >
+              <div
+                class="cds--tooltip-trigger__wrapper"
+              >
+                <button
+                  aria-labelledby="tooltip-:ra:"
+                  aria-pressed="false"
+                  class="clabs--animated-header__carousel__dot"
+                  type="button"
+                />
+              </div>
+              <span
+                aria-hidden="true"
+                class="cds--popover"
+                id="tooltip-:ra:"
+                role="tooltip"
+              >
+                <span
+                  class="cds--popover-content cds--tooltip-content"
+                >
+                  Page 4
+                </span>
+                <span
+                  class="cds--popover-caret"
+                />
+              </span>
+            </span>
+            <span
+              class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip"
+            >
+              <div
+                class="cds--tooltip-trigger__wrapper"
+              >
+                <button
+                  aria-labelledby="tooltip-:rc:"
+                  aria-pressed="false"
+                  class="clabs--animated-header__carousel__dot"
+                  type="button"
+                />
+              </div>
+              <span
+                aria-hidden="true"
+                class="cds--popover"
+                id="tooltip-:rc:"
+                role="tooltip"
+              >
+                <span
+                  class="cds--popover-content cds--tooltip-content"
+                >
+                  Page 5
+                </span>
+                <span
+                  class="cds--popover-caret"
+                />
+              </span>
+            </span>
+            <span
+              class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip"
+            >
+              <div
+                class="cds--tooltip-trigger__wrapper"
+              >
+                <button
+                  aria-labelledby="tooltip-:re:"
+                  aria-pressed="false"
+                  class="clabs--animated-header__carousel__dot"
+                  type="button"
+                />
+              </div>
+              <span
+                aria-hidden="true"
+                class="cds--popover"
+                id="tooltip-:re:"
+                role="tooltip"
+              >
+                <span
+                  class="cds--popover-content cds--tooltip-content"
+                >
+                  Page 6
+                </span>
+                <span
+                  class="cds--popover-caret"
+                />
+              </span>
+            </span>
+            <span
+              class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip"
+            >
+              <div
+                class="cds--tooltip-trigger__wrapper"
+              >
+                <button
+                  aria-labelledby="tooltip-:rg:"
+                  aria-pressed="false"
+                  class="clabs--animated-header__carousel__dot"
+                  type="button"
+                />
+              </div>
+              <span
+                aria-hidden="true"
+                class="cds--popover"
+                id="tooltip-:rg:"
+                role="tooltip"
+              >
+                <span
+                  class="cds--popover-content cds--tooltip-content"
+                >
+                  Page 7
+                </span>
+                <span
+                  class="cds--popover-caret"
+                />
+              </span>
+            </span>
+            <span
+              class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip"
+            >
+              <div
+                class="cds--tooltip-trigger__wrapper"
+              >
+                <button
+                  aria-labelledby="tooltip-:ri:"
+                  aria-pressed="false"
+                  class="clabs--animated-header__carousel__dot"
+                  type="button"
+                />
+              </div>
+              <span
+                aria-hidden="true"
+                class="cds--popover"
+                id="tooltip-:ri:"
+                role="tooltip"
+              >
+                <span
+                  class="cds--popover-content cds--tooltip-content"
+                >
+                  Page 8
+                </span>
+                <span
+                  class="cds--popover-caret"
+                />
+              </span>
+            </span>
+          </div>
+          <span
+            class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--icon-tooltip"
+          >
+            <div
+              class="cds--tooltip-trigger__wrapper"
+            >
+              <button
+                aria-labelledby="tooltip-:rl:"
+                class="cds--btn cds--btn--xs cds--layout--size-xs cds--btn--ghost cds--btn--icon-only"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M11 8 6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <span
+              aria-hidden="true"
+              class="cds--popover"
+              id="tooltip-:rl:"
+              role="tooltip"
+            >
+              <span
+                class="cds--popover-content cds--tooltip-content"
+              >
+                Next page
+              </span>
+              <span
+                class="cds--popover-caret"
+              />
+            </span>
+          </span>
+        </div>
         <button
           aria-controls="clabs--animated-header-content"
           aria-expanded="true"

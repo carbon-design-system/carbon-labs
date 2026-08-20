@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.59.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.58.0...@carbon-labs/react-animated-header@0.59.0) (2026-08-20)
+
+
+### Features
+
+* **animated-header:** animated header carousel auto pagination ([#1347](https://github.com/carbon-design-system/carbon-labs/issues/1347)) ([bb5e981](https://github.com/carbon-design-system/carbon-labs/commit/bb5e98154ebb9c8c727770f06569b58cfc36e8ae))
+
+
+
+
+
+# [0.58.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.57.0...@carbon-labs/react-animated-header@0.58.0) (2026-08-19)
+
+
+### Features
+
+* **animated-header:** Update header to have page carousel ([#1300](https://github.com/carbon-design-system/carbon-labs/issues/1300)) ([3d3d106](https://github.com/carbon-design-system/carbon-labs/commit/3d3d106e249bbd676843ab2bd2085651ffa363c1))
+
+
+
+
+
+# [0.57.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.56.0...@carbon-labs/react-animated-header@0.57.0) (2026-08-13)
+
+**Note:** Version bump only for package @carbon-labs/react-animated-header
+
+
+
+
+
+# [0.56.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.54.0...@carbon-labs/react-animated-header@0.56.0) (2026-08-12)
+
+**Note:** Version bump only for package @carbon-labs/react-animated-header
+
+
+
+
+
+# [0.55.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.54.0...@carbon-labs/react-animated-header@0.55.0) (2026-08-11)
+
+**Note:** Version bump only for package @carbon-labs/react-animated-header
+
+
+
+
+
 # [0.54.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.53.0...@carbon-labs/react-animated-header@0.54.0) (2026-06-02)
 
 **Note:** Version bump only for package @carbon-labs/react-animated-header

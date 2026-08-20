@@ -28,6 +28,7 @@ import HeaderAction from '../HeaderAction/HeaderAction';
 import type { HeaderActionProps } from '../HeaderAction/header-action.types';
 import type { HeaderCarouselConfig } from '../HeaderCarousel/header-carousel.types';
 import HeaderCarousel from '../HeaderCarousel/HeaderCarousel';
+import { chunkTilesByWidth } from '../utils';
 
 const AnimatedBackground = lazy(
   () => import('../AnimatedBackground/AnimatedBackground')
@@ -83,6 +84,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   const blockClass = `${prefix}--animated-header`;
 
   const [isOpen, setIsOpen] = useState(true);
+
   // Track whether we have hydrated. The animated background is suppressed on
   // the first render so that the server HTML and the initial client render are
   // identical — avoiding a Suspense-driven tree mismatch.
@@ -91,19 +93,36 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
     setHasMounted(true);
   }, []);
 
+  const [autoPage, setAutoPage] = useState(0);
+
   const handleButtonCollapseClick = () => {
     setIsOpen(!isOpen);
   };
 
-  const currentPage = carouselConfig?.currentPage ?? 0;
-  const onPageChange = carouselConfig?.onPageChange;
+  // --- Pagination derivation ---
+  // Auto-chunk: split selectedTileGroup tiles into pages by visual width units.
+  // aiPrompt = 2 units, glass / ai = 1 unit each. Max 4 units per page.
+  // Falls back to the legacy allTileGroups path when selectedTileGroup does not
+  // need pagination (i.e. fits on one page).
+  const tileChunks =
+    selectedTileGroup && chunkTilesByWidth(selectedTileGroup.tiles).length > 1
+      ? chunkTilesByWidth(selectedTileGroup.tiles)
+      : null;
 
-  const activeTileGroup = carouselConfig
-    ? allTileGroups?.[currentPage]
+  const pageGroups: TileGroup[] | null = tileChunks
+    ? tileChunks.map((chunk, i) => ({
+        ...selectedTileGroup!,
+        id: selectedTileGroup!.id * 1000 + i,
+        tiles: chunk,
+      }))
+    : (allTileGroups ?? null);
+
+  const totalPages = pageGroups?.length ?? 1;
+  const currentPage = autoPage;
+  const activeTileGroup = pageGroups
+    ? pageGroups[currentPage]
     : selectedTileGroup;
-
-  const totalPages = allTileGroups?.length ?? 0;
-  const showCarousel = !!carouselConfig && totalPages > 1;
+  const showCarousel = totalPages > 1;
 
   return (
     <header className={blockClass} data-expanded={isOpen}>
@@ -237,7 +256,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
             <HeaderCarousel
               currentPage={currentPage}
               totalPages={totalPages}
-              onPageChange={onPageChange ?? (() => {})}
+              onPageChange={setAutoPage}
               headerExpanded={isOpen}
               config={carouselConfig}
               ariaLabels={ariaLabels}
@@ -277,14 +296,12 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   ariaLabels: PropTypes.object,
 
   /**
-   * Configuration object that enables the carousel pagination controls.
-   * `currentPage` and `onPageChange` live inside this config.
+   * Optional label and accessibility overrides for the carousel pagination
+   * controls. Pagination activates automatically — this config is not required.
    */
   carouselConfig: PropTypes.shape({
     ariaLabel: PropTypes.string,
-    currentPage: PropTypes.number,
     nextButtonLabel: PropTypes.string,
-    onPageChange: PropTypes.func,
     prevButtonLabel: PropTypes.string,
   }),
 

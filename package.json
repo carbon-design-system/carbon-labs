@@ -11,7 +11,8 @@
   },
   "workspaces": [
     "packages/*",
-    "packages/*/**",
+    "packages/*/src/components/*",
+    "packages/*/src/v12/components/*",
     "tools/*"
   ],
   "scripts": {

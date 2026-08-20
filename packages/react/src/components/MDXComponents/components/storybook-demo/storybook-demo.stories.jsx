@@ -81,3 +81,53 @@ Default.args = {
   tall: false,
   lazy: false,
 };
+
+const actionableNotificationVariants = [
+  {
+    label: 'Default',
+    variant: 'components-notifications-actionable--default',
+  },
+  {
+    label: 'Low contrast',
+    variant: 'components-notifications-actionable--low-contrast',
+  },
+];
+
+/* eslint-disable react/forbid-dom-props */
+/**
+ * Scroll down to see the StorybookDemo iframe below the fold.
+ * With lazy=true the iframe src is only set once the "full demo" Link at the
+ * bottom of the component enters the viewport — by that point the page is
+ * already scrolled to the demo, so focus-stealing stories can't cause a jump.
+ */
+export const LazyLoadTest = (args) => (
+  <div>
+    <div
+      style={{
+        height: '90vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderBottom: '1px dashed #8d8d8d',
+      }}>
+      <p style={{ fontFamily: 'sans-serif', color: '#525252' }}>
+        ↓ Scroll down — the StorybookDemo iframe is below this spacer. With
+        lazy=true the iframe src should only be set once the component is fully
+        in view. Check the Network tab before scrolling to confirm.
+      </p>
+    </div>
+    <StorybookDemo
+      {...args}
+      url="https://react.carbondesignsystem.com"
+      variants={actionableNotificationVariants}
+    />
+  </div>
+);
+/* eslint-enable react/forbid-dom-props */
+LazyLoadTest.args = {
+  themeSelector: true,
+  wide: false,
+  tall: false,
+  lazy: true,
+};
+LazyLoadTest.storyName = 'Lazy load test (iframe below fold)';

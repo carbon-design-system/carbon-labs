@@ -8,6 +8,7 @@
 import { Extension, Mark, mergeAttributes } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
 import { html } from 'lit';
+import { styleMap } from 'lit/directives/style-map.js';
 import TextBold from '@carbon/icons/es/text--bold/16.js';
 import TextItalic from '@carbon/icons/es/text--italic/16.js';
 import TextUnderline from '@carbon/icons/es/text--underline/16.js';
@@ -17,6 +18,7 @@ import '@carbon/web-components/es/components/icon-button/index.js';
 import { BASE_CLASS } from '../constants.js';
 import type { ExtensionWithToolbar, ToolbarSize } from '../types.js';
 import { cmdButton } from './button-helper.js';
+import { toolbarGroupPopover } from './popover-utils.js';
 import Bold from '@tiptap/extension-bold';
 import Italic from '@tiptap/extension-italic';
 import Underline from '@tiptap/extension-underline';
@@ -93,16 +95,57 @@ const BUTTONS = [
 
 /**
  * Renders the text formatting toolbar with formatting controls.
+ * On compact (mobile) widths the buttons collapse into a caret popover.
  * @param {Editor | null} editor - The TipTap editor instance
  * @param {ToolbarSize} toolbarSize - Size of the toolbar buttons
+ * @param {boolean} compact - Whether the toolbar is in the compact layout
  */
 TextFormatting.toolbarRender = (
   editor: Editor | null,
-  toolbarSize: ToolbarSize = 'md'
-) => html`
-  <div class="${BASE_CLASS}__toolbar-group">
-    ${BUTTONS.map(([icon, cmd, active, tooltip]) =>
-      cmdButton(icon, editor, cmd, toolbarSize, { active, tooltip })
-    )}
-  </div>
-`;
+  toolbarSize: ToolbarSize = 'md',
+  compact = false
+) => {
+  /**
+   * Formatting buttons. `onDone` closes the compact popover after a command.
+   * @param {() => void} [onDone] - Closes the popover
+   * @returns {import('lit').TemplateResult[]} Formatting buttons
+   */
+  const buttons = (onDone?: () => void) =>
+    BUTTONS.map(([icon, cmd, active, tooltip]) =>
+      cmdButton(icon, editor, cmd, toolbarSize, { active, tooltip, onDone })
+    );
+
+  if (!compact) {
+    return html` <div class="${BASE_CLASS}__toolbar-group">${buttons()}</div> `;
+  }
+
+  const decorations = [
+    editor?.isActive('underline') && 'underline',
+    editor?.isActive('strike') && 'line-through',
+  ].filter(Boolean) as string[];
+
+  return toolbarGroupPopover({
+    tooltip: 'Text Formatting',
+    toolbarSize,
+    selected: BUTTONS.some(([, , active]) => editor?.isActive(active)),
+    editor,
+    iconContent: html`
+      <span
+        slot="icon"
+        class="${BASE_CLASS}__format-preview${editor?.isActive('code')
+          ? ` ${BASE_CLASS}__format-preview--code`
+          : ''}"
+        style=${styleMap({
+          fontWeight: editor?.isActive('bold') ? '700' : undefined,
+          fontStyle: editor?.isActive('italic') ? 'italic' : undefined,
+          textDecoration: decorations.join(' ') || undefined,
+          fontFamily: editor?.isActive('code')
+            ? "'IBM Plex Mono', monospace"
+            : undefined,
+        })}>
+        A
+      </span>
+    `,
+    items: buttons,
+  });
+};

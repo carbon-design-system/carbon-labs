@@ -1,0 +1,291 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as FocusRegionStories from './FocusRegion.stories';
+
+<Meta isTemplate />
+
+# FocusRegion
+
+- **Initiative owner(s):** Accessibility
+- **Status:** Incubating
+- **Target library:** Carbon Labs React
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/FocusRegion)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/FocusRegion)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Getting started](#getting-started)
+- [Component API](#component-api)
+- [Keyboard Interactions](#keyboard-interactions)
+- [Accessibility](#accessibility)
+- [Examples](#examples)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+**FocusRegion** is a React component that provides efficient keyboard navigation between major sections of a page using F6/Shift+F6, following established accessibility patterns from the ARIA authoring practices.
+
+### Problem Statement
+
+Modern web applications often have complex layouts with multiple interactive regions (headers, sidebars, main content, modals). Users navigating via keyboard need an efficient way to move between these regions without tabbing through every element. Screen reader users can navigate by landmarks, but keyboard-only users lack an equivalent mechanism.
+
+FocusRegion solves this by:
+- Providing F6/Shift+F6 navigation to move between regions
+- Maintaining "focus location" memory - each region remembers the last focused element
+- Supporting modal behavior where F6 navigation is restricted to specific regions
+- Working seamlessly with Carbon's modal components for focus trapping
+- Handling empty regions gracefully
+- Supporting shadow DOM traversal
+
+### Key Features
+
+- **Normal Tab Behavior**: Tab and Shift+Tab work naturally through the entire page - no tab trapping
+- **F6 Navigation**: F6 and Shift+F6 move focus between regions, returning to the last focused element in each region
+- **Focus Location Memory**: Each region remembers where focus was, so you can quickly return to your work
+- **Modal Support**: Group regions and restrict F6 navigation to active modal groups
+- **Carbon Integration**: Works seamlessly with Carbon Modal, Dialog, and Tearsheet components
+- **Empty Region Handling**: Regions without tabbable children can still receive focus
+- **Shadow DOM Support**: Correctly traverses shadow DOM boundaries when finding tabbable elements
+- **Semantic HTML**: Automatically uses appropriate elements (`<main>`, `<nav>`, `<aside>`, etc.) based on role
+- **Accessibility First**: Built-in warnings for missing labels and singleton role violations
+
+## Getting started
+
+### Installation
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-focus-region
+```
+
+### JS (via import)
+
+```javascript
+import { FocusRegion } from '@carbon-labs/react-focus-region/es/index';
+import { useFocusGroupModal } from '@carbon-labs/react-focus-region/es/hooks/useFocusGroupModal';
+
+function App() {
+  return (
+    <>
+      <FocusRegion id="header" aria-label="Header" role="banner">
+        <button>Home</button>
+        <button>About</button>
+      </FocusRegion>
+      
+      <FocusRegion id="main" aria-label="Main content" role="main" defaultFocus>
+        <input type="text" placeholder="Search..." />
+        <button>Submit</button>
+      </FocusRegion>
+    </>
+  );
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import:
+
+```scss
+@use '@carbon/react';
+@use '@carbon-labs/react-focus-region/scss/focus-region';
+```
+
+## Component API
+
+### FocusRegion Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `id` | `string` | **Required** | Unique identifier for this region. |
+| `enabled` | `boolean` | `true` | Whether this region participates in F6 navigation. When `false`, the region is skipped during F6 navigation. |
+| `defaultFocus` | `boolean` | `false` | Marks this region to receive focus on page load. Only the first instance with `defaultFocus={true}` is respected. |
+| `role` | `string` | `'region'` | ARIA role for the region. Options: `'region'`, `'main'`, `'navigation'`, `'complementary'`, `'banner'`, `'contentinfo'`, `'search'`. The component automatically renders the appropriate semantic HTML element. |
+| `aria-label` | `string` | - | **Required** - Accessible label for the region. An unlabeled `role="region"` is not exposed as a landmark. |
+| `aria-labelledby` | `string` | - | Alternative to `aria-label` when an existing visible element can name the region. |
+| `groupId` | `string` | - | Group ID this region belongs to. Used for modal behavior to restrict F6 navigation. |
+| `children` | `React.ReactNode` | - | Child elements to render within the region. |
+| `className` | `string` | - | Additional CSS class names. |
+| `style` | `React.CSSProperties` | - | Additional inline styles. |
+
+### useFocusGroupModal Hook
+
+```typescript
+const { pushModal, popModal, activeGroupId, stack } = useFocusGroupModal();
+```
+
+#### Methods
+
+**`pushModal(groupId: string, options?: PushModalOptions)`**
+
+Pushes a group ID onto the modal stack, making it the active modal context. Captures current focus for later restoration.
+
+Options:
+- `initialFocus`: CSS selector or React ref for the element that should receive focus when the modal opens
+
+**`popModal(groupId?: string)`**
+
+Removes a group from the modal stack and restores focus. If `groupId` is provided, removes that specific group (with a warning if not at top of stack). If omitted, removes the top entry.
+
+#### Return Values
+
+- `activeGroupId`: The currently active modal group ID (or `null` if no modal is active)
+- `stack`: The full modal stack (for debugging)
+
+## Keyboard Interactions
+
+| Key | Behavior |
+|-----|----------|
+| `Tab` | Move to next tabbable element in natural DOM order. Works normally across the entire page - **no tab trapping**. |
+| `Shift+Tab` | Move to previous tabbable element in natural DOM order. Works normally across the entire page - **no tab trapping**. |
+| `F6` | Move focus to the **focus location** of the next enabled FocusRegion in DOM order. The focus location is the last element that had focus in that region. If the region has never been visited, focus moves to the first tabbable element. If the region is empty, focus moves to the region container itself. |
+| `Shift+F6` | Move focus to the **focus location** of the previous enabled FocusRegion in DOM order. Wraps from first to last region. |
+
+### Important Notes
+
+- **Normal Tab Order**: Tab and Shift+Tab work exactly as they normally would - they move through all tabbable elements in DOM order across the entire page. FocusRegion does not interfere with normal tab navigation.
+- **Focus Location Memory**: Each region tracks the last element that received focus within it. When you navigate to a region via F6, focus moves to that remembered location, allowing you to quickly return to where you were working.
+- **Modal Behavior**: When a modal is active (via `pushModal()`), F6 navigation is restricted to only regions with the active `groupId`. Tab behavior is handled by the Carbon modal component (which provides tab wrapping within the modal).
+- **Disabled Regions**: Regions with `enabled={false}` are skipped during F6 navigation but remain in the normal tab order.
+- **Empty Regions**: If a region has no tabbable elements, F6 will focus the region container itself (which has `tabindex="-1"`).
+
+### Integration with Carbon Modals
+
+FocusRegion is designed to work seamlessly with Carbon's Modal, Dialog, and Tearsheet components:
+
+- **Carbon handles tab trapping**: Carbon modal components automatically wrap Tab/Shift+Tab within the modal
+- **FocusRegion handles F6 navigation**: Use `groupId` to restrict F6 navigation to modal regions
+- **Focus restoration**: When the modal closes, focus is automatically restored to the element that opened it
+
+```jsx
+import { Modal } from '@carbon/react';
+import { FocusRegion, useFocusGroupModal } from '@carbon-labs/react-focus-region';
+
+function MyComponent() {
+  const [isOpen, setIsOpen] = useState(false);
+  const { pushModal, popModal } = useFocusGroupModal();
+
+  const handleOpen = () => {
+    setIsOpen(true);
+    pushModal('my-dialog');
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+    popModal('my-dialog');
+  };
+
+  return (
+    <>
+      <FocusRegion id="main" aria-label="Main content" role="main">
+        <button onClick={handleOpen}>Open Dialog</button>
+      </FocusRegion>
+
+      <Modal open={isOpen} onRequestClose={handleClose}>
+        <FocusRegion id="modal-form" groupId="my-dialog" aria-label="Form" role="region">
+          <input type="text" placeholder="Name" />
+          <input type="email" placeholder="Email" />
+        </FocusRegion>
+        <FocusRegion id="modal-actions" groupId="my-dialog" aria-label="Actions" role="region">
+          <button onClick={handleClose}>Cancel</button>
+          <button>Submit</button>
+        </FocusRegion>
+      </Modal>
+    </>
+  );
+}
+```
+
+## Accessibility
+
+### Landmark Roles
+
+Every FocusRegion renders as an ARIA landmark. The default role is `region`, which **requires** an accessible name to be surfaced by screen readers.
+
+**Required**: Always provide either `aria-label` or `aria-labelledby`. In development mode, a warning is emitted if both are absent.
+
+```jsx
+// ✅ Good - has accessible label
+<FocusRegion id="main" aria-label="Main content" role="main">
+  {/* content */}
+</FocusRegion>
+
+// ✅ Good - labeled by existing element
+<FocusRegion id="sidebar" aria-labelledby="sidebar-heading" role="navigation">
+  <h2 id="sidebar-heading">Navigation</h2>
+  {/* content */}
+</FocusRegion>
+
+// ❌ Bad - no accessible label (warning in dev mode)
+<FocusRegion id="region1" role="region">
+  {/* content */}
+</FocusRegion>
+```
+
+### Semantic HTML Elements
+
+The component automatically renders the appropriate semantic HTML element based on the `role` prop:
+
+- `role="main"` → `<main>`
+- `role="navigation"` → `<nav>`
+- `role="complementary"` → `<aside>`
+- `role="banner"` → `<header>`
+- `role="contentinfo"` → `<footer>`
+- `role="region"` (default) → `<section>`
+
+### Singleton Roles
+
+Some ARIA roles should only appear once per page: `main`, `banner`, `contentinfo`. In development mode, a warning is emitted if these roles appear on multiple FocusRegion instances.
+
+### Screen Reader Navigation vs F6
+
+- **Screen reader landmark navigation** (e.g., `R` key in NVDA/JAWS) allows screen reader users to jump between landmarks
+- **F6 keyboard navigation** provides a similar mechanism for keyboard-only users who aren't using screen readers
+- These two navigation methods complement each other and should both be supported
+
+### Empty Regions
+
+When a FocusRegion has no tabbable children:
+- The region root itself receives focus when navigated to via F6
+- The region root has `tabindex="-1"` to allow programmatic focus
+- Tab and Shift+Tab work normally (move to next/previous tabbable element in DOM)
+- F6 and Shift+F6 continue to work normally
+- A meaningful `aria-label` is critical so screen readers can announce something useful
+- The focused region root displays a visible focus indicator meeting WCAG 2.4.11
+
+## Examples
+
+### Default Example
+
+<Canvas of={FocusRegionStories.Default} />
+
+### With Modal
+
+<Canvas of={FocusRegionStories.WithModal} />
+
+### With Disabled Regions
+
+<Canvas of={FocusRegionStories.WithDisabledRegions} />
+
+### Focus Location Tracking
+
+<Canvas of={FocusRegionStories.FocusLocationTracking} />
+
+### With Navigation Hint
+
+<Canvas of={FocusRegionStories.WithNavigationHint} />
+
+## Component Props
+
+<ArgTypes of={FocusRegionStories} />

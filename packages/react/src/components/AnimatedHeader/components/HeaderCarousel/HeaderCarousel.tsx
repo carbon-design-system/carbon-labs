@@ -47,7 +47,14 @@ const HeaderCarousel: React.FC<HeaderCarouselProps> = ({
   const nextLabel =
     config?.nextButtonLabel ?? ariaLabels?.carouselNextButton ?? 'Next page';
 
-  const dotLabelTemplate = ariaLabels?.carouselDot ?? 'Page {n}';
+  const getDotLabel = (i: number): string => {
+    const pageNumber = i + 1;
+    if (config?.getPageIndicatorLabel) {
+      return config.getPageIndicatorLabel(pageNumber);
+    }
+    const template = ariaLabels?.carouselDot ?? 'Page {n}';
+    return template.replace('{n}', String(pageNumber));
+  };
 
   // Live region ref — announce page change to screen readers
   const liveRef = useRef<HTMLSpanElement>(null);
@@ -88,9 +95,9 @@ const HeaderCarousel: React.FC<HeaderCarouselProps> = ({
       <div className={`${blockClass}__dots`} role="group" aria-label="Pages">
         {Array.from({ length: totalPages }).map((_, i) => {
           const isActive = i === currentPage;
-          const dotLabel = dotLabelTemplate.replace('{n}', String(i + 1));
+          const pageIndicatorLabel = getDotLabel(i);
           return (
-            <Tooltip key={i} label={dotLabel} align="top">
+            <Tooltip key={i} label={pageIndicatorLabel} align="top">
               <button
                 type="button"
                 className={`${blockClass}__dot${isActive ? ` ${blockClass}__dot--active` : ''}`}

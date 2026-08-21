@@ -712,10 +712,189 @@ export const overflowManyTileGroup: TileGroup = {
   ],
 };
 
+/**
+ * 16 glass tiles — overflows to 4 even pages (4 + 4 + 4 + 4).
+ * Designed to demonstrate `getPageIndicatorLabel` with named pages.
+ */
+export const overflowNamedPagesTileGroup: TileGroup = {
+  id: 203,
+  label: 'Sixteen glass tiles — named pages',
+  tiles: [
+    {
+      tileId: 'named-1',
+      variant: 'glass',
+      href: '#',
+      title: 'Establish your business vocabulary',
+      subtitle: 'Journey 1',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 1: Establish your business vocabulary',
+    },
+    {
+      tileId: 'named-2',
+      variant: 'glass',
+      href: '#',
+      title: 'Enrich data with business context',
+      subtitle: 'Journey 2',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 2: Enrich data with business context',
+    },
+    {
+      tileId: 'named-3',
+      variant: 'glass',
+      href: '#',
+      title: 'Identify data quality issues',
+      subtitle: 'Journey 3',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 3: Identify data quality issues',
+    },
+    {
+      tileId: 'named-4',
+      variant: 'glass',
+      href: '#',
+      title: 'Create a data product',
+      subtitle: 'Journey 4',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 4: Create a data product',
+    },
+    {
+      tileId: 'named-5',
+      variant: 'glass',
+      href: '#',
+      title: 'Publish and share your data product',
+      subtitle: 'Journey 5',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 5: Publish and share your data product',
+    },
+    {
+      tileId: 'named-6',
+      variant: 'glass',
+      href: '#',
+      title: 'Monitor data lineage and impact',
+      subtitle: 'Journey 6',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 6: Monitor data lineage and impact',
+    },
+    {
+      tileId: 'named-7',
+      variant: 'glass',
+      href: '#',
+      title: 'Define data access policies',
+      subtitle: 'Journey 7',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 7: Define data access policies',
+    },
+    {
+      tileId: 'named-8',
+      variant: 'glass',
+      href: '#',
+      title: 'Classify sensitive data assets',
+      subtitle: 'Journey 8',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 8: Classify sensitive data assets',
+    },
+    {
+      tileId: 'named-9',
+      variant: 'glass',
+      href: '#',
+      title: 'Automate data pipelines end-to-end',
+      subtitle: 'Journey 9',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 9: Automate data pipelines end-to-end',
+    },
+    {
+      tileId: 'named-10',
+      variant: 'glass',
+      href: '#',
+      title: 'Set up real-time data streaming',
+      subtitle: 'Journey 10',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 10: Set up real-time data streaming',
+    },
+    {
+      tileId: 'named-11',
+      variant: 'glass',
+      href: '#',
+      title: 'Build a self-service analytics workspace',
+      subtitle: 'Journey 11',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 11: Build a self-service analytics workspace',
+    },
+    {
+      tileId: 'named-12',
+      variant: 'glass',
+      href: '#',
+      title: 'Connect and federate external data sources',
+      subtitle: 'Journey 12',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 12: Connect and federate external data sources',
+    },
+    {
+      tileId: 'named-13',
+      variant: 'glass',
+      href: '#',
+      title: 'Govern AI models responsibly',
+      subtitle: 'Journey 13',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 13: Govern AI models responsibly',
+    },
+    {
+      tileId: 'named-14',
+      variant: 'glass',
+      href: '#',
+      title: 'Validate model performance at scale',
+      subtitle: 'Journey 14',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 14: Validate model performance at scale',
+    },
+    {
+      tileId: 'named-15',
+      variant: 'glass',
+      href: '#',
+      title: 'Deploy models to production',
+      subtitle: 'Journey 15',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 15: Deploy models to production',
+    },
+    {
+      tileId: 'named-16',
+      variant: 'glass',
+      href: '#',
+      title: 'Monitor deployed model health',
+      subtitle: 'Journey 16',
+      primaryIcon: ArrowRight,
+      ariaLabel: 'Journey 16: Monitor deployed model health',
+    },
+  ],
+};
+
 export const carouselConfig: HeaderCarouselConfig = {
   ariaLabel: 'Journey pages',
   prevButtonLabel: 'Previous journey page',
   nextButtonLabel: 'Next journey page',
+};
+
+/** getPageIndicatorLabel as a translation function — returns a translated label per page number */
+export const carouselConfigPageLabelTemplate: HeaderCarouselConfig = {
+  ariaLabel: 'Journey pages',
+  prevButtonLabel: 'Vorherige Seite',
+  nextButtonLabel: 'Nächste Seite',
+  getPageIndicatorLabel: (n) => `Seite ${n}`,
+};
+
+/** getPageIndicatorLabel using a lookup array — one descriptive label per page */
+export const carouselConfigPageLabelArray: HeaderCarouselConfig = {
+  ariaLabel: 'Journey pages',
+  prevButtonLabel: 'Previous journey page',
+  nextButtonLabel: 'Next journey page',
+  getPageIndicatorLabel: (n) => {
+    const labels = [
+      'Business vocabulary',
+      'Data enrichment',
+      'Data quality',
+      'Data products',
+    ];
+    return labels[n - 1] ?? `Page ${n}`;
+  },
 };
 
 // ---------------------------------------------------------------------------

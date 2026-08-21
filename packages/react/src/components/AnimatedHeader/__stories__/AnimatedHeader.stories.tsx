@@ -20,6 +20,7 @@ import {
   overflowGlassTileGroup,
   overflowAiPromptTileGroup,
   overflowManyTileGroup,
+  overflowNamedPagesTileGroup,
   tasksControllerConfigButton,
   tasksControllerConfigDropdown,
   tasksControllerConfigLoading,
@@ -30,6 +31,9 @@ import {
   contentSwitcherConfigTwo,
   contentSwitcherConfigThree,
   contentSwitcherConfigLoading,
+  carouselConfig,
+  carouselConfigPageLabelTemplate,
+  carouselConfigPageLabelArray,
 } from './data';
 
 import {
@@ -172,9 +176,10 @@ const sharedArgTypes = {
         9: overflowGlassTileGroup.label,
         10: overflowAiPromptTileGroup.label,
         11: overflowManyTileGroup.label,
+        12: overflowNamedPagesTileGroup.label,
       },
     },
-    options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     mapping: {
       0: null,
       1: headerTiles[0],
@@ -188,6 +193,7 @@ const sharedArgTypes = {
       9: overflowGlassTileGroup,
       10: overflowAiPromptTileGroup,
       11: overflowManyTileGroup,
+      12: overflowNamedPagesTileGroup,
     },
   },
   tasksControllerConfig: {
@@ -268,8 +274,23 @@ const sharedArgTypes = {
   },
   carouselConfig: {
     description:
-      'Optional label/accessibility overrides for the carousel pagination controls (ariaLabel, prevButtonLabel, nextButtonLabel). Pagination activates automatically when a TileGroup has more tiles than fit on one page.',
-    control: { type: 'object' },
+      'Optional label/accessibility overrides for the carousel pagination controls. Select an example to see `getPageIndicatorLabel` in action — pair with a paginated `selectedTileGroup` option such as "Sixteen glass tiles — named pages". `getPageIndicatorLabel` is a callback `(pageNumber: number) => string` called with the 1-based page number; return the full label for that dot.',
+    control: {
+      type: 'select',
+      labels: {
+        0: 'None',
+        1: 'Default (no page labels)',
+        2: 'Translation function — Seite {n}',
+        3: 'Named pages array — Business vocabulary, Data enrichment…',
+      },
+    },
+    options: [0, 1, 2, 3],
+    mapping: {
+      0: null,
+      1: carouselConfig,
+      2: carouselConfigPageLabelTemplate,
+      3: carouselConfigPageLabelArray,
+    },
   },
 };
 
@@ -465,3 +486,4 @@ ThemeG100.globals = {
   backgrounds: { value: '#161616' },
   theme: 'g100',
 };
+

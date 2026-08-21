@@ -322,10 +322,10 @@ const headerOverflowPanel = (isSm, themeSetting, setThemeSetting) => (
           title="Settings"
           backButtonTitle="Back">
           <SideNavDivider />
-          <SideNavLink renderIcon={ChartCustom} href="#">
+          <SideNavMenuItem renderIcon={ChartCustom} href="#">
             Customize
             <Launch />
-          </SideNavLink>
+          </SideNavMenuItem>
         </SideNavMenu>
         <SideNavLink renderIcon={Notification} href="#">
           Notifications
@@ -390,7 +390,6 @@ export const Demo = () => {
                 isActive={isSideNavExpanded}
                 aria-expanded={isSideNavExpanded}
                 isCollapsible //shows menu at desktop
-                isFixedNav
                 renderMenuIcon={<SwitcherIcon size={20} />}
               />
               <HeaderName href="#" prefix="IBM">

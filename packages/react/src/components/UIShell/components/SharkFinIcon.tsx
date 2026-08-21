@@ -47,7 +47,7 @@ export const SharkFinIcon: React.FC<SharkFinIconProps> = ({
       aria-hidden="true"
       fill="none"
       xmlns="http://www.w3.org/2000/svg">
-      <g clip-path="url(#clip0_519_52879)">
+      <g clipPath="url(#clip0_519_52879)">
         <path d="M2 2L4 0V4H0L2 2Z" />
       </g>
       <defs>

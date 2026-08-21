@@ -15,7 +15,12 @@ import {
   Button,
 } from '@carbon/react';
 import { View, FolderOpen, Folders, Layers } from '@carbon/icons-react';
-import { DatePicker, DatePickerInput, DatePickerSkeleton } from '../index';
+import {
+  DatePicker,
+  DatePickerInput,
+  DatePickerSkeleton,
+  type CalendarDayRenderProps,
+} from '../index';
 import '../components/date-picker.scss';
 import './with-layer.scss';
 import mdx from './date-picker-react.mdx';
@@ -91,6 +96,35 @@ export default {
       },
     },
   },
+};
+
+const eventDotsByDate: Record<string, Array<'blue' | 'green' | 'magenta'>> = {
+  '2026-05-04': ['blue'],
+  '2026-05-07': ['green', 'magenta'],
+  '2026-05-12': ['blue', 'green', 'magenta'],
+  '2026-05-18': ['magenta'],
+  '2026-05-22': ['blue', 'green'],
+  '2026-05-27': ['green', 'magenta', 'blue'],
+};
+
+const renderEventDay = ({ date, isCurrentMonth }: CalendarDayRenderProps) => {
+  const dots = isCurrentMonth ? (eventDotsByDate[date.toString()] ?? []) : [];
+
+  return (
+    <span className="cds--date-picker__day-content">
+      <span>{date.day}</span>
+      {dots.length > 0 && (
+        <span className="cds--date-picker__day-event-dots" aria-hidden="true">
+          {dots.slice(0, 3).map((color, index) => (
+            <span
+              key={`${date.toString()}-${color}-${index}`}
+              className={`cds--date-picker__day-event-dot cds--date-picker__day-event-dot--${color}`}
+            />
+          ))}
+        </span>
+      )}
+    </span>
+  );
 };
 
 const sharedArgTypes = {
@@ -307,6 +341,25 @@ Skeleton.parameters = {
     skip: true,
   },
 };
+
+export const WithEventDots = (args) => (
+  <DatePicker
+    datePickerType="single"
+    value="05/12/2026"
+    renderDay={renderEventDay}
+    {...args}>
+    <DatePickerInput
+      placeholder="mm/dd/yyyy"
+      labelText="Project schedule"
+      helperText="Dates may show one to three colored dots for different event types."
+      id="date-picker-with-event-dots"
+      size="md"
+      {...args}
+    />
+  </DatePicker>
+);
+
+WithEventDots.argTypes = { ...sharedArgTypes };
 
 export const withAILabel = (args) => {
   const aiLabel = (

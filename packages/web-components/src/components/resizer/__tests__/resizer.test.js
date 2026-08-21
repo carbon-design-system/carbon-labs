@@ -176,7 +176,6 @@ describe('clabs-resizer-handle', function () {
 
     const { detail } = await oneEvent(handle, 'resize-start');
     expect(detail).to.exist;
-    expect(detail.axis).to.exist;
     expect(detail.startPosition).to.exist;
     expect(detail.startPosition.x).to.equal(100);
     expect(detail.startPosition.y).to.equal(100);
@@ -205,7 +204,6 @@ describe('clabs-resizer-handle', function () {
 
     const { detail } = await oneEvent(handle, 'resize-drag');
     expect(detail).to.exist;
-    expect(detail.axis).to.exist;
     expect(detail.delta).to.exist;
     expect(detail.position).to.exist;
   });
@@ -233,7 +231,6 @@ describe('clabs-resizer-handle', function () {
 
     const { detail } = await oneEvent(handle, 'resize-end');
     expect(detail).to.exist;
-    expect(detail.axis).to.exist;
     expect(detail.delta).to.be.a('number');
   });
 
@@ -444,32 +441,28 @@ describe('clabs-resizer-handle', function () {
     expect(handle.hasAttribute('data-synthetic-active')).to.be.false;
   });
 
-  it('should render pivot slot at start position', async () => {
-    const panel = await fixture(html`
-      <clabs-resizer-panel slot="right">
-        <clabs-resizer-handle>
-          <clabs-resizer-handle-pivot slot="pivot"></clabs-resizer-handle-pivot>
-        </clabs-resizer-handle>
-      </clabs-resizer-panel>
+  it('should render pivot at start position', async () => {
+    const handle = await fixture(html`
+      <clabs-resizer-handle pivot="start"></clabs-resizer-handle>
     `);
 
-    const handle = panel.querySelector('clabs-resizer-handle');
-    const pivotSlot = handle.shadowRoot.querySelector('slot[name="pivot"]');
-    expect(pivotSlot).to.exist;
+    await handle.updateComplete;
+    const pivot = handle.shadowRoot.querySelector(
+      'clabs-resizer-handle-pivot[position="start"]'
+    );
+    expect(pivot).to.exist;
   });
 
-  it('should render pivot slot at end position', async () => {
-    const panel = await fixture(html`
-      <clabs-resizer-panel slot="left">
-        <clabs-resizer-handle>
-          <clabs-resizer-handle-pivot slot="pivot"></clabs-resizer-handle-pivot>
-        </clabs-resizer-handle>
-      </clabs-resizer-panel>
+  it('should render pivot at end position', async () => {
+    const handle = await fixture(html`
+      <clabs-resizer-handle pivot="end"></clabs-resizer-handle>
     `);
 
-    const handle = panel.querySelector('clabs-resizer-handle');
-    const pivotSlot = handle.shadowRoot.querySelector('slot[name="pivot"]');
-    expect(pivotSlot).to.exist;
+    await handle.updateComplete;
+    const pivot = handle.shadowRoot.querySelector(
+      'clabs-resizer-handle-pivot[position="end"]'
+    );
+    expect(pivot).to.exist;
   });
 
   it('should update grid CSS properties during drag', async () => {

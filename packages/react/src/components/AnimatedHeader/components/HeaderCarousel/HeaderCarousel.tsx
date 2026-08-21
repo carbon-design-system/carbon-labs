@@ -95,9 +95,9 @@ const HeaderCarousel: React.FC<HeaderCarouselProps> = ({
       <div className={`${blockClass}__dots`} role="group" aria-label="Pages">
         {Array.from({ length: totalPages }).map((_, i) => {
           const isActive = i === currentPage;
-          const dotLabel = getDotLabel(i);
+          const pageIndicatorLabel = getDotLabel(i);
           return (
-            <Tooltip key={i} label={dotLabel} align="top">
+            <Tooltip key={i} label={pageIndicatorLabel} align="top">
               <button
                 type="button"
                 className={`${blockClass}__dot${isActive ? ` ${blockClass}__dot--active` : ''}`}

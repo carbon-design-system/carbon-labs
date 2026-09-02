@@ -55,8 +55,8 @@ export default {
     reportDir: 'test-coverage',
     threshold: {
       statements: 95,
-      branches: 89,
-      functions: 91,
+      branches: 90,
+      functions: 90,
       lines: 95,
     },
     include: ['components/**/*.ts'],

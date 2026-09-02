@@ -17,6 +17,8 @@ import type { HeaderProps } from '../../types/Header.types';
 import {
   AUTOMATION_NAMESPACE_PREFIX,
   APP_SWITCHER_BUTTON_ID,
+  SOLIS_SWITCHER_BUTTON_ID,
+  SOLIS_SIDEKICK_BUTTON_ID,
 } from '../../constant';
 /* c8 ignore next */
 import cx from 'classnames';
@@ -27,6 +29,8 @@ import '../HeaderContext/HeaderContext';
 import useScript from '../../globals/useScript';
 import loadSidekickScript from '../../globals/loadSidekickScript';
 import loadSolisScript from '../../globals/loadSolisScript';
+
+import type { HeaderContext } from '../HeaderContext/HeaderContext';
 
 const { stablePrefix: clabsPrefix } = settings;
 
@@ -140,12 +144,70 @@ export class CommonHeader extends LitElement {
       this.headerProps.sidekickConfig?.isEnabled &&
       changedProperties.has('headerProps')
     ) {
+      customElements.whenDefined('solis-sidekick').then(() => {
+        const headerContext = this.renderRoot.querySelector(
+          'clabs-global-header-context'
+        ) as HeaderContext | null;
+        (headerContext as any).updateComplete.then(() => {
+          if (headerContext?.shadowRoot) {
+            const sidekickButtonId = SOLIS_SIDEKICK_BUTTON_ID;
+            const sidekickButton =
+              headerContext.shadowRoot.getElementById(sidekickButtonId);
+            if (sidekickButton) {
+              console.info(
+                'Attaching openSidekick/closeSidekick functions to Solis sidekick button'
+              );
+              let sidekickOpen = false;
+              sidekickButton.addEventListener('click', () => {
+                if (sidekickOpen) {
+                  window._solis.sidekick?.closeSidekick?.();
+                  sidekickOpen = false;
+                } else {
+                  window._solis.sidekick?.openSidekick?.();
+                  sidekickOpen = true;
+                }
+              });
+            } else {
+              console.warn('Solis switcher button not found');
+            }
+          }
+        });
+      });
       loadSidekickScript(this.headerProps);
     }
     if (
       this.headerProps.solisConfig?.isEnabled &&
       changedProperties.has('headerProps')
     ) {
+      customElements.whenDefined('solis-switcher').then(() => {
+        const headerContext = this.renderRoot.querySelector(
+          'clabs-global-header-context'
+        ) as HeaderContext | null;
+        (headerContext as any).updateComplete.then(() => {
+          if (headerContext?.shadowRoot) {
+            const switcherButtonId = SOLIS_SWITCHER_BUTTON_ID;
+            const switcherButton =
+              headerContext.shadowRoot.getElementById(switcherButtonId);
+            if (switcherButton) {
+              console.info(
+                'Attaching openSwitcher/closeSwitcher functions to Solis switcher button'
+              );
+              let switcherOpen = false;
+              switcherButton.addEventListener('click', () => {
+                if (switcherOpen) {
+                  window._solis.switcher?.closeSwitcher?.();
+                  switcherOpen = false;
+                } else {
+                  window._solis.switcher?.openSwitcher?.();
+                  switcherOpen = true;
+                }
+              });
+            } else {
+              console.warn('Solis switcher button not found');
+            }
+          }
+        });
+      });
       loadSolisScript(this.headerProps);
     }
   }

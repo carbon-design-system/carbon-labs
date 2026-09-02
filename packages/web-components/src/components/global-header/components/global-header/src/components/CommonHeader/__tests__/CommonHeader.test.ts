@@ -11,6 +11,11 @@
 import { html, fixture, expect, elementUpdated } from '@open-wc/testing';
 import { CommonHeader } from '../CommonHeader';
 import '../CommonHeader';
+import {
+  SOLIS_SIDEKICK_BUTTON_ID,
+  SOLIS_SWITCHER_BUTTON_ID,
+} from '../../../constant';
+import { solisDeploymentEnvironment } from '../../../types/Header.types';
 import sinon from 'sinon';
 
 describe('CommonHeader tests', () => {
@@ -162,6 +167,213 @@ describe('CommonHeader tests', () => {
 
       await elementUpdated(el);
       expect(el.headerProps.assistMeConfigs?.productId).to.equal(productId);
+    });
+  });
+
+  describe('Solis Sidekick button event listener', () => {
+    let consoleInfoStub: sinon.SinonStub;
+    let consoleWarnStub: sinon.SinonStub;
+    let openSidekickSpy: sinon.SinonSpy;
+    let closeSidekickSpy: sinon.SinonSpy;
+
+    beforeEach(() => {
+      // Stub console methods to avoid cluttering test output
+      consoleInfoStub = sinon.stub(console, 'info');
+      consoleWarnStub = sinon.stub(console, 'warn');
+
+      openSidekickSpy = sinon.spy();
+      closeSidekickSpy = sinon.spy();
+      // Mock window._solis object
+      (window as any)._solis = {
+        sidekick: {
+          openSidekick: openSidekickSpy,
+          closeSidekick: closeSidekickSpy,
+        },
+      };
+
+      // Define the solis-sidekick custom element
+      if (!customElements.get('solis-sidekick')) {
+        customElements.define('solis-sidekick', class extends HTMLElement {});
+      }
+    });
+
+    afterEach(() => {
+      consoleInfoStub.restore();
+      consoleWarnStub.restore();
+      delete (window as any)._solis;
+    });
+
+    it('should attach click event listener to sidekick button when element is found', async () => {
+      const props = {
+        sidekickConfig: {
+          isEnabled: true,
+          scriptUrl: 'https://example.com/sidekick.js',
+        },
+        solisConfig: {
+          isEnabled: false,
+          product_id: 'test',
+          is_prod: false,
+          cdn_hostname: 'https://example.com',
+          deployment_environment: solisDeploymentEnvironment['local'],
+        },
+      };
+
+      const el = await fixture<CommonHeader>(
+        html`<clabs-global-header-apaas
+          .headerProps="${props}"></clabs-global-header-apaas>`
+      );
+
+      // Wait for component to update
+      await elementUpdated(el);
+
+      // Wait for customElements.whenDefined to resolve
+      await customElements.whenDefined('solis-sidekick');
+
+      // Get HeaderContext from shadow DOM
+      const headerContext = el.renderRoot.querySelector(
+        'clabs-global-header-context'
+      );
+      expect(headerContext).to.exist;
+
+      // Wait for HeaderContext to render
+      await (headerContext as any).updateComplete;
+
+      // Create and append the sidekick button to HeaderContext shadow DOM
+      const sidekickButton = document.createElement('button');
+      sidekickButton.id = SOLIS_SIDEKICK_BUTTON_ID;
+      headerContext?.shadowRoot?.appendChild(sidekickButton);
+
+      // Reassign sidekick spies as loadSidekickScript will have overwritten them
+      (window as any)._solis.sidekick = {
+        ...(window as any)._solis.sidekick,
+        openSidekick: openSidekickSpy,
+        closeSidekick: closeSidekickSpy,
+      };
+
+      // Now update the props to trigger the updated() lifecycle
+      // This will cause the event listener attachment code to run
+      el.headerProps = { ...props };
+      await el.updateComplete;
+
+      // Wait for customElements.whenDefined and the async chain to complete
+      await customElements.whenDefined('solis-sidekick');
+
+      // Wait for event listener attachment
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
+      sidekickButton.click();
+      sinon.assert.calledOnce(openSidekickSpy);
+      sinon.assert.notCalled(closeSidekickSpy);
+
+      sidekickButton.click();
+      sinon.assert.calledOnce(closeSidekickSpy);
+      sinon.assert.calledOnce(openSidekickSpy);
+
+      sidekickButton.click();
+      sinon.assert.calledTwice(openSidekickSpy);
+      sinon.assert.calledOnce(closeSidekickSpy);
+    });
+  });
+
+  describe('Solis Switcher button event listener', () => {
+    let consoleInfoStub: sinon.SinonStub;
+    let consoleWarnStub: sinon.SinonStub;
+    let openSwitcherSpy: sinon.SinonSpy;
+    let closeSwitcherSpy: sinon.SinonSpy;
+
+    beforeEach(() => {
+      // Stub console methods to avoid cluttering test output
+      consoleInfoStub = sinon.stub(console, 'info');
+      consoleWarnStub = sinon.stub(console, 'warn');
+
+      openSwitcherSpy = sinon.spy();
+      closeSwitcherSpy = sinon.spy();
+      // Mock window._solis object
+      (window as any)._solis = {
+        switcher: {
+          openSwitcher: openSwitcherSpy,
+          closeSwitcher: closeSwitcherSpy,
+        },
+      };
+
+      // Define the solis-sidekick custom element
+      if (!customElements.get('solis-switcher')) {
+        customElements.define('solis-switcher', class extends HTMLElement {});
+      }
+    });
+
+    afterEach(() => {
+      consoleInfoStub.restore();
+      consoleWarnStub.restore();
+      delete (window as any)._solis;
+    });
+
+    it('should attach click event listener to switcher button when element is found', async () => {
+      const props = {
+        solisConfig: {
+          isEnabled: true,
+          product_id: 'test',
+          is_prod: false,
+          cdn_hostname: 'https://example.com',
+          deployment_environment: solisDeploymentEnvironment['local'],
+          scriptUrl: 'https://example.com/switcher.js',
+        },
+      };
+
+      const el = await fixture<CommonHeader>(
+        html`<clabs-global-header-apaas
+          .headerProps="${props}"></clabs-global-header-apaas>`
+      );
+
+      // Wait for component to update
+      await elementUpdated(el);
+
+      // Wait for customElements.whenDefined to resolve
+      await customElements.whenDefined('solis-switcher');
+
+      // Get HeaderContext from shadow DOM
+      const headerContext = el.renderRoot.querySelector(
+        'clabs-global-header-context'
+      );
+      expect(headerContext).to.exist;
+
+      // Wait for HeaderContext to render
+      await (headerContext as any).updateComplete;
+
+      // Create and append the sidekick button to HeaderContext shadow DOM
+      const switcherButton = document.createElement('button');
+      switcherButton.id = SOLIS_SWITCHER_BUTTON_ID;
+      headerContext?.shadowRoot?.appendChild(switcherButton);
+
+      // Reassign sidekick spies as loadSidekickScript will have overwritten them
+      (window as any)._solis.switcher = {
+        ...(window as any)._solis.switcher,
+        openSidekick: openSwitcherSpy,
+        closeSidekick: closeSwitcherSpy,
+      };
+
+      // Now update the props to trigger the updated() lifecycle
+      // This will cause the event listener attachment code to run
+      el.headerProps = { ...props };
+      await el.updateComplete;
+
+      // Wait for customElements.whenDefined and the async chain to complete
+      await customElements.whenDefined('solis-sidekick');
+
+      // Wait for event listener attachment
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
+      switcherButton.click();
+      sinon.assert.calledOnce(openSwitcherSpy);
+      sinon.assert.notCalled(closeSwitcherSpy);
+
+      switcherButton.click();
+      sinon.assert.calledOnce(closeSwitcherSpy);
+      sinon.assert.calledOnce(openSwitcherSpy);
+
+      switcherButton.click();
+      sinon.assert.calledTwice(openSwitcherSpy);
+      sinon.assert.calledOnce(closeSwitcherSpy);
     });
   });
 

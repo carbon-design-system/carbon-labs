@@ -1,12 +1,16 @@
 {
   "name": "@carbon-labs/react-processing",
-  "version": "0.20.0",
+  "version": "0.21.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
   "type": "module",
   "description": "Carbon Labs - Processing",
+  "labs": {
+    "status": "preview",
+    "title": "React Processing"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

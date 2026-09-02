@@ -29,6 +29,8 @@ import '../CommonHeader/CommonHeader';
 
 import styles from '../../index.scss?inline';
 
+import solisSessionManager from '../../globals/solisSessionManager';
+
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
@@ -70,13 +72,17 @@ export class HybridIpaasHeader extends LitElement {
   capabilityProfileFooterLinks: ProfileFooterLinks[] = [];
   @property({ type: Array }) capabilityGlobalActions: GlobalActionConfig[] = [];
   @property({ type: Boolean }) addCookiePreferences = false;
+  @property({ type: Boolean }) forceBackendProxy = false; // override domain check; always enable the backend proxy when true
+  @property({ type: Boolean }) solisSessionManagerEnabled = false; // toggle to enable/disable the Solis session manager
+  @property({ type: Number }) solisSessionRefreshInterval = 25; // might not need Solis token refresh interval to be configurable
+  @property({ type: Number }) solisIdleTimeoutInterval = 28; // might not need Solis idle timeout interval to be configurable
 
   @state()
   headerOptions: HeaderProps = {
     ...INITIAL_AUTOMATION_HEADER_PROPS,
     brand: {
       company: 'IBM',
-      product: 'webMethods Hybrid Integration',
+      product: '',
     },
     capabilityName: {
       label: '',
@@ -87,6 +93,8 @@ export class HybridIpaasHeader extends LitElement {
       sidebarLabel: 'Side navigation',
     },
   };
+
+  sessionManager: solisSessionManager | null = null;
 
   constructor() {
     super();
@@ -100,6 +108,11 @@ export class HybridIpaasHeader extends LitElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
+    if (this.sessionManager) {
+      this.sessionManager.stopRefreshSchedule();
+      this.sessionManager.unregisterActivityListeners();
+      this.sessionManager = null;
+    }
     document.removeEventListener(CUSTOM_EVENT_NAME, this._customEventListener);
   }
 
@@ -135,6 +148,14 @@ export class HybridIpaasHeader extends LitElement {
       );
 
       this.headerOptions = this.buildHeaderOptions(serverOptions);
+      if (
+        this.solisSessionManagerEnabled &&
+        this.headerOptions.profile !== null &&
+        this.headerOptions.profile !== undefined
+      ) {
+        // backend is ready and user is authenticated
+        this.initializeSessionManager();
+      }
     } catch (error) {
       console.error('Failed to load header options:', error);
     }
@@ -171,12 +192,33 @@ export class HybridIpaasHeader extends LitElement {
     }
   }
 
+  private initializeSessionManager() {
+    if (!this.sessionManager) {
+      this.sessionManager = new solisSessionManager({
+        tokenRefreshInterval: this.solisSessionRefreshInterval,
+        idleTimeoutInterval: this.solisIdleTimeoutInterval,
+        basePath: this.basePath,
+      });
+      this.sessionManager.startRefreshSchedule();
+      this.sessionManager.registerActivityListeners();
+    }
+  }
+
   private initCookiePrefsLink() {
     const footerLink = {
       text: 'Cookie preferences',
       arialLabel: 'Cookie preferences',
       carbonIcon: 'Cookie',
       onClickHandler: this.openCookiePrefs,
+    };
+    return footerLink;
+  }
+
+  private initYPCLink() {
+    const footerLink = {
+      'data-ypc-link': true,
+      text: '',
+      arialLabel: 'Your privacy choices',
     };
     return footerLink;
   }
@@ -215,6 +257,22 @@ export class HybridIpaasHeader extends LitElement {
       tell_me_more_enabled: false,
     };
   }
+
+  protected getHostname(): string {
+    return window.location.hostname;
+  }
+
+  private getBackendProxy(): string | undefined {
+    // Always set backendProxy when forceBackendProxy is true, otherwise only
+    // set it when the user is NOT on an *.ibm.com domain.
+    const hostname = this.getHostname();
+    const ibmDomainRegex = /^(.+\.)?ibm\.com$/;
+    if (this.forceBackendProxy || !ibmDomainRegex.test(hostname)) {
+      return `${this.basePath}/hybrid-ipaas/v1/proxies/solis/backend`;
+    }
+    return undefined;
+  }
+
   private initSolisOptions(env = 'local', forSidekick = false, isProd = true) {
     if (forSidekick) {
       return {
@@ -223,6 +281,7 @@ export class HybridIpaasHeader extends LitElement {
         cdn_hostname: SOLIS_CDN_HOSTNAMES[env],
         deployment_environment: solisDeploymentEnvironment[env] || 'local',
         product_id: 'ipaas',
+        backendProxy: this.getBackendProxy(),
       };
     } else {
       return {
@@ -232,6 +291,7 @@ export class HybridIpaasHeader extends LitElement {
         cdn_hostname: SOLIS_CDN_HOSTNAMES[env],
         deployment_environment: solisDeploymentEnvironment[env] || 'local',
         product_id: 'ipaas',
+        backendProxy: this.getBackendProxy(),
       };
     }
   }
@@ -279,6 +339,9 @@ export class HybridIpaasHeader extends LitElement {
     if (logoutIndex !== undefined && logoutIndex > -1) {
       baseOptions.profileFooterLinks?.splice(logoutIndex, 1);
     }
+
+    // add an element with the data-ypc-link attribute for the YourPrivacyChoices UI
+    baseOptions.profileFooterLinks?.push(this.initYPCLink());
 
     // add our own 'log out' entry at the end of the list
     baseOptions.profileFooterLinks?.push(this.initLogoutLink());

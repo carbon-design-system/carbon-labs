@@ -160,4 +160,9 @@
       background-color: transparent;
     }
   }
+
+  // data-ypc-link div should not take up space until content is injected
+  div[data-ypc-link]:empty {
+    display: none;
+  }
 }

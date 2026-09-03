@@ -8,6 +8,7 @@
 // Import shared framework-agnostic styles from primitives (built output)
 // Uses Carbon's standard 'cds' prefix for compatibility with Carbon Design System
 @use '@carbon-labs/primitives/es/date-picker/styles/date-picker';
+@use '@carbon/styles/scss/theme' as *;
 
 // =============================================================================
 // REACT SPECIFIC STYLES
@@ -18,3 +19,39 @@
 
 // React uses standard class-based selectors, which are already defined
 // in the shared primitives SCSS file. No additional wrappers needed.
+
+.cds--date-picker__day-content {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.cds--date-picker__day-event-dots {
+  position: absolute;
+  inset-block-end: 0.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 0.125rem;
+}
+
+.cds--date-picker__day-event-dot {
+  inline-size: 0.25rem;
+  block-size: 0.25rem;
+  border-radius: 50%;
+}
+
+.cds--date-picker__day-event-dot--blue {
+  background-color: $support-info;
+}
+
+.cds--date-picker__day-event-dot--green {
+  background-color: $support-success;
+}
+
+.cds--date-picker__day-event-dot--magenta {
+  background-color: $support-error;
+}

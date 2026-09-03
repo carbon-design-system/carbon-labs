@@ -28,4 +28,15 @@ describe('clabs-wysiwyg', function () {
     expect(el.content).to.equal(testContent);
     await expect(el).shadowDom.to.be.accessible();
   });
+
+  it('should hide the toolbar and disable editing when readonly', async () => {
+    const el = await fixture(
+      html`<clabs-wysiwyg readonly content="<p>Locked</p>"></clabs-wysiwyg>`
+    );
+
+    expect(el.readonly).to.be.true;
+    expect(el.hasAttribute('readonly')).to.be.true;
+    expect(el.shadowRoot.querySelector('.clabs-wysiwyg__toolbar')).to.not.exist;
+    expect(el.editor?.isEditable).to.be.false;
+  });
 });

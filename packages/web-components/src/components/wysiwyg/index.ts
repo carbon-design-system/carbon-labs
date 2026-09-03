@@ -35,4 +35,7 @@ export { Search } from './components/wysiwyg/src/extensions/search';
 export { Blocks } from './components/wysiwyg/src/extensions/blocks';
 export { Insert } from './components/wysiwyg/src/extensions/insert';
 export { Typeface } from './components/wysiwyg/src/extensions/typeface';
+export { FontSize } from './components/wysiwyg/src/extensions/font-size';
+export { FileUpload } from './components/wysiwyg/src/extensions/file-upload';
+export type { FileAttachment } from './components/wysiwyg/src/extensions/file-upload';
 export { Clipboard } from './components/wysiwyg/src/extensions/clipboard';

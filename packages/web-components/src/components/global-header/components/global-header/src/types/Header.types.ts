@@ -399,6 +399,7 @@ declare global {
 export interface solisSessionManagerConfig {
   tokenRefreshInterval?: number;
   idleTimeoutInterval?: number;
+  sessionStatusInterval?: number;
   basePath?: string;
   logoutUrl?: string;
   logoutCallback?: (() => void) | undefined;

@@ -11,7 +11,9 @@ import { solisSessionManagerConfig } from '../types/Header.types';
 
 export default class solisSessionManager {
   private refreshIntervalId: number | null = null;
+  private sessionStatusIntervalId: number | null = null;
   private tokenRefreshInterval: number;
+  private sessionStatusInterval: number;
   private idleTimeoutInterval: number;
   private isIdle: boolean;
   private idleTimeout: ReturnType<typeof setTimeout> | undefined;
@@ -25,6 +27,7 @@ export default class solisSessionManager {
   constructor(config: solisSessionManagerConfig) {
     this.config = config;
     this.tokenRefreshInterval = config.tokenRefreshInterval || 25;
+    this.sessionStatusInterval = config.sessionStatusInterval || 10;
     this.idleTimeoutInterval = config.idleTimeoutInterval || 28;
     this.basePath = config.basePath;
     this.activityEvents = [
@@ -152,6 +155,7 @@ export default class solisSessionManager {
 
   async performLogout() {
     this.stopRefreshSchedule();
+    this.stopSessionStatusPolling();
     this.unregisterActivityListeners();
     const postRoute = this.basePath
       ? this.basePath + '/v1/solis/session/logout'
@@ -182,6 +186,22 @@ export default class solisSessionManager {
     this.redirect(
       this.logoutUrl ?? (this.basePath ? `${this.basePath}/logout` : '/logout')
     );
+  }
+
+  startSessionStatusPolling() {
+    this.sessionStatusIntervalId = window.setInterval(async () => {
+      const sessionActive = await this.checkSessionStatus();
+      if (!sessionActive) {
+        await this.performLogout();
+      }
+    }, this.sessionStatusInterval * 1000);
+  }
+
+  stopSessionStatusPolling() {
+    if (this.sessionStatusIntervalId) {
+      clearInterval(this.sessionStatusIntervalId);
+      this.sessionStatusIntervalId = null;
+    }
   }
 
   redirect(url: string) {

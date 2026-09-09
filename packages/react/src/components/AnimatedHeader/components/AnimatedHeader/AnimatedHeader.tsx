@@ -102,8 +102,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   // --- Pagination derivation ---
   // Auto-chunk: split selectedTileGroup tiles into pages by visual width units.
   // aiPrompt = 2 units, glass / ai = 1 unit each. Max 4 units per page.
-  // Falls back to the legacy allTileGroups path when selectedTileGroup does not
-  // need pagination (i.e. fits on one page).
+  // The carousel only ever paginates within selectedTileGroup; allTileGroups is
+  // a separate concern (workspace/task switching) and must not affect pagination.
   const tileChunks =
     selectedTileGroup && chunkTilesByWidth(selectedTileGroup.tiles).length > 1
       ? chunkTilesByWidth(selectedTileGroup.tiles)
@@ -115,7 +115,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
         id: selectedTileGroup!.id * 1000 + i,
         tiles: chunk,
       }))
-    : (allTileGroups ?? null);
+    : null;
 
   const totalPages = pageGroups?.length ?? 1;
   const currentPage = autoPage;

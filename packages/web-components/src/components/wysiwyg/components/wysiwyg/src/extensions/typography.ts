@@ -7,10 +7,8 @@
 
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
-import { html } from 'lit';
-import '@carbon/web-components/es/components/dropdown/index.js';
-import { BASE_CLASS } from '../constants.js';
 import type { ExtensionWithToolbar, ToolbarSize } from '../types.js';
+import { toolbarMenuButton } from './toolbar-menu-button.js';
 import Heading from '@tiptap/extension-heading';
 import HardBreak from '@tiptap/extension-hard-break';
 import HorizontalRule from '@tiptap/extension-horizontal-rule';
@@ -25,16 +23,22 @@ const TYPOGRAPHY_OPTIONS = [
   { value: 'h6', label: 'Heading 6' },
 ];
 
-const styles = `
-  .${BASE_CLASS}__toolbar-group--typography {
-    flex: 1;
+/**
+ * Applies a paragraph or heading level to the current selection.
+ * @param {Editor | null} editor - TipTap editor
+ * @param {string} value - `p` or `h1`–`h6`
+ */
+const applyTypography = (editor: Editor | null, value: string) => {
+  if (value === 'p') {
+    editor?.chain().focus().setParagraph().run();
+    return;
   }
-  
-  .${BASE_CLASS}__toolbar-group--typography cds-dropdown {
-    inline-size: 100%;
-    --cds-border-strong: transparent;
-  }
-`;
+  editor
+    ?.chain()
+    .focus()
+    .setHeading({ level: parseInt(value.replace('h', ''), 10) as any })
+    .run();
+};
 
 export const Typography = Extension.create({
   name: 'typography',
@@ -52,51 +56,31 @@ export const Typography = Extension.create({
 }) as unknown as ExtensionWithToolbar;
 
 /**
- * Renders the typography toolbar with level dropdown.
+ * Renders the typography toolbar as a menu button.
  * @param {Editor | null} editor - The TipTap editor instance
  * @param {ToolbarSize} toolbarSize - Size of the toolbar buttons
+ * @param {boolean} compact - Whether the toolbar is in the compact layout
  */
 Typography.toolbarRender = (
   editor: Editor | null,
-  toolbarSize: ToolbarSize = 'md'
+  toolbarSize: ToolbarSize = 'md',
+  compact = false
 ) => {
   const currentLevel = [1, 2, 3, 4, 5, 6].find((level) =>
     editor?.isActive('heading', { level })
   );
+  const currentValue = currentLevel ? `h${currentLevel}` : 'p';
+  const currentLabel =
+    TYPOGRAPHY_OPTIONS.find((option) => option.value === currentValue)?.label ??
+    'Paragraph';
 
-  return html`
-    <style>
-      ${styles}
-    </style>
-    <div
-      class="${BASE_CLASS}__toolbar-group ${BASE_CLASS}__toolbar-group--typography">
-      <cds-dropdown
-        label="Typography"
-        hide-label
-        title-text="Select typography level"
-        .size=${toolbarSize as any}
-        .value=${currentLevel ? `h${currentLevel}` : 'p'}
-        @cds-dropdown-selected=${(e: CustomEvent) => {
-          const value = e.detail.item.value;
-          if (value === 'p') {
-            editor?.chain().focus().setParagraph().run();
-          } else {
-            const level = parseInt(value.replace('h', ''), 10);
-            editor
-              ?.chain()
-              .focus()
-              .setHeading({ level: level as any })
-              .run();
-          }
-        }}>
-        ${TYPOGRAPHY_OPTIONS.map(
-          (option) => html`
-            <cds-dropdown-item value=${option.value}>
-              ${option.label}
-            </cds-dropdown-item>
-          `
-        )}
-      </cds-dropdown>
-    </div>
-  `;
+  return toolbarMenuButton({
+    label: compact ? currentValue.toUpperCase() : currentLabel,
+    groupLabel: 'Typography',
+    toolbarSize,
+    options: TYPOGRAPHY_OPTIONS,
+    currentValue,
+    editor,
+    onSelect: applyTypography.bind(null, editor),
+  });
 };

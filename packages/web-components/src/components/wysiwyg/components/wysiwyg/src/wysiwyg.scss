@@ -65,6 +65,59 @@ $BASE_CLASS: #{$prefix}-wysiwyg;
   transition: all motion.$duration-fast-02 motion(standard, productive);
 }
 
+.#{$BASE_CLASS}__toolbar-group--flex {
+  flex: 1 1 10rem;
+  min-inline-size: 6.5rem;
+}
+
+.#{$BASE_CLASS}__toolbar-group--menu-fixed {
+  flex: 0 0 6.5rem;
+  min-inline-size: 6.5rem;
+}
+
+.#{$BASE_CLASS}__toolbar--compact {
+  .#{$BASE_CLASS}__toolbar-group--flex,
+  .#{$BASE_CLASS}__toolbar-group--menu-fixed {
+    flex-basis: 4.5rem;
+    min-inline-size: 4.5rem;
+  }
+}
+
+.#{$BASE_CLASS}__toolbar-group--menu cds-button {
+  --cds-link-primary: var(--cds-text-primary);
+  --cds-link-primary-hover: var(--cds-text-primary);
+
+  flex: 1 1 auto;
+  inline-size: 100%;
+  max-inline-size: none;
+}
+
+.#{$BASE_CLASS}__toolbar-group--menu cds-button::part(button) {
+  justify-content: space-between;
+  inline-size: 100%;
+  max-inline-size: none;
+}
+
+.#{$BASE_CLASS}__toolbar-popover-content[open]::part(content) {
+  display: flex;
+}
+
+.#{$BASE_CLASS}__format-preview {
+  display: grid;
+  block-size: 1rem;
+  color: theme.$icon-primary;
+  font-size: 0.875rem;
+  inline-size: 1rem;
+  line-height: 1;
+  place-items: center;
+  pointer-events: none;
+}
+
+.#{$BASE_CLASS}__format-preview--code {
+  border-radius: 0.125rem;
+  background-color: theme.$layer;
+}
+
 .#{$BASE_CLASS}__toolbar-group [caret]::part(button) {
   position: relative;
 

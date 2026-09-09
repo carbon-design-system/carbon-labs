@@ -20,6 +20,7 @@ import * as DatePickerStories from './date-picker-react.stories.tsx';
   - [Single date picker](#single-date-picker)
   - [Range date picker](#range-date-picker)
   - [Skeleton state](#skeleton-state)
+  - [Event dots](#event-dots)
   - [AI label](#ai-label)
 - [Component API](#component-api)
   - [API Compatibility](#api-compatibility)
@@ -45,8 +46,8 @@ Date pickers allow users to select a single or a range of dates. Pickers are
 used to display past, present, or future dates. The kind of date (exact,
 approximate, memorable) you are requesting from the user will determine which
 picker is best to use. Each picker's format can be customized depending on
-location or need. The `DatePicker` component expects a `DatePickerInput`
-as a child.
+location or need. The `DatePicker` component expects a `DatePickerInput` as a
+child.
 
 <Canvas of={DatePickerStories.SingleWithCalendar} />
 
@@ -80,10 +81,18 @@ being fetched.
 
 <Canvas of={DatePickerStories.Skeleton} />
 
+### Event dots
+
+Use the `renderDay` prop to customize the content inside each day cell. This is
+the recommended integration point for showing per-date metadata such as events,
+availability, or status indicators.
+
+<Canvas of={DatePickerStories.WithEventDots} />
+
 ### AI label
 
-The input also supports Carbon AI label decoration through the
-`DatePickerInput` `decorator` prop.
+The input also supports Carbon AI label decoration through the `DatePickerInput`
+`decorator` prop.
 
 <Canvas of={DatePickerStories.withAILabel} />
 
@@ -91,9 +100,11 @@ The input also supports Carbon AI label decoration through the
 
 ### API Compatibility
 
-This implementation maintains **100% backward compatibility** with Carbon React v11 DatePicker API. All existing props and functionality work exactly as before:
+This implementation maintains **100% backward compatibility** with Carbon React
+v11 DatePicker API. All existing props and functionality work exactly as before:
 
 **`DatePicker` props:**
+
 - `allowInput` - Allow manual date entry
 - `appendTo` - Append the calendar to a specific element
 - `className` - Additional CSS class names
@@ -108,10 +119,12 @@ This implementation maintains **100% backward compatibility** with Carbon React 
 - `onClose` - Callback when the calendar closes
 - `onOpen` - Callback when the calendar opens
 - `readOnly` - Make date picker read-only
+- `renderDay` - Customize the content rendered inside each calendar day cell
 - `short` - Use short variant
 - `value` - Selected date value
 
 **`DatePickerInput` props:**
+
 - `autoComplete` - Autocomplete attribute
 - `className` - Additional CSS class names
 - `decorator` - Decorator component such as an AI label
@@ -144,17 +157,19 @@ This implementation maintains **100% backward compatibility** with Carbon React 
 
 ### Breaking Changes
 
-**None.** This implementation is a drop-in replacement with no breaking changes to the public API.
+**None.** This implementation is a drop-in replacement with no breaking changes
+to the public API.
 
 **What changed internally:**
+
 - Removed Flatpickr dependency (~15,000 lines of code)
 - Implemented native calendar using Temporal API and modern web standards
 - Added shared state machine with Web Components implementation
 - Enhanced keyboard navigation
 - Improved accessibility
 
-**Migration:**
-No migration needed. Existing code continues to work without modifications. Simply update your import path:
+**Migration:** No migration needed. Existing code continues to work without
+modifications. Simply update your import path:
 
 ```tsx
 // Before (Carbon React v11)
@@ -170,32 +185,33 @@ import { DatePicker, DatePickerInput } from '@carbon-labs/react/date-picker';
 
 ## `DatePickerInput`
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `id` | `string` | - | **Required.** Unique identifier for the input |
-| `labelText` | `ReactNode` | - | Label text |
-| `placeholder` | `string` | `'mm/dd/yyyy'` | Placeholder text |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Input size |
-| `disabled` | `boolean` | `false` | Whether the input is disabled |
-| `invalid` | `boolean` | `false` | Whether the input is invalid |
-| `invalidText` | `ReactNode` | - | Invalid text to display |
-| `warn` | `boolean` | `false` | Whether the input has a warning |
-| `warnText` | `ReactNode` | - | Warning text to display |
-| `helperText` | `ReactNode` | - | Helper text to display |
-| `hideLabel` | `boolean` | `false` | Whether to hide the label visually |
-| `readOnly` | `boolean` | `false` | Whether the input is read-only |
-| `value` | `string` | - | Input value (controlled) |
-| `defaultValue` | `string` | - | Default value (uncontrolled) |
-| `onChange` | `(event) => void` | - | Change handler |
-| `onFocus` | `(event) => void` | - | Focus handler |
-| `onBlur` | `(event) => void` | - | Blur handler |
+| Prop           | Type                   | Default        | Description                                   |
+| -------------- | ---------------------- | -------------- | --------------------------------------------- |
+| `id`           | `string`               | -              | **Required.** Unique identifier for the input |
+| `labelText`    | `ReactNode`            | -              | Label text                                    |
+| `placeholder`  | `string`               | `'mm/dd/yyyy'` | Placeholder text                              |
+| `size`         | `'sm' \| 'md' \| 'lg'` | `'md'`         | Input size                                    |
+| `disabled`     | `boolean`              | `false`        | Whether the input is disabled                 |
+| `invalid`      | `boolean`              | `false`        | Whether the input is invalid                  |
+| `invalidText`  | `ReactNode`            | -              | Invalid text to display                       |
+| `warn`         | `boolean`              | `false`        | Whether the input has a warning               |
+| `warnText`     | `ReactNode`            | -              | Warning text to display                       |
+| `helperText`   | `ReactNode`            | -              | Helper text to display                        |
+| `hideLabel`    | `boolean`              | `false`        | Whether to hide the label visually            |
+| `readOnly`     | `boolean`              | `false`        | Whether the input is read-only                |
+| `value`        | `string`               | -              | Input value (controlled)                      |
+| `defaultValue` | `string`               | -              | Default value (uncontrolled)                  |
+| `onChange`     | `(event) => void`      | -              | Change handler                                |
+| `onFocus`      | `(event) => void`      | -              | Focus handler                                 |
+| `onBlur`       | `(event) => void`      | -              | Blur handler                                  |
 
 ### Date picker `dateFormat`
 
-You can use the `dateFormat` prop to change how the selected date is
-displayed in the input. The default format is `m/d/Y` (MM/DD/YYYY).
+You can use the `dateFormat` prop to change how the selected date is displayed
+in the input. The default format is `m/d/Y` (MM/DD/YYYY).
 
 Supported format tokens:
+
 - `m` - Month (1-12)
 - `d` - Day (1-31)
 - `Y` - Year (4 digits)
@@ -216,7 +232,8 @@ There are three supported variations of `DatePicker` in Carbon.
 
 - `simple` will render a simple text input _without_ a calendar dropdown.
 - `single` will render a single text input _with_ a calendar dropdown.
-- For `range`, two `DatePickerInput` components will need to be provided as children.
+- For `range`, two `DatePickerInput` components will need to be provided as
+  children.
 
 ```tsx
 // Simple (no calendar)
@@ -260,8 +277,8 @@ minimum date will be disabled in the calendar and navigation will be restricted.
 
 ### Date picker `value`
 
-Pass a string value to either the `DatePicker` or the child `DatePickerInput`
-to initialize the selected date.
+Pass a string value to either the `DatePicker` or the child `DatePickerInput` to
+initialize the selected date.
 
 ```tsx
 <DatePicker value="04/17/2025">
@@ -273,14 +290,17 @@ to initialize the selected date.
 
 ### Modern implementation
 
-This date picker implementation uses modern web platform APIs and has **zero external dependencies**:
+This date picker implementation uses modern web platform APIs and has **zero
+external dependencies**:
 
-- **Temporal API** - Modern date/time handling (polyfilled for browser compatibility)
+- **Temporal API** - Modern date/time handling (polyfilled for browser
+  compatibility)
 - **Popover API** - Native browser popover for the calendar dropdown
 - **CSS Anchor Positioning** - Smart positioning relative to the input field
 - **State Machine** - Predictable state management shared with Web Components
 
 **Benefits:**
+
 - 🎯 **84% less code** compared to Flatpickr-based implementation
 - 📦 **~20-30% smaller bundle** size
 - 🚀 **Zero external dependencies** to maintain
@@ -290,15 +310,16 @@ This date picker implementation uses modern web platform APIs and has **zero ext
 
 ### State machine
 
-The date picker uses a finite state machine to manage all interactions and state transitions.
-This provides:
+The date picker uses a finite state machine to manage all interactions and state
+transitions. This provides:
 
 - **Predictable behavior** - All state changes are explicit and testable
 - **Clear event handling** - Events trigger specific state transitions
 - **Maintainable code** - State logic is centralized and documented
 - **Framework agnostic** - Same logic used in Web Components and React
 
-States include: `IDLE`, `FOCUSED`, `CALENDAR_OPEN`, `DATE_SELECTED`, `RANGE_START_SELECTED`, `RANGE_SELECTING`
+States include: `IDLE`, `FOCUSED`, `CALENDAR_OPEN`, `DATE_SELECTED`,
+`RANGE_START_SELECTED`, `RANGE_SELECTING`
 
 For detailed shared state logic, see the primitives package in
 [GitHub](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/primitives/src/date-picker).
@@ -312,7 +333,8 @@ The calendar supports comprehensive keyboard navigation:
 - **Escape** - Close the calendar
 - **Tab** - Navigate through the date picker interface
   - **Single mode**: Input field → Calendar (when open) → Outside the component
-  - **Range mode**: First input → Calendar (when open) → Second input → Calendar (when open) → Outside the component
+  - **Range mode**: First input → Calendar (when open) → Second input → Calendar
+    (when open) → Outside the component
   - **Shift+Tab** - Reverse navigation through the same flow
 - **Page Up/Down** - Navigate between months
 - **Home/End** - Jump to start/end of week
@@ -320,42 +342,48 @@ The calendar supports comprehensive keyboard navigation:
 **Tab Navigation Flow:**
 
 In **single date mode**, pressing Tab follows this pattern:
+
 1. Focus on input field
 2. If calendar is open, Tab moves focus to the calendar
 3. Tab again moves focus outside the date picker
 
 In **range date mode**, pressing Tab follows this pattern:
+
 1. Focus on first input field (start date)
 2. If calendar is open, Tab moves focus to the calendar
 3. Tab again moves focus to second input field (end date)
 4. If calendar is open, Tab moves focus to the calendar again
 5. Tab again moves focus outside the date picker
 
-Shift+Tab reverses this flow, allowing you to navigate backward through the same sequence.
+Shift+Tab reverses this flow, allowing you to navigate backward through the same
+sequence.
 
-When the calendar opens without a selected date, focus automatically moves to today's date
-for easy keyboard navigation.
+When the calendar opens without a selected date, focus automatically moves to
+today's date for easy keyboard navigation.
 
 ## Migration from Carbon React v11
 
-This implementation is **100% backwards compatible** with Carbon React v11. No code changes are required:
+This implementation is **100% backwards compatible** with Carbon React v11. No
+code changes are required:
 
 ### Before (Carbon React v11)
+
 ```tsx
 import { DatePicker, DatePickerInput } from '@carbon/react';
 
 <DatePicker datePickerType="single" onChange={handleChange}>
   <DatePickerInput id="date" labelText="Date" />
-</DatePicker>
+</DatePicker>;
 ```
 
 ### After (Carbon Labs)
+
 ```tsx
 import { DatePicker, DatePickerInput } from '@carbon-labs/react/date-picker';
 
 <DatePicker datePickerType="single" onChange={handleChange}>
   <DatePickerInput id="date" labelText="Date" />
-</DatePicker>
+</DatePicker>;
 ```
 
 **All props work exactly the same!** The only change is the import path.
@@ -363,10 +391,17 @@ import { DatePicker, DatePickerInput } from '@carbon-labs/react/date-picker';
 ## References
 
 - [Carbon React v11 DatePicker Documentation](https://react.carbondesignsystem.com/?path=/docs/components-datepicker--overview)
-- The date picker uses the [Temporal API](https://tc39.es/proposal-temporal/docs/) for modern date handling
-- The calendar uses the [Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API) for dropdown behavior
-- Positioning uses [CSS Anchor Positioning](https://developer.chrome.com/blog/tether-elements-to-each-other-with-css-anchor-positioning) for smart placement
-- The `DatePickerInput` component takes in similar props to the Carbon `TextInput` component
+- The date picker uses the
+  [Temporal API](https://tc39.es/proposal-temporal/docs/) for modern date
+  handling
+- The calendar uses the
+  [Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API)
+  for dropdown behavior
+- Positioning uses
+  [CSS Anchor Positioning](https://developer.chrome.com/blog/tether-elements-to-each-other-with-css-anchor-positioning)
+  for smart placement
+- The `DatePickerInput` component takes in similar props to the Carbon
+  `TextInput` component
 
 ## Feedback
 

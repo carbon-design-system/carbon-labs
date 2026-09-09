@@ -145,7 +145,7 @@ describe('solisSessionManager', () => {
         })
       );
       const consoleErrorStub = sinon.stub(console, 'error');
-      sinon.stub(solisSessionManager.prototype, 'performSoftLogout');
+      sinon.stub(solisSessionManager.prototype, 'performLogout');
       const sessionManager = new solisSessionManager({});
       await sessionManager.triggerRefresh();
       expect(consoleErrorStub).to.have.been.calledWith(
@@ -162,7 +162,7 @@ describe('solisSessionManager', () => {
         })
       );
       const consoleErrorStub = sinon.stub(console, 'error');
-      sinon.stub(solisSessionManager.prototype, 'performSoftLogout');
+      sinon.stub(solisSessionManager.prototype, 'performLogout');
       const sessionManager = new solisSessionManager({});
       await sessionManager.triggerRefresh();
       expect(consoleErrorStub).to.have.been.calledWith(
@@ -315,7 +315,7 @@ describe('solisSessionManager', () => {
     });
   });
 
-  describe('performSoftLogout', () => {
+  describe('performLogout', () => {
     let redirectStub: sinon.SinonStub;
 
     beforeEach(() => {
@@ -327,7 +327,7 @@ describe('solisSessionManager', () => {
       fetchStub.resolves(new Response(null, { status: 200, statusText: 'OK' }));
       const consoleLogStub = sinon.stub(console, 'log');
       const sessionManager = new solisSessionManager({ basePath: '/api' });
-      await sessionManager.performSoftLogout();
+      await sessionManager.performLogout();
       expect(fetchStub).to.have.been.calledWith(
         '/api/v1/solis/session/logout',
         { method: 'POST', credentials: 'same-origin' }
@@ -342,7 +342,7 @@ describe('solisSessionManager', () => {
       fetchStub.resolves(new Response(null, { status: 200, statusText: 'OK' }));
       const consoleLogStub = sinon.stub(console, 'log');
       const sessionManager = new solisSessionManager({});
-      await sessionManager.performSoftLogout();
+      await sessionManager.performLogout();
       expect(fetchStub).to.have.been.calledWith('/v1/solis/session/logout', {
         method: 'POST',
         credentials: 'same-origin',
@@ -359,7 +359,7 @@ describe('solisSessionManager', () => {
       );
       const consoleLogStub = sinon.stub(console, 'log');
       const sessionManager = new solisSessionManager({});
-      await sessionManager.performSoftLogout();
+      await sessionManager.performLogout();
       expect(consoleLogStub).to.have.been.calledWith(
         'Solis session logout - session already expired'
       );
@@ -372,7 +372,7 @@ describe('solisSessionManager', () => {
       );
       const consoleErrorStub = sinon.stub(console, 'error');
       const sessionManager = new solisSessionManager({});
-      await sessionManager.performSoftLogout();
+      await sessionManager.performLogout();
       expect(consoleErrorStub).to.have.been.calledWith(
         'Solis session logout failed:',
         500
@@ -384,7 +384,7 @@ describe('solisSessionManager', () => {
       fetchStub.rejects(new Error('Network error'));
       const consoleErrorStub = sinon.stub(console, 'error');
       const sessionManager = new solisSessionManager({});
-      await sessionManager.performSoftLogout();
+      await sessionManager.performLogout();
       expect(consoleErrorStub).to.have.been.calledWith(
         'Solis session logout error:',
         'Network error'
@@ -392,58 +392,58 @@ describe('solisSessionManager', () => {
       expect(redirectStub).to.have.been.calledWith('/logout');
     });
 
-    it('invokes softLogoutCallback if provided', async () => {
+    it('invokes logoutCallback if provided', async () => {
       const fetchStub = sinon.stub(window, 'fetch');
       fetchStub.resolves(new Response(null, { status: 200, statusText: 'OK' }));
       const callbackSpy = sinon.spy();
       const sessionManager = new solisSessionManager({
-        softLogoutCallback: callbackSpy,
+        logoutCallback: callbackSpy,
       });
-      await sessionManager.performSoftLogout();
+      await sessionManager.performLogout();
       expect(callbackSpy).to.have.been.calledOnce;
     });
 
-    it('still redirects when softLogoutCallback throws', async () => {
+    it('still redirects when logoutCallback throws', async () => {
       const fetchStub = sinon.stub(window, 'fetch');
       fetchStub.resolves(new Response(null, { status: 200, statusText: 'OK' }));
       const consoleErrorStub = sinon.stub(console, 'error');
       const failingCallback = sinon.stub().rejects(new Error('Callback error'));
       const sessionManager = new solisSessionManager({
-        softLogoutCallback: failingCallback,
-        softLogoutUrl: '/soft-logout',
+        logoutCallback: failingCallback,
+        logoutUrl: '/soft-logout',
       });
-      await sessionManager.performSoftLogout();
+      await sessionManager.performLogout();
       expect(consoleErrorStub).to.have.been.calledWith(
-        'Soft logout failed with error: ',
+        'Logout failed with error: ',
         'Callback error'
       );
       expect(redirectStub).to.have.been.calledWith('/soft-logout');
     });
 
-    it('redirects to softLogoutUrl when provided', async () => {
+    it('redirects to logoutUrl when provided', async () => {
       const fetchStub = sinon.stub(window, 'fetch');
       fetchStub.resolves(new Response(null, { status: 200, statusText: 'OK' }));
       const sessionManager = new solisSessionManager({
-        softLogoutUrl: '/session-expired',
+        logoutUrl: '/session-expired',
         basePath: '/api',
       });
-      await sessionManager.performSoftLogout();
+      await sessionManager.performLogout();
       expect(redirectStub).to.have.been.calledWith('/session-expired');
     });
 
-    it('falls back to basePath + /logout when softLogoutUrl is not provided', async () => {
+    it('falls back to basePath + /logout when logoutUrl is not provided', async () => {
       const fetchStub = sinon.stub(window, 'fetch');
       fetchStub.resolves(new Response(null, { status: 200, statusText: 'OK' }));
       const sessionManager = new solisSessionManager({ basePath: '/api' });
-      await sessionManager.performSoftLogout();
+      await sessionManager.performLogout();
       expect(redirectStub).to.have.been.calledWith('/api/logout');
     });
 
-    it('falls back to /logout when neither softLogoutUrl nor basePath is provided', async () => {
+    it('falls back to /logout when neither logoutUrl nor basePath is provided', async () => {
       const fetchStub = sinon.stub(window, 'fetch');
       fetchStub.resolves(new Response(null, { status: 200, statusText: 'OK' }));
       const sessionManager = new solisSessionManager({});
-      await sessionManager.performSoftLogout();
+      await sessionManager.performLogout();
       expect(redirectStub).to.have.been.calledWith('/logout');
     });
 
@@ -459,17 +459,17 @@ describe('solisSessionManager', () => {
         'unregisterActivityListeners'
       );
       const sessionManager = new solisSessionManager({});
-      await sessionManager.performSoftLogout();
+      await sessionManager.performLogout();
       expect(stopScheduleSpy).to.have.been.calledOnce;
       expect(unregisterSpy).to.have.been.calledOnce;
     });
   });
 
   describe('setIdle', () => {
-    it('sets isIdle to true and calls performSoftLogout when session is inactive', async () => {
-      const performSoftLogoutStub = sinon.stub(
+    it('sets isIdle to true and calls performLogout when session is inactive', async () => {
+      const performLogoutStub = sinon.stub(
         solisSessionManager.prototype,
-        'performSoftLogout'
+        'performLogout'
       );
       sinon
         .stub(solisSessionManager.prototype, 'checkSessionStatus')
@@ -477,20 +477,20 @@ describe('solisSessionManager', () => {
       const sessionManager = new solisSessionManager({});
       await sessionManager.setIdle();
       expect(sessionManager.isTabIdle()).to.be.true;
-      expect(performSoftLogoutStub).to.have.been.calledOnce;
+      expect(performLogoutStub).to.have.been.calledOnce;
     });
 
-    it('does not call performSoftLogout when session is active', async () => {
-      const performSoftLogoutStub = sinon.stub(
+    it('does not call performLogout when session is active', async () => {
+      const performLogoutStub = sinon.stub(
         solisSessionManager.prototype,
-        'performSoftLogout'
+        'performLogout'
       );
       sinon
         .stub(solisSessionManager.prototype, 'checkSessionStatus')
         .resolves(true);
       const sessionManager = new solisSessionManager({});
       await sessionManager.setIdle();
-      expect(performSoftLogoutStub).to.not.have.been.called;
+      expect(performLogoutStub).to.not.have.been.called;
     });
   });
 });

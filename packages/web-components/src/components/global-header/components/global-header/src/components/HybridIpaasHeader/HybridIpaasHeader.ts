@@ -76,7 +76,7 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: Boolean }) solisSessionManagerEnabled = false; // toggle to enable/disable the Solis session manager
   @property({ type: Number }) solisSessionRefreshInterval = 25; // might not need Solis token refresh interval to be configurable
   @property({ type: Number }) solisIdleTimeoutInterval = 28; // might not need Solis idle timeout interval to be configurable
-  @property({ type: String }) softLogoutUrl = '';
+  @property({ type: String }) logoutUrl = '';
 
   @state()
   headerOptions: HeaderProps = {
@@ -195,11 +195,11 @@ export class HybridIpaasHeader extends LitElement {
 
   private initializeSessionManager() {
     if (!this.sessionManager) {
-      let softLogoutCallback: (() => void) | undefined;
+      let logoutCallback: (() => void) | undefined;
       if (this.logoutCallback) {
-        softLogoutCallback = this.logoutCallback;
+        logoutCallback = this.logoutCallback;
       } else if (this.logoutCallbackEvent) {
-        softLogoutCallback = () => {
+        logoutCallback = () => {
           const event = new CustomEvent(this.logoutCallbackEvent, {
             bubbles: true,
             cancelable: true,
@@ -212,8 +212,8 @@ export class HybridIpaasHeader extends LitElement {
         tokenRefreshInterval: this.solisSessionRefreshInterval,
         idleTimeoutInterval: this.solisIdleTimeoutInterval,
         basePath: this.basePath,
-        softLogoutCallback,
-        softLogoutUrl: this.softLogoutUrl || undefined,
+        logoutCallback,
+        logoutUrl: this.logoutUrl || undefined,
       });
       this.sessionManager.startRefreshSchedule();
       this.sessionManager.registerActivityListeners();

@@ -246,7 +246,9 @@ export class HybridIpaasHeader extends LitElement {
       arialLabel: 'Logout',
     };
 
-    if (this.logoutCallback) {
+    if (this.solisSessionManagerEnabled) {
+      footerLink.onClickHandler = () => this.sessionManager?.performLogout(); // will do nothing if sessionManager is not yet initialized (narrow window)
+    } else if (this.logoutCallback) {
       footerLink.onClickHandler = this.logoutCallback;
     } else if (this.logoutCallbackEvent) {
       footerLink.onClickHandler = () => {

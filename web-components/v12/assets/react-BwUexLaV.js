@@ -1,0 +1,1 @@
+import{t as e}from"./lib-CCJE9CR_.js";export{e as MDXProvider};

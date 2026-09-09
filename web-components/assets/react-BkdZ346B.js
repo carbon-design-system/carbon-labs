@@ -1,0 +1,1 @@
+import{t as e}from"./lib-CsIkgHaD.js";export{e as MDXProvider};

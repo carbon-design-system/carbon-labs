@@ -447,12 +447,16 @@ describe('solisSessionManager', () => {
       expect(redirectStub).to.have.been.calledWith('/logout');
     });
 
-    it('stops the refresh schedule and unregisters activity listeners', async () => {
+    it('stops the refresh schedule, stops session status polling, and unregisters activity listeners', async () => {
       const fetchStub = sinon.stub(window, 'fetch');
       fetchStub.resolves(new Response(null, { status: 200, statusText: 'OK' }));
       const stopScheduleSpy = sinon.spy(
         solisSessionManager.prototype,
         'stopRefreshSchedule'
+      );
+      const stopPollingSpy = sinon.spy(
+        solisSessionManager.prototype,
+        'stopSessionStatusPolling'
       );
       const unregisterSpy = sinon.spy(
         solisSessionManager.prototype,
@@ -461,6 +465,7 @@ describe('solisSessionManager', () => {
       const sessionManager = new solisSessionManager({});
       await sessionManager.performLogout();
       expect(stopScheduleSpy).to.have.been.calledOnce;
+      expect(stopPollingSpy).to.have.been.calledOnce;
       expect(unregisterSpy).to.have.been.calledOnce;
     });
   });

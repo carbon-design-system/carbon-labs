@@ -74,8 +74,9 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: Boolean }) addCookiePreferences = false;
   @property({ type: Boolean }) forceBackendProxy = false; // override domain check; always enable the backend proxy when true
   @property({ type: Boolean }) solisSessionManagerEnabled = false; // toggle to enable/disable the Solis session manager
-  @property({ type: Number }) solisSessionRefreshInterval = 25; // might not need Solis token refresh interval to be configurable
-  @property({ type: Number }) solisIdleTimeoutInterval = 28; // might not need Solis idle timeout interval to be configurable
+  @property({ type: Number }) solisSessionRefreshInterval = 25; // (minutes) might not need Solis token refresh interval to be configurable
+  @property({ type: Number }) solisIdleTimeoutInterval = 28; // (minutes) might not need Solis idle timeout interval to be configurable
+  @property({ type: Number }) solisSessionStatusInterval = 10; // (seconds) might not need Solis session polling interval to be configurable
   @property({ type: String }) logoutUrl = '';
 
   @state()
@@ -212,6 +213,7 @@ export class HybridIpaasHeader extends LitElement {
       this.sessionManager = new solisSessionManager({
         tokenRefreshInterval: this.solisSessionRefreshInterval,
         idleTimeoutInterval: this.solisIdleTimeoutInterval,
+        sessionStatusInterval: this.solisSessionStatusInterval,
         basePath: this.basePath,
         logoutCallback,
         logoutUrl: this.logoutUrl || undefined,

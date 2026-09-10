@@ -327,6 +327,7 @@ export interface ReactWrapperProps extends Omit<
   solisSessionManagerEnabled?: boolean;
   solisSessionRefreshInterval?: number;
   solisIdleTimeoutInterval?: number;
+  solisSessionStatusInterval?: number;
   logoutUrl?: string;
 }
 

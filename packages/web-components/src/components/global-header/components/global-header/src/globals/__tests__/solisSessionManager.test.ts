@@ -555,4 +555,24 @@ describe('solisSessionManager', () => {
       sessionManager.stopSessionStatusPolling();
     });
   });
+
+  describe('stopSessionStatusPolling', () => {
+    it('does nothing if the session status polling schedule is not running', () => {
+      const clearIntervalStub = sinon.stub(window, 'clearInterval');
+      const sessionManager = new solisSessionManager({});
+      sessionManager.stopSessionStatusPolling();
+      expect(sessionManager.isPollingRunning()).to.be.false;
+      expect(clearIntervalStub).to.not.have.been.called;
+    });
+
+    it('clears the interval if the session status polling schedule is running', () => {
+      const clearIntervalStub = sinon.stub(window, 'clearInterval');
+      const sessionManager = new solisSessionManager({});
+      sessionManager.startSessionStatusPolling();
+      expect(sessionManager.isPollingRunning()).to.be.true;
+      sessionManager.stopSessionStatusPolling();
+      expect(clearIntervalStub).to.have.been.calledOnce;
+      expect(sessionManager.isPollingRunning()).to.be.false;
+    });
+  });
 });

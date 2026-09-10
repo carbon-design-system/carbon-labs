@@ -111,6 +111,7 @@ export class HybridIpaasHeader extends LitElement {
     super.disconnectedCallback();
     if (this.sessionManager) {
       this.sessionManager.stopRefreshSchedule();
+      this.sessionManager.stopSessionStatusPolling();
       this.sessionManager.unregisterActivityListeners();
       this.sessionManager = null;
     }
@@ -216,6 +217,7 @@ export class HybridIpaasHeader extends LitElement {
         logoutUrl: this.logoutUrl || undefined,
       });
       this.sessionManager.startRefreshSchedule();
+      this.sessionManager.startSessionStatusPolling();
       this.sessionManager.registerActivityListeners();
     }
   }

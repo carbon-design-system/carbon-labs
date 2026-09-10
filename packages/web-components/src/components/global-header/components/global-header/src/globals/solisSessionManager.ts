@@ -192,17 +192,26 @@ export default class solisSessionManager {
   }
 
   startSessionStatusPolling() {
-    this.sessionStatusIntervalId = window.setInterval(async () => {
+    const poll = async () => {
       const sessionActive = await this.checkSessionStatus();
       if (!sessionActive) {
         await this.performLogout();
+        return; // don't reschedule after logout
       }
-    }, this.sessionStatusInterval * 1000);
+      this.sessionStatusIntervalId = window.setTimeout(
+        poll,
+        this.sessionStatusInterval * 1000
+      );
+    };
+    this.sessionStatusIntervalId = window.setTimeout(
+      poll,
+      this.sessionStatusInterval * 1000
+    );
   }
 
   stopSessionStatusPolling() {
     if (this.sessionStatusIntervalId) {
-      clearInterval(this.sessionStatusIntervalId);
+      clearTimeout(this.sessionStatusIntervalId);
       this.sessionStatusIntervalId = null;
     }
   }

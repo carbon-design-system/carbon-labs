@@ -518,7 +518,7 @@ describe('solisSessionManager', () => {
       clock = sinon.useFakeTimers({
         shouldAdvanceTime: false,
         shouldClearNativeTimers: true,
-        toFake: ['setInterval', 'clearInterval'],
+        toFake: ['setTimeout', 'clearTimeout'],
       });
     });
 
@@ -533,7 +533,7 @@ describe('solisSessionManager', () => {
       sessionManager.stopSessionStatusPolling();
     });
 
-    it('calls checkSessionStatus after the specified interval has passed', () => {
+    it('calls checkSessionStatus after the specified interval has passed', async () => {
       const checkSessionStatusStub = sinon
         .stub(solisSessionManager.prototype, 'checkSessionStatus')
         .resolves(true);
@@ -543,8 +543,9 @@ describe('solisSessionManager', () => {
       sessionManager.startSessionStatusPolling();
       expect(sessionManager.isPollingRunning()).to.be.true;
       clock.tick(1 * 1000);
-      expect(checkSessionStatusStub).to.have.been.calledOnce;
+      await Promise.resolve(); // flush so poll completes before we stop
       sessionManager.stopSessionStatusPolling();
+      expect(checkSessionStatusStub).to.have.been.calledOnce;
     });
 
     it('calls performLogout if the session is inactive', async () => {
@@ -569,21 +570,35 @@ describe('solisSessionManager', () => {
   });
 
   describe('stopSessionStatusPolling', () => {
-    it('does nothing if the session status polling schedule is not running', () => {
-      const clearIntervalStub = sinon.stub(window, 'clearInterval');
+    let clock;
+
+    beforeEach(() => {
+      clock = sinon.useFakeTimers({
+        shouldAdvanceTime: false,
+        shouldClearNativeTimers: true,
+        toFake: ['setTimeout', 'clearTimeout'],
+      });
+    });
+
+    afterEach(() => {
+      clock.restore();
+    });
+
+    it('does nothing if the session status polling is not running', () => {
+      const clearTimeoutStub = sinon.stub(window, 'clearTimeout');
       const sessionManager = new solisSessionManager({});
       sessionManager.stopSessionStatusPolling();
       expect(sessionManager.isPollingRunning()).to.be.false;
-      expect(clearIntervalStub).to.not.have.been.called;
+      expect(clearTimeoutStub).to.not.have.been.called;
     });
 
-    it('clears the interval if the session status polling schedule is running', () => {
-      const clearIntervalStub = sinon.stub(window, 'clearInterval');
+    it('clears the timeout if the session status polling is running', () => {
+      const clearTimeoutStub = sinon.stub(window, 'clearTimeout');
       const sessionManager = new solisSessionManager({});
       sessionManager.startSessionStatusPolling();
       expect(sessionManager.isPollingRunning()).to.be.true;
       sessionManager.stopSessionStatusPolling();
-      expect(clearIntervalStub).to.have.been.calledOnce;
+      expect(clearTimeoutStub).to.have.been.calledOnce;
       expect(sessionManager.isPollingRunning()).to.be.false;
     });
   });

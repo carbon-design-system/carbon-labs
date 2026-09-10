@@ -468,6 +468,18 @@ describe('solisSessionManager', () => {
       expect(stopPollingSpy).to.have.been.calledOnce;
       expect(unregisterSpy).to.have.been.calledOnce;
     });
+
+    it('does not execute if a logout is already in progress', async () => {
+      const fetchStub = sinon.stub(window, 'fetch');
+      fetchStub.resolves(new Response(null, { status: 200, statusText: 'OK' }));
+      const sessionManager = new solisSessionManager({});
+      // kick off two concurrent calls
+      await Promise.all([
+        sessionManager.performLogout(),
+        sessionManager.performLogout(),
+      ]);
+      expect(fetchStub).to.have.been.calledOnce;
+    });
   });
 
   describe('setIdle', () => {

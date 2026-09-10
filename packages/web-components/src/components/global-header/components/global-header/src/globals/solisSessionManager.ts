@@ -12,6 +12,7 @@ import { solisSessionManagerConfig } from '../types/Header.types';
 export default class solisSessionManager {
   private refreshIntervalId: number | null = null;
   private sessionStatusIntervalId: number | null = null;
+  private isLoggingOut = false;
   private tokenRefreshInterval: number;
   private sessionStatusInterval: number;
   private idleTimeoutInterval: number;
@@ -154,6 +155,8 @@ export default class solisSessionManager {
   }
 
   async performLogout() {
+    if (this.isLoggingOut) return;
+    this.isLoggingOut = true;
     this.stopRefreshSchedule();
     this.stopSessionStatusPolling();
     this.unregisterActivityListeners();

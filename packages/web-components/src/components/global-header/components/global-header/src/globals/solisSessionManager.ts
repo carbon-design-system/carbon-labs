@@ -204,6 +204,10 @@ export default class solisSessionManager {
     }
   }
 
+  isPollingRunning(): boolean {
+    return this.sessionStatusIntervalId !== null;
+  }
+
   redirect(url: string) {
     window.location.href = url;
   }

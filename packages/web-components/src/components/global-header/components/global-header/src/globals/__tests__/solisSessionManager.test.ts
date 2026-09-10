@@ -493,4 +493,61 @@ describe('solisSessionManager', () => {
       expect(performLogoutStub).to.not.have.been.called;
     });
   });
+
+  describe('startSessionStatusPolling', () => {
+    let clock;
+
+    beforeEach(() => {
+      clock = sinon.useFakeTimers({
+        shouldAdvanceTime: false,
+        shouldClearNativeTimers: true,
+        toFake: ['setInterval', 'clearInterval'],
+      });
+    });
+
+    afterEach(() => {
+      clock.restore();
+    });
+
+    it('sets the sessionStatusIntervalId', () => {
+      const sessionManager = new solisSessionManager({});
+      sessionManager.startSessionStatusPolling();
+      expect(sessionManager.isPollingRunning()).to.be.true;
+      sessionManager.stopSessionStatusPolling();
+    });
+
+    it('calls checkSessionStatus after the specified interval has passed', () => {
+      const checkSessionStatusStub = sinon
+        .stub(solisSessionManager.prototype, 'checkSessionStatus')
+        .resolves(true);
+      const sessionManager = new solisSessionManager({
+        sessionStatusInterval: 1,
+      });
+      sessionManager.startSessionStatusPolling();
+      expect(sessionManager.isPollingRunning()).to.be.true;
+      clock.tick(1 * 1000);
+      expect(checkSessionStatusStub).to.have.been.calledOnce;
+      sessionManager.stopSessionStatusPolling();
+    });
+
+    it('calls performLogout if the session is inactive', async () => {
+      const checkSessionStatusStub = sinon
+        .stub(solisSessionManager.prototype, 'checkSessionStatus')
+        .resolves(false);
+      const performLogoutStub = sinon.stub(
+        solisSessionManager.prototype,
+        'performLogout'
+      );
+      const sessionManager = new solisSessionManager({
+        sessionStatusInterval: 1,
+      });
+      sessionManager.startSessionStatusPolling();
+      expect(sessionManager.isPollingRunning()).to.be.true;
+      clock.tick(1 * 1000);
+      await Promise.resolve(); // flush microtask queue so the async interval callback resolves
+      expect(checkSessionStatusStub).to.have.been.calledOnce;
+      expect(performLogoutStub).to.have.been.calledOnce;
+      sessionManager.stopSessionStatusPolling();
+    });
+  });
 });

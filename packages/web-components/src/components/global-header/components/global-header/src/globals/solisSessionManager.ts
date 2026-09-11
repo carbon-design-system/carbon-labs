@@ -124,6 +124,7 @@ export default class solisSessionManager {
     const isSessionActive = await this.checkSessionStatus();
     if (!isSessionActive) {
       await this.performLogout();
+      return;
     }
   }
 

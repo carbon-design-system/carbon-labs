@@ -156,7 +156,9 @@ export default class solisSessionManager {
   }
 
   async performLogout() {
-    if (this.isLoggingOut) return;
+    if (this.isLoggingOut) {
+      return;
+    }
     this.isLoggingOut = true;
     this.stopRefreshSchedule();
     this.stopSessionStatusPolling();

@@ -74,9 +74,10 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: Boolean }) addCookiePreferences = false;
   @property({ type: Boolean }) forceBackendProxy = false; // override domain check; always enable the backend proxy when true
   @property({ type: Boolean }) solisSessionManagerEnabled = false; // toggle to enable/disable the Solis session manager
-  @property({ type: Number }) solisSessionRefreshInterval = 25; // might not need Solis token refresh interval to be configurable
-  @property({ type: Number }) solisIdleTimeoutInterval = 28; // might not need Solis idle timeout interval to be configurable
-  @property({ type: String }) softLogoutUrl = '';
+  @property({ type: Number }) solisSessionRefreshInterval = 25; // (minutes) might not need Solis token refresh interval to be configurable
+  @property({ type: Number }) solisIdleTimeoutInterval = 28; // (minutes) might not need Solis idle timeout interval to be configurable
+  @property({ type: Number }) solisSessionStatusInterval = 10; // (seconds) might not need Solis session polling interval to be configurable
+  @property({ type: String }) logoutUrl = '';
 
   @state()
   headerOptions: HeaderProps = {
@@ -111,6 +112,7 @@ export class HybridIpaasHeader extends LitElement {
     super.disconnectedCallback();
     if (this.sessionManager) {
       this.sessionManager.stopRefreshSchedule();
+      this.sessionManager.stopSessionStatusPolling();
       this.sessionManager.unregisterActivityListeners();
       this.sessionManager = null;
     }
@@ -195,11 +197,11 @@ export class HybridIpaasHeader extends LitElement {
 
   private initializeSessionManager() {
     if (!this.sessionManager) {
-      let softLogoutCallback: (() => void) | undefined;
+      let logoutCallback: (() => void) | undefined;
       if (this.logoutCallback) {
-        softLogoutCallback = this.logoutCallback;
+        logoutCallback = this.logoutCallback;
       } else if (this.logoutCallbackEvent) {
-        softLogoutCallback = () => {
+        logoutCallback = () => {
           const event = new CustomEvent(this.logoutCallbackEvent, {
             bubbles: true,
             cancelable: true,
@@ -211,11 +213,13 @@ export class HybridIpaasHeader extends LitElement {
       this.sessionManager = new solisSessionManager({
         tokenRefreshInterval: this.solisSessionRefreshInterval,
         idleTimeoutInterval: this.solisIdleTimeoutInterval,
+        sessionStatusInterval: this.solisSessionStatusInterval,
         basePath: this.basePath,
-        softLogoutCallback,
-        softLogoutUrl: this.softLogoutUrl || undefined,
+        logoutCallback,
+        logoutUrl: this.logoutUrl || undefined,
       });
       this.sessionManager.startRefreshSchedule();
+      this.sessionManager.startSessionStatusPolling();
       this.sessionManager.registerActivityListeners();
     }
   }
@@ -246,7 +250,9 @@ export class HybridIpaasHeader extends LitElement {
       arialLabel: 'Logout',
     };
 
-    if (this.logoutCallback) {
+    if (this.solisSessionManagerEnabled) {
+      footerLink.onClickHandler = () => this.sessionManager?.performLogout(); // will do nothing if sessionManager is not yet initialized (narrow window)
+    } else if (this.logoutCallback) {
       footerLink.onClickHandler = this.logoutCallback;
     } else if (this.logoutCallbackEvent) {
       footerLink.onClickHandler = () => {

@@ -14110,7 +14110,7 @@ __metadata:
     storybook: "npm:^9.1.2"
     strip-comments: "npm:^2.0.1"
     stylelint: "npm:^17.0.0"
-    stylelint-config-carbon: "npm:1.23.0"
+    stylelint-config-carbon: "npm:1.24.0"
     yargs: "npm:^17.7.2"
   languageName: unknown
   linkType: soft
@@ -31795,9 +31795,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-config-carbon@npm:1.23.0":
-  version: 1.23.0
-  resolution: "stylelint-config-carbon@npm:1.23.0"
+"stylelint-config-carbon@npm:1.24.0":
+  version: 1.24.0
+  resolution: "stylelint-config-carbon@npm:1.24.0"
   dependencies:
     "@double-great/stylelint-a11y": "npm:^3.4.10"
     stylelint-config-idiomatic-order: "npm:^10.0.0"
@@ -31811,7 +31811,7 @@ __metadata:
     stylelint-use-logical: "npm:^2.1.0"
   peerDependencies:
     stylelint: ^17.0.0
-  checksum: 10c0/fb5195cc9637e3a91fa9df75649faba277b7b16461c4800574459db8f3463d8edccb9c06a25997ac0d00be6a0ada79f8db112ccb43964041322821f4dfe22aa0
+  checksum: 10c0/621bd4f027564496af70586bb4723a0c84dcf542a289c93760e6b767613cdd1e1422a0b0bc4c0bd34e10752ecdf23920bd1bac5476edfe8df2b32f5849d59c51
   languageName: node
   linkType: hard
 

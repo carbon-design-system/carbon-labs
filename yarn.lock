@@ -3005,7 +3005,7 @@ __metadata:
     "@types/three": "npm:^0.185.0"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
-    three: "npm:^0.185.0"
+    three: "npm:^0.186.0"
   peerDependencies:
     "@carbon/colors": ">=11"
     "@react-spring/three": ">=9"
@@ -3016,7 +3016,7 @@ __metadata:
     react: ^18.0.0
     react-dom: ^18.0.0
     sass: ">=1"
-    three: ^0.185.0
+    three: ^0.186.0
     typescript: ^5.7.2
   languageName: unknown
   linkType: soft
@@ -32479,10 +32479,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"three@npm:^0.185.0":
-  version: 0.185.1
-  resolution: "three@npm:0.185.1"
-  checksum: 10c0/d15d3fa934f53c9fd6706965ff9946f55653bc728cf582e68acb03421c0179d7662f7d270e14bcf72923e140c36779e7fba6b0f6e542e07deade7342f63c8bdf
+"three@npm:^0.186.0":
+  version: 0.186.0
+  resolution: "three@npm:0.186.0"
+  checksum: 10c0/5c1e81ad9d4591c3582e484f5fd019830e42cf69a859241b3c6e7aaa216349accf4fd1bae8a9be2f6d7973fa3aef31812477c5eda694f505c0780d3ce3b385af
   languageName: node
   linkType: hard
 

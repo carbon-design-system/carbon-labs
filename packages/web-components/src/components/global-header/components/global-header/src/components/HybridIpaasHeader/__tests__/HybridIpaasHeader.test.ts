@@ -288,6 +288,10 @@ describe('HybridIpaasHeader Component', () => {
       solisSessionManager.prototype,
       'startRefreshSchedule'
     );
+    const startSessionStatusPollingStub = sinon.stub(
+      solisSessionManager.prototype,
+      'startSessionStatusPolling'
+    );
     const registerActivityListenersStub = sinon.stub(
       solisSessionManager.prototype,
       'registerActivityListeners'
@@ -304,6 +308,7 @@ describe('HybridIpaasHeader Component', () => {
 
     expect(el.sessionManager).to.not.be.null;
     expect(startRefreshScheduleStub).to.have.been.calledOnce;
+    expect(startSessionStatusPollingStub).to.have.been.calledOnce;
     expect(registerActivityListenersStub).to.have.been.calledOnce;
   });
 
@@ -346,6 +351,44 @@ describe('HybridIpaasHeader Component', () => {
         text: 'Log out',
       },
     ]);
+  });
+
+  it('should call sessionManager.performLogout when the logout link is clicked and solisSessionManagerEnabled is true', async () => {
+    fetchStub.resolves(
+      new Response(JSON.stringify(fetchResp), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    );
+    const performLogoutStub = sinon.stub(
+      solisSessionManager.prototype,
+      'performLogout'
+    );
+    // stub out timer and listener functions
+    sinon.stub(solisSessionManager.prototype, 'startRefreshSchedule');
+    sinon.stub(solisSessionManager.prototype, 'startSessionStatusPolling');
+    sinon.stub(solisSessionManager.prototype, 'registerActivityListeners');
+
+    const el = await fixture<HybridIpaasHeader>(
+      html`<clabs-global-header-hybrid-ipaas
+        productName="Test Product"
+        productKey="test-productKey"
+        basePath="/base"
+        solisSessionManagerEnabled="true"></clabs-global-header-hybrid-ipaas>`
+    );
+    await waitUntil(
+      () =>
+        el.headerOptions.mainSectionItems &&
+        el.headerOptions.mainSectionItems[0].text === 'Test Product',
+      'headerOptions were not updated as expected'
+    );
+
+    const logoutLink = el.headerOptions.profileFooterLinks?.find(
+      (link) => link.text === 'Log out'
+    );
+    expect(logoutLink?.onClickHandler).to.exist;
+    logoutLink?.onClickHandler?.();
+    expect(performLogoutStub).to.have.been.calledOnce;
   });
 
   describe('logoutCallbackEvent', () => {

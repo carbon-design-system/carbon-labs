@@ -11,20 +11,24 @@ import { solisSessionManagerConfig } from '../types/Header.types';
 
 export default class solisSessionManager {
   private refreshIntervalId: number | null = null;
+  private sessionStatusIntervalId: number | null = null;
+  private isLoggingOut = false;
   private tokenRefreshInterval: number;
+  private sessionStatusInterval: number;
   private idleTimeoutInterval: number;
   private isIdle: boolean;
   private idleTimeout: ReturnType<typeof setTimeout> | undefined;
   private basePath: string | undefined;
   private activityEvents: string[];
   private boundSetActive: () => void;
-  private softLogoutUrl: string | undefined;
-  private softLogoutCallback: (() => void) | undefined;
+  private logoutUrl: string | undefined;
+  private logoutCallback: (() => void) | undefined;
   config: solisSessionManagerConfig;
 
   constructor(config: solisSessionManagerConfig) {
     this.config = config;
     this.tokenRefreshInterval = config.tokenRefreshInterval || 25;
+    this.sessionStatusInterval = config.sessionStatusInterval || 10;
     this.idleTimeoutInterval = config.idleTimeoutInterval || 28;
     this.basePath = config.basePath;
     this.activityEvents = [
@@ -39,8 +43,8 @@ export default class solisSessionManager {
     this.isIdle = false;
     this.idleTimeout = undefined;
     this.boundSetActive = () => this.setActive();
-    this.softLogoutUrl = config.softLogoutUrl;
-    this.softLogoutCallback = config.softLogoutCallback;
+    this.logoutUrl = config.logoutUrl;
+    this.logoutCallback = config.logoutCallback;
   }
 
   startRefreshSchedule() {
@@ -80,7 +84,7 @@ export default class solisSessionManager {
         console.log('Solis token refresh skipped (too recent)'); // TODO - this response doesn't yet exist in the backend
       } else if (response.status === 401 || response.status === 403) {
         console.error('Solis token refresh unauthorized - triggering logout');
-        await this.performSoftLogout();
+        await this.performLogout();
       } else {
         console.error('Solis token refresh failed:', response.status);
       }
@@ -119,7 +123,8 @@ export default class solisSessionManager {
     this.isIdle = true;
     const isSessionActive = await this.checkSessionStatus();
     if (!isSessionActive) {
-      await this.performSoftLogout();
+      await this.performLogout();
+      return;
     }
   }
 
@@ -150,8 +155,13 @@ export default class solisSessionManager {
     }
   }
 
-  async performSoftLogout() {
+  async performLogout() {
+    if (this.isLoggingOut) {
+      return;
+    }
+    this.isLoggingOut = true;
     this.stopRefreshSchedule();
+    this.stopSessionStatusPolling();
     this.unregisterActivityListeners();
     const postRoute = this.basePath
       ? this.basePath + '/v1/solis/session/logout'
@@ -172,17 +182,45 @@ export default class solisSessionManager {
     } catch (error: any) {
       console.error('Solis session logout error:', error.message);
     }
-    if (this.softLogoutCallback) {
+    if (this.logoutCallback) {
       try {
-        await this.softLogoutCallback();
+        await this.logoutCallback();
       } catch (error: any) {
-        console.error('Soft logout failed with error: ', error.message);
+        console.error('Logout failed with error: ', error.message);
       }
     }
     this.redirect(
-      this.softLogoutUrl ??
-        (this.basePath ? `${this.basePath}/logout` : '/logout')
+      this.logoutUrl ?? (this.basePath ? `${this.basePath}/logout` : '/logout')
     );
+  }
+
+  startSessionStatusPolling() {
+    const poll = async () => {
+      const sessionActive = await this.checkSessionStatus();
+      if (!sessionActive) {
+        await this.performLogout();
+        return; // don't reschedule after logout
+      }
+      this.sessionStatusIntervalId = window.setTimeout(
+        poll,
+        this.sessionStatusInterval * 1000
+      );
+    };
+    this.sessionStatusIntervalId = window.setTimeout(
+      poll,
+      this.sessionStatusInterval * 1000
+    );
+  }
+
+  stopSessionStatusPolling() {
+    if (this.sessionStatusIntervalId) {
+      clearTimeout(this.sessionStatusIntervalId);
+      this.sessionStatusIntervalId = null;
+    }
+  }
+
+  isPollingRunning(): boolean {
+    return this.sessionStatusIntervalId !== null;
   }
 
   redirect(url: string) {

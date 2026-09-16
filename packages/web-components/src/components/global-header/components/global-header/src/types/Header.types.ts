@@ -327,7 +327,8 @@ export interface ReactWrapperProps extends Omit<
   solisSessionManagerEnabled?: boolean;
   solisSessionRefreshInterval?: number;
   solisIdleTimeoutInterval?: number;
-  softLogoutUrl?: string;
+  solisSessionStatusInterval?: number;
+  logoutUrl?: string;
 }
 
 export enum solisDeploymentEnvironment {
@@ -399,7 +400,8 @@ declare global {
 export interface solisSessionManagerConfig {
   tokenRefreshInterval?: number;
   idleTimeoutInterval?: number;
+  sessionStatusInterval?: number;
   basePath?: string;
-  softLogoutUrl?: string;
-  softLogoutCallback?: (() => void) | undefined;
+  logoutUrl?: string;
+  logoutCallback?: (() => void) | undefined;
 }

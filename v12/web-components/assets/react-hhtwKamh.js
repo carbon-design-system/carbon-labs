@@ -1,0 +1,1 @@
+import{t as e}from"./lib-3ATUUuZE.js";export{e as MDXProvider};

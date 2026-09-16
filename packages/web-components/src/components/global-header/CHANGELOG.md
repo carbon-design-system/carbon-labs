@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.92.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.91.0...@carbon-labs/wc-global-header@0.92.0) (2026-09-16)
+
+
+### Features
+
+* **global-header:** Trigger Solis logout when user clicks header logout ([#1367](https://github.com/carbon-design-system/carbon-labs/issues/1367)) ([f858ea5](https://github.com/carbon-design-system/carbon-labs/commit/f858ea5e981079480aa72577389d5dd97290d588))
+
+
+
+
+
 # [0.91.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.90.0...@carbon-labs/wc-global-header@0.91.0) (2026-09-16)
 
 **Note:** Version bump only for package @carbon-labs/wc-global-header

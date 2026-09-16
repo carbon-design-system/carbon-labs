@@ -1,0 +1,1 @@
+import{t as e}from"./lib-DkAqe-jm.js";export{e as MDXProvider};

@@ -1,0 +1,1 @@
+import{t as e}from"./lib--fAMlXrO.js";export{e as MDXProvider};

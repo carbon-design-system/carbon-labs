@@ -45,7 +45,7 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: String }) productName = null;
   @property({ type: String }) productKey = '';
   @property({ type: Object }) fetchHeaders = {};
-  private readonly solisSidekickEnabled = false;
+  @property({ type: Boolean }) solisSidekickEnabled = false;
   @property({ type: Boolean }) solisSwitcherEnabled = false;
   @property({ type: String }) solisEnvironment = 'local';
   @property({ type: Boolean }) solisDevMode = false; // override for storybook and local to use mock data

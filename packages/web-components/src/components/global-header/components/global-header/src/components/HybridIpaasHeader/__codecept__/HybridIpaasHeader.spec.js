@@ -163,12 +163,11 @@ Scenario('Solis components render', async ({ I }) => {
   I.amOnPage(localhostWithSolis);
   I.waitForElement('clabs-global-header-apaas', 30);
 
-  // I.seeElement(locate('#ibm-automation-cds-solis-sidekick-button'));
-  // I.click(locate('#ibm-automation-cds-solis-sidekick-button'));
-  // I.seeElement('.sidekick-body');
-  // I.see('Overview');
-  // I.see('Analyze this page');
-  // I.see('Insights');
+  I.seeElement(locate('#ibm-automation-cds-solis-sidekick-button'));
+  I.click(locate('#ibm-automation-cds-solis-sidekick-button'));
+  I.see('Overview');
+  I.see('Analyze this page');
+  I.see('Insights');
 
   // Verify the switcher button is rendered and interactive (local assertions).
   I.seeElement(locate('#ibm-automation-cds-solis-switcher-button'));

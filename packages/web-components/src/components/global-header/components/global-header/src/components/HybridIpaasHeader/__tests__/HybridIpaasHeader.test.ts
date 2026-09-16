@@ -530,8 +530,7 @@ describe('HybridIpaasHeader Component', () => {
     expect(el.headerOptions.solisConfig?.is_prod).to.be.false;
   });
 
-  // Test skipped: solisSidekickEnabled is now hardcoded to false and cannot be enabled
-  xit('should handle solis sidekick rendering', async () => {
+  it('should handle solis sidekick rendering', async () => {
     fetchStub.resolves(
       new Response(JSON.stringify(fetchResp), {
         status: 200,

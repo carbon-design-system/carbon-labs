@@ -27,11 +27,7 @@ type Story = StoryObj<typeof SessionExpiryModal>;
 export const Basic: Story = {
   render: () => html`
     <div role="main">
-      <clabs-global-header-session-expiry-modal
-        open
-        expiryTime="5 minutes"
-        .logoutCallback="${() => console.log('Logout now')}"
-        .continueCallback="${() => console.log('Continue session')}">
+      <clabs-global-header-session-expiry-modal expiryTime="5 minutes">
       </clabs-global-header-session-expiry-modal>
     </div>
   `,

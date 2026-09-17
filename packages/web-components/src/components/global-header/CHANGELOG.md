@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.93.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.92.0...@carbon-labs/wc-global-header@0.93.0) (2026-09-17)
+
+
+### Bug Fixes
+
+* **global-header:** switch session expiry to notification ([#1371](https://github.com/carbon-design-system/carbon-labs/issues/1371)) ([c06ecec](https://github.com/carbon-design-system/carbon-labs/commit/c06ecece9a030da68e1e84b5d6581621d04e7df1))
+
+
+
+
+
 # [0.92.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.91.0...@carbon-labs/wc-global-header@0.92.0) (2026-09-16)
 
 

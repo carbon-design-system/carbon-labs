@@ -1,0 +1,1 @@
+import{t as e}from"./lib-CVt71uSd.js";export{e as MDXProvider};

@@ -162,7 +162,7 @@ Scenario('Trial information renders', async ({ I }) => {
 Scenario('Solis components render', async ({ I }) => {
   I.amOnPage(localhostWithSolis);
   I.waitForElement('clabs-global-header-apaas', 30);
-
+  I.wait(1);
   I.seeElement(locate('#ibm-automation-cds-solis-sidekick-button'));
   I.click(locate('#ibm-automation-cds-solis-sidekick-button'));
   I.see('Overview');

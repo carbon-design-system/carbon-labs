@@ -1,0 +1,266 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as FileUploaderButtonStories from './FileUploaderButton.stories';
+
+<Meta isTemplate />
+
+# FileUploader
+
+- **Initiative owner(s):** Nandan Devadula
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/FileUploader)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/FileUploader)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Getting started](#getting-started)
+- [Composable Examples](#composable-examples)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+{/* carbon-labs-create:problem-statement */}
+
+TODO: Replace this block with a concise problem statement.
+
+Answer:
+
+- What gap does this component fill?
+- What user need does it address?
+- Which existing Carbon component is the nearest neighbor (if any)?
+  > **Problem statement:** _Describe the gap this component fills (edit or
+  > delete this line)._
+
+Add description of component here
+
+<Canvas of={FileUploaderButtonStories.FileUploaderButtonStory} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-file-uploader
+```
+
+### JS (via import)
+
+```javascript
+import { FileUploader } from '@carbon-labs/react-file-uploader/es/index';
+
+function App() {
+  return <FileUploader />;
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-file-uploader/scss/file-uploader';
+```
+
+---
+
+## Composable Examples
+
+The FileUploader component provides flexible, composable building blocks that
+allow you to create custom file upload experiences. These examples demonstrate
+how to use `FileUploaderButton` and `FileUploaderItem` components independently
+to build tailored solutions.
+
+### Why Use Composable Components?
+
+The composable approach gives you:
+
+- **Full control** over layout and styling
+- **Custom file validation** logic
+- **Flexible file item rendering** with your own components
+- **Integration** with forms and state management
+- **Reusable patterns** across your application
+
+### Available Components
+
+#### FileUploaderButton
+
+A button component that triggers file selection. It handles:
+
+- File input management
+- Multiple file selection
+- File type restrictions
+- Accessibility features
+
+#### FileUploaderItem
+
+A pre-built file item component with:
+
+- File name display
+- Status indicators (edit, invalid)
+- Error messaging
+- Delete functionality
+- Size variants
+
+### Examples
+
+#### Example 1: Custom File View with Horizontal Layout
+
+This example demonstrates a custom file rendering approach with:
+
+- Horizontal scrollable file list
+- Custom file item component with icons
+- Icon-only upload button
+- Tile container for visual grouping
+
+**Key Features:**
+
+- Custom `CustomFileItem` component for unique styling
+- Horizontal layout with overflow scrolling
+- Icon-only button for compact design
+- Integrated within a Carbon Tile
+
+**Use Cases:**
+
+- Image galleries
+- Media upload interfaces
+- Compact file selection areas
+- Dashboard widgets
+
+---
+
+#### Example 2: Form Integration with Validation
+
+This example shows a complete form integration with:
+
+- File size validation
+- Error messaging for invalid files
+- Form submission handling
+- Standard vertical file list layout
+
+**Key Features:**
+
+- Built-in file size validation (configurable via controls)
+- FileUploaderItem with status indicators
+- Form integration with submit button
+- Customizable error messages
+
+**Use Cases:**
+
+- Document upload forms
+- Profile picture uploads
+- File attachment systems
+- Data import interfaces
+
+---
+
+### Implementation Patterns
+
+#### Basic Pattern
+
+```jsx
+import { FileUploaderButton, FileUploaderItem } from '@carbon-labs/react';
+
+function MyFileUploader() {
+  const [files, setFiles] = useState([]);
+  const buttonRef = useRef(null);
+
+  const handleChange = (event) => {
+    const fileList = event.target.files;
+    setFiles(Array.from(fileList));
+  };
+
+  const handleDelete = (fileName) => {
+    const updated = files.filter((f) => f.name !== fileName);
+    setFiles(updated);
+    buttonRef.current?.setFiles(updated);
+  };
+
+  return (
+    <>
+      <FileUploaderButton
+        ref={buttonRef}
+        onChange={handleChange}
+        accept=".jpg,.png"
+        multiple
+      />
+      {files.map((file) => (
+        <FileUploaderItem
+          key={file.name}
+          name={file.name}
+          status="edit"
+          onDelete={() => handleDelete(file.name)}
+        />
+      ))}
+    </>
+  );
+}
+```
+
+#### With Validation
+
+```jsx
+const MAX_SIZE = 512 * 1024; // 512KB
+
+const validateFile = (file) => {
+  return file.size <= MAX_SIZE;
+};
+
+// In your render:
+<FileUploaderItem
+  name={file.name}
+  status={validateFile(file) ? 'edit' : 'invalid'}
+  errorSubject="File too large"
+  errorBody="Maximum file size is 512KB"
+  onDelete={() => handleDelete(file.name)}
+/>;
+```
+
+#### Form Integration
+
+```jsx
+<Form onSubmit={handleSubmit}>
+  <FileUploaderButton name="attachments" onChange={handleChange} />
+  {/* Render file items */}
+  <Button type="submit">Submit</Button>
+</Form>
+```
+
+### Best Practices
+
+1. **Always use a ref** with FileUploaderButton to sync internal state when
+   deleting files
+2. **Provide unique keys** for file items (e.g., `${file.name}-${file.size}`)
+3. **Validate files** before rendering to provide immediate feedback
+4. **Clear error messages** help users understand what went wrong
+5. **Accessible labels** ensure screen reader users can interact with the
+   component
+
+### Customization Tips
+
+- Use the `size` prop consistently across button and items for visual harmony
+- Customize error messages to match your validation rules
+- Consider using `hasIconOnly` for compact layouts
+- Wrap in appropriate containers (Tile, Modal, etc.) for context
+- Add loading states during file uploads for better UX
+
+### Related Components
+
+- **FileUploaderDropContainer**: For drag-and-drop file uploads
+- **Form**: For form integration and submission handling
+- **Button**: For custom action buttons
+- **Tile**: For visual grouping and containers

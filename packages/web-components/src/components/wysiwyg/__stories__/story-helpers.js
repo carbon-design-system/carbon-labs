@@ -17,6 +17,8 @@ import { History } from '../components/wysiwyg/src/extensions/history.js';
 import { Blocks } from '../components/wysiwyg/src/extensions/blocks.js';
 import { Insert } from '../components/wysiwyg/src/extensions/insert.js';
 import { Typeface } from '../components/wysiwyg/src/extensions/typeface.js';
+import { FontSize } from '../components/wysiwyg/src/extensions/font-size.js';
+import { FileUpload } from '../components/wysiwyg/src/extensions/file-upload.js';
 import { Clipboard } from '../components/wysiwyg/src/extensions/clipboard.js';
 
 /**
@@ -27,9 +29,11 @@ export const allExtensions = /** @type {any} */ ([
   History,
   Clipboard,
   Typeface,
+  FontSize,
   TextFormatting,
   TextColor,
   Insert,
+  FileUpload,
   Blocks,
   Typography,
   Lists,
@@ -74,140 +78,39 @@ export const processWithAI = async (text) => {
 };
 
 /**
- * Context menu styles for table operations
- *
- * TODO: remove once https://github.com/carbon-design-system/carbon/pull/22392 gets merged
- */
-export const contextMenuStyles = `
-  .context-menu {
-    position: fixed;
-    background: var(--cds-layer);
-    border: 1px solid var(--cds-border-subtle);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    padding: 4px 0;
-    max-width: 160px;
-    z-index: 9999;
-    display: none;
-  }
-  .context-menu.open {
-    display: block;
-  }
-  .context-menu button {
-    width: 100%;
-    padding: 8px 16px;
-    border: none;
-    background: transparent;
-    color: var(--cds-text-primary);
-    text-align: left;
-    cursor: pointer;
-  }
-  .context-menu button:hover:not(:disabled) {
-    background: var(--cds-layer-hover);
-  }
-  .context-menu button:active {
-    outline: 2px solid var(--cds-focus);
-    outline-offset: -2px;
-  }
-  .context-menu button:disabled {
-    color: var(--cds-text-disabled);
-  }
-  .context-menu button[data-delete]:hover:not(:disabled) {
-    background: var(--cds-button-danger-primary, #da1e28);
-    color: var(--cds-text-on-color, #ffffff);
-  }
-  .context-menu button[data-delete]:active:not(:disabled) {
-    background: var(--cds-button-danger-active, #750e13);
-    color: var(--cds-text-on-color, #ffffff);
-  }
-  .context-menu hr {
-    margin: 4px 0;
-    border: none;
-    border-top: 1px solid var(--cds-border-subtle);
-  }
-`;
-
-/**
- * Create context menu manager for table operations
- * @param {object} editor - Editor instance
- * @param {HTMLElement} menu - Menu element
- * @returns {object} Menu manager with showMenu and runAction methods
- */
-export const createContextMenuManager = (editor, menu) => {
-  /**
-   * Show context menu at position
-   * @param {number} x - X coordinate
-   * @param {number} y - Y coordinate
-   */
-  const showMenu = (x, y) => {
-    if (!menu || !editor) {
-      return;
-    }
-
-    menu.style.left = `${x}px`;
-    menu.style.top = `${y}px`;
-    menu.classList.add('open');
-
-    const merge = menu.querySelector('[data-action="merge"]');
-    const split = menu.querySelector('[data-action="split"]');
-    const divider = menu.querySelector('[data-divider]');
-
-    const canMerge = editor.can().mergeCells();
-    const canSplit = editor.can().splitCell();
-
-    merge.style.display = canMerge ? '' : 'none';
-    split.style.display = canSplit ? '' : 'none';
-    divider.style.display = canMerge || canSplit ? '' : 'none';
-  };
-
-  /**
-   * Run table action
-   * @param {Event} e - Event
-   * @param {string} action - Action name
-   */
-  const runAction = (e, action) => {
-    e.stopPropagation();
-    menu?.classList.remove('open');
-    setTimeout(() => editor?.chain().focus()[action]().run(), 0);
-  };
-
-  return { showMenu, runAction };
-};
-
-/**
  * Custom toolbar demo content
  */
 export const customToolbarContent = `
-  <h2>Custom Toolbar Rendering</h2>
-  <p>Any toolbar item can be intercepted to render custom elements and functionality that matter to your products.</p>
-  <p>This example demonstrates overriding the <code>toolbarRender</code> method for the tables extension. The default table button is replaced with a custom implementation that adds a right-click context menu for table operations.</p>
-  <h3>Try It Out</h3>
-  <p>Right-click on any table cell while the text cursor is inside the table below to see the custom context menu in action:</p>
-  <table>
-    <tbody>
-      <tr>
-        <th><p>Header 1</p></th>
-        <th><p>Header 2</p></th>
-        <th><p>Header 3</p></th>
-      </tr>
-      <tr>
-        <td><p>Cell 1</p></td>
-        <td><p>Cell 2</p></td>
-        <td><p>Cell 3</p></td>
-      </tr>
-      <tr>
-        <td><p>Cell 4</p></td>
-        <td><p>Cell 5</p></td>
-        <td><p>Cell 6</p></td>
-      </tr>
-    </tbody>
-  </table>
-  <h3>Customization Possibilities</h3>
+  <h2>Custom toolbar</h2>
+  <p>This story adds a <strong>Print</strong> button at the end of the toolbar. It prints a snapshot of the editor surface.</p>
+  <h3>Try it</h3>
+  <ol>
+    <li>Apply color, headings, and a table, then click <strong>Print</strong>.</li>
+    <li>Confirm the print preview matches the editor, without Storybook chrome or resize handles.</li>
+  </ol>
+  <h3>How to add your own control</h3>
+  <p>Any object with a <code>name</code> and a <code>toolbarRender</code> function can go in the <code>extensions</code> array. Built-in extensions stay as they are; yours is appended.</p>
+  <pre><code>const PrintExtension = {
+  name: 'print',
+  toolbarRender: (editor, size) =&gt; html\`
+    &lt;cds-icon-button kind="secondary" .size=\${size} @click=\${() =&gt; {
+      printEditorDocument(editor);
+    }}&gt;
+      &lt;span slot="tooltip-content"&gt;Print&lt;/span&gt;
+    &lt;/cds-icon-button&gt;
+  \`,
+};
+
+editor.extensions = [...allExtensions, PrintExtension];</code></pre>
+  <p><code>toolbarRender</code> receives the live TipTap <code>editor</code> and the toolbar <code>size</code>. For print, clone <code>editor.view.dom</code> and copy Carbon CSS variables plus the component's shadow styles. <code>getHTML()</code> alone drops tokens like <code>var(--cds-support-error)</code> and table/heading CSS.</p>
+  <p>To replace a built-in control instead of adding one, map over <code>allExtensions</code> and swap the item whose <code>name</code> matches (for example <code>tables</code>).</p>
+  <h3>Customization possibilities</h3>
   <ul>
-    <li><strong>Custom color pickers and icons:</strong> Don't like the limited set of colors? Extend it with a <code>style picker</code> that matches your requirement. Add carbon icon libraries or pictogram sets specific to your domain.</li>
-    <li><strong>Inline context menus:</strong> Want to open context menus inline instead of in the toolbar? DIY with custom event handlers.</li>
+    <li><strong>Product-specific actions:</strong> Export to PDF, publish to CMS, submit for review — wire any workflow to a toolbar button.</li>
+    <li><strong>Custom color pickers and icons:</strong> Extend the built-in color extension or add pictogram sets specific to your domain.</li>
+    <li><strong>Inline context menus:</strong> Open menus from the editor surface instead of the toolbar with custom event handlers.</li>
     <li><strong>AI-powered selection refactoring:</strong> Hook selection actions to your own backend, process selected text, and asynchronously update the selection with the result.</li>
-    <li><strong>Product-specific tools:</strong> Integrate specialized formatting tools, templates, or workflows unique to your application.</li>
-    <li><strong>Endless possibilities:</strong> Customizations are bounded only by imagination. See also: <a target="_blank" rel="noopener noreferrer" href="https://tiptap.dev/docs/examples">Examples</a></li>
+    <li><strong>More examples:</strong> Customizations are bounded only by imagination. See also: <a target="_blank" rel="noopener noreferrer" href="https://tiptap.dev/docs/examples">TipTap examples</a></li>
   </ul>
 `;
 
@@ -264,6 +167,9 @@ export const demoContent = `
   <p><span style="font-family: 'Helvetica';">Helvetica</span> - Clean sans-serif</p>
   <p><span style="font-family: 'Times New Roman';">Times New Roman</span> - Traditional serif</p>
   <p><span style="font-family: 'Courier New';">Courier New</span> - Classic monospace</p>
+
+  <h2>Font Sizes</h2>
+  <p><span style="font-size: 12px;">12px</span> · <span style="font-size: 16px;">16px (default)</span> · <span style="font-size: 24px;">24px</span> · <span style="font-size: 32px;">32px</span></p>
   
   <h2>Text Alignment</h2>
   <p style="text-align: left;">Left aligned text - Standard alignment for most content. This is the default alignment used throughout documents.</p>
@@ -465,7 +371,7 @@ console.log(message);</code></pre>
     <li>Create new lists and tables</li>
     <li>Insert links and images</li>
     <li>Change text alignment and colors</li>
-    <li>Switch between different font families</li>
+    <li>Switch between different font families and sizes</li>
     <li>Use the search feature to find content</li>
     <li>Experiment with undo/redo operations</li>
   </ol>

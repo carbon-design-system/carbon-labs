@@ -3,7 +3,6 @@
 exports[`Processing renders as expected - Component API should match snapshot 1`] = `
 <div>
   <div
-    aria-label="Processing"
     class="clabs--processing"
     role="status"
   >
@@ -15,9 +14,10 @@ exports[`Processing renders as expected - Component API should match snapshot 1`
     >
       <g
         class="clabs--processing__group"
+        style="transform-origin: 16px 16px;"
       >
         <circle
-          class="clabs--processing__dot clabs--processing__dot--left"
+          class="clabs--processing__dot"
           cx="8"
           cy="16"
           r="0.875px"
@@ -25,7 +25,7 @@ exports[`Processing renders as expected - Component API should match snapshot 1`
           style=""
         />
         <circle
-          class="clabs--processing__dot clabs--processing__dot--center"
+          class="clabs--processing__dot"
           cx="16"
           cy="16"
           r="0.875px"
@@ -33,7 +33,7 @@ exports[`Processing renders as expected - Component API should match snapshot 1`
           style=""
         />
         <circle
-          class="clabs--processing__dot clabs--processing__dot--right"
+          class="clabs--processing__dot"
           cx="24"
           cy="16"
           r="0.875px"
@@ -50,6 +50,11 @@ exports[`Processing renders as expected - Component API should match snapshot 1`
         />
       </g>
     </svg>
+    <span
+      class="clabs--processing__label"
+    >
+      Processing
+    </span>
   </div>
 </div>
 `;

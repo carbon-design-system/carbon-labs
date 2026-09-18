@@ -13,6 +13,7 @@ collect:
         - label
         - loop
         - mode
+        - onTransitionEnd
         # React
         - key
         - ref
@@ -22,7 +23,6 @@ collect:
         - out
         - square
         - triangle
-        - wiggle
   npm:
     dependencies: null
   js:

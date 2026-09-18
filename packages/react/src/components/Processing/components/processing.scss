@@ -6,9 +6,8 @@
  */
 
 // Carbon setting imports
-@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/config' as carbon;
 @use '@carbon/styles/scss/colors' as *;
-@use '@carbon/styles/scss/spacing' as *;
 
 $prefix: 'clabs--processing' !default;
 
@@ -18,6 +17,27 @@ $prefix: 'clabs--processing' !default;
   place-items: center;
 }
 
+// Component tokens, set per Carbon theme zone the way Carbon's own component
+// tokens are: on the theme class (<Theme> / `cds--g100`) or
+// `data-carbon-theme`, so the nearest zone wins and nested zones work.
+// Override either on any ancestor, or on the component itself.
+:root,
+.#{carbon.$prefix}--white,
+.#{carbon.$prefix}--g10,
+[data-carbon-theme='white'],
+[data-carbon-theme='g10'] {
+  --clabs-processing-dot-color: #{$blue-90};
+  --clabs-processing-dot-color-ai: #{$blue-80};
+}
+
+.#{carbon.$prefix}--g90,
+.#{carbon.$prefix}--g100,
+[data-carbon-theme='g90'],
+[data-carbon-theme='g100'] {
+  --clabs-processing-dot-color: #{$gray-10};
+  --clabs-processing-dot-color-ai: #{$blue-20};
+}
+
 .#{$prefix} {
   display: inline-flex;
   align-items: center;
@@ -25,49 +45,46 @@ $prefix: 'clabs--processing' !default;
 }
 
 .#{$prefix}__dots {
+  // Dots briefly exceed the viewBox at peak radius.
   display: block;
-  overflow: visible; /* dots briefly exceed viewBox at peak r */
+  overflow: visible;
   block-size: 32px;
   inline-size: 32px;
 }
 
+// Right-to-left: mirror the drawing — the stagger runs right to left and the
+// spin turns counter-clockwise.
+[dir='rtl'] .#{$prefix}__dots {
+  transform: scaleX(-1);
+}
+
+// Size (r, stroke-width) is left to the SVG attributes and animations: a CSS
+// value here would override the attributes written for settled and static
+// (reduced-motion) states, hiding the dots.
 .#{$prefix}__dot {
   fill: none;
-  r: 0;
-  stroke-width: 0;
-  transform: translateY(0);
+  stroke: var(--clabs-processing-dot-color, #{$blue-90});
 }
 
-:root .#{$prefix}__dot,
-[data-carbon-theme='white'] .#{$prefix}__dot,
-[data-carbon-theme='g10'] .#{$prefix}__dot {
-  stroke: $blue-90;
+.#{$prefix}[data-ai] .#{$prefix}__dot {
+  stroke: var(--clabs-processing-dot-color-ai, #{$blue-80});
 }
 
-[data-carbon-theme='g90'] .#{$prefix}__dot,
-[data-carbon-theme='g100'] .#{$prefix}__dot {
-  stroke: $gray-10;
+// Visually hidden live-region text (same declarations as Carbon's
+// visually-hidden mixin, without emitting its global classes).
+.#{$prefix}__label {
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip: rect(0, 0, 0, 0);
+  inline-size: 1px;
+  visibility: inherit;
+  white-space: nowrap;
 }
 
-/* ── AI color treatment ─────────────────────────────────────────────────────── */
-:root .#{$prefix}[data-ai] .#{$prefix}__dot,
-[data-carbon-theme='white'] .#{$prefix}[data-ai] .#{$prefix}__dot,
-[data-carbon-theme='g10'] .#{$prefix}[data-ai] .#{$prefix}__dot {
-  stroke: $blue-80;
-}
-
-[data-carbon-theme='g90'] .#{$prefix}[data-ai] .#{$prefix}__dot,
-[data-carbon-theme='g100'] .#{$prefix}[data-ai] .#{$prefix}__dot {
-  stroke: $blue-20;
-}
-
-/*
-  If the user has expressed their preference for
-  reduced motion, then don't use animations
-*/
-@media (prefers-reduced-motion: reduce) {
-  .#{$prefix}__dot {
-    animation: none;
-    transition: none;
-  }
-}
+// Reduced motion: intentionally no @media (prefers-reduced-motion) rule. Every
+// animation runs through the Web Animations API, which the CSS cascade cannot
+// stop; the component reads the preference and paints static end states.

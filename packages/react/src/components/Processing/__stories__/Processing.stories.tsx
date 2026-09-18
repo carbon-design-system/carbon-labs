@@ -24,35 +24,39 @@ const meta: Meta<typeof Processing> = {
       page: mdx,
       description: {
         component:
-          'Processing indicates that data is being loaded or an action is in progress. Use the imperative handle to trigger shape formations or interrupt the animation at any point.',
+          'Processing indicates that data is being loaded or an action is in progress. Set the state with the `mode` prop, or drive it with the imperative handle.',
       },
     },
   },
   argTypes: {
     mode: {
       control: 'select',
-      options: ['loading', 'triangle', 'square', 'out', 'wiggle'],
+      options: ['loading', 'triangle', 'square', 'out'],
       description:
-        "`'loading'` — three dots load in then pulse in a loop | `'triangle'` — load in then arc into an equilateral triangle | `'square'` — load in then grow a fourth dot and arc into a square | `'out'` — shrink all dots to zero immediately | `'wiggle'` — bob each dot up and back (trigger via `handle.triggerWiggle()`)",
+        "The state to be in. Changes animate from the current state: `'loading'` — three dots pulsing in a line | `'triangle'` — arc into a spinning equilateral triangle | `'square'` — grow a fourth dot and arc into a square | `'out'` — shrink to nothing (a later mode loads in again). Triangle ↔ square passes through the loading line.",
       table: { defaultValue: { summary: "'loading'" } },
     },
     loop: {
       control: 'boolean',
       description:
-        'Legacy compatibility prop. In the proposed v2.0 model, Processing remains in the loading loop until another mode is triggered. Only applies in `loading` mode.',
+        'Whether the loading loop repeats; `false` runs one cycle, then shrinks out. Changing it restarts the component.',
       table: { defaultValue: { summary: 'true' } },
     },
     label: {
       control: 'text',
       description:
-        'Accessible label announced by screen readers via `aria-label` on the status region.',
+        'Status text for screen readers, rendered as visually hidden text inside the `role="status"` live region; changes are announced.',
       table: { defaultValue: { summary: "'Processing'" } },
     },
     ai: {
       control: 'boolean',
       description:
-        'Apply AI color treatment to the dots: blue-80 on light themes (white, g10), blue-20 on dark themes (g90, g100).',
+        'Apply the AI color treatment to the dots: blue-80 on light themes (white, g10), blue-20 on dark themes (g90, g100). Override with `--clabs-processing-dot-color-ai`.',
       table: { defaultValue: { summary: 'false' } },
+    },
+    onTransitionEnd: {
+      description:
+        'Called with the mode once the state set by `mode` is reached.',
     },
   },
 };
@@ -98,6 +102,21 @@ function SqrIcon() {
   );
 }
 
+function LoadingIcon() {
+  return (
+    <svg
+      width="12"
+      height="4"
+      viewBox="0 0 12 4"
+      fill="none"
+      aria-hidden="true">
+      <circle cx="2" cy="2" r="1.25" fill="currentColor" />
+      <circle cx="6" cy="2" r="1.25" fill="currentColor" />
+      <circle cx="10" cy="2" r="1.25" fill="currentColor" />
+    </svg>
+  );
+}
+
 function WiggleIcon() {
   return (
     <svg
@@ -117,189 +136,164 @@ function WiggleIcon() {
   );
 }
 
-// ── Timing constants ──────────────────────────────────────────────────────────
+// ── Timing ────────────────────────────────────────────────────────────────────
 const LOAD_IN_END = 200 * 2 + 1000; // STAGGER*2 + LOAD_DUR = 1400 ms
-const PULSE_CYCLES = 2;
-const OUT_SETTLE = 200 * 2 + 100 + 300; // OUT_STAGGER*2 + OUT_DUR + gap = 700 ms
-const LOOP_DUR = 1000; // one pulse cycle
-const FORM_DUR = 700; // triangle/square formation duration
-const FORM_STAGGER = 50; // per-dot stagger for formation
-const FORMATION_TRIGGER_AT = LOAD_IN_END + LOOP_DUR * PULSE_CYCLES; // 3400 ms
-const HOLD = 2000; // 2 s hold
+const HOLD = 2000; // how long the demos hold each state
 
-// ── Loading demo ──────────────────────────────────────────────────────────────
-function LoadingDemo() {
+/**
+ * Resolve after `ms` milliseconds.
+ * @param {number} ms - delay
+ * @returns {Promise<void>} resolves after the delay
+ */
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+/**
+ * Remount-and-replay helper for the demo stories: runs `script` against the
+ * handle, then remounts and runs it again until the story unmounts.
+ * @param {Function} script - the demo sequence
+ * @returns {object} `handle` ref and remount `key`
+ */
+function useDemoLoop(
+  script: (h: ProcessingHandle, alive: () => boolean) => Promise<unknown>
+) {
   const handle = useRef<ProcessingHandle>(null);
   const [key, setKey] = useState(0);
-
   useEffect(() => {
-    const triggerTimer = setTimeout(
-      () => {
-        handle.current?.triggerOut();
-      },
-      LOAD_IN_END + LOOP_DUR * PULSE_CYCLES
-    );
-
-    const restartTimer = setTimeout(
-      () => {
-        setKey((k) => k + 1);
-      },
-      LOAD_IN_END + LOOP_DUR * PULSE_CYCLES + OUT_SETTLE
-    );
-
+    let alive = true;
+    const h = handle.current;
+    if (h) {
+      void script(h, () => alive).then(() => alive && setKey((k) => k + 1));
+    }
     return () => {
-      clearTimeout(triggerTimer);
-      clearTimeout(restartTimer);
+      alive = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
+  return { handle, key };
+}
 
-  return (
-    <Processing key={key} ref={handle} mode="loading" loop label="Processing" />
-  );
+/**
+ * Demo wrapper: renders Processing and replays `script` forever.
+ * @param {object} props - props
+ * @param {Function} props.script - the demo sequence
+ * @returns {React.ReactElement} the demo
+ */
+function Demo({
+  script,
+}: {
+  script: (h: ProcessingHandle, alive: () => boolean) => Promise<unknown>;
+}) {
+  const { handle, key } = useDemoLoop(script);
+  return <Processing key={key} ref={handle} label="Processing" />;
 }
 
 export const Loading: Story = {
-  render: () => <LoadingDemo />,
+  render: () => (
+    <Demo
+      script={async (h, alive) => {
+        await sleep(LOAD_IN_END + HOLD);
+        if (alive()) {
+          await h.triggerOut();
+        }
+        await sleep(400);
+      }}
+    />
+  ),
   parameters: {
     docs: {
       description: {
         story:
-          'Demonstrates the default loading state: three dots load in, pulse twice, then shrink out and restart.',
+          'The default loading state: three dots load in and pulse, then shrink out and restart.',
       },
     },
   },
 };
-
-// ── Triangle demo ─────────────────────────────────────────────────────────────
-function TriangleDemo() {
-  const handle = useRef<ProcessingHandle>(null);
-  const [key, setKey] = useState(0);
-
-  useEffect(() => {
-    const triggerAt = FORMATION_TRIGGER_AT; // 3400
-    const settledAt = triggerAt + FORM_DUR + FORM_STAGGER * 2; // 4200
-    const outAt = settledAt + HOLD; // 6200
-    const restartAt = outAt + OUT_SETTLE; // 6900
-
-    const triggerTimer = setTimeout(() => {
-      handle.current?.triggerTriangle();
-    }, triggerAt);
-    const outTimer = setTimeout(() => {
-      handle.current?.triggerOut();
-    }, outAt);
-    const restartTimer = setTimeout(() => {
-      setKey((k) => k + 1);
-    }, restartAt);
-
-    return () => {
-      clearTimeout(triggerTimer);
-      clearTimeout(outTimer);
-      clearTimeout(restartTimer);
-    };
-  }, [key]);
-
-  return (
-    <Processing key={key} ref={handle} mode="loading" loop label="Processing" />
-  );
-}
 
 export const Triangle: Story = {
-  render: () => <TriangleDemo />,
+  render: () => (
+    <Demo
+      script={async (h, alive) => {
+        await h.triggerTriangle(); // queued until load-in lands
+        await sleep(HOLD);
+        if (alive()) {
+          await h.triggerLoading();
+        }
+        await sleep(HOLD / 2);
+        if (alive()) {
+          await h.triggerOut();
+        }
+        await sleep(400);
+      }}
+    />
+  ),
   parameters: {
     docs: {
       description: {
         story:
-          'Demonstrates the triangle formation: dots load in, pulse twice, then arc into an equilateral triangle, hold for 2 s, and shrink out.',
+          'After load-in, the dots arc into an equilateral triangle, hold, unwind back into the loading line, then shrink out.',
       },
     },
   },
 };
-
-// ── Square demo ───────────────────────────────────────────────────────────────
-function SquareDemo() {
-  const handle = useRef<ProcessingHandle>(null);
-  const [key, setKey] = useState(0);
-
-  useEffect(() => {
-    const triggerAt = FORMATION_TRIGGER_AT; // 3400
-    const settledAt = triggerAt + FORM_DUR + FORM_STAGGER * 3; // 4250
-    const outAt = settledAt + HOLD; // 6250
-    const restartAt = outAt + OUT_SETTLE; // 6950
-
-    const triggerTimer = setTimeout(() => {
-      handle.current?.triggerSquare();
-    }, triggerAt);
-    const outTimer = setTimeout(() => {
-      handle.current?.triggerOut();
-    }, outAt);
-    const restartTimer = setTimeout(() => {
-      setKey((k) => k + 1);
-    }, restartAt);
-
-    return () => {
-      clearTimeout(triggerTimer);
-      clearTimeout(outTimer);
-      clearTimeout(restartTimer);
-    };
-  }, [key]);
-
-  return (
-    <Processing key={key} ref={handle} mode="loading" loop label="Processing" />
-  );
-}
 
 export const Square: Story = {
-  render: () => <SquareDemo />,
+  render: () => (
+    <Demo
+      script={async (h, alive) => {
+        await h.triggerSquare();
+        await sleep(HOLD);
+        if (alive()) {
+          await h.triggerLoading();
+        }
+        await sleep(HOLD / 2);
+        if (alive()) {
+          await h.triggerOut();
+        }
+        await sleep(400);
+      }}
+    />
+  ),
   parameters: {
     docs: {
       description: {
         story:
-          'Demonstrates the square formation: dots load in, pulse twice, then a fourth dot grows in and all four arc into a square, hold for 2 s, and shrink out.',
+          'After load-in, a fourth dot grows in and all four arc into a square, hold, unwind back into the loading line, then shrink out.',
       },
     },
   },
 };
 
-// ── Wiggle demo ───────────────────────────────────────────────────────────────
-function WiggleDemo() {
-  const handle = useRef<ProcessingHandle>(null);
-  const [key, setKey] = useState(0);
-
-  useEffect(() => {
-    const triggerAt = FORMATION_TRIGGER_AT; // 3400
-    const wiggleDone = triggerAt + 400 + FORM_STAGGER * 4 * 2; // 4200
-    const outAt = wiggleDone + HOLD; // 6200
-    const restartAt = outAt + OUT_SETTLE; // 6900
-
-    const triggerTimer = setTimeout(() => {
-      handle.current?.triggerWiggle();
-    }, triggerAt);
-    const outTimer = setTimeout(() => {
-      handle.current?.triggerOut();
-    }, outAt);
-    const restartTimer = setTimeout(() => {
-      setKey((k) => k + 1);
-    }, restartAt);
-
-    return () => {
-      clearTimeout(triggerTimer);
-      clearTimeout(outTimer);
-      clearTimeout(restartTimer);
-    };
-  }, [key]);
-
-  return (
-    <Processing key={key} ref={handle} mode="loading" loop label="Processing" />
-  );
-}
-
 export const Wiggle: Story = {
-  render: () => <WiggleDemo />,
+  render: () => (
+    <Demo
+      script={async (h, alive) => {
+        await h.triggerWiggle();
+        await sleep(HOLD);
+        if (alive()) {
+          await h.triggerOut();
+        }
+        await sleep(400);
+      }}
+    />
+  ),
   parameters: {
     docs: {
       description: {
         story:
-          'Demonstrates the wiggle: dots load in, pulse twice, then each dot bobs up and back with a left-to-right stagger, hold for 2 s, and shrink out.',
+          'After load-in, each dot bobs up and back with a left-to-right stagger, holds, then shrinks out. The wiggle is handle-only (`triggerWiggle()`).',
+      },
+    },
+  },
+};
+
+export const ModeProp: Story = {
+  name: 'Mode prop',
+  args: { mode: 'loading', loop: true, label: 'Processing', ai: false },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Drive the component declaratively: change `mode` in the controls and it animates from its current state, just like the handle. `onTransitionEnd` fires when each state is reached (see the Actions panel).',
       },
     },
   },
@@ -307,6 +301,13 @@ export const Wiggle: Story = {
 
 // ── Processing — interactive controls ────────────────────────────────────────
 
+/**
+ * Buttons for every handle method.
+ * @param {object} props - props
+ * @param {boolean} props.ai - AI color treatment
+ * @param {string} props.label - status text
+ * @returns {React.ReactElement} the demo
+ */
 function InteractiveDemo({
   ai = false,
   label = 'Processing',
@@ -316,97 +317,73 @@ function InteractiveDemo({
 }) {
   const handle = useRef<ProcessingHandle>(null);
   const [key, setKey] = useState(0);
+  // The state last requested. Requests queue inside the component, so the
+  // buttons only need to stop repeating the current one.
   const [activeMode, setActiveMode] = useState<
-    'loading' | 'triangle' | 'square' | 'wiggle' | 'out'
+    'loading' | 'triangle' | 'square' | 'out'
   >('loading');
-  // True only during the initial load-in animation; clears once dots are looping.
-  const [isLoadingIn, setIsLoadingIn] = useState(true);
 
-  // Reset the load-in gate whenever the component remounts (key changes).
-  useEffect(() => {
-    setIsLoadingIn(true);
-    const t = setTimeout(() => setIsLoadingIn(false), LOAD_IN_END);
-    return () => clearTimeout(t);
-  }, [key]);
-
-  const runTriangle = () => {
-    handle.current?.triggerTriangle();
-    setActiveMode('triangle');
+  /**
+   * Request a state through the handle.
+   * @param {string} next - state to go to
+   */
+  const go = (next: 'loading' | 'triangle' | 'square' | 'out') => {
+    const h = handle.current;
+    if (!h) {
+      return;
+    }
+    setActiveMode(next);
+    void {
+      loading: h.triggerLoading,
+      triangle: h.triggerTriangle,
+      square: h.triggerSquare,
+      out: h.triggerOut,
+    }[next]();
   };
 
-  const runSquare = () => {
-    handle.current?.triggerSquare();
-    setActiveMode('square');
-  };
-
-  const runWiggle = () => {
-    handle.current?.triggerWiggle();
-    setActiveMode('wiggle');
-  };
-
-  const runOut = () => {
-    handle.current?.triggerOut();
-    setActiveMode('out');
-  };
-
+  /** Remount the component. */
   const restart = () => {
     setKey((k) => k + 1);
     setActiveMode('loading');
   };
 
-  // Disabled states:
-  // load-in  → Triangle, Square, Wiggle disabled (dots still entering)
-  // looping  → all three available
-  // triangle → Square, Wiggle disabled
-  // square   → Triangle, Wiggle disabled
-  // wiggle   → none extra disabled
-  // out      → Triangle, Square, Wiggle, Out all disabled
-  const isOut = activeMode === 'out';
-  const isTriangle = activeMode === 'triangle';
-  const isSquare = activeMode === 'square';
-
-  const triDisabled = isLoadingIn || isSquare || isOut;
-  const sqrDisabled = isLoadingIn || isTriangle || isOut;
-  const wiggleDisabled = isLoadingIn || isTriangle || isSquare || isOut;
-  const outDisabled = isOut;
-
   return (
     <div className="processing-story__layout">
-      <Processing
-        key={key}
-        ref={handle}
-        mode="loading"
-        loop
-        label={label}
-        ai={ai}
-      />
+      <Processing key={key} ref={handle} label={label} ai={ai} />
       <div className="processing-story__controls">
         <button
           type="button"
           className="processing-story__btn"
-          disabled={triDisabled}
-          onClick={runTriangle}>
+          disabled={activeMode === 'triangle'}
+          onClick={() => go('triangle')}>
           <TriIcon /> Triangle
         </button>
         <button
           type="button"
           className="processing-story__btn"
-          disabled={sqrDisabled}
-          onClick={runSquare}>
+          disabled={activeMode === 'square'}
+          onClick={() => go('square')}>
           <SqrIcon /> Square
         </button>
         <button
           type="button"
           className="processing-story__btn"
-          disabled={wiggleDisabled}
-          onClick={runWiggle}>
+          disabled={activeMode !== 'loading'}
+          onClick={() => void handle.current?.triggerWiggle()}>
           <WiggleIcon /> Wiggle
         </button>
         <button
           type="button"
+          className="processing-story__btn"
+          disabled={activeMode === 'loading'}
+          onClick={() => go('loading')}>
+          <LoadingIcon /> Loading
+        </button>
+        <button
+          type="button"
           className="processing-story__btn processing-story__btn--danger"
-          disabled={outDisabled}
-          onClick={runOut}>
+          disabled={activeMode === 'out'}
+          onClick={() => go('out')}>
           Out
         </button>
         <button
@@ -417,9 +394,9 @@ function InteractiveDemo({
         </button>
       </div>
       <p className="processing-story__helper">
-        Active mode: <strong>{activeMode}</strong>. Use the buttons to preview
-        proposed v2.0 interaction modes without changing the default loading
-        behavior.
+        Requested state: <strong>{activeMode}</strong>. Requests made during a
+        transition queue and run when it lands; triangle ↔ square passes through
+        the loading line.
       </p>
     </div>
   );
@@ -449,7 +426,7 @@ export const Interactive: Story = {
     docs: {
       description: {
         story:
-          'Proposed v2.0 review surface for Labs: Processing stays in the default loading loop until a new mode is triggered, removing the need for separate loop and no-loop story variants.',
+          'Every handle method, one button each. Processing stays in the loading loop until a new state is requested.',
       },
     },
   },

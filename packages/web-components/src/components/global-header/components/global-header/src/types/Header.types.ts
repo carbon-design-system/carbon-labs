@@ -404,4 +404,5 @@ export interface solisSessionManagerConfig {
   basePath?: string;
   logoutUrl?: string;
   logoutCallback?: (() => void) | undefined;
+  ttlUnit?: 'seconds' | 'milliseconds' | 'minutes';
 }

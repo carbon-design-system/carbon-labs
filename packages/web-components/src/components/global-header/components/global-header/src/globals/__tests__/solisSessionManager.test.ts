@@ -667,22 +667,22 @@ describe('solisSessionManager', () => {
       expect(stopRefreshScheduleStub).to.have.been.calledOnce;
     });
 
-    it('sets a timeout using the ttlMs minus a 2 minute buffer', () => {
+    it('sets a timeout using the ttlMs minus a 5 minute buffer', () => {
       const setTimeoutStub = sinon.stub(window, 'setTimeout');
       sinon.stub(solisSessionManager.prototype, 'stopRefreshSchedule');
       const sessionManager = new solisSessionManager({});
-      sessionManager.rescheduleRefresh(5 * 60 * 1000);
+      sessionManager.rescheduleRefresh(30 * 60 * 1000);
       expect(setTimeoutStub).to.have.been.calledWith(
         sinon.match.func,
-        3 * 60 * 1000
+        25 * 60 * 1000
       );
     });
 
-    it('sets a timeout of 0 seconds if ttlMs is less than 2 minutes', () => {
+    it('sets a timeout of 0 seconds if ttlMs is less than 5 minutes', () => {
       const setTimeoutStub = sinon.stub(window, 'setTimeout');
       sinon.stub(solisSessionManager.prototype, 'stopRefreshSchedule');
       const sessionManager = new solisSessionManager({});
-      sessionManager.rescheduleRefresh(30 * 1000);
+      sessionManager.rescheduleRefresh(60 * 1000);
       expect(setTimeoutStub).to.have.been.calledWith(sinon.match.func, 0);
     });
 
@@ -701,8 +701,8 @@ describe('solisSessionManager', () => {
         'startRefreshSchedule'
       );
       const sessionManager = new solisSessionManager({});
-      sessionManager.rescheduleRefresh(5 * 60 * 1000);
-      clock.tick(3 * 60 * 1000);
+      sessionManager.rescheduleRefresh(30 * 60 * 1000);
+      clock.tick(25 * 60 * 1000);
       clock.restore();
       expect(triggerRefreshStub).to.have.been.calledOnce;
       expect(startRefreshScheduleStub).to.have.been.calledOnce;

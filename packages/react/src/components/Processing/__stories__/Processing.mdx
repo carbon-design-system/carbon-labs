@@ -1,6 +1,11 @@
 import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as ProcessingStories from './Processing.stories';
 import Processing from '../components/Processing';
+import AIChatLoop from './images/ai_chat_loop.gif';
+import NoLoopLight from './images/processing_element_load_unload_light_128x128.gif';
+import NoLoopDark from './images/processing_element_load_unload_dark_128x128.gif';
+import LoopLight from './images/processing_element_loop_light_128x128.gif';
+import LoopDark from './images/processing_element_loop_dark_128x128.gif';
 
 <Meta isTemplate />
 
@@ -26,6 +31,7 @@ import Processing from '../components/Processing';
 - [Overview](#overview)
 - [Getting started](#getting-started)
 - [Component API](#component-api)
+- [Accessibility](#accessibility)
 - [Proposed v2.0 update](#proposed-v20-update)
   - [Intended use cases](#intended-use-cases)
   - [Interaction guidance](#interaction-guidance)
@@ -37,19 +43,32 @@ import Processing from '../components/Processing';
 
 ## Overview
 
-Processing indicates that data is being loaded or an action is in progress. It is used in chat interfaces, async operations, and anywhere the user should wait for a response. Inspired by the Carbon Design System loading pattern, this component extends it with shape formation transforms and an imperative animation API.
+Processing indicates that data is being loaded or an action is in progress. It
+is used in chat interfaces, async operations, and anywhere the user should wait
+for a response. Inspired by the Carbon Design System loading pattern, this
+component extends it with shape formation transforms and an imperative animation
+API.
 
-<Canvas
-  of={ProcessingStories.Loading}
-/>
+<Canvas of={ProcessingStories.Loading} />
 
-_Ex. The loading state in a chat shell interface._
+<img src={AIChatLoop} alt="AI chat window example" width={319} />
 
-## Using Processing in Figma
+**Ex.** Content processing in a chat shell.
 
-A Figma component kit for Processing is currently in development. When available, it will include all four modes and both light and dark theme variants matching the Carbon dot colour tokens.
+### Using Processing element in Figma
 
-> **Note:** Dot stroke colour is driven by Carbon theme tokens (`$blue-90` in white/g10 themes and `$gray-10` in g90/g100 themes; with AI accents `$blue-80` and `$blue-20`), so the component automatically adapts when you switch Storybook themes.
+As a designer, you can use the Processing component in Figma to create a more
+interactive prototype. This can be done by downloading the desired `.gif` below
+and adding to Figma. The GIFs show the loading state; the v2.0 shape formations
+are not yet available as Figma assets.
+
+|             |                                     Light mode (white, g10)                                     |                                    Dark mode (g90, g100)                                    |
+| :---------- | :---------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: |
+| **No Loop** | <div style={{ background: '#ffffff' }}><img src={NoLoopLight} alt="No loop light mode" /></div> | <div style={{background: '#161616'}}><img src={NoLoopDark} alt="No loop dark mode" /></div> |
+| **Loop**    |   <div style={{ background: '#ffffff' }}><img src={LoopLight} alt="Loop light mode" /></div>    |  <div style={{ background: '#161616' }}><img src={LoopDark} alt="Loop dark mode" /></div>   |
+
+> **Note:** Dot stroke color follows the Carbon theme: `$blue-90` in white/g10
+> and `$gray-10` in g90/g100, or `$blue-80` / `$blue-20` with `ai` set.
 
 ## Getting started
 
@@ -85,50 +104,95 @@ In your styles file import
 
 <ArgTypes />
 
+`mode` sets the sequence that runs on mount. `square` and `wiggle` load in
+first, then form the square or wiggle once the dots have landed.
+
+## Accessibility
+
+- The root element is `role="status"` with an `aria-label` taken from `label`
+  (default `'Processing'`). Keep it aligned with the user-facing status message.
+- **Reduced motion is handled in JavaScript.** The dots are animated with the
+  Web Animations API, which a CSS `prefers-reduced-motion` rule cannot stop, so
+  the component reads the preference itself and paints a static end state
+  instead: `loading` and `wiggle` show three resting dots, `triangle` and
+  `square` show the formed shape, and `out` hides the dots. The imperative
+  handle snaps to the same end states, and `triggerWiggle()` does nothing. The
+  same static state is used where the Web Animations API is unavailable.
+
 ## Proposed v2.0 update
 
-Processing v2.0 extends the current element with reviewer-friendly interactive modes while preserving the existing base loading behavior. The default `loading` experience now remains active until a new mode is triggered, removing the need to differentiate between separate loop and no-loop Labs stories.
+Processing v2.0 moves the animation from CSS keyframes to the Web Animations API
+and adds shape formations, an imperative handle, and an accessible status
+region. The default `loading` experience now remains active until a new mode is
+triggered.
 
 ### Intended use cases
 
-- Keep `loading` as the default state for waiting, thinking, or background work in progress.
-- Trigger `triangle` or `square` when the system needs to communicate a more expressive state change after loading completes.
-- Use `wiggle` as lightweight feedback when work is still active but you want a brief accent rather than a persistent new formation.
-- Use `out` to intentionally dismiss the indicator when work is complete or cancelled.
+- Keep `loading` as the default state for waiting, thinking, or background work
+  in progress.
+- Trigger `triangle` or `square` when the system needs to communicate a more
+  expressive state change after loading completes.
+- Use `wiggle` as lightweight feedback when work is still active but you want a
+  brief accent rather than a persistent new formation.
+- Use `out` to intentionally dismiss the indicator when work is complete or
+  cancelled.
 
 ### Interaction guidance
 
-- Start in the default loading state, then trigger a new mode only when the product has a meaningful state transition to communicate.
-- Prefer imperative handle methods for transitions so the element can respond to async milestones without remounting the surrounding UI.
-- Treat the new modes as optional enhancements, not replacements for the base indicator.
-- Keep the accessible label aligned with the user-facing status message when embedding Processing in larger workflows.
+- Start in the default loading state, then trigger a new mode only when the
+  product has a meaningful state transition to communicate.
+- Prefer imperative handle methods for transitions so the element can respond to
+  async milestones without remounting the surrounding UI.
+- Treat the new modes as optional enhancements, not replacements for the base
+  indicator.
+- Keep the accessible label aligned with the user-facing status message when
+  embedding Processing in larger workflows.
 
 ### Proposed behavior and usage model
 
-The proposed v2.0 surface keeps the current base props and imperative handle intact while clarifying the recommended usage model for these transitions:
+v2.0 adds an imperative handle (via `ref`) for moving between states without
+remounting:
 
 - `triggerTriangle()` highlights a completed or elevated in-progress state.
-- `triggerSquare()` introduces a four-dot formation for an alternate expressive state.
-- `triggerWiggle()` provides transient motion feedback without leaving the loading layout.
+- `triggerSquare()` introduces a four-dot formation for an alternate expressive
+  state.
+- `triggerWiggle()` provides transient motion feedback without leaving the
+  loading layout.
 - `triggerOut()` cleanly dismisses the current indicator from any visible state.
 
 <Canvas of={ProcessingStories.Interactive} />
 
 ### Migration guidance
 
-Migration from the current Processing element is additive:
+**Unchanged:** the package name, the `Processing` import, the SCSS import, and
+the `loop` prop. `<Processing />` and `<Processing loop />` keep working without
+code changes.
 
-- Existing implementations that use the default loading behavior do not need to change.
-- The v2.0 proposal removes the need for separate loop and no-loop story variants in Labs because Processing now remains in the loading state until another mode is triggered.
-- Existing `label` and `ai` usage stays valid.
-- Teams only need migration work when they want to opt into the new interaction modes by using the imperative handle in response to product events.
-- Adoption can happen incrementally, one mode at a time, without altering the base loading behavior.
+**New:** the `mode`, `label`, `ai` and `className` props, the imperative handle,
+the `role="status"` region, and reduced-motion support.
+
+**Breaking changes to review before upgrading:**
+
+- **Loop length.** In v1, `loop` ran five cycles and then unloaded. In v2 the
+  loading loop repeats until the mode changes or `triggerOut()` is called.
+  `loop={false}` still runs one cycle and then unloads.
+- **CSS classes.** The `__linear` and `__linear--no-loop` modifier classes and
+  their keyframes are removed. Overrides that targeted them no longer apply.
+- **Rendering needs JavaScript.** The dots are drawn and animated from
+  JavaScript, so nothing is visible before hydration, whereas the v1 CSS
+  animation ran without it.
+- **Right-to-left.** v1 mirrored the load stagger under `[dir='rtl']`; v2 always
+  staggers left to right.
+- **Stories.** The `LinearLoop` and `LinearNoLoop` stories are replaced by
+  `Loading`, `Triangle`, `Square`, `Wiggle` and `Interactive`, so links to the
+  old story IDs will break.
 
 ## Example usages
 
 #### Default loading behavior
 
-Starts in the loading state and remains there until your product triggers a new mode.
+Starts in the loading state and remains there until your product triggers a new
+mode.
 
 ```jsx
 <Processing />
@@ -136,32 +200,40 @@ Starts in the loading state and remains there until your product triggers a new 
 
 #### Transition to triangle
 
-Start in the default loading state, then trigger the triangle mode when a product milestone completes.
+Start in the default loading state, then trigger the triangle mode when a
+product milestone completes.
 
 ```jsx
 import { useRef } from 'react';
-import { Processing } from '@carbon-labs/react-processing';
-import type { ProcessingHandle } from '@carbon-labs/react-processing';
+import { Processing } from '@carbon-labs/react-processing/es/index';
+import type { ProcessingHandle } from '@carbon-labs/react-processing/es/index';
 
 function App() {
   const ref = useRef<ProcessingHandle>(null);
 
+  // Call when the product milestone completes.
   const handleComplete = () => {
     ref.current?.triggerTriangle();
   };
 
-  return <Processing ref={ref} label="Processing" />;
+  return (
+    <>
+      <Processing ref={ref} label="Processing" />
+      <button onClick={handleComplete}>Complete</button>
+    </>
+  );
 }
 ```
 
 #### Transition to square
 
-Use the imperative handle when the workflow needs a four-dot formation to communicate a distinct state.
+Use the imperative handle when the workflow needs a four-dot formation to
+communicate a distinct state.
 
 ```jsx
 import { useRef } from 'react';
-import { Processing } from '@carbon-labs/react-processing';
-import type { ProcessingHandle } from '@carbon-labs/react-processing';
+import { Processing } from '@carbon-labs/react-processing/es/index';
+import type { ProcessingHandle } from '@carbon-labs/react-processing/es/index';
 
 function App() {
   const ref = useRef<ProcessingHandle>(null);
@@ -170,18 +242,24 @@ function App() {
     ref.current?.triggerSquare();
   };
 
-  return <Processing ref={ref} label="Processing" />;
+  return (
+    <>
+      <Processing ref={ref} label="Processing" />
+      <button onClick={handleStateChange}>Change state</button>
+    </>
+  );
 }
 ```
 
 #### Wiggle
 
-Trigger a left-to-right bob animation on the three loading dots via the imperative handle.
+Trigger a left-to-right bob animation on the three loading dots via the
+imperative handle.
 
 ```jsx
 import { useRef } from 'react';
-import { Processing } from '@carbon-labs/react-processing';
-import type { ProcessingHandle } from '@carbon-labs/react-processing';
+import { Processing } from '@carbon-labs/react-processing/es/index';
+import type { ProcessingHandle } from '@carbon-labs/react-processing/es/index';
 
 function App() {
   const ref = useRef<ProcessingHandle>(null);
@@ -192,22 +270,5 @@ function App() {
       <button onClick={() => ref.current?.triggerWiggle()}>Wiggle</button>
     </>
   );
-}
-```
-
-#### Imperative handle
-
-Use a ref to trigger animations programmatically — for example, forming a triangle when an async operation completes.
-
-```jsx
-import { useRef } from 'react';
-import { Processing } from '@carbon-labs/react-processing';
-import type { ProcessingHandle } from '@carbon-labs/react-processing';
-
-function App() {
-  const ref = useRef<ProcessingHandle>(null);
-
-  // When your async work finishes, call triggerTriangle() on the ref:
-  return <Processing ref={ref} />;
 }
 ```

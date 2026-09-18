@@ -13,6 +13,7 @@ import { SideNav } from '../components/SideNav';
 import { SideNavItems } from '../components/SideNavItems';
 import { SideNavMenu } from '../components/SideNavMenu';
 import { SideNavLink } from '../components/SideNavLink';
+import { SideNavMenuItem } from '../components/SideNavMenuItem';
 import { Profile } from '../index';
 import { HeaderContainer } from '../components/HeaderContainer';
 import { HeaderOverflowPanel } from '../components/HeaderOverflowPanel';
@@ -148,7 +149,6 @@ export const Default = () => {
               isActive={isSideNavExpanded}
               aria-expanded={isSideNavExpanded}
               isCollapsible //shows menu at desktop
-              isFixedNav
               renderMenuIcon={<SwitcherIcon size={20} />}
             />
             <HeaderName href="#" prefix="IBM">
@@ -235,10 +235,10 @@ export const Default = () => {
                       title="Settings"
                       backButtonTitle="Back">
                       <SideNavDivider />
-                      <SideNavLink renderIcon={ChartCustom} href="#">
+                      <SideNavMenuItem renderIcon={ChartCustom} href="#">
                         Customize
                         <Launch />
-                      </SideNavLink>
+                      </SideNavMenuItem>
                     </SideNavMenu>
                     <SideNavLink renderIcon={Notification} href="#">
                       Notifications

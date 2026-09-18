@@ -404,12 +404,15 @@ function InteractiveDemo({
         </button>
         <button
           type="button"
-          className={s.btnDanger}
+          className={`${s.btn} ${s.btnDanger}`}
           disabled={outDisabled}
           onClick={runOut}>
           Out
         </button>
-        <button type="button" className={s.btnRestart} onClick={restart}>
+        <button
+          type="button"
+          className={`${s.btn} ${s.btnRestart}`}
+          onClick={restart}>
           Restart ⟳
         </button>
       </div>

@@ -49,7 +49,7 @@ $prefix: 'clabs--processing' !default;
   stroke: $gray-10;
 }
 
-/* ── AI colour treatment ─────────────────────────────────────────────────────── */
+/* ── AI color treatment ─────────────────────────────────────────────────────── */
 :root .#{$prefix}[data-ai] .#{$prefix}__dot,
 [data-carbon-theme='white'] .#{$prefix}[data-ai] .#{$prefix}__dot,
 [data-carbon-theme='g10'] .#{$prefix}[data-ai] .#{$prefix}__dot {

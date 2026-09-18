@@ -20,24 +20,24 @@ exports[`Processing renders as expected - Component API should match snapshot 1`
           class="clabs--processing__dot clabs--processing__dot--left"
           cx="8"
           cy="16"
-          r="0"
-          stroke-width="0"
+          r="0.875px"
+          stroke-width="1.72"
           style=""
         />
         <circle
           class="clabs--processing__dot clabs--processing__dot--center"
           cx="16"
           cy="16"
-          r="0"
-          stroke-width="0"
+          r="0.875px"
+          stroke-width="1.72"
           style=""
         />
         <circle
           class="clabs--processing__dot clabs--processing__dot--right"
           cx="24"
           cy="16"
-          r="0"
-          stroke-width="0"
+          r="0.875px"
+          stroke-width="1.72"
           style=""
         />
         <circle

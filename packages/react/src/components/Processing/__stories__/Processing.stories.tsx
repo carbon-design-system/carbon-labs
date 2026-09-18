@@ -9,7 +9,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import s from './Processing.stories.module.css';
+import './storybook.scss';
 import mdx from './Processing.mdx';
 import Processing from '../components/Processing';
 import type { ProcessingHandle } from '../components/Processing';
@@ -51,7 +51,7 @@ const meta: Meta<typeof Processing> = {
     ai: {
       control: 'boolean',
       description:
-        'Apply AI colour treatment to the dots: blue-80 on light themes (white, g10), blue-20 on dark themes (g90, g100).',
+        'Apply AI color treatment to the dots: blue-80 on light themes (white, g10), blue-20 on dark themes (g90, g100).',
       table: { defaultValue: { summary: 'false' } },
     },
   },
@@ -371,7 +371,7 @@ function InteractiveDemo({
   const outDisabled = isOut;
 
   return (
-    <div className={s.interactiveLayout}>
+    <div className="processing-story__layout">
       <Processing
         key={key}
         ref={handle}
@@ -380,43 +380,43 @@ function InteractiveDemo({
         label={label}
         ai={ai}
       />
-      <div className={s.controlsRow}>
+      <div className="processing-story__controls">
         <button
           type="button"
-          className={s.btn}
+          className="processing-story__btn"
           disabled={triDisabled}
           onClick={runTriangle}>
           <TriIcon /> Triangle
         </button>
         <button
           type="button"
-          className={s.btn}
+          className="processing-story__btn"
           disabled={sqrDisabled}
           onClick={runSquare}>
           <SqrIcon /> Square
         </button>
         <button
           type="button"
-          className={s.btn}
+          className="processing-story__btn"
           disabled={wiggleDisabled}
           onClick={runWiggle}>
           <WiggleIcon /> Wiggle
         </button>
         <button
           type="button"
-          className={`${s.btn} ${s.btnDanger}`}
+          className="processing-story__btn processing-story__btn--danger"
           disabled={outDisabled}
           onClick={runOut}>
           Out
         </button>
         <button
           type="button"
-          className={`${s.btn} ${s.btnRestart}`}
+          className="processing-story__btn processing-story__btn--restart"
           onClick={restart}>
           Restart ⟳
         </button>
       </div>
-      <p className={s.helperText}>
+      <p className="processing-story__helper">
         Active mode: <strong>{activeMode}</strong>. Use the buttons to preview
         proposed v2.0 interaction modes without changing the default loading
         behavior.

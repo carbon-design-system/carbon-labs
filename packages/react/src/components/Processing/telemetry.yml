@@ -8,11 +8,21 @@ collect:
     elements:
       allowedAttributeNames:
         # Processing
+        - ai
+        - className
+        - label
         - loop
+        - mode
         # React
         - key
         - ref
-      allowedAttributeStringValues: []
+      allowedAttributeStringValues:
+        # Processing - mode
+        - loading
+        - out
+        - square
+        - triangle
+        - wiggle
   npm:
     dependencies: null
   js:

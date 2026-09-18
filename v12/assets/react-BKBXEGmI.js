@@ -1,1 +1,0 @@
-import{t as e}from"./lib-CBo-0XyC.js";export{e as MDXProvider};

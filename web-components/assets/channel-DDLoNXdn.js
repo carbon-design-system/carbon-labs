@@ -1,1 +1,0 @@
-import{$t as e,en as t}from"./diagramElement-D7Q7qOA8.js";var n=(n,r)=>t.lang.round(e.parse(n)[r]);export{n as t};

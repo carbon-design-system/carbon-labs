@@ -23,7 +23,6 @@ export default class solisSessionManager {
   private boundSetActive: () => void;
   private logoutUrl: string | undefined;
   private logoutCallback: (() => void) | undefined;
-  private ttlUnit: 'seconds' | 'milliseconds' | 'minutes';
   config: solisSessionManagerConfig;
 
   constructor(config: solisSessionManagerConfig) {
@@ -46,7 +45,6 @@ export default class solisSessionManager {
     this.boundSetActive = () => this.setActive();
     this.logoutUrl = config.logoutUrl;
     this.logoutCallback = config.logoutCallback;
-    this.ttlUnit = config.ttlUnit || 'seconds';
   }
 
   startRefreshSchedule() {
@@ -78,19 +76,6 @@ export default class solisSessionManager {
     }, delay);
   }
 
-  private ttlToMs(ttl: number): number {
-    switch (this.ttlUnit) {
-      case 'milliseconds':
-        return ttl;
-      case 'minutes':
-        return ttl * 60 * 1000;
-      case 'seconds':
-        return ttl * 1000;
-      default:
-        return ttl * 1000;
-    }
-  }
-
   async triggerRefresh() {
     const fetchRoute = this.basePath
       ? this.basePath + '/v1/solis/session/refresh-token'
@@ -106,7 +91,7 @@ export default class solisSessionManager {
         const data = await response.json().catch(() => null);
         if (data?.ttl != null) {
           // ttl is the Solis token "time to live"
-          this.rescheduleRefresh(this.ttlToMs(data.ttl)); // Safety net to sync up refresh schedule with token expiry if lead tab is closed
+          this.rescheduleRefresh(data.ttl * 1000); // Safety net to sync up refresh schedule with token expiry if lead tab is closed
         }
       } else if (response.status === 429) {
         // refresh happened too recently

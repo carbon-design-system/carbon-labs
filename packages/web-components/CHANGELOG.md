@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.176.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.175.0...@carbon-labs/web-components@0.176.0) (2026-09-18)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
 # [0.175.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.174.0...@carbon-labs/web-components@0.175.0) (2026-09-17)
 
 

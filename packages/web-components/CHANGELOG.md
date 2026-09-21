@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.177.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.176.0...@carbon-labs/web-components@0.177.0) (2026-09-21)
+
+
+### Bug Fixes
+
+* **global-header:** Sync Solis token refresh cycles ([#1372](https://github.com/carbon-design-system/carbon-labs/issues/1372)) ([af55e24](https://github.com/carbon-design-system/carbon-labs/commit/af55e247dd7cae4b466c7743126b0278af3715c5))
+
+
+
+
+
 # [0.176.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.175.0...@carbon-labs/web-components@0.176.0) (2026-09-18)
 
 **Note:** Version bump only for package @carbon-labs/web-components

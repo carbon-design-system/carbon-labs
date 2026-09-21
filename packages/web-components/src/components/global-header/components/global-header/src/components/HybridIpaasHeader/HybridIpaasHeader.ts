@@ -84,7 +84,7 @@ export class HybridIpaasHeader extends LitElement {
     ...INITIAL_AUTOMATION_HEADER_PROPS,
     brand: {
       company: 'IBM',
-      product: '',
+      product: 'Integration',
     },
     capabilityName: {
       label: '',

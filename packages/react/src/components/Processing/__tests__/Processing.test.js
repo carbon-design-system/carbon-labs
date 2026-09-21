@@ -271,6 +271,22 @@ describe('Processing', () => {
       });
     });
 
+    it("hands a dot off to its own pulse as soon as ITS load-in ends, not the whole group's", async () => {
+      // Dot 0's load-in runs 0-1000ms; dots 1 and 2 (200ms stagger) don't
+      // finish until 1200ms and 1400ms. A batched hand-off would leave dot
+      // 0's finished-but-uncancelled load-in (fill: 'forwards', higher in
+      // the effect stack) masking its already-running pulse until then —
+      // frozen at rest size, then snapping to catch up once it's cancelled.
+      engine.run('loading', true, false);
+      await waapi.advance(1050);
+      expect(dots[0].getAnimations()).toHaveLength(1); // the pulse only
+      expect(dots[0].getAttribute('r')).toBe('0.875px');
+      // The other two dots' load-ins are still legitimately in flight,
+      // each alongside its own not-yet-started pulse.
+      expect(dots[1].getAnimations()).toHaveLength(2);
+      expect(dots[2].getAnimations()).toHaveLength(2);
+    });
+
     it('forms a triangle and hands off to a steady spin', async () => {
       engine.run('loading', true, false);
       const formed = engine.toTriangle(); // queued until load-in lands

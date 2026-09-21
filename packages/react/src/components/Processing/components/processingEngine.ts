@@ -623,12 +623,23 @@ export function createProcessingEngine(
         pulseOrigin + STAGGER * role,
         loop ? Infinity : 1
       );
-      return play(
+      const anim = play(
         d,
         LOAD_IN,
         { duration: LOAD, fill: 'forwards' },
         t0 + STAGGER * role
       );
+      // Hand off to this dot's own pulse the instant ITS load-in ends —
+      // waiting for every dot would leave an earlier one's finished (but
+      // still fill:'forwards'-held) load-in masking its already-running
+      // pulse, higher in the effect stack, until the last dot catches up.
+      // Cancelling only then made the dot visibly snap to the pulse's
+      // current position instead of a continuous hand-off.
+      anim.finished.then(() => {
+        size(d, R_REST, SW1);
+        cancel(anim);
+      }, noop);
+      return anim;
     });
     if (then) {
       pending = { target: then, resolve };
@@ -675,12 +686,16 @@ export function createProcessingEngine(
       spare.style.cssText = '';
       size(spare, '0', '0');
       place(spare, SPAWN);
-      play(
+      const grow = play(
         spare,
         LOAD_IN,
         { duration: LOAD, fill: 'forwards' },
         t + stagger[3]
       );
+      grow.finished.then(() => {
+        size(spare, R_REST, SW1);
+        cancel(grow);
+      }, noop);
       slots[i] = 3;
       startPulse(i, slotTime(3, t + stagger[3] + LOAD));
     }

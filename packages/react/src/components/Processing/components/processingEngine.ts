@@ -96,10 +96,14 @@ const OUT_STAGGER = 50;
 const OUT = 100;
 const FORM = 700; // each dot's formation move
 // Delay before each dot's formation move. The dots funnel through one entry
-// point, so these (with SLIDE_SPEED) keep them from bunching; the square's
-// fourth dot waits until the centre it grows from is clear.
+// point, so these (with SLIDE_SPEED) keep them from bunching. Square's dots
+// 0-2 use their own tighter 25ms cascade (rather than reusing triangle's
+// 50/30) so the fourth dot — which needs about 200ms clear of dot 2's start,
+// however early that is, to not cross its path near the shared entry point —
+// can follow sooner, keeping one continuous four-beat cascade instead of
+// three quick beats then a long silent gap before a late fourth.
 const FORM_STAGGER_TRI = [0, 50, 80];
-const FORM_STAGGER_SQR = [0, 50, 80, 280];
+const FORM_STAGGER_SQR = [0, 25, 50, 255];
 const SLIDE_SPEED = 0.05; // px/ms — a slide's share of FORM grows with its length
 const ROT = 8000; // one steady revolution
 const SPIN = 360 / ROT; // steady spin speed, deg/ms
@@ -164,18 +168,20 @@ const polar = (deg: number, r: number): Pt => ({
   x: C + r * Math.cos(toRad(deg)),
   y: C + r * Math.sin(toRad(deg)),
 });
+// Quintic ease: 0 → 1 with start slope k, and — unlike a plain cubic Hermite —
+// zero ACCELERATION as well as zero velocity at the end, so a landing tapers
+// off instead of braking hard right up to the last moment. k=0 is the
+// classic "smootherstep". Monotonic for k up to ~2.5; K_MAX keeps clear of
+// that so the motion never dips backwards.
+const K_MAX = 2.4;
 /**
- * Cubic Hermite ease: 0 → 1 with start slope k, end slope 0 (monotonic for k ≤ 3).
+ * Quintic ease-out: 0 → 1 with start slope k, zero velocity AND zero
+ * acceleration at the end.
  * @param {number} t - progress, 0–1
  * @param {number} k - start slope
  */
-const hermite = (t: number, k: number) =>
-  k * t + (3 - 2 * k) * t * t + (k - 2) * t * t * t;
-/**
- * Ease-in-out with zero velocity at both ends.
- * @param {number} t - progress, 0–1
- */
-const smoothstep = (t: number) => t * t * (3 - 2 * t);
+const glideTo = (t: number, k: number) =>
+  (6 - 3 * k) * t ** 5 + (8 * k - 15) * t ** 4 + (10 - 6 * k) * t ** 3 + k * t;
 /**
  * A cx/cy keyframe.
  * @param {number} offset - keyframe offset, 0–1
@@ -246,8 +252,8 @@ function orbitFrames(
       kf(
         t,
         polar(
-          start.deg + sweep * hermite(t, k),
-          start.r + (endR - start.r) * smoothstep(t)
+          start.deg + sweep * glideTo(t, k),
+          start.r + (endR - start.r) * glideTo(t, 0)
         )
       )
     );
@@ -795,7 +801,8 @@ export function createProcessingEngine(
     const dur = QUICK * Math.max(1, Math.max(...sweeps) / 330);
     const moves = ds.map((dot, k) => {
       const to = UNWIND[role[k]];
-      const slope = sweeps[k] > 0 ? Math.min(3, (speed * dur) / sweeps[k]) : 0;
+      const slope =
+        sweeps[k] > 0 ? Math.min(K_MAX, (speed * dur) / sweeps[k]) : 0;
       return play(
         dot,
         orbitFrames(pts[k], sweeps[k], to.r, slope, to.pos),

@@ -205,6 +205,9 @@ export const Loading: Story = {
         story:
           'The default loading state: three dots load in and pulse, then shrink out and restart.',
       },
+      source: {
+        code: '<Processing ref={ref} label="Processing" />',
+      },
     },
   },
 };
@@ -231,6 +234,9 @@ export const Triangle: Story = {
       description: {
         story:
           'After load-in, the dots arc into an equilateral triangle, hold, unwind back into the loading line, then shrink out.',
+      },
+      source: {
+        code: '<Processing ref={ref} label="Processing" />\n\nawait ref.current.triggerTriangle();',
       },
     },
   },
@@ -259,6 +265,9 @@ export const Square: Story = {
         story:
           'After load-in, a fourth dot grows in and all four arc into a square, hold, unwind back into the loading line, then shrink out.',
       },
+      source: {
+        code: '<Processing ref={ref} label="Processing" />\n\nawait ref.current.triggerSquare();',
+      },
     },
   },
 };
@@ -281,6 +290,9 @@ export const Wiggle: Story = {
       description: {
         story:
           'After load-in, each dot bobs up and back with a left-to-right stagger, holds, then shrinks out. The wiggle is handle-only (`triggerWiggle()`).',
+      },
+      source: {
+        code: '<Processing ref={ref} label="Processing" />\n\nawait ref.current.triggerWiggle();',
       },
     },
   },
@@ -427,6 +439,9 @@ export const Interactive: Story = {
       description: {
         story:
           'Every handle method, one button each. Processing stays in the loading loop until a new state is requested.',
+      },
+      source: {
+        code: '<Processing ref={ref} label="Processing" />\n\nref.current.triggerTriangle();\nref.current.triggerSquare();\nref.current.triggerWiggle();\nref.current.triggerLoading();\nref.current.triggerOut();',
       },
     },
   },

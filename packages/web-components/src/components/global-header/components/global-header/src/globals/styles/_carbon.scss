@@ -16,3 +16,7 @@ clabs-global-header-apaas,
 clabs-global-header-hybrid-ipaas {
   @include theme.theme(themes.$g100);
 }
+
+clabs-global-header-session-expiry-modal {
+  @include theme.theme(themes.$white);
+}

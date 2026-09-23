@@ -16,7 +16,7 @@ import { settings } from '@carbon-labs/utilities';
 import { renderCarbonIcon } from '../../globals/utils';
 
 import { AUTOMATION_HEADER_BASE_CLASS } from '../../constant';
-import styles from './_index.scss?inline' assert { type: 'css' };
+import styles from './_index.scss?inline' with { type: 'css' };
 
 const { stablePrefix: clabsPrefix } = settings;
 const blockClass = `${AUTOMATION_HEADER_BASE_CLASS}__logout-tile`;

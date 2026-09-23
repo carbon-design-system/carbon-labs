@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.95.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.94.0...@carbon-labs/wc-global-header@0.95.0) (2026-09-21)
+
+
+### Bug Fixes
+
+* **global-header:** Sync Solis token refresh cycles ([#1372](https://github.com/carbon-design-system/carbon-labs/issues/1372)) ([af55e24](https://github.com/carbon-design-system/carbon-labs/commit/af55e247dd7cae4b466c7743126b0278af3715c5))
+
+
+
+
+
+# [0.94.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.93.0...@carbon-labs/wc-global-header@0.94.0) (2026-09-18)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
 # [0.93.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.92.0...@carbon-labs/wc-global-header@0.93.0) (2026-09-17)
 
 

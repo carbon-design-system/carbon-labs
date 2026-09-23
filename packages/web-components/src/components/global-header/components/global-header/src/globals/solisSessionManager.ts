@@ -75,6 +75,15 @@ export default class solisSessionManager {
     }
   }
 
+  rescheduleRefresh(ttlMs: number) {
+    this.stopRefreshSchedule();
+    const delay = Math.max(0, ttlMs - 300 * 1000); // 5 minutes before token expiry
+    window.setTimeout(() => {
+      this.triggerRefresh(); // Trigger a one off refresh 5 minutes before token expires
+      this.startRefreshSchedule(); // Trigger usual 25 minute refresh schedule from then on
+    }, delay);
+  }
+
   async triggerRefresh() {
     const fetchRoute = this.basePath
       ? this.basePath + '/v1/solis/session/refresh-token'
@@ -87,6 +96,11 @@ export default class solisSessionManager {
 
       if (response.ok) {
         console.log('Solis token refresh successful');
+        const data = await response.json().catch(() => null);
+        if (data?.ttl != null) {
+          // ttl is the Solis token "time-to-live, in seconds"
+          this.rescheduleRefresh(data.ttl * 1000); // Safety net to sync up refresh schedule with token expiry if lead tab is closed
+        }
       } else if (response.status === 429) {
         // refresh happened too recently
         console.log('Solis token refresh skipped (too recent)'); // TODO - this response doesn't yet exist in the backend

@@ -77,11 +77,12 @@ describe('solisSessionManager', () => {
     it('calls fetch with the correct URL and options', async () => {
       const fetchStub = sinon.stub(window, 'fetch');
       fetchStub.resolves(
-        new Response(null, {
+        new Response(JSON.stringify({}), {
           status: 200,
           statusText: 'OK',
         })
       );
+      sinon.stub(solisSessionManager.prototype, 'rescheduleRefresh');
       const consoleLogStub = sinon.stub(console, 'log');
       const sessionManager = new solisSessionManager({ basePath: '/api' });
       await sessionManager.triggerRefresh();
@@ -100,11 +101,12 @@ describe('solisSessionManager', () => {
     it('calls fetch with the correct URL and options when the basePath is undefined', async () => {
       const fetchStub = sinon.stub(window, 'fetch');
       fetchStub.resolves(
-        new Response(null, {
+        new Response(JSON.stringify({}), {
           status: 200,
           statusText: 'OK',
         })
       );
+      sinon.stub(solisSessionManager.prototype, 'rescheduleRefresh');
       const consoleLogStub = sinon.stub(console, 'log');
       const sessionManager = new solisSessionManager({});
       await sessionManager.triggerRefresh();
@@ -198,6 +200,57 @@ describe('solisSessionManager', () => {
         'Network error'
       );
     });
+
+    it('calls rescheduleRefresh with ttl (in ms) when ttl is present in the response body', async () => {
+      const fetchStub = sinon.stub(window, 'fetch');
+      fetchStub.resolves(
+        new Response(JSON.stringify({ ttl: 600 }), {
+          status: 200,
+          statusText: 'OK',
+        })
+      );
+      const rescheduleRefreshStub = sinon.stub(
+        solisSessionManager.prototype,
+        'rescheduleRefresh'
+      );
+      const sessionManager = new solisSessionManager({});
+      await sessionManager.triggerRefresh();
+      expect(rescheduleRefreshStub).to.have.been.calledWith(600000);
+    });
+
+    it('does not call rescheduleRefresh if ttl is not present in the response body', async () => {
+      const fetchStub = sinon.stub(window, 'fetch');
+      fetchStub.resolves(
+        new Response(JSON.stringify({}), {
+          status: 200,
+          statusText: 'OK',
+        })
+      );
+      const rescheduleRefreshStub = sinon.stub(
+        solisSessionManager.prototype,
+        'rescheduleRefresh'
+      );
+      const sessionManager = new solisSessionManager({});
+      await sessionManager.triggerRefresh();
+      expect(rescheduleRefreshStub).to.not.have.been.called;
+    });
+
+    it('does not call rescheduleRefresh if the response body is not valid JSON', async () => {
+      const fetchStub = sinon.stub(window, 'fetch');
+      fetchStub.resolves(
+        new Response('not json', {
+          status: 200,
+          statusText: 'OK',
+        })
+      );
+      const rescheduleRefreshStub = sinon.stub(
+        solisSessionManager.prototype,
+        'rescheduleRefresh'
+      );
+      const sessionManager = new solisSessionManager({});
+      await sessionManager.triggerRefresh();
+      expect(rescheduleRefreshStub).to.not.have.been.called;
+    });
   });
 
   describe('registerActivityListeners', () => {
@@ -247,10 +300,7 @@ describe('solisSessionManager', () => {
     });
 
     it('removes the event listeners from each activity event', () => {
-      const removeEventListenerStub = sinon.stub(
-        window,
-        'removeEventListener'
-      );
+      const removeEventListenerStub = sinon.stub(window, 'removeEventListener');
       const sessionManager = new solisSessionManager({});
       sessionManager.registerActivityListeners();
       sessionManager.unregisterActivityListeners();
@@ -498,14 +548,20 @@ describe('solisSessionManager', () => {
     });
 
     it('calls cancelWarningTimer to stop the current the idle warning timer', () => {
-      const cancelWarningTimerStub = sinon.stub(solisSessionManager.prototype, 'cancelWarningTimer');
+      const cancelWarningTimerStub = sinon.stub(
+        solisSessionManager.prototype,
+        'cancelWarningTimer'
+      );
       const sessionManager = new solisSessionManager({});
       sessionManager.setActive();
       expect(cancelWarningTimerStub).to.have.been.called;
     });
 
     it('calls startWarningTimer to restart the idle warning timer', () => {
-      const startWarningTimerStub = sinon.stub(solisSessionManager.prototype, 'startWarningTimer');
+      const startWarningTimerStub = sinon.stub(
+        solisSessionManager.prototype,
+        'startWarningTimer'
+      );
       const sessionManager = new solisSessionManager({});
       sessionManager.setActive();
       expect(startWarningTimerStub).to.have.been.called;
@@ -513,7 +569,9 @@ describe('solisSessionManager', () => {
 
     it('calls onWarningDismissedCallback if the function is passed', () => {
       const onWarningDismissedCallbackStub = sinon.stub();
-      const sessionManager = new solisSessionManager({ onWarningDismissedCallback: onWarningDismissedCallbackStub });
+      const sessionManager = new solisSessionManager({
+        onWarningDismissedCallback: onWarningDismissedCallbackStub,
+      });
       sessionManager.setActive();
       expect(onWarningDismissedCallbackStub).to.have.been.called;
     });
@@ -523,7 +581,7 @@ describe('solisSessionManager', () => {
       expect(() => {
         sessionManager.setActive();
       }).to.not.throw();
-    })
+    });
   });
 
   describe('setIdle', () => {
@@ -549,10 +607,18 @@ describe('solisSessionManager', () => {
       sinon
         .stub(solisSessionManager.prototype, 'checkSessionStatus')
         .resolves(true);
-      const cancelWarningTimerStub = sinon.stub(solisSessionManager.prototype, 'cancelWarningTimer');
-      const setActiveStub = sinon.stub(solisSessionManager.prototype, 'setActive');
+      const cancelWarningTimerStub = sinon.stub(
+        solisSessionManager.prototype,
+        'cancelWarningTimer'
+      );
+      const setActiveStub = sinon.stub(
+        solisSessionManager.prototype,
+        'setActive'
+      );
       const onWarningDismissedCallbackStub = sinon.stub();
-      const sessionManager = new solisSessionManager({ onWarningDismissedCallback: onWarningDismissedCallbackStub });
+      const sessionManager = new solisSessionManager({
+        onWarningDismissedCallback: onWarningDismissedCallbackStub,
+      });
       await sessionManager.setIdle();
       expect(performLogoutStub).to.not.have.been.called;
       expect(cancelWarningTimerStub).to.have.been.called;
@@ -670,14 +736,21 @@ describe('solisSessionManager', () => {
 
     it('calls the onWarningCallback function after (idleTimeoutInterval - warningLeadTime) * 60 * 1000 ms', () => {
       const onWarningCallbackStub = sinon.stub();
-      const sessionManager = new solisSessionManager({ onWarningCallback: onWarningCallbackStub, idleTimeoutInterval: 2, warningLeadTime: 1});
+      const sessionManager = new solisSessionManager({
+        onWarningCallback: onWarningCallbackStub,
+        idleTimeoutInterval: 2,
+        warningLeadTime: 1,
+      });
       sessionManager.startWarningTimer();
       clock.tick(1 * 60 * 1000);
       expect(onWarningCallbackStub).to.have.been.called;
     });
 
     it('does not throw if onWarningCallback is not provided', () => {
-      const sessionManager = new solisSessionManager({ idleTimeoutInterval: 2, warningLeadTime: 1});
+      const sessionManager = new solisSessionManager({
+        idleTimeoutInterval: 2,
+        warningLeadTime: 1,
+      });
       expect(() => {
         sessionManager.startWarningTimer();
         clock.tick(1 * 60 * 1000);
@@ -702,7 +775,11 @@ describe('solisSessionManager', () => {
 
     it('prevents onWarningCallback from firing when called before the timeout elapses', () => {
       const onWarningCallbackStub = sinon.stub();
-      const sessionManager = new solisSessionManager({ onWarningCallback: onWarningCallbackStub, idleTimeoutInterval: 3, warningLeadTime: 1});
+      const sessionManager = new solisSessionManager({
+        onWarningCallback: onWarningCallbackStub,
+        idleTimeoutInterval: 3,
+        warningLeadTime: 1,
+      });
       sessionManager.startWarningTimer();
       clock.tick(1 * 60 * 1000);
       sessionManager.cancelWarningTimer();
@@ -712,7 +789,11 @@ describe('solisSessionManager', () => {
     it('resets warningTimeout to undefined', () => {
       const onWarningCallbackStub = sinon.stub();
       const clearTimeoutStub = sinon.stub(window, 'clearTimeout');
-      const sessionManager = new solisSessionManager({ onWarningCallback: onWarningCallbackStub, idleTimeoutInterval: 3, warningLeadTime: 1});
+      const sessionManager = new solisSessionManager({
+        onWarningCallback: onWarningCallbackStub,
+        idleTimeoutInterval: 3,
+        warningLeadTime: 1,
+      });
       sessionManager.startWarningTimer();
       expect(sessionManager.isWarningTimerRunning()).to.be.true;
       clock.tick(1 * 60 * 1000);
@@ -724,9 +805,66 @@ describe('solisSessionManager', () => {
     it('does nothing if the warning timer is not running', () => {
       const onWarningCallbackStub = sinon.stub();
       const clearTimeoutStub = sinon.stub(window, 'clearTimeout');
-      const sessionManager = new solisSessionManager({ onWarningCallback: onWarningCallbackStub, idleTimeoutInterval: 3, warningLeadTime: 1});
+      const sessionManager = new solisSessionManager({
+        onWarningCallback: onWarningCallbackStub,
+        idleTimeoutInterval: 3,
+        warningLeadTime: 1,
+      });
       sessionManager.cancelWarningTimer();
       expect(clearTimeoutStub).to.not.have.been.called;
-    })
-  })
+    });
+  });
+
+  describe('rescheduleRefresh', () => {
+    it('stops the current token refresh schedule', () => {
+      const stopRefreshScheduleStub = sinon.stub(
+        solisSessionManager.prototype,
+        'stopRefreshSchedule'
+      );
+      const sessionManager = new solisSessionManager({});
+      sessionManager.rescheduleRefresh(5 * 60 * 1000);
+      expect(stopRefreshScheduleStub).to.have.been.calledOnce;
+    });
+
+    it('sets a timeout using the ttlMs minus a 5 minute buffer', () => {
+      const setTimeoutStub = sinon.stub(window, 'setTimeout');
+      sinon.stub(solisSessionManager.prototype, 'stopRefreshSchedule');
+      const sessionManager = new solisSessionManager({});
+      sessionManager.rescheduleRefresh(30 * 60 * 1000);
+      expect(setTimeoutStub).to.have.been.calledWith(
+        sinon.match.func,
+        25 * 60 * 1000
+      );
+    });
+
+    it('sets a timeout of 0 seconds if ttlMs is less than 5 minutes', () => {
+      const setTimeoutStub = sinon.stub(window, 'setTimeout');
+      sinon.stub(solisSessionManager.prototype, 'stopRefreshSchedule');
+      const sessionManager = new solisSessionManager({});
+      sessionManager.rescheduleRefresh(60 * 1000);
+      expect(setTimeoutStub).to.have.been.calledWith(sinon.match.func, 0);
+    });
+
+    it('calls triggerRefresh and startRefreshSchedule after the delay elapses', () => {
+      const clock = sinon.useFakeTimers({
+        shouldAdvanceTime: false,
+        shouldClearNativeTimers: true,
+        toFake: ['setTimeout', 'clearTimeout', 'setInterval', 'clearInterval'],
+      });
+      const triggerRefreshStub = sinon.stub(
+        solisSessionManager.prototype,
+        'triggerRefresh'
+      );
+      const startRefreshScheduleStub = sinon.stub(
+        solisSessionManager.prototype,
+        'startRefreshSchedule'
+      );
+      const sessionManager = new solisSessionManager({});
+      sessionManager.rescheduleRefresh(30 * 60 * 1000);
+      clock.tick(25 * 60 * 1000);
+      clock.restore();
+      expect(triggerRefreshStub).to.have.been.calledOnce;
+      expect(startRefreshScheduleStub).to.have.been.calledOnce;
+    });
+  });
 });

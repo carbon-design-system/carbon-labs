@@ -15,8 +15,7 @@ import { SessionExpiryModal } from '../SessionExpiryModal';
 describe('SessionExpiryModal Component', () => {
   it('renders component when open is true', async () => {
     const el = await fixture(
-      html`<clabs-global-header-session-expiry-modal
-      open>
+      html`<clabs-global-header-session-expiry-modal open>
       </clabs-global-header-session-expiry-modal>`
     );
     expect(el.shadowRoot).not.to.be.null;
@@ -30,14 +29,14 @@ describe('SessionExpiryModal Component', () => {
       </clabs-global-header-session-expiry-modal>`
     );
     expect(el.shadowRoot).not.to.be.null;
-    expect(el.shadowRoot?.querySelectorAll('cds-custom-inline-notification').length).to
-      .equal(0);
+    expect(
+      el.shadowRoot?.querySelectorAll('cds-custom-inline-notification').length
+    ).to.equal(0);
   });
 
-  it('does not render the component when open switches from true to false', async() => {
+  it('does not render the component when open switches from true to false', async () => {
     const el = await fixture<SessionExpiryModal>(
-      html`<clabs-global-header-session-expiry-modal
-      open>
+      html`<clabs-global-header-session-expiry-modal open>
       </clabs-global-header-session-expiry-modal>`
     );
     expect(el.shadowRoot).not.to.be.null;
@@ -45,8 +44,13 @@ describe('SessionExpiryModal Component', () => {
       .exist;
     el.open = false;
     await el.updateComplete;
-    expect(el.shadowRoot?.querySelectorAll('cds-custom-inline-notification').length).to
-      .equal(0);
+    // no CSS transitions in test environment so transitionend never fires automatically —
+    // dispatch it manually to complete the fade-out and remove the element
+    el.dispatchEvent(new Event('transitionend'));
+    await el.updateComplete;
+    expect(
+      el.shadowRoot?.querySelectorAll('cds-custom-inline-notification').length
+    ).to.equal(0);
   });
 
   it('renders component with expiry', async () => {
@@ -60,11 +64,13 @@ describe('SessionExpiryModal Component', () => {
       'cds-custom-inline-notification'
     );
     expect((notification as any)?.title).to.contain('Session expiry');
-    expect((notification as any)?.subtitle).to.contain('You will be logged out');
+    expect((notification as any)?.subtitle).to.contain(
+      'You will be logged out'
+    );
     expect((notification as any)?.subtitle).to.contain('2 minutes');
   });
 
-  it('renders component with expiry in minutes and seconds', async() => {
+  it('renders component with expiry in minutes and seconds', async () => {
     const el = await fixture<HTMLElement>(
       html`<clabs-global-header-session-expiry-modal
         open
@@ -76,7 +82,7 @@ describe('SessionExpiryModal Component', () => {
     expect((notification as any)?.subtitle).to.contain('2 minutes 5 seconds');
   });
 
-  it('renders component with expiry in seconds only', async() => {
+  it('renders component with expiry in seconds only', async () => {
     const el = await fixture<HTMLElement>(
       html`<clabs-global-header-session-expiry-modal
         open
@@ -103,7 +109,7 @@ describe('SessionExpiryModal Component', () => {
       clock.restore();
     });
 
-    it('updates the expiry time in the notification every second', async() => {
+    it('updates the expiry time in the notification every second', async () => {
       const el = await fixture<SessionExpiryModal>(
         html`<clabs-global-header-session-expiry-modal
           open
@@ -115,7 +121,9 @@ describe('SessionExpiryModal Component', () => {
       expect((notification as any)?.subtitle).to.contain('2 minutes 5 seconds');
       clock.tick(1000);
       await el.updateComplete;
-      notification = el.shadowRoot?.querySelector('cds-custom-inline-notification');
+      notification = el.shadowRoot?.querySelector(
+        'cds-custom-inline-notification'
+      );
       expect((notification as any)?.subtitle).to.contain('2 minutes 4 seconds');
     });
   });

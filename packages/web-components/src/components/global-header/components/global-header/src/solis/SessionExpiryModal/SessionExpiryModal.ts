@@ -37,8 +37,12 @@ export class SessionExpiryModal extends LitElement {
   willUpdate(changedProperties: Map<string, unknown>) {
     if (changedProperties.has('open')) {
       if (this.open) {
+        this.hiding = false;
         this.remainingSeconds = this.totalSeconds;
         this.expiryTime = this.getExpiryTime(this.remainingSeconds);
+      } else if (changedProperties.get('open') === true) {
+        // only fade out if open was previously true — ignore initial render
+        this.hiding = true;
       }
     }
   }
@@ -46,14 +50,14 @@ export class SessionExpiryModal extends LitElement {
   updated(changedProperties: Map<string, unknown>) {
     if (changedProperties.has('open')) {
       if (this.open) {
-        this.hiding = false;
         this.startCountdown();
-      } else {
+      } else if (changedProperties.get('open') === true) {
         this.stopCountdown();
-        this.hiding = true;
         this.addEventListener(
           'transitionend',
-          () => { this.hiding = false; },
+          () => {
+            this.hiding = false;
+          },
           { once: true }
         );
       }
@@ -77,13 +81,10 @@ export class SessionExpiryModal extends LitElement {
 
   startCountdown() {
     this.stopCountdown();
-    this.countdownIntervalId = window.setInterval(
-      () => {
-        this.remainingSeconds = this.remainingSeconds - 1
-        this.expiryTime = this.getExpiryTime(this.remainingSeconds);
-      },
-      1 * 1000
-    );
+    this.countdownIntervalId = window.setInterval(() => {
+      this.remainingSeconds = this.remainingSeconds - 1;
+      this.expiryTime = this.getExpiryTime(this.remainingSeconds);
+    }, 1 * 1000);
   }
 
   stopCountdown() {
@@ -92,7 +93,7 @@ export class SessionExpiryModal extends LitElement {
       this.countdownIntervalId = undefined;
     }
   }
-  
+
   render() {
     if (!this.open && !this.hiding) {
       return html``;
@@ -101,7 +102,9 @@ export class SessionExpiryModal extends LitElement {
       <cds-custom-inline-notification
         kind="warning"
         .title="${'Session expiry'}"
-        .subtitle="${'You will be logged out in ' + this.expiryTime + ' due to inactivity.'}"
+        .subtitle="${'You will be logged out in ' +
+        this.expiryTime +
+        ' due to inactivity.'}"
         role="status"
         ?low-contrast="${true}"
         ?hide-close-button="${true}"
@@ -111,5 +114,4 @@ export class SessionExpiryModal extends LitElement {
       </cds-custom-inline-notification>
     `;
   }
-
 }

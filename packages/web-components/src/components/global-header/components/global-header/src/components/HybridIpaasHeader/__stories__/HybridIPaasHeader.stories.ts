@@ -543,3 +543,51 @@ export const IWHIRebrand: Story = {
     </div>
   `,
 };
+
+export const WithSessionExpiryWarning: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.get(
+          'http://localhost:6007/hybrid-ipaas/v1/header/options',
+          async () => {
+            await delay();
+            return HttpResponse.json(mockHeaderOptions);
+          }
+        ),
+        http.get(
+          'http://localhost:6007/v1/solis/session/session-status',
+          () => HttpResponse.json({}, { status: 200 })
+        ),
+        http.post(
+          'http://localhost:6007/v1/solis/session/logout',
+          () => HttpResponse.json({}, { status: 200 })
+        ),
+      ],
+    },
+  },
+  render: () => {
+    document.addEventListener('session-expired', () => {
+      alert('Session expired — you would be redirected to the logout page.');
+    });
+
+    return html`
+      <div role="main">
+        <clabs-global-header-hybrid-ipaas
+          productKey="mycloud"
+          productVersion="2.3.4.5"
+          solisSessionManagerEnabled
+          .solisIdleTimeoutInterval="${1}"
+          .solisWarningLeadTime="${0.5}"
+          logoutUrl="/"
+          logoutCallbackEvent="session-expired">
+        </clabs-global-header-hybrid-ipaas>
+        <p>
+          Stay idle for 30 seconds to see the session expiry warning notification with a live countdown.
+          The session status endpoint is mocked as active in this story, so the notification will dismiss
+          automatically after 60 seconds and the idle cycle will restart.
+        </p>
+      </div>
+    `;
+  },
+};

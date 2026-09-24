@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-wysiwyg@0.3.0...@carbon-labs/wc-wysiwyg@0.4.0) (2026-09-24)
+
+
+### Bug Fixes
+
+* **deps:** update tiptap monorepo to v3.31.3 ([#1377](https://github.com/carbon-design-system/carbon-labs/issues/1377)) ([7962a58](https://github.com/carbon-design-system/carbon-labs/commit/7962a58f063e7bfe468ca7dab50f5a454cb5a40d))
+
+
+
+
+
 # [0.3.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-wysiwyg@0.2.0...@carbon-labs/wc-wysiwyg@0.3.0) (2026-09-24)
 
 

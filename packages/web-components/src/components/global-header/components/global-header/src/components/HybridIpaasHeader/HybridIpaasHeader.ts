@@ -227,7 +227,7 @@ export class HybridIpaasHeader extends LitElement {
         },
         onWarningDismissedCallback: () => {
           this.sessionExpiryNotificationOpen = false;
-        }
+        },
       });
       this.sessionManager.startRefreshSchedule();
       this.sessionManager.startSessionStatusPolling();

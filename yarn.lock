@@ -3413,7 +3413,7 @@ __metadata:
     "@carbon-labs/utilities": "npm:0.28.0"
     "@carbon/element-styles": "npm:^0.3.0"
     "@carbon/web-components": "npm:^2.40.0"
-    "@tiptap/core": "npm:3.25.0"
+    "@tiptap/core": "npm:3.30.5"
     "@tiptap/extension-blockquote": "npm:3.25.0"
     "@tiptap/extension-bold": "npm:3.25.0"
     "@tiptap/extension-bullet-list": "npm:3.25.0"
@@ -9448,12 +9448,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/core@npm:3.25.0":
-  version: 3.25.0
-  resolution: "@tiptap/core@npm:3.25.0"
+"@tiptap/core@npm:3.30.5":
+  version: 3.30.5
+  resolution: "@tiptap/core@npm:3.30.5"
   peerDependencies:
-    "@tiptap/pm": 3.25.0
-  checksum: 10c0/004643f8059b6f5da911c62d2b81d230cf62f29df194a4a2ecee1ce24feb1bafec935f1b02fde4e1ab993916698d478e43a54f9392da17351ce57c3558d05de1
+    "@tiptap/pm": 3.30.5
+  checksum: 10c0/d64a695926b2db554a1faec7652c24bd34488be0d1fcfaa036a74094aefaed87c032c2a93fa8b8c0170c7f35b168fa942358a494a44597e1236acf5bd16026cc
   languageName: node
   linkType: hard
 

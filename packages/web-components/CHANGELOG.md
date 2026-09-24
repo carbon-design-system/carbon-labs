@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.180.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.179.0...@carbon-labs/web-components@0.180.0) (2026-09-24)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.179.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.178.0...@carbon-labs/web-components@0.179.0) (2026-09-24)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @tiptap/core to v3.30.5 [security] ([#1362](https://github.com/carbon-design-system/carbon-labs/issues/1362)) ([a967941](https://github.com/carbon-design-system/carbon-labs/commit/a967941e0b06b3ea1b4ce88effe742e46ee79353))
+
+
+
+
+
 # [0.178.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.177.0...@carbon-labs/web-components@0.178.0) (2026-09-21)
 
 

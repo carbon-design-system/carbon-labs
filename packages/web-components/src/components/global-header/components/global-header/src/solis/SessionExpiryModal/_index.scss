@@ -10,12 +10,15 @@
 
 :host {
   position: fixed;
-  top: 3rem;
-  right: 1rem;
   z-index: 9000;
-  width: 22rem;
+  inline-size: 22rem;
+  inset-block-start: 3rem;
+  inset-inline-end: 1rem;
   opacity: 1;
-  transition: opacity 600ms ease;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: opacity 600ms ease;
+  }
 }
 
 :host([hiding]) {

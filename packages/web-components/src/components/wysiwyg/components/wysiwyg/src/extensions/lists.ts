@@ -17,6 +17,7 @@ import '@carbon/web-components/es/components/icon-button/index.js';
 import { BASE_CLASS } from '../constants.js';
 import type { ExtensionWithToolbar, ToolbarSize } from '../types.js';
 import { cmdButton } from './button-helper.js';
+import { toolbarGroupPopover } from './popover-utils.js';
 import BulletList from '@tiptap/extension-bullet-list';
 import OrderedList from '@tiptap/extension-ordered-list';
 import ListItem from '@tiptap/extension-list-item';
@@ -70,17 +71,17 @@ const BUTTONS = [
 
 /**
  * Renders the lists toolbar with list type and indentation controls.
+ * On compact (mobile) widths the buttons collapse into a caret popover.
  * @param {Editor | null} editor - The TipTap editor instance
  * @param {ToolbarSize} toolbarSize - Size of the toolbar buttons
+ * @param {boolean} compact - Whether the toolbar is in the compact layout
  */
 Lists.toolbarRender = (
   editor: Editor | null,
-  toolbarSize: ToolbarSize = 'md'
-) => html`
-  <style>
-    ${styles}
-  </style>
-  <div class="${BASE_CLASS}__toolbar-group">
+  toolbarSize: ToolbarSize = 'md',
+  compact = false
+) => {
+  const buttons = html`
     ${BUTTONS.map(([icon, cmd, active, tooltip]) =>
       cmdButton(icon, editor, cmd, toolbarSize, { active, tooltip })
     )}
@@ -92,5 +93,24 @@ Lists.toolbarRender = (
       args: ['listItem'],
       tooltip: 'Indent More',
     })}
-  </div>
-`;
+  `;
+
+  return html`
+    <style>
+      ${styles}
+    </style>
+    ${compact
+      ? toolbarGroupPopover({
+          icon: (BUTTONS.find(([, , active]) => editor?.isActive(active)) ??
+            BUTTONS[0])[0],
+          tooltip: 'Lists',
+          toolbarSize,
+          /**
+           * Compact list controls.
+           * @returns {import('lit').TemplateResult} List buttons
+           */
+          items: () => buttons,
+        })
+      : html` <div class="${BASE_CLASS}__toolbar-group">${buttons}</div> `}
+  `;
+};

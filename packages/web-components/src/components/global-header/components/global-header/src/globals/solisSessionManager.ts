@@ -23,6 +23,10 @@ export default class solisSessionManager {
   private boundSetActive: () => void;
   private logoutUrl: string | undefined;
   private logoutCallback: (() => void) | undefined;
+  private warningLeadTime: number;
+  private onWarningCallback: (() => void) | undefined;
+  private onWarningDismissedCallback: (() => void) | undefined;
+  private warningTimeout: ReturnType<typeof setTimeout> | undefined;
   config: solisSessionManagerConfig;
 
   constructor(config: solisSessionManagerConfig) {
@@ -34,7 +38,7 @@ export default class solisSessionManager {
     this.activityEvents = [
       'mousedown',
       'mousemove',
-      'keypress',
+      'keydown',
       'scroll',
       'touchstart',
       'click',
@@ -45,6 +49,10 @@ export default class solisSessionManager {
     this.boundSetActive = () => this.setActive();
     this.logoutUrl = config.logoutUrl;
     this.logoutCallback = config.logoutCallback;
+    this.warningLeadTime = config.warningLeadTime || 5;
+    this.onWarningCallback = config.onWarningCallback;
+    this.onWarningDismissedCallback = config.onWarningDismissedCallback;
+    this.warningTimeout = undefined;
   }
 
   startRefreshSchedule() {
@@ -109,7 +117,7 @@ export default class solisSessionManager {
 
   registerActivityListeners() {
     this.activityEvents.forEach((eventType) => {
-      document.addEventListener(eventType, this.boundSetActive, {
+      window.addEventListener(eventType, this.boundSetActive, {
         passive: true,
         capture: true,
       });
@@ -118,7 +126,7 @@ export default class solisSessionManager {
 
   unregisterActivityListeners() {
     this.activityEvents.forEach((eventType) => {
-      document.removeEventListener(eventType, this.boundSetActive, {
+      window.removeEventListener(eventType, this.boundSetActive, {
         capture: true,
       });
     });
@@ -126,7 +134,10 @@ export default class solisSessionManager {
 
   setActive() {
     this.isIdle = false;
+    this.cancelWarningTimer();
+    this.onWarningDismissedCallback?.();
     clearTimeout(this.idleTimeout);
+    this.startWarningTimer();
     this.idleTimeout = setTimeout(
       () => this.setIdle(),
       this.idleTimeoutInterval * 60 * 1000
@@ -137,9 +148,13 @@ export default class solisSessionManager {
     this.isIdle = true;
     const isSessionActive = await this.checkSessionStatus();
     if (!isSessionActive) {
-      await this.performLogout();
+      await this.performLogout(); // no other tabs keeping the session alive, safe to log out
       return;
     }
+    // another tab is keeping the session alive, so cancel current warning timer and restart idle monitoring
+    this.cancelWarningTimer();
+    this.onWarningDismissedCallback?.();
+    this.setActive();
   }
 
   isTabIdle(): boolean {
@@ -235,6 +250,24 @@ export default class solisSessionManager {
 
   isPollingRunning(): boolean {
     return this.sessionStatusIntervalId !== null;
+  }
+
+  startWarningTimer() {
+    this.warningTimeout = setTimeout(
+      () => this.onWarningCallback?.(),
+      (this.idleTimeoutInterval - this.warningLeadTime) * 60 * 1000
+    );
+  }
+
+  cancelWarningTimer() {
+    if (this.warningTimeout) {
+      clearTimeout(this.warningTimeout);
+      this.warningTimeout = undefined;
+    }
+  }
+
+  isWarningTimerRunning(): boolean {
+    return this.warningTimeout !== undefined;
   }
 
   redirect(url: string) {

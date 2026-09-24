@@ -7,3 +7,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 @use '@carbon/styles/scss/components/notification/inline-notification';
+
+:host {
+  position: fixed;
+  z-index: 9000;
+  inline-size: 22rem;
+  inset-block-start: 3rem;
+  inset-inline-end: 1rem;
+  opacity: 1;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: opacity 600ms ease;
+  }
+}
+
+:host([hiding]) {
+  opacity: 0;
+}

@@ -26,6 +26,7 @@ import type {
 } from '../../types/Header.types';
 import { solisDeploymentEnvironment } from '../../types/Header.types';
 import '../CommonHeader/CommonHeader';
+import '../../solis/SessionExpiryModal/SessionExpiryModal';
 
 import styles from '../../index.scss?inline';
 
@@ -77,6 +78,7 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: Number }) solisSessionRefreshInterval = 25; // (minutes) might not need Solis token refresh interval to be configurable
   @property({ type: Number }) solisIdleTimeoutInterval = 28; // (minutes) might not need Solis idle timeout interval to be configurable
   @property({ type: Number }) solisSessionStatusInterval = 10; // (seconds) might not need Solis session polling interval to be configurable
+  @property({ type: Number }) solisWarningLeadTime = 5; // (minutes)
   @property({ type: String }) logoutUrl = '';
 
   @state()
@@ -95,6 +97,8 @@ export class HybridIpaasHeader extends LitElement {
       sidebarLabel: 'Side navigation',
     },
   };
+
+  @state() private sessionExpiryNotificationOpen = false;
 
   sessionManager: solisSessionManager | null = null;
 
@@ -217,10 +221,18 @@ export class HybridIpaasHeader extends LitElement {
         basePath: this.basePath,
         logoutCallback,
         logoutUrl: this.logoutUrl || undefined,
+        warningLeadTime: this.solisWarningLeadTime,
+        onWarningCallback: () => {
+          this.sessionExpiryNotificationOpen = true;
+        },
+        onWarningDismissedCallback: () => {
+          this.sessionExpiryNotificationOpen = false;
+        },
       });
       this.sessionManager.startRefreshSchedule();
       this.sessionManager.startSessionStatusPolling();
       this.sessionManager.registerActivityListeners();
+      this.sessionManager.setActive();
     }
   }
 
@@ -499,6 +511,10 @@ export class HybridIpaasHeader extends LitElement {
         .headerProps="${this.headerOptions}">
         <slot name="header-logo" slot="header-logo"></slot>
       </clabs-global-header-apaas>
+      <clabs-global-header-session-expiry-modal
+        .totalSeconds="${this.solisWarningLeadTime * 60}"
+        .open="${this.sessionExpiryNotificationOpen}">
+      </clabs-global-header-session-expiry-modal>
     </div>`;
   }
 }

@@ -267,7 +267,7 @@ describe('solisSessionManager', () => {
     });
 
     it('registers an event listener for each activity event', () => {
-      const addEventListenerStub = sinon.stub(document, 'addEventListener');
+      const addEventListenerStub = sinon.stub(window, 'addEventListener');
       const sessionManager = new solisSessionManager({});
 
       sessionManager.registerActivityListeners();
@@ -280,7 +280,7 @@ describe('solisSessionManager', () => {
       sessionManager['isIdle'] = true;
 
       sessionManager.registerActivityListeners();
-      document.dispatchEvent(new Event('click'));
+      window.dispatchEvent(new Event('click'));
 
       expect(sessionManager.isTabIdle()).to.be.false;
     });
@@ -300,10 +300,7 @@ describe('solisSessionManager', () => {
     });
 
     it('removes the event listeners from each activity event', () => {
-      const removeEventListenerStub = sinon.stub(
-        document,
-        'removeEventListener'
-      );
+      const removeEventListenerStub = sinon.stub(window, 'removeEventListener');
       const sessionManager = new solisSessionManager({});
       sessionManager.registerActivityListeners();
       sessionManager.unregisterActivityListeners();
@@ -535,6 +532,58 @@ describe('solisSessionManager', () => {
     });
   });
 
+  describe('setActive', () => {
+    let clock;
+
+    beforeEach(() => {
+      clock = sinon.useFakeTimers({
+        shouldAdvanceTime: false,
+        shouldClearNativeTimers: true,
+        toFake: ['setTimeout', 'clearTimeout'],
+      });
+    });
+
+    afterEach(() => {
+      clock.restore();
+    });
+
+    it('calls cancelWarningTimer to stop the current the idle warning timer', () => {
+      const cancelWarningTimerStub = sinon.stub(
+        solisSessionManager.prototype,
+        'cancelWarningTimer'
+      );
+      const sessionManager = new solisSessionManager({});
+      sessionManager.setActive();
+      expect(cancelWarningTimerStub).to.have.been.called;
+    });
+
+    it('calls startWarningTimer to restart the idle warning timer', () => {
+      const startWarningTimerStub = sinon.stub(
+        solisSessionManager.prototype,
+        'startWarningTimer'
+      );
+      const sessionManager = new solisSessionManager({});
+      sessionManager.setActive();
+      expect(startWarningTimerStub).to.have.been.called;
+    });
+
+    it('calls onWarningDismissedCallback if the function is passed', () => {
+      const onWarningDismissedCallbackStub = sinon.stub();
+      const sessionManager = new solisSessionManager({
+        onWarningDismissedCallback: onWarningDismissedCallbackStub,
+      });
+      sessionManager.setActive();
+      expect(onWarningDismissedCallbackStub).to.have.been.called;
+    });
+
+    it('does not throw if onWarningDismissedCallback is not passed', () => {
+      const sessionManager = new solisSessionManager({});
+      expect(() => {
+        sessionManager.setActive();
+      }).to.not.throw();
+    });
+  });
+
   describe('setIdle', () => {
     it('sets isIdle to true and calls performLogout when session is inactive', async () => {
       const performLogoutStub = sinon.stub(
@@ -550,7 +599,7 @@ describe('solisSessionManager', () => {
       expect(performLogoutStub).to.have.been.calledOnce;
     });
 
-    it('does not call performLogout when session is active', async () => {
+    it('calls cancelWarningTimer, onWarningDismissedCallback and setActive when session is active', async () => {
       const performLogoutStub = sinon.stub(
         solisSessionManager.prototype,
         'performLogout'
@@ -558,9 +607,23 @@ describe('solisSessionManager', () => {
       sinon
         .stub(solisSessionManager.prototype, 'checkSessionStatus')
         .resolves(true);
-      const sessionManager = new solisSessionManager({});
+      const cancelWarningTimerStub = sinon.stub(
+        solisSessionManager.prototype,
+        'cancelWarningTimer'
+      );
+      const setActiveStub = sinon.stub(
+        solisSessionManager.prototype,
+        'setActive'
+      );
+      const onWarningDismissedCallbackStub = sinon.stub();
+      const sessionManager = new solisSessionManager({
+        onWarningDismissedCallback: onWarningDismissedCallbackStub,
+      });
       await sessionManager.setIdle();
       expect(performLogoutStub).to.not.have.been.called;
+      expect(cancelWarningTimerStub).to.have.been.called;
+      expect(setActiveStub).to.have.been.called;
+      expect(onWarningDismissedCallbackStub).to.have.been.called;
     });
   });
 
@@ -653,6 +716,102 @@ describe('solisSessionManager', () => {
       sessionManager.stopSessionStatusPolling();
       expect(clearTimeoutStub).to.have.been.calledOnce;
       expect(sessionManager.isPollingRunning()).to.be.false;
+    });
+  });
+
+  describe('startWarningTimer', () => {
+    let clock;
+
+    beforeEach(() => {
+      clock = sinon.useFakeTimers({
+        shouldAdvanceTime: false,
+        shouldClearNativeTimers: true,
+        toFake: ['setTimeout', 'clearTimeout'],
+      });
+    });
+
+    afterEach(() => {
+      clock.restore();
+    });
+
+    it('calls the onWarningCallback function after (idleTimeoutInterval - warningLeadTime) * 60 * 1000 ms', () => {
+      const onWarningCallbackStub = sinon.stub();
+      const sessionManager = new solisSessionManager({
+        onWarningCallback: onWarningCallbackStub,
+        idleTimeoutInterval: 2,
+        warningLeadTime: 1,
+      });
+      sessionManager.startWarningTimer();
+      clock.tick(1 * 60 * 1000);
+      expect(onWarningCallbackStub).to.have.been.called;
+    });
+
+    it('does not throw if onWarningCallback is not provided', () => {
+      const sessionManager = new solisSessionManager({
+        idleTimeoutInterval: 2,
+        warningLeadTime: 1,
+      });
+      expect(() => {
+        sessionManager.startWarningTimer();
+        clock.tick(1 * 60 * 1000);
+      }).to.not.throw();
+    });
+  });
+
+  describe('cancelWarningTimer', () => {
+    let clock;
+
+    beforeEach(() => {
+      clock = sinon.useFakeTimers({
+        shouldAdvanceTime: false,
+        shouldClearNativeTimers: true,
+        toFake: ['setTimeout', 'clearTimeout'],
+      });
+    });
+
+    afterEach(() => {
+      clock.restore();
+    });
+
+    it('prevents onWarningCallback from firing when called before the timeout elapses', () => {
+      const onWarningCallbackStub = sinon.stub();
+      const sessionManager = new solisSessionManager({
+        onWarningCallback: onWarningCallbackStub,
+        idleTimeoutInterval: 3,
+        warningLeadTime: 1,
+      });
+      sessionManager.startWarningTimer();
+      clock.tick(1 * 60 * 1000);
+      sessionManager.cancelWarningTimer();
+      expect(onWarningCallbackStub).to.not.have.been.called;
+    });
+
+    it('resets warningTimeout to undefined', () => {
+      const onWarningCallbackStub = sinon.stub();
+      const clearTimeoutStub = sinon.stub(window, 'clearTimeout');
+      const sessionManager = new solisSessionManager({
+        onWarningCallback: onWarningCallbackStub,
+        idleTimeoutInterval: 3,
+        warningLeadTime: 1,
+      });
+      sessionManager.startWarningTimer();
+      expect(sessionManager.isWarningTimerRunning()).to.be.true;
+      clock.tick(1 * 60 * 1000);
+      sessionManager.cancelWarningTimer();
+      expect(clearTimeoutStub).to.have.been.called;
+      expect(sessionManager.isWarningTimerRunning()).to.be.false;
+    });
+
+    it('does nothing if the warning timer is not running', () => {
+      const onWarningCallbackStub = sinon.stub();
+      const clearTimeoutStub = sinon.stub(window, 'clearTimeout');
+      const sessionManager = new solisSessionManager({
+        onWarningCallback: onWarningCallbackStub,
+        idleTimeoutInterval: 3,
+        warningLeadTime: 1,
+      });
+      sessionManager.cancelWarningTimer();
+      expect(clearTimeoutStub).to.not.have.been.called;
     });
   });
 

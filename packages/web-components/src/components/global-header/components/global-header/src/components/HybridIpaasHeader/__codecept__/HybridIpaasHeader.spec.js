@@ -30,7 +30,7 @@ Scenario('It checks the header content', async ({ I }) => {
   I.waitForElement('#ipaas-header-container', 30); // Add some wait time for the page to fully load
   I.waitForElement('.ibm-automation-cds__header-name');
   I.seeElement('.ibm-automation-cds__header-name');
-  I.waitForText('webMethods Hybrid Integration');
+  I.waitForText('Integration');
   I.seeElement('.ibm-automation-cds__capability-name');
   I.waitForVisible('.ibm-automation-cds__capability-name');
   I.waitForText('App Connect');

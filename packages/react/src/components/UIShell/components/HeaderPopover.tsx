@@ -221,17 +221,26 @@ export function HeaderPopoverButton<T extends React.ElementType>({
     [`${prefix}--header-action__button`]: true,
   });
   const ComponentToggle: any = BaseComponent ?? IconButton;
-  return (
-    <ComponentToggle
-      {...toggletip?.onClick}
-      className={className}
-      kind={BaseComponent ? null : 'ghost'}
-      label={label}
-      highContrast={false}
-      {...rest}>
-      {children}
-    </ComponentToggle>
-  );
+
+  // Only pass highContrast to IconButton, not to custom components
+  const componentProps = BaseComponent
+    ? {
+        ...toggletip?.onClick,
+        className,
+        kind: null,
+        label,
+        ...rest,
+      }
+    : {
+        ...toggletip?.onClick,
+        className,
+        kind: 'ghost',
+        label,
+        highContrast: false,
+        ...rest,
+      };
+
+  return <ComponentToggle {...componentProps}>{children}</ComponentToggle>;
 }
 
 HeaderPopoverButton.propTypes = {

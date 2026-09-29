@@ -21,7 +21,6 @@ export default class solisSessionManager {
   private basePath: string | undefined;
   private activityEvents: string[];
   private boundSetActive: () => void;
-  private logoutUrl: string | undefined;
   private logoutCallback: (() => void) | undefined;
   config: solisSessionManagerConfig;
 
@@ -43,7 +42,6 @@ export default class solisSessionManager {
     this.isIdle = false;
     this.idleTimeout = undefined;
     this.boundSetActive = () => this.setActive();
-    this.logoutUrl = config.logoutUrl;
     this.logoutCallback = config.logoutCallback;
   }
 
@@ -98,7 +96,7 @@ export default class solisSessionManager {
         console.log('Solis token refresh skipped (too recent)'); // TODO - this response doesn't yet exist in the backend
       } else if (response.status === 401 || response.status === 403) {
         console.error('Solis token refresh unauthorized - triggering logout');
-        await this.performLogout();
+        await this.performLogout(true);
       } else {
         console.error('Solis token refresh failed:', response.status);
       }
@@ -137,7 +135,7 @@ export default class solisSessionManager {
     this.isIdle = true;
     const isSessionActive = await this.checkSessionStatus();
     if (!isSessionActive) {
-      await this.performLogout();
+      await this.performLogout(false);
       return;
     }
   }
@@ -169,7 +167,7 @@ export default class solisSessionManager {
     }
   }
 
-  async performLogout() {
+  async performLogout(hardLogout: boolean) {
     if (this.isLoggingOut) {
       return;
     }
@@ -206,8 +204,9 @@ export default class solisSessionManager {
         console.error('Logout failed with error: ', error.message);
       }
     }
+    const logoutEndpoint = hardLogout ? '/solis-logout' : '/login';
     this.redirect(
-      this.logoutUrl ?? (this.basePath ? `${this.basePath}/logout` : '/logout')
+      this.basePath ? `${this.basePath}${logoutEndpoint}` : logoutEndpoint
     );
   }
 
@@ -215,7 +214,7 @@ export default class solisSessionManager {
     const poll = async () => {
       const sessionActive = await this.checkSessionStatus();
       if (!sessionActive) {
-        await this.performLogout();
+        await this.performLogout(false);
         return; // don't reschedule after logout
       }
       this.sessionStatusIntervalId = window.setTimeout(

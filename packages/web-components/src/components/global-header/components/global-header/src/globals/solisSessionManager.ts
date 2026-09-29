@@ -78,8 +78,8 @@ export default class solisSessionManager {
 
   async triggerRefresh() {
     const fetchRoute = this.basePath
-      ? this.basePath + '/v1/solis/session/refresh-token'
-      : '/v1/solis/session/refresh-token';
+      ? this.basePath + '/hybrid-ipaas/v1/solis/session/refresh-token'
+      : '/hybrid-ipaas/v1/solis/session/refresh-token';
     try {
       const response = await fetch(fetchRoute, {
         method: 'GET',
@@ -148,8 +148,8 @@ export default class solisSessionManager {
 
   async checkSessionStatus() {
     const fetchRoute = this.basePath
-      ? this.basePath + '/v1/solis/session/session-status'
-      : '/v1/solis/session/session-status';
+      ? this.basePath + '/hybrid-ipaas/v1/solis/session/session-status'
+      : '/hybrid-ipaas/v1/solis/session/session-status';
     try {
       const response = await fetch(fetchRoute, {
         method: 'GET',
@@ -178,8 +178,8 @@ export default class solisSessionManager {
     this.stopSessionStatusPolling();
     this.unregisterActivityListeners();
     const postRoute = this.basePath
-      ? this.basePath + '/v1/solis/session/logout'
-      : '/v1/solis/session/logout';
+      ? this.basePath + '/hybrid-ipaas/v1/solis/session/logout'
+      : '/hybrid-ipaas/v1/solis/session/logout';
     try {
       const response = await fetch(postRoute, {
         method: 'POST',

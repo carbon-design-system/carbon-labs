@@ -177,24 +177,27 @@ export default class solisSessionManager {
     this.stopRefreshSchedule();
     this.stopSessionStatusPolling();
     this.unregisterActivityListeners();
-    const postRoute = this.basePath
-      ? this.basePath + '/hybrid-ipaas/v1/solis/session/logout'
-      : '/hybrid-ipaas/v1/solis/session/logout';
-    try {
-      const response = await fetch(postRoute, {
-        method: 'POST',
-        credentials: 'same-origin',
-      });
+    const sessionActive = await this.checkSessionStatus();
+    if (sessionActive) {
+      const postRoute = this.basePath
+        ? this.basePath + '/hybrid-ipaas/v1/solis/session/logout'
+        : '/hybrid-ipaas/v1/solis/session/logout';
+      try {
+        const response = await fetch(postRoute, {
+          method: 'POST',
+          credentials: 'same-origin',
+        });
 
-      if (response.ok) {
-        console.log('Solis session logout - successful');
-      } else if (response.status === 401) {
-        console.log('Solis session logout - session already expired');
-      } else {
-        console.error('Solis session logout failed:', response.status);
+        if (response.ok) {
+          console.log('Solis session logout - successful');
+        } else if (response.status === 401) {
+          console.log('Solis session logout - session already expired');
+        } else {
+          console.error('Solis session logout failed:', response.status);
+        }
+      } catch (error: any) {
+        console.error('Solis session logout error:', error.message);
       }
-    } catch (error: any) {
-      console.error('Solis session logout error:', error.message);
     }
     if (this.logoutCallback) {
       try {

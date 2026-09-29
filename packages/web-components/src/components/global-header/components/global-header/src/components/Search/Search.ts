@@ -13,7 +13,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities';
 import '@carbon/web-components/es-custom/components/search/index.js';
 
-import styles from './_index.scss?inline' assert { type: 'css' };
+import styles from './_index.scss?inline' with { type: 'css' };
 import type { SearchConfigs } from '../../types/Header.types';
 
 const { stablePrefix: clabsPrefix } = settings;

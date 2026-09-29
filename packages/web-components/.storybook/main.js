@@ -61,15 +61,6 @@ const config = {
       build: {
         cssMinify: 'esbuild',
       },
-      css: {
-        preprocessorOptions: {
-          scss: {
-            implementation: sass,
-            api: 'modern',
-            silenceDeprecations: ['mixed-decls'],
-          },
-        },
-      },
       plugins: [
         postcss(),
         postcssLit({

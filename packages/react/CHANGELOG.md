@@ -3,6 +3,79 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.209.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.208.0...@carbon-labs/react@0.209.0) (2026-09-21)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.208.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.207.0...@carbon-labs/react@0.208.0) (2026-09-03)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.207.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.206.0...@carbon-labs/react@0.207.0) (2026-08-25)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.206.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.205.0...@carbon-labs/react@0.206.0) (2026-08-25)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.205.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.204.0...@carbon-labs/react@0.205.0) (2026-08-21)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.204.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.203.0...@carbon-labs/react@0.204.0) (2026-08-20)
+
+
+### Bug Fixes
+
+* **ui-shell:** make useMatchMedia SSR-safe to prevent hydration mismatch ([#1287](https://github.com/carbon-design-system/carbon-labs/issues/1287)) ([996eceb](https://github.com/carbon-design-system/carbon-labs/commit/996ecebcbdf616f95c37fd5beb14068c6e64c248))
+
+
+
+
+
+# [0.203.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.202.0...@carbon-labs/react@0.203.0) (2026-08-20)
+
+
+### Features
+
+* **animated-header:** animated header carousel auto pagination ([#1347](https://github.com/carbon-design-system/carbon-labs/issues/1347)) ([bb5e981](https://github.com/carbon-design-system/carbon-labs/commit/bb5e98154ebb9c8c727770f06569b58cfc36e8ae))
+
+
+
+
+
+# [0.202.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.201.0...@carbon-labs/react@0.202.0) (2026-08-19)
+
+
+### Features
+
+* **animated-header:** Update header to have page carousel ([#1300](https://github.com/carbon-design-system/carbon-labs/issues/1300)) ([3d3d106](https://github.com/carbon-design-system/carbon-labs/commit/3d3d106e249bbd676843ab2bd2085651ffa363c1))
+
+
+
+
+
 # [0.201.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.200.0...@carbon-labs/react@0.201.0) (2026-08-13)
 
 **Note:** Version bump only for package @carbon-labs/react

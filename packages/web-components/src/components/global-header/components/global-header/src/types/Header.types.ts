@@ -315,6 +315,7 @@ export interface ReactWrapperProps extends Omit<
   productVersion?: null;
   assistMeKey?: string;
   hasNewNotifications?: boolean;
+  forceBackendProxy?: boolean;
   capabilityProfileFooterLinks?: ProfileFooterLinks[];
   capabilityGlobalActions?: GlobalActionConfig[];
   searchConfigs?: Omit<SearchConfigs, 'callback' | 'submitCallback'>;
@@ -323,6 +324,11 @@ export interface ReactWrapperProps extends Omit<
   logoutCallback?: () => void | undefined;
   searchCallback?: (value: string) => void | undefined;
   searchSubmitCallback?: (value: string) => void | undefined;
+  solisSessionManagerEnabled?: boolean;
+  solisSessionRefreshInterval?: number;
+  solisIdleTimeoutInterval?: number;
+  solisSessionStatusInterval?: number;
+  logoutUrl?: string;
 }
 
 export enum solisDeploymentEnvironment {
@@ -394,5 +400,8 @@ declare global {
 export interface solisSessionManagerConfig {
   tokenRefreshInterval?: number;
   idleTimeoutInterval?: number;
+  sessionStatusInterval?: number;
   basePath?: string;
+  logoutUrl?: string;
+  logoutCallback?: (() => void) | undefined;
 }

@@ -7,3 +7,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 import '@testing-library/jest-dom';
+import { TextEncoder, TextDecoder } from 'node:util';
+
+// jsdom doesn't provide TextEncoder/TextDecoder, which `react-dom/server`
+// requires. Polyfill them so server-rendering and hydration tests can run.
+const globalWithEncoders = globalThis as unknown as {
+  TextEncoder: typeof TextEncoder;
+  TextDecoder: typeof TextDecoder;
+};
+globalWithEncoders.TextEncoder ??= TextEncoder;
+globalWithEncoders.TextDecoder ??= TextDecoder;

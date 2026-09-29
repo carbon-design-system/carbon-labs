@@ -48,7 +48,7 @@ import {
   trackEvent,
 } from '../../globals/utils';
 
-import styles from './_index.scss?inline' assert { type: 'css' };
+import styles from './_index.scss?inline' with { type: 'css' };
 
 const { stablePrefix: clabsPrefix } = settings;
 

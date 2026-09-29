@@ -3,6 +3,85 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.96.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.95.0...@carbon-labs/wc-global-header@0.96.0) (2026-09-24)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.95.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.94.0...@carbon-labs/wc-global-header@0.95.0) (2026-09-21)
+
+
+### Bug Fixes
+
+* **global-header:** Sync Solis token refresh cycles ([#1372](https://github.com/carbon-design-system/carbon-labs/issues/1372)) ([af55e24](https://github.com/carbon-design-system/carbon-labs/commit/af55e247dd7cae4b466c7743126b0278af3715c5))
+
+
+
+
+
+# [0.94.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.93.0...@carbon-labs/wc-global-header@0.94.0) (2026-09-18)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.93.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.92.0...@carbon-labs/wc-global-header@0.93.0) (2026-09-17)
+
+
+### Bug Fixes
+
+* **global-header:** switch session expiry to notification ([#1371](https://github.com/carbon-design-system/carbon-labs/issues/1371)) ([c06ecec](https://github.com/carbon-design-system/carbon-labs/commit/c06ecece9a030da68e1e84b5d6581621d04e7df1))
+
+
+
+
+
+# [0.92.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.91.0...@carbon-labs/wc-global-header@0.92.0) (2026-09-16)
+
+
+### Features
+
+* **global-header:** Trigger Solis logout when user clicks header logout ([#1367](https://github.com/carbon-design-system/carbon-labs/issues/1367)) ([f858ea5](https://github.com/carbon-design-system/carbon-labs/commit/f858ea5e981079480aa72577389d5dd97290d588))
+
+
+
+
+
+# [0.91.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.90.0...@carbon-labs/wc-global-header@0.91.0) (2026-09-16)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.90.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.89.0...@carbon-labs/wc-global-header@0.90.0) (2026-09-09)
+
+
+### Features
+
+* **global-header:** Trigger Solis logout when user idle timeout limit is reached ([#1346](https://github.com/carbon-design-system/carbon-labs/issues/1346)) ([6d613e6](https://github.com/carbon-design-system/carbon-labs/commit/6d613e6f5a5d541aa552cc74e75a658bffcac7ed))
+
+
+
+
+
+# [0.89.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.88.0...@carbon-labs/wc-global-header@0.89.0) (2026-08-17)
+
+
+### Features
+
+* Add the ability to toggle the proxy on, defaults to false ([#1344](https://github.com/carbon-design-system/carbon-labs/issues/1344)) ([183b47f](https://github.com/carbon-design-system/carbon-labs/commit/183b47f51e72823853c004cdaf361fedcc39f2c1))
+
+
+
+
+
 # [0.88.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.87.0...@carbon-labs/wc-global-header@0.88.0) (2026-08-13)
 
 

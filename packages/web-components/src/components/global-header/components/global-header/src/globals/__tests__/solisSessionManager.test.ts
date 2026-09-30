@@ -610,6 +610,59 @@ describe('solisSessionManager', () => {
     });
   });
 
+  describe('setActive', () => {
+    let clock;
+
+    beforeEach(() => {
+      clock = sinon.useFakeTimers({
+        shouldAdvanceTime: false,
+        shouldClearNativeTimers: true,
+        toFake: ['setTimeout', 'clearTimeout'],
+      });
+    });
+
+    afterEach(() => {
+      clock.restore();
+    });
+
+    it('sets isIdle to false', () => {
+      const sessionManager = new solisSessionManager({});
+      sessionManager['isIdle'] = true;
+      sessionManager.setActive();
+      expect(sessionManager.isTabIdle()).to.be.false;
+    });
+
+    it('resets isIdle to false and restarts the idle timeout when called again', () => {
+      const setIdleStub = sinon.stub(solisSessionManager.prototype, 'setIdle');
+      const sessionManager = new solisSessionManager({
+        idleTimeoutInterval: 1,
+      });
+
+      // First call — starts the idle timeout
+      sessionManager.setActive();
+      // Second call before timeout fires — should clear the first timeout and restart
+      sessionManager['isIdle'] = true;
+      sessionManager.setActive();
+
+      expect(sessionManager.isTabIdle()).to.be.false;
+      // Advance past one interval — only one setIdle call should fire (from the restarted timeout)
+      clock.tick(1 * 60 * 1000);
+      expect(setIdleStub).to.have.been.calledOnce;
+    });
+
+    it('calls setIdle after the idle timeout elapses', () => {
+      const setIdleStub = sinon.stub(solisSessionManager.prototype, 'setIdle');
+      const sessionManager = new solisSessionManager({
+        idleTimeoutInterval: 1,
+      });
+
+      sessionManager.setActive();
+      expect(setIdleStub).to.not.have.been.called;
+      clock.tick(1 * 60 * 1000);
+      expect(setIdleStub).to.have.been.calledOnce;
+    });
+  });
+
   describe('setIdle', () => {
     it('sets isIdle to true and calls performLogout when session is inactive', async () => {
       const performLogoutStub = sinon.stub(

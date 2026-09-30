@@ -110,16 +110,6 @@ export default class solisSessionManager {
           // Safety net to sync up refresh schedule with token expiry if lead tab is closed
           this.rescheduleRefresh(data.ttl * 1000);
         }
-      } else if (response.status === 429) {
-        // Another tab refreshed the token very recently; this tab's request
-        // was rejected to protect the just-issued token.  Use the TTL from
-        // the response body (same shape as a successful refresh) to resync
-        // this tab's refresh schedule so it stays aligned with token expiry.
-        console.log('Solis token refresh skipped (too recent - 429)');
-        const data = await response.json().catch(() => null);
-        if (data?.ttl != null) {
-          this.rescheduleRefresh(data.ttl * 1000);
-        }
       } else if (response.status === 401 || response.status === 403) {
         console.error('Solis token refresh unauthorized - triggering logout');
         await this.performLogout(true);

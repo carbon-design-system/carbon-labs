@@ -334,6 +334,25 @@ describe('solisSessionManager', () => {
       expect(consoleLogStub).to.have.been.calledWith('Solis session is active');
     });
 
+    it('returns true if ttl is not in the response body when the session is active', async () => {
+      const fetchStub = sinon.stub(window, 'fetch');
+      fetchStub.resolves(
+        new Response(JSON.stringify({}), {
+          status: 200,
+          statusText: 'OK',
+        })
+      );
+      const consoleLogStub = sinon.stub(console, 'log');
+      const sessionManager = new solisSessionManager({});
+      const result = await sessionManager.checkSessionStatus();
+      expect(fetchStub).to.have.been.calledOnceWith(
+        '/hybrid-ipaas/v1/solis/session/session-status',
+        { method: 'GET', credentials: 'same-origin' }
+      );
+      expect(result).to.be.true;
+      expect(consoleLogStub).to.have.been.calledWith('Solis session is active');
+    });
+
     it('returns false when the session is inactive (401)', async () => {
       const fetchStub = sinon.stub(window, 'fetch');
       fetchStub.resolves(

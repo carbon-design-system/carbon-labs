@@ -74,6 +74,55 @@ describe('solisSessionManager', () => {
   });
 
   describe('triggerRefresh', () => {
+    it('skips the fetch when refreshNotBefore is in the future', async () => {
+      sinon.stub(Date, 'now').returns(1234);
+      const fetchStub = sinon.stub(window, 'fetch');
+      const sessionManager = new solisSessionManager({});
+      sessionManager['refreshNotBefore'] = 1243;
+      await sessionManager.triggerRefresh();
+      expect(fetchStub).to.not.have.been.called;
+    });
+
+    it('does not skip the fetch when refreshNotBefore is in the past', async () => {
+      sinon.stub(Date, 'now').returns(1243);
+      const fetchStub = sinon.stub(window, 'fetch');
+      fetchStub.resolves(new Response(null, { status: 200, statusText: 'OK' }));
+      const sessionManager = new solisSessionManager({});
+      sessionManager['refreshNotBefore'] = 1234;
+      await sessionManager.triggerRefresh();
+      expect(fetchStub).to.have.been.called;
+    });
+
+    it('sets refreshNotBefore correctly after a successful refresh', async () => {
+      sinon.stub(Date, 'now').returns(500000);
+      const fetchStub = sinon.stub(window, 'fetch');
+      fetchStub.resolves(
+        new Response(JSON.stringify({ ttl: 1800 }), {
+          status: 200,
+          statusText: 'OK',
+        })
+      );
+      sinon.stub(solisSessionManager.prototype, 'rescheduleRefresh');
+      const sessionManager = new solisSessionManager({});
+      await sessionManager.triggerRefresh();
+      expect(sessionManager['refreshNotBefore']).to.equal(2000000);
+    });
+
+    it('does not set refreshNotBefore when ttl is not in the response body', async () => {
+      sinon.stub(Date, 'now').returns(500000);
+      const fetchStub = sinon.stub(window, 'fetch');
+      fetchStub.resolves(
+        new Response(JSON.stringify({}), {
+          status: 200,
+          statusText: 'OK',
+        })
+      );
+      sinon.stub(solisSessionManager.prototype, 'rescheduleRefresh');
+      const sessionManager = new solisSessionManager({});
+      await sessionManager.triggerRefresh();
+      expect(sessionManager['refreshNotBefore']).to.equal(0);
+    });
+
     it('calls fetch with the correct URL and options', async () => {
       const fetchStub = sinon.stub(window, 'fetch');
       fetchStub.resolves(
@@ -131,12 +180,16 @@ describe('solisSessionManager', () => {
         })
       );
       const consoleErrorStub = sinon.stub(console, 'error');
-      sinon.stub(solisSessionManager.prototype, 'performLogout');
+      const performLogoutStub = sinon.stub(
+        solisSessionManager.prototype,
+        'performLogout'
+      );
       const sessionManager = new solisSessionManager({});
       await sessionManager.triggerRefresh();
       expect(consoleErrorStub).to.have.been.calledWith(
         'Solis token refresh unauthorized - triggering logout'
       );
+      expect(performLogoutStub).to.have.been.calledWith(true);
     });
 
     it('logs an error if the user is not authenticated, response status 403', async () => {
@@ -148,12 +201,16 @@ describe('solisSessionManager', () => {
         })
       );
       const consoleErrorStub = sinon.stub(console, 'error');
-      sinon.stub(solisSessionManager.prototype, 'performLogout');
+      const performLogoutStub = sinon.stub(
+        solisSessionManager.prototype,
+        'performLogout'
+      );
       const sessionManager = new solisSessionManager({});
       await sessionManager.triggerRefresh();
       expect(consoleErrorStub).to.have.been.calledWith(
         'Solis token refresh unauthorized - triggering logout'
       );
+      expect(performLogoutStub).to.have.been.calledWith(true);
     });
 
     it('logs an error if the response status is 500', async () => {

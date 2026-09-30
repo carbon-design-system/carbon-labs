@@ -580,6 +580,32 @@ describe('solisSessionManager', () => {
       await sessionManager.setIdle();
       expect(performLogoutStub).to.not.have.been.called;
     });
+
+    it('calls rescheduleRefresh when session is active', async () => {
+      const rescheduleRefreshStub = sinon.stub(
+        solisSessionManager.prototype,
+        'rescheduleRefresh'
+      );
+      sinon
+        .stub(solisSessionManager.prototype, 'checkSessionStatus')
+        .resolves(123);
+      const sessionManager = new solisSessionManager({});
+      await sessionManager.setIdle();
+      expect(rescheduleRefreshStub).to.have.been.calledWith(123 * 1000);
+    });
+
+    it('does not call rescheduleRefresh when session is active but ttl is not returned', async () => {
+      const rescheduleRefreshStub = sinon.stub(
+        solisSessionManager.prototype,
+        'rescheduleRefresh'
+      );
+      sinon
+        .stub(solisSessionManager.prototype, 'checkSessionStatus')
+        .resolves(true);
+      const sessionManager = new solisSessionManager({});
+      await sessionManager.setIdle();
+      expect(rescheduleRefreshStub).to.not.have.been.called;
+    });
   });
 
   describe('startSessionStatusPolling', () => {

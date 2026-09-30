@@ -134,8 +134,25 @@ describe('solisSessionManager', () => {
       const sessionManager = new solisSessionManager({});
       await sessionManager.triggerRefresh();
       expect(consoleLogStub).to.have.been.calledWith(
-        'Solis token refresh skipped (too recent)'
+        'Solis token refresh skipped (too recent - 429)'
       );
+    });
+
+    it('calls reschedule refresh if the token refresh happened too recently, response status 429', async () => {
+      const fetchStub = sinon.stub(window, 'fetch');
+      fetchStub.resolves(
+        new Response(JSON.stringify({ ttl: 123 }), {
+          status: 429,
+          statusText: 'Refresh already in progress',
+        })
+      );
+      const rescheduleRefreshStub = sinon.stub(
+        solisSessionManager.prototype,
+        'rescheduleRefresh'
+      );
+      const sessionManager = new solisSessionManager({});
+      await sessionManager.triggerRefresh();
+      expect(rescheduleRefreshStub).to.have.been.calledWith(123 * 1000);
     });
 
     it('logs an error if the user is not authenticated, response status 401', async () => {
@@ -312,9 +329,14 @@ describe('solisSessionManager', () => {
   });
 
   describe('checkSessionStatus', () => {
-    it('returns true when the session is active (200)', async () => {
+    it('returns the ttl from the response body when the session is active (200)', async () => {
       const fetchStub = sinon.stub(window, 'fetch');
-      fetchStub.resolves(new Response(null, { status: 200, statusText: 'OK' }));
+      fetchStub.resolves(
+        new Response(JSON.stringify({ ttl: 123 }), {
+          status: 200,
+          statusText: 'OK',
+        })
+      );
       const consoleLogStub = sinon.stub(console, 'log');
       const sessionManager = new solisSessionManager({ basePath: '/api' });
       const result = await sessionManager.checkSessionStatus();
@@ -322,13 +344,18 @@ describe('solisSessionManager', () => {
         '/api/hybrid-ipaas/v1/solis/session/session-status',
         { method: 'GET', credentials: 'same-origin' }
       );
-      expect(result).to.be.true;
+      expect(result).to.equal(123);
       expect(consoleLogStub).to.have.been.calledWith('Solis session is active');
     });
 
-    it('returns true when the session is active and basePath is undefined', async () => {
+    it('returns the ttl from the response body when the session is active and basePath is undefined', async () => {
       const fetchStub = sinon.stub(window, 'fetch');
-      fetchStub.resolves(new Response(null, { status: 200, statusText: 'OK' }));
+      fetchStub.resolves(
+        new Response(JSON.stringify({ ttl: 123 }), {
+          status: 200,
+          statusText: 'OK',
+        })
+      );
       const consoleLogStub = sinon.stub(console, 'log');
       const sessionManager = new solisSessionManager({});
       const result = await sessionManager.checkSessionStatus();
@@ -336,7 +363,7 @@ describe('solisSessionManager', () => {
         '/hybrid-ipaas/v1/solis/session/session-status',
         { method: 'GET', credentials: 'same-origin' }
       );
-      expect(result).to.be.true;
+      expect(result).to.equal(123);
       expect(consoleLogStub).to.have.been.calledWith('Solis session is active');
     });
 
@@ -562,7 +589,7 @@ describe('solisSessionManager', () => {
       );
       sinon
         .stub(solisSessionManager.prototype, 'checkSessionStatus')
-        .resolves(true);
+        .resolves(123);
       const sessionManager = new solisSessionManager({});
       await sessionManager.setIdle();
       expect(performLogoutStub).to.not.have.been.called;
@@ -594,7 +621,7 @@ describe('solisSessionManager', () => {
     it('calls checkSessionStatus after the specified interval has passed', async () => {
       const checkSessionStatusStub = sinon
         .stub(solisSessionManager.prototype, 'checkSessionStatus')
-        .resolves(true);
+        .resolves(123);
       const sessionManager = new solisSessionManager({
         sessionStatusInterval: 1,
       });

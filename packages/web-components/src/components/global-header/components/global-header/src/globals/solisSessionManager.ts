@@ -164,10 +164,10 @@ export default class solisSessionManager {
     return this.isIdle;
   }
 
-  // Returns the token's remaining TTL in seconds when the session is active
-  // (0 if the endpoint did not include a TTL), or false when it is inactive
-  // or the request fails.
-  async checkSessionStatus(): Promise<number | false> {
+  // Returns the token's remaining TTL in seconds when the session is active,
+  // true if the session is active but the endpoint did not include a TTL,
+  // or false when it is inactive or the request fails.
+  async checkSessionStatus(): Promise<number | boolean> {
     const fetchRoute = this.basePath
       ? this.basePath + '/hybrid-ipaas/v1/solis/session/session-status'
       : '/hybrid-ipaas/v1/solis/session/session-status';
@@ -181,7 +181,7 @@ export default class solisSessionManager {
         const data = await response.json().catch(() => null);
         const ttl: number | null = data?.ttl ?? null;
         console.log('Solis session is active');
-        return ttl ?? 0; // 0 = active but TTL not provided; still truthy
+        return ttl ?? true; // active but TTL not provided
       } else {
         console.warn('Solis session is inactive');
         return false;

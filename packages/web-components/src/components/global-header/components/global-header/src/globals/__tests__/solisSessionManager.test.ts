@@ -600,37 +600,45 @@ describe('solisSessionManager', () => {
       expect(checkSessionStatusStub).to.have.been.calledOnce;
     });
 
-    // it('calls rescheduleRefresh with ttl if session is active and ttl is returned', async () => {
-    //   sinon.stub(solisSessionManager.prototype, 'checkSessionStatus')
-    //     .resolves(123);
-    //   const rescheduleRefreshStub = sinon.stub(solisSessionManager.prototype, 'rescheduleRefresh');
-    //   const sessionManager = new solisSessionManager({
-    //     sessionStatusInterval: 1,
-    //   });
-    //   sessionManager.startSessionStatusPolling();
-    //   expect(sessionManager.isPollingRunning()).to.be.true;
-    //   clock.tick(1 * 1000);
-    //   await Promise.resolve(); // flush: setTimeout callback fires, checkSessionStatus called
-    //   await Promise.resolve(); // flush: awaited checkSessionStatus resolves, rescheduleRefresh called
-    //   sessionManager.stopSessionStatusPolling();
-    //   expect(rescheduleRefreshStub).to.have.been.calledWith(123 * 1000);
-    // });
+    it('calls rescheduleRefresh with ttl if session is active and ttl is returned', async () => {
+      sinon
+        .stub(solisSessionManager.prototype, 'checkSessionStatus')
+        .resolves(123);
+      const rescheduleRefreshStub = sinon.stub(
+        solisSessionManager.prototype,
+        'rescheduleRefresh'
+      );
+      const sessionManager = new solisSessionManager({
+        sessionStatusInterval: 1,
+      });
+      sessionManager.startSessionStatusPolling();
+      expect(sessionManager.isPollingRunning()).to.be.true;
+      clock.tick(1 * 1000);
+      await Promise.resolve(); // flush: setTimeout callback fires, checkSessionStatus called
+      await Promise.resolve(); // flush: awaited checkSessionStatus resolves, rescheduleRefresh called
+      sessionManager.stopSessionStatusPolling();
+      expect(rescheduleRefreshStub).to.have.been.calledWith(123 * 1000);
+    });
 
-    // it('does not call rescheduleRefresh if session is active and ttl is not returned', async () => {
-    //   sinon.stub(solisSessionManager.prototype, 'checkSessionStatus')
-    //     .resolves(0);
-    //   const rescheduleRefreshStub = sinon.stub(solisSessionManager.prototype, 'rescheduleRefresh');
-    //   const sessionManager = new solisSessionManager({
-    //     sessionStatusInterval: 1,
-    //   });
-    //   sessionManager.startSessionStatusPolling();
-    //   expect(sessionManager.isPollingRunning()).to.be.true;
-    //   clock.tick(1 * 1000);
-    //   await Promise.resolve(); // flush: setTimeout callback fires, checkSessionStatus called
-    //   await Promise.resolve(); // flush: awaited checkSessionStatus resolves, rescheduleRefresh skipped
-    //   sessionManager.stopSessionStatusPolling();
-    //   expect(rescheduleRefreshStub).to.not.have.been.called;
-    // });
+    it('does not call rescheduleRefresh if session is active and ttl is not returned', async () => {
+      sinon
+        .stub(solisSessionManager.prototype, 'checkSessionStatus')
+        .resolves(true);
+      const rescheduleRefreshStub = sinon.stub(
+        solisSessionManager.prototype,
+        'rescheduleRefresh'
+      );
+      const sessionManager = new solisSessionManager({
+        sessionStatusInterval: 1,
+      });
+      sessionManager.startSessionStatusPolling();
+      expect(sessionManager.isPollingRunning()).to.be.true;
+      clock.tick(1 * 1000);
+      await Promise.resolve(); // flush: setTimeout callback fires, checkSessionStatus called
+      await Promise.resolve(); // flush: awaited checkSessionStatus resolves, rescheduleRefresh skipped
+      sessionManager.stopSessionStatusPolling();
+      expect(rescheduleRefreshStub).to.not.have.been.called;
+    });
 
     it('calls performLogout if the session is inactive', async () => {
       const checkSessionStatusStub = sinon

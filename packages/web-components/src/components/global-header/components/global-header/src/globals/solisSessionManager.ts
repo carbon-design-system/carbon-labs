@@ -16,7 +16,7 @@ export default class solisSessionManager {
   // Earliest wall-clock time (ms) at which the next refresh is permitted.
   // Set after each successful refresh so that any scheduled call that fires
   // before (30 - tokenRefreshInterval) minutes before token expiry is skipped.
-  private refreshNotBefore: number = 0;
+  private refreshNotBefore = 0;
   private tokenRefreshInterval: number;
   private sessionStatusInterval: number;
   private idleTimeoutInterval: number;

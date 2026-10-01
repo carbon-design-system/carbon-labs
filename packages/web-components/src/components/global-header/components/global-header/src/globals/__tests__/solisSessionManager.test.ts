@@ -861,9 +861,11 @@ describe('solisSessionManager', () => {
       expect(stopRefreshScheduleStub).to.have.been.calledOnce;
     });
 
-    it('sets a timeout using the ttlMs minus a 5 minute buffer', () => {
+    it('sets a timeout using the ttlMs minus (30 - tokenRefreshInterval) minutes', () => {
       const setTimeoutStub = sinon.stub(window, 'setTimeout');
       sinon.stub(solisSessionManager.prototype, 'stopRefreshSchedule');
+      // default tokenRefreshInterval is 25, so preExpiryMs = (30 - 25) * 60 * 1000 = 300000
+      // delay = 30 * 60 * 1000 - 300000 = 1800000 - 300000 = 1500000
       const sessionManager = new solisSessionManager({});
       sessionManager.rescheduleRefresh(30 * 60 * 1000);
       expect(setTimeoutStub).to.have.been.calledWith(
@@ -872,9 +874,10 @@ describe('solisSessionManager', () => {
       );
     });
 
-    it('sets a timeout of 0 seconds if ttlMs is less than 5 minutes', () => {
+    it('sets a timeout of 0 seconds if ttlMs is less than (30 - tokenRefreshInterval) minutes', () => {
       const setTimeoutStub = sinon.stub(window, 'setTimeout');
       sinon.stub(solisSessionManager.prototype, 'stopRefreshSchedule');
+      // default tokenRefreshInterval is 25, so preExpiryMs = 300000; ttl of 1 min < 5 min threshold
       const sessionManager = new solisSessionManager({});
       sessionManager.rescheduleRefresh(60 * 1000);
       expect(setTimeoutStub).to.have.been.calledWith(sinon.match.func, 0);

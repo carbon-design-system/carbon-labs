@@ -71,10 +71,11 @@ export default class solisSessionManager {
 
   rescheduleRefresh(ttlMs: number) {
     this.stopRefreshSchedule();
-    const delay = Math.max(0, ttlMs - 300 * 1000); // 5 minutes before token expiry
+    const preExpiryMs = (30 - this.tokenRefreshInterval) * 60 * 1000;
+    const delay = Math.max(0, ttlMs - preExpiryMs);
     window.setTimeout(() => {
-      this.triggerRefresh(); // Trigger a one off refresh 5 minutes before token expires
-      this.startRefreshSchedule(); // Trigger usual 25 minute refresh schedule from then on
+      this.triggerRefresh(); // Trigger a one off refresh (30 - tokenRefreshInterval) minutes before token expires
+      this.startRefreshSchedule(); // Trigger usual tokenRefreshInterval minute refresh schedule from then on
     }, delay);
   }
 

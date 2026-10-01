@@ -77,7 +77,6 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: Number }) solisSessionRefreshInterval = 25; // (minutes) might not need Solis token refresh interval to be configurable
   @property({ type: Number }) solisIdleTimeoutInterval = 28; // (minutes) might not need Solis idle timeout interval to be configurable
   @property({ type: Number }) solisSessionStatusInterval = 10; // (seconds) might not need Solis session polling interval to be configurable
-  @property({ type: String }) logoutUrl = '';
 
   @state()
   headerOptions: HeaderProps = {
@@ -216,7 +215,6 @@ export class HybridIpaasHeader extends LitElement {
         sessionStatusInterval: this.solisSessionStatusInterval,
         basePath: this.basePath,
         logoutCallback,
-        logoutUrl: this.logoutUrl || undefined,
       });
       this.sessionManager.startRefreshSchedule();
       this.sessionManager.startSessionStatusPolling();
@@ -251,7 +249,8 @@ export class HybridIpaasHeader extends LitElement {
     };
 
     if (this.solisSessionManagerEnabled) {
-      footerLink.onClickHandler = () => this.sessionManager?.performLogout(); // will do nothing if sessionManager is not yet initialized (narrow window)
+      footerLink.onClickHandler = () =>
+        this.sessionManager?.performLogout(true); // will do nothing if sessionManager is not yet initialized (narrow window)
     } else if (this.logoutCallback) {
       footerLink.onClickHandler = this.logoutCallback;
     } else if (this.logoutCallbackEvent) {

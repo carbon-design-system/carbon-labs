@@ -13,6 +13,10 @@ export default class solisSessionManager {
   private refreshIntervalId: number | null = null;
   private sessionStatusIntervalId: number | null = null;
   private isLoggingOut = false;
+  // Earliest wall-clock time (ms) at which the next refresh is permitted.
+  // Set after each successful refresh so that any scheduled call that fires
+  // before (30 - tokenRefreshInterval) minutes before token expiry is skipped.
+  private refreshNotBefore = 0;
   private tokenRefreshInterval: number;
   private sessionStatusInterval: number;
   private idleTimeoutInterval: number;
@@ -21,7 +25,6 @@ export default class solisSessionManager {
   private basePath: string | undefined;
   private activityEvents: string[];
   private boundSetActive: () => void;
-  private logoutUrl: string | undefined;
   private logoutCallback: (() => void) | undefined;
   config: solisSessionManagerConfig;
 
@@ -43,7 +46,6 @@ export default class solisSessionManager {
     this.isIdle = false;
     this.idleTimeout = undefined;
     this.boundSetActive = () => this.setActive();
-    this.logoutUrl = config.logoutUrl;
     this.logoutCallback = config.logoutCallback;
   }
 
@@ -69,17 +71,25 @@ export default class solisSessionManager {
 
   rescheduleRefresh(ttlMs: number) {
     this.stopRefreshSchedule();
-    const delay = Math.max(0, ttlMs - 300 * 1000); // 5 minutes before token expiry
+    const preExpiryMs = (30 - this.tokenRefreshInterval) * 60 * 1000;
+    const delay = Math.max(0, ttlMs - preExpiryMs);
     window.setTimeout(() => {
-      this.triggerRefresh(); // Trigger a one off refresh 5 minutes before token expires
-      this.startRefreshSchedule(); // Trigger usual 25 minute refresh schedule from then on
+      this.triggerRefresh(); // Trigger a one off refresh (30 - tokenRefreshInterval) minutes before token expires
+      this.startRefreshSchedule(); // Trigger usual tokenRefreshInterval minute refresh schedule from then on
     }, delay);
   }
 
   async triggerRefresh() {
+    // Skip if the token was refreshed recently enough that the next scheduled
+    // refresh is not yet due, preventing tight loops and redundant calls.
+    if (Date.now() < this.refreshNotBefore) {
+      console.log('Solis token refresh skipped (token still fresh)');
+      return;
+    }
+
     const fetchRoute = this.basePath
-      ? this.basePath + '/v1/solis/session/refresh-token'
-      : '/v1/solis/session/refresh-token';
+      ? this.basePath + '/hybrid-ipaas/v1/solis/session/refresh-token'
+      : '/hybrid-ipaas/v1/solis/session/refresh-token';
     try {
       const response = await fetch(fetchRoute, {
         method: 'GET',
@@ -90,15 +100,20 @@ export default class solisSessionManager {
         console.log('Solis token refresh successful');
         const data = await response.json().catch(() => null);
         if (data?.ttl != null) {
-          // ttl is the Solis token "time-to-live, in seconds"
-          this.rescheduleRefresh(data.ttl * 1000); // Safety net to sync up refresh schedule with token expiry if lead tab is closed
+          // ttl is the Solis token "time-to-live, in seconds".
+          // Block further refreshes until (30 - tokenRefreshInterval) minutes
+          // before this token expires, keeping the guard in sync with the
+          // configured refresh cadence.
+          const minTtlBeforeRefreshMs =
+            (30 - this.tokenRefreshInterval) * 60 * 1000;
+          this.refreshNotBefore =
+            Date.now() + data.ttl * 1000 - minTtlBeforeRefreshMs;
+          // Safety net to sync up refresh schedule with token expiry if lead tab is closed
+          this.rescheduleRefresh(data.ttl * 1000);
         }
-      } else if (response.status === 429) {
-        // refresh happened too recently
-        console.log('Solis token refresh skipped (too recent)'); // TODO - this response doesn't yet exist in the backend
       } else if (response.status === 401 || response.status === 403) {
         console.error('Solis token refresh unauthorized - triggering logout');
-        await this.performLogout();
+        await this.performLogout(true);
       } else {
         console.error('Solis token refresh failed:', response.status);
       }
@@ -135,10 +150,14 @@ export default class solisSessionManager {
 
   async setIdle() {
     this.isIdle = true;
-    const isSessionActive = await this.checkSessionStatus();
-    if (!isSessionActive) {
-      await this.performLogout();
+    const sessionResult = await this.checkSessionStatus();
+    if (!sessionResult) {
+      await this.performLogout(false);
       return;
+    }
+    if (typeof sessionResult === 'number') {
+      // Resync the refresh schedule with the actual token expiry
+      this.rescheduleRefresh(sessionResult * 1000);
     }
   }
 
@@ -146,10 +165,13 @@ export default class solisSessionManager {
     return this.isIdle;
   }
 
-  async checkSessionStatus() {
+  // Returns the token's remaining TTL in seconds when the session is active,
+  // true if the session is active but the endpoint did not include a TTL,
+  // or false when it is inactive or the request fails.
+  async checkSessionStatus(): Promise<number | boolean> {
     const fetchRoute = this.basePath
-      ? this.basePath + '/v1/solis/session/session-status'
-      : '/v1/solis/session/session-status';
+      ? this.basePath + '/hybrid-ipaas/v1/solis/session/session-status'
+      : '/hybrid-ipaas/v1/solis/session/session-status';
     try {
       const response = await fetch(fetchRoute, {
         method: 'GET',
@@ -157,8 +179,10 @@ export default class solisSessionManager {
       });
 
       if (response.ok) {
+        const data = await response.json().catch(() => null);
+        const ttl: number | null = data?.ttl ?? null;
         console.log('Solis session is active');
-        return true;
+        return ttl ?? true; // active but TTL not provided
       } else {
         console.warn('Solis session is inactive');
         return false;
@@ -169,7 +193,7 @@ export default class solisSessionManager {
     }
   }
 
-  async performLogout() {
+  async performLogout(hardLogout: boolean) {
     if (this.isLoggingOut) {
       return;
     }
@@ -177,24 +201,27 @@ export default class solisSessionManager {
     this.stopRefreshSchedule();
     this.stopSessionStatusPolling();
     this.unregisterActivityListeners();
-    const postRoute = this.basePath
-      ? this.basePath + '/v1/solis/session/logout'
-      : '/v1/solis/session/logout';
-    try {
-      const response = await fetch(postRoute, {
-        method: 'POST',
-        credentials: 'same-origin',
-      });
+    const sessionActive = await this.checkSessionStatus();
+    if (sessionActive) {
+      const postRoute = this.basePath
+        ? this.basePath + '/hybrid-ipaas/v1/solis/session/logout'
+        : '/hybrid-ipaas/v1/solis/session/logout';
+      try {
+        const response = await fetch(postRoute, {
+          method: 'POST',
+          credentials: 'same-origin',
+        });
 
-      if (response.ok) {
-        console.log('Solis session logout - successful');
-      } else if (response.status === 401) {
-        console.log('Solis session logout - session already expired');
-      } else {
-        console.error('Solis session logout failed:', response.status);
+        if (response.ok) {
+          console.log('Solis session logout - successful');
+        } else if (response.status === 401) {
+          console.log('Solis session logout - session already expired');
+        } else {
+          console.error('Solis session logout failed:', response.status);
+        }
+      } catch (error: any) {
+        console.error('Solis session logout error:', error.message);
       }
-    } catch (error: any) {
-      console.error('Solis session logout error:', error.message);
     }
     if (this.logoutCallback) {
       try {
@@ -203,17 +230,23 @@ export default class solisSessionManager {
         console.error('Logout failed with error: ', error.message);
       }
     }
+    const logoutEndpoint = hardLogout ? '/solis-logout' : '/login';
     this.redirect(
-      this.logoutUrl ?? (this.basePath ? `${this.basePath}/logout` : '/logout')
+      this.basePath ? `${this.basePath}${logoutEndpoint}` : logoutEndpoint
     );
   }
 
   startSessionStatusPolling() {
     const poll = async () => {
-      const sessionActive = await this.checkSessionStatus();
-      if (!sessionActive) {
-        await this.performLogout();
+      const sessionResult = await this.checkSessionStatus();
+      if (!sessionResult) {
+        await this.performLogout(false);
         return; // don't reschedule after logout
+      }
+      if (typeof sessionResult === 'number') {
+        // Resync the refresh schedule with the actual token expiry so that
+        // tabs opening after the lead tab has already refreshed stay aligned.
+        this.rescheduleRefresh(sessionResult * 1000);
       }
       this.sessionStatusIntervalId = window.setTimeout(
         poll,

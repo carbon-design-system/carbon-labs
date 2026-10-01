@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.182.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.181.0...@carbon-labs/web-components@0.182.0) (2026-10-01)
+
+
+### Bug Fixes
+
+* **global-header:** Session manager fixes ([#1386](https://github.com/carbon-design-system/carbon-labs/issues/1386)) ([3db879c](https://github.com/carbon-design-system/carbon-labs/commit/3db879c9a5caabab89acafac35fe1f1adcecd565))
+
+
+
+
+
 # [0.181.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.180.0...@carbon-labs/web-components@0.181.0) (2026-09-24)
 
 

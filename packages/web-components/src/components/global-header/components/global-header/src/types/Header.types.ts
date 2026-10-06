@@ -329,7 +329,6 @@ export interface ReactWrapperProps extends Omit<
   solisIdleTimeoutInterval?: number;
   solisSessionStatusInterval?: number;
   solisWarningLeadTime?: number;
-  logoutUrl?: string;
 }
 
 export enum solisDeploymentEnvironment {
@@ -403,7 +402,6 @@ export interface solisSessionManagerConfig {
   idleTimeoutInterval?: number;
   sessionStatusInterval?: number;
   basePath?: string;
-  logoutUrl?: string;
   logoutCallback?: (() => void) | undefined;
   warningLeadTime?: number;
   onWarningCallback?: (() => void) | undefined;

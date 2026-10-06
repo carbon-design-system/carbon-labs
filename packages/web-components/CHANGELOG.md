@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.184.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.183.0...@carbon-labs/web-components@0.184.0) (2026-10-06)
+
+
+### Features
+
+* **global-header:** Configure Solis logout warning notification ([#1380](https://github.com/carbon-design-system/carbon-labs/issues/1380)) ([0a3b6e7](https://github.com/carbon-design-system/carbon-labs/commit/0a3b6e7053611c44bc3f2debbc7906873ce759c4))
+
+
+
+
+
 # [0.183.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.182.0...@carbon-labs/web-components@0.183.0) (2026-10-05)
 
 **Note:** Version bump only for package @carbon-labs/web-components

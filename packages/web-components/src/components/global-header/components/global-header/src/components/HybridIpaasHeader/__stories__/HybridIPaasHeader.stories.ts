@@ -555,11 +555,13 @@ export const WithSessionExpiryWarning: Story = {
             return HttpResponse.json(mockHeaderOptions);
           }
         ),
-        http.get('http://localhost:6007/v1/solis/session/session-status', () =>
-          HttpResponse.json({}, { status: 200 })
+        http.get(
+          'http://localhost:6007/hybrid-ipaas/v1/solis/session/session-status',
+          () => HttpResponse.json({}, { status: 200 })
         ),
-        http.post('http://localhost:6007/v1/solis/session/logout', () =>
-          HttpResponse.json({}, { status: 200 })
+        http.post(
+          'http://localhost:6007/hybrid-ipaas/v1/solis/session/logout',
+          () => HttpResponse.json({}, { status: 200 })
         ),
       ],
     },

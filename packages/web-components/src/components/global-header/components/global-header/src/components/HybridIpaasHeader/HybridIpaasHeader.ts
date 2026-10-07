@@ -26,7 +26,6 @@ import type {
 } from '../../types/Header.types';
 import { solisDeploymentEnvironment } from '../../types/Header.types';
 import '../CommonHeader/CommonHeader';
-import '../../solis/SessionExpiryModal/SessionExpiryModal';
 
 import styles from '../../index.scss?inline';
 
@@ -197,6 +196,8 @@ export class HybridIpaasHeader extends LitElement {
   }
 
   private initializeSessionManager() {
+    import('../../solis/SessionExpiryModal/SessionExpiryModal');
+
     if (!this.sessionManager) {
       let logoutCallback: (() => void) | undefined;
       if (this.logoutCallback) {

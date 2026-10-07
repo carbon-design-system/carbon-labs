@@ -284,10 +284,6 @@ describe('HybridIpaasHeader Component', () => {
         headers: { 'Content-Type': 'application/json' },
       })
     );
-    const startRefreshScheduleStub = sinon.stub(
-      solisSessionManager.prototype,
-      'startRefreshSchedule'
-    );
     const startSessionStatusPollingStub = sinon.stub(
       solisSessionManager.prototype,
       'startSessionStatusPolling'
@@ -307,7 +303,6 @@ describe('HybridIpaasHeader Component', () => {
     await new Promise((resolve) => setTimeout(resolve, 200));
 
     expect(el.sessionManager).to.not.be.null;
-    expect(startRefreshScheduleStub).to.have.been.calledOnce;
     expect(startSessionStatusPollingStub).to.have.been.calledOnce;
     expect(registerActivityListenersStub).to.have.been.calledOnce;
   });
@@ -365,7 +360,6 @@ describe('HybridIpaasHeader Component', () => {
       'performLogout'
     );
     // stub out timer and listener functions
-    sinon.stub(solisSessionManager.prototype, 'startRefreshSchedule');
     sinon.stub(solisSessionManager.prototype, 'startSessionStatusPolling');
     sinon.stub(solisSessionManager.prototype, 'registerActivityListeners');
 

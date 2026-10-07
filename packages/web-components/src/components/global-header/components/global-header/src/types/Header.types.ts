@@ -325,7 +325,6 @@ export interface ReactWrapperProps extends Omit<
   searchCallback?: (value: string) => void | undefined;
   searchSubmitCallback?: (value: string) => void | undefined;
   solisSessionManagerEnabled?: boolean;
-  solisSessionRefreshInterval?: number;
   solisIdleTimeoutInterval?: number;
   solisSessionStatusInterval?: number;
   solisWarningLeadTime?: number;
@@ -398,7 +397,6 @@ declare global {
 }
 
 export interface solisSessionManagerConfig {
-  tokenRefreshInterval?: number;
   idleTimeoutInterval?: number;
   sessionStatusInterval?: number;
   basePath?: string;

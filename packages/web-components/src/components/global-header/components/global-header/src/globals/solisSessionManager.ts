@@ -10,14 +10,8 @@
 import { solisSessionManagerConfig } from '../types/Header.types';
 
 export default class solisSessionManager {
-  private refreshIntervalId: number | null = null;
   private sessionStatusIntervalId: number | null = null;
   private isLoggingOut = false;
-  // Earliest wall-clock time (ms) at which the next refresh is permitted.
-  // Set after each successful refresh so that any scheduled call that fires
-  // before (30 - tokenRefreshInterval) minutes before token expiry is skipped.
-  private refreshNotBefore = 0;
-  private tokenRefreshInterval: number;
   private sessionStatusInterval: number;
   private idleTimeoutInterval: number;
   private isIdle: boolean;
@@ -30,11 +24,11 @@ export default class solisSessionManager {
   private onWarningCallback: (() => void) | undefined;
   private onWarningDismissedCallback: (() => void) | undefined;
   private warningTimeout: ReturnType<typeof setTimeout> | undefined;
+  private isRefreshing = false;
   config: solisSessionManagerConfig;
 
   constructor(config: solisSessionManagerConfig) {
     this.config = config;
-    this.tokenRefreshInterval = config.tokenRefreshInterval || 25;
     this.sessionStatusInterval = config.sessionStatusInterval || 10;
     this.idleTimeoutInterval = config.idleTimeoutInterval || 28;
     this.basePath = config.basePath;
@@ -57,43 +51,8 @@ export default class solisSessionManager {
     this.warningTimeout = undefined;
   }
 
-  startRefreshSchedule() {
-    this.refreshIntervalId = window.setInterval(
-      () => {
-        this.triggerRefresh();
-      },
-      this.tokenRefreshInterval * 60 * 1000
-    );
-  }
-
-  isScheduleRunning(): boolean {
-    return this.refreshIntervalId !== null;
-  }
-
-  stopRefreshSchedule() {
-    if (this.refreshIntervalId) {
-      clearInterval(this.refreshIntervalId);
-      this.refreshIntervalId = null;
-    }
-  }
-
-  rescheduleRefresh(ttlMs: number) {
-    this.stopRefreshSchedule();
-    const preExpiryMs = (30 - this.tokenRefreshInterval) * 60 * 1000;
-    const delay = Math.max(0, ttlMs - preExpiryMs);
-    window.setTimeout(() => {
-      this.triggerRefresh(); // Trigger a one off refresh (30 - tokenRefreshInterval) minutes before token expires
-      this.startRefreshSchedule(); // Trigger usual tokenRefreshInterval minute refresh schedule from then on
-    }, delay);
-  }
-
   async triggerRefresh() {
-    // Skip if the token was refreshed recently enough that the next scheduled
-    // refresh is not yet due, preventing tight loops and redundant calls.
-    if (Date.now() < this.refreshNotBefore) {
-      console.log('Solis token refresh skipped (token still fresh)');
-      return;
-    }
+    this.isRefreshing = true;
 
     const fetchRoute = this.basePath
       ? this.basePath + '/hybrid-ipaas/v1/solis/session/refresh-token'
@@ -106,27 +65,18 @@ export default class solisSessionManager {
 
       if (response.ok) {
         console.log('Solis token refresh successful');
-        const data = await response.json().catch(() => null);
-        if (data?.ttl != null) {
-          // ttl is the Solis token "time-to-live, in seconds".
-          // Block further refreshes until (30 - tokenRefreshInterval) minutes
-          // before this token expires, keeping the guard in sync with the
-          // configured refresh cadence.
-          const minTtlBeforeRefreshMs =
-            (30 - this.tokenRefreshInterval) * 60 * 1000;
-          this.refreshNotBefore =
-            Date.now() + data.ttl * 1000 - minTtlBeforeRefreshMs;
-          // Safety net to sync up refresh schedule with token expiry if lead tab is closed
-          this.rescheduleRefresh(data.ttl * 1000);
-        }
+        this.isRefreshing = false;
       } else if (response.status === 401 || response.status === 403) {
         console.error('Solis token refresh unauthorized - triggering logout');
+        this.isRefreshing = false;
         await this.performLogout(true);
       } else {
         console.error('Solis token refresh failed:', response.status);
+        this.isRefreshing = false;
       }
     } catch (error: any) {
       console.error('Solis token refresh error:', error.message);
+      this.isRefreshing = false;
     }
   }
 
@@ -166,9 +116,12 @@ export default class solisSessionManager {
       await this.performLogout(false);
       return;
     }
-    if (typeof sessionResult === 'number') {
-      // Resync the refresh schedule with the actual token expiry
-      this.rescheduleRefresh(sessionResult * 1000);
+    if (
+      typeof sessionResult === 'number' &&
+      sessionResult <= 60 &&
+      !this.isRefreshing
+    ) {
+      this.triggerRefresh();
     }
   }
 
@@ -209,7 +162,6 @@ export default class solisSessionManager {
       return;
     }
     this.isLoggingOut = true;
-    this.stopRefreshSchedule();
     this.stopSessionStatusPolling();
     this.unregisterActivityListeners();
     const sessionActive = await this.checkSessionStatus();
@@ -254,10 +206,12 @@ export default class solisSessionManager {
         await this.performLogout(false);
         return; // don't reschedule after logout
       }
-      if (typeof sessionResult === 'number') {
-        // Resync the refresh schedule with the actual token expiry so that
-        // tabs opening after the lead tab has already refreshed stay aligned.
-        this.rescheduleRefresh(sessionResult * 1000);
+      if (
+        typeof sessionResult === 'number' &&
+        sessionResult <= 60 &&
+        !this.isRefreshing
+      ) {
+        this.triggerRefresh();
       }
       this.sessionStatusIntervalId = window.setTimeout(
         poll,

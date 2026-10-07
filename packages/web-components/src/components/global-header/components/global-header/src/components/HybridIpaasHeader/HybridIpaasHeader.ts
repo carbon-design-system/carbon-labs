@@ -75,7 +75,6 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: Boolean }) addCookiePreferences = false;
   @property({ type: Boolean }) forceBackendProxy = false; // override domain check; always enable the backend proxy when true
   @property({ type: Boolean }) solisSessionManagerEnabled = false; // toggle to enable/disable the Solis session manager
-  @property({ type: Number }) solisSessionRefreshInterval = 25; // (minutes) might not need Solis token refresh interval to be configurable
   @property({ type: Number }) solisIdleTimeoutInterval = 28; // (minutes) might not need Solis idle timeout interval to be configurable
   @property({ type: Number }) solisSessionStatusInterval = 10; // (seconds) might not need Solis session polling interval to be configurable
   @property({ type: Number }) solisWarningLeadTime = 5; // (minutes)
@@ -114,7 +113,6 @@ export class HybridIpaasHeader extends LitElement {
   disconnectedCallback() {
     super.disconnectedCallback();
     if (this.sessionManager) {
-      this.sessionManager.stopRefreshSchedule();
       this.sessionManager.stopSessionStatusPolling();
       this.sessionManager.unregisterActivityListeners();
       this.sessionManager = null;
@@ -214,7 +212,6 @@ export class HybridIpaasHeader extends LitElement {
       }
 
       this.sessionManager = new solisSessionManager({
-        tokenRefreshInterval: this.solisSessionRefreshInterval,
         idleTimeoutInterval: this.solisIdleTimeoutInterval,
         sessionStatusInterval: this.solisSessionStatusInterval,
         basePath: this.basePath,
@@ -227,7 +224,6 @@ export class HybridIpaasHeader extends LitElement {
           this.sessionExpiryNotificationOpen = false;
         },
       });
-      this.sessionManager.startRefreshSchedule();
       this.sessionManager.startSessionStatusPolling();
       this.sessionManager.registerActivityListeners();
       this.sessionManager.setActive();

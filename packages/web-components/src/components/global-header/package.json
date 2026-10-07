@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/wc-global-header",
-  "version": "0.99.0",
+  "version": "0.100.0",
   "author": "Your Name <your@email.com>",
   "publishConfig": {
     "access": "public",

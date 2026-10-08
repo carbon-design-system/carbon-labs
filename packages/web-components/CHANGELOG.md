@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.187.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.186.0...@carbon-labs/web-components@0.187.0) (2026-10-08)
+
+
+### Bug Fixes
+
+* **global-header:** Trigger refresh if ttl increases between session status polls ([#1395](https://github.com/carbon-design-system/carbon-labs/issues/1395)) ([376cb03](https://github.com/carbon-design-system/carbon-labs/commit/376cb0347e7e2c16be05e4983cbcf14134dfc86a))
+
+
+
+
+
 # [0.186.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.185.0...@carbon-labs/web-components@0.186.0) (2026-10-07)
 
 **Note:** Version bump only for package @carbon-labs/web-components

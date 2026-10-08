@@ -25,6 +25,7 @@ export default class solisSessionManager {
   private onWarningDismissedCallback: (() => void) | undefined;
   private warningTimeout: ReturnType<typeof setTimeout> | undefined;
   private isRefreshing = false;
+  private currentTtl: number | null = null;
   config: solisSessionManagerConfig;
 
   constructor(config: solisSessionManagerConfig) {
@@ -69,7 +70,7 @@ export default class solisSessionManager {
       } else if (response.status === 401 || response.status === 403) {
         console.error('Solis token refresh unauthorized - triggering logout');
         this.isRefreshing = false;
-        await this.performLogout(true);
+        await this.performLogout();
       } else {
         console.error('Solis token refresh failed:', response.status);
         this.isRefreshing = false;
@@ -113,7 +114,7 @@ export default class solisSessionManager {
     this.isIdle = true;
     const sessionResult = await this.checkSessionStatus();
     if (!sessionResult) {
-      await this.performLogout(false);
+      await this.performLogout();
       return;
     }
     if (
@@ -157,7 +158,7 @@ export default class solisSessionManager {
     }
   }
 
-  async performLogout(hardLogout: boolean) {
+  async performLogout() {
     if (this.isLoggingOut) {
       return;
     }
@@ -193,7 +194,8 @@ export default class solisSessionManager {
         console.error('Logout failed with error: ', error.message);
       }
     }
-    const logoutEndpoint = hardLogout ? '/solis-logout' : '/login';
+    // const logoutEndpoint = hardLogout ? '/solis-logout' : '/login';
+    const logoutEndpoint = '/logout';
     this.redirect(
       this.basePath ? `${this.basePath}${logoutEndpoint}` : logoutEndpoint
     );
@@ -203,15 +205,16 @@ export default class solisSessionManager {
     const poll = async () => {
       const sessionResult = await this.checkSessionStatus();
       if (!sessionResult) {
-        await this.performLogout(false);
+        await this.performLogout();
         return; // don't reschedule after logout
       }
-      if (
-        typeof sessionResult === 'number' &&
-        sessionResult <= 60 &&
-        !this.isRefreshing
-      ) {
-        this.triggerRefresh();
+      if (typeof sessionResult === 'number') {
+        const hasIncreased =
+          this.currentTtl !== null && sessionResult > this.currentTtl;
+        if ((sessionResult <= 60 || hasIncreased) && !this.isRefreshing) {
+          this.triggerRefresh();
+        }
+        this.currentTtl = sessionResult;
       }
       this.sessionStatusIntervalId = window.setTimeout(
         poll,

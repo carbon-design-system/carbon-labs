@@ -80,7 +80,7 @@ describe('solisSessionManager', () => {
       expect(consoleErrorStub).to.have.been.calledWith(
         'Solis token refresh unauthorized - triggering logout'
       );
-      expect(performLogoutStub).to.have.been.calledWith(true);
+      expect(performLogoutStub).to.have.been.called;
     });
 
     it('logs an error if the user is not authenticated, response status 403', async () => {
@@ -101,7 +101,7 @@ describe('solisSessionManager', () => {
       expect(consoleErrorStub).to.have.been.calledWith(
         'Solis token refresh unauthorized - triggering logout'
       );
-      expect(performLogoutStub).to.have.been.calledWith(true);
+      expect(performLogoutStub).to.have.been.called;
     });
 
     it('logs an error if the response status is 500', async () => {
@@ -323,7 +323,7 @@ describe('solisSessionManager', () => {
       fetchStub.resolves(new Response(null, { status: 200, statusText: 'OK' }));
       const consoleLogStub = sinon.stub(console, 'log');
       const sessionManager = new solisSessionManager({ basePath: '/api' });
-      await sessionManager.performLogout(true);
+      await sessionManager.performLogout();
       expect(fetchStub).to.have.been.calledWith(
         '/api/hybrid-ipaas/v1/solis/session/logout',
         { method: 'POST', credentials: 'same-origin' }
@@ -338,7 +338,7 @@ describe('solisSessionManager', () => {
       fetchStub.resolves(new Response(null, { status: 200, statusText: 'OK' }));
       const consoleLogStub = sinon.stub(console, 'log');
       const sessionManager = new solisSessionManager({});
-      await sessionManager.performLogout(true);
+      await sessionManager.performLogout();
       expect(fetchStub).to.have.been.calledWith(
         '/hybrid-ipaas/v1/solis/session/logout',
         {
@@ -358,7 +358,7 @@ describe('solisSessionManager', () => {
       );
       const consoleLogStub = sinon.stub(console, 'log');
       const sessionManager = new solisSessionManager({});
-      await sessionManager.performLogout(true);
+      await sessionManager.performLogout();
       expect(consoleLogStub).to.have.been.calledWith(
         'Solis session logout - session already expired'
       );
@@ -371,7 +371,7 @@ describe('solisSessionManager', () => {
       );
       const consoleErrorStub = sinon.stub(console, 'error');
       const sessionManager = new solisSessionManager({});
-      await sessionManager.performLogout(true);
+      await sessionManager.performLogout();
       expect(consoleErrorStub).to.have.been.calledWith(
         'Solis session logout failed:',
         500
@@ -383,12 +383,12 @@ describe('solisSessionManager', () => {
       fetchStub.rejects(new Error('Network error'));
       const consoleErrorStub = sinon.stub(console, 'error');
       const sessionManager = new solisSessionManager({});
-      await sessionManager.performLogout(true);
+      await sessionManager.performLogout();
       expect(consoleErrorStub).to.have.been.calledWith(
         'Solis session logout error:',
         'Network error'
       );
-      expect(redirectStub).to.have.been.calledWith('/solis-logout');
+      expect(redirectStub).to.have.been.calledWith('/logout');
     });
 
     it('invokes logoutCallback if provided', async () => {
@@ -398,7 +398,7 @@ describe('solisSessionManager', () => {
       const sessionManager = new solisSessionManager({
         logoutCallback: callbackSpy,
       });
-      await sessionManager.performLogout(true);
+      await sessionManager.performLogout();
       expect(callbackSpy).to.have.been.calledOnce;
     });
 
@@ -410,23 +410,23 @@ describe('solisSessionManager', () => {
       const sessionManager = new solisSessionManager({
         logoutCallback: failingCallback,
       });
-      await sessionManager.performLogout(true);
+      await sessionManager.performLogout();
       expect(consoleErrorStub).to.have.been.calledWith(
         'Logout failed with error: ',
         'Callback error'
       );
-      expect(redirectStub).to.have.been.calledWith('/solis-logout');
+      expect(redirectStub).to.have.been.calledWith('/logout');
     });
 
-    it('redirects to /login after a soft logout', async () => {
+    it('redirects to /logout after a soft logout', async () => {
       const fetchStub = sinon.stub(window, 'fetch');
       fetchStub.resolves(new Response(null, { status: 200, statusText: 'OK' }));
       const callbackSpy = sinon.spy();
       const sessionManager = new solisSessionManager({
         logoutCallback: callbackSpy,
       });
-      await sessionManager.performLogout(false);
-      expect(redirectStub).to.have.been.calledWith('/login');
+      await sessionManager.performLogout();
+      expect(redirectStub).to.have.been.calledWith('/logout');
     });
 
     it('stops session status polling, and unregisters activity listeners', async () => {
@@ -441,7 +441,7 @@ describe('solisSessionManager', () => {
         'unregisterActivityListeners'
       );
       const sessionManager = new solisSessionManager({});
-      await sessionManager.performLogout(true);
+      await sessionManager.performLogout();
       expect(stopPollingSpy).to.have.been.calledOnce;
       expect(unregisterSpy).to.have.been.calledOnce;
     });
@@ -452,8 +452,8 @@ describe('solisSessionManager', () => {
       const sessionManager = new solisSessionManager({});
       // kick off two concurrent calls
       await Promise.all([
-        sessionManager.performLogout(true),
-        sessionManager.performLogout(true),
+        sessionManager.performLogout(),
+        sessionManager.performLogout(),
       ]);
       expect(fetchStub).to.have.been.calledOnce;
     });
@@ -466,7 +466,7 @@ describe('solisSessionManager', () => {
           new Response(null, { status: 200, statusText: 'OK' })
         );
         const sessionManager = new solisSessionManager({});
-        await sessionManager.performLogout(true);
+        await sessionManager.performLogout();
         expect(fetchStub).to.not.have.been.called;
       });
     });
@@ -759,6 +759,70 @@ describe('solisSessionManager', () => {
       await Promise.resolve(); // flush microtask queue so the async interval callback resolves
       expect(checkSessionStatusStub).to.have.been.calledOnce;
       expect(performLogoutStub).to.have.been.calledOnce;
+      sessionManager.stopSessionStatusPolling();
+    });
+
+    it('calls triggerRefresh if ttl is greater than previous poll', async () => {
+      const checkSessionStatusStub = sinon.stub(
+        solisSessionManager.prototype,
+        'checkSessionStatus'
+      );
+      checkSessionStatusStub.onFirstCall().resolves(120);
+      checkSessionStatusStub.onSecondCall().resolves(150);
+
+      const triggerRefreshStub = sinon.stub(
+        solisSessionManager.prototype,
+        'triggerRefresh'
+      );
+      const sessionManager = new solisSessionManager({
+        sessionStatusInterval: 1,
+      });
+      sessionManager.startSessionStatusPolling();
+
+      // First tick
+      clock.tick(1 * 1000);
+      await Promise.resolve();
+      await Promise.resolve();
+      expect(triggerRefreshStub).to.not.have.been.called;
+
+      // Second tick
+      clock.tick(1 * 1000);
+      await Promise.resolve();
+      await Promise.resolve();
+      expect(triggerRefreshStub).to.have.been.calledOnce;
+
+      sessionManager.stopSessionStatusPolling();
+    });
+
+    it('does not call triggerRefresh if ttl is less than previous poll', async () => {
+      const checkSessionStatusStub = sinon.stub(
+        solisSessionManager.prototype,
+        'checkSessionStatus'
+      );
+      checkSessionStatusStub.onFirstCall().resolves(150);
+      checkSessionStatusStub.onSecondCall().resolves(140);
+
+      const triggerRefreshStub = sinon.stub(
+        solisSessionManager.prototype,
+        'triggerRefresh'
+      );
+      const sessionManager = new solisSessionManager({
+        sessionStatusInterval: 1,
+      });
+      sessionManager.startSessionStatusPolling();
+
+      // First tick
+      clock.tick(1 * 1000);
+      await Promise.resolve();
+      await Promise.resolve();
+      expect(triggerRefreshStub).to.not.have.been.called;
+
+      // Second tick
+      clock.tick(1 * 1000);
+      await Promise.resolve();
+      await Promise.resolve();
+      expect(triggerRefreshStub).to.not.have.been.called;
+
       sessionManager.stopSessionStatusPolling();
     });
   });

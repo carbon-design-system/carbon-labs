@@ -1,0 +1,66 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/theme' as *;
+
+$prefix: 'clabs' !default;
+
+// FileUploaderButton styles
+.#{$prefix}--file-uploader-button {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $spacing-03;
+
+  // Remove margin when it's the only child
+  &:only-child {
+    margin-block-end: 0;
+  }
+}
+
+.#{$prefix}--file-uploader-button__label {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $spacing-03;
+  margin-block-end: $spacing-02;
+}
+
+.#{$prefix}--file-uploader-button__label-text {
+  @include type-style('label-01');
+
+  color: $text-secondary;
+}
+
+.#{$prefix}--file-uploader-button__wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.#{$prefix}--file-uploader-button__input {
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip: rect(0, 0, 0, 0);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+.#{$prefix}--file-uploader-button__helper-text {
+  @include type-style('helper-text-01');
+
+  color: $text-secondary;
+}

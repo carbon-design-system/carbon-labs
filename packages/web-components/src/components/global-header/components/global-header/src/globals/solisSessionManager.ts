@@ -70,7 +70,7 @@ export default class solisSessionManager {
       } else if (response.status === 401 || response.status === 403) {
         console.error('Solis token refresh unauthorized - triggering logout');
         this.isRefreshing = false;
-        await this.performLogout(true);
+        await this.performLogout();
       } else {
         console.error('Solis token refresh failed:', response.status);
         this.isRefreshing = false;
@@ -114,7 +114,7 @@ export default class solisSessionManager {
     this.isIdle = true;
     const sessionResult = await this.checkSessionStatus();
     if (!sessionResult) {
-      await this.performLogout(false);
+      await this.performLogout();
       return;
     }
     if (
@@ -158,7 +158,7 @@ export default class solisSessionManager {
     }
   }
 
-  async performLogout(hardLogout: boolean) {
+  async performLogout() {
     if (this.isLoggingOut) {
       return;
     }
@@ -205,7 +205,7 @@ export default class solisSessionManager {
     const poll = async () => {
       const sessionResult = await this.checkSessionStatus();
       if (!sessionResult) {
-        await this.performLogout(false);
+        await this.performLogout();
         return; // don't reschedule after logout
       }
       if (typeof sessionResult === 'number') {

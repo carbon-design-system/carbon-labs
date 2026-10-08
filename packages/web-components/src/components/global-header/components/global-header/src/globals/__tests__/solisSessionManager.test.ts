@@ -323,7 +323,7 @@ describe('solisSessionManager', () => {
       fetchStub.resolves(new Response(null, { status: 200, statusText: 'OK' }));
       const consoleLogStub = sinon.stub(console, 'log');
       const sessionManager = new solisSessionManager({ basePath: '/api' });
-      await sessionManager.performLogout(true);
+      await sessionManager.performLogout();
       expect(fetchStub).to.have.been.calledWith(
         '/api/hybrid-ipaas/v1/solis/session/logout',
         { method: 'POST', credentials: 'same-origin' }
@@ -338,7 +338,7 @@ describe('solisSessionManager', () => {
       fetchStub.resolves(new Response(null, { status: 200, statusText: 'OK' }));
       const consoleLogStub = sinon.stub(console, 'log');
       const sessionManager = new solisSessionManager({});
-      await sessionManager.performLogout(true);
+      await sessionManager.performLogout();
       expect(fetchStub).to.have.been.calledWith(
         '/hybrid-ipaas/v1/solis/session/logout',
         {
@@ -358,7 +358,7 @@ describe('solisSessionManager', () => {
       );
       const consoleLogStub = sinon.stub(console, 'log');
       const sessionManager = new solisSessionManager({});
-      await sessionManager.performLogout(true);
+      await sessionManager.performLogout();
       expect(consoleLogStub).to.have.been.calledWith(
         'Solis session logout - session already expired'
       );
@@ -371,7 +371,7 @@ describe('solisSessionManager', () => {
       );
       const consoleErrorStub = sinon.stub(console, 'error');
       const sessionManager = new solisSessionManager({});
-      await sessionManager.performLogout(true);
+      await sessionManager.performLogout();
       expect(consoleErrorStub).to.have.been.calledWith(
         'Solis session logout failed:',
         500
@@ -383,7 +383,7 @@ describe('solisSessionManager', () => {
       fetchStub.rejects(new Error('Network error'));
       const consoleErrorStub = sinon.stub(console, 'error');
       const sessionManager = new solisSessionManager({});
-      await sessionManager.performLogout(true);
+      await sessionManager.performLogout();
       expect(consoleErrorStub).to.have.been.calledWith(
         'Solis session logout error:',
         'Network error'
@@ -398,7 +398,7 @@ describe('solisSessionManager', () => {
       const sessionManager = new solisSessionManager({
         logoutCallback: callbackSpy,
       });
-      await sessionManager.performLogout(true);
+      await sessionManager.performLogout();
       expect(callbackSpy).to.have.been.calledOnce;
     });
 
@@ -410,7 +410,7 @@ describe('solisSessionManager', () => {
       const sessionManager = new solisSessionManager({
         logoutCallback: failingCallback,
       });
-      await sessionManager.performLogout(true);
+      await sessionManager.performLogout();
       expect(consoleErrorStub).to.have.been.calledWith(
         'Logout failed with error: ',
         'Callback error'
@@ -425,7 +425,7 @@ describe('solisSessionManager', () => {
       const sessionManager = new solisSessionManager({
         logoutCallback: callbackSpy,
       });
-      await sessionManager.performLogout(false);
+      await sessionManager.performLogout();
       expect(redirectStub).to.have.been.calledWith('/logout');
     });
 
@@ -441,7 +441,7 @@ describe('solisSessionManager', () => {
         'unregisterActivityListeners'
       );
       const sessionManager = new solisSessionManager({});
-      await sessionManager.performLogout(true);
+      await sessionManager.performLogout();
       expect(stopPollingSpy).to.have.been.calledOnce;
       expect(unregisterSpy).to.have.been.calledOnce;
     });
@@ -452,8 +452,8 @@ describe('solisSessionManager', () => {
       const sessionManager = new solisSessionManager({});
       // kick off two concurrent calls
       await Promise.all([
-        sessionManager.performLogout(true),
-        sessionManager.performLogout(true),
+        sessionManager.performLogout(),
+        sessionManager.performLogout(),
       ]);
       expect(fetchStub).to.have.been.calledOnce;
     });
@@ -466,7 +466,7 @@ describe('solisSessionManager', () => {
           new Response(null, { status: 200, statusText: 'OK' })
         );
         const sessionManager = new solisSessionManager({});
-        await sessionManager.performLogout(true);
+        await sessionManager.performLogout();
         expect(fetchStub).to.not.have.been.called;
       });
     });

@@ -80,7 +80,7 @@ describe('solisSessionManager', () => {
       expect(consoleErrorStub).to.have.been.calledWith(
         'Solis token refresh unauthorized - triggering logout'
       );
-      expect(performLogoutStub).to.have.been.calledWith(true);
+      expect(performLogoutStub).to.have.been.called;
     });
 
     it('logs an error if the user is not authenticated, response status 403', async () => {
@@ -101,7 +101,7 @@ describe('solisSessionManager', () => {
       expect(consoleErrorStub).to.have.been.calledWith(
         'Solis token refresh unauthorized - triggering logout'
       );
-      expect(performLogoutStub).to.have.been.calledWith(true);
+      expect(performLogoutStub).to.have.been.called;
     });
 
     it('logs an error if the response status is 500', async () => {

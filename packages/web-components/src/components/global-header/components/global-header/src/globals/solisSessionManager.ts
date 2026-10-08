@@ -25,7 +25,7 @@ export default class solisSessionManager {
   private onWarningDismissedCallback: (() => void) | undefined;
   private warningTimeout: ReturnType<typeof setTimeout> | undefined;
   private isRefreshing = false;
-  private currentTtl = 0;
+  private currentTtl: number | null = null;
   config: solisSessionManagerConfig;
 
   constructor(config: solisSessionManagerConfig) {
@@ -210,7 +210,7 @@ export default class solisSessionManager {
       }
       if (typeof sessionResult === 'number') {
         const hasIncreased =
-          this.currentTtl > 0 && sessionResult > this.currentTtl;
+          this.currentTtl !== null && sessionResult > this.currentTtl;
         if ((sessionResult <= 60 || hasIncreased) && !this.isRefreshing) {
           this.triggerRefresh();
         }

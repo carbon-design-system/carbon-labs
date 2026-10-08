@@ -388,7 +388,7 @@ describe('solisSessionManager', () => {
         'Solis session logout error:',
         'Network error'
       );
-      expect(redirectStub).to.have.been.calledWith('/solis-logout');
+      expect(redirectStub).to.have.been.calledWith('/logout');
     });
 
     it('invokes logoutCallback if provided', async () => {
@@ -415,10 +415,10 @@ describe('solisSessionManager', () => {
         'Logout failed with error: ',
         'Callback error'
       );
-      expect(redirectStub).to.have.been.calledWith('/solis-logout');
+      expect(redirectStub).to.have.been.calledWith('/logout');
     });
 
-    it('redirects to /login after a soft logout', async () => {
+    it('redirects to /logout after a soft logout', async () => {
       const fetchStub = sinon.stub(window, 'fetch');
       fetchStub.resolves(new Response(null, { status: 200, statusText: 'OK' }));
       const callbackSpy = sinon.spy();
@@ -426,7 +426,7 @@ describe('solisSessionManager', () => {
         logoutCallback: callbackSpy,
       });
       await sessionManager.performLogout(false);
-      expect(redirectStub).to.have.been.calledWith('/login');
+      expect(redirectStub).to.have.been.calledWith('/logout');
     });
 
     it('stops session status polling, and unregisters activity listeners', async () => {

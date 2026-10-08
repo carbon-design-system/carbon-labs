@@ -194,7 +194,8 @@ export default class solisSessionManager {
         console.error('Logout failed with error: ', error.message);
       }
     }
-    const logoutEndpoint = hardLogout ? '/solis-logout' : '/login';
+    // const logoutEndpoint = hardLogout ? '/solis-logout' : '/login';
+    const logoutEndpoint = '/logout';
     this.redirect(
       this.basePath ? `${this.basePath}${logoutEndpoint}` : logoutEndpoint
     );

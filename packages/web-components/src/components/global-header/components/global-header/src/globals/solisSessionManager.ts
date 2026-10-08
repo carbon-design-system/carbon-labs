@@ -25,6 +25,7 @@ export default class solisSessionManager {
   private onWarningDismissedCallback: (() => void) | undefined;
   private warningTimeout: ReturnType<typeof setTimeout> | undefined;
   private isRefreshing = false;
+  private currentTtl = 0;
   config: solisSessionManagerConfig;
 
   constructor(config: solisSessionManagerConfig) {
@@ -206,12 +207,13 @@ export default class solisSessionManager {
         await this.performLogout(false);
         return; // don't reschedule after logout
       }
-      if (
-        typeof sessionResult === 'number' &&
-        sessionResult <= 60 &&
-        !this.isRefreshing
-      ) {
-        this.triggerRefresh();
+      if (typeof sessionResult === 'number') {
+        const hasIncreased =
+          this.currentTtl > 0 && sessionResult > this.currentTtl;
+        if ((sessionResult <= 60 || hasIncreased) && !this.isRefreshing) {
+          this.triggerRefresh();
+        }
+        this.currentTtl = sessionResult;
       }
       this.sessionStatusIntervalId = window.setTimeout(
         poll,

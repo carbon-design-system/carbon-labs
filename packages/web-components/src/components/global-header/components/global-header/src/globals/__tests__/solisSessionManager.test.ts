@@ -761,6 +761,70 @@ describe('solisSessionManager', () => {
       expect(performLogoutStub).to.have.been.calledOnce;
       sessionManager.stopSessionStatusPolling();
     });
+
+    it('calls triggerRefresh if ttl is greater than previous poll', async () => {
+      const checkSessionStatusStub = sinon.stub(
+        solisSessionManager.prototype,
+        'checkSessionStatus'
+      );
+      checkSessionStatusStub.onFirstCall().resolves(120);
+      checkSessionStatusStub.onSecondCall().resolves(150);
+
+      const triggerRefreshStub = sinon.stub(
+        solisSessionManager.prototype,
+        'triggerRefresh'
+      );
+      const sessionManager = new solisSessionManager({
+        sessionStatusInterval: 1,
+      });
+      sessionManager.startSessionStatusPolling();
+
+      // First tick
+      clock.tick(1 * 1000);
+      await Promise.resolve();
+      await Promise.resolve();
+      expect(triggerRefreshStub).to.not.have.been.called;
+
+      // Second tick
+      clock.tick(1 * 1000);
+      await Promise.resolve();
+      await Promise.resolve();
+      expect(triggerRefreshStub).to.have.been.calledOnce;
+
+      sessionManager.stopSessionStatusPolling();
+    });
+
+    it('does not call triggerRefresh if ttl is less than previous poll', async () => {
+      const checkSessionStatusStub = sinon.stub(
+        solisSessionManager.prototype,
+        'checkSessionStatus'
+      );
+      checkSessionStatusStub.onFirstCall().resolves(150);
+      checkSessionStatusStub.onSecondCall().resolves(140);
+
+      const triggerRefreshStub = sinon.stub(
+        solisSessionManager.prototype,
+        'triggerRefresh'
+      );
+      const sessionManager = new solisSessionManager({
+        sessionStatusInterval: 1,
+      });
+      sessionManager.startSessionStatusPolling();
+
+      // First tick
+      clock.tick(1 * 1000);
+      await Promise.resolve();
+      await Promise.resolve();
+      expect(triggerRefreshStub).to.not.have.been.called;
+
+      // Second tick
+      clock.tick(1 * 1000);
+      await Promise.resolve();
+      await Promise.resolve();
+      expect(triggerRefreshStub).to.not.have.been.called;
+
+      sessionManager.stopSessionStatusPolling();
+    });
   });
 
   describe('stopSessionStatusPolling', () => {

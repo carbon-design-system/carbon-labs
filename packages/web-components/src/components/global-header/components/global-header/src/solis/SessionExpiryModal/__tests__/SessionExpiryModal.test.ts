@@ -126,5 +126,28 @@ describe('SessionExpiryModal Component', () => {
       );
       expect((notification as any)?.subtitle).to.contain('2 minutes 4 seconds');
     });
+
+    it('stops at 0 seconds and does not cycle back', async () => {
+      const el = await fixture<SessionExpiryModal>(
+        html`<clabs-global-header-session-expiry-modal
+          open
+          totalSeconds="${2}"></clabs-global-header-session-expiry-modal>`
+      );
+      clock.tick(2000);
+      await el.updateComplete;
+      let notification = el.shadowRoot?.querySelector(
+        'cds-custom-inline-notification'
+      );
+      expect((notification as any)?.subtitle).to.contain('in 0 seconds');
+      expect(clock.countTimers()).to.equal(0);
+
+      clock.tick(5000);
+      await el.updateComplete;
+      notification = el.shadowRoot?.querySelector(
+        'cds-custom-inline-notification'
+      );
+      expect((notification as any)?.subtitle).to.contain('in 0 seconds');
+      expect((notification as any)?.subtitle).to.not.contain('59');
+    });
   });
 });

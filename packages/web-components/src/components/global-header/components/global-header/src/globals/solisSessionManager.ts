@@ -212,9 +212,11 @@ export default class solisSessionManager {
         const hasIncreased =
           this.currentTtl !== null && sessionResult > this.currentTtl;
         if ((sessionResult <= 60 || hasIncreased) && !this.isRefreshing) {
+          this.currentTtl = null;
           this.triggerRefresh();
+        } else {
+          this.currentTtl = sessionResult;
         }
-        this.currentTtl = sessionResult;
       }
       this.sessionStatusIntervalId = window.setTimeout(
         poll,

@@ -1,0 +1,46 @@
+/**
+ * Copyright IBM Corp. 2021, 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon setting imports
+@use '@carbon/styles/scss/motion' as *;
+
+$prefix: 'clabs' !default;
+
+$block-class: '#{$prefix}--cascade';
+$animation-props: $duration-moderate-02 motion(standard, productive) 0s 1;
+$fade-start: translateY(3rem);
+$fade-end: translateY(0);
+
+@keyframes #{$block-class}-fade {
+  0% {
+    opacity: 0;
+    transform: $fade-start;
+  }
+
+  100% {
+    opacity: 1;
+    transform: $fade-end;
+  }
+}
+
+.#{$block-class}__element,
+.#{$block-class}__col {
+  @media (prefers-reduced-motion: no-preference) {
+    /* stylelint-disable-next-line carbon/motion-duration-use, carbon/motion-easing-use -- Carbon animation duration defined above in $animation-props */
+    animation: $animation-props #{$block-class}-fade;
+    animation-fill-mode: forwards;
+    opacity: 0;
+  }
+}
+
+// adds cascading delay
+@for $i from 1 through 8 {
+  .#{$block-class}__element:nth-child(n + #{$i}),
+  .#{$block-class}__col-#{$i} {
+    animation-delay: #{$i * 60}ms;
+  }
+}

@@ -494,13 +494,22 @@ describe('solisSessionManager', () => {
       expect(sessionManager.isTabIdle()).to.be.false;
     });
 
-    it('resets isIdle to false and restarts the idle timeout when called again', () => {
+    it('sets refreshedWhileIdle to false', () => {
+      const sessionManager = new solisSessionManager({});
+      sessionManager['refreshedWhileIdle'] = true;
+      sessionManager.setActive();
+      expect(sessionManager['refreshedWhileIdle']).to.be.false;
+    });
+
+    it('resets isIdle to false and restarts the pre-idle timeout when called again', () => {
       const setIdleStub = sinon.stub(solisSessionManager.prototype, 'setIdle');
+      // pre-idle interval = idleTimeoutInterval - warningLeadTime = 1 minute
       const sessionManager = new solisSessionManager({
-        idleTimeoutInterval: 1,
+        idleTimeoutInterval: 2,
+        warningLeadTime: 1,
       });
 
-      // First call — starts the idle timeout
+      // First call — starts the pre-idle timeout
       sessionManager.setActive();
       // Second call before timeout fires — should clear the first timeout and restart
       sessionManager['isIdle'] = true;
@@ -512,16 +521,33 @@ describe('solisSessionManager', () => {
       expect(setIdleStub).to.have.been.calledOnce;
     });
 
-    it('calls setIdle after the idle timeout elapses', () => {
+    it('calls setIdle after (idleTimeoutInterval - warningLeadTime) minutes', () => {
       const setIdleStub = sinon.stub(solisSessionManager.prototype, 'setIdle');
       const sessionManager = new solisSessionManager({
-        idleTimeoutInterval: 1,
+        idleTimeoutInterval: 2,
+        warningLeadTime: 1,
       });
 
       sessionManager.setActive();
       expect(setIdleStub).to.not.have.been.called;
       clock.tick(1 * 60 * 1000);
       expect(setIdleStub).to.have.been.calledOnce;
+    });
+
+    it('calls checkIdleLogout after the idle timeout elapses', () => {
+      const checkIdleLogoutStub = sinon.stub(
+        solisSessionManager.prototype,
+        'checkIdleLogout'
+      );
+      const sessionManager = new solisSessionManager({
+        idleTimeoutInterval: 2,
+        warningLeadTime: 1,
+      });
+
+      sessionManager.setActive();
+      expect(checkIdleLogoutStub).to.not.have.been.called;
+      clock.tick(2 * 60 * 1000);
+      expect(checkIdleLogoutStub).to.have.been.calledOnce;
     });
   });
 
@@ -578,70 +604,43 @@ describe('solisSessionManager', () => {
   });
 
   describe('setIdle', () => {
-    it('sets isIdle to true and calls performLogout when session is inactive', async () => {
-      const performLogoutStub = sinon.stub(
-        solisSessionManager.prototype,
-        'performLogout'
-      );
-      sinon
-        .stub(solisSessionManager.prototype, 'checkSessionStatus')
-        .resolves(false);
+    it('sets isIdle to true', () => {
       const sessionManager = new solisSessionManager({});
-      await sessionManager.setIdle();
+      sessionManager.setIdle();
       expect(sessionManager.isTabIdle()).to.be.true;
-      expect(performLogoutStub).to.have.been.calledOnce;
     });
+  });
 
-    it('does not call performLogout when session is active', async () => {
+  describe('checkIdleLogout', () => {
+    it('calls performLogout when the session was not refreshed while idle', async () => {
       const performLogoutStub = sinon.stub(
         solisSessionManager.prototype,
         'performLogout'
       );
-      sinon
-        .stub(solisSessionManager.prototype, 'checkSessionStatus')
-        .resolves(123);
+      const setActiveStub = sinon.stub(
+        solisSessionManager.prototype,
+        'setActive'
+      );
       const sessionManager = new solisSessionManager({});
-      await sessionManager.setIdle();
+      await sessionManager.checkIdleLogout();
+      expect(performLogoutStub).to.have.been.calledOnce;
+      expect(setActiveStub).to.not.have.been.called;
+    });
+
+    it('calls setActive and does not call performLogout when the session was refreshed while idle (another tab is active)', async () => {
+      const performLogoutStub = sinon.stub(
+        solisSessionManager.prototype,
+        'performLogout'
+      );
+      const setActiveStub = sinon.stub(
+        solisSessionManager.prototype,
+        'setActive'
+      );
+      const sessionManager = new solisSessionManager({});
+      sessionManager['refreshedWhileIdle'] = true;
+      await sessionManager.checkIdleLogout();
+      expect(setActiveStub).to.have.been.calledOnce;
       expect(performLogoutStub).to.not.have.been.called;
-    });
-
-    it('calls triggerRefresh when session is active and ttl is <= 60 seconds', async () => {
-      const triggerRefreshStub = sinon.stub(
-        solisSessionManager.prototype,
-        'triggerRefresh'
-      );
-      sinon
-        .stub(solisSessionManager.prototype, 'checkSessionStatus')
-        .resolves(45);
-      const sessionManager = new solisSessionManager({});
-      await sessionManager.setIdle();
-      expect(triggerRefreshStub).to.have.been.called;
-    });
-
-    it('does not call triggerRefresh when session is active and ttl is > 60 seconds', async () => {
-      const triggerRefreshStub = sinon.stub(
-        solisSessionManager.prototype,
-        'triggerRefresh'
-      );
-      sinon
-        .stub(solisSessionManager.prototype, 'checkSessionStatus')
-        .resolves(120);
-      const sessionManager = new solisSessionManager({});
-      await sessionManager.setIdle();
-      expect(triggerRefreshStub).to.not.have.been.called;
-    });
-
-    it('does not call triggerRefresh when session is active and ttl is not returned', async () => {
-      const triggerRefreshStub = sinon.stub(
-        solisSessionManager.prototype,
-        'triggerRefresh'
-      );
-      sinon
-        .stub(solisSessionManager.prototype, 'checkSessionStatus')
-        .resolves(true);
-      const sessionManager = new solisSessionManager({});
-      await sessionManager.setIdle();
-      expect(triggerRefreshStub).to.not.have.been.called;
     });
   });
 
@@ -721,6 +720,82 @@ describe('solisSessionManager', () => {
       await Promise.resolve();
       sessionManager.stopSessionStatusPolling();
       expect(triggerRefreshStub).to.not.have.been.called;
+    });
+
+    it('does not call triggerRefresh when isIdle is true', async () => {
+      sinon
+        .stub(solisSessionManager.prototype, 'checkSessionStatus')
+        .resolves(45);
+      const triggerRefreshStub = sinon.stub(
+        solisSessionManager.prototype,
+        'triggerRefresh'
+      );
+      const sessionManager = new solisSessionManager({
+        sessionStatusInterval: 1,
+      });
+      sessionManager['isIdle'] = true;
+      sessionManager.startSessionStatusPolling();
+      clock.tick(1 * 1000);
+      await Promise.resolve();
+      await Promise.resolve();
+      sessionManager.stopSessionStatusPolling();
+      expect(triggerRefreshStub).to.not.have.been.called;
+    });
+
+    it('sets refreshedWhileIdle when idle and the ttl has increased since the previous poll', async () => {
+      sinon
+        .stub(solisSessionManager.prototype, 'checkSessionStatus')
+        .resolves(1500);
+      const triggerRefreshStub = sinon.stub(
+        solisSessionManager.prototype,
+        'triggerRefresh'
+      );
+      const sessionManager = new solisSessionManager({
+        sessionStatusInterval: 1,
+      });
+      sessionManager['isIdle'] = true;
+      sessionManager['currentTtl'] = 100;
+      sessionManager.startSessionStatusPolling();
+      clock.tick(1 * 1000);
+      await Promise.resolve();
+      await Promise.resolve();
+      sessionManager.stopSessionStatusPolling();
+      expect(sessionManager['refreshedWhileIdle']).to.be.true;
+      expect(triggerRefreshStub).to.not.have.been.called;
+    });
+
+    it('does not set refreshedWhileIdle when idle and the ttl has not increased', async () => {
+      sinon
+        .stub(solisSessionManager.prototype, 'checkSessionStatus')
+        .resolves(90);
+      const sessionManager = new solisSessionManager({
+        sessionStatusInterval: 1,
+      });
+      sessionManager['isIdle'] = true;
+      sessionManager['currentTtl'] = 100;
+      sessionManager.startSessionStatusPolling();
+      clock.tick(1 * 1000);
+      await Promise.resolve();
+      await Promise.resolve();
+      sessionManager.stopSessionStatusPolling();
+      expect(sessionManager['refreshedWhileIdle']).to.be.false;
+    });
+
+    it('does not set refreshedWhileIdle when not idle and the ttl has increased', async () => {
+      sinon
+        .stub(solisSessionManager.prototype, 'checkSessionStatus')
+        .resolves(1500);
+      sinon.stub(solisSessionManager.prototype, 'triggerRefresh');
+      const sessionManager = new solisSessionManager({
+        sessionStatusInterval: 1,
+      });
+      sessionManager['currentTtl'] = 100;
+      sessionManager.startSessionStatusPolling();
+      clock.tick(1 * 1000);
+      await Promise.resolve();
+      await Promise.resolve();
+      sessionManager.stopSessionStatusPolling();
+      expect(sessionManager['refreshedWhileIdle']).to.be.false;
     });
 
     it('does not call triggerRefresh or clear the currentTtl if ttl > 60 seconds', async () => {

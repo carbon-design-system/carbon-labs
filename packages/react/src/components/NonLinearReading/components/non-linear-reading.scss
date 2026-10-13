@@ -110,8 +110,6 @@ $block-class: '#{$prefix}--non-linear-reading';
   display: block;
   padding: $spacing-03 $spacing-04;
   margin: $spacing-02 0;
-  // Onboarding does not always use Carbon defaults/tokens
-  // stylelint-disable-next-line carbon/motion-duration-use, carbon/motion-easing-use
   animation: #{$block-class}-fade 600ms;
   border-inline-start: convert.to-rem(1.25px) solid $text-primary;
 

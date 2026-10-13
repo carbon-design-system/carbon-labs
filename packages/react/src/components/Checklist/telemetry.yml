@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://unpkg.com/@ibm/telemetry-config-schema@v1/dist/config.schema.json
+
+version: 1
+projectId: d47b6cda-7418-4b2d-8bc3-a283caf6e871
+endpoint: https://www-api.ibm.com/ibm-telemetry/v1/metrics
+collect:
+  jsx:
+    elements:
+      allowedAttributeNames:
+        # Checklist
+        - aria-label
+        - align
+        - className
+        - kind
+        - onClick
+        - size
+        - title
+        - theme
+        - value
+        # React
+        - key
+        - ref
+      allowedAttributeStringValues: []
+  npm:
+    dependencies: null
+  js:
+    functions: {}
+    tokens: null

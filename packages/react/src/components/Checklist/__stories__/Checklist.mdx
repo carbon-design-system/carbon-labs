@@ -1,0 +1,115 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ChecklistStories from './Checklist.stories';
+
+<Meta isTemplate />
+
+# Checklist
+
+- **Initiative owner(s):** Carbon for IBM Products
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/Checklist)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/Checklist)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [About onboarding](#about-onboarding)
+- [Getting started](#getting-started)
+- [Component API](#component-api)
+- [Example usages](#example-usages)
+  - [Default](#default)
+  - [Task states](#task-states)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+The Checklist tracks a user's progress much like Your Learning or WalkMe. Each
+item in the list can be clickable, and each item has an icon that defines the
+item's state as "not started", "in progress", and "complete".
+
+<Canvas of={ChecklistStories.Default} />
+
+## About onboarding
+
+Onboarding is a continuous learning methodology and framework that aims to
+orient, onboard, explain, educate, and cultivate novice users into
+high-functioning power users.
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-checklist
+```
+
+### JS (via import)
+
+```javascript
+import { Checklist } from '@carbon-labs/react-checklist/es/index';
+
+function App() {
+  return (
+    <Checklist
+      title="Get started checklist"
+      chartValue={0.33}
+      chartLabel="33% complete"
+      taskLists={[
+        {
+          title: 'Section label',
+          tasks: [
+            { kind: 'checked', label: 'Task name', onClick: () => {} },
+            { kind: 'unchecked', label: 'Task name' },
+          ],
+        },
+      ]}
+      viewAllLabel="View all (10)"
+    />
+  );
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```scss
+@use '@carbon/react';
+@use '@carbon-labs/react-checklist/scss/checklist';
+```
+
+## Component API
+
+<ArgTypes />
+
+## Example usages
+
+### Default
+
+Define both `chartLabel` and `chartValue` to show the chart and its label
+together. The `viewAllLabel` prop shows the "View all" button at the bottom of
+the list.
+
+<Canvas of={ChecklistStories.Default} />
+
+### Task states
+
+Each task has a `kind` of `unchecked`, `indeterminate`, `checked`, `disabled` or
+`error`. If a task has an `onClick` callback its `label` is rendered as a
+button, otherwise as plain text.
+
+<Canvas of={ChecklistStories.TaskStates} />

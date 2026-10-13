@@ -30,7 +30,6 @@ $fade-end: translateY(0);
 .#{$block-class}__element,
 .#{$block-class}__col {
   @media (prefers-reduced-motion: no-preference) {
-    /* stylelint-disable-next-line carbon/motion-duration-use, carbon/motion-easing-use -- Carbon animation duration defined above in $animation-props */
     animation: $animation-props #{$block-class}-fade;
     animation-fill-mode: forwards;
     opacity: 0;

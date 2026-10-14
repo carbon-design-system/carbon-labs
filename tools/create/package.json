@@ -24,7 +24,7 @@
     "commander": "^12.1.0",
     "execa": "^9.5.2",
     "ora": "^8.1.1",
-    "simple-git": "^3.27.0"
+    "simple-git": "^4.0.0"
   },
   "devDependencies": {
     "vitest": "^4.0.0"

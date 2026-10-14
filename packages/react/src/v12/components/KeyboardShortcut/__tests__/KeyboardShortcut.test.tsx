@@ -9,6 +9,7 @@ import React from 'react';
 import { act, render, renderHook, screen } from '@testing-library/react';
 import { renderToString } from 'react-dom/server';
 import { hydrateRoot } from 'react-dom/client';
+import { IconButton } from '@carbon/react';
 import { KeyboardShortcut } from '../components/KeyboardShortcut';
 import {
   defaultTranslateWithId,
@@ -293,6 +294,49 @@ describe('KeyboardShortcut', () => {
       // combination as left to right (measured in the browser).
       expect(shownKeys(root)).toEqual(['⇧', '⌘', 'P']);
       expect(screen.getByText('Shift Command P')).toBeInTheDocument();
+    });
+  });
+
+  describe("in a Carbon IconButton's tooltip label (the Button use case)", () => {
+    it.each([
+      ['mac', 'Copy Command C'],
+      ['other', 'Copy Control C'],
+    ] as const)('names the button "%s" in words, once', (platform, name) => {
+      render(
+        <IconButton
+          label={
+            <>
+              Copy <KeyboardShortcut keys={['mod', 'C']} platform={platform} />
+            </>
+          }>
+          <svg aria-hidden="true" />
+        </IconButton>
+      );
+      // The button is labelled by the tooltip content (aria-labelledby), and
+      // its computed name reads the words once and no glyph.
+      const button = screen.getByRole('button', { name });
+      const labelledBy = button.getAttribute('aria-labelledby');
+      expect(labelledBy).toBeTruthy();
+      const tooltip = document.getElementById(labelledBy as string);
+      expect(
+        tooltip?.querySelector('kbd.cds--keyboard-shortcut')
+      ).not.toBeNull();
+      expect(button).not.toHaveAccessibleDescription(/Command|Control/);
+    });
+
+    it('puts the keycaps inside the high-contrast popover the inverse rule keys on', () => {
+      render(
+        <IconButton
+          label={
+            <>
+              Copy <KeyboardShortcut keys={['mod', 'C']} platform="mac" />
+            </>
+          }>
+          <svg aria-hidden="true" />
+        </IconButton>
+      );
+      const key = document.querySelector('.cds--keyboard-shortcut__key');
+      expect(key?.closest('.cds--popover--high-contrast')).not.toBeNull();
     });
   });
 

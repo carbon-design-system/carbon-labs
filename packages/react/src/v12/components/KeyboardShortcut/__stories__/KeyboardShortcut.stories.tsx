@@ -7,8 +7,12 @@
 
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import { Copy } from '@carbon/icons-react';
 import {
   Button,
+  DefinitionTooltip,
+  IconButton,
+  Layer,
   Menu,
   MenuItem,
   MenuItemDivider,
@@ -117,7 +121,9 @@ export const RightToLeft: Story = {
 };
 
 /**
- * Keycaps inside a Carbon Tooltip, which uses the inverse surface.
+ * Keycaps inside a Carbon Tooltip, around a Button. The tooltip is Carbon's
+ * high-contrast popover ($background-inverse), so the keycap takes Carbon's
+ * inverse family; `kind="plain"` inherits the popover's $text-inverse.
  */
 export const InTooltip: Story = {
   args: { keys: ['mod', 'K'] },
@@ -138,6 +144,52 @@ export const InTooltip: Story = {
 };
 
 /**
+ * The Button use case: an icon-only Carbon IconButton whose label, shown in
+ * its tooltip and used as its accessible name, carries the shortcut. The
+ * button is named "Copy Command C" on macOS and "Copy Control C" elsewhere.
+ */
+export const InIconButtonTooltip: Story = {
+  args: { keys: ['mod', 'C'] },
+  render: (args) => (
+    <div>
+      <IconButton
+        align="bottom"
+        defaultOpen
+        kind="ghost"
+        label={
+          <>
+            Copy <KeyboardShortcut {...args} />
+          </>
+        }>
+        <Copy />
+      </IconButton>
+    </div>
+  ),
+};
+
+/**
+ * A shortcut inside a Carbon DefinitionTooltip, also a high-contrast popover.
+ */
+export const InDefinitionTooltip: Story = {
+  args: { keys: ['mod', 'shift', 'P'] },
+  render: (args) => (
+    <p>
+      Open the{' '}
+      <DefinitionTooltip
+        defaultOpen
+        definition={
+          <>
+            Run any command by name. <KeyboardShortcut {...args} />
+          </>
+        }>
+        command palette
+      </DefinitionTooltip>{' '}
+      from anywhere.
+    </p>
+  ),
+};
+
+/**
  * Keycaps on a Carbon Tile ($layer-01) with no Layer around it, so the keycap's
  * contextual $layer is the same token as the tile.
  */
@@ -146,6 +198,21 @@ export const OnTile: Story = {
   render: (args) => (
     <Tile>
       Press <KeyboardShortcut {...args} /> to search
+    </Tile>
+  ),
+};
+
+/**
+ * The guidance for a Tile: a `Layer` inside it raises the keycap one layer
+ * above the tile, as Carbon raises any control placed on a layer.
+ */
+export const OnTileWithLayer: Story = {
+  args: { keys: ['mod', 'K'] },
+  render: (args) => (
+    <Tile>
+      <Layer>
+        Press <KeyboardShortcut {...args} /> to search
+      </Layer>
     </Tile>
   ),
 };

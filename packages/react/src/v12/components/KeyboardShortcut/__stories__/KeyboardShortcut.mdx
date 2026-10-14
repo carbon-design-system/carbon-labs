@@ -33,6 +33,7 @@ import * as KeyboardShortcutStories from './KeyboardShortcut.stories';
 - [Overview](#overview)
 - [Platforms](#platforms)
 - [Accessibility](#accessibility)
+- [On surfaces](#on-surfaces)
 - [Inside a menu](#inside-a-menu)
 - [Component API](#component-api)
 - [Getting started](#getting-started)
@@ -88,6 +89,24 @@ example from the request's `User-Agent`.
   `carbon.keyboard-shortcut.control.name` ("Steuerung").
 - In a right-to-left page the combination stays left to right, as on the
   keyboard.
+
+## On surfaces
+
+- **In a tooltip.** Inside Carbon's high-contrast popover (`Tooltip`,
+  `DefinitionTooltip`, an `IconButton`'s label), keycaps take Carbon's inverse
+  family by themselves: `$background-inverse-hover` fill, `$border-inverse`
+  edge, `$text-inverse` label. `kind="plain"` inherits the popover's text
+  colour. Nothing to set.
+
+<Canvas of={KeyboardShortcutStories.InIconButtonTooltip} />
+
+- **On a Tile or any other layer.** A keycap's fill is the contextual
+  `$layer`, so directly on a `Tile` it is the tile's own colour and only its
+  border draws the key. Put the content in a `<Layer>` inside the tile, as
+  Carbon does for any control on a layer; or use `kind="plain"` where a keycap
+  is not wanted.
+
+<Canvas of={KeyboardShortcutStories.OnTileWithLayer} />
 
 ## Inside a menu
 

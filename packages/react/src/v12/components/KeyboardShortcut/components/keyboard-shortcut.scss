@@ -70,3 +70,19 @@
   padding-inline: $spacing-02;
   text-align: center;
 }
+
+// Inside Carbon's high-contrast popover (Tooltip, DefinitionTooltip, IconButton's
+// label), the ground is $background-inverse, not the page's layer. The keycap
+// takes Carbon's inverse family instead, by each token's own description:
+// $background-inverse-hover is the step Carbon itself puts on an inverse
+// surface (the skeleton in this same popover, an inverse notification's
+// action), $border-inverse is "for borders on dark backgrounds or inverse
+// components", and $text-inverse is the popover's own text colour. Plain needs
+// nothing: it inherits the popover's $text-inverse.
+.#{$prefix}--popover--high-contrast
+  .#{$prefix}--keyboard-shortcut--keycap
+  .#{$prefix}--keyboard-shortcut__key {
+  border-color: $border-inverse;
+  background-color: $background-inverse-hover;
+  color: $text-inverse;
+}

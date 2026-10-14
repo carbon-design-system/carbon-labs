@@ -349,7 +349,9 @@ const useStoryWiring = (args, updateArgs) => {
   // Inject dropdown-only TasksController wiring
   const tasksControllerConfigInjected = React.useMemo(() => {
     const tc = args.tasksControllerConfig;
-    if (!tc) return tc;
+    if (!tc) {
+      return tc;
+    }
     if (tc.type === 'dropdown') {
       return {
         ...tc,
@@ -369,15 +371,25 @@ const useStoryWiring = (args, updateArgs) => {
   const headerActionConfigResolved: HeaderActionConfig | null =
     React.useMemo(() => {
       const t = args.headerActionConfig;
-      if (t === 1) return headerActionIcon;
-      if (t === 2) return headerActionGhost;
+
+      if (t === 1) {
+        return headerActionIcon;
+      }
+
+      if (t === 2) {
+        return headerActionGhost;
+      }
+
       return null;
     }, [args.headerActionConfig]);
 
   // ContentSwitcher wiring — uses headerTiles (not carousel pages)
   const contentSwitcherConfigInjected = React.useMemo(() => {
     const base = args.contentSwitcherConfig;
-    if (!base) return undefined;
+
+    if (!base) {
+      return undefined;
+    }
 
     const count: 2 | 3 = base.visibleCount === 3 ? 3 : 2;
 

@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.190.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.189.0...@carbon-labs/web-components@0.190.0) (2026-10-14)
+
+
+### Bug Fixes
+
+* **global-header:** Fixes for currentTtl state and warning countdown ([#1396](https://github.com/carbon-design-system/carbon-labs/issues/1396)) ([2f8201e](https://github.com/carbon-design-system/carbon-labs/commit/2f8201ef0173c29c59da585a8702e11835dcf379))
+
+
+
+
+
+# [0.189.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.188.0...@carbon-labs/web-components@0.189.0) (2026-10-14)
+
+
+### Bug Fixes
+
+* **deps:** update tiptap monorepo to v3.31.4 ([#1390](https://github.com/carbon-design-system/carbon-labs/issues/1390)) ([a06cdfe](https://github.com/carbon-design-system/carbon-labs/commit/a06cdfe9bc325213c5c286f8b69a20a7b2bdc012))
+
+
+
+
+
+# [0.188.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.187.0...@carbon-labs/web-components@0.188.0) (2026-10-14)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
 # [0.187.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.186.0...@carbon-labs/web-components@0.187.0) (2026-10-08)
 
 

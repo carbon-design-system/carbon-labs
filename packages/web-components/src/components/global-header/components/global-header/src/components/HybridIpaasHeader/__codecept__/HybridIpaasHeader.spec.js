@@ -30,7 +30,7 @@ Scenario('It checks the header content', async ({ I }) => {
   I.waitForElement('#ipaas-header-container', 30); // Add some wait time for the page to fully load
   I.waitForElement('.ibm-automation-cds__header-name');
   I.seeElement('.ibm-automation-cds__header-name');
-  I.waitForText('webMethods Hybrid Integration');
+  I.waitForText('Integration');
   I.seeElement('.ibm-automation-cds__capability-name');
   I.waitForVisible('.ibm-automation-cds__capability-name');
   I.waitForText('App Connect');
@@ -162,13 +162,12 @@ Scenario('Trial information renders', async ({ I }) => {
 Scenario('Solis components render', async ({ I }) => {
   I.amOnPage(localhostWithSolis);
   I.waitForElement('clabs-global-header-apaas', 30);
-
-  // I.seeElement(locate('#ibm-automation-cds-solis-sidekick-button'));
-  // I.click(locate('#ibm-automation-cds-solis-sidekick-button'));
-  // I.seeElement('.sidekick-body');
-  // I.see('Overview');
-  // I.see('Analyze this page');
-  // I.see('Insights');
+  I.wait(3);
+  I.seeElement(locate('#ibm-automation-cds-solis-sidekick-button'));
+  I.click(locate('#ibm-automation-cds-solis-sidekick-button'));
+  I.see('Overview');
+  I.see('Analyze this page');
+  I.see('Insights');
 
   // Verify the switcher button is rendered and interactive (local assertions).
   I.seeElement(locate('#ibm-automation-cds-solis-switcher-button'));

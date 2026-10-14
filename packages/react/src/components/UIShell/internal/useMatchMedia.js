@@ -6,42 +6,25 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { useState, useEffect } from 'react';
-import { canUseDOM } from './environment';
+import { useCallback, useSyncExternalStore } from 'react';
 
 export function useMatchMedia(mediaQueryString) {
-  const [matches, setMatches] = useState(() => {
-    if (canUseDOM) {
+  const subscribe = useCallback(
+    (onStoreChange) => {
       const mediaQueryList = window.matchMedia(mediaQueryString);
-      return mediaQueryList.matches;
-    }
-    return false;
-  });
+      mediaQueryList.addEventListener('change', onStoreChange);
+      return () => mediaQueryList.removeEventListener('change', onStoreChange);
+    },
+    [mediaQueryString]
+  );
 
-  useEffect(() => {
-    function listener(event) {
-      setMatches(event.matches);
-    }
+  // `getSnapshot` runs only on the client; `getServerSnapshot` returns `false`
+  // during SSR and the initial hydration render so the markup matches the
+  // server. React then re-renders with the real client value after hydration,
+  // without a hydration mismatch - see
+  // https://react.dev/reference/react/useSyncExternalStore#adding-support-for-server-rendering
+  const getSnapshot = () => window.matchMedia(mediaQueryString).matches;
+  const getServerSnapshot = () => false;
 
-    const mediaQueryList = window.matchMedia(mediaQueryString);
-    // Support fallback to `addListener` for broader browser support
-    if (mediaQueryList.addEventListener) {
-      mediaQueryList.addEventListener('change', listener);
-    } else {
-      mediaQueryList.addListener(listener);
-    }
-
-    // Make sure the media query list is in sync with the matches state
-    setMatches(mediaQueryList.matches);
-
-    return () => {
-      if (mediaQueryList.addEventListener) {
-        mediaQueryList.removeEventListener('change', listener);
-      } else {
-        mediaQueryList.removeListener(listener);
-      }
-    };
-  }, [mediaQueryString]);
-
-  return matches;
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }

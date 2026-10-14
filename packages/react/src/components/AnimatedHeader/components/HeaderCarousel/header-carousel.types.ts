@@ -20,4 +20,22 @@ export type HeaderCarouselConfig = {
   prevButtonLabel?: string;
   /** aria-label for the next page chevron button (default: 'Next page') */
   nextButtonLabel?: string;
+  /**
+   * Optional callback that returns the aria-label and tooltip text for a page
+   * dot given its 1-based page number. When omitted the default label
+   * `'Page N'` is used.
+   *
+   * @param pageNumber - 1-based index of the page dot (1, 2, 3, …)
+   * @returns The full label string for that dot, e.g. `'Page 1'`
+   *
+   * @example
+   * // Simple translation
+   * getPageIndicatorLabel={(n) => `Seite ${n}`}
+   *
+   * @example
+   * // Per-page descriptive names
+   * const labels = ['Overview', 'Models', 'Deployments', 'Monitors', 'Jobs'];
+   * getPageIndicatorLabel={(n) => labels[n - 1]}
+   */
+  getPageIndicatorLabel?: (pageNumber: number) => string;
 };

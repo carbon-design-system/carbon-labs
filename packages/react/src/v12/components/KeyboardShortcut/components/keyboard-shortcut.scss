@@ -1,0 +1,67 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon foundations only: a labs v12 component consumes @carbon/styles and
+// never mirrors it.
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/utilities/visually-hidden' as *;
+
+$prefix: 'cds' !default;
+
+.#{$prefix}--keyboard-shortcut {
+  // A <kbd> is monospace in every browser's own stylesheet. Each kind sets
+  // its type below; nothing here may leak the browser's default.
+  font: inherit;
+  white-space: nowrap;
+}
+
+// The accessible name. Hidden visually, read by assistive technology, and kept
+// out of an ordinary text selection so copying "⌘K" does not paste the words.
+.#{$prefix}--keyboard-shortcut__label {
+  @include visually-hidden;
+
+  user-select: none;
+}
+
+.#{$prefix}--keyboard-shortcut__key {
+  font: inherit;
+}
+
+// Plain: exactly what Carbon's MenuItem does with its shortcut hint. Its
+// `__shortcut` div sets nothing but `display: flex`, and inherits the type
+// (body-compact-01) and colour ($text-secondary, $text-primary on hover) of
+// the menu item. Inheriting is how this matches it in every state.
+.#{$prefix}--keyboard-shortcut--plain {
+  color: inherit;
+}
+
+// Keycap: each key a small key on the surface it sits on.
+.#{$prefix}--keyboard-shortcut--keycap {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-02;
+  vertical-align: baseline;
+}
+
+.#{$prefix}--keyboard-shortcut--keycap .#{$prefix}--keyboard-shortcut__key {
+  @include type-style('code-01');
+
+  // Radius: v12 Carbon gives a small surface $border-radius-04 (MenuItem,
+  // Tooltip). Labs's @carbon/styles is 1.106 until carbon-labs#1415, which has
+  // no radius scale at all, so the keycap stays square rather than mirror the
+  // value by hand. It takes $border-radius-04 when the bump lands.
+  display: inline-block;
+  box-sizing: border-box;
+  border: 1px solid $border-subtle;
+  background-color: $layer;
+  color: $text-secondary;
+  min-inline-size: $spacing-05;
+  padding-inline: $spacing-02;
+  text-align: center;
+}

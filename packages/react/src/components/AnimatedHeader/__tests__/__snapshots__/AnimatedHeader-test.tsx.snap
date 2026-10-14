@@ -66,7 +66,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
               Label
             </label>
             <div
-              class="cds--dropdown cds--dropdown--inline cds--dropdown--md cds--list-box cds--list-box--md"
+              class="cds--dropdown cds--dropdown--inline cds--dropdown--md cds--list-box cds--list-box--md cds--layout--size-md"
               id="clabs--animated-header__header-dropdown"
             >
               <button
@@ -139,7 +139,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
               Label
             </label>
             <div
-              class="cds--dropdown cds--dropdown--inline cds--dropdown--sm cds--list-box cds--list-box--sm"
+              class="cds--dropdown cds--dropdown--inline cds--dropdown--sm cds--list-box cds--list-box--sm cds--layout--size-sm"
               id="clabs--animated-header__workspace"
             >
               <button

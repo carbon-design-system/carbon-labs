@@ -82,8 +82,11 @@ export class SessionExpiryModal extends LitElement {
   startCountdown() {
     this.stopCountdown();
     this.countdownIntervalId = window.setInterval(() => {
-      this.remainingSeconds = this.remainingSeconds - 1;
+      this.remainingSeconds = Math.max(0, this.remainingSeconds - 1);
       this.expiryTime = this.getExpiryTime(this.remainingSeconds);
+      if (this.remainingSeconds === 0) {
+        this.stopCountdown();
+      }
     }, 1 * 1000);
   }
 

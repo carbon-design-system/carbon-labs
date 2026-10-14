@@ -10,5 +10,16 @@ export type {
   KeyboardShortcutProps,
   KeyboardShortcutKind,
 } from './components/KeyboardShortcut';
-export { translationIds, defaultTranslations } from './internal/keys';
-export type { Platform, TranslationId, TranslateWithId } from './internal/keys';
+export {
+  translationIds,
+  defaultTranslateWithId,
+  keyIds,
+} from './internal/keys';
+export type {
+  KeyId,
+  Platform,
+  KeyboardShortcutTranslate,
+  KeyboardShortcutTranslationKey,
+  KeyboardShortcutTranslationArgs,
+  TranslateWithId,
+} from './internal/keys';

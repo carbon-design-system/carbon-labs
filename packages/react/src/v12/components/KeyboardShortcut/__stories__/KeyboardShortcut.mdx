@@ -8,17 +8,19 @@ import * as KeyboardShortcutStories from './KeyboardShortcut.stories';
 - **Initiative owner(s):** @ryanmellody
 - **Status:** Draft
 - **Target library:** @carbon/react
-- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Target library maintainer(s) / PR Reviewer(s):** TODO — to be named by the initiative owner
+- **Radius:** pending carbon-labs#1415. The keycap is square only because labs's
+  `@carbon/styles` (1.106) has no radius scale yet; it takes `$border-radius-04`
+  when the bump lands. Square is not the design.
 - **Support channel:** `#carbon-labs`
 
 {/* graduation-ready:status */}
 
-> **Graduation readiness:** 3 FAIL, 15 pass, 3 n-a — not ready. Advisory: it
+> **Graduation readiness:** 2 FAIL, 16 pass, 3 n-a — not ready. Advisory: it
 > never blocks a draft. Written by `graduation-ready --write-status`; run it for
 > the reasons.
 
 - FAIL `status`
-- FAIL `mdx-maintainers`
 - FAIL `proposals`
 
 {/* /graduation-ready:status */}
@@ -58,8 +60,11 @@ listens for the keys.
 
 ## Platforms
 
-`mod` is ⌘ on macOS and Ctrl elsewhere. macOS shows glyphs (⌘ ⌥ ⇧ ⌃ ↵ ⌫ ⎋ ←);
-Windows and Linux show words (Ctrl, Alt, Shift, Enter). `platform="auto"`
+`mod` is ⌘ on macOS and Ctrl elsewhere, and `remove` is ⌫ on macOS and Del
+elsewhere. macOS shows glyphs (⌘ ⌥ ⇧ ⌃ ↩ ⌫ ⎋ ←); Windows and Linux show words
+(Ctrl, Alt, Shift, Win, Enter). Modifiers are shown in each platform's order —
+⌃⌥⇧⌘ on macOS, Ctrl+Alt+Shift+Win elsewhere — whatever order they are written
+in, and the spoken name follows the same order. `platform="auto"`
 detects it in the browser. A server render cannot know the platform, so it
 renders the Windows and Linux words and the browser takes over straight after
 hydration. Pass `platform="mac"` or `"other"` when the server knows better, for
@@ -78,7 +83,11 @@ example from the request's `User-Agent`.
   technology so the name is not read twice.
 - Inside a control, the words become part of its name: a menu item reads
   "Copy Command C", not "Copy ⌘C".
-- `translateWithId` translates the spoken names.
+- `translateWithId` translates both what each key shows and its spoken name,
+  with separate ids: `carbon.keyboard-shortcut.control.label` ("Strg") and
+  `carbon.keyboard-shortcut.control.name` ("Steuerung").
+- In a right-to-left page the combination stays left to right, as on the
+  keyboard.
 
 ## Inside a menu
 

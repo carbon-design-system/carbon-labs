@@ -8,12 +8,12 @@
 import React, { forwardRef, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { usePrefix } from '../internal/usePrefix';
+import { usePrefix } from '@carbon/react';
 import { usePlatform } from '../internal/usePlatform';
 import {
-  resolveKey,
+  resolveKeys,
+  type KeyboardShortcutTranslate,
   type Platform,
-  type TranslateWithId,
 } from '../internal/keys';
 
 export type KeyboardShortcutKind = 'keycap' | 'plain';
@@ -28,12 +28,15 @@ export interface KeyboardShortcutProps extends Omit<
   className?: string;
 
   /**
-   * The keys of the combination, in order. Named keys are case-insensitive:
-   * `mod` is ⌘ on macOS and Ctrl elsewhere; `ctrl`, `alt`, `shift`, `meta`,
-   * `enter`, `backspace`, `delete`, `escape`, `tab`, `space`, `capslock`, the
-   * arrows, `pageup`, `pagedown`, `home`, `end` and `f1`–`f24` are mapped per
-   * platform. Anything else renders as written; a single letter is upper-cased.
-   * The component only displays the shortcut: it never listens for the keys.
+   * The keys of the combination. Named keys are case-insensitive: `mod` is ⌘
+   * on macOS and Ctrl elsewhere; `remove` is ⌫ on macOS and Del elsewhere;
+   * `ctrl`, `alt`, `shift`, `meta`, `enter`, `backspace`, `delete`, `escape`,
+   * `tab`, `space`, `capslock`, the arrows, `pageup`, `pagedown`, `home`, `end`
+   * and punctuation are mapped per platform. Modifiers are shown in platform
+   * order (⌃⌥⇧⌘, Ctrl+Alt+Shift+Win) whatever order they are written in; other
+   * keys follow in the order written. Anything else renders as written; a
+   * single letter is upper-cased. It only displays the shortcut: it never
+   * listens for the keys.
    */
   keys: string[];
 
@@ -51,11 +54,12 @@ export interface KeyboardShortcutProps extends Omit<
   platform?: Platform | 'auto';
 
   /**
-   * Translates the spoken name of each named key ("Command", "Shift"), which
-   * make up the shortcut's accessible name. Called with a message id from
-   * `translationIds` and `{ platform }`.
+   * Translates what each named key shows ("Ctrl" → "Strg") and its spoken
+   * name ("Control" → "Steuerung"). Called with a message id from
+   * `translationIds` (`carbon.keyboard-shortcut.<key>.<label|name>`) and
+   * `{ platform }`. Ids it does not translate fall back to English.
    */
-  translateWithId?: TranslateWithId;
+  translateWithId?: KeyboardShortcutTranslate;
 }
 
 export const KeyboardShortcut = forwardRef<HTMLElement, KeyboardShortcutProps>(
@@ -72,15 +76,16 @@ export const KeyboardShortcut = forwardRef<HTMLElement, KeyboardShortcutProps>(
   ) {
     const prefix = usePrefix();
     const resolvedPlatform = usePlatform(platform);
-    const resolved = (keys ?? [])
-      .filter((key) => typeof key === 'string' && key !== '')
-      .map((key) => resolveKey(key, resolvedPlatform, translateWithId));
+    const resolved = resolveKeys(keys ?? [], resolvedPlatform, translateWithId);
 
     // Text keys are joined with `+` off macOS (Ctrl+K) and written together on
     // it (⌘K), as each platform's own menus do. Keycaps need no separator:
-    // each key is already its own shape.
+    // each key is already its own shape. Joined with `+`, the Plus key is
+    // written as its name, so Ctrl and Plus read "Ctrl+Plus", not "Ctrl++".
     const separator =
       kind === 'plain' && resolvedPlatform === 'other' ? '+' : null;
+    const shown = (key: (typeof resolved)[number]) =>
+      separator && key.id === 'plus' ? key.name : key.label;
 
     return (
       <kbd
@@ -115,7 +120,7 @@ export const KeyboardShortcut = forwardRef<HTMLElement, KeyboardShortcutProps>(
             <kbd
               aria-hidden="true"
               className={`${prefix}--keyboard-shortcut__key`}>
-              {key.label}
+              {shown(key)}
             </kbd>
           </Fragment>
         ))}
@@ -133,12 +138,15 @@ KeyboardShortcut.propTypes = {
   className: PropTypes.string,
 
   /**
-   * The keys of the combination, in order. Named keys are case-insensitive:
-   * `mod` is ⌘ on macOS and Ctrl elsewhere; `ctrl`, `alt`, `shift`, `meta`,
-   * `enter`, `backspace`, `delete`, `escape`, `tab`, `space`, `capslock`, the
-   * arrows, `pageup`, `pagedown`, `home`, `end` and `f1`–`f24` are mapped per
-   * platform. Anything else renders as written; a single letter is upper-cased.
-   * The component only displays the shortcut: it never listens for the keys.
+   * The keys of the combination. Named keys are case-insensitive: `mod` is ⌘
+   * on macOS and Ctrl elsewhere; `remove` is ⌫ on macOS and Del elsewhere;
+   * `ctrl`, `alt`, `shift`, `meta`, `enter`, `backspace`, `delete`, `escape`,
+   * `tab`, `space`, `capslock`, the arrows, `pageup`, `pagedown`, `home`, `end`
+   * and punctuation are mapped per platform. Modifiers are shown in platform
+   * order (⌃⌥⇧⌘, Ctrl+Alt+Shift+Win) whatever order they are written in; other
+   * keys follow in the order written. Anything else renders as written; a
+   * single letter is upper-cased. It only displays the shortcut: it never
+   * listens for the keys.
    */
   keys: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 
@@ -156,9 +164,10 @@ KeyboardShortcut.propTypes = {
   platform: PropTypes.oneOf(['mac', 'other', 'auto'] as const),
 
   /**
-   * Translates the spoken name of each named key ("Command", "Shift"), which
-   * make up the shortcut's accessible name. Called with a message id from
-   * `translationIds` and `{ platform }`.
+   * Translates what each named key shows ("Ctrl" → "Strg") and its spoken
+   * name ("Control" → "Steuerung"). Called with a message id from
+   * `translationIds` (`carbon.keyboard-shortcut.<key>.<label|name>`) and
+   * `{ platform }`. Ids it does not translate fall back to English.
    */
   translateWithId: PropTypes.func,
 };

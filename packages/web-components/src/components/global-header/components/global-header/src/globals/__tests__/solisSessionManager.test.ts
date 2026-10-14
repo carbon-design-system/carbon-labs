@@ -682,7 +682,7 @@ describe('solisSessionManager', () => {
       expect(checkSessionStatusStub).to.have.been.calledOnce;
     });
 
-    it('calls triggerRefresh when ttl is <= 60 seconds and isRefreshing is false', async () => {
+    it('calls triggerRefresh and clears the currentTtl when ttl is <= 60 seconds and isRefreshing is false', async () => {
       sinon
         .stub(solisSessionManager.prototype, 'checkSessionStatus')
         .resolves(45);
@@ -699,6 +699,7 @@ describe('solisSessionManager', () => {
       await Promise.resolve(); // flush: setTimeout callback fires, checkSessionStatus called
       await Promise.resolve(); // flush: awaited checkSessionStatus resolves, triggerRefresh called
       sessionManager.stopSessionStatusPolling();
+      expect(sessionManager['currentTtl']).to.be.null;
       expect(triggerRefreshStub).to.have.been.called;
     });
 
@@ -722,7 +723,7 @@ describe('solisSessionManager', () => {
       expect(triggerRefreshStub).to.not.have.been.called;
     });
 
-    it('does not call triggerRefresh if ttl > 60 seconds', async () => {
+    it('does not call triggerRefresh or clear the currentTtl if ttl > 60 seconds', async () => {
       sinon
         .stub(solisSessionManager.prototype, 'checkSessionStatus')
         .resolves(120);
@@ -740,6 +741,7 @@ describe('solisSessionManager', () => {
       await Promise.resolve(); // flush: awaited checkSessionStatus resolves, triggerRefresh skipped
       sessionManager.stopSessionStatusPolling();
       expect(triggerRefreshStub).to.not.have.been.called;
+      expect(sessionManager['currentTtl']).to.equal(120);
     });
 
     it('calls performLogout if the session is inactive', async () => {

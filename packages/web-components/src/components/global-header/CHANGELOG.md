@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.102.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.101.0...@carbon-labs/wc-global-header@0.102.0) (2026-10-14)
+
+
+### Bug Fixes
+
+* **global-header:** Fixes for currentTtl state and warning countdown ([#1396](https://github.com/carbon-design-system/carbon-labs/issues/1396)) ([2f8201e](https://github.com/carbon-design-system/carbon-labs/commit/2f8201ef0173c29c59da585a8702e11835dcf379))
+
+
+
+
+
 # [0.101.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.100.0...@carbon-labs/wc-global-header@0.101.0) (2026-10-08)
 
 

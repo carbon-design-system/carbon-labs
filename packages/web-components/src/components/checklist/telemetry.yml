@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=https://unpkg.com/@ibm/telemetry-config-schema@v1/dist/config.schema.json
+
+version: 1
+projectId: 5b40806f-86cd-48b4-b550-3f60defe53da
+endpoint: https://www-api.ibm.com/ibm-telemetry/v1/metrics
+collect:
+  wc:
+    elements:
+      allowedAttributeNames:
+        # clabs-checklist
+        - chart-label
+        - chart-value
+        - disable-toggle
+        - open
+        - title
+        - toggle-aria-label
+        - toggle-label
+        - toggle-label-align
+        - view-all-label
+        # clabs-checklist-group
+        # clabs-checklist-item
+        - clickable
+        - label
+        - status
+        # clabs-checklist-icon
+        - kind
+        # clabs-checklist-chart
+        - value
+      allowedAttributeStringValues:
+        # General - boolean attributes
+        - 'true'
+        - 'false'
+        # kind / status
+        - unchecked
+        - indeterminate
+        - checked
+        - disabled
+        - error
+        - not started
+        - in progress
+        - completed
+  npm:
+    dependencies: null
+  js:
+    functions: {}
+    tokens: null

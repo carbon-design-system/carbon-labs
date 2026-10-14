@@ -1,0 +1,72 @@
+import { ArgTypes, Markdown, Meta } from '@storybook/addon-docs/blocks';
+import { cdnJs, cdnCss } from '../../../globals/internal/storybook-cdn';
+import meta from './checklist.stories';
+import packageJson from '../package.json';
+
+<Meta of={meta} />
+
+# Checklist
+
+- **Initiative owner(s):** Carbon for IBM Products
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+## Overview
+
+The Checklist tracks a user's progress much like Your Learning or WalkMe. Each
+item in the list can be clickable, and each item has an icon that defines the
+item's state as "not started", "in progress", "completed", "error", or
+"disabled".
+
+The component family is:
+
+- `<clabs-checklist>` — the root container with header, body and footer
+- `<clabs-checklist-group>` — a labelled section inside the body
+- `<clabs-checklist-item>` — a single task row, optionally clickable
+- `<clabs-checklist-icon>` — the status icon (used internally by
+  `clabs-checklist-item`)
+- `<clabs-checklist-chart>` — the donut-chart progress indicator (used
+  internally by `clabs-checklist`)
+
+## Getting started
+
+### JS (via import)
+
+```javascript
+import '@carbon-labs/wc-checklist/es/index.js';
+```
+
+<Markdown>{`${cdnJs({ components: ['checklist'] }, packageJson)}`}</Markdown>
+<Markdown>{`${cdnCss()}`}</Markdown>
+
+### HTML
+
+```html
+<clabs-checklist
+  title="Get started checklist"
+  chart-value="0.33"
+  chart-label="33% complete"
+  view-all-label="View all (10)"
+  toggle-label="Toggle"
+  toggle-aria-label="Checklist toggle"
+  open>
+  <clabs-checklist-group title="Section label">
+    <clabs-checklist-item
+      label="Task name"
+      status="completed"></clabs-checklist-item>
+    <clabs-checklist-item
+      label="Task name"
+      status="in progress"
+      clickable></clabs-checklist-item>
+    <clabs-checklist-item
+      label="Task name"
+      status="not started"></clabs-checklist-item>
+  </clabs-checklist-group>
+</clabs-checklist>
+```
+
+### `<clabs-checklist>` attributes and properties
+
+<ArgTypes of="clabs-checklist" />

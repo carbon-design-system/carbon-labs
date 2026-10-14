@@ -74,10 +74,9 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: Boolean }) addCookiePreferences = false;
   @property({ type: Boolean }) forceBackendProxy = false; // override domain check; always enable the backend proxy when true
   @property({ type: Boolean }) solisSessionManagerEnabled = false; // toggle to enable/disable the Solis session manager
-  @property({ type: Number }) solisSessionRefreshInterval = 25; // (minutes) might not need Solis token refresh interval to be configurable
   @property({ type: Number }) solisIdleTimeoutInterval = 28; // (minutes) might not need Solis idle timeout interval to be configurable
   @property({ type: Number }) solisSessionStatusInterval = 10; // (seconds) might not need Solis session polling interval to be configurable
-  @property({ type: String }) logoutUrl = '';
+  @property({ type: Number }) solisWarningLeadTime = 5; // (minutes)
 
   @state()
   headerOptions: HeaderProps = {
@@ -96,6 +95,8 @@ export class HybridIpaasHeader extends LitElement {
     },
   };
 
+  @state() private sessionExpiryNotificationOpen = false;
+
   sessionManager: solisSessionManager | null = null;
 
   constructor() {
@@ -111,7 +112,6 @@ export class HybridIpaasHeader extends LitElement {
   disconnectedCallback() {
     super.disconnectedCallback();
     if (this.sessionManager) {
-      this.sessionManager.stopRefreshSchedule();
       this.sessionManager.stopSessionStatusPolling();
       this.sessionManager.unregisterActivityListeners();
       this.sessionManager = null;
@@ -196,6 +196,8 @@ export class HybridIpaasHeader extends LitElement {
   }
 
   private initializeSessionManager() {
+    import('../../solis/SessionExpiryModal/SessionExpiryModal');
+
     if (!this.sessionManager) {
       let logoutCallback: (() => void) | undefined;
       if (this.logoutCallback) {
@@ -211,16 +213,21 @@ export class HybridIpaasHeader extends LitElement {
       }
 
       this.sessionManager = new solisSessionManager({
-        tokenRefreshInterval: this.solisSessionRefreshInterval,
         idleTimeoutInterval: this.solisIdleTimeoutInterval,
         sessionStatusInterval: this.solisSessionStatusInterval,
         basePath: this.basePath,
         logoutCallback,
-        logoutUrl: this.logoutUrl || undefined,
+        warningLeadTime: this.solisWarningLeadTime,
+        onWarningCallback: () => {
+          this.sessionExpiryNotificationOpen = true;
+        },
+        onWarningDismissedCallback: () => {
+          this.sessionExpiryNotificationOpen = false;
+        },
       });
-      this.sessionManager.startRefreshSchedule();
       this.sessionManager.startSessionStatusPolling();
       this.sessionManager.registerActivityListeners();
+      this.sessionManager.setActive();
     }
   }
 
@@ -499,6 +506,10 @@ export class HybridIpaasHeader extends LitElement {
         .headerProps="${this.headerOptions}">
         <slot name="header-logo" slot="header-logo"></slot>
       </clabs-global-header-apaas>
+      <clabs-global-header-session-expiry-modal
+        .totalSeconds="${this.solisWarningLeadTime * 60}"
+        .open="${this.sessionExpiryNotificationOpen}">
+      </clabs-global-header-session-expiry-modal>
     </div>`;
   }
 }

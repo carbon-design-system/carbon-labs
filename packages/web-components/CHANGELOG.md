@@ -3,6 +3,71 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.188.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.187.0...@carbon-labs/web-components@0.188.0) (2026-10-14)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.187.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.186.0...@carbon-labs/web-components@0.187.0) (2026-10-08)
+
+
+### Bug Fixes
+
+* **global-header:** Trigger refresh if ttl increases between session status polls ([#1395](https://github.com/carbon-design-system/carbon-labs/issues/1395)) ([376cb03](https://github.com/carbon-design-system/carbon-labs/commit/376cb0347e7e2c16be05e4983cbcf14134dfc86a))
+
+
+
+
+
+# [0.186.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.185.0...@carbon-labs/web-components@0.186.0) (2026-10-07)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.185.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.184.0...@carbon-labs/web-components@0.185.0) (2026-10-07)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.184.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.183.0...@carbon-labs/web-components@0.184.0) (2026-10-06)
+
+
+### Features
+
+* **global-header:** Configure Solis logout warning notification ([#1380](https://github.com/carbon-design-system/carbon-labs/issues/1380)) ([0a3b6e7](https://github.com/carbon-design-system/carbon-labs/commit/0a3b6e7053611c44bc3f2debbc7906873ce759c4))
+
+
+
+
+
+# [0.183.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.182.0...@carbon-labs/web-components@0.183.0) (2026-10-05)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.182.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.181.0...@carbon-labs/web-components@0.182.0) (2026-10-01)
+
+
+### Bug Fixes
+
+* **global-header:** Session manager fixes ([#1386](https://github.com/carbon-design-system/carbon-labs/issues/1386)) ([3db879c](https://github.com/carbon-design-system/carbon-labs/commit/3db879c9a5caabab89acafac35fe1f1adcecd565))
+
+
+
+
+
 # [0.181.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.180.0...@carbon-labs/web-components@0.181.0) (2026-09-24)
 
 

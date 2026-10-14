@@ -10,10 +10,8 @@
 import { html, fixture, expect } from '@open-wc/testing';
 import '@carbon-labs/wc-global-header/es/wc-global-header.mjs';
 describe('clabs-global-header', function () {
-  it('should render with cds-button minimum attributes', async () => {
-    const el = await fixture(
-      html`<clabs-global-header> button </clabs-global-header>`
-    );
+  it('should render with clabs-global-header minimum attributes', async () => {
+    const el = await fixture(html`<clabs-global-header></clabs-global-header>`);
 
     await expect(el).dom.to.equalSnapshot();
     await expect(el).shadowDom.to.be.accessible();

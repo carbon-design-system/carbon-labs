@@ -10,27 +10,33 @@
 import { solisSessionManagerConfig } from '../types/Header.types';
 
 export default class solisSessionManager {
-  private refreshIntervalId: number | null = null;
-  private tokenRefreshInterval: number;
+  private sessionStatusIntervalId: number | null = null;
+  private isLoggingOut = false;
+  private sessionStatusInterval: number;
   private idleTimeoutInterval: number;
   private isIdle: boolean;
   private idleTimeout: ReturnType<typeof setTimeout> | undefined;
   private basePath: string | undefined;
   private activityEvents: string[];
   private boundSetActive: () => void;
-  private softLogoutUrl: string | undefined;
-  private softLogoutCallback: (() => void) | undefined;
+  private logoutCallback: (() => void) | undefined;
+  private warningLeadTime: number;
+  private onWarningCallback: (() => void) | undefined;
+  private onWarningDismissedCallback: (() => void) | undefined;
+  private warningTimeout: ReturnType<typeof setTimeout> | undefined;
+  private isRefreshing = false;
+  private currentTtl: number | null = null;
   config: solisSessionManagerConfig;
 
   constructor(config: solisSessionManagerConfig) {
     this.config = config;
-    this.tokenRefreshInterval = config.tokenRefreshInterval || 25;
+    this.sessionStatusInterval = config.sessionStatusInterval || 10;
     this.idleTimeoutInterval = config.idleTimeoutInterval || 28;
     this.basePath = config.basePath;
     this.activityEvents = [
       'mousedown',
       'mousemove',
-      'keypress',
+      'keydown',
       'scroll',
       'touchstart',
       'click',
@@ -39,34 +45,19 @@ export default class solisSessionManager {
     this.isIdle = false;
     this.idleTimeout = undefined;
     this.boundSetActive = () => this.setActive();
-    this.softLogoutUrl = config.softLogoutUrl;
-    this.softLogoutCallback = config.softLogoutCallback;
-  }
-
-  startRefreshSchedule() {
-    this.refreshIntervalId = window.setInterval(
-      () => {
-        this.triggerRefresh();
-      },
-      this.tokenRefreshInterval * 60 * 1000
-    );
-  }
-
-  isScheduleRunning(): boolean {
-    return this.refreshIntervalId !== null;
-  }
-
-  stopRefreshSchedule() {
-    if (this.refreshIntervalId) {
-      clearInterval(this.refreshIntervalId);
-      this.refreshIntervalId = null;
-    }
+    this.logoutCallback = config.logoutCallback;
+    this.warningLeadTime = config.warningLeadTime || 5;
+    this.onWarningCallback = config.onWarningCallback;
+    this.onWarningDismissedCallback = config.onWarningDismissedCallback;
+    this.warningTimeout = undefined;
   }
 
   async triggerRefresh() {
+    this.isRefreshing = true;
+
     const fetchRoute = this.basePath
-      ? this.basePath + '/v1/solis/session/refresh-token'
-      : '/v1/solis/session/refresh-token';
+      ? this.basePath + '/hybrid-ipaas/v1/solis/session/refresh-token'
+      : '/hybrid-ipaas/v1/solis/session/refresh-token';
     try {
       const response = await fetch(fetchRoute, {
         method: 'GET',
@@ -75,23 +66,24 @@ export default class solisSessionManager {
 
       if (response.ok) {
         console.log('Solis token refresh successful');
-      } else if (response.status === 429) {
-        // refresh happened too recently
-        console.log('Solis token refresh skipped (too recent)'); // TODO - this response doesn't yet exist in the backend
+        this.isRefreshing = false;
       } else if (response.status === 401 || response.status === 403) {
         console.error('Solis token refresh unauthorized - triggering logout');
-        await this.performSoftLogout();
+        this.isRefreshing = false;
+        await this.performLogout();
       } else {
         console.error('Solis token refresh failed:', response.status);
+        this.isRefreshing = false;
       }
     } catch (error: any) {
       console.error('Solis token refresh error:', error.message);
+      this.isRefreshing = false;
     }
   }
 
   registerActivityListeners() {
     this.activityEvents.forEach((eventType) => {
-      document.addEventListener(eventType, this.boundSetActive, {
+      window.addEventListener(eventType, this.boundSetActive, {
         passive: true,
         capture: true,
       });
@@ -100,7 +92,7 @@ export default class solisSessionManager {
 
   unregisterActivityListeners() {
     this.activityEvents.forEach((eventType) => {
-      document.removeEventListener(eventType, this.boundSetActive, {
+      window.removeEventListener(eventType, this.boundSetActive, {
         capture: true,
       });
     });
@@ -108,7 +100,10 @@ export default class solisSessionManager {
 
   setActive() {
     this.isIdle = false;
+    this.cancelWarningTimer();
+    this.onWarningDismissedCallback?.();
     clearTimeout(this.idleTimeout);
+    this.startWarningTimer();
     this.idleTimeout = setTimeout(
       () => this.setIdle(),
       this.idleTimeoutInterval * 60 * 1000
@@ -117,9 +112,17 @@ export default class solisSessionManager {
 
   async setIdle() {
     this.isIdle = true;
-    const isSessionActive = await this.checkSessionStatus();
-    if (!isSessionActive) {
-      await this.performSoftLogout();
+    const sessionResult = await this.checkSessionStatus();
+    if (!sessionResult) {
+      await this.performLogout();
+      return;
+    }
+    if (
+      typeof sessionResult === 'number' &&
+      sessionResult <= 60 &&
+      !this.isRefreshing
+    ) {
+      this.triggerRefresh();
     }
   }
 
@@ -127,10 +130,13 @@ export default class solisSessionManager {
     return this.isIdle;
   }
 
-  async checkSessionStatus() {
+  // Returns the token's remaining TTL in seconds when the session is active,
+  // true if the session is active but the endpoint did not include a TTL,
+  // or false when it is inactive or the request fails.
+  async checkSessionStatus(): Promise<number | boolean> {
     const fetchRoute = this.basePath
-      ? this.basePath + '/v1/solis/session/session-status'
-      : '/v1/solis/session/session-status';
+      ? this.basePath + '/hybrid-ipaas/v1/solis/session/session-status'
+      : '/hybrid-ipaas/v1/solis/session/session-status';
     try {
       const response = await fetch(fetchRoute, {
         method: 'GET',
@@ -138,8 +144,10 @@ export default class solisSessionManager {
       });
 
       if (response.ok) {
+        const data = await response.json().catch(() => null);
+        const ttl: number | null = data?.ttl ?? null;
         console.log('Solis session is active');
-        return true;
+        return ttl ?? true; // active but TTL not provided
       } else {
         console.warn('Solis session is inactive');
         return false;
@@ -150,39 +158,102 @@ export default class solisSessionManager {
     }
   }
 
-  async performSoftLogout() {
-    this.stopRefreshSchedule();
+  async performLogout() {
+    if (this.isLoggingOut) {
+      return;
+    }
+    this.isLoggingOut = true;
+    this.stopSessionStatusPolling();
     this.unregisterActivityListeners();
-    const postRoute = this.basePath
-      ? this.basePath + '/v1/solis/session/logout'
-      : '/v1/solis/session/logout';
-    try {
-      const response = await fetch(postRoute, {
-        method: 'POST',
-        credentials: 'same-origin',
-      });
-
-      if (response.ok) {
-        console.log('Solis session logout - successful');
-      } else if (response.status === 401) {
-        console.log('Solis session logout - session already expired');
-      } else {
-        console.error('Solis session logout failed:', response.status);
-      }
-    } catch (error: any) {
-      console.error('Solis session logout error:', error.message);
-    }
-    if (this.softLogoutCallback) {
+    const sessionActive = await this.checkSessionStatus();
+    if (sessionActive) {
+      const postRoute = this.basePath
+        ? this.basePath + '/hybrid-ipaas/v1/solis/session/logout'
+        : '/hybrid-ipaas/v1/solis/session/logout';
       try {
-        await this.softLogoutCallback();
+        const response = await fetch(postRoute, {
+          method: 'POST',
+          credentials: 'same-origin',
+        });
+
+        if (response.ok) {
+          console.log('Solis session logout - successful');
+        } else if (response.status === 401) {
+          console.log('Solis session logout - session already expired');
+        } else {
+          console.error('Solis session logout failed:', response.status);
+        }
       } catch (error: any) {
-        console.error('Soft logout failed with error: ', error.message);
+        console.error('Solis session logout error:', error.message);
       }
     }
+    if (this.logoutCallback) {
+      try {
+        await this.logoutCallback();
+      } catch (error: any) {
+        console.error('Logout failed with error: ', error.message);
+      }
+    }
+    // const logoutEndpoint = hardLogout ? '/solis-logout' : '/login';
+    const logoutEndpoint = '/logout';
     this.redirect(
-      this.softLogoutUrl ??
-        (this.basePath ? `${this.basePath}/logout` : '/logout')
+      this.basePath ? `${this.basePath}${logoutEndpoint}` : logoutEndpoint
     );
+  }
+
+  startSessionStatusPolling() {
+    const poll = async () => {
+      const sessionResult = await this.checkSessionStatus();
+      if (!sessionResult) {
+        await this.performLogout();
+        return; // don't reschedule after logout
+      }
+      if (typeof sessionResult === 'number') {
+        const hasIncreased =
+          this.currentTtl !== null && sessionResult > this.currentTtl;
+        if ((sessionResult <= 60 || hasIncreased) && !this.isRefreshing) {
+          this.triggerRefresh();
+        }
+        this.currentTtl = sessionResult;
+      }
+      this.sessionStatusIntervalId = window.setTimeout(
+        poll,
+        this.sessionStatusInterval * 1000
+      );
+    };
+    this.sessionStatusIntervalId = window.setTimeout(
+      poll,
+      this.sessionStatusInterval * 1000
+    );
+  }
+
+  stopSessionStatusPolling() {
+    if (this.sessionStatusIntervalId) {
+      clearTimeout(this.sessionStatusIntervalId);
+      this.sessionStatusIntervalId = null;
+    }
+  }
+
+  isPollingRunning(): boolean {
+    return this.sessionStatusIntervalId !== null;
+  }
+
+  startWarningTimer() {
+    this.warningTimeout = setTimeout(
+      () => this.onWarningCallback?.(),
+      (this.idleTimeoutInterval - this.warningLeadTime) * 60 * 1000
+    );
+  }
+
+  cancelWarningTimer() {
+    if (this.warningTimeout) {
+      clearTimeout(this.warningTimeout);
+      this.warningTimeout = undefined;
+    }
+  }
+
+  isWarningTimerRunning(): boolean {
+    return this.warningTimeout !== undefined;
   }
 
   redirect(url: string) {

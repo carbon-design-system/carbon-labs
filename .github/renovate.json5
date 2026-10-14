@@ -16,4 +16,5 @@
     "schedule:earlyMondays",
   ],
   "rebaseWhen": "never",
+  "postUpdateOptions": ["yarnDedupeHighest"],
 }

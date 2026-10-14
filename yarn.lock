@@ -9229,7 +9229,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/estree@npm:*, @types/estree@npm:^1.0.0, @types/estree@npm:^1.0.6, @types/estree@npm:^1.0.8, @types/estree@npm:^1.0.9":
+"@types/estree@npm:*, @types/estree@npm:^1.0.0, @types/estree@npm:^1.0.6, @types/estree@npm:^1.0.8":
   version: 1.0.9
   resolution: "@types/estree@npm:1.0.9"
   checksum: 10c0/3ad3286ca2988cd550dafb8f2ad599c8474868e954fa601a36655bdfefd8039f7c714b8c1c7f2ae219ffbd58bd4660e66fa7479a0120fc02d4777057d4865387
@@ -31061,13 +31061,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-expression@npm:^6.1.0":
-  version: 6.2.2
-  resolution: "vega-expression@npm:6.2.2"
+"vega-expression@npm:^6.1.0, vega-expression@npm:~6.1.0":
+  version: 6.1.0
+  resolution: "vega-expression@npm:6.1.0"
   dependencies:
-    "@types/estree": "npm:^1.0.9"
-    vega-util: "npm:^2.1.3"
-  checksum: 10c0/1c4cfc801cf0db1284770b2dcd4ac58b89eeb43c263b68993fb1d73d9b9e729d9a6b7e230832edd96b1574f130cb0bd91c0581c1438e92f2d09031e9c11230e5
+    "@types/estree": "npm:^1.0.8"
+    vega-util: "npm:^2.1.0"
+  checksum: 10c0/985ffcbc884a460c4d825de8b68c0bab167a6c7a42ac7b2642a29c04420ab239e78d8ec6527948db75c40e0700890ce270479e1b00fab919424a4b4ab915225a
   languageName: node
   linkType: hard
 
@@ -31078,16 +31078,6 @@ __metadata:
     "@types/estree": "npm:^1.0.0"
     vega-util: "npm:^1.17.4"
   checksum: 10c0/704fc5eb2bf0f0c032fa187cb7203972bcca1440783c236a69a59d4dda3291d34fc5f748d71af5481b1aeb0b35e695121bc841b9fda30dd14ea0a43ed62d2cb0
-  languageName: node
-  linkType: hard
-
-"vega-expression@npm:~6.1.0":
-  version: 6.1.0
-  resolution: "vega-expression@npm:6.1.0"
-  dependencies:
-    "@types/estree": "npm:^1.0.8"
-    vega-util: "npm:^2.1.0"
-  checksum: 10c0/985ffcbc884a460c4d825de8b68c0bab167a6c7a42ac7b2642a29c04420ab239e78d8ec6527948db75c40e0700890ce270479e1b00fab919424a4b4ab915225a
   languageName: node
   linkType: hard
 
@@ -31382,10 +31372,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vega-util@npm:^2.1.0, vega-util@npm:^2.1.3, vega-util@npm:~2.1.0":
-  version: 2.1.3
-  resolution: "vega-util@npm:2.1.3"
-  checksum: 10c0/9c89f20439c63252f0bd5af3a2019c7c00fedf8f9a1d72e4bca36114ce5616c07f661009187244f351b2096df2cbf78c21e11709c469a7c632811e0a807f007c
+"vega-util@npm:^2.1.0, vega-util@npm:~2.1.0":
+  version: 2.1.1
+  resolution: "vega-util@npm:2.1.1"
+  checksum: 10c0/a8e2aab58125f6ff6fd175b2a97cbe736d086261e4eca4d664c06fb71e1b09fd3327e52e0348ca5ec8985df91674e5d6420d23b02b633ae7488362c8cc52d68f
   languageName: node
   linkType: hard
 

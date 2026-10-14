@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-animated-header",
-  "version": "0.62.0",
+  "version": "0.63.0",
   "publishConfig": {
     "access": "public",
     "provenance": true

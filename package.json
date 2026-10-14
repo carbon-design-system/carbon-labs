@@ -41,14 +41,14 @@
     "test": "lerna run test --stream"
   },
   "resolutions": {
-    "@carbon/react": "^1.95.0",
-    "@carbon/styles": "^1.94.0",
-    "@carbon/icons-react": "^11.65.0"
+    "@carbon/react": "^1.118.0",
+    "@carbon/styles": "^1.117.0",
+    "@carbon/icons-react": "^11.90.0"
   },
   "devDependencies": {
-    "@carbon/icons-react": "^11.65.0",
-    "@carbon/react": "^1.95.0",
-    "@carbon/styles": "^1.94.0",
+    "@carbon/icons-react": "^11.90.0",
+    "@carbon/react": "^1.118.0",
+    "@carbon/styles": "^1.117.0",
     "@commitlint/cli": "^21.0.0",
     "@commitlint/config-conventional": "^21.0.0",
     "@rollup/plugin-commonjs": "^29.0.0",

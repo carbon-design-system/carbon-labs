@@ -8,17 +8,25 @@
 'use strict';
 
 // Drafted in labs in core's shape; it runs only in core, where it moves to
-// e2e/components/KeyboardShortcut/KeyboardShortcut-test.avt.e2e.js and the
-// story ids become components-keyboardshortcut--*. Labs has no AVT runner.
+// e2e/components/KeyboardShortcut/KeyboardShortcut-test.avt.e2e.js. The story
+// ids assume core's preview title, `Preview/preview__KeyboardShortcut`, which
+// Storybook turns into `preview-preview-keyboardshortcut--<story>`. Labs has no
+// AVT runner.
 
 import { expect, test } from '@playwright/test';
 import { visitStory } from '../../test-utils/storybook';
+
+/**
+ * @param {string} story The story's export name, kebab-cased.
+ * @returns {string} Its id in core's Storybook.
+ */
+const id = (story) => `preview-preview-keyboardshortcut--${story}`;
 
 test.describe('@avt KeyboardShortcut', () => {
   test('@avt-default-state KeyboardShortcut', async ({ page }) => {
     await visitStory(page, {
       component: 'KeyboardShortcut',
-      id: 'components-keyboardshortcut--default',
+      id: id('default'),
       globals: {
         theme: 'white',
       },
@@ -29,7 +37,7 @@ test.describe('@avt KeyboardShortcut', () => {
   test('@avt-advanced-states KeyboardShortcut plain', async ({ page }) => {
     await visitStory(page, {
       component: 'KeyboardShortcut',
-      id: 'components-keyboardshortcut--plain',
+      id: id('plain'),
       globals: {
         theme: 'white',
       },
@@ -38,22 +46,22 @@ test.describe('@avt KeyboardShortcut', () => {
   });
 
   test('@avt-advanced-states KeyboardShortcut platforms', async ({ page }) => {
-    for (const [id, name] of [
-      ['components-keyboardshortcut--platform-mac', 'Command Shift P'],
-      ['components-keyboardshortcut--platform-other', 'Control Shift P'],
+    for (const [story, name] of [
+      ['platform-mac', 'Shift Command P'],
+      ['platform-other', 'Control Shift P'],
     ]) {
       await visitStory(page, {
         component: 'KeyboardShortcut',
-        id,
+        id: id(story),
         globals: {
           theme: 'white',
         },
       });
-      // The words are the accessible text; the glyph keys are hidden.
-      await expect(page.locator('kbd.cds--keyboard-shortcut')).toHaveText(
-        new RegExp(`^${name}`)
+      // Only the words reach the accessibility tree; the glyph keys are hidden.
+      await expect(page.locator('#storybook-root')).toMatchAriaSnapshot(
+        `- text: ${name}`
       );
-      await expect(page).toHaveNoACViolations(`KeyboardShortcut-${id}`);
+      await expect(page).toHaveNoACViolations(`KeyboardShortcut-${story}`);
     }
   });
 
@@ -62,21 +70,28 @@ test.describe('@avt KeyboardShortcut', () => {
   }) => {
     await visitStory(page, {
       component: 'KeyboardShortcut',
-      id: 'components-keyboardshortcut--inside-menu',
+      id: id('inside-menu'),
       globals: {
         theme: 'white',
       },
     });
-    await expect(
-      page.getByRole('menuitem', { name: 'Copy Command C' })
-    ).toBeVisible();
+    await expect(page.getByRole('menu', { name: 'KeyboardShortcut' }))
+      .toMatchAriaSnapshot(`
+      - menu "KeyboardShortcut":
+        - menuitem "Cut Command X"
+        - menuitem "Copy Command C"
+        - menuitem "Paste Command V"
+        - menuitem "Rename Command R" [disabled]
+        - separator
+        - menuitem "Delete danger Delete"
+    `);
     await expect(page).toHaveNoACViolations('KeyboardShortcut-inside-menu');
   });
 
   test('@avt-keyboard-nav KeyboardShortcut', async ({ page }) => {
     await visitStory(page, {
       component: 'KeyboardShortcut',
-      id: 'components-keyboardshortcut--default',
+      id: id('default'),
       globals: {
         theme: 'white',
       },

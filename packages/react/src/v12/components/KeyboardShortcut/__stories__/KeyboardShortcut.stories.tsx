@@ -7,7 +7,14 @@
 
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import { Menu, MenuItem, MenuItemDivider } from '@carbon/react';
+import {
+  Button,
+  Menu,
+  MenuItem,
+  MenuItemDivider,
+  Tile,
+  Tooltip,
+} from '@carbon/react';
 import { KeyboardShortcut } from '../components/KeyboardShortcut';
 import '../components/keyboard-shortcut.scss';
 import mdx from './KeyboardShortcut.mdx';
@@ -82,6 +89,68 @@ export const SingleKey: Story = {
 };
 
 /**
+ * Modifiers written out of order are shown in platform order: ⇧⌘P, not ⌘⇧P.
+ */
+export const ModifierOrder: Story = {
+  args: { keys: ['mod', 'shift', 'P'] },
+};
+
+/**
+ * A digit, to show the keycap's slashed zero (⌘0, reset zoom).
+ */
+export const Digits: Story = {
+  args: { keys: ['mod', '0'] },
+};
+
+/**
+ * In a right-to-left page the combination still reads in the platform's order,
+ * left to right, as on the keyboard.
+ */
+export const RightToLeft: Story = {
+  args: { keys: ['mod', 'shift', 'P'] },
+  globals: { dir: 'rtl' },
+  render: (args) => (
+    <p dir="rtl">
+      اضغط <KeyboardShortcut {...args} /> للبحث
+    </p>
+  ),
+};
+
+/**
+ * Keycaps inside a Carbon Tooltip, which uses the inverse surface.
+ */
+export const InTooltip: Story = {
+  args: { keys: ['mod', 'K'] },
+  render: (args) => (
+    <div>
+      <Tooltip
+        align="bottom"
+        defaultOpen
+        label={
+          <>
+            Search <KeyboardShortcut {...args} />
+          </>
+        }>
+        <Button kind="tertiary">Search</Button>
+      </Tooltip>
+    </div>
+  ),
+};
+
+/**
+ * Keycaps on a Carbon Tile ($layer-01) with no Layer around it, so the keycap's
+ * contextual $layer is the same token as the tile.
+ */
+export const OnTile: Story = {
+  args: { keys: ['mod', 'K'] },
+  render: (args) => (
+    <Tile>
+      Press <KeyboardShortcut {...args} /> to search
+    </Tile>
+  ),
+};
+
+/**
  * Left: Carbon's `MenuItem` with its own `shortcut` strings, as Carbon's Menu
  * story writes them. Right: the same items with `KeyboardShortcut kind="plain"`
  * in the `shortcut` slot. The type and colour should be identical, at rest and
@@ -106,15 +175,21 @@ export const InsideMenu: Story = {
           <MenuItem label="Cut" shortcut="⌘X" />
           <MenuItem label="Copy" shortcut="⌘C" />
           <MenuItem label="Paste" shortcut="⌘V" />
+          <MenuItem label="Rename" shortcut="⌘R" disabled />
           <MenuItemDivider />
-          <MenuItem label="Delete" shortcut="⌫" />
+          <MenuItem label="Delete" shortcut="⌫" kind="danger" />
         </Menu>
         <Menu label="KeyboardShortcut" open x={288} y={16} mode="basic">
           <MenuItem label="Cut" shortcut={shortcut(['mod', 'X'])} />
           <MenuItem label="Copy" shortcut={shortcut(['mod', 'C'])} />
           <MenuItem label="Paste" shortcut={shortcut(['mod', 'V'])} />
+          <MenuItem label="Rename" shortcut={shortcut(['mod', 'R'])} disabled />
           <MenuItemDivider />
-          <MenuItem label="Delete" shortcut={shortcut(['backspace'])} />
+          <MenuItem
+            label="Delete"
+            shortcut={shortcut(['remove'])}
+            kind="danger"
+          />
         </Menu>
       </div>
     );

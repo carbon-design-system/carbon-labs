@@ -7,17 +7,20 @@
 
 // Carbon foundations only: a labs v12 component consumes @carbon/styles and
 // never mirrors it.
+@use '@carbon/styles/scss/config' as *;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/spacing' as *;
 @use '@carbon/styles/scss/type' as *;
 @use '@carbon/styles/scss/utilities/visually-hidden' as *;
 
-$prefix: 'cds' !default;
-
 .#{$prefix}--keyboard-shortcut {
-  // A <kbd> is monospace in every browser's own stylesheet. Each kind sets
-  // its type below; nothing here may leak the browser's default.
+  // `direction` and `unicode-bidi`: a combination reads in the platform's
+  // order in a right-to-left page too, left to right as on the keyboard.
+  // `font`: a <kbd> is monospace in every browser's own stylesheet; each kind
+  // sets its type below, and nothing here may leak the browser's default.
+  direction: ltr;
   font: inherit;
+  unicode-bidi: isolate;
   white-space: nowrap;
 }
 
@@ -50,7 +53,7 @@ $prefix: 'cds' !default;
 }
 
 .#{$prefix}--keyboard-shortcut--keycap .#{$prefix}--keyboard-shortcut__key {
-  @include type-style('code-01');
+  @include type-style('label-01');
 
   // Radius: v12 Carbon gives a small surface $border-radius-04 (MenuItem,
   // Tooltip). Labs's @carbon/styles is 1.106 until carbon-labs#1415, which has
@@ -61,6 +64,8 @@ $prefix: 'cds' !default;
   border: 1px solid $border-subtle;
   background-color: $layer;
   color: $text-secondary;
+  // @carbon-proposal mixin: keycap-slashed-zero — Carbon's type styles have no slashed-zero option, and a keycap 0 must not read as the letter O. TBD
+  font-variant-numeric: slashed-zero;
   min-inline-size: $spacing-05;
   padding-inline: $spacing-02;
   text-align: center;

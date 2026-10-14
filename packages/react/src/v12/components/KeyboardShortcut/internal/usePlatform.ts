@@ -40,17 +40,19 @@ type UseSyncExternalStore = <T>(
 ) => T;
 
 /**
- * React 16 and 17 have no useSyncExternalStore. Core reaches for the official
- * shim (internal/useDocumentLang.tsx); this package adds no dependency for one
- * hook, so it falls back to a state that settles after mount, which is what the
- * shim does on a server render too.
+ * React 16 and 17 have no useSyncExternalStore. This package adds no dependency
+ * for one hook, so it falls back to a state that starts at the server value and
+ * settles after mount. On React 16/17 every render, client-only too, therefore
+ * shows the non-mac keys for one frame on a Mac (MIGRATION.md). At graduation,
+ * core takes `use-sync-external-store/shim`, as internal/useDocumentLang.tsx
+ * does, and this fallback is deleted.
  *
  * @param {Function} _subscribe Unused: the platform never changes.
  * @param {Function} getClientSnapshot Reads the value in the browser.
  * @param {Function} [getServer] The value a server render and its hydration use.
  * @returns The value.
  */
-function useSyncExternalStoreFallback<T>(
+export function useSyncExternalStoreFallback<T>(
   _subscribe: (onChange: () => void) => () => void,
   getClientSnapshot: () => T,
   getServer: () => T = getClientSnapshot
@@ -67,9 +69,10 @@ const useSync: UseSyncExternalStore =
     .useSyncExternalStore ?? useSyncExternalStoreFallback;
 
 /**
- * The platform to render for. An explicit `mac` or `other` wins. On `auto`, a
- * client-only render reads the browser on its first render, so the right keys
- * paint first and nothing shifts. A server render and its hydration use
+ * The platform to render for. An explicit `mac` or `other` wins. On `auto`,
+ * with React 18 or later, a client-only render reads the browser on its first
+ * render, so the right keys paint first and nothing shifts (on React 16/17, see
+ * the fallback above). A server render and its hydration use
  * `other`, and React re-renders with the detected platform straight after
  * hydrating, so the markup always matches and nothing reads `window` on the
  * server.

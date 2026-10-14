@@ -6,26 +6,32 @@
  */
 
 import React from 'react';
-import { act, render, screen } from '@testing-library/react';
+import { act, render, renderHook, screen } from '@testing-library/react';
 import { renderToString } from 'react-dom/server';
 import { hydrateRoot } from 'react-dom/client';
 import { KeyboardShortcut } from '../components/KeyboardShortcut';
 import {
-  defaultTranslations,
+  defaultTranslateWithId,
   detectPlatform,
   resolveKey,
+  translationIds,
+  type KeyboardShortcutTranslationKey,
 } from '../internal/keys';
+import { useSyncExternalStoreFallback } from '../internal/usePlatform';
 
-/** What a sighted user sees: the key labels, hidden words excluded. */
-function shownKeys(root: HTMLElement) {
-  return Array.from(
-    root.querySelectorAll(':scope > .cds--keyboard-shortcut__key')
-  ).map((key) => key.textContent);
+/** What a sighted user reads, in DOM order, without the hidden words. */
+function visible(root: Element) {
+  return Array.from(root.children)
+    .filter((child) => child.getAttribute('aria-hidden') === 'true')
+    .map((child) => child.textContent)
+    .join('');
 }
 
-/** The accessible name a screen reader is given, in words. */
-function spokenName(root: HTMLElement) {
-  return root.querySelector('.cds--keyboard-shortcut__label')?.textContent;
+/** The key labels, one per inner <kbd>. */
+function shownKeys(root: Element) {
+  return Array.from(root.querySelectorAll(':scope > kbd')).map(
+    (key) => key.textContent
+  );
 }
 
 function setPlatform(value: string) {
@@ -44,18 +50,21 @@ describe('KeyboardShortcut', () => {
       const { container } = render(
         <KeyboardShortcut keys={['mod', 'k']} platform="mac" />
       );
-      const root = container.firstElementChild as HTMLElement;
-      expect(shownKeys(root)).toEqual(['⌘', 'K']);
-      expect(spokenName(root)).toBe('Command K');
+      expect(shownKeys(container.firstElementChild as Element)).toEqual([
+        '⌘',
+        'K',
+      ]);
     });
 
     it('renders mod as Ctrl elsewhere', () => {
       const { container } = render(
         <KeyboardShortcut keys={['mod', 'shift', 'p']} platform="other" />
       );
-      const root = container.firstElementChild as HTMLElement;
-      expect(shownKeys(root)).toEqual(['Ctrl', 'Shift', 'P']);
-      expect(spokenName(root)).toBe('Control Shift P');
+      expect(shownKeys(container.firstElementChild as Element)).toEqual([
+        'Ctrl',
+        'Shift',
+        'P',
+      ]);
     });
 
     it.each([
@@ -63,37 +72,40 @@ describe('KeyboardShortcut', () => {
       ['Alt', '⌥', 'Option', 'Alt', 'Alt'],
       ['option', '⌥', 'Option', 'Alt', 'Alt'],
       ['shift', '⇧', 'Shift', 'Shift', 'Shift'],
-      ['cmd', '⌘', 'Command', 'Meta', 'Meta'],
-      ['enter', '↵', 'Return', 'Enter', 'Enter'],
+      ['cmd', '⌘', 'Command', 'Win', 'Windows'],
+      ['meta', '⌘', 'Command', 'Win', 'Windows'],
+      ['enter', '↩', 'Return', 'Enter', 'Enter'],
       ['backspace', '⌫', 'Delete', 'Backspace', 'Backspace'],
-      ['delete', '⌦', 'Forward Delete', 'Delete', 'Delete'],
+      ['delete', '⌦', 'Forward delete', 'Del', 'Delete'],
+      ['remove', '⌫', 'Delete', 'Del', 'Delete'],
       ['esc', '⎋', 'Escape', 'Esc', 'Escape'],
       ['tab', '⇥', 'Tab', 'Tab', 'Tab'],
       ['space', 'Space', 'Space', 'Space', 'Space'],
-      ['ArrowLeft', '←', 'Left Arrow', 'Left', 'Left Arrow'],
-      ['right', '→', 'Right Arrow', 'Right', 'Right Arrow'],
-      ['up', '↑', 'Up Arrow', 'Up', 'Up Arrow'],
-      ['pagedown', '⇟', 'Page Down', 'PgDn', 'Page Down'],
+      ['ArrowLeft', '←', 'Left arrow', 'Left', 'Left arrow'],
+      ['right', '→', 'Right arrow', 'Right', 'Right arrow'],
+      ['up', '↑', 'Up arrow', 'Up', 'Up arrow'],
+      ['pagedown', '⇟', 'Page down', 'PgDn', 'Page down'],
       ['f5', 'F5', 'F5', 'F5', 'F5'],
       [',', ',', 'Comma', ',', 'Comma'],
       ['/', '/', 'Slash', '/', 'Slash'],
+      ['+', '+', 'Plus', '+', 'Plus'],
     ])(
       '%s: mac %s (%s), other %s (%s)',
       (token, macLabel, macName, label, name) => {
-        expect(resolveKey(token, 'mac')).toEqual({
+        expect(resolveKey(token, 'mac')).toMatchObject({
           label: macLabel,
           name: macName,
         });
-        expect(resolveKey(token, 'other')).toEqual({ label, name });
+        expect(resolveKey(token, 'other')).toMatchObject({ label, name });
       }
     );
 
     it('renders an unknown key as written and upper-cases one letter', () => {
-      expect(resolveKey('PrintScreen', 'other')).toEqual({
+      expect(resolveKey('PrintScreen', 'other')).toMatchObject({
         label: 'PrintScreen',
         name: 'PrintScreen',
       });
-      expect(resolveKey('q', 'mac')).toEqual({ label: 'Q', name: 'Q' });
+      expect(resolveKey('q', 'mac')).toMatchObject({ label: 'Q', name: 'Q' });
     });
 
     it.each([
@@ -116,7 +128,7 @@ describe('KeyboardShortcut', () => {
     it('detects the platform on the first client render', () => {
       setPlatform('MacIntel');
       const { container } = render(<KeyboardShortcut keys={['mod', 'K']} />);
-      expect(shownKeys(container.firstElementChild as HTMLElement)).toEqual([
+      expect(shownKeys(container.firstElementChild as Element)).toEqual([
         '⌘',
         'K',
       ]);
@@ -127,9 +139,59 @@ describe('KeyboardShortcut', () => {
       const { container } = render(
         <KeyboardShortcut keys={['mod', 'K']} platform="other" />
       );
-      expect(shownKeys(container.firstElementChild as HTMLElement)).toEqual([
+      expect(shownKeys(container.firstElementChild as Element)).toEqual([
         'Ctrl',
         'K',
+      ]);
+    });
+  });
+
+  describe('modifier order', () => {
+    it.each([
+      [['mod', 'shift', 'P']],
+      [['shift', 'mod', 'P']],
+      [['P', 'shift', 'mod']],
+    ])('%j renders ⇧⌘P on macOS and Ctrl+Shift+P elsewhere', (keys) => {
+      const mac = render(
+        <KeyboardShortcut keys={keys} kind="plain" platform="mac" />
+      );
+      expect(visible(mac.container.firstElementChild as Element)).toBe('⇧⌘P');
+      expect(screen.getByText('Shift Command P')).toBeInTheDocument();
+      mac.unmount();
+      const other = render(
+        <KeyboardShortcut keys={keys} kind="plain" platform="other" />
+      );
+      expect(visible(other.container.firstElementChild as Element)).toBe(
+        'Ctrl+Shift+P'
+      );
+      expect(screen.getByText('Control Shift P')).toBeInTheDocument();
+      other.unmount();
+    });
+
+    it('orders all four modifiers ⌃⌥⇧⌘ and Ctrl+Alt+Shift+Win', () => {
+      const keys = ['meta', 'shift', 'alt', 'ctrl', 'K'];
+      expect(
+        visible(
+          render(<KeyboardShortcut keys={keys} kind="plain" platform="mac" />)
+            .container.firstElementChild as Element
+        )
+      ).toBe('⌃⌥⇧⌘K');
+      expect(
+        visible(
+          render(<KeyboardShortcut keys={keys} kind="plain" platform="other" />)
+            .container.firstElementChild as Element
+        )
+      ).toBe('Ctrl+Alt+Shift+Win+K');
+    });
+
+    it('keeps non-modifier keys in the order written', () => {
+      const { container } = render(
+        <KeyboardShortcut keys={['K', 'shift', 'J']} platform="other" />
+      );
+      expect(shownKeys(container.firstElementChild as Element)).toEqual([
+        'Shift',
+        'K',
+        'J',
       ]);
     });
   });
@@ -138,7 +200,6 @@ describe('KeyboardShortcut', () => {
     it('renders the non-mac words on the server and settles after hydration', async () => {
       setPlatform('MacIntel');
       const html = renderToString(<KeyboardShortcut keys={['mod', 'K']} />);
-      // The server snapshot, whatever the client's platform.
       expect(html).toContain('Ctrl');
       expect(html).not.toContain('⌘');
 
@@ -149,11 +210,9 @@ describe('KeyboardShortcut', () => {
       await act(async () => {
         hydrateRoot(container, <KeyboardShortcut keys={['mod', 'K']} />);
       });
-      // No hydration mismatch was reported…
       expect(errors).not.toHaveBeenCalled();
       errors.mockRestore();
-      // …and the client's platform took over straight after.
-      expect(shownKeys(container.firstElementChild as HTMLElement)).toEqual([
+      expect(shownKeys(container.firstElementChild as Element)).toEqual([
         '⌘',
         'K',
       ]);
@@ -168,62 +227,146 @@ describe('KeyboardShortcut', () => {
     });
   });
 
+  describe('the React 16/17 fallback', () => {
+    it('starts at the server value and settles to the client value', () => {
+      const values: string[] = [];
+      const { result } = renderHook(() => {
+        const value = useSyncExternalStoreFallback(
+          () => () => {},
+          () => 'mac',
+          () => 'other'
+        );
+        values.push(value);
+        return value;
+      });
+      expect(values[0]).toBe('other');
+      expect(result.current).toBe('mac');
+    });
+  });
+
   describe('accessibility', () => {
     it('nests one <kbd> per key inside an outer <kbd>', () => {
       const { container } = render(
         <KeyboardShortcut keys={['mod', 'shift', 'P']} platform="other" />
       );
-      const root = container.firstElementChild as HTMLElement;
+      const root = container.firstElementChild as Element;
       expect(root.tagName).toBe('KBD');
       const inner = root.querySelectorAll(':scope > kbd');
       expect(inner).toHaveLength(3);
       inner.forEach((key) =>
         expect(key).toHaveAttribute('aria-hidden', 'true')
       );
-    });
-
-    it('names the whole shortcut in words with text, not aria-label', () => {
-      const { container } = render(
-        <KeyboardShortcut keys={['mod', 'K']} platform="mac" />
-      );
-      const root = container.firstElementChild as HTMLElement;
       expect(root).not.toHaveAttribute('aria-label');
-      // The words are the only text assistive technology is not told to skip.
-      expect(screen.getByText('Command K')).toBe(
-        root.querySelector('.cds--keyboard-shortcut__label')
-      );
     });
 
-    it('becomes part of a parent name from content', () => {
-      render(
-        <button type="button">
-          Search <KeyboardShortcut keys={['mod', 'K']} platform="mac" />
-        </button>
-      );
-      expect(
-        screen.getByRole('button', { name: 'Search Command K' })
-      ).toBeInTheDocument();
-    });
+    it.each([
+      ['mac', 'Search Shift Command P'],
+      ['other', 'Search Control Shift P'],
+    ] as const)(
+      'computes the accessible name in words on %s',
+      (platform, name) => {
+        render(
+          <button type="button">
+            Search{' '}
+            <KeyboardShortcut
+              keys={['mod', 'shift', 'P']}
+              platform={platform}
+            />
+          </button>
+        );
+        // getByRole's name is the computed accessible name (accname 1.2),
+        // which leaves out the aria-hidden glyphs.
+        expect(screen.getByRole('button', { name })).toBeInTheDocument();
+      }
+    );
 
-    it('translates the spoken names', () => {
+    it('keeps key order in a right-to-left page', () => {
+      const { container } = render(
+        <div dir="rtl">
+          <KeyboardShortcut keys={['shift', 'mod', 'P']} platform="mac" />
+        </div>
+      );
+      const root = container.querySelector(
+        'kbd.cds--keyboard-shortcut'
+      ) as Element;
+      // The DOM order is the platform order; the stylesheet isolates the
+      // combination as left to right (measured in the browser).
+      expect(shownKeys(root)).toEqual(['⇧', '⌘', 'P']);
+      expect(screen.getByText('Shift Command P')).toBeInTheDocument();
+    });
+  });
+
+  describe('translateWithId', () => {
+    const german: Partial<Record<KeyboardShortcutTranslationKey, string>> = {
+      'carbon.keyboard-shortcut.control.label': 'Strg',
+      'carbon.keyboard-shortcut.control.name': 'Steuerung',
+      'carbon.keyboard-shortcut.shift.label': 'Umschalt',
+      'carbon.keyboard-shortcut.shift.name': 'Umschalttaste',
+    };
+
+    it('translates visible labels and spoken names separately', () => {
       const { container } = render(
         <KeyboardShortcut
           keys={['mod', 'shift', 'K']}
+          kind="plain"
           platform="other"
-          translateWithId={(id) =>
-            ({ control: 'Steuerung', shift: 'Umschalt' })[id as string] ??
-            defaultTranslations[id]
+          translateWithId={(id, args) =>
+            german[id] ?? defaultTranslateWithId(id, args)
           }
         />
       );
-      expect(spokenName(container.firstElementChild as HTMLElement)).toBe(
-        'Steuerung Umschalt K'
+      expect(visible(container.firstElementChild as Element)).toBe(
+        'Strg+Umschalt+K'
       );
+      expect(screen.getByText('Steuerung Umschalttaste K')).toBeInTheDocument();
+    });
+
+    it('is called with the platform and a namespaced id for label and name', () => {
+      const translate = jest.fn(
+        (id: KeyboardShortcutTranslationKey, args?: { platform: string }) =>
+          `${id}@${args?.platform}`
+      );
+      render(
+        <KeyboardShortcut
+          keys={['mod']}
+          platform="mac"
+          translateWithId={translate}
+        />
+      );
+      expect(translate).toHaveBeenCalledWith(
+        'carbon.keyboard-shortcut.meta.label',
+        { platform: 'mac' }
+      );
+      expect(translate).toHaveBeenCalledWith(
+        'carbon.keyboard-shortcut.meta.name',
+        { platform: 'mac' }
+      );
+    });
+
+    it('lists a label and a name id for every key', () => {
+      expect(translationIds).toContain(
+        'carbon.keyboard-shortcut.backspace.name'
+      );
+      expect(
+        translationIds.every((id) =>
+          /^carbon\.keyboard-shortcut\.[a-z-]+\.(label|name)$/.test(id)
+        )
+      ).toBe(true);
+      expect(
+        defaultTranslateWithId('carbon.keyboard-shortcut.backspace.name', {
+          platform: 'mac',
+        })
+      ).toBe('Delete');
+      expect(
+        defaultTranslateWithId('carbon.keyboard-shortcut.backspace.name', {
+          platform: 'other',
+        })
+      ).toBe('Backspace');
     });
   });
 
   describe('kind', () => {
-    it('is keycap by default', () => {
+    it('is keycap by default, with no separator', () => {
       const { container } = render(<KeyboardShortcut keys={['K']} />);
       expect(container.firstElementChild).toHaveClass(
         'cds--keyboard-shortcut',
@@ -238,19 +381,28 @@ describe('KeyboardShortcut', () => {
       const { container } = render(
         <KeyboardShortcut keys={['mod', 'K']} kind="plain" platform="other" />
       );
-      const root = container.firstElementChild as HTMLElement;
+      const root = container.firstElementChild as Element;
       expect(root).toHaveClass('cds--keyboard-shortcut--plain');
       const separators = root.querySelectorAll(
         '.cds--keyboard-shortcut__separator'
       );
       expect(separators).toHaveLength(1);
       expect(separators[0]).toHaveAttribute('aria-hidden', 'true');
-      // What a sighted user reads, in DOM order, without the hidden words.
-      const visible = Array.from(root.children)
-        .filter((child) => child.getAttribute('aria-hidden') === 'true')
-        .map((child) => child.textContent)
-        .join('');
-      expect(visible).toBe('Ctrl+K');
+      expect(visible(root)).toBe('Ctrl+K');
+    });
+
+    it('plain writes the Plus key as a word off macOS, never Ctrl++', () => {
+      const other = render(
+        <KeyboardShortcut keys={['mod', '+']} kind="plain" platform="other" />
+      );
+      expect(visible(other.container.firstElementChild as Element)).toBe(
+        'Ctrl+Plus'
+      );
+      other.unmount();
+      const mac = render(
+        <KeyboardShortcut keys={['mod', '+']} kind="plain" platform="mac" />
+      );
+      expect(visible(mac.container.firstElementChild as Element)).toBe('⌘+');
     });
 
     it('plain writes keys together on macOS', () => {

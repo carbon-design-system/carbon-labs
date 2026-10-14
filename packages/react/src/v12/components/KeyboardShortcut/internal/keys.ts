@@ -8,213 +8,272 @@
 export type Platform = 'mac' | 'other';
 
 /**
- * The message ids `translateWithId` is called with, one per spoken key name.
- * Exported so a consumer can build a complete translation table.
+ * One id per physical key. `mod` and `remove` are not keys: they resolve to
+ * one of these per platform.
  */
-export const translationIds = {
-  command: 'command',
-  control: 'control',
-  option: 'option',
-  alt: 'alt',
-  shift: 'shift',
-  meta: 'meta',
-  return: 'return',
-  enter: 'enter',
-  backspace: 'backspace',
-  delete: 'delete',
-  'forward-delete': 'forward-delete',
-  escape: 'escape',
-  tab: 'tab',
-  space: 'space',
-  'caps-lock': 'caps-lock',
-  'up-arrow': 'up-arrow',
-  'down-arrow': 'down-arrow',
-  'left-arrow': 'left-arrow',
-  'right-arrow': 'right-arrow',
-  'page-up': 'page-up',
-  'page-down': 'page-down',
-  home: 'home',
-  end: 'end',
-  comma: 'comma',
-  period: 'period',
-  slash: 'slash',
-  backslash: 'backslash',
-  semicolon: 'semicolon',
-  quote: 'quote',
-  'left-bracket': 'left-bracket',
-  'right-bracket': 'right-bracket',
-  minus: 'minus',
-  equals: 'equals',
-  backtick: 'backtick',
-  plus: 'plus',
-} as const;
+export const keyIds = [
+  'control',
+  'alt',
+  'shift',
+  'meta',
+  'enter',
+  'backspace',
+  'delete',
+  'escape',
+  'tab',
+  'space',
+  'caps-lock',
+  'up',
+  'down',
+  'left',
+  'right',
+  'page-up',
+  'page-down',
+  'home',
+  'end',
+  'plus',
+  'comma',
+  'period',
+  'slash',
+  'backslash',
+  'semicolon',
+  'quote',
+  'left-bracket',
+  'right-bracket',
+  'minus',
+  'equals',
+  'backtick',
+] as const;
 
-export type TranslationId = keyof typeof translationIds;
-
-/** The English names, read when no `translateWithId` is given. */
-export const defaultTranslations: Record<TranslationId, string> = {
-  command: 'Command',
-  control: 'Control',
-  option: 'Option',
-  alt: 'Alt',
-  shift: 'Shift',
-  meta: 'Meta',
-  return: 'Return',
-  enter: 'Enter',
-  // A Mac keyboard labels its backspace key "delete", and VoiceOver users
-  // know it by that name, so the mac table below names ⌫ "Delete".
-  backspace: 'Backspace',
-  delete: 'Delete',
-  'forward-delete': 'Forward Delete',
-  escape: 'Escape',
-  tab: 'Tab',
-  space: 'Space',
-  'caps-lock': 'Caps Lock',
-  'up-arrow': 'Up Arrow',
-  'down-arrow': 'Down Arrow',
-  'left-arrow': 'Left Arrow',
-  'right-arrow': 'Right Arrow',
-  'page-up': 'Page Up',
-  'page-down': 'Page Down',
-  home: 'Home',
-  end: 'End',
-  comma: 'Comma',
-  period: 'Period',
-  slash: 'Slash',
-  backslash: 'Backslash',
-  semicolon: 'Semicolon',
-  quote: 'Quote',
-  'left-bracket': 'Left Bracket',
-  'right-bracket': 'Right Bracket',
-  minus: 'Minus',
-  equals: 'Equals',
-  backtick: 'Backtick',
-  plus: 'Plus',
-};
-
-/** What one key shows and says, on one platform. */
-interface KeyFace {
-  /** What is drawn on the key. */
-  label: string;
-  /** The message id of its spoken name; absent when the label is already a word. */
-  nameId?: TranslationId;
-}
-
-type KeyTable = Record<string, { mac: KeyFace; other: KeyFace }>;
+export type KeyId = (typeof keyIds)[number];
 
 /**
- * A key that looks and is named the same on every platform.
+ * The message ids `translateWithId` is called with: one for what a key shows
+ * and one for its spoken name, `carbon.keyboard-shortcut.<key>.<label|name>`.
+ */
+export type KeyboardShortcutTranslationKey =
+  `carbon.keyboard-shortcut.${KeyId}.${'label' | 'name'}`;
+
+export const translationIds: KeyboardShortcutTranslationKey[] = keyIds.flatMap(
+  (id) =>
+    [
+      `carbon.keyboard-shortcut.${id}.label`,
+      `carbon.keyboard-shortcut.${id}.name`,
+    ] as const
+);
+
+export interface KeyboardShortcutTranslationArgs {
+  /** The platform the shortcut is rendered for. */
+  platform: Platform;
+}
+
+/**
+ * Mirrors Carbon's `TranslateWithId<MID, ARGS>` (types/common.ts), which a
+ * labs package cannot import; at graduation this becomes that type.
+ */
+export interface TranslateWithId<MID = string, ARGS = Record<string, unknown>> {
+  /**
+   * Translates component strings using your i18n tool.
+   *
+   * @param messageId The translation ID for the string to translate.
+   * @param [args] Arguments for string interpolation.
+   * @returns The translated string.
+   */
+  translateWithId?(messageId: MID, args?: ARGS): string;
+}
+
+export type KeyboardShortcutTranslate = NonNullable<
+  TranslateWithId<
+    KeyboardShortcutTranslationKey,
+    KeyboardShortcutTranslationArgs
+  >['translateWithId']
+>;
+
+interface Face {
+  label: string;
+  name: string;
+}
+
+/**
+ * The same label and name on both platforms.
  *
  * @param {string} label What is drawn on the key.
- * @param {TranslationId} [nameId] The message id of its spoken name.
- * @returns The key's face on both platforms.
+ * @param {string} name Its name in words.
+ * @returns {{ mac: Face, other: Face }} The key's faces.
  */
-const same = (label: string, nameId?: TranslationId) => ({
-  mac: { label, nameId },
-  other: { label, nameId },
+const both = (label: string, name: string) => ({
+  mac: { label, name },
+  other: { label, name },
 });
 
-// Named keys. Glyphs on macOS, where they are printed on the keyboard and used
-// in every menu; words elsewhere, where Windows and Linux write them out.
-const NAMED: KeyTable = {
-  mod: {
-    mac: { label: '⌘', nameId: 'command' },
-    other: { label: 'Ctrl', nameId: 'control' },
-  },
-  meta: {
-    mac: { label: '⌘', nameId: 'command' },
-    other: { label: 'Meta', nameId: 'meta' },
-  },
-  ctrl: {
-    mac: { label: '⌃', nameId: 'control' },
-    other: { label: 'Ctrl', nameId: 'control' },
+// English defaults, per platform. Glyphs on macOS, where they are printed on
+// the keyboard and used in every menu; words elsewhere. Names are sentence
+// case. A Mac keyboard labels its backspace key "delete", and VoiceOver users
+// know it by that name.
+const ENGLISH: Record<KeyId, { mac: Face; other: Face }> = {
+  control: {
+    mac: { label: '⌃', name: 'Control' },
+    other: { label: 'Ctrl', name: 'Control' },
   },
   alt: {
-    mac: { label: '⌥', nameId: 'option' },
-    other: { label: 'Alt', nameId: 'alt' },
+    mac: { label: '⌥', name: 'Option' },
+    other: { label: 'Alt', name: 'Alt' },
   },
   shift: {
-    mac: { label: '⇧', nameId: 'shift' },
-    other: { label: 'Shift', nameId: 'shift' },
+    mac: { label: '⇧', name: 'Shift' },
+    other: { label: 'Shift', name: 'Shift' },
+  },
+  meta: {
+    mac: { label: '⌘', name: 'Command' },
+    other: { label: 'Win', name: 'Windows' },
   },
   enter: {
-    mac: { label: '↵', nameId: 'return' },
-    other: { label: 'Enter', nameId: 'enter' },
+    mac: { label: '↩', name: 'Return' },
+    other: { label: 'Enter', name: 'Enter' },
   },
   backspace: {
-    mac: { label: '⌫', nameId: 'delete' },
-    other: { label: 'Backspace', nameId: 'backspace' },
+    mac: { label: '⌫', name: 'Delete' },
+    other: { label: 'Backspace', name: 'Backspace' },
   },
   delete: {
-    mac: { label: '⌦', nameId: 'forward-delete' },
-    other: { label: 'Delete', nameId: 'delete' },
+    mac: { label: '⌦', name: 'Forward delete' },
+    other: { label: 'Del', name: 'Delete' },
   },
   escape: {
-    mac: { label: '⎋', nameId: 'escape' },
-    other: { label: 'Esc', nameId: 'escape' },
+    mac: { label: '⎋', name: 'Escape' },
+    other: { label: 'Esc', name: 'Escape' },
   },
   tab: {
-    mac: { label: '⇥', nameId: 'tab' },
-    other: { label: 'Tab', nameId: 'tab' },
+    mac: { label: '⇥', name: 'Tab' },
+    other: { label: 'Tab', name: 'Tab' },
   },
-  space: same('Space', 'space'),
-  capslock: {
-    mac: { label: '⇪', nameId: 'caps-lock' },
-    other: { label: 'Caps Lock', nameId: 'caps-lock' },
+  space: both('Space', 'Space'),
+  'caps-lock': {
+    mac: { label: '⇪', name: 'Caps lock' },
+    other: { label: 'Caps Lock', name: 'Caps lock' },
   },
   up: {
-    mac: { label: '↑', nameId: 'up-arrow' },
-    other: { label: 'Up', nameId: 'up-arrow' },
+    mac: { label: '↑', name: 'Up arrow' },
+    other: { label: 'Up', name: 'Up arrow' },
   },
   down: {
-    mac: { label: '↓', nameId: 'down-arrow' },
-    other: { label: 'Down', nameId: 'down-arrow' },
+    mac: { label: '↓', name: 'Down arrow' },
+    other: { label: 'Down', name: 'Down arrow' },
   },
   left: {
-    mac: { label: '←', nameId: 'left-arrow' },
-    other: { label: 'Left', nameId: 'left-arrow' },
+    mac: { label: '←', name: 'Left arrow' },
+    other: { label: 'Left', name: 'Left arrow' },
   },
   right: {
-    mac: { label: '→', nameId: 'right-arrow' },
-    other: { label: 'Right', nameId: 'right-arrow' },
+    mac: { label: '→', name: 'Right arrow' },
+    other: { label: 'Right', name: 'Right arrow' },
   },
-  pageup: {
-    mac: { label: '⇞', nameId: 'page-up' },
-    other: { label: 'PgUp', nameId: 'page-up' },
+  'page-up': {
+    mac: { label: '⇞', name: 'Page up' },
+    other: { label: 'PgUp', name: 'Page up' },
   },
-  pagedown: {
-    mac: { label: '⇟', nameId: 'page-down' },
-    other: { label: 'PgDn', nameId: 'page-down' },
+  'page-down': {
+    mac: { label: '⇟', name: 'Page down' },
+    other: { label: 'PgDn', name: 'Page down' },
   },
   home: {
-    mac: { label: '↖', nameId: 'home' },
-    other: { label: 'Home', nameId: 'home' },
+    mac: { label: '↖', name: 'Home' },
+    other: { label: 'Home', name: 'Home' },
   },
   end: {
-    mac: { label: '↘', nameId: 'end' },
-    other: { label: 'End', nameId: 'end' },
+    mac: { label: '↘', name: 'End' },
+    other: { label: 'End', name: 'End' },
   },
+  // Punctuation is drawn as written and named in words, because a screen
+  // reader at its default punctuation level skips `,` and `/` entirely.
+  plus: both('+', 'Plus'),
+  comma: both(',', 'Comma'),
+  period: both('.', 'Period'),
+  slash: both('/', 'Slash'),
+  backslash: both('\\', 'Backslash'),
+  semicolon: both(';', 'Semicolon'),
+  quote: both("'", 'Quote'),
+  'left-bracket': both('[', 'Left bracket'),
+  'right-bracket': both(']', 'Right bracket'),
+  minus: both('-', 'Minus'),
+  equals: both('=', 'Equals'),
+  backtick: both('`', 'Backtick'),
 };
 
-// Every spelling an author is likely to write, folded onto one entry.
-const ALIASES: Record<string, string> = {
-  cmd: 'meta',
-  command: 'meta',
-  control: 'ctrl',
+/**
+ * The English text for a message id, used when no `translateWithId` is given
+ * and for any id a translation leaves out.
+ *
+ * @param {KeyboardShortcutTranslationKey} messageId The message id.
+ * @param {KeyboardShortcutTranslationArgs} [args] The platform.
+ * @returns {string} The English label or name.
+ */
+export const defaultTranslateWithId: KeyboardShortcutTranslate = (
+  messageId,
+  args
+) => {
+  const [, , key, part] = messageId.split('.') as [
+    string,
+    string,
+    KeyId,
+    'label' | 'name',
+  ];
+  return ENGLISH[key]?.[args?.platform ?? 'other']?.[part] ?? messageId;
+};
+
+// Every spelling an author is likely to write, folded onto a key id. `mod` and
+// `remove` are resolved per platform: the primary modifier (⌘ / Ctrl), and the
+// key that removes a selection (⌫ on a Mac, Del elsewhere).
+/**
+ * @param {Platform} p The platform.
+ * @returns {KeyId} The primary modifier: ⌘ on a Mac, Ctrl elsewhere.
+ */
+const mod = (p: Platform): KeyId => (p === 'mac' ? 'meta' : 'control');
+
+/**
+ * @param {Platform} p The platform.
+ * @returns {KeyId} The key that removes a selection: ⌫ on a Mac, Del elsewhere.
+ */
+const remove = (p: Platform): KeyId => (p === 'mac' ? 'backspace' : 'delete');
+
+const ALIASES: Record<string, KeyId | ((p: Platform) => KeyId)> = {
+  mod,
+  remove,
+  ctrl: 'control',
+  control: 'control',
+  alt: 'alt',
   option: 'alt',
   opt: 'alt',
+  shift: 'shift',
+  meta: 'meta',
+  cmd: 'meta',
+  command: 'meta',
+  win: 'meta',
+  super: 'meta',
+  enter: 'enter',
   return: 'enter',
+  backspace: 'backspace',
+  delete: 'delete',
   del: 'delete',
+  escape: 'escape',
   esc: 'escape',
+  tab: 'tab',
+  space: 'space',
+  capslock: 'caps-lock',
+  up: 'up',
+  down: 'down',
+  left: 'left',
+  right: 'right',
   arrowup: 'up',
   arrowdown: 'down',
   arrowleft: 'left',
   arrowright: 'right',
-};
-
-// Punctuation is drawn as written and named in words, because a screen reader
-// at its default punctuation level skips `,` and `/` entirely.
-const PUNCTUATION: Record<string, TranslationId> = {
+  pageup: 'page-up',
+  pagedown: 'page-down',
+  home: 'home',
+  end: 'end',
+  plus: 'plus',
+  '+': 'plus',
   ',': 'comma',
   '.': 'period',
   '/': 'slash',
@@ -226,28 +285,26 @@ const PUNCTUATION: Record<string, TranslationId> = {
   '-': 'minus',
   '=': 'equals',
   '`': 'backtick',
-  '+': 'plus',
+};
+
+// Platform order: ⌃⌥⇧⌘ on a Mac, Ctrl+Alt+Shift+Win elsewhere. Both are
+// control, alt, shift, meta; `mod` lands in the right place because it is
+// resolved to a key before sorting.
+const MODIFIER_RANK: Partial<Record<KeyId, number>> = {
+  control: 0,
+  alt: 1,
+  shift: 2,
+  meta: 3,
 };
 
 export interface ResolvedKey {
+  /** The physical key, or null for one with no id (a letter, F5). */
+  id: KeyId | null;
   /** What is drawn on the key. */
   label: string;
   /** The key's name in words, for the accessible name. */
   name: string;
 }
-
-export type TranslateWithId = (
-  messageId: TranslationId,
-  args: { platform: Platform }
-) => string;
-
-/**
- * The English name of a key, used when no `translateWithId` is given.
- *
- * @param {TranslationId} id The message id.
- * @returns The English name.
- */
-const defaultTranslate: TranslateWithId = (id) => defaultTranslations[id];
 
 /**
  * Resolves one key token, as an author writes it, to what it shows and says on
@@ -256,38 +313,66 @@ const defaultTranslate: TranslateWithId = (id) => defaultTranslations[id];
  *
  * @param {string} token The key as the author wrote it, such as `mod` or `K`.
  * @param {Platform} platform The platform to render for.
- * @param {TranslateWithId} [translate] Translates a key's spoken name.
- * @returns What the key shows, and its name in words.
+ * @param {KeyboardShortcutTranslate} [translate] Translates labels and names.
+ * @returns {ResolvedKey} The key, what it shows, and its name in words.
  */
 export function resolveKey(
   token: string,
   platform: Platform,
-  translate: TranslateWithId = defaultTranslate
+  translate: KeyboardShortcutTranslate = defaultTranslateWithId
 ): ResolvedKey {
-  /**
-   * @param {TranslationId} id The message id of a key's spoken name.
-   * @returns The name, translated where a translation is given.
-   */
-  const name = (id: TranslationId) =>
-    translate(id, { platform }) ?? defaultTranslations[id];
-  const lower = token.toLowerCase();
-  const entry = NAMED[ALIASES[lower] ?? lower];
-
-  if (entry) {
-    const face = entry[platform];
-    return {
-      label: face.label,
-      name: face.nameId ? name(face.nameId) : face.label,
+  const alias = ALIASES[token.toLowerCase()];
+  if (alias) {
+    const id = typeof alias === 'function' ? alias(platform) : alias;
+    /**
+     * @param {'label' | 'name'} part Which text.
+     * @returns {string} The translated text, or the English default.
+     */
+    const text = (part: 'label' | 'name') => {
+      const messageId: KeyboardShortcutTranslationKey = `carbon.keyboard-shortcut.${id}.${part}`;
+      return (
+        translate(messageId, { platform }) ??
+        defaultTranslateWithId(messageId, { platform })
+      );
     };
+    return { id, label: text('label'), name: text('name') };
   }
-  if (PUNCTUATION[token]) {
-    return { label: token, name: name(PUNCTUATION[token]) };
-  }
-  if (/^f([1-9]|1\d|2[0-4])$/.test(lower)) {
-    return { label: token.toUpperCase(), name: token.toUpperCase() };
-  }
-  const label = token.length === 1 ? token.toUpperCase() : token;
-  return { label, name: label };
+  const label =
+    token.length === 1 || /^f([1-9]|1\d|2[0-4])$/i.test(token)
+      ? token.toUpperCase()
+      : token;
+  return { id: null, label, name: label };
+}
+
+/**
+ * Resolves a combination and puts its modifiers in platform order; every other
+ * key follows, in the order written. A repeated modifier is shown once.
+ *
+ * @param {string[]} keys The keys as the author wrote them.
+ * @param {Platform} platform The platform to render for.
+ * @param {KeyboardShortcutTranslate} [translate] Translates labels and names.
+ * @returns {ResolvedKey[]} The keys, in display order.
+ */
+export function resolveKeys(
+  keys: string[],
+  platform: Platform,
+  translate?: KeyboardShortcutTranslate
+): ResolvedKey[] {
+  const resolved = keys
+    .filter((key) => typeof key === 'string' && key !== '')
+    .map((key) => resolveKey(key, platform, translate));
+  /**
+   * @param {ResolvedKey} key A key.
+   * @returns {number | undefined} Its modifier rank, if it is a modifier.
+   */
+  const rank = (key: ResolvedKey) =>
+    key.id === null ? undefined : MODIFIER_RANK[key.id];
+  const modifiers = resolved
+    .filter((key) => rank(key) !== undefined)
+    .filter((key, i, all) => all.findIndex((k) => k.id === key.id) === i)
+    .sort((a, b) => (rank(a) as number) - (rank(b) as number));
+  const others = resolved.filter((key) => rank(key) === undefined);
+  return [...modifiers, ...others];
 }
 
 /**
@@ -297,7 +382,7 @@ export function resolveKey(
  * which is right: an iPad keyboard has ⌘.
  *
  * @param {Navigator} [nav] The browser's navigator; absent on a server.
- * @returns `mac` on Apple platforms, `other` everywhere else.
+ * @returns {Platform} `mac` on Apple platforms, `other` everywhere else.
  */
 export function detectPlatform(nav?: Navigator): Platform {
   if (!nav) {

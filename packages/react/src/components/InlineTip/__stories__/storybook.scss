@@ -9,11 +9,11 @@
 
 .storybook--inline-tip-wide {
   // Allow enough space above the component to show the "X" tooltip.
-  margin-block-start: $spacing-07;
   max-inline-size: 784px;
+  margin: $spacing-08;
 }
 
 .storybook--inline-tip-narrow {
-  margin-block-start: $spacing-07;
+  margin: $spacing-08;
   max-inline-size: 348px;
 }

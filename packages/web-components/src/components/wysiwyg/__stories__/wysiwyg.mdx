@@ -76,8 +76,109 @@ that is implemented.
   editor.addEventListener('content-change', (e) => {
     console.log('HTML:', e.detail);
   });
+
+  editor.addEventListener('files-change', (e) => {
+    console.log('Files:', e.detail.files);
+  });
 </script>
 ```
+
+## Properties
+
+<table>
+  <thead>
+    <tr>
+      <th>Attribute</th>
+      <th>Property</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>content</code>
+      </td>
+      <td>
+        <code>content</code>
+      </td>
+      <td>
+        Initial HTML. Updating this property replaces the editor document when
+        it differs from the current HTML.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>toolbar-size</code>
+      </td>
+      <td>
+        <code>toolbarSize</code>
+      </td>
+      <td>
+        Toolbar control size: <code>sm</code>, <code>md</code>, or{' '}
+        <code>lg</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>readonly</code>
+      </td>
+      <td>
+        <code>readonly</code>
+      </td>
+      <td>
+        When set, editing is disabled and the toolbar is hidden. Selection and
+        copy still work. Attached files, if any, are shown without delete
+        controls.
+      </td>
+    </tr>
+    <tr>
+      <td>—</td>
+      <td>
+        <code>extensions</code>
+      </td>
+      <td>
+        Array of TipTap extensions (typically with <code>toolbarRender</code>).
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### Events
+
+<table>
+  <thead>
+    <tr>
+      <th>Event</th>
+      <th>Detail</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>content-change</code>
+      </td>
+      <td>
+        <code>{'{ editor }'}</code>
+      </td>
+      <td>Fired when the document HTML changes.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>files-change</code>
+      </td>
+      <td>
+        <code>{'{ files, attachments }'}</code>
+      </td>
+      <td>
+        Fired when the FileUpload attachment list changes. <code>files</code> is
+        a <code>File[]</code>; <code>attachments</code> is
+        <code>{'{ id, name, size }[]'}</code>. Attachments are not stored in the
+        document HTML.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ## Extensions
 
@@ -118,7 +219,7 @@ specific features and toolbar controls.
         <code>Typography</code>
       </td>
       <td>Heading and paragraph styles</td>
-      <td>H1-H6, paragraph dropdown</td>
+      <td>H1-H6, paragraph menu</td>
     </tr>
     <tr>
       <td>4</td>
@@ -186,6 +287,26 @@ specific features and toolbar controls.
     </tr>
     <tr>
       <td>12</td>
+      <td>
+        <code>FontSize</code>
+      </td>
+      <td>Font size selection</td>
+      <td>12px–32px via a toolbar menu</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>
+        <code>FileUpload</code>
+      </td>
+      <td>File attachments</td>
+      <td>
+        Toolbar upload, drag-and-drop, and a file strip below the editor. Listen
+        for <code>files-change</code>. Optional
+        <code>FileUpload.accept</code> filters the file picker.
+      </td>
+    </tr>
+    <tr>
+      <td>14</td>
       <td>
         <code>Clipboard</code>
       </td>
@@ -502,8 +623,9 @@ The editor supports standard keyboard shortcuts for formatting and navigation.
 ## Markdown Input Rules
 
 The editor supports Markdown-style input patterns that automatically convert to
-formatted content as you type. These work with the base TipTap StarterKit
-extensions.
+formatted content as you type when the matching bundled extensions are loaded
+(for example `Typography`, `Lists`, `TextFormatting`, `Blocks`). This is not a
+Markdown source view.
 
 <table>
   <thead>

@@ -1,0 +1,48 @@
+{
+  "name": "@carbon-labs/react-inline-tip",
+  "version": "0.0.1",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "type": "module",
+  "description": "Carbon Labs - InlineTip",
+  "labs": {
+    "status": "draft",
+    "title": "React InlineTip"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "src/components/InlineTip"
+  },
+  "types": "./es/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./es/index.js",
+      "require": "./lib/index.js"
+    },
+    "./es/*": "./es/*",
+    "./lib/*": "./lib/*",
+    "./scss/*": "./scss/*"
+  },
+  "files": [
+    "es",
+    "lib",
+    "scss",
+    "telemetry.yml"
+  ],
+  "scripts": {
+    "build": "node ../../../tasks/build.js",
+    "clean": "rimraf es lib scss",
+    "postinstall": "ibmtelemetry --config=telemetry.yml",
+    "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 2ab0cb7e-a17c-4cb0-929f-8145a6ed3630 --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
+  },
+  "devDependencies": {
+    "@carbon-labs/utilities": "0.28.0"
+  },
+  "dependencies": {
+    "@ibm/telemetry-js": "^1.10.2"
+  }
+}

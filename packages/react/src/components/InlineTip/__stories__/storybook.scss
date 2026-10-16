@@ -1,0 +1,19 @@
+/**
+ * Copyright IBM Corp. 2023, 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/styles/scss/spacing' as *;
+
+.storybook--inline-tip-wide {
+  // Allow enough space above the component to show the "X" tooltip.
+  max-inline-size: 784px;
+  margin: $spacing-08;
+}
+
+.storybook--inline-tip-narrow {
+  margin: $spacing-08;
+  max-inline-size: 348px;
+}

@@ -1,0 +1,1 @@
+export{t as MDXProvider}from"./lib-BmQJ10Yk.js";

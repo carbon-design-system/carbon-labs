@@ -91,6 +91,28 @@ describe('mergeOptions — storybookGroup', () => {
   });
 });
 
+describe('mergeOptions — v12', () => {
+  it('is off unless --v12 is passed', () => {
+    expect(mergeOptions({}, {}).v12).toBe(false);
+    expect(mergeOptions({ v12: true }, {}).v12).toBe(true);
+  });
+
+  it('titles v12 stories under V12', () => {
+    const result = mergeOptions({ v12: true }, {});
+    expect(result.storybookGroup).toBe('V12');
+  });
+
+  it('nests a --group flag under V12', () => {
+    const result = mergeOptions({ v12: true, group: 'Patterns' }, {});
+    expect(result.storybookGroup).toBe('V12/Patterns');
+  });
+
+  it('does not apply the config storybookGroup to v12', () => {
+    const result = mergeOptions({ v12: true }, { storybookGroup: 'Squad' });
+    expect(result.storybookGroup).toBe('V12');
+  });
+});
+
 // ── loadConfig filesystem tests ────────────────────────────────────────────
 
 import { loadConfig } from '../src/utils/config.js';

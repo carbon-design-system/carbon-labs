@@ -2997,6 +2997,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-non-linear-reading@workspace:packages/react/src/components/NonLinearReading":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-non-linear-reading@workspace:packages/react/src/components/NonLinearReading"
+  dependencies:
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-plane-stack-3d@workspace:packages/react/src/components/PlaneStack3D":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-plane-stack-3d@workspace:packages/react/src/components/PlaneStack3D"

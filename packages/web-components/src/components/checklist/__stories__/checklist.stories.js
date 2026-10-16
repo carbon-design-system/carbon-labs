@@ -129,7 +129,7 @@ const renderDefault = (args) => {
  * @returns {import('lit').TemplateResult} Rendered template
  */
 const renderTaskStates = (args) => {
-  const { toggleLabel, toggleLabelAlign, toggleAriaLabel } = args;
+  const { toggleLabel, toggleLabelAlign, toggleAriaLabel, viewAllLabel } = args;
 
   return html`
     <div style="max-inline-size: 20rem; min-inline-size: 20rem;">
@@ -138,6 +138,8 @@ const renderTaskStates = (args) => {
         toggle-label=${toggleLabel}
         toggle-label-align=${toggleLabelAlign}
         toggle-aria-label=${toggleAriaLabel}
+        view-all-label=${viewAllLabel}
+        @clabs-checklist-view-all=${action('clabs-checklist-view-all')}
         open>
         <clabs-checklist-group title="Not started / In progress / Completed">
           <clabs-checklist-item

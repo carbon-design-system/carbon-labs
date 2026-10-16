@@ -2965,6 +2965,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-checklist@workspace:packages/react/src/components/Checklist":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-checklist@workspace:packages/react/src/components/Checklist"
+  dependencies:
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon/colors": "npm:^11.0.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  peerDependencies:
+    "@carbon/colors": ">=11"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-date-picker@workspace:packages/react/src/v12/components/DatePicker":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-date-picker@workspace:packages/react/src/v12/components/DatePicker"

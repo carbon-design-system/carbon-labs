@@ -1,0 +1,14 @@
+/**
+ * Copyright IBM Corp. 2023, 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/styles/scss/spacing' as *;
+
+.storybook--checklist-viewport {
+  max-inline-size: calc(2 * $spacing-13);
+  min-inline-size: calc(2 * $spacing-13);
+  margin: $spacing-08;
+}

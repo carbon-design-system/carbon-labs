@@ -3040,6 +3040,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-mega-button@workspace:packages/react/src/v12/components/MegaButton":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-mega-button@workspace:packages/react/src/v12/components/MegaButton"
+  dependencies:
+    classnames: "npm:^2.3.2"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    "@carbon/react": ^1.95.0
+    react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+    react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-non-linear-reading@workspace:packages/react/src/components/NonLinearReading":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-non-linear-reading@workspace:packages/react/src/components/NonLinearReading"

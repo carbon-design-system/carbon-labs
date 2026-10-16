@@ -3,6 +3,7 @@ import { white, g10, g90, g100 } from '@carbon/themes';
 import { breakpoints } from '@carbon/layout';
 import { GlobalTheme, Theme } from '@carbon/react/es/components/Theme';
 import { Layout } from '@carbon/react/es/components/Layout';
+import { FeatureFlags } from '@carbon/react/es/components/FeatureFlags';
 import { DocsContainer, Meta, Unstyled } from '@storybook/addon-docs/blocks';
 import {
   Accordion,
@@ -334,9 +335,19 @@ const decorators = [
   },
 ];
 
+// The v12 Storybook renders every story with `enable-v12-release` on, as
+// core's `.storybook-v12` does.
+const withV12Release = (Story, context) => (
+  <FeatureFlags enableV12Release>
+    <Story {...context} />
+  </FeatureFlags>
+);
+
+const includeV12 = process.env.STORYBOOK_INCLUDE_V12 === 'true';
+
 const preview = {
   parameters,
-  decorators,
+  decorators: includeV12 ? [withV12Release, ...decorators] : decorators,
   globalTypes,
   tags: ['autodocs'],
 };

@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://unpkg.com/@ibm/telemetry-config-schema@v1/dist/config.schema.json
+
+# The projectId is issued per package and cannot be generated here. Until it is
+# set, package.json carries no `postinstall` telemetry hook, so nothing reads
+# this file. Generate the real one with @ibm/telemetry-js-config-generator.
+version: 1
+projectId: REPLACE-WITH-TELEMETRY-PROJECT-ID
+endpoint: https://www-api.ibm.com/ibm-telemetry/v1/metrics
+collect:
+  npm:
+    dependencies: null
+  jsx:
+    elements:
+      allowedAttributeNames:
+        # MegaButton
+        - className
+        # React
+        - key
+        - ref
+      allowedAttributeStringValues: []

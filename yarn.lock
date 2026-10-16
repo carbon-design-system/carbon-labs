@@ -2965,6 +2965,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-cascade@workspace:packages/react/src/components/Cascade":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-cascade@workspace:packages/react/src/components/Cascade"
+  dependencies:
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-date-picker@workspace:packages/react/src/v12/components/DatePicker":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-date-picker@workspace:packages/react/src/v12/components/DatePicker"

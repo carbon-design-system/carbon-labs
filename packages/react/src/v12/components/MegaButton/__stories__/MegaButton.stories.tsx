@@ -21,7 +21,18 @@ import './MegaButton.stories.scss';
 import proposals from '../proposals/tokens.json';
 import mdx from './MegaButton.mdx';
 
-type Theme = 'white' | 'g10' | 'g90' | 'g100';
+type CarbonTheme = 'white' | 'g10' | 'g90' | 'g100';
+type Theme = CarbonTheme | 'v12-light' | 'v12-dark';
+
+// The v12 Storybook's v12 themes read the proposals' light and dark values.
+const proposalTheme: Record<Theme, CarbonTheme> = {
+  white: 'white',
+  g10: 'g10',
+  g90: 'g90',
+  g100: 'g100',
+  'v12-light': 'white',
+  'v12-dark': 'g100',
+};
 
 /**
  * The proposed values, for one Carbon theme, as the custom properties the
@@ -39,7 +50,7 @@ function proposedValues(theme: Theme, scope: string): string {
       const themes = (
         token as { $extensions: { 'carbon.themes': Record<Theme, string> } }
       ).$extensions['carbon.themes'];
-      return `--cds-mega-button-${role}: ${themes[theme] ?? themes.white};`;
+      return `--cds-mega-button-${role}: ${themes[proposalTheme[theme] ?? 'white']};`;
     }
   );
   return `.${scope} { ${declarations.join(' ')} }`;

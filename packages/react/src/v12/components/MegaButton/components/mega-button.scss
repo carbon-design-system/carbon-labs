@@ -65,19 +65,34 @@ $block: '#{$prefix}--mega-button';
   vertical-align: top;
   white-space: nowrap;
 
-  // The press: a fill that grows from where the pointer went down (INBOX row
-  // 4), in the pressed colour. Keyboard activation grows it from the centre.
+  // The press (INBOX row 4, refined 2026-10-16): the background fades slowly into the pressed
+  // colour while a soft radial of the same colour grows from where the pointer went down. The
+  // radial has no hard edge: it is the pressed colour at its centre, thinning through mixed
+  // stops to transparent, so the two layers blend into one smooth press. Keyboard activation
+  // grows it from the centre.
   &::before {
     position: absolute;
     z-index: -1;
-    background-color: var(--#{$block}-bg-active);
-    clip-path: circle(
-      0 at var(--#{$block}-press-x, 50%) var(--#{$block}-press-y, 50%)
+    background-image: radial-gradient(
+      circle farthest-corner at var(--#{$block}-press-x, 50%)
+        var(--#{$block}-press-y, 50%),
+      var(--#{$block}-bg-active) 0%,
+      var(--#{$block}-bg-active) 20%,
+      color-mix(in oklch, var(--#{$block}-bg-active) 70%, transparent) 40%,
+      color-mix(in oklch, var(--#{$block}-bg-active) 30%, transparent) 60%,
+      transparent 85%
     );
     content: '';
     inset: 0;
+    opacity: 0;
     pointer-events: none;
-    transition: clip-path $duration-moderate-01 motion(entrance, expressive);
+    transform: scale(0);
+    transform-origin: var(--#{$block}-press-x, 50%)
+      var(--#{$block}-press-y, 50%);
+    // Release: fade out quickly, then reset the scale once it is invisible.
+    transition:
+      opacity $duration-fast-02 motion(exit, productive),
+      transform 0s linear $duration-fast-02;
   }
 
   // Hover only where a pointer can hover, as Carbon's Button does, so a touch
@@ -94,14 +109,25 @@ $block: '#{$prefix}--mega-button';
   &:active {
     --#{$block}-border: var(--#{$block}-border-hover, transparent);
 
+    background-color: var(--#{$block}-bg-active);
     color: var(--#{$block}-fg-active, var(--#{$block}-fg));
+    // Entering the press, the background takes its time; leaving it, the
+    // base rule's fast-01 applies.
+    transition:
+      background-color $duration-slow-01 motion(entrance, productive),
+      border-color $duration-fast-01 motion(entrance, productive),
+      box-shadow $duration-fast-01 motion(entrance, productive),
+      color $duration-fast-01 motion(entrance, productive);
   }
 
   &:active::before {
-    // 150% of the reference box covers the pill from any point inside it.
-    clip-path: circle(
-      150% at var(--#{$block}-press-x, 50%) var(--#{$block}-press-y, 50%)
-    );
+    opacity: 1;
+    // Grown past the pill from any press point: at 2.5 the solid centre alone
+    // reaches beyond the farthest corner.
+    transform: scale(2.5);
+    transition:
+      opacity $duration-moderate-01 motion(entrance, expressive),
+      transform $duration-slow-01 motion(entrance, expressive);
   }
 
   &[aria-pressed='true'] {
@@ -121,10 +147,22 @@ $block: '#{$prefix}--mega-button';
       inset 0 0 0 button-vars.$button-border-width $background;
   }
 
+  // Reduced motion: no growth and no fade. The press is the pressed colour,
+  // at once.
   @media (prefers-reduced-motion: reduce) {
     transition: none;
 
+    &:active {
+      transition: none;
+    }
+
     &::before {
+      display: none;
+      transition: none;
+    }
+
+    &:active::before {
+      transform: none;
       transition: none;
     }
   }
@@ -249,10 +287,10 @@ $block: '#{$prefix}--mega-button';
     }
   }
 
-  // The press is the radial fill above; under it the button holds its hover
-  // colour, so a press from the keyboard still turns blue.
+  // The press fades the primary from its hover blue into the pressed blue,
+  // under the radial (the base rule's press).
   &:active {
-    background-color: var(--#{$block}-bg-hover);
+    background-color: var(--#{$block}-bg-active);
   }
 
   &[aria-pressed='true'] {

@@ -52,6 +52,7 @@ $-clip-pressed: inset(1px round #{$-clip-radius});
   // overridable by ButtonSet through --cds-button-radius, as for Button.
   @include button-radius.apply;
   --#{$block}-border: transparent;
+  --#{$block}-lift: 0 0 0 0 transparent;
 
   position: relative;
   display: inline-flex;
@@ -63,9 +64,9 @@ $-clip-pressed: inset(1px round #{$-clip-radius});
   appearance: none;
   background-color: var(--#{$block}-bg);
   block-size: layout.size('height');
-  // Hover fades rather than switches (refined 2026-10-16): the colours take
-  // $duration-fast-02 instead of Carbon's fast-01, which read as instant.
-  // Focus keeps Carbon's fast-01.
+  // The hover lift (the hover-lift exploration) is an outer shadow of the pill,
+  // so it falls only below the shape: never under the label or the outline.
+  box-shadow: var(--#{$block}-lift);
   clip-path: $-clip-rest;
   color: var(--#{$block}-fg);
   cursor: pointer;
@@ -77,13 +78,15 @@ $-clip-pressed: inset(1px round #{$-clip-radius});
   padding-block: 0;
   text-align: start;
   text-decoration: none;
+  // Hover fades rather than switches (refined 2026-10-16): the colours and the
+  // lift take $duration-fast-02 instead of Carbon's fast-01, which read as
+  // instant.
   transition:
     background-color $duration-fast-02 motion(entrance, productive),
     border-color $duration-fast-02 motion(entrance, productive),
-    box-shadow $duration-fast-01 motion(entrance, productive),
+    box-shadow $duration-fast-02 motion(entrance, productive),
     clip-path $duration-fast-01 motion(exit, productive),
-    color $duration-fast-02 motion(entrance, productive),
-    filter $duration-fast-02 motion(entrance, productive);
+    color $duration-fast-02 motion(entrance, productive);
   vertical-align: top;
   white-space: nowrap;
 
@@ -125,6 +128,7 @@ $-clip-pressed: inset(1px round #{$-clip-radius});
 
       // @carbon-explore hover-lift — a one-pixel shadow directly below fades in with the hover reveal, the lightest form of the raised lift. TBD
       @include explore.explore-hover-lift;
+      --#{$block}-lift: var(--cds-explore-hover-lift);
 
       background-color: var(--#{$block}-bg-hover);
       color: var(--#{$block}-fg-hover, var(--#{$block}-fg));
@@ -136,18 +140,18 @@ $-clip-pressed: inset(1px round #{$-clip-radius});
 
     background-color: var(--#{$block}-bg-active);
     // Pressed in: a pixel smaller on every edge, and the lift gone.
+    --#{$block}-lift: 0 0 0 0 transparent;
+
     clip-path: $-clip-pressed;
     color: var(--#{$block}-fg-active, var(--#{$block}-fg));
-    filter: none;
     // Entering the press, the background takes its time; leaving it, the
     // base rule's fast-02 applies.
     transition:
       background-color $duration-slow-01 motion(entrance, productive),
       border-color $duration-fast-01 motion(entrance, productive),
-      box-shadow $duration-fast-01 motion(entrance, productive),
+      box-shadow $duration-fast-01 motion(exit, productive),
       clip-path $duration-fast-01 motion(entrance, productive),
-      color $duration-fast-01 motion(entrance, productive),
-      filter $duration-fast-01 motion(exit, productive);
+      color $duration-fast-01 motion(entrance, productive);
   }
 
   &:active::before {
@@ -167,14 +171,17 @@ $-clip-pressed: inset(1px round #{$-clip-radius});
     color: var(--#{$block}-fg-selected);
   }
 
-  // Carbon's button focus, unchanged: a 2px ring (the border plus a 1px inset)
-  // over a 1px $background gap, drawn inside so nothing reflows. ADR 0014 in
-  // the IBM design harness adopts it.
-  &:focus {
+  // Carbon's button focus ring: a 2px ring (the border plus a 1px inset) over
+  // a 1px $background gap, drawn inside so nothing reflows (ADR 0014 in the IBM
+  // design harness adopts it). Shown on :focus-visible, not Carbon's :focus, so
+  // a mouse press does not draw it (decided by the human, INBOX row 21: on a
+  // press the 1px inset clipped the ring into a haze). The lift rides along.
+  &:focus-visible {
     border-color: $focus;
     box-shadow:
       inset 0 0 0 button-vars.$button-outline-width $focus,
-      inset 0 0 0 button-vars.$button-border-width $background;
+      inset 0 0 0 button-vars.$button-border-width $background,
+      var(--#{$block}-lift);
   }
 
   // Reduced motion: no growth and no fade. The press is the pressed colour,
@@ -504,7 +511,6 @@ $-clip-pressed: inset(1px round #{$-clip-radius});
   clip-path: $-clip-rest;
   color: var(--#{$block}-fg-disabled);
   cursor: not-allowed;
-  filter: none;
 
   &::before {
     display: none;

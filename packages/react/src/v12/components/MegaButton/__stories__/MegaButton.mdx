@@ -53,8 +53,10 @@ need none of the above.
   is named by its label alone. Icon-only buttons put the chord in the tooltip.
 - **Sizes.** Carbon's six heights, from the layout context. Inline padding grows
   with size (12, 16, 20, 24px) where Carbon's stays at 16px.
-- **Press.** A fill grows from where the pointer went down, timed by Carbon's
-  motion tokens, and is off under `prefers-reduced-motion`.
+- **Press.** The background fades slowly into the pressed colour while a soft,
+  edgeless radial of the same colour grows from where the pointer went down,
+  timed by Carbon's motion tokens. Under `prefers-reduced-motion` the colour
+  changes at once.
 - **Focus** is Carbon's: a 2px ring over a 1px gap, drawn inside.
 
 <Canvas of={MegaButtonStories.BesideCarbonButton} />

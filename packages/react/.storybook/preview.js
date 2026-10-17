@@ -52,6 +52,25 @@ import {
   Video,
 } from '@carbon-labs/mdx-components';
 import './styles.scss';
+
+// The v12 Storybook (STORYBOOK_INCLUDE_V12) previews Carbon's v12 light and dark
+// themes from carbon#23376 until @carbon/themes ships them. Storybook inlines
+// the variable at build time, so the standard Storybook carries none of this.
+const includeV12 = process.env.STORYBOOK_INCLUDE_V12 === 'true';
+if (includeV12) {
+  require('./v12-themes/_index.scss');
+}
+
+const themeItems = includeV12
+  ? [
+      { value: 'v12-light', title: 'v12 light (preview, carbon#23376)' },
+      { value: 'v12-dark', title: 'v12 dark (preview, carbon#23376)' },
+      { value: 'white', title: 'white (v11)' },
+      { value: 'g10', title: 'g10 (v11)' },
+      { value: 'g90', title: 'g90 (v11)' },
+      { value: 'g100', title: 'g100 (v11)' },
+    ]
+  : ['white', 'g10', 'g90', 'g100'];
 import { MDXProvider } from '@mdx-js/react';
 import theme from './theme';
 
@@ -210,10 +229,10 @@ export const globalTypes = {
   theme: {
     name: 'Theme',
     description: 'Set the global theme for displaying components',
-    defaultValue: 'white',
+    defaultValue: includeV12 ? 'v12-light' : 'white',
     toolbar: {
       icon: 'paintbrush',
-      items: ['white', 'g10', 'g90', 'g100'],
+      items: themeItems,
     },
   },
   ...(process.env.NODE_ENV === 'development' ? devTools : {}),
@@ -342,8 +361,6 @@ const withV12Release = (Story, context) => (
     <Story {...context} />
   </FeatureFlags>
 );
-
-const includeV12 = process.env.STORYBOOK_INCLUDE_V12 === 'true';
 
 const preview = {
   parameters,

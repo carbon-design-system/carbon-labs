@@ -46,12 +46,12 @@ $explore-hover-emboss:
   box-shadow: $explore-hover-emboss;
 }
 
-/// hover-lift — elevation. hover: drop 0 1px 1px, directly below, in $shadow; on filter, so it never meets a focus ring
+/// hover-lift — elevation. hover: an outer shadow 0 1px 1px in $shadow, along the bottom of the shape only; handed over as --cds-explore-hover-lift for box-shadow
 /// Law: ibm-design-rules/reference/motion.md#effects. Would become: new.
-$explore-hover-lift: drop-shadow(0 1px 1px $shadow);
+$explore-hover-lift: 0 1px 1px 0 $shadow;
 
 @mixin explore-hover-lift {
-  filter: $explore-hover-lift;
+  --cds-explore-hover-lift: #{$explore-hover-lift};
 }
 
 /// elevated — elevation. drop 0 8px 24px 2px black @0.40

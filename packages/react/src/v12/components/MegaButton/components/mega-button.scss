@@ -57,11 +57,14 @@ $block: '#{$prefix}--mega-button';
   padding-block: 0;
   text-align: start;
   text-decoration: none;
+  // Hover fades rather than switches (refined 2026-10-16): the colours take
+  // $duration-moderate-01 instead of Carbon's fast-01, which read as instant.
+  // Focus keeps Carbon's fast-01.
   transition:
-    background-color $duration-fast-01 motion(entrance, productive),
-    border-color $duration-fast-01 motion(entrance, productive),
+    background-color $duration-moderate-01 motion(entrance, productive),
+    border-color $duration-moderate-01 motion(entrance, productive),
     box-shadow $duration-fast-01 motion(entrance, productive),
-    color $duration-fast-01 motion(entrance, productive);
+    color $duration-moderate-01 motion(entrance, productive);
   vertical-align: top;
   white-space: nowrap;
 
@@ -112,7 +115,7 @@ $block: '#{$prefix}--mega-button';
     background-color: var(--#{$block}-bg-active);
     color: var(--#{$block}-fg-active, var(--#{$block}-fg));
     // Entering the press, the background takes its time; leaving it, the
-    // base rule's fast-01 applies.
+    // base rule's moderate-01 applies.
     transition:
       background-color $duration-slow-01 motion(entrance, productive),
       border-color $duration-fast-01 motion(entrance, productive),

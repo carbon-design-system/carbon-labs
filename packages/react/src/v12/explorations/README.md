@@ -8,6 +8,8 @@ becomes a recommendation for v12 or it is removed.
 - `corner-smoothing` (smoothing): 40%. Would become: new.
 - `hover-emboss` (elevation): raised: drop 0 2px 4px 0 black @0.20; inset 0 1px
   0.5px 0 white @0.28; inset 0 -1px 0.5px 0 black @0.18. Would become: new.
+- `hover-lift` (elevation): hover: drop 0 1px 1px, directly below, in $shadow;
+  on filter, so it never meets a focus ring. Would become: new.
 - `elevated` (elevation): drop 0 8px 24px 2px black @0.40. Would become:
   box-shadow.
 - `primary-rest` (other): rest

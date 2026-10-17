@@ -78,6 +78,23 @@ describe('MegaButton', () => {
     expect(last).toHaveAttribute('aria-hidden', 'true');
   });
 
+  it('leads with the icon whenever there is a key command, even if trailing was asked for', () => {
+    render(
+      <MegaButton
+        renderIcon={Add}
+        iconPosition="trailing"
+        keyCommand={['mod', 's']}>
+        Save
+      </MegaButton>
+    );
+    const button = screen.getByRole('button');
+    const children = Array.from(button.children);
+    expect(children[0].tagName.toLowerCase()).toBe('svg');
+    expect(children[1]).toHaveClass('cds--mega-button__label');
+    expect(children[2]).toHaveClass('cds--mega-button__key-command');
+    expect(button).toHaveClass('cds--mega-button--icon-leading');
+  });
+
   it('has no aria-keyshortcuts without a key command', () => {
     render(<MegaButton>Save</MegaButton>);
     expect(screen.getByRole('button')).not.toHaveAttribute('aria-keyshortcuts');

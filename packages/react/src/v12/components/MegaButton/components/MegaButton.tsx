@@ -65,8 +65,9 @@ export interface MegaButtonProps extends Omit<
   hasIconOnly?: boolean;
 
   /**
-   * Which side of the label the one icon sits on. The key command, when there
-   * is one, is always last.
+   * Which side of the label the one icon sits on. With a key command the icon
+   * always leads, so the label, the icon and the chord never crowd the end of
+   * the button; the key command is always last.
    */
   iconPosition?: MegaButtonIconPosition;
 
@@ -142,6 +143,11 @@ export const MegaButton = forwardRef<HTMLButtonElement, MegaButtonProps>(
     const prefix = usePrefix();
     const block = `${prefix}--mega-button`;
     const hasKeyCommand = Boolean(keyCommand && keyCommand.length > 0);
+    // A key command takes the end of the button, so the icon moves to lead
+    // (decided by the human, INBOX row 19).
+    const position: MegaButtonIconPosition = hasKeyCommand
+      ? 'leading'
+      : iconPosition;
 
     // The press grows from where the pointer went down, so the position is
     // handed to the stylesheet as two custom properties. Keyboard activation
@@ -172,7 +178,7 @@ export const MegaButton = forwardRef<HTMLButtonElement, MegaButtonProps>(
       `${prefix}--layout--size-${size}`,
       {
         [`${block}--icon-only`]: hasIconOnly,
-        [`${block}--icon-leading`]: !hasIconOnly && iconPosition === 'leading',
+        [`${block}--icon-leading`]: !hasIconOnly && position === 'leading',
       },
       className
     );
@@ -195,9 +201,9 @@ export const MegaButton = forwardRef<HTMLButtonElement, MegaButtonProps>(
         ) : (
           <>
             {/* @carbon-proposal api: mega-button-icon-position — Carbon's Button only trails its icon. TBD */}
-            {iconPosition === 'leading' && icon}
+            {position === 'leading' && icon}
             <span className={`${block}__label`}>{children}</span>
-            {iconPosition === 'trailing' && icon}
+            {position === 'trailing' && icon}
             {hasKeyCommand && (
               // The button is named by its label alone; the chord is
               // announced by aria-keyshortcuts, so the visible hint is hidden
@@ -268,8 +274,9 @@ MegaButton.propTypes = {
   hasIconOnly: PropTypes.bool,
 
   /**
-   * Which side of the label the one icon sits on. The key command, when there
-   * is one, is always last.
+   * Which side of the label the one icon sits on. With a key command the icon
+   * always leads, so the label, the icon and the chord never crowd the end of
+   * the button; the key command is always last.
    */
   iconPosition: PropTypes.oneOf(['leading', 'trailing'] as const),
 

@@ -16,6 +16,8 @@
 @use '@carbon/styles/scss/spacing' as *;
 @use '@carbon/styles/scss/type' as *;
 @use '@carbon/styles/scss/motion' as *;
+@use '@carbon/styles/scss/border-radius' as *;
+@use '@carbon/styles/scss/feature-flags' as *;
 @use '@carbon/styles/scss/utilities/custom-property';
 @use '@carbon/styles/scss/utilities/layout';
 @use '@carbon/styles/scss/components/button/tokens' as *;
@@ -24,6 +26,20 @@
 @use '../../../explorations' as explore;
 
 $block: '#{$prefix}--mega-button';
+
+// The press shrinks the pill by a pixel on every edge (INBOX row 19). It is a
+// clip that follows Carbon's own button radius chain, so ButtonSet's squared
+// corners are honoured. At rest the clip stands clear of the pill by
+// $spacing-02, so the hover lift's shadow below is never cut.
+$-radius: button-vars.$button-border-radius;
+
+@if enabled('enable-v12-release') {
+  $-radius: $border-radius-max;
+}
+
+$-clip-radius: custom-property.get-var('button-radius', $-radius);
+$-clip-rest: inset(calc(-1 * #{$spacing-02}) round #{$-clip-radius});
+$-clip-pressed: inset(1px round #{$-clip-radius});
 
 // Each kind fills in a few state properties (--cds--mega-button-bg and its
 // siblings); this base rule is the only place they are painted.
@@ -47,6 +63,10 @@ $block: '#{$prefix}--mega-button';
   appearance: none;
   background-color: var(--#{$block}-bg);
   block-size: layout.size('height');
+  // Hover fades rather than switches (refined 2026-10-16): the colours take
+  // $duration-fast-02 instead of Carbon's fast-01, which read as instant.
+  // Focus keeps Carbon's fast-01.
+  clip-path: $-clip-rest;
   color: var(--#{$block}-fg);
   cursor: pointer;
   // The press fill is drawn inside the pill and must not escape its corners.
@@ -57,14 +77,13 @@ $block: '#{$prefix}--mega-button';
   padding-block: 0;
   text-align: start;
   text-decoration: none;
-  // Hover fades rather than switches (refined 2026-10-16): the colours take
-  // $duration-fast-02 instead of Carbon's fast-01, which read as instant.
-  // Focus keeps Carbon's fast-01.
   transition:
     background-color $duration-fast-02 motion(entrance, productive),
     border-color $duration-fast-02 motion(entrance, productive),
     box-shadow $duration-fast-01 motion(entrance, productive),
-    color $duration-fast-02 motion(entrance, productive);
+    clip-path $duration-fast-01 motion(exit, productive),
+    color $duration-fast-02 motion(entrance, productive),
+    filter $duration-fast-02 motion(entrance, productive);
   vertical-align: top;
   white-space: nowrap;
 
@@ -104,6 +123,9 @@ $block: '#{$prefix}--mega-button';
     &:hover {
       --#{$block}-border: var(--#{$block}-border-hover, transparent);
 
+      // @carbon-explore hover-lift — a one-pixel shadow directly below fades in with the hover reveal, the lightest form of the raised lift. TBD
+      @include explore.explore-hover-lift;
+
       background-color: var(--#{$block}-bg-hover);
       color: var(--#{$block}-fg-hover, var(--#{$block}-fg));
     }
@@ -113,14 +135,19 @@ $block: '#{$prefix}--mega-button';
     --#{$block}-border: var(--#{$block}-border-hover, transparent);
 
     background-color: var(--#{$block}-bg-active);
+    // Pressed in: a pixel smaller on every edge, and the lift gone.
+    clip-path: $-clip-pressed;
     color: var(--#{$block}-fg-active, var(--#{$block}-fg));
+    filter: none;
     // Entering the press, the background takes its time; leaving it, the
     // base rule's fast-02 applies.
     transition:
       background-color $duration-slow-01 motion(entrance, productive),
       border-color $duration-fast-01 motion(entrance, productive),
       box-shadow $duration-fast-01 motion(entrance, productive),
-      color $duration-fast-01 motion(entrance, productive);
+      clip-path $duration-fast-01 motion(entrance, productive),
+      color $duration-fast-01 motion(entrance, productive),
+      filter $duration-fast-01 motion(exit, productive);
   }
 
   &:active::before {
@@ -474,8 +501,10 @@ $block: '#{$prefix}--mega-button';
   border-color: var(--#{$block}-border-disabled);
   background-color: var(--#{$block}-bg-disabled);
   box-shadow: none;
+  clip-path: $-clip-rest;
   color: var(--#{$block}-fg-disabled);
   cursor: not-allowed;
+  filter: none;
 
   &::before {
     display: none;

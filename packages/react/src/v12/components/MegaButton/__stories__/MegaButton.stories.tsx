@@ -79,7 +79,7 @@ const meta: Meta<StoryArgs> = {
     kind: 'primary',
     size: 'lg',
     icon: 'Add',
-    iconPosition: 'trailing',
+    iconPosition: 'leading',
     keyCommand: ['mod', 's'],
     hasIconOnly: false,
     disabled: false,

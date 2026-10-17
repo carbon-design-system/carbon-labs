@@ -26,6 +26,14 @@
       "recommendsFor": "new"
     },
     {
+      "name": "hover-lift",
+      "kind": "elevation",
+      "value": "hover: drop 0 1px 1px, directly below, in $shadow; on filter, so it never meets a focus ring",
+      "rationale": "The lightest form of the law's raised lift: one shadow, one pixel down with a one-pixel blur, fading in with the hover reveal and gone again on the press, so the press reads as pushing in. The human chose it over hover-emboss for MegaButton (2026-10-17): no inner highlight. Drawn with filter: drop-shadow() so it follows the shape and leaves box-shadow to Carbon's inset focus ring. Rendered with Carbon's $shadow, so its alpha is Carbon's.",
+      "harnessLaw": "ibm-design-rules/reference/motion.md#effects",
+      "recommendsFor": "new"
+    },
+    {
       "name": "elevated",
       "kind": "elevation",
       "value": "drop 0 8px 24px 2px black @0.40",

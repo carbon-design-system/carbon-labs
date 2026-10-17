@@ -1,0 +1,522 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon foundations only: a labs v12 component consumes @carbon/styles and
+// never mirrors it. Anything Carbon does not have yet is read through
+// custom-property.get-var('<name>', <a Carbon token>) under a carbon-proposal
+// token callout, and declared in proposals/tokens.json. One of our own styles
+// being tried (primary-rest) comes from the shared explorations reference and
+// is marked where it is used.
+@use '@carbon/styles/scss/config' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/motion' as *;
+@use '@carbon/styles/scss/border-radius' as *;
+@use '@carbon/styles/scss/feature-flags' as *;
+@use '@carbon/styles/scss/utilities/custom-property';
+@use '@carbon/styles/scss/utilities/layout';
+@use '@carbon/styles/scss/components/button/tokens' as *;
+@use '@carbon/styles/scss/components/button/vars' as button-vars;
+@use '@carbon/styles/scss/components/button/radius' as button-radius;
+@use '../../../explorations' as explore;
+
+$block: '#{$prefix}--mega-button';
+
+// The press shrinks the pill by a pixel on every edge (INBOX row 19). It is a
+// clip that follows Carbon's own button radius chain, so ButtonSet's squared
+// corners are honoured. At rest the clip stands clear of the pill by
+// $spacing-02, so the hover lift's shadow below is never cut.
+$-radius: button-vars.$button-border-radius;
+
+@if enabled('enable-v12-release') {
+  $-radius: $border-radius-max;
+}
+
+$-clip-radius: custom-property.get-var('button-radius', $-radius);
+$-clip-rest: inset(calc(-1 * #{$spacing-02}) round #{$-clip-radius});
+$-clip-pressed: inset(1px round #{$-clip-radius});
+
+// Each kind fills in a few state properties (--cds--mega-button-bg and its
+// siblings); this base rule is the only place they are painted.
+.#{$block} {
+  // Carbon's own sizing: the six heights come from the layout context, as
+  // Carbon's Button takes them, so a MegaButton inside a Layout follows it.
+  @include layout.use('size', $min: 'xs', $default: 'lg', $max: '2xl');
+  @include type-style('body-compact-01');
+  // Carbon's button radius: $border-radius-max under enable-v12-release, and
+  // overridable by ButtonSet through --cds-button-radius, as for Button.
+  @include button-radius.apply;
+  --#{$block}-border: transparent;
+  --#{$block}-lift: 0 0 0 0 transparent;
+
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: flex-start;
+  border: button-vars.$button-outline-width solid var(--#{$block}-border);
+  margin: 0;
+  appearance: none;
+  background-color: var(--#{$block}-bg);
+  block-size: layout.size('height');
+  // The hover lift (the hover-lift exploration) is an outer shadow of the pill,
+  // so it falls only below the shape: never under the label or the outline.
+  box-shadow: var(--#{$block}-lift);
+  clip-path: $-clip-rest;
+  color: var(--#{$block}-fg);
+  cursor: pointer;
+  // The press fill is drawn inside the pill and must not escape its corners.
+  isolation: isolate;
+  // 2:1 is the narrowest a text button gets, whatever its label (Q16).
+  min-inline-size: calc(#{layout.size('height')} * 2);
+  outline: none;
+  padding-block: 0;
+  text-align: start;
+  text-decoration: none;
+  // Hover fades rather than switches (refined 2026-10-16): the colours and the
+  // lift take $duration-fast-02 instead of Carbon's fast-01, which read as
+  // instant.
+  transition:
+    background-color $duration-fast-02 motion(entrance, productive),
+    border-color $duration-fast-02 motion(entrance, productive),
+    box-shadow $duration-fast-02 motion(entrance, productive),
+    clip-path $duration-fast-01 motion(exit, productive),
+    color $duration-fast-02 motion(entrance, productive);
+  vertical-align: top;
+  white-space: nowrap;
+
+  // The press (INBOX row 4, refined 2026-10-16): the background fades slowly into the pressed
+  // colour while a soft radial of the same colour grows from where the pointer went down. The
+  // radial has no hard edge: it is the pressed colour at its centre, thinning through mixed
+  // stops to transparent, so the two layers blend into one smooth press. Keyboard activation
+  // grows it from the centre.
+  &::before {
+    position: absolute;
+    z-index: -1;
+    background-image: radial-gradient(
+      circle farthest-corner at var(--#{$block}-press-x, 50%)
+        var(--#{$block}-press-y, 50%),
+      var(--#{$block}-bg-active) 0%,
+      var(--#{$block}-bg-active) 20%,
+      color-mix(in oklch, var(--#{$block}-bg-active) 70%, transparent) 40%,
+      color-mix(in oklch, var(--#{$block}-bg-active) 30%, transparent) 60%,
+      transparent 85%
+    );
+    content: '';
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0);
+    transform-origin: var(--#{$block}-press-x, 50%)
+      var(--#{$block}-press-y, 50%);
+    // Release: fade out quickly, then reset the scale once it is invisible.
+    transition:
+      opacity $duration-fast-02 motion(exit, productive),
+      transform 0s linear $duration-fast-02;
+  }
+
+  // Hover only where a pointer can hover, as Carbon's Button does, so a touch
+  // press never leaves a sticky hover behind.
+  @media (any-hover: hover) {
+    &:hover {
+      --#{$block}-border: var(--#{$block}-border-hover, transparent);
+
+      // @carbon-explore hover-lift — a one-pixel shadow directly below fades in with the hover reveal, the lightest form of the raised lift. TBD
+      @include explore.explore-hover-lift;
+      --#{$block}-lift: var(--cds-explore-hover-lift);
+
+      background-color: var(--#{$block}-bg-hover);
+      color: var(--#{$block}-fg-hover, var(--#{$block}-fg));
+    }
+  }
+
+  &:active {
+    --#{$block}-border: var(--#{$block}-border-hover, transparent);
+
+    background-color: var(--#{$block}-bg-active);
+    // Pressed in: a pixel smaller on every edge, and the lift gone.
+    --#{$block}-lift: 0 0 0 0 transparent;
+
+    clip-path: $-clip-pressed;
+    color: var(--#{$block}-fg-active, var(--#{$block}-fg));
+    // Entering the press, the background takes its time; leaving it, the
+    // base rule's fast-02 applies.
+    transition:
+      background-color $duration-slow-01 motion(entrance, productive),
+      border-color $duration-fast-01 motion(entrance, productive),
+      box-shadow $duration-fast-01 motion(exit, productive),
+      clip-path $duration-fast-01 motion(entrance, productive),
+      color $duration-fast-01 motion(entrance, productive);
+  }
+
+  &:active::before {
+    opacity: 1;
+    // Grown past the pill from any press point: at 2.5 the solid centre alone
+    // reaches beyond the farthest corner.
+    transform: scale(2.5);
+    transition:
+      opacity $duration-moderate-01 motion(entrance, expressive),
+      transform $duration-slow-01 motion(entrance, expressive);
+  }
+
+  &[aria-pressed='true'] {
+    --#{$block}-border: var(--#{$block}-border-selected, transparent);
+
+    background-color: var(--#{$block}-bg-selected);
+    color: var(--#{$block}-fg-selected);
+  }
+
+  // Carbon's button focus ring: a 2px ring (the border plus a 1px inset) over
+  // a 1px $background gap, drawn inside so nothing reflows (ADR 0014 in the IBM
+  // design harness adopts it). Shown on :focus-visible, not Carbon's :focus, so
+  // a mouse press does not draw it (decided by the human, INBOX row 21: on a
+  // press the 1px inset clipped the ring into a haze). The lift rides along.
+  &:focus-visible {
+    border-color: $focus;
+    box-shadow:
+      inset 0 0 0 button-vars.$button-outline-width $focus,
+      inset 0 0 0 button-vars.$button-border-width $background,
+      var(--#{$block}-lift);
+  }
+
+  // Reduced motion: no growth and no fade. The press is the pressed colour,
+  // at once.
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:active {
+      transition: none;
+    }
+
+    &::before {
+      display: none;
+      transition: none;
+    }
+
+    &:active::before {
+      transform: none;
+      transition: none;
+    }
+  }
+}
+
+.#{$block}__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.#{$block}__icon {
+  flex-shrink: 0;
+  fill: currentColor;
+}
+
+// The key command is always last (decision 8), in label-01 and its own muted
+// colour, held to 4.5:1 because it is text (Q9).
+.#{$block}__key-command {
+  @include type-style('label-01');
+
+  flex-shrink: 0;
+  color: var(--#{$block}-key);
+}
+
+.#{$block}:hover .#{$block}__key-command {
+  color: var(--#{$block}-key-hover, var(--#{$block}-key));
+}
+
+.#{$block}:active .#{$block}__key-command {
+  color: var(--#{$block}-key-active, var(--#{$block}-key));
+}
+
+.#{$block}[aria-pressed='true'] .#{$block}__key-command {
+  color: var(--#{$block}-key-selected, var(--#{$block}-key));
+}
+
+// Sizes. The gap is a Carbon spacing step per size; inline padding grows with
+// size instead of Carbon's constant 16px, and never shrinks as size grows (Q21).
+.#{$block}--xs {
+  gap: $spacing-02;
+  padding-inline: $spacing-04;
+}
+
+.#{$block}--sm {
+  gap: $spacing-03;
+  padding-inline: $spacing-05;
+}
+
+.#{$block}--md {
+  gap: $spacing-04;
+  // @carbon-proposal token: mega-button-padding-inline-md — padding grows with size, and md's 20px is the one step Carbon's spacing scale lacks. TBD
+  padding-inline: custom-property.get-var(
+    'mega-button-padding-inline-md',
+    $spacing-05
+  );
+}
+
+// xl and 2xl hold lg's gap and padding until the design gives them (INBOX row 8).
+.#{$block}--lg,
+.#{$block}--xl,
+.#{$block}--2xl {
+  gap: $spacing-05;
+  padding-inline: $spacing-06;
+}
+
+// Ghost keeps one gap at every size (Figma 3753:15980).
+.#{$block}--ghost {
+  gap: $spacing-03;
+}
+
+.#{$block}--icon-only {
+  justify-content: center;
+  inline-size: layout.size('height');
+  min-inline-size: 0;
+  padding-inline: 0;
+}
+
+// Primary (high contrast): neutral at rest, blue when the person acts.
+.#{$block}--primary {
+  --#{$block}-fg: #{$text-inverse};
+  --#{$block}-fg-hover: #{$text-on-color};
+  --#{$block}-fg-active: #{$text-on-color};
+  --#{$block}-fg-selected: #{$text-on-color};
+  // @carbon-proposal token: mega-button-primary-hover — blue responds: hover is a step on the brand curve, the reveal of a neutral resting primary. replaces: button-primary-hover. TBD
+  --#{$block}-bg-hover: #{custom-property.get-var(
+      'mega-button-primary-hover',
+      $button-primary-hover
+    )};
+  // @carbon-proposal token: mega-button-primary-active — one step darker than hover on the brand curve, so the white label holds through the press. replaces: button-primary-active. TBD
+  --#{$block}-bg-active: #{custom-property.get-var(
+      'mega-button-primary-active',
+      $button-primary-active
+    )};
+  // @carbon-proposal token: mega-button-primary-selected — a selected primary stays blue. replaces: background-selected. TBD
+  --#{$block}-bg-selected: #{custom-property.get-var(
+      'mega-button-primary-selected',
+      $button-primary
+    )};
+  // @carbon-proposal token: mega-button-key-command-rest — Carbon has no muted text token that clears 4.5:1 on an inverse fill. TBD
+  --#{$block}-key: #{custom-property.get-var(
+      'mega-button-key-command-rest',
+      $text-inverse
+    )};
+  // @carbon-proposal token: mega-button-key-command-hover — a muted hint on the blue fill, solved to 4.6:1. TBD
+  --#{$block}-key-hover: #{custom-property.get-var(
+      'mega-button-key-command-hover',
+      $text-on-color
+    )};
+  --#{$block}-key-selected: var(--#{$block}-key-hover);
+  // @carbon-proposal token: mega-button-key-command-active — a muted hint on the pressed fill, solved to 4.6:1. TBD
+  --#{$block}-key-active: #{custom-property.get-var(
+      'mega-button-key-command-active',
+      $text-on-color
+    )};
+
+  // @carbon-explore primary-rest — primary rests at the ink colour and turns blue only when the person acts. TBD
+  @include explore.explore-primary-rest;
+
+  @media (any-hover: hover) {
+    &:hover {
+      background-color: var(--#{$block}-bg-hover);
+    }
+  }
+
+  // The press fades the primary from its hover blue into the pressed blue,
+  // under the radial (the base rule's press).
+  &:active {
+    background-color: var(--#{$block}-bg-active);
+  }
+
+  &[aria-pressed='true'] {
+    background-color: var(--#{$block}-bg-selected);
+  }
+}
+
+// The three neutral kinds share the blue-gray tints, the blue that answers the
+// person, and the selected tint.
+.#{$block}--secondary,
+.#{$block}--tertiary,
+.#{$block}--ghost {
+  --#{$block}-fg: #{$text-primary};
+  // @carbon-proposal token: mega-button-interactive-text — the blue a neutral button turns when acted on, solved per theme on the tint under it. replaces: link-primary. TBD
+  --#{$block}-fg-hover: #{custom-property.get-var(
+      'mega-button-interactive-text',
+      $link-primary
+    )};
+  --#{$block}-fg-active: var(--#{$block}-fg-hover);
+  // @carbon-proposal token: mega-button-selected-fill — Carbon has no button selected tint; the interaction law's brand tint. replaces: background-selected. TBD
+  --#{$block}-bg-selected: #{custom-property.get-var(
+      'mega-button-selected-fill',
+      $background-selected
+    )};
+  // @carbon-proposal token: mega-button-selected-text — the foreground solved to 4.6:1 on the selected tint, the only ground it sits on; Carbon has no foreground for a selected tint. TBD
+  --#{$block}-fg-selected: #{custom-property.get-var(
+      'mega-button-selected-text',
+      $link-primary
+    )};
+  // @carbon-proposal token: mega-button-key-command-neutral — a muted hint for transparent and tinted kinds, solved on the darkest tint it meets. TBD
+  --#{$block}-key: #{custom-property.get-var(
+      'mega-button-key-command-neutral',
+      $text-secondary
+    )};
+}
+
+// Secondary is the outline (Q24: Carbon calls its outline "tertiary").
+.#{$block}--secondary {
+  --#{$block}-bg: transparent;
+  --#{$block}-bg-hover: transparent;
+  // @carbon-proposal token: mega-button-outline-border — the resting outline is ink, not blue; blue is kept for the person acting. replaces: button-tertiary. TBD
+  --#{$block}-border: #{custom-property.get-var(
+      'mega-button-outline-border',
+      $border-strong-01
+    )};
+  --#{$block}-border-hover: var(--#{$block}-fg-hover);
+  --#{$block}-border-selected: var(--#{$block}-fg-selected);
+  // @carbon-proposal token: mega-button-tonal-rest — the blue-gray tint; the outline presses into it. replaces: button-secondary. TBD
+  --#{$block}-bg-active: #{custom-property.get-var(
+      'mega-button-tonal-rest',
+      $layer-accent-01
+    )};
+}
+
+// Tertiary is the gray fill (Q24: Carbon calls its fill "secondary").
+.#{$block}--tertiary {
+  // @carbon-proposal token: mega-button-tonal-rest — the blue-gray tint at rest. replaces: button-secondary. TBD
+  --#{$block}-bg: #{custom-property.get-var(
+      'mega-button-tonal-rest',
+      $layer-accent-01
+    )};
+  // @carbon-proposal token: mega-button-tonal-hover — one lightness step from rest. replaces: button-secondary-hover. TBD
+  --#{$block}-bg-hover: #{custom-property.get-var(
+      'mega-button-tonal-hover',
+      $layer-accent-hover-01
+    )};
+  // @carbon-proposal token: mega-button-tonal-active — one lightness step from hover. replaces: button-secondary-active. TBD
+  --#{$block}-bg-active: #{custom-property.get-var(
+      'mega-button-tonal-active',
+      $layer-accent-active-01
+    )};
+}
+
+.#{$block}--ghost {
+  --#{$block}-bg: transparent;
+  // @carbon-proposal token: mega-button-tonal-rest — a ghost surfaces the tint on hover. replaces: button-secondary. TBD
+  --#{$block}-bg-hover: #{custom-property.get-var(
+      'mega-button-tonal-rest',
+      $layer-accent-01
+    )};
+  // @carbon-proposal token: mega-button-tonal-hover — and presses one step deeper. replaces: button-secondary-hover. TBD
+  --#{$block}-bg-active: #{custom-property.get-var(
+      'mega-button-tonal-hover',
+      $layer-accent-hover-01
+    )};
+}
+
+// Danger takes Carbon's own red buttons; only its hints are proposals.
+.#{$block}--danger,
+.#{$block}--danger--secondary {
+  --#{$block}-bg-hover: #{$button-danger-hover};
+  --#{$block}-bg-active: #{$button-danger-active};
+  --#{$block}-bg-selected: #{$button-danger-hover};
+  --#{$block}-fg-hover: #{$text-on-color};
+  --#{$block}-fg-active: #{$text-on-color};
+  --#{$block}-fg-selected: #{$text-on-color};
+  // @carbon-proposal token: mega-button-danger-key-command-hover — a muted hint on the danger hover fill, solved to 4.6:1. TBD
+  --#{$block}-key-hover: #{custom-property.get-var(
+      'mega-button-danger-key-command-hover',
+      $text-on-color
+    )};
+  --#{$block}-key-selected: var(--#{$block}-key-hover);
+  // @carbon-proposal token: mega-button-danger-key-command-active — a muted hint on the danger active fill, solved to 4.6:1. TBD
+  --#{$block}-key-active: #{custom-property.get-var(
+      'mega-button-danger-key-command-active',
+      $text-on-color
+    )};
+}
+
+.#{$block}--danger {
+  --#{$block}-bg: #{$button-danger-primary};
+  --#{$block}-fg: #{$text-on-color};
+  // No muted hint reaches 4.5:1 on Carbon's danger red, so at rest it is the label colour.
+  --#{$block}-key: #{$text-on-color};
+}
+
+.#{$block}--danger--secondary {
+  --#{$block}-bg: transparent;
+  --#{$block}-border: #{$button-danger-secondary};
+  // @carbon-proposal token: mega-button-danger-text — Carbon's red reads 3.98:1 on a light layer; solved on the danger curve to clear 4.5:1 on every surface. replaces: button-danger-secondary. TBD
+  --#{$block}-fg: #{custom-property.get-var(
+      'mega-button-danger-text',
+      $button-danger-secondary
+    )};
+  // @carbon-proposal token: mega-button-key-command-neutral — on the surface at rest, the neutral hint. TBD
+  --#{$block}-key: #{custom-property.get-var(
+      'mega-button-key-command-neutral',
+      $text-secondary
+    )};
+}
+
+// Disabled last, so it wins over every kind's hover and press. Each kind sets
+// its disabled colours at class level (above, or in the defaults just below);
+// this rule only paints them.
+.#{$block} {
+  // @carbon-proposal token: mega-button-disabled-fill — the darker disabled fill, shared by primary and danger (INBOX row 12). replaces: button-disabled. TBD
+  --#{$block}-bg-disabled: #{custom-property.get-var(
+      'mega-button-disabled-fill',
+      $button-disabled
+    )};
+  // @carbon-proposal token: mega-button-disabled-text — its label. replaces: text-on-color-disabled. TBD
+  --#{$block}-fg-disabled: #{custom-property.get-var(
+      'mega-button-disabled-text',
+      $text-on-color-disabled
+    )};
+  --#{$block}-border-disabled: transparent;
+}
+
+.#{$block}--secondary,
+.#{$block}--ghost,
+.#{$block}--danger--secondary {
+  --#{$block}-bg-disabled: transparent;
+  --#{$block}-fg-disabled: #{$text-disabled};
+  --#{$block}-border-disabled: #{$border-disabled};
+}
+
+.#{$block}--ghost {
+  --#{$block}-border-disabled: transparent;
+}
+
+.#{$block}--tertiary {
+  // @carbon-proposal token: mega-button-tonal-rest — a disabled tonal keeps its resting tint. replaces: button-secondary. TBD
+  --#{$block}-bg-disabled: #{custom-property.get-var(
+      'mega-button-tonal-rest',
+      $layer-accent-01
+    )};
+  // @carbon-proposal token: mega-button-tonal-text-disabled — its label, on that tint. replaces: text-disabled. TBD
+  --#{$block}-fg-disabled: #{custom-property.get-var(
+      'mega-button-tonal-text-disabled',
+      $text-disabled
+    )};
+}
+
+.#{$block}:disabled,
+.#{$block}:disabled:hover,
+.#{$block}:disabled:active,
+.#{$block}:disabled[aria-pressed='true'] {
+  border-color: var(--#{$block}-border-disabled);
+  background-color: var(--#{$block}-bg-disabled);
+  box-shadow: none;
+  clip-path: $-clip-rest;
+  color: var(--#{$block}-fg-disabled);
+  cursor: not-allowed;
+
+  &::before {
+    display: none;
+  }
+
+  .#{$block}__key-command {
+    color: var(--#{$block}-fg-disabled);
+  }
+}

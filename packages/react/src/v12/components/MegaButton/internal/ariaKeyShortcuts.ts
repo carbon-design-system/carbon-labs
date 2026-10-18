@@ -9,7 +9,7 @@ import {
   resolveKey,
   type KeyId,
   type Platform,
-} from '../../KeyboardShortcut/internal/keys';
+} from '@carbon-labs/react-keyboard-shortcut';
 
 // aria-keyshortcuts names keys as KeyboardEvent.key does, and modifiers as
 // Alt, Control, Shift and Meta, written first.

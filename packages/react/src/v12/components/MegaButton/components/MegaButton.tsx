@@ -14,7 +14,7 @@ import React, {
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Tooltip, usePrefix } from '@carbon/react';
-import { KeyboardShortcut } from '../../KeyboardShortcut';
+import { KeyboardShortcut } from '@carbon-labs/react-keyboard-shortcut';
 import { toAriaKeyShortcuts } from '../internal/ariaKeyShortcuts';
 
 // @carbon-proposal api: mega-button-kinds — Carbon's secondary is the fill and its tertiary the outline; MegaButton swaps them on purpose (the outline reads better beside a neutral primary), and keeps two red kinds. TBD

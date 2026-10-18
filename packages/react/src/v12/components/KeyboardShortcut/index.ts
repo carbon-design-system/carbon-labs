@@ -14,6 +14,7 @@ export {
   translationIds,
   defaultTranslateWithId,
   keyIds,
+  resolveKey,
 } from './internal/keys';
 export type {
   KeyId,
@@ -22,4 +23,5 @@ export type {
   KeyboardShortcutTranslationKey,
   KeyboardShortcutTranslationArgs,
   TranslateWithId,
+  ResolvedKey,
 } from './internal/keys';

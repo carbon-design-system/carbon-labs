@@ -3027,7 +3027,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-keyboard-shortcut@workspace:packages/react/src/v12/components/KeyboardShortcut":
+"@carbon-labs/react-keyboard-shortcut@npm:0.0.1, @carbon-labs/react-keyboard-shortcut@workspace:packages/react/src/v12/components/KeyboardShortcut":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-keyboard-shortcut@workspace:packages/react/src/v12/components/KeyboardShortcut"
   dependencies:
@@ -3044,6 +3044,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-mega-button@workspace:packages/react/src/v12/components/MegaButton"
   dependencies:
+    "@carbon-labs/react-keyboard-shortcut": "npm:0.0.1"
     classnames: "npm:^2.3.2"
     prop-types: "npm:^15.8.1"
   peerDependencies:

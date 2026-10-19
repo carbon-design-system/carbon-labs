@@ -1,0 +1,110 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as NonLinearReadingStories from './NonLinearReading.stories';
+
+<Meta isTemplate />
+
+# NonLinearReading
+
+- **Initiative owner(s):** Carbon for IBM Products
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/NonLinearReading)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/NonLinearReading)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Getting started](#getting-started)
+- [Component API](#component-api)
+- [Example usages](#example-usages)
+  - [Single level](#single-level)
+  - [Multiple level](#multiple-level)
+  - [With gradient background](#with-gradient-background)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+Use non-linear reading when space is limited to share a brief, at-a-glance,
+summary of a concept that may require more explanation for some users.
+
+The component renders an inline keyword pill. Clicking the keyword expands an
+additional definition or explanation inline with the surrounding text.
+Definitions can be nested to multiple levels, and support a `dark` theme for use
+on gradient or dark-background panels.
+
+<Canvas of={NonLinearReadingStories.SingleLevel} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-non-linear-reading
+```
+
+### JS (via import)
+
+```javascript
+import { NonLinearReading } from '@carbon-labs/react-non-linear-reading/es/index';
+
+function App() {
+  return (
+    <>
+      XDR Connect's correlation{' '}
+      <NonLinearReading definition="This is a technical component that uses a set of rules to process alerts.">
+        engine,
+      </NonLinearReading>{' '}
+      creates a case by processing data from alerts across multiple security
+      tools.
+    </>
+  );
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```scss
+@use '@carbon/react';
+@use '@carbon-labs/react-non-linear-reading/scss/non-linear-reading';
+```
+
+## Component API
+
+<ArgTypes />
+
+## Example usages
+
+### Single level
+
+A simple keyword that expands a single definition.
+
+<Canvas of={NonLinearReadingStories.SingleLevel} />
+
+### Multiple level
+
+Keywords can be nested so that a definition can itself contain additional
+expandable keywords.
+
+<Canvas of={NonLinearReadingStories.MultipleLevel} />
+
+### With gradient background
+
+Use `theme="dark"` on dark or gradient backgrounds to ensure the pill colours
+remain accessible.
+
+<Canvas of={NonLinearReadingStories.WithGradientBackground} />

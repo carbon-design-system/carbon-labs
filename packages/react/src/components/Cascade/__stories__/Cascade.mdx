@@ -1,0 +1,103 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as CascadeStories from './Cascade.stories';
+
+<Meta isTemplate />
+
+# Cascade
+
+- **Initiative owner(s):** Carbon for IBM Products
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/Cascade)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/Cascade)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Getting started](#getting-started)
+- [Component API](#component-api)
+- [Example usages](#example-usages)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+`Cascade` is intended for use with cards, tiles, or similarly styled components.
+Use this pattern in areas that are the primary focus on the page to help the
+user along their journey or locate the most important information on the page.
+It should not be used on a page if it is the secondary focus of the page as
+that will distract the user.
+
+The animation is disabled for users who have expressed a preference for reduced
+motion.
+
+<Canvas of={CascadeStories.WithoutGrid} />
+
+### With grid
+
+When using `Cascade` with grid support it's important that you follow the
+example code structure and provide the rows and columns. The component will
+assume this structure and add the appropriate CSS classes to the columns.
+
+<Canvas of={CascadeStories.WithGrid} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-cascade
+```
+
+### JS (via import)
+
+```javascript
+import { Cascade } from '@carbon-labs/react-cascade/es/index';
+
+function App() {
+  return (
+    <Cascade>
+      <div>Card 1</div>
+      <div>Card 2</div>
+    </Cascade>
+  );
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-cascade/scss/cascade';
+```
+
+## Component API
+
+<ArgTypes />
+
+## Example usages
+
+Example of Cascade with grid support
+
+```jsx
+import { Column } from '@carbon/react';
+
+<Cascade grid>
+  <Column lg={4}>Card 1</Column>
+  <Column lg={4}>Card 2</Column>
+</Cascade>;
+```

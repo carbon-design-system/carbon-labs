@@ -3328,6 +3328,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/wc-checklist@workspace:packages/web-components/src/components/checklist":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/wc-checklist@workspace:packages/web-components/src/components/checklist"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.2"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon/web-components": "npm:^2.41.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/wc-date-picker@workspace:packages/web-components/src/v12/components/date-picker":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/wc-date-picker@workspace:packages/web-components/src/v12/components/date-picker"

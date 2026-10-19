@@ -1,0 +1,227 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/colors' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/motion' as *;
+@use '@carbon/styles/scss/utilities/convert';
+
+$block-class: #{$clabs-prefix}--checklist;
+
+// ─── Shared layout ────────────────────────────────────────────────────────────
+
+@mixin ellipsis-2-lines {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+}
+
+// ─── Host elements ────────────────────────────────────────────────────────────
+
+:host(#{$clabs-prefix}-checklist) {
+  display: block;
+
+  .#{$block-class}__toggle {
+    block-size: 2rem;
+    margin-block-start: calc(-1 * $spacing-03);
+    margin-inline: auto calc(-1 * $spacing-03);
+  }
+
+  #{$cds-prefix}-icon-button::part(button):focus {
+    box-shadow: none;
+    outline: 2px solid $focus;
+  }
+}
+
+:host(#{$clabs-prefix}-checklist-item) {
+  display: flex;
+  margin-block-end: $spacing-03;
+}
+
+:host(#{$clabs-prefix}-checklist-item:last-of-type) {
+  margin-block-end: 0;
+}
+
+:host(#{$clabs-prefix}-checklist-group) {
+  display: block;
+  padding: $spacing-05;
+  border-block-start: 1px solid $border-subtle-01;
+}
+
+:host(#{$clabs-prefix}-checklist-group:first-of-type) {
+  border-block-start: none;
+}
+
+// ─── Checklist header ─────────────────────────────────────────────────────────
+
+.#{$block-class}__header {
+  display: flex;
+  padding: $spacing-05;
+  background-color: $layer-01;
+  border-block-end: 1px solid $border-subtle-01;
+  gap: $spacing-03;
+}
+
+.#{$block-class}__titles {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.#{$block-class}__title {
+  @include type-style('productive-heading-02');
+
+  margin: 0;
+}
+
+.#{$block-class}__chart-label {
+  @include type-style('label-01');
+
+  margin: 0;
+  color: $text-secondary;
+}
+
+.#{$block-class}__title + .#{$block-class}__chart-label {
+  margin-block-start: $spacing-01;
+}
+
+// ─── Toggle / chevron ─────────────────────────────────────────────────────────
+
+.#{$block-class}__chevron {
+  color: $text-primary;
+  transform: rotate(0deg);
+  transition: all $duration-fast-02 motion(standard, productive);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.#{$block-class}__closed .#{$block-class}__chevron {
+  transform: rotate(-180deg);
+}
+
+// ─── Animated content area ────────────────────────────────────────────────────
+
+.#{$block-class}__content-outer {
+  overflow: hidden;
+}
+
+.#{$block-class}__content-inner {
+  background-color: $layer-01;
+  block-size: 100%;
+  transform: translate(0, 0);
+  transition: all $duration-fast-02 motion(standard, productive);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.#{$block-class}__closed .#{$block-class}__content-inner {
+  block-size: 0;
+  transform: translate(0, -100%);
+}
+
+// ─── Donut chart ──────────────────────────────────────────────────────────────
+
+.#{$block-class}__chart {
+  position: relative;
+  align-self: center;
+  border-radius: 50%;
+  background-image: conic-gradient(
+    $purple-50 var(--#{$clabs-prefix}-num-degrees, 0deg),
+    $gray-20 var(--#{$clabs-prefix}-num-degrees, 0deg) 360deg
+  );
+  block-size: $spacing-08;
+  inline-size: $spacing-08;
+  min-inline-size: $spacing-08;
+}
+
+.#{$block-class}__chart::after {
+  position: absolute;
+  border-radius: 50%;
+  background-color: $layer-01;
+  block-size: $spacing-07;
+  content: '';
+  inline-size: $spacing-07;
+  inset-block-start: $spacing-02;
+  inset-inline-start: $spacing-02;
+}
+
+// ─── Task list ────────────────────────────────────────────────────────────────
+
+.#{$block-class}__list-title {
+  @include type-style('body-short-01');
+  @include ellipsis-2-lines();
+
+  margin: 0 0 $spacing-03;
+}
+
+.#{$block-class}__list {
+  padding: 0;
+  list-style: none;
+}
+
+// ─── Icons ────────────────────────────────────────────────────────────────────
+
+.#{$block-class}__icon {
+  margin: convert.to-rem(1px) $spacing-03 0 0;
+  color: $icon-primary;
+}
+
+.#{$block-class}__icon--checked,
+.#{$block-class}__icon--indeterminate {
+  color: $interactive;
+}
+
+.#{$block-class}__icon--error {
+  color: $support-error;
+}
+
+.#{$block-class}__icon--disabled {
+  color: $icon-disabled;
+}
+
+// ─── Labels ───────────────────────────────────────────────────────────────────
+
+.#{$block-class}__label {
+  @include type-style('body-short-01');
+  @include ellipsis-2-lines();
+}
+
+.#{$block-class}__label--disabled {
+  color: $text-disabled;
+}
+
+.#{$block-class}__label--clickable {
+  color: $link-primary;
+  cursor: pointer;
+}
+
+.#{$block-class}__label--clickable:hover {
+  color: $link-primary-hover;
+  text-decoration: underline;
+}
+
+// ─── Footer ───────────────────────────────────────────────────────────────────
+
+.#{$block-class}__footer {
+  padding: $spacing-03 $spacing-05;
+  border-block-start: 1px solid $border-subtle-01;
+
+  &:empty {
+    display: none;
+  }
+}

@@ -1,0 +1,1 @@
+var e={elem:`svg`,attrs:{xmlns:`http://www.w3.org/2000/svg`,viewBox:`0 0 16 16`,fill:`currentColor`,width:16,height:16},content:[{elem:`path`,attrs:{d:`M8 5 13 10 12.3 10.7 8 6.4 3.7 10.7 3 10z`}}],name:`chevron--up`,size:16};export{e as t};

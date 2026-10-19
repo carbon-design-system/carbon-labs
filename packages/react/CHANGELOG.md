@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.214.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.213.0...%40carbon-labs%2Freact%400.214.0) (2026-10-19)
+
+### Features
+
+* **cascade:** migrate Cascade component from ibm-products ([#1402](https://github.com/carbon-design-system/carbon-labs/issues/1402)) ([c12e5a3](https://github.com/carbon-design-system/carbon-labs/commit/c12e5a3cd84a1515dd44b22f91786ccba2291f18)), closes [#1401](https://github.com/carbon-design-system/carbon-labs/issues/1401)
+* **non-linear-reading:** migrate NonLinearReading component from ibm-products ([#1403](https://github.com/carbon-design-system/carbon-labs/issues/1403)) ([fa13fa6](https://github.com/carbon-design-system/carbon-labs/commit/fa13fa6a40fa6f94da6929dce814833b90f285f4))
+
+
+# [0.213.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.212.0...%40carbon-labs%2Freact%400.213.0) (2026-10-16)
+
+### Bug Fixes
+
+* **deps:** resolve critical and high dependabot alerts ([#1416](https://github.com/carbon-design-system/carbon-labs/issues/1416)) ([ed5673d](https://github.com/carbon-design-system/carbon-labs/commit/ed5673d8c5600a2d67b1fbeea4a5022df6c9dc15))
+
+
+# [0.212.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.211.0...@carbon-labs/react@0.212.0) (2026-10-14)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.211.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.210.0...@carbon-labs/react@0.211.0) (2026-10-14)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.210.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.209.0...@carbon-labs/react@0.210.0) (2026-10-14)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
 # [0.209.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.208.0...@carbon-labs/react@0.209.0) (2026-09-21)
 
 **Note:** Version bump only for package @carbon-labs/react

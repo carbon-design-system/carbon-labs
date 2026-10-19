@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-registration-flow",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -36,7 +36,7 @@
     "@carbon-labs/utilities": "workspace:^"
   },
   "dependencies": {
-    "@carbon/styles": "^1.110.1",
+    "@carbon/styles": "^1.117.0",
     "classnames": "^2.5.1"
   }
 }

@@ -14,8 +14,11 @@ export default class solisSessionManager {
   private isLoggingOut = false;
   private sessionStatusInterval: number;
   private idleTimeoutInterval: number;
+  private preIdleInterval: number;
   private isIdle: boolean;
+  private refreshedWhileIdle = false;
   private idleTimeout: ReturnType<typeof setTimeout> | undefined;
+  private preIdleTimeout: ReturnType<typeof setTimeout> | undefined;
   private basePath: string | undefined;
   private activityEvents: string[];
   private boundSetActive: () => void;
@@ -32,6 +35,9 @@ export default class solisSessionManager {
     this.config = config;
     this.sessionStatusInterval = config.sessionStatusInterval || 10;
     this.idleTimeoutInterval = config.idleTimeoutInterval || 28;
+    this.warningLeadTime = config.warningLeadTime || 5;
+    // The tab is considered idle from the moment the inactivity warning is due
+    this.preIdleInterval = this.idleTimeoutInterval - this.warningLeadTime;
     this.basePath = config.basePath;
     this.activityEvents = [
       'mousedown',
@@ -44,9 +50,9 @@ export default class solisSessionManager {
     ];
     this.isIdle = false;
     this.idleTimeout = undefined;
+    this.preIdleTimeout = undefined;
     this.boundSetActive = () => this.setActive();
     this.logoutCallback = config.logoutCallback;
-    this.warningLeadTime = config.warningLeadTime || 5;
     this.onWarningCallback = config.onWarningCallback;
     this.onWarningDismissedCallback = config.onWarningDismissedCallback;
     this.warningTimeout = undefined;
@@ -100,30 +106,35 @@ export default class solisSessionManager {
 
   setActive() {
     this.isIdle = false;
+    this.refreshedWhileIdle = false;
     this.cancelWarningTimer();
     this.onWarningDismissedCallback?.();
+    clearTimeout(this.preIdleTimeout);
     clearTimeout(this.idleTimeout);
     this.startWarningTimer();
-    this.idleTimeout = setTimeout(
+    this.preIdleTimeout = setTimeout(
       () => this.setIdle(),
+      this.preIdleInterval * 60 * 1000
+    );
+    this.idleTimeout = setTimeout(
+      () => this.checkIdleLogout(),
       this.idleTimeoutInterval * 60 * 1000
     );
   }
 
-  async setIdle() {
+  setIdle() {
     this.isIdle = true;
-    const sessionResult = await this.checkSessionStatus();
-    if (!sessionResult) {
-      await this.performLogout();
+  }
+
+  async checkIdleLogout() {
+    // This tab suppresses its own token refreshes while idle, so if the poller
+    // saw the TTL increase, another tab must have refreshed the session. Stand
+    // down and restart the idle timers. Session expiry is handled by the poller.
+    if (this.refreshedWhileIdle) {
+      this.setActive();
       return;
     }
-    if (
-      typeof sessionResult === 'number' &&
-      sessionResult <= 60 &&
-      !this.isRefreshing
-    ) {
-      this.triggerRefresh();
-    }
+    await this.performLogout();
   }
 
   isTabIdle(): boolean {
@@ -211,10 +222,19 @@ export default class solisSessionManager {
       if (typeof sessionResult === 'number') {
         const hasIncreased =
           this.currentTtl !== null && sessionResult > this.currentTtl;
-        if ((sessionResult <= 60 || hasIncreased) && !this.isRefreshing) {
-          this.triggerRefresh();
+        if (this.isIdle && hasIncreased) {
+          this.refreshedWhileIdle = true;
         }
-        this.currentTtl = sessionResult;
+        if (
+          (sessionResult <= 60 || hasIncreased) &&
+          !this.isRefreshing &&
+          !this.isIdle
+        ) {
+          this.currentTtl = null;
+          this.triggerRefresh();
+        } else {
+          this.currentTtl = sessionResult;
+        }
       }
       this.sessionStatusIntervalId = window.setTimeout(
         poll,

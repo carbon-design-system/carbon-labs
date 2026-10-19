@@ -41,14 +41,21 @@
     "test": "lerna run test --stream"
   },
   "resolutions": {
-    "@carbon/react": "^1.95.0",
-    "@carbon/styles": "^1.94.0",
-    "@carbon/icons-react": "^11.65.0"
+    "@carbon/react": "^1.118.0",
+    "@carbon/styles": "^1.117.0",
+    "@carbon/icons-react": "^11.90.0",
+    "axios": "^1.20.0",
+    "serialize-javascript": "^7.0.5",
+    "codeceptjs/@xmldom/xmldom": "^0.9.12",
+    "codeceptjs/joi": "^18.2.9",
+    "codeceptjs/uuid": "^11.1.1",
+    "vega-lite/vega-expression": "~5.2.1",
+    "nx/undici": "^7.29.1"
   },
   "devDependencies": {
-    "@carbon/icons-react": "^11.65.0",
-    "@carbon/react": "^1.95.0",
-    "@carbon/styles": "^1.94.0",
+    "@carbon/icons-react": "^11.90.0",
+    "@carbon/react": "^1.118.0",
+    "@carbon/styles": "^1.117.0",
     "@commitlint/cli": "^21.0.0",
     "@commitlint/config-conventional": "^21.0.0",
     "@rollup/plugin-commonjs": "^29.0.0",
@@ -71,7 +78,7 @@
     "glob": "^11.0.0",
     "globby": "^14.0.0",
     "husky": "^9.0.0",
-    "lerna": "^9.0.7",
+    "lerna": "^10.0.0",
     "lint-staged": "^15.0.2",
     "lit": "^3.2.1",
     "prettier": "^3.3.3",
@@ -84,8 +91,8 @@
     "storybook": "^9.1.2",
     "strip-comments": "^2.0.1",
     "stylelint": "^17.0.0",
-    "stylelint-config-carbon": "1.23.0",
+    "stylelint-config-carbon": "1.24.0",
     "yargs": "^17.7.2"
   },
-  "packageManager": "yarn@4.18.0"
+  "packageManager": "yarn@4.18.1"
 }

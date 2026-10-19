@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/create",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Create a Carbon Labs component contribution from the command line",
   "type": "module",
   "engines": {
@@ -24,7 +24,7 @@
     "commander": "^12.1.0",
     "execa": "^9.5.2",
     "ora": "^8.1.1",
-    "simple-git": "^3.27.0"
+    "simple-git": "^4.0.1"
   },
   "devDependencies": {
     "vitest": "^4.0.0"

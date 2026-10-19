@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.214.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.213.0...%40carbon-labs%2Freact%400.214.0) (2026-10-19)
+
+### Features
+
+* **cascade:** migrate Cascade component from ibm-products ([#1402](https://github.com/carbon-design-system/carbon-labs/issues/1402)) ([c12e5a3](https://github.com/carbon-design-system/carbon-labs/commit/c12e5a3cd84a1515dd44b22f91786ccba2291f18)), closes [#1401](https://github.com/carbon-design-system/carbon-labs/issues/1401)
+* **non-linear-reading:** migrate NonLinearReading component from ibm-products ([#1403](https://github.com/carbon-design-system/carbon-labs/issues/1403)) ([fa13fa6](https://github.com/carbon-design-system/carbon-labs/commit/fa13fa6a40fa6f94da6929dce814833b90f285f4))
+
+
 # [0.213.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.212.0...%40carbon-labs%2Freact%400.213.0) (2026-10-16)
 
 ### Bug Fixes

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.195.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fweb-components%400.194.0...%40carbon-labs%2Fweb-components%400.195.0) (2026-10-19)
+
+### Features
+
+* **checklist-wc:** migrate Checklist web component from ibm-products ([#1414](https://github.com/carbon-design-system/carbon-labs/issues/1414)) ([a3c3a53](https://github.com/carbon-design-system/carbon-labs/commit/a3c3a53b6962ce6d246a7f23a99e63a63473c609))
+
+
 # [0.194.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fweb-components%400.193.0...%40carbon-labs%2Fweb-components%400.194.0) (2026-10-16)
 
 ### Bug Fixes

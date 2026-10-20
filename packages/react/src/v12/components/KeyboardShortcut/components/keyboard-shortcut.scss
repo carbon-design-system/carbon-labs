@@ -7,6 +7,7 @@
 
 // Carbon foundations only: a labs v12 component consumes @carbon/styles and
 // never mirrors it.
+@use '@carbon/styles/scss/border-radius' as *;
 @use '@carbon/styles/scss/config' as *;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/spacing' as *;
@@ -55,13 +56,11 @@
 .#{$prefix}--keyboard-shortcut--keycap .#{$prefix}--keyboard-shortcut__key {
   @include type-style('label-01');
 
-  // Radius: v12 Carbon gives a small surface $border-radius-04 (MenuItem,
-  // Tooltip). Labs's @carbon/styles is 1.106 until carbon-labs#1415, which has
-  // no radius scale at all, so the keycap stays square rather than mirror the
-  // value by hand. It takes $border-radius-04 when the bump lands.
   display: inline-block;
   box-sizing: border-box;
   border: 1px solid $border-subtle;
+  // v12 Carbon gives a small surface $border-radius-04 (MenuItem, Tooltip).
+  border-radius: $border-radius-04;
   background-color: $layer;
   color: $text-secondary;
   // @carbon-proposal mixin: keycap-slashed-zero — Carbon's type styles have no slashed-zero option, and a keycap 0 must not read as the letter O. TBD

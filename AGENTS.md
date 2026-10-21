@@ -39,6 +39,34 @@ If the user wants to preview the process without changing files:
 npx @carbon-labs/create@latest <ComponentName> --dry-run
 ```
 
+## The v12 Lane
+
+New React components that target `@carbon/react` are built in the v12 lane:
+`packages/react/src/v12/components/<Name>/`. Changes to existing Carbon
+components do not go here; propose them in `carbon-design-system/carbon` as a
+v12 design-intent issue.
+
+- Use the `cds` prefix. Read it with `usePrefix` from `@carbon/react` in
+  components and `$prefix` from `@carbon/styles/scss/config` in Sass, so class
+  names move to `@carbon/react` unchanged.
+- Consume Carbon, mirror nothing. Styles come from `@carbon/styles` and icons
+  from `@carbon/icons-react`. Do not copy a Carbon value or component.
+- When Carbon has no token for a value, read it with
+  `custom-property.get-var('<name>', <Carbon token>)` so it falls back to a
+  Carbon token, and put a `@carbon-proposal` comment on the line above that
+  names the upstream issue.
+- Do not add feature flags. Flags are added in the graduation PR to Carbon.
+- React first. Web components are ported in Carbon after the React preview.
+- Scaffold with `npx @carbon-labs/create@latest <ComponentName> --v12` (coming
+  in a follow-up PR). Story titles start with `V12/`.
+- Preview with `yarn storybook:v12`. The v12 Storybook renders every story with
+  Carbon's `enable-v12-release` feature flag on.
+- Keep the PR in draft until the design team is satisfied with it.
+
+A component graduates by a PR to `main` in `carbon-design-system/carbon`, where
+it is exported as `preview__<Name>`. A later PR to `main` can declare it stable.
+Once it ships in `@carbon/react`, its Carbon Labs package is deprecated.
+
 ## What The Create Utility Handles
 
 The create utility:

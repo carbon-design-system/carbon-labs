@@ -3006,6 +3006,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-inline-tip@workspace:packages/react/src/components/InlineTip":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-inline-tip@workspace:packages/react/src/components/InlineTip"
+  dependencies:
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-non-linear-reading@workspace:packages/react/src/components/NonLinearReading":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-non-linear-reading@workspace:packages/react/src/components/NonLinearReading"

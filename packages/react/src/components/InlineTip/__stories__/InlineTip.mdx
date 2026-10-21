@@ -1,0 +1,137 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as InlineTipStories from './InlineTip.stories';
+
+<Meta isTemplate />
+
+# InlineTip
+
+- **Initiative owner(s):** Carbon for IBM Products
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/InlineTip)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/InlineTip)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Getting started](#getting-started)
+- [Component API](#component-api)
+- [Example usages](#example-usages)
+  - [Default](#default)
+  - [Narrow](#narrow)
+  - [With an action](#with-an-action)
+  - [Collapsible](#collapsible)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+Inline tips are messages embedded within other components that provide an
+ambient way to deliver learning content without distracting the user from their
+flow.
+
+The package exports three components:
+
+- `InlineTip`: the tip container
+- `InlineTipButton`: a pre-styled ghost button for the `action` prop
+- `InlineTipLink`: a pre-styled link, with a launch icon, for the `action` prop
+
+<Canvas of={InlineTipStories.Default} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-inline-tip
+```
+
+### JS (via import)
+
+```javascript
+import {
+  InlineTip,
+  InlineTipButton,
+} from '@carbon-labs/react-inline-tip/es/index';
+
+function App() {
+  return (
+    <InlineTip
+      title="Use case-specific heading"
+      action={<InlineTipButton>Click me</InlineTipButton>}
+      onClose={() => {}}>
+      <p>
+        Use case-specific content that explains the concept or adds context.
+      </p>
+    </InlineTip>
+  );
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```scss
+@use '@carbon/react';
+@use '@carbon-labs/react-inline-tip/scss/inline-tip';
+```
+
+## Component API
+
+<ArgTypes />
+
+## Example usages
+
+### Default
+
+The wide format is the default.
+
+<Canvas of={InlineTipStories.Default} />
+
+### Narrow
+
+Set `narrow` to arrange the information in a format that is easier to read in a
+limited space.
+
+<Canvas of={InlineTipStories.Narrow} />
+
+### With an action
+
+Use the `action` prop with `InlineTipButton` or `InlineTipLink` to add a call to
+action below the content.
+
+```jsx
+<InlineTip
+  title="Use case-specific heading"
+  action={
+    <InlineTipLink href="https://www.ibm.com" target="_blank">
+      Learn more
+    </InlineTipLink>
+  }>
+  <p>Use case-specific content.</p>
+</InlineTip>
+```
+
+### Collapsible
+
+Set `collapsible` to truncate the body text to one line and expose an
+expand/collapse button. This is disabled when `renderMedia` is provided.
+
+```jsx
+<InlineTip title="Use case-specific heading" collapsible>
+  <p>Use case-specific content that explains the concept or adds context.</p>
+</InlineTip>
+```

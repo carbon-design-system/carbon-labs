@@ -1,0 +1,36 @@
+# yaml-language-server: $schema=https://unpkg.com/@ibm/telemetry-config-schema@v1/dist/config.schema.json
+
+version: 1
+projectId: 2ab0cb7e-a17c-4cb0-929f-8145a6ed3630
+endpoint: https://www-api.ibm.com/ibm-telemetry/v1/metrics
+collect:
+  jsx:
+    elements:
+      allowedAttributeNames:
+        # InlineTip
+        - action
+        - className
+        - closeIconDescription
+        - collapseButtonLabel
+        - collapsible
+        - expandButtonLabel
+        - narrow
+        - onClick
+        - onClose
+        - renderMedia
+        - tertiaryButtonLabel
+        - title
+        - withLeftGutter
+        # InlineTipButton
+        # InlineTipLink
+        - href
+        - target
+        # React
+        - key
+        - ref
+      allowedAttributeStringValues: []
+  npm:
+    dependencies: null
+  js:
+    functions: {}
+    tokens: null

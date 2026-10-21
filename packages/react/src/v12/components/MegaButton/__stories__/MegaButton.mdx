@@ -1,0 +1,111 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as MegaButtonStories from './MegaButton.stories';
+
+<Meta isTemplate />
+
+# MegaButton
+
+- **Initiative owner(s):** Ryan Mellody (@ryanmellody)
+- **Status:** Draft
+- **Target library:** @carbon/react
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+## Table of Contents
+
+- [Overview](#overview)
+- [How it differs from Carbon's Button](#how-it-differs-from-carbons-button)
+- [Proposals](#proposals)
+- [Component API](#component-api)
+- [Getting started](#getting-started)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+> **Problem statement:** products reach for a button with a visible keyboard
+> shortcut, and for one API across text, icon-and-text and icon-only buttons.
+> Carbon's `Button` has no key command, trails its only icon, and hands
+> icon-only to `IconButton`, which has no danger kinds. MegaButton is one button
+> for all of it, and the place to see, side by side with Carbon's `Button`,
+> three positions put to Carbon: primary rests neutral and turns blue only when
+> the person acts; blue responds on every kind; and colour is authored in OKLCH,
+> each value a lightness on a hue and chroma curve.
+
+Its nearest Carbon neighbours are `Button` and `IconButton`. Use those when you
+need none of the above.
+
+<Canvas of={MegaButtonStories.Default} />
+
+## How it differs from Carbon's Button
+
+- **Kinds.** `primary` (neutral at rest), `secondary` (the outline), `tertiary`
+  (a tinted fill), `ghost`, `danger` and `danger--secondary` (a red outline).
+  Carbon's names for the outline and the fill are the other way round: the swap
+  is deliberate, because the outline reads better beside a neutral primary.
+- **Content.** Text, icon and text with the one icon leading or trailing, or
+  icon-only (`xs` to `lg`), every kind including danger.
+- **Key command.** `keyCommand={['mod', 's']}` shows the chord last, with
+  `KeyboardShortcut`, and announces it through `aria-keyshortcuts`. The button
+  is named by its label alone. Icon-only buttons put the chord in the tooltip.
+- **Sizes.** Carbon's six heights, from the layout context. Inline padding grows
+  with size (12, 16, 20, 24px) where Carbon's stays at 16px.
+- **Press.** The background fades slowly into the pressed colour while a soft,
+  edgeless radial of the same colour grows from where the pointer went down,
+  timed by Carbon's motion tokens. Under `prefers-reduced-motion` the colour
+  changes at once.
+- **Focus** is Carbon's: a 2px ring over a 1px gap, drawn inside.
+
+<Canvas of={MegaButtonStories.BesideCarbonButton} />
+
+## Proposals
+
+Every value Carbon does not have is a `@carbon-proposal`, read with a Carbon
+fallback so the component renders on stock Carbon. The **proposals** control
+switches them on and off. The token values live in `proposals/tokens.json`,
+shaped like Carbon's `packages/themes` DTCG, with each colour's OKLCH curve and
+its sRGB fallback beside Carbon's per-theme value.
+
+<Canvas of={MegaButtonStories.Matrix} />
+
+{/* graduation-ready:status */} {/* /graduation-ready:status */}
+
+## Component API
+
+<ArgTypes of={MegaButtonStories.Default} />
+
+## Getting started
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-mega-button
+```
+
+### JS (via import)
+
+```javascript
+import { MegaButton } from '@carbon-labs/react-mega-button/es/index';
+import { Save } from '@carbon/icons-react';
+
+function App() {
+  return (
+    <MegaButton kind="primary" renderIcon={Save} keyCommand={['mod', 's']}>
+      Save
+    </MegaButton>
+  );
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-mega-button/scss/mega-button';
+```

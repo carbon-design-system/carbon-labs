@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.215.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.214.0...%40carbon-labs%2Freact%400.215.0) (2026-10-21)
+
+### Features
+
+* **checklist:** migrate Checklist component from ibm-products ([#1405](https://github.com/carbon-design-system/carbon-labs/issues/1405)) ([3a212f6](https://github.com/carbon-design-system/carbon-labs/commit/3a212f6c978d58ccf40d93c67c6fc636739fba00))
+* **inline-tip:** migrate InlineTip component from ibm-products ([#1404](https://github.com/carbon-design-system/carbon-labs/issues/1404)) ([28838c0](https://github.com/carbon-design-system/carbon-labs/commit/28838c0fbc8f953339dff78dbbf3f3f589c885ee))
+
+
 # [0.214.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.213.0...%40carbon-labs%2Freact%400.214.0) (2026-10-19)
 
 ### Features

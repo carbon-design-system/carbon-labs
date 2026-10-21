@@ -347,7 +347,7 @@ $-clip-pressed: inset(1px round #{$-clip-radius});
       $link-primary
     )};
   --#{$block}-fg-active: var(--#{$block}-fg-hover);
-  // @carbon-proposal token: mega-button-selected-fill — Carbon has no button selected tint; the interaction law's brand tint. replaces: background-selected. TBD
+  // @carbon-proposal token: mega-button-selected-fill — Carbon has no button selected tint; the v12 blue-gray at the surface's selected step. replaces: background-selected. TBD
   --#{$block}-bg-selected: #{custom-property.get-var(
       'mega-button-selected-fill',
       $background-selected

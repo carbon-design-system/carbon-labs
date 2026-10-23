@@ -171,16 +171,18 @@ $-clip-pressed: inset(1px round #{$-clip-radius});
     color: var(--#{$block}-fg-selected);
   }
 
-  // Carbon's button focus ring: a 2px ring (the border plus a 1px inset) over
-  // a 1px $background gap, drawn inside so nothing reflows (ADR 0014 in the IBM
-  // design harness adopts it). Shown on :focus-visible, not Carbon's :focus, so
-  // a mouse press does not draw it (decided by the human, INBOX row 21: on a
-  // press the 1px inset clipped the ring into a haze). The lift rides along.
+  // Carbon's button focus ring: a 2px ring (the border plus a 1px inset) over a
+  // 1px $focus-inset gap (Carbon's token for that gap; Carbon's Button writes
+  // $background, the same value in v12), drawn inside so nothing reflows (ADR
+  // 0014 in the IBM design harness adopts it). Shown on :focus-visible, not
+  // Carbon's :focus, so a mouse press does not draw it (decided by the human,
+  // INBOX row 21: on a press the 1px inset clipped the ring into a haze). The
+  // lift rides along.
   &:focus-visible {
     border-color: $focus;
     box-shadow:
       inset 0 0 0 button-vars.$button-outline-width $focus,
-      inset 0 0 0 button-vars.$button-border-width $background,
+      inset 0 0 0 button-vars.$button-border-width $focus-inset,
       var(--#{$block}-lift);
   }
 

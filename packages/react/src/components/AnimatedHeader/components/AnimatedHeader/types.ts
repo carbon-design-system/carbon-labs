@@ -23,4 +23,7 @@ export interface AriaLabels {
   collapseButton?: string;
   expandButton?: string;
   tilesContainer?: string;
+  carouselPrevButton?: string;
+  carouselNextButton?: string;
+  carouselDot?: string;
 }

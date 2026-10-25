@@ -6,8 +6,10 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import React, { useEffect, useRef } from 'react';
-import lottie, { AnimationItem } from 'lottie-web';
+import React, { useEffect, useRef, useState } from 'react';
+// lottie-web accesses `document` at module-evaluation time and cannot be
+// imported at the top level in an SSR environment. Load it dynamically
+// inside useEffect so it only runs in the browser.
 import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 
 export interface AnimatedBackgroundProps {
@@ -23,8 +25,17 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
   const blockClass = `${prefix}--animated-header__lottie-animation`;
 
   const animationContainer = useRef<HTMLDivElement>(null);
-  const animRef = useRef<AnimationItem | null>(null);
-  const isReduced = window.matchMedia('(prefers-reduced-motion)').matches;
+  const animRef = useRef<import('lottie-web').AnimationItem | null>(null);
+  const [isReduced, setIsReduced] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion)');
+    setIsReduced(mq.matches);
+
+    const handler = (e: MediaQueryListEvent) => setIsReduced(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
 
   useEffect(() => {
     // Make sure any prior instance is destroyed before creating a new one
@@ -36,33 +47,41 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
       return;
     }
 
-    const animation = lottie.loadAnimation({
-      container: animationContainer.current as HTMLDivElement,
-      animationData: headerAnimation as any,
-      renderer: 'svg',
-      loop: false,
-      autoplay: false,
-      rendererSettings: { preserveAspectRatio: 'xMidYMid slice' },
-    });
-    animRef.current = animation;
-    animation.setSpeed(1);
-
-    const onDomLoaded = () => {
-      const totalFrames = animation.getDuration(true);
-
-      if (isReduced) {
-        animation.goToAndStop(totalFrames, true);
-      } else {
-        animation.play();
+    let cancelled = false;
+    import('lottie-web').then(({ default: lottie }) => {
+      if (cancelled) {
+        return;
       }
-    };
+      const animation = lottie.loadAnimation({
+        container: animationContainer.current as HTMLDivElement,
+        animationData: headerAnimation as any,
+        renderer: 'svg',
+        loop: false,
+        autoplay: false,
+        rendererSettings: { preserveAspectRatio: 'xMidYMid slice' },
+      });
+      animRef.current = animation;
+      animation.setSpeed(1);
 
-    animation.addEventListener('DOMLoaded', onDomLoaded);
+      const onDomLoaded = () => {
+        const totalFrames = animation.getDuration(true);
+
+        if (isReduced) {
+          animation.goToAndStop(totalFrames, true);
+        } else {
+          animation.play();
+        }
+      };
+
+      animation.addEventListener('DOMLoaded', onDomLoaded);
+    });
 
     return () => {
-      animation.removeEventListener('DOMLoaded', onDomLoaded);
-      animation.destroy();
-      animRef.current = null;
+      cancelled = true;
+      if (animRef.current) {
+        animRef.current.destroy();
+        animRef.current = null;
+      }
     };
     // Re-init when the JSON or reduced-motion preference changes
   }, [headerAnimation, isReduced]);

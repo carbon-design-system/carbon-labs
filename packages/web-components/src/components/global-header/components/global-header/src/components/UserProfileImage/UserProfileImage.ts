@@ -16,7 +16,7 @@ import { renderCarbonIcon } from '../../globals/utils';
 /* c8 ignore next */
 import cx from 'classnames';
 
-import styles from './UserProfileImage.scss?inline' assert { type: 'css' };
+import styles from './UserProfileImage.scss?inline' with { type: 'css' };
 import { AUTOMATION_HEADER_BASE_CLASS } from '../../constant';
 const blockClass = `${AUTOMATION_HEADER_BASE_CLASS}__user-profile-image`;
 

@@ -512,6 +512,10 @@ body {
   .#{$prefix}__button-collapse--container .cds--popover-container {
     display: none;
   }
+
+  .#{$prefix}__carousel {
+    display: none;
+  }
 }
 
 // Medium
@@ -556,6 +560,10 @@ body {
 
   .#{$prefix}__button-collapse--container .cds--popover-container {
     display: flex;
+  }
+
+  .#{$prefix}__carousel {
+    display: inline-flex;
   }
 
   .#{$prefix}__tiles-container > .#{$prefix}__tile {

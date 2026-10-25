@@ -3,6 +3,216 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.104.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.103.0...@carbon-labs/wc-global-header@0.104.0) (2026-10-14)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.103.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.102.0...@carbon-labs/wc-global-header@0.103.0) (2026-10-14)
+
+
+### Bug Fixes
+
+* **global-header:** Refactor logic related to Solis idle logout ([#1406](https://github.com/carbon-design-system/carbon-labs/issues/1406)) ([56bb174](https://github.com/carbon-design-system/carbon-labs/commit/56bb1743084fd0bbdb97bf6eaa9e813969e68915))
+
+
+
+
+
+# [0.102.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.101.0...@carbon-labs/wc-global-header@0.102.0) (2026-10-14)
+
+
+### Bug Fixes
+
+* **global-header:** Fixes for currentTtl state and warning countdown ([#1396](https://github.com/carbon-design-system/carbon-labs/issues/1396)) ([2f8201e](https://github.com/carbon-design-system/carbon-labs/commit/2f8201ef0173c29c59da585a8702e11835dcf379))
+
+
+
+
+
+# [0.101.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.100.0...@carbon-labs/wc-global-header@0.101.0) (2026-10-08)
+
+
+### Bug Fixes
+
+* **global-header:** Trigger refresh if ttl increases between session status polls ([#1395](https://github.com/carbon-design-system/carbon-labs/issues/1395)) ([376cb03](https://github.com/carbon-design-system/carbon-labs/commit/376cb0347e7e2c16be05e4983cbcf14134dfc86a))
+
+
+
+
+
+# [0.100.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.99.0...@carbon-labs/wc-global-header@0.100.0) (2026-10-07)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.99.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.98.0...@carbon-labs/wc-global-header@0.99.0) (2026-10-07)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.98.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.97.0...@carbon-labs/wc-global-header@0.98.0) (2026-10-06)
+
+
+### Features
+
+* **global-header:** Configure Solis logout warning notification ([#1380](https://github.com/carbon-design-system/carbon-labs/issues/1380)) ([0a3b6e7](https://github.com/carbon-design-system/carbon-labs/commit/0a3b6e7053611c44bc3f2debbc7906873ce759c4))
+
+
+
+
+
+# [0.97.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.96.0...@carbon-labs/wc-global-header@0.97.0) (2026-10-01)
+
+
+### Bug Fixes
+
+* **global-header:** Session manager fixes ([#1386](https://github.com/carbon-design-system/carbon-labs/issues/1386)) ([3db879c](https://github.com/carbon-design-system/carbon-labs/commit/3db879c9a5caabab89acafac35fe1f1adcecd565))
+
+
+
+
+
+# [0.96.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.95.0...@carbon-labs/wc-global-header@0.96.0) (2026-09-24)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.95.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.94.0...@carbon-labs/wc-global-header@0.95.0) (2026-09-21)
+
+
+### Bug Fixes
+
+* **global-header:** Sync Solis token refresh cycles ([#1372](https://github.com/carbon-design-system/carbon-labs/issues/1372)) ([af55e24](https://github.com/carbon-design-system/carbon-labs/commit/af55e247dd7cae4b466c7743126b0278af3715c5))
+
+
+
+
+
+# [0.94.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.93.0...@carbon-labs/wc-global-header@0.94.0) (2026-09-18)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.93.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.92.0...@carbon-labs/wc-global-header@0.93.0) (2026-09-17)
+
+
+### Bug Fixes
+
+* **global-header:** switch session expiry to notification ([#1371](https://github.com/carbon-design-system/carbon-labs/issues/1371)) ([c06ecec](https://github.com/carbon-design-system/carbon-labs/commit/c06ecece9a030da68e1e84b5d6581621d04e7df1))
+
+
+
+
+
+# [0.92.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.91.0...@carbon-labs/wc-global-header@0.92.0) (2026-09-16)
+
+
+### Features
+
+* **global-header:** Trigger Solis logout when user clicks header logout ([#1367](https://github.com/carbon-design-system/carbon-labs/issues/1367)) ([f858ea5](https://github.com/carbon-design-system/carbon-labs/commit/f858ea5e981079480aa72577389d5dd97290d588))
+
+
+
+
+
+# [0.91.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.90.0...@carbon-labs/wc-global-header@0.91.0) (2026-09-16)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.90.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.89.0...@carbon-labs/wc-global-header@0.90.0) (2026-09-09)
+
+
+### Features
+
+* **global-header:** Trigger Solis logout when user idle timeout limit is reached ([#1346](https://github.com/carbon-design-system/carbon-labs/issues/1346)) ([6d613e6](https://github.com/carbon-design-system/carbon-labs/commit/6d613e6f5a5d541aa552cc74e75a658bffcac7ed))
+
+
+
+
+
+# [0.89.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.88.0...@carbon-labs/wc-global-header@0.89.0) (2026-08-17)
+
+
+### Features
+
+* Add the ability to toggle the proxy on, defaults to false ([#1344](https://github.com/carbon-design-system/carbon-labs/issues/1344)) ([183b47f](https://github.com/carbon-design-system/carbon-labs/commit/183b47f51e72823853c004cdaf361fedcc39f2c1))
+
+
+
+
+
+# [0.88.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.87.0...@carbon-labs/wc-global-header@0.88.0) (2026-08-13)
+
+
+### Features
+
+* **global-header:** Remove product name from intial Hybrid iPaas Header options ([#1337](https://github.com/carbon-design-system/carbon-labs/issues/1337)) ([5033ad3](https://github.com/carbon-design-system/carbon-labs/commit/5033ad339cf600fd8ae9e186ef2e7eba5351735a))
+
+
+
+
+
+# [0.87.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.86.0...@carbon-labs/wc-global-header@0.87.0) (2026-08-04)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.86.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.85.0...@carbon-labs/wc-global-header@0.86.0) (2026-07-30)
+
+
+### Bug Fixes
+
+* **global-header:** Pass Solis idle timeout down from header ([#1332](https://github.com/carbon-design-system/carbon-labs/issues/1332)) ([800525c](https://github.com/carbon-design-system/carbon-labs/commit/800525c4bded575dbe9fa4b6d7599f88a94d5013))
+
+
+
+
+
+# [0.85.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.84.0...@carbon-labs/wc-global-header@0.85.0) (2026-07-28)
+
+
+### Bug Fixes
+
+* **global-header:** skip Solis CDN content assertions in CI ([#1328](https://github.com/carbon-design-system/carbon-labs/issues/1328)) ([0b83d3f](https://github.com/carbon-design-system/carbon-labs/commit/0b83d3f807881eb92bf29c1d6c67f77ef91ae9bf))
+
+
+
+
+
+# [0.84.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.83.0...@carbon-labs/wc-global-header@0.84.0) (2026-07-24)
+
+
+### Features
+
+* **global-header:** Solis idle timeout ([#1313](https://github.com/carbon-design-system/carbon-labs/issues/1313)) ([a480b53](https://github.com/carbon-design-system/carbon-labs/commit/a480b53848bd21d1438fc4cf01b8df5a2afe9313))
+
+
+
+
+
 # [0.83.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.82.0...@carbon-labs/wc-global-header@0.83.0) (2026-07-15)
 
 **Note:** Version bump only for package @carbon-labs/wc-global-header

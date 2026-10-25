@@ -9,16 +9,16 @@
 /* eslint jsdoc/require-jsdoc: 0 */
 
 import { LitElement, css, html, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities';
-import '@carbon/web-components/es-custom/components/modal/index.js';
+import '@carbon/web-components/es-custom/components/notification/inline-notification.js';
 
 import styles from './_index.scss?inline';
 
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
- * Modal dialog to warn about session expiry
+ * Notification to warn about session expiry
  */
 @customElement(`${clabsPrefix}-global-header-session-expiry-modal`)
 export class SessionExpiryModal extends LitElement {
@@ -26,38 +26,95 @@ export class SessionExpiryModal extends LitElement {
     ${unsafeCSS(styles)}
   `;
 
+  @state() private expiryTime = '';
   @property({ type: Boolean }) open = false;
-  @property({ type: String }) expiryTime = '';
-  @property({ type: Function }) logoutCallback: (() => void) | undefined;
-  @property({ type: Function }) continueCallback: (() => void) | undefined;
+  @property({ type: Number }) totalSeconds = 300;
+  @state() private remainingSeconds = 300;
+  @property({ type: Boolean, reflect: true }) private hiding = false;
+
+  private countdownIntervalId: ReturnType<typeof setInterval> | undefined;
+
+  willUpdate(changedProperties: Map<string, unknown>) {
+    if (changedProperties.has('open')) {
+      if (this.open) {
+        this.hiding = false;
+        this.remainingSeconds = this.totalSeconds;
+        this.expiryTime = this.getExpiryTime(this.remainingSeconds);
+      } else if (changedProperties.get('open') === true) {
+        // only fade out if open was previously true — ignore initial render
+        this.hiding = true;
+      }
+    }
+  }
+
+  updated(changedProperties: Map<string, unknown>) {
+    if (changedProperties.has('open')) {
+      if (this.open) {
+        this.startCountdown();
+      } else if (changedProperties.get('open') === true) {
+        this.stopCountdown();
+        this.addEventListener(
+          'transitionend',
+          () => {
+            this.hiding = false;
+          },
+          { once: true }
+        );
+      }
+    }
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.stopCountdown();
+  }
+
+  getExpiryTime(remainingSeconds: number): string {
+    const minutes = Math.floor(remainingSeconds / 60);
+    const seconds = remainingSeconds - minutes * 60;
+    const minutesText = minutes > 1 ? ' minutes ' : ' minute ';
+    const secondsText = seconds === 1 ? ' second' : ' seconds';
+    return minutes > 0
+      ? minutes + minutesText + seconds + secondsText
+      : seconds + secondsText;
+  }
+
+  startCountdown() {
+    this.stopCountdown();
+    this.countdownIntervalId = window.setInterval(() => {
+      this.remainingSeconds = Math.max(0, this.remainingSeconds - 1);
+      this.expiryTime = this.getExpiryTime(this.remainingSeconds);
+      if (this.remainingSeconds === 0) {
+        this.stopCountdown();
+      }
+    }, 1 * 1000);
+  }
+
+  stopCountdown() {
+    if (this.countdownIntervalId) {
+      clearInterval(this.countdownIntervalId);
+      this.countdownIntervalId = undefined;
+    }
+  }
 
   render() {
-    return html` <cds-custom-modal
-      ?open=${this.open}
-      prevent-close-on-click-outside>
-      <cds-custom-modal-header>
-        <cds-custom-modal-close-button
-          close-button-label="Close"></cds-custom-modal-close-button>
-        <cds-custom-modal-heading
-          >Session expiring soon</cds-custom-modal-heading
-        >
-      </cds-custom-modal-header>
-      <cds-custom-modal-body>
-        Your session will expire in ${this.expiryTime} due to inactivity. Do you
-        want to continue?
-      </cds-custom-modal-body>
-      <cds-custom-modal-footer>
-        <cds-custom-modal-footer-button
-          kind="secondary"
-          @click="${this.logoutCallback}"
-          >Logout now</cds-custom-modal-footer-button
-        >
-        <cds-custom-modal-footer-button
-          kind="primary"
-          @click="${this.continueCallback}"
-          >Continue session</cds-custom-modal-footer-button
-        >
-      </cds-custom-modal-footer>
-    </cds-custom-modal>`;
+    if (!this.open && !this.hiding) {
+      return html``;
+    }
+    return html`
+      <cds-custom-inline-notification
+        kind="warning"
+        .title="${'Session expiry'}"
+        .subtitle="${'You will be logged out in ' +
+        this.expiryTime +
+        ' due to inactivity.'}"
+        role="status"
+        ?low-contrast="${true}"
+        ?hide-close-button="${true}"
+        ?open="${true}"
+        aria-label="close"
+        status-icon-description="notification">
+      </cds-custom-inline-notification>
+    `;
   }
 }

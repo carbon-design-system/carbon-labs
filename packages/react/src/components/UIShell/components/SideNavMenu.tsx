@@ -490,6 +490,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         id={uniqueId}>
         <button
           aria-expanded={isExpanded}
+          data-depth={depth}
           className={buttonClassName}
           onClick={() => {
             if (onMenuToggle) {

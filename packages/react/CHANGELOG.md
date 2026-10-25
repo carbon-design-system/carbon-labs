@@ -3,6 +3,227 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.215.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.214.0...%40carbon-labs%2Freact%400.215.0) (2026-10-21)
+
+### Features
+
+* **checklist:** migrate Checklist component from ibm-products ([#1405](https://github.com/carbon-design-system/carbon-labs/issues/1405)) ([3a212f6](https://github.com/carbon-design-system/carbon-labs/commit/3a212f6c978d58ccf40d93c67c6fc636739fba00))
+* **inline-tip:** migrate InlineTip component from ibm-products ([#1404](https://github.com/carbon-design-system/carbon-labs/issues/1404)) ([28838c0](https://github.com/carbon-design-system/carbon-labs/commit/28838c0fbc8f953339dff78dbbf3f3f589c885ee))
+
+
+# [0.214.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.213.0...%40carbon-labs%2Freact%400.214.0) (2026-10-19)
+
+### Features
+
+* **cascade:** migrate Cascade component from ibm-products ([#1402](https://github.com/carbon-design-system/carbon-labs/issues/1402)) ([c12e5a3](https://github.com/carbon-design-system/carbon-labs/commit/c12e5a3cd84a1515dd44b22f91786ccba2291f18)), closes [#1401](https://github.com/carbon-design-system/carbon-labs/issues/1401)
+* **non-linear-reading:** migrate NonLinearReading component from ibm-products ([#1403](https://github.com/carbon-design-system/carbon-labs/issues/1403)) ([fa13fa6](https://github.com/carbon-design-system/carbon-labs/commit/fa13fa6a40fa6f94da6929dce814833b90f285f4))
+
+
+# [0.213.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.212.0...%40carbon-labs%2Freact%400.213.0) (2026-10-16)
+
+### Bug Fixes
+
+* **deps:** resolve critical and high dependabot alerts ([#1416](https://github.com/carbon-design-system/carbon-labs/issues/1416)) ([ed5673d](https://github.com/carbon-design-system/carbon-labs/commit/ed5673d8c5600a2d67b1fbeea4a5022df6c9dc15))
+
+
+# [0.212.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.211.0...@carbon-labs/react@0.212.0) (2026-10-14)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.211.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.210.0...@carbon-labs/react@0.211.0) (2026-10-14)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.210.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.209.0...@carbon-labs/react@0.210.0) (2026-10-14)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.209.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.208.0...@carbon-labs/react@0.209.0) (2026-09-21)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.208.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.207.0...@carbon-labs/react@0.208.0) (2026-09-03)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.207.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.206.0...@carbon-labs/react@0.207.0) (2026-08-25)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.206.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.205.0...@carbon-labs/react@0.206.0) (2026-08-25)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.205.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.204.0...@carbon-labs/react@0.205.0) (2026-08-21)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.204.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.203.0...@carbon-labs/react@0.204.0) (2026-08-20)
+
+
+### Bug Fixes
+
+* **ui-shell:** make useMatchMedia SSR-safe to prevent hydration mismatch ([#1287](https://github.com/carbon-design-system/carbon-labs/issues/1287)) ([996eceb](https://github.com/carbon-design-system/carbon-labs/commit/996ecebcbdf616f95c37fd5beb14068c6e64c248))
+
+
+
+
+
+# [0.203.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.202.0...@carbon-labs/react@0.203.0) (2026-08-20)
+
+
+### Features
+
+* **animated-header:** animated header carousel auto pagination ([#1347](https://github.com/carbon-design-system/carbon-labs/issues/1347)) ([bb5e981](https://github.com/carbon-design-system/carbon-labs/commit/bb5e98154ebb9c8c727770f06569b58cfc36e8ae))
+
+
+
+
+
+# [0.202.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.201.0...@carbon-labs/react@0.202.0) (2026-08-19)
+
+
+### Features
+
+* **animated-header:** Update header to have page carousel ([#1300](https://github.com/carbon-design-system/carbon-labs/issues/1300)) ([3d3d106](https://github.com/carbon-design-system/carbon-labs/commit/3d3d106e249bbd676843ab2bd2085651ffa363c1))
+
+
+
+
+
+# [0.201.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.200.0...@carbon-labs/react@0.201.0) (2026-08-13)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.200.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.198.0...@carbon-labs/react@0.200.0) (2026-08-12)
+
+
+### Bug Fixes
+
+* **TagInput:** resolve accessibility audit findings ([#1330](https://github.com/carbon-design-system/carbon-labs/issues/1330)) ([44d7fe3](https://github.com/carbon-design-system/carbon-labs/commit/44d7fe3da03551aca206cb4fdd002cc33b02d753))
+
+
+
+
+
+# [0.199.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.198.0...@carbon-labs/react@0.199.0) (2026-08-11)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.198.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.197.0...@carbon-labs/react@0.198.0) (2026-07-30)
+
+
+### Bug Fixes
+
+* **global-header:** Pass Solis idle timeout down from header ([#1332](https://github.com/carbon-design-system/carbon-labs/issues/1332)) ([800525c](https://github.com/carbon-design-system/carbon-labs/commit/800525c4bded575dbe9fa4b6d7599f88a94d5013))
+
+
+
+
+
+# [0.197.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.196.0...@carbon-labs/react@0.197.0) (2026-07-29)
+
+
+### Bug Fixes
+
+* move ref from iframe to link ([#1329](https://github.com/carbon-design-system/carbon-labs/issues/1329)) ([277d901](https://github.com/carbon-design-system/carbon-labs/commit/277d9018bed04a19b0bb336447672bb9770663d2))
+
+
+
+
+
+# [0.196.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.195.0...@carbon-labs/react@0.196.0) (2026-07-29)
+
+
+### Bug Fixes
+
+* removed default author field ([#1326](https://github.com/carbon-design-system/carbon-labs/issues/1326)) ([51a4b1b](https://github.com/carbon-design-system/carbon-labs/commit/51a4b1b5674af2d27b9137e67643e9f255a76f1c))
+
+
+
+
+
+# [0.195.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.194.0...@carbon-labs/react@0.195.0) (2026-07-29)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.194.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.193.0...@carbon-labs/react@0.194.0) (2026-07-27)
+
+
+### Features
+
+* registration flow ([#1309](https://github.com/carbon-design-system/carbon-labs/issues/1309)) ([83756e4](https://github.com/carbon-design-system/carbon-labs/commit/83756e4655067489d9ae5c73d80910ef809beead))
+
+
+
+
+
+# [0.193.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.192.0...@carbon-labs/react@0.193.0) (2026-07-25)
+
+
+### Features
+
+* **UIShell:** expose depth on SideNavMenu button as data-depth attribute ([#1321](https://github.com/carbon-design-system/carbon-labs/issues/1321)) ([37e1f8d](https://github.com/carbon-design-system/carbon-labs/commit/37e1f8d8481ae756d2a40cf64d2a7141e80bab1f))
+
+
+
+
+
+# [0.192.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.191.0...@carbon-labs/react@0.192.0) (2026-07-23)
+
+
+### Features
+
+* add lazy loading for components which needs inital focus on page load ([#1307](https://github.com/carbon-design-system/carbon-labs/issues/1307)) ([cbc9d7a](https://github.com/carbon-design-system/carbon-labs/commit/cbc9d7ac5bfcf9e17f2966ba4adb3856adcd9b16))
+
+
+
+
+
 # [0.191.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.190.0...@carbon-labs/react@0.191.0) (2026-07-15)
 
 

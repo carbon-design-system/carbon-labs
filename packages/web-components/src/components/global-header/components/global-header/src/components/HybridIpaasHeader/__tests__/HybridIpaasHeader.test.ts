@@ -284,9 +284,13 @@ describe('HybridIpaasHeader Component', () => {
         headers: { 'Content-Type': 'application/json' },
       })
     );
-    const startRefreshScheduleStub = sinon.stub(
+    const startSessionStatusPollingStub = sinon.stub(
       solisSessionManager.prototype,
-      'startRefreshSchedule'
+      'startSessionStatusPolling'
+    );
+    const registerActivityListenersStub = sinon.stub(
+      solisSessionManager.prototype,
+      'registerActivityListeners'
     );
     const el = await fixture<HybridIpaasHeader>(
       html`<clabs-global-header-hybrid-ipaas
@@ -299,7 +303,8 @@ describe('HybridIpaasHeader Component', () => {
     await new Promise((resolve) => setTimeout(resolve, 200));
 
     expect(el.sessionManager).to.not.be.null;
-    expect(startRefreshScheduleStub).to.have.been.calledOnce;
+    expect(startSessionStatusPollingStub).to.have.been.calledOnce;
+    expect(registerActivityListenersStub).to.have.been.calledOnce;
   });
 
   it('should handle logoutCallback passed in', async () => {
@@ -341,6 +346,43 @@ describe('HybridIpaasHeader Component', () => {
         text: 'Log out',
       },
     ]);
+  });
+
+  it('should call sessionManager.performLogout when the logout link is clicked and solisSessionManagerEnabled is true', async () => {
+    fetchStub.resolves(
+      new Response(JSON.stringify(fetchResp), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    );
+    const performLogoutStub = sinon.stub(
+      solisSessionManager.prototype,
+      'performLogout'
+    );
+    // stub out timer and listener functions
+    sinon.stub(solisSessionManager.prototype, 'startSessionStatusPolling');
+    sinon.stub(solisSessionManager.prototype, 'registerActivityListeners');
+
+    const el = await fixture<HybridIpaasHeader>(
+      html`<clabs-global-header-hybrid-ipaas
+        productName="Test Product"
+        productKey="test-productKey"
+        basePath="/base"
+        solisSessionManagerEnabled="true"></clabs-global-header-hybrid-ipaas>`
+    );
+    await waitUntil(
+      () =>
+        el.headerOptions.mainSectionItems &&
+        el.headerOptions.mainSectionItems[0].text === 'Test Product',
+      'headerOptions were not updated as expected'
+    );
+
+    const logoutLink = el.headerOptions.profileFooterLinks?.find(
+      (link) => link.text === 'Log out'
+    );
+    expect(logoutLink?.onClickHandler).to.exist;
+    logoutLink?.onClickHandler?.();
+    expect(performLogoutStub).to.have.been.calledOnce;
   });
 
   describe('logoutCallbackEvent', () => {
@@ -482,8 +524,7 @@ describe('HybridIpaasHeader Component', () => {
     expect(el.headerOptions.solisConfig?.is_prod).to.be.false;
   });
 
-  // Test skipped: solisSidekickEnabled is now hardcoded to false and cannot be enabled
-  xit('should handle solis sidekick rendering', async () => {
+  it('should handle solis sidekick rendering', async () => {
     fetchStub.resolves(
       new Response(JSON.stringify(fetchResp), {
         status: 200,
@@ -967,6 +1008,32 @@ describe('HybridIpaasHeader Component', () => {
       hostnameStub = sinon.stub(el as any, 'getHostname').returns('localhost');
       const result = (el as any).getBackendProxy();
       expect(result).to.equal('/hybrid-ipaas/v1/proxies/solis/backend');
+    });
+
+    it('should return backendProxy URL when forceBackendProxy is true, even on an ibm.com domain', async () => {
+      const el = await fixture<HybridIpaasHeader>(
+        html`<clabs-global-header-hybrid-ipaas
+          productKey="test-key"
+          basePath="/test"
+          forceBackendProxy></clabs-global-header-hybrid-ipaas>`
+      );
+
+      hostnameStub = sinon.stub(el as any, 'getHostname').returns('ibm.com');
+      const result = (el as any).getBackendProxy();
+      expect(result).to.equal('/test/hybrid-ipaas/v1/proxies/solis/backend');
+    });
+
+    it('should return undefined when forceBackendProxy is false (default) and hostname is ibm.com', async () => {
+      const el = await fixture<HybridIpaasHeader>(
+        html`<clabs-global-header-hybrid-ipaas
+          productKey="test-key"
+          basePath="/test"></clabs-global-header-hybrid-ipaas>`
+      );
+
+      hostnameStub = sinon.stub(el as any, 'getHostname').returns('ibm.com');
+      expect(el.forceBackendProxy).to.be.false;
+      const result = (el as any).getBackendProxy();
+      expect(result).to.be.undefined;
     });
   });
 });

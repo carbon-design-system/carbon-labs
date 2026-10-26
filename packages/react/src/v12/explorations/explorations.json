@@ -1,5 +1,5 @@
 {
-  "$description": "The v12 lane's explorations: our own styles being tried inline, each marked at every use with // @carbon-explore <name> — <reason>. <ref>. Every one is resolved before its component graduates — adopted as a @carbon-proposal, or removed. Checked by exploration-ledger.",
+  "$description": "The v12 lane's explorations: our own styles being tried inline, each marked at every use with // @carbon-explore <name> \u2014 <reason>. <ref>. Every one is resolved before its component graduates \u2014 adopted as a @carbon-proposal, or removed. Checked by exploration-ledger.",
   "explorations": [
     {
       "name": "radius-field",
@@ -40,6 +40,14 @@
       "rationale": "The primary button rests in the extreme neutral (near-black on light, near-white on dark) and reveals brand blue on hover, press and selected, so blue means the person is acting: the button half of \"blue responds\" (carbon#23484). Carbon's primary is blue at rest. Drawn from Carbon tokens only ($text-primary is #161616 / #f4f4f4, not pure black or white); pure values would be a @carbon-proposal if this persuades. Proposed upstream on carbon#23134 (decided 2026-10-14).",
       "harnessLaw": "ibm-design-rules/reference/shape.md#button-variants",
       "recommendsFor": "button-primary"
+    },
+    {
+      "name": "composer-corner",
+      "kind": "radius",
+      "value": "20px (1.25rem)",
+      "rationale": "The grown chat composer's send corner: border-radius-16 on three corners and 20 on the corner that holds the 32px send control, so that corner reads concentric with it (the human's ChatInput decision 4, 2026-10-26). It departs from the law's 24dp composer rung by that decision. Carbon has no 20 radius.",
+      "harnessLaw": "ibm-design-rules/reference/shape.md#the-radius-ladder",
+      "recommendsFor": "new"
     }
   ]
 }

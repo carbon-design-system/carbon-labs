@@ -13,3 +13,7 @@ One line per `flag`, `icon`, `mixin` or `api` callout. Token proposals are in
   Carbon's Button only trails it.
 - `api: mega-button-danger-icon-only` — the two danger kinds are allowed
   icon-only. Carbon's IconButton has no danger kinds.
+- `api: mega-button-hide-tooltip` — an icon-only button can leave out its own
+  tooltip when its group draws one shared tooltip (ChatInput's actions), so
+  neighbours never show two at once. The label still names it, through
+  `aria-label`. Carbon's IconButton always draws its own.

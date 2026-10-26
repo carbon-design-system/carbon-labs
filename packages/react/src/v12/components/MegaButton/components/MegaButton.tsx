@@ -6,6 +6,7 @@
  */
 
 import React, {
+  cloneElement,
   forwardRef,
   type ElementType,
   type PointerEvent,
@@ -63,6 +64,13 @@ export interface MegaButtonProps extends Omit<
    * name, and the key command moves into the tooltip as keycaps.
    */
   hasIconOnly?: boolean;
+
+  /**
+   * Leave out an icon-only button's own tooltip, for a group that draws one
+   * shared tooltip for all its buttons. The label still names the button,
+   * through `aria-label`.
+   */
+  hideTooltip?: boolean;
 
   /**
    * Which side of the label the one icon sits on. With a key command the icon
@@ -127,6 +135,7 @@ export const MegaButton = forwardRef<HTMLButtonElement, MegaButtonProps>(
       className,
       disabled = false,
       hasIconOnly = false,
+      hideTooltip = false,
       iconPosition = 'trailing',
       isSelected,
       keyCommand,
@@ -224,6 +233,15 @@ export const MegaButton = forwardRef<HTMLButtonElement, MegaButtonProps>(
       return button;
     }
 
+    // @carbon-proposal api: mega-button-hide-tooltip — an icon-only button inside a group that shares one tooltip; Carbon's IconButton always draws its own. TBD
+    if (hideTooltip) {
+      return cloneElement(button, {
+        'aria-label':
+          rest['aria-label'] ??
+          (typeof children === 'string' ? children : undefined),
+      });
+    }
+
     // Icon-only: the label is the tooltip and, through it, the accessible
     // name, as Carbon's IconButton does. The key command joins it as keycaps.
     // @carbon-proposal api: mega-button-danger-icon-only — the danger kinds may be icon-only; Carbon's IconButton has no danger kinds. TBD
@@ -272,6 +290,13 @@ MegaButton.propTypes = {
    * name, and the key command moves into the tooltip as keycaps.
    */
   hasIconOnly: PropTypes.bool,
+
+  /**
+   * Leave out an icon-only button's own tooltip, for a group that draws one
+   * shared tooltip for all its buttons. The label still names the button,
+   * through `aria-label`.
+   */
+  hideTooltip: PropTypes.bool,
 
   /**
    * Which side of the label the one icon sits on. With a key command the icon

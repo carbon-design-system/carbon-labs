@@ -1,0 +1,126 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as FileChipStories from './FileChip.stories';
+
+<Meta isTemplate />
+
+# FileChip
+
+- **Initiative owner(s):** Ryan Mellody (@ryanmellody)
+- **Status:** Draft
+- **Target library:** @carbon/react
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Behaviour](#behaviour)
+- [Explorations](#explorations)
+- [Proposals](#proposals)
+- [Component API](#component-api)
+- [Getting started](#getting-started)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+> **Problem statement:** a chat input needs to show each file a person has
+> attached before they send it: what it is, whether it has uploaded, why it
+> failed if it did, and a way to take it back out. Carbon has no part for this.
+> `FileUploaderItem` belongs to `FileUploader`'s list, reads as a form row and
+> truncates the extension away. A dismissible `Tag` is a label, with no upload
+> state and no thumbnail. FileChip is one attached file, standalone, built on
+> Carbon's `Loading`, `Tooltip` and icons, with a labs `MegaButton` to remove
+> it. It is the first part of the chat input bar, one step lighter than the
+> input: `$layer-01` on a white input, `$layer-02` on the dark shell.
+
+Its nearest Carbon neighbours are `FileUploaderItem` and the dismissible `Tag`.
+Use `FileUploaderItem` inside a `FileUploader` form; use a `Tag` for a label
+that is not a file.
+
+<Canvas of={FileChipStories.InTheInputBar} />
+
+## Behaviour
+
+- **Kinds.** `file` shows Carbon's glyph for its extension (`Pdf`, `Doc`, `Txt`,
+  `Csv`, `Zip`, `Xls`, `Ppt`, `Json`, else `Document`). `image` and `video` show
+  a thumbnail, without the name unless `showName` is set. A video's thumbnail
+  carries Carbon's `VideoFilled` at 12 on a 16px round `$overlay` backing: a
+  type marker, not a play button, since the chip body does nothing. The 12px
+  size is a proposal (see below); on stock Carbon it is 16. The kind follows
+  `mimeType` unless `kind` is given.
+- **Status.** `uploading` shows Carbon's small `Loading`. `error` shows
+  `ErrorFilled`, and the second line says why, so a failure is never told by
+  colour alone; a media chip in error also shows its name. `complete` shows
+  `CheckmarkFilled`, holds for `successDelay` (1500ms, InlineLoading's default),
+  fades, and calls `onSuccessEnd`.
+- **Names truncate in the middle.** The end, the last four characters and the
+  extension, never shrinks. The full name is always the chip's accessible name,
+  and it is in the Remove button's label and tooltip. When the name is actually
+  cut, resting the pointer on it for `nameTooltipDelay` (1000ms) shows the full
+  name in a Carbon `Tooltip`; a name that fits gets none.
+- **Not text.** The pointer stays the default arrow over the chip; only Remove
+  shows Carbon's button cursor.
+- **Remove is the only control,** a `MegaButton` (ghost, `xs`, icon-only,
+  `Close`) named "Remove `name`". The chip plays its exit, then calls
+  `onRemove`. Under reduced motion it calls at once. Moving focus afterwards is
+  the input bar's job.
+- **Motion.** Enter: opacity and a slight scale over `$duration-moderate-02`,
+  entrance productive. Exit and the check's fade: opacity over
+  `$duration-fast-02`, exit productive. Reduced motion: none.
+
+<Canvas of={FileChipStories.Matrix} />
+
+## Explorations
+
+- **`radius-field` (6dp).** FileChip's corner, and its thumbnail at the radius
+  less the 2dp inset. It is tried on this component only; Carbon's tags are 4dp,
+  and on stock Carbon the reference is the only thing to change.
+
+## Proposals
+
+- **`file-chip-background`.** The chip's fill: `{layer-01}` in light and
+  `{layer-02}` in dark, one step lighter than the chat input (white in light,
+  the shell, `$layer-03`, in dark). No Carbon token is both; on stock Carbon it
+  is `$layer-01`, which in v12 dark is the input's own value.
+- **`file-chip-video-icon-size` (12px, `$spacing-04`).** The video glyph on its
+  16px backing. Carbon's icons start at 16, which fills the backing and reads
+  too large on a 36px thumbnail. Read through `get-var` with Carbon's 16 as the
+  fallback; the stories' `proposals` control turns it off to compare.
+
+## Component API
+
+<ArgTypes of={FileChipStories.Default} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-file-chip
+```
+
+### JS (via import)
+
+```javascript
+import { FileChip } from '@carbon-labs/react-file-chip/es/index';
+
+function App() {
+  return <FileChip />;
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-file-chip/scss/file-chip';
+```

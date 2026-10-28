@@ -1,0 +1,178 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon foundations only: a labs v12 component consumes @carbon/styles and
+// never mirrors it. Carbon has no syntax colours, so each role is read through
+// get-var under a carbon-proposal callout, falling back to the Carbon tag text
+// colour it resolves to today. Tag colours are Carbon component tokens, set
+// where Carbon's Tag styles are loaded; without them a role reads as
+// $text-primary.
+@use '@carbon/styles/scss/config' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/motion' as *;
+@use '@carbon/styles/scss/border-radius' as *;
+@use '@carbon/styles/scss/utilities/custom-property';
+@use '@carbon/styles/scss/utilities/focus-outline' as *;
+
+$block: '#{$prefix}--code-snippet';
+
+.#{$block} {
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  border: 1px solid $border-subtle-01;
+  // The card radius: a container, two mini-units.
+  border-radius: $border-radius-08;
+  // v12's theme overrides the numbered layer, not the contextual one.
+  background-color: $layer-01;
+  color: $text-primary;
+}
+
+.#{$block}__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  // The copy control is inset: 8 from the corner, 16 before the language.
+  padding: $spacing-03 $spacing-03 $spacing-03 $spacing-05;
+  gap: $spacing-03;
+}
+
+.#{$block}__meta {
+  @include type-style('label-01');
+
+  display: flex;
+  gap: $spacing-02;
+  min-inline-size: 0;
+}
+
+.#{$block}__language {
+  color: $text-primary;
+}
+
+.#{$block}__count {
+  color: $text-secondary;
+}
+
+.#{$block}__viewport {
+  display: flex;
+  overflow: auto hidden;
+  // The code keeps its own height, so it can be measured past the cut.
+  align-items: flex-start;
+  padding: 0 $spacing-05 $spacing-05;
+  gap: $spacing-05;
+  // Show more opens on the disclosure motion, the same as ChatInput's growth.
+  transition: block-size $duration-moderate-01 motion(entrance, productive);
+
+  &:focus {
+    @include focus-outline('outline');
+  }
+
+  &:focus:not(:focus-visible) {
+    @include focus-outline('reset');
+  }
+}
+
+.#{$block}__viewport--collapsed {
+  padding-block-end: 0;
+}
+
+.#{$block}__numbers,
+.#{$block}__pre {
+  @include type-style('code-02');
+
+  margin: 0;
+  white-space: pre;
+}
+
+.#{$block}__numbers {
+  flex: none;
+  color: $text-secondary;
+  text-align: end;
+  user-select: none;
+}
+
+.#{$block}__pre {
+  flex: 1 0 auto;
+  color: $text-primary;
+}
+
+// Syntax roles. Comments and punctuation are Carbon's own text colours.
+.#{$block}__token--keyword {
+  // @carbon-proposal token: code-snippet-syntax-keyword — Carbon ships no syntax colours; resolves to the blue tag text for now (the human's decision, 2026-10-27). TBD
+  color: custom-property.get-var(
+    'code-snippet-syntax-keyword',
+    custom-property.get-var('tag-color-blue', $text-primary)
+  );
+}
+
+.#{$block}__token--variable {
+  // @carbon-proposal token: code-snippet-syntax-variable — Carbon ships no syntax colours; resolves to the blue tag text for now. TBD
+  color: custom-property.get-var(
+    'code-snippet-syntax-variable',
+    custom-property.get-var('tag-color-blue', $text-primary)
+  );
+}
+
+.#{$block}__token--function {
+  // @carbon-proposal token: code-snippet-syntax-function — Carbon ships no syntax colours; resolves to the green tag text for now. TBD
+  color: custom-property.get-var(
+    'code-snippet-syntax-function',
+    custom-property.get-var('tag-color-green', $text-primary)
+  );
+}
+
+.#{$block}__token--string {
+  // @carbon-proposal token: code-snippet-syntax-string — Carbon ships no syntax colours and no orange tag; proposed at orange 70 / 20, falling back to the red tag text. TBD
+  color: custom-property.get-var(
+    'code-snippet-syntax-string',
+    custom-property.get-var('tag-color-red', $text-primary)
+  );
+}
+
+.#{$block}__token--number {
+  // @carbon-proposal token: code-snippet-syntax-number — Carbon ships no syntax colours; resolves to the purple tag text for now. TBD
+  color: custom-property.get-var(
+    'code-snippet-syntax-number',
+    custom-property.get-var('tag-color-purple', $text-primary)
+  );
+}
+
+.#{$block}__token--comment {
+  color: $text-secondary;
+}
+
+.#{$block}__token--punctuation {
+  color: $text-primary;
+}
+
+.#{$block}__footer {
+  padding: $spacing-03 $spacing-05 $spacing-03 $spacing-03;
+  border-block-start: 1px solid $border-subtle-01;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .#{$block}__viewport {
+    transition: none;
+  }
+}
+
+// ---- InlineCode --------------------------------------------------------------
+
+.#{$prefix}--inline-code {
+  @include type-style('code-01');
+
+  display: inline-block;
+  padding: 0 $spacing-02;
+  // Extra-small surfaces step down the ladder: 4 at 16 tall.
+  border-radius: $border-radius-04;
+  // $highlight is Carbon's selected-text tint, kept for a named reference (the
+  // human's decision, 2026-10-27).
+  background-color: $highlight;
+  color: $link-primary;
+}

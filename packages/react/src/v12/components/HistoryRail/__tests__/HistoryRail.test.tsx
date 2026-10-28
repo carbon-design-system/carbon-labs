@@ -144,15 +144,46 @@ describe('HistoryRail', () => {
     );
     expect(container.querySelectorAll('.cds--history-marker')).toHaveLength(10);
     expect(screen.getByRole('slider')).toHaveAttribute('aria-valuenow', '21');
-    expect(screen.getByText('Iteration 21')).toBeInTheDocument();
   });
 
-  it('does not say the card twice: the slider already reads it', () => {
+  it('keeps the card for the iteration being reached for, not for rest', () => {
     const { container } = rail({ current: 'a', defaultValue: 'b' });
+    const slider = screen.getByRole('slider');
+    expect(container.querySelector('.cds--history-marker-card')).toBeNull();
+
+    sizeTrack(slider);
+    // 56 tall over four marks: 14 each, so 20px down is the second.
+    // jsdom has no PointerEvent, so the pointer move is a MouseEvent under
+    // the name React listens for.
+    fireEvent(
+      slider,
+      new MouseEvent('pointermove', { bubbles: true, clientY: 20 })
+    );
     const card = container.querySelector('.cds--history-marker-card');
     expect(card).toHaveAttribute('aria-hidden', 'true');
     expect(card).toHaveTextContent('Iteration 2');
     expect(card).toHaveTextContent('Drafted the table');
+
+    fireEvent.pointerLeave(slider.parentElement as HTMLElement);
+    expect(container.querySelector('.cds--history-marker-card')).toBeNull();
+  });
+
+  it('shows the card to the keyboard while the rail has focus', () => {
+    const { container } = rail({ current: 'a', defaultValue: 'b' });
+    const slider = screen.getByRole('slider');
+    fireEvent.focus(slider);
+    expect(
+      container.querySelector('.cds--history-marker-card')
+    ).toHaveTextContent('Iteration 2');
+    fireEvent.blur(slider);
+    expect(container.querySelector('.cds--history-marker-card')).toBeNull();
+  });
+
+  it('keeps the selected mark blue whether or not the card is up', () => {
+    const { container } = rail({ current: 'a', defaultValue: 'd' });
+    const marks = container.querySelectorAll('.cds--history-marker');
+    expect(container.querySelector('.cds--history-marker-card')).toBeNull();
+    expect(marks[3]).toHaveClass('cds--history-marker--highlighted');
   });
 
   it('takes a translation for what is read out', () => {

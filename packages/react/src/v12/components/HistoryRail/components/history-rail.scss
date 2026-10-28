@@ -56,11 +56,28 @@ $-track-width: $spacing-06;
   block-size: $-pitch;
 }
 
+// The card is only there while a pointer or the keyboard is on the rail, so
+// it arrives rather than appearing. There is no exit: it goes with its mark.
 .#{$block}__card {
   position: absolute;
+  animation: #{$block}__card-in $duration-fast-02 motion(entrance, productive);
   inset-block-start: 50%;
   inset-inline-start: calc(100% + #{$spacing-03});
   transform: translateY(-50%);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes #{$block}__card-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 // ---- a mark ------------------------------------------------------------------

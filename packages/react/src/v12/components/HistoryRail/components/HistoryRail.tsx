@@ -157,6 +157,7 @@ export const HistoryRail = forwardRef<HTMLDivElement, HistoryRailProps>(
     const fallback = current ?? items[items.length - 1]?.id;
     const [valueState, setValueState] = useState(defaultValue ?? fallback);
     const [hovered, setHovered] = useState<string | null>(null);
+    const [focused, setFocused] = useState(false);
     const value = valueProp ?? valueState;
 
     const selected = Math.max(
@@ -215,10 +216,15 @@ export const HistoryRail = forwardRef<HTMLDivElement, HistoryRailProps>(
       setHovered(item ? item.id : null);
     }
 
-    // The card follows the pointer while there is one, and the selection
-    // otherwise, so the keyboard sees the same thing a mouse does.
-    const shownId = hovered ?? value;
+    // The card is what the rail says about the iteration you are reaching for,
+    // so it appears on the one under the pointer and goes away with it. At
+    // rest it would be a permanent label on a control nobody is using. The
+    // keyboard gets it while the rail holds focus, which is the same moment.
+    const shownId = hovered ?? (focused ? value : null);
     const shownItem = items.find((item) => item.id === shownId);
+    // The mark stays blue wherever the selection is, pointer or no pointer:
+    // only the card comes and goes.
+    const markedId = hovered ?? value;
     const active = items[selected];
 
     return (
@@ -242,18 +248,20 @@ export const HistoryRail = forwardRef<HTMLDivElement, HistoryRailProps>(
           aria-orientation="vertical"
           className={`${block}__track`}
           onKeyDown={handleKeyDown}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
           onPointerMove={handlePointerMove}
           onClick={(event) => select(nearest(event.clientY))}>
           {shown.map((item, i) => {
             const index = start + i;
-            const highlighted = item.id === shownId;
-            const state = highlighted
-              ? 'highlighted'
-              : item.id === current
-                ? 'current'
-                : item.status === 'failed'
-                  ? 'failed'
-                  : 'default';
+            const state =
+              item.id === markedId
+                ? 'highlighted'
+                : item.id === current
+                  ? 'current'
+                  : item.status === 'failed'
+                    ? 'failed'
+                    : 'default';
             return (
               // The card rides in the highlighted mark's own slot, so nothing
               // has to compute where it goes and the pitch stays in one place.
@@ -262,7 +270,7 @@ export const HistoryRail = forwardRef<HTMLDivElement, HistoryRailProps>(
                 className={`${block}__slot`}
                 data-index={index}>
                 <HistoryMarker state={state} />
-                {highlighted && shownItem ? (
+                {item.id === shownId && shownItem ? (
                   <HistoryMarkerCard
                     label={shownItem.label}
                     description={shownItem.description}

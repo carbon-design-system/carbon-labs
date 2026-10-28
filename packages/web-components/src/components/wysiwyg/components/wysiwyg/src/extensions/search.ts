@@ -54,12 +54,13 @@ const searchToolbarStyles = `
   .${BASE_CLASS}__toolbar-group--search {
     display: flex;
     align-items: center;
-    flex: 1;
+    flex: 1 1 12rem;
     position: relative;
   }
   .${BASE_CLASS}__search {
     --cds-border-strong: transparent;
     min-inline-size: 12rem;
+    inline-size: 100%;
   }
   .${BASE_CLASS}__search--count {
     position: absolute;

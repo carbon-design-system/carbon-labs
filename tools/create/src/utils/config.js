@@ -8,6 +8,7 @@
 import { readFile } from 'fs/promises';
 import { join } from 'path';
 import { parseOwners } from './owners.js';
+import { getV12StorybookGroup } from './lane.js';
 
 const CONFIG_FILE = '.carbon-labs-create.json';
 
@@ -52,6 +53,7 @@ export async function loadConfig(repoRoot) {
  * @param {object} config - result of loadConfig()
  */
 export function mergeOptions(flagOptions, config) {
+  const v12 = Boolean(flagOptions.v12);
   const owners =
     flagOptions.owners != null
       ? parseOwners(flagOptions.owners)
@@ -61,8 +63,12 @@ export function mergeOptions(flagOptions, config) {
     type: flagOptions.type ?? config.defaultType ?? DEFAULTS.defaultType,
     owners,
     editorCommand: config.editorCommand ?? DEFAULTS.editorCommand,
-    storybookGroup:
-      flagOptions.group ?? config.storybookGroup ?? DEFAULTS.storybookGroup,
+    v12,
+    // v12 stories are titled `V12/<Name>`. A --group nests under it
+    // (`V12/<group>/<Name>`); the team config's group is not applied there.
+    storybookGroup: v12
+      ? getV12StorybookGroup({ v12, group: flagOptions.group })
+      : (flagOptions.group ?? config.storybookGroup ?? DEFAULTS.storybookGroup),
     squad: config.squad ?? DEFAULTS.squad,
   };
 }

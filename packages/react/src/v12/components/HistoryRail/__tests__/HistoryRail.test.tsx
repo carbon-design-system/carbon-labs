@@ -34,9 +34,8 @@ function rail(props = {}) {
   );
 }
 
-/** jsdom gives every box zero height, so the track has to be told its size. */
-function sizeTrack(track: HTMLElement, height = 56, top = 0) {
-  jest.spyOn(track, 'getBoundingClientRect').mockReturnValue({
+function box(top: number, height: number) {
+  return {
     top,
     height,
     bottom: top + height,
@@ -46,7 +45,31 @@ function sizeTrack(track: HTMLElement, height = 56, top = 0) {
     x: 0,
     y: top,
     toJSON: () => ({}),
-  } as DOMRect);
+  } as DOMRect;
+}
+
+/**
+ * jsdom gives every box zero height, so the rail has to be told its geometry
+ * — the track and each slot, since the rail measures the slots themselves.
+ * Slots are laid out at the rest pitch and then pushed by `data-push`, the
+ * way the stylesheet does it.
+ */
+function sizeTrack(track: HTMLElement, pitch = 14, top = 0, push = 5) {
+  const slots = Array.from(track.children) as HTMLElement[];
+  jest
+    .spyOn(track, 'getBoundingClientRect')
+    .mockReturnValue(box(top, pitch * slots.length));
+  slots.forEach((slot, index) => {
+    jest.spyOn(slot, 'getBoundingClientRect').mockImplementation(() => {
+      const shift =
+        slot.dataset.push === 'up'
+          ? -push
+          : slot.dataset.push === 'down'
+            ? push
+            : 0;
+      return box(top + index * pitch + shift, pitch);
+    });
+  });
 }
 
 describe('HistoryRail', () => {
@@ -166,6 +189,42 @@ describe('HistoryRail', () => {
 
     fireEvent.pointerLeave(slider.parentElement as HTMLElement);
     expect(container.querySelector('.cds--history-marker-card')).toBeNull();
+  });
+
+  it('parts the marks around the one being reached for, and only then', () => {
+    const { container } = rail({ current: 'a' });
+    const slider = screen.getByRole('slider');
+    const pushes = () =>
+      [...container.querySelectorAll('.cds--history-rail__slot')].map(
+        (slot) => (slot as HTMLElement).dataset.push
+      );
+    expect(pushes()).toEqual([undefined, undefined, undefined, undefined]);
+
+    sizeTrack(slider);
+    fireEvent(
+      slider,
+      new MouseEvent('pointermove', { bubbles: true, clientY: 20 })
+    );
+    // the second mark holds its place; everything above and below parts
+    expect(pushes()).toEqual(['up', 'at', 'down', 'down']);
+
+    fireEvent.pointerLeave(slider.parentElement as HTMLElement);
+    expect(pushes()).toEqual([undefined, undefined, undefined, undefined]);
+  });
+
+  it('hits the marks where the push leaves them, not where they started', () => {
+    const onChange = jest.fn();
+    rail({ current: 'a', onChange });
+    const slider = screen.getByRole('slider');
+    sizeTrack(slider);
+    // With the second mark reached for, the third has moved 5 down: its band
+    // starts at 33 rather than 28, so 30 is still the second.
+    fireEvent(
+      slider,
+      new MouseEvent('pointermove', { bubbles: true, clientY: 20 })
+    );
+    fireEvent.click(slider, { clientY: 30 });
+    expect(onChange).toHaveBeenCalledWith(items[1], 1);
   });
 
   it('shows the card to the keyboard while the rail has focus', () => {

@@ -7,6 +7,7 @@
 
 // Carbon foundations only: a labs v12 component consumes @carbon/styles and
 // never mirrors it. Every value here is a Carbon token; nothing is proposed.
+@use 'sass:math';
 @use '@carbon/styles/scss/config' as *;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/spacing' as *;
@@ -22,12 +23,19 @@ $card: '#{$prefix}--history-marker-card';
 // The rhythm of the rail, in one place: a 6 mark in a 14 slot, which is the
 // sketch's pitch. The component only counts marks; it never writes this down.
 $-pitch: $spacing-05 - $spacing-01;
+$-pitch-reached: $spacing-06;
 $-dot: $spacing-03 - $spacing-01;
 $-dot-large: $spacing-03;
 $-track-width: $spacing-06;
+// How far each side parts so the reached-for mark sits in a 24 slot instead
+// of a 14 one. Derived, so the two pitches stay the only numbers.
+$-push: math.div($-pitch-reached - $-pitch, 2);
 
+// The ends of the rail move by $-push when the first or last mark is the one
+// being reached for, so the rail reserves that room rather than growing.
 .#{$block} {
   display: inline-block;
+  padding-block: $-push;
 }
 
 // One control: the whole track takes the pointer and resolves to the nearest
@@ -54,6 +62,23 @@ $-track-width: $spacing-06;
   align-items: center;
   justify-content: center;
   block-size: $-pitch;
+  transition: transform $duration-fast-02 motion(standard, productive);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+// The mark being reached for keeps its place and the rest part around it, a
+// slot's worth between them. It is a transform, so the track's own box and
+// the order of the marks are untouched; the rail measures the slots where
+// they end up, so what you see is what you hit.
+.#{$block}__slot[data-push='up'] {
+  transform: translateY(-#{$-push});
+}
+
+.#{$block}__slot[data-push='down'] {
+  transform: translateY($-push);
 }
 
 // The card is only there while a pointer or the keyboard is on the rail, so

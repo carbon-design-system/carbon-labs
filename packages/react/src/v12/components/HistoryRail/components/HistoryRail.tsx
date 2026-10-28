@@ -182,16 +182,28 @@ export const HistoryRail = forwardRef<HTMLDivElement, HistoryRailProps>(
     const { start, end } = windowOf(items.length, selected, maxMarks);
     const shown = items.slice(start, end);
 
-    /** The mark nearest a point on the track, which is what a scrubber does. */
+    /**
+     * The mark nearest a point on the track, which is what a scrubber does.
+     * It measures the slots where they actually are rather than dividing the
+     * track evenly, because the mark being reached for pushes its neighbours
+     * apart: what you see and what you hit have to be the same places.
+     */
     function nearest(clientY: number) {
       const track = trackRef.current;
       if (!track || shown.length === 0) {
         return 0;
       }
-      const box = track.getBoundingClientRect();
-      const step = box.height / shown.length;
-      const index = Math.floor((clientY - box.top) / step);
-      return start + Math.min(Math.max(index, 0), shown.length - 1);
+      let best = 0;
+      let closest = Infinity;
+      Array.from(track.children).forEach((slot, index) => {
+        const box = slot.getBoundingClientRect();
+        const distance = Math.abs(clientY - (box.top + box.height / 2));
+        if (distance < closest) {
+          closest = distance;
+          best = index;
+        }
+      });
+      return start + best;
     }
 
     function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
@@ -226,6 +238,10 @@ export const HistoryRail = forwardRef<HTMLDivElement, HistoryRailProps>(
     // only the card comes and goes.
     const markedId = hovered ?? value;
     const active = items[selected];
+    // Which way each mark gets out of the way. The mark being reached for
+    // stays where it is and its neighbours part around it, so the thing under
+    // the pointer never moves out from under it.
+    const shownIndex = items.findIndex((item) => item.id === shownId);
 
     return (
       <div
@@ -268,7 +284,16 @@ export const HistoryRail = forwardRef<HTMLDivElement, HistoryRailProps>(
               <span
                 key={item.id}
                 className={`${block}__slot`}
-                data-index={index}>
+                data-index={index}
+                data-push={
+                  shownIndex < 0
+                    ? undefined
+                    : index < shownIndex
+                      ? 'up'
+                      : index > shownIndex
+                        ? 'down'
+                        : 'at'
+                }>
                 <HistoryMarker state={state} />
                 {item.id === shownId && shownItem ? (
                   <HistoryMarkerCard

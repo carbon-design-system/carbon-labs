@@ -1,0 +1,53 @@
+{
+  "$description": "The v12 lane's explorations: our own styles being tried inline, each marked at every use with // @carbon-explore <name> — <reason>. <ref>. Every one is resolved before its component graduates — adopted as a @carbon-proposal, or removed. Checked by exploration-ledger.",
+  "explorations": [
+    {
+      "name": "radius-field",
+      "kind": "radius",
+      "value": "6px (0.375rem)",
+      "rationale": "Form fields take the one off-grid rung, between the 4dp extra-small step and the 8dp container, so a field reads as touchable but not as a button. Carbon decided fields at 4 (carbon#22812); tags take Carbon's 2/4. Explored in labs and proposed only after a side-by-side, on the Text Input tracker carbon#23227 (decided 2026-10-14).",
+      "harnessLaw": "ibm-design-rules/reference/shape.md#the-radius-ladder",
+      "recommendsFor": "new"
+    },
+    {
+      "name": "corner-smoothing",
+      "kind": "smoothing",
+      "value": "40%",
+      "rationale": "Every rounded corner is a 40% superellipse, one constant for every rung; a plain border-radius is 0%. Carbon is silent on corner smoothing. The mixin publishes the constant as --cds-explore-corner-smoothing and draws nothing yet: how 40% maps to CSS corner-shape is unmeasured, and the reference must not invent it.",
+      "harnessLaw": "ibm-design-rules/reference/shape.md#corner-smoothing",
+      "recommendsFor": "new"
+    },
+    {
+      "name": "hover-emboss",
+      "kind": "elevation",
+      "value": "raised: drop 0 2px 4px 0 black @0.20; inset 0 1px 0.5px 0 white @0.28; inset 0 -1px 0.5px 0 black @0.18",
+      "rationale": "Hover and hit lift an interactive surface with a subtle emboss, paired with the blue reveal; rest and selected stay flat. Carbon's hover is a lightness step (#23376) and its shadows are a stub (#23135). Rendered with Carbon's $shadow, whose alpha is Carbon's (0.3 light, 0.8 dark) rather than ours; the top highlight uses $icon-on-color, white in all four themes, because Carbon has no highlight token.",
+      "harnessLaw": "ibm-design-rules/reference/motion.md#effects",
+      "recommendsFor": "new"
+    },
+    {
+      "name": "hover-lift",
+      "kind": "elevation",
+      "value": "hover: an outer shadow 0 1px 1px in $shadow, along the bottom of the shape only; handed over as --cds-explore-hover-lift for box-shadow",
+      "rationale": "The lightest form of the law's raised lift: one shadow, one pixel down with a one-pixel blur, fading in with the hover reveal and gone again on the press, so the press reads as pushing in. The human chose it over hover-emboss for MegaButton (2026-10-17): no inner highlight. It is an OUTER box-shadow of the shape, so it falls only below the shape and never under its text or stroke (a drop-shadow filter shadowed both on transparent kinds, 2026-10-17). It is handed over as a custom property so a component can append it to its own box-shadow (Carbon's inset focus ring). Rendered with Carbon's $shadow, so its alpha is Carbon's.",
+      "harnessLaw": "ibm-design-rules/reference/motion.md#effects",
+      "recommendsFor": "new"
+    },
+    {
+      "name": "elevated",
+      "kind": "elevation",
+      "value": "drop 0 8px 24px 2px black @0.40",
+      "rationale": "A surface that genuinely floats (modal, menu, toast, a dragged item) takes one large soft shadow with an offset, never a zero-offset halo. Carbon's box-shadow mixin is 0 2px 6px $shadow. Rendered with Carbon's $shadow, so its alpha is Carbon's.",
+      "harnessLaw": "ibm-design-rules/reference/motion.md#effects",
+      "recommendsFor": "box-shadow"
+    },
+    {
+      "name": "primary-rest",
+      "kind": "other",
+      "value": "rest $text-primary fill / $text-inverse label; hover $button-primary-hover; active $button-primary-active; selected $button-primary",
+      "rationale": "The primary button rests in the extreme neutral (near-black on light, near-white on dark) and reveals brand blue on hover, press and selected, so blue means the person is acting: the button half of \"blue responds\" (carbon#23484). Carbon's primary is blue at rest. Drawn from Carbon tokens only ($text-primary is #161616 / #f4f4f4, not pure black or white); pure values would be a @carbon-proposal if this persuades. Proposed upstream on carbon#23134 (decided 2026-10-14).",
+      "harnessLaw": "ibm-design-rules/reference/shape.md#button-variants",
+      "recommendsFor": "button-primary"
+    }
+  ]
+}

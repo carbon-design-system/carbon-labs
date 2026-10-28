@@ -1,0 +1,417 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon foundations only: a labs v12 component consumes @carbon/styles and
+// never mirrors it. Every value here is a Carbon token; nothing is proposed.
+@use '@carbon/styles/scss/config' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/motion' as *;
+@use '@carbon/styles/scss/border-radius' as *;
+@use '@carbon/styles/scss/utilities/button-reset';
+@use '@carbon/styles/scss/utilities/focus-outline' as *;
+
+$block: '#{$prefix}--reasoning-trace';
+$step: '#{$prefix}--reasoning-step';
+$thinking: '#{$prefix}--thinking-indicator';
+
+// ---- the trace ---------------------------------------------------------------
+
+.#{$block} {
+  display: flex;
+  flex-direction: column;
+}
+
+// The header is the disclosure: what happened, how long, and the chevron.
+.#{$block}__header {
+  @include button-reset.reset;
+  @include type-style('body-compact-01');
+
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  color: $text-secondary;
+  gap: $spacing-03;
+
+  &:hover {
+    color: $text-primary;
+  }
+
+  &:focus {
+    @include focus-outline('outline');
+  }
+
+  &:focus:not(:focus-visible) {
+    @include focus-outline('reset');
+  }
+}
+
+.#{$block}__duration {
+  @include type-style('label-01');
+}
+
+.#{$block}__chevron {
+  fill: $icon-secondary;
+}
+
+// The panel opens on the disclosure motion. A grid row eases from 0fr to 1fr,
+// which a height cannot do to auto, and the content fades in as it comes, so
+// the card and its steps arrive as one. Visibility drops the closed content
+// from the tab order and the accessibility tree once the row has closed.
+.#{$block}__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows $duration-moderate-01 motion(exit, productive),
+    opacity $duration-moderate-01 motion(exit, productive),
+    visibility 0s linear $duration-moderate-01;
+  visibility: hidden;
+}
+
+.#{$block}__panel--open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transition:
+    grid-template-rows $duration-moderate-01 motion(entrance, productive),
+    opacity $duration-moderate-02 motion(entrance, productive),
+    visibility 0s;
+  visibility: visible;
+}
+
+.#{$block}__panel-inner {
+  overflow: hidden;
+  min-block-size: 0;
+  // On close the gap stays until the content has faded and collapsed, so
+  // nothing jumps up first; it arrives at once on open.
+  transition: padding-block-start 0s linear $duration-moderate-01;
+}
+
+.#{$block}__panel--open .#{$block}__panel-inner {
+  // Room for a focus ring on the card's edge, and the gap below the header.
+  padding-block-start: $spacing-03;
+  transition: none;
+}
+
+.#{$block}__card {
+  overflow: hidden;
+  border: 1px solid $border-subtle-01;
+  // The card radius: a container, two mini-units. The rules between steps
+  // are square; the card rounds the whole.
+  border-radius: $border-radius-08;
+  // v12's theme overrides the numbered layer, not the contextual one.
+  background-color: $layer-01;
+}
+
+.#{$block}__steps {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+// Without a footer, the card's own edge closes the last step.
+.#{$block}__steps:last-child > :last-child {
+  border-block-end: 0;
+}
+
+// "View plan details" opens a region beside the conversation, so it is a
+// button; it reads as a link, as drawn. One control spans the row, the
+// Maximize glyph included.
+.#{$block}__details {
+  @include button-reset.reset;
+  @include type-style('body-compact-01');
+
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-04 $spacing-05;
+  color: $link-primary;
+  gap: $spacing-03;
+  inline-size: 100%;
+
+  &:hover {
+    color: $link-primary-hover;
+  }
+
+  &:hover .#{$block}__details-label {
+    text-decoration: underline;
+  }
+
+  &:focus {
+    @include focus-outline('outline');
+  }
+
+  &:focus:not(:focus-visible) {
+    @include focus-outline('reset');
+  }
+}
+
+.#{$block}__details-icon {
+  flex: none;
+  fill: $icon-primary;
+}
+
+// Content that is not a step list (a CodeSnippet) brings its own card; the
+// footer then sits under it, on the page.
+.#{$block}__panel-inner > .#{$block}__details {
+  padding-inline: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .#{$block}__panel,
+  .#{$block}__panel--open,
+  .#{$block}__panel-inner {
+    transition: none;
+  }
+}
+
+// ---- a step ------------------------------------------------------------------
+
+.#{$step} {
+  @include type-style('body-compact-01');
+
+  display: flex;
+  flex-direction: column;
+  padding: $spacing-04 $spacing-05;
+  background-color: $layer-01;
+  border-block-end: 1px solid $border-subtle-01;
+  color: $text-secondary;
+  gap: $spacing-02;
+}
+
+// The live step reads as live: primary text beside Carbon's Loading. In the
+// source it was placeholder grey, which read as disabled.
+.#{$step}--running {
+  color: $text-primary;
+}
+
+.#{$step}__line {
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+}
+
+.#{$step}__status {
+  flex: none;
+}
+
+.#{$step}__status--failed {
+  fill: $support-error;
+}
+
+.#{$step}__toggle {
+  @include button-reset.reset;
+
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+  font: inherit;
+  gap: $spacing-03;
+  text-align: start;
+
+  &:hover {
+    color: $text-primary;
+  }
+
+  &:focus {
+    @include focus-outline('outline');
+  }
+
+  &:focus:not(:focus-visible) {
+    @include focus-outline('reset');
+  }
+}
+
+.#{$step}__chevron {
+  flex: none;
+  fill: $icon-secondary;
+}
+
+.#{$step}__detail {
+  color: $text-secondary;
+}
+
+// ---- the thinking animation --------------------------------------------------
+
+// Three 2px dots, 4 apart, centred in 16 (Carbon2027 - Modelling's sprite).
+// One cycle is four slow-02 durations, 2.8s; the source video measured 2.6s.
+// The middle spreads from a large dot, the three ripple, a darker square
+// passes start to end, they collapse to a point, and the middle spreads again.
+$-cycle: calc(#{$duration-slow-02} * 4);
+$-reach: calc(#{$spacing-02} + #{$spacing-01});
+
+.#{$thinking} {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  block-size: $spacing-05;
+  gap: $spacing-02;
+  inline-size: $spacing-05;
+}
+
+.#{$thinking}__dot {
+  border-radius: 50%;
+  animation: $-cycle motion(standard, productive) infinite both;
+  background-color: $interactive;
+  block-size: $spacing-01;
+  inline-size: $spacing-01;
+}
+
+.#{$thinking}__dot--start {
+  animation-name: #{$prefix}--thinking-start;
+}
+
+.#{$thinking}__dot--middle {
+  animation-name: #{$prefix}--thinking-middle;
+}
+
+.#{$thinking}__dot--end {
+  animation-name: #{$prefix}--thinking-end;
+}
+
+@keyframes #{$prefix}--thinking-start {
+  0%,
+  9% {
+    transform: none;
+  }
+
+  18% {
+    transform: translateY(calc(-1 * #{$spacing-02}));
+  }
+
+  27% {
+    transform: translateY($spacing-02);
+  }
+
+  36%,
+  54% {
+    border-radius: 50%;
+    background-color: $interactive;
+    transform: none;
+  }
+
+  58%,
+  63% {
+    border-radius: 0;
+    background-color: $link-primary-hover;
+  }
+
+  67%,
+  81% {
+    border-radius: 50%;
+    background-color: $interactive;
+    transform: none;
+  }
+
+  90% {
+    transform: translateX($-reach) scale(0);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes #{$prefix}--thinking-middle {
+  0% {
+    transform: scale(2);
+  }
+
+  9%,
+  18% {
+    transform: none;
+  }
+
+  27% {
+    transform: translateY(calc(-1 * #{$spacing-02}));
+  }
+
+  36% {
+    transform: translateY($spacing-02);
+  }
+
+  45%,
+  63% {
+    border-radius: 50%;
+    background-color: $interactive;
+    transform: none;
+  }
+
+  67%,
+  72% {
+    border-radius: 0;
+    background-color: $link-primary-hover;
+  }
+
+  76%,
+  81% {
+    border-radius: 50%;
+    background-color: $interactive;
+    transform: none;
+  }
+
+  90% {
+    border-radius: 0;
+    background-color: $link-primary-hover;
+    transform: scale(2);
+  }
+
+  100% {
+    border-radius: 50%;
+    background-color: $interactive;
+    transform: scale(2);
+  }
+}
+
+@keyframes #{$prefix}--thinking-end {
+  0%,
+  27% {
+    transform: none;
+  }
+
+  36% {
+    transform: translateY(calc(-1 * #{$spacing-02}));
+  }
+
+  45% {
+    transform: translateY($spacing-02);
+  }
+
+  54%,
+  72% {
+    border-radius: 50%;
+    background-color: $interactive;
+    transform: none;
+  }
+
+  76%,
+  81% {
+    border-radius: 0;
+    background-color: $link-primary-hover;
+    transform: none;
+  }
+
+  90% {
+    border-radius: 50%;
+    background-color: $interactive;
+    transform: translateX(calc(-1 * #{$-reach})) scale(0);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+// Reduced motion holds three still dots.
+@media (prefers-reduced-motion: reduce) {
+  .#{$thinking}__dot {
+    animation: none;
+  }
+}

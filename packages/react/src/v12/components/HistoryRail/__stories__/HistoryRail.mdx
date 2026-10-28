@@ -1,0 +1,95 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as HistoryRailStories from './HistoryRail.stories';
+
+<Meta isTemplate />
+
+# HistoryRail
+
+- **Initiative owner(s):** @ryanmellody
+- **Status:** Draft
+- **Target library:** @carbon/react
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Component API](#component-api)
+- [Getting started](#getting-started)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+> **Problem statement:** an agent's work goes through many iterations, and a
+> person needs to find one of them — the version before the table was replaced,
+> the run that failed — without reading the whole conversation again. A list of
+> links costs a line each and buries the shape of the history. Carbon has no
+> scrubber; the nearest neighbours are `Slider` and a list.
+
+HistoryRail is a scrubber: a column of marks down the edge of the panel, one
+per iteration, with the live one drawn as a square. Moving a pointer down the
+track or arrowing through it lights the nearest iteration and opens a card
+saying what changed there.
+
+### One control, not one per mark
+
+The whole track takes the pointer and resolves to the nearest iteration. That
+is what lets the marks sit 14px apart and stay hittable: there is a single
+24 x 196 target rather than fourteen small ones, so WCAG 2.2 SC 2.5.8 Target
+Size is met outright, on a mouse and under a finger alike. A mark is
+decoration — `aria-hidden`, no focus, no pointer region of its own — and it
+grows in place when it lights, so nothing ever moves under a pointer in
+flight.
+
+### What it says
+
+The rail is a `slider`: one tab stop, `aria-valuenow` on the position and
+`aria-valuetext` naming the iteration and what changed. The card repeats those
+words for the eye, so it is hidden from assistive technology rather than read
+out twice. Pass `translations.valueText` to change the sentence.
+
+### Current is not the same as selected
+
+`current` is the live iteration — the state of the work — and stays put as you
+scrub. `value` is the one you are looking at. They are usually different, which
+is the point: you can look back without leaving where you are.
+
+<Canvas of={HistoryRailStories.Default} />
+
+## Component API
+
+<ArgTypes of={HistoryRailStories.Default} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-history-rail
+```
+
+### JS (via import)
+
+```javascript
+import { HistoryRail } from '@carbon-labs/react-history-rail/es/index';
+
+function App() {
+  return <HistoryRail />;
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-history-rail/scss/history-rail';
+```

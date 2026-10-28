@@ -1,0 +1,135 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon foundations only: a labs v12 component consumes @carbon/styles and
+// never mirrors it. Every value here is a Carbon token; nothing is proposed.
+@use '@carbon/styles/scss/config' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/motion' as *;
+@use '@carbon/styles/scss/border-radius' as *;
+@use '@carbon/styles/scss/utilities/focus-outline' as *;
+
+$block: '#{$prefix}--history-rail';
+$mark: '#{$prefix}--history-marker';
+$card: '#{$prefix}--history-marker-card';
+
+// The rhythm of the rail, in one place: a 6 mark in a 14 slot, which is the
+// sketch's pitch. The component only counts marks; it never writes this down.
+$-pitch: $spacing-05 - $spacing-01;
+$-dot: $spacing-03 - $spacing-01;
+$-dot-large: $spacing-03;
+$-track-width: $spacing-06;
+
+.#{$block} {
+  display: inline-block;
+}
+
+// One control: the whole track takes the pointer and resolves to the nearest
+// iteration, so no mark is a target of its own and none of them move.
+.#{$block}__track {
+  display: flex;
+  flex-direction: column;
+  inline-size: $-track-width;
+
+  &:focus {
+    @include focus-outline('outline');
+  }
+
+  &:focus:not(:focus-visible) {
+    @include focus-outline('reset');
+  }
+}
+
+// A mark's place on the track. The card hangs off it, so nothing computes a
+// position and the pitch lives only here.
+.#{$block}__slot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  block-size: $-pitch;
+}
+
+.#{$block}__card {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: calc(100% + #{$spacing-03});
+  transform: translateY(-50%);
+}
+
+// ---- a mark ------------------------------------------------------------------
+
+.#{$mark} {
+  display: block;
+  border-radius: 50%;
+  block-size: $-dot;
+  inline-size: $-dot;
+  transition:
+    background-color $duration-fast-02 motion(standard, productive),
+    block-size $duration-fast-02 motion(standard, productive),
+    inline-size $duration-fast-02 motion(standard, productive);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+// A past iteration. The sketch's light grey was about 1.3:1 on white; a mark
+// that says an iteration exists carries information, so it owes 3:1.
+.#{$mark}--default {
+  background-color: $border-strong-01;
+}
+
+// The one the pointer is nearest, or the keyboard is on. It grows in place,
+// so no mark slides under a pointer that is already in flight.
+.#{$mark}--highlighted {
+  background-color: $link-primary;
+  block-size: $-dot-large;
+  inline-size: $-dot-large;
+}
+
+// Where the work actually is. The square is the one shape that differs, so
+// this is never carried by colour alone.
+.#{$mark}--current {
+  border-radius: $border-radius-02;
+  background-color: $interactive;
+  block-size: $-dot-large;
+  inline-size: $-dot-large;
+}
+
+.#{$mark}--failed {
+  background-color: $support-error;
+  block-size: $-dot-large;
+  inline-size: $-dot-large;
+}
+
+// ---- the card ----------------------------------------------------------------
+
+.#{$card} {
+  display: flex;
+  flex-direction: column;
+  padding: $spacing-03;
+  border-radius: $border-radius-08;
+  background-color: $background-inverse;
+  gap: $spacing-01;
+  inline-size: max-content;
+  max-inline-size: 13rem;
+}
+
+.#{$card}__label {
+  @include type-style('label-01');
+
+  color: $text-inverse;
+}
+
+.#{$card}__description {
+  @include type-style('helper-text-01');
+
+  color: $text-inverse;
+}

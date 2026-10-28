@@ -1,0 +1,64 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Story-only layout, on Carbon's tokens: the panel the rail is given. The
+// rail paints nothing behind itself and has no size but its marks.
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+
+.history-rail-story__panel {
+  box-sizing: border-box;
+  padding: $spacing-07;
+  background-color: $background;
+}
+
+.history-rail-story__pane {
+  display: flex;
+  box-sizing: border-box;
+  padding: $spacing-07;
+  background-color: $background;
+  block-size: 28rem;
+  gap: $spacing-07;
+  overflow-y: auto;
+}
+
+.history-rail-story__pane > :last-child {
+  flex: 1;
+  max-inline-size: 36rem;
+}
+
+.history-rail-story__rail {
+  position: sticky;
+  flex: none;
+  inset-block-start: 0;
+}
+
+.history-rail-story__pane p {
+  @include type-style('body-01');
+
+  margin: 0;
+  color: $text-primary;
+}
+
+.history-rail-story__marks {
+  display: flex;
+  align-items: center;
+  gap: $spacing-07;
+}
+
+.history-rail-story__mark {
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+}
+
+.history-rail-story__mark-label {
+  @include type-style('label-01');
+
+  color: $text-secondary;
+}

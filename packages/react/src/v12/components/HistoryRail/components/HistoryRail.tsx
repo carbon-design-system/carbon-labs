@@ -9,6 +9,7 @@ import React, {
   forwardRef,
   useCallback,
   useId,
+  useLayoutEffect,
   useRef,
   useState,
   type KeyboardEvent,
@@ -154,6 +155,8 @@ export const HistoryRail = forwardRef<HTMLDivElement, HistoryRailProps>(
     const t = { ...defaultTranslations, ...translations };
     const trackId = useId();
     const trackRef = useRef<HTMLDivElement>(null);
+    const cardRef = useRef<HTMLDivElement>(null);
+    const [sliding, setSliding] = useState(false);
     const fallback = current ?? items[items.length - 1]?.id;
     const [valueState, setValueState] = useState(defaultValue ?? fallback);
     const [hovered, setHovered] = useState<string | null>(null);
@@ -220,11 +223,15 @@ export const HistoryRail = forwardRef<HTMLDivElement, HistoryRailProps>(
         return;
       }
       event.preventDefault();
+      setSliding(shownId !== null);
       select(Math.min(Math.max(next, 0), items.length - 1));
     }
 
     function handlePointerMove(event: PointerEvent<HTMLDivElement>) {
       const item = items[nearest(event.clientY)];
+      // Already showing: it slides to the new mark and changes its words.
+      // Arriving: it appears where it is wanted, with no travel from nowhere.
+      setSliding(shownId !== null);
       setHovered(item ? item.id : null);
     }
 
@@ -243,11 +250,27 @@ export const HistoryRail = forwardRef<HTMLDivElement, HistoryRailProps>(
     // the pointer never moves out from under it.
     const shownIndex = items.findIndex((item) => item.id === shownId);
 
+    // One card for the whole rail, moved to the mark it names, so going from
+    // one mark to the next changes its words instead of replacing it. The
+    // position is written to the element: labs lint forbids a style prop.
+    useLayoutEffect(() => {
+      const slot =
+        trackRef.current?.querySelector<HTMLElement>('[data-push="at"]');
+      if (cardRef.current && slot) {
+        cardRef.current.style.insetBlockStart = `${
+          slot.offsetTop + slot.offsetHeight / 2
+        }px`;
+      }
+    }, [shownId]);
+
     return (
       <div
         ref={ref}
         className={cx(block, className)}
-        onPointerLeave={() => setHovered(null)}
+        onPointerLeave={() => {
+          setSliding(false);
+          setHovered(null);
+        }}
         {...rest}>
         <div
           ref={trackRef}
@@ -264,8 +287,14 @@ export const HistoryRail = forwardRef<HTMLDivElement, HistoryRailProps>(
           aria-orientation="vertical"
           className={`${block}__track`}
           onKeyDown={handleKeyDown}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
+          onFocus={() => {
+            setSliding(false);
+            setFocused(true);
+          }}
+          onBlur={() => {
+            setSliding(false);
+            setFocused(false);
+          }}
           onPointerMove={handlePointerMove}
           onClick={(event) => select(nearest(event.clientY))}>
           {shown.map((item, i) => {
@@ -279,8 +308,6 @@ export const HistoryRail = forwardRef<HTMLDivElement, HistoryRailProps>(
                     ? 'failed'
                     : 'default';
             return (
-              // The card rides in the highlighted mark's own slot, so nothing
-              // has to compute where it goes and the pitch stays in one place.
               <span
                 key={item.id}
                 className={`${block}__slot`}
@@ -295,17 +322,20 @@ export const HistoryRail = forwardRef<HTMLDivElement, HistoryRailProps>(
                         : 'at'
                 }>
                 <HistoryMarker state={state} />
-                {item.id === shownId && shownItem ? (
-                  <HistoryMarkerCard
-                    label={shownItem.label}
-                    description={shownItem.description}
-                    className={`${block}__card`}
-                  />
-                ) : null}
               </span>
             );
           })}
         </div>
+        {shownItem ? (
+          <HistoryMarkerCard
+            ref={cardRef}
+            label={shownItem.label}
+            description={shownItem.description}
+            className={cx(`${block}__card`, {
+              [`${block}__card--sliding`]: sliding,
+            })}
+          />
+        ) : null}
       </div>
     );
   }

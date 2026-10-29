@@ -34,6 +34,7 @@ $-push: math.div($-pitch-reached - $-pitch, 2);
 // The ends of the rail move by $-push when the first or last mark is the one
 // being reached for, so the rail reserves that room rather than growing.
 .#{$block} {
+  position: relative;
   display: inline-block;
   padding-block: $-push;
 }
@@ -54,8 +55,8 @@ $-push: math.div($-pitch-reached - $-pitch, 2);
   }
 }
 
-// A mark's place on the track. The card hangs off it, so nothing computes a
-// position and the pitch lives only here.
+// A mark's place on the track. The pitch lives only here; the rail reads a
+// slot's position back off the element rather than counting it out.
 .#{$block}__slot {
   position: relative;
   display: flex;
@@ -81,17 +82,29 @@ $-push: math.div($-pitch-reached - $-pitch, 2);
   transform: translateY($-push);
 }
 
-// The card is only there while a pointer or the keyboard is on the rail, so
-// it arrives rather than appearing. There is no exit: it goes with its mark.
+// One card for the whole rail, hung off the rail rather than off a mark: the
+// rail writes its inset-block-start, and $spacing-03 clears the track. It is
+// only there while a pointer or the keyboard is on the rail, so it arrives
+// rather than appearing. There is no exit: it goes with its mark.
 .#{$block}__card {
   position: absolute;
   animation: #{$block}__card-in $duration-fast-02 motion(entrance, productive);
-  inset-block-start: 50%;
-  inset-inline-start: calc(100% + #{$spacing-03});
+  inset-inline-start: calc(#{$-track-width} + #{$spacing-03});
   transform: translateY(-50%);
 
   @media (prefers-reduced-motion: reduce) {
     animation: none;
+  }
+}
+
+// Moving from one mark to the next, it slides and changes its words instead
+// of going away and coming back somewhere else.
+.#{$block}__card--sliding {
+  animation: none;
+  transition: inset-block-start $duration-fast-02 motion(standard, productive);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 }
 

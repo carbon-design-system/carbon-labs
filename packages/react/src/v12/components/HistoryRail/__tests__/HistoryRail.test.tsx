@@ -191,6 +191,29 @@ describe('HistoryRail', () => {
     expect(container.querySelector('.cds--history-marker-card')).toBeNull();
   });
 
+  it('keeps one card between marks and changes its words', () => {
+    const { container } = rail({ current: 'a' });
+    const slider = screen.getByRole('slider');
+    sizeTrack(slider);
+    const move = (clientY: number) =>
+      fireEvent(
+        slider,
+        new MouseEvent('pointermove', { bubbles: true, clientY })
+      );
+
+    move(20);
+    const first = container.querySelector('.cds--history-marker-card');
+    expect(first).toHaveTextContent('Iteration 2');
+    // arriving, so it appears where it is wanted rather than travelling
+    expect(first).not.toHaveClass('cds--history-rail__card--sliding');
+
+    move(45);
+    const second = container.querySelector('.cds--history-marker-card');
+    expect(second).toBe(first);
+    expect(second).toHaveTextContent('Iteration 3');
+    expect(second).toHaveClass('cds--history-rail__card--sliding');
+  });
+
   it('parts the marks around the one being reached for, and only then', () => {
     const { container } = rail({ current: 'a' });
     const slider = screen.getByRole('slider');

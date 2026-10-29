@@ -120,9 +120,12 @@ ChatMessage.propTypes = {
   timestamp: PropTypes.node,
 } as React.WeakValidationMap<ChatMessageProps>;
 
+// `type` is narrowed rather than inherited: the DOM's own attribute allows
+// `reset`, which MegaButton does not, and the rest of these props are spread
+// straight into it.
 export interface ChatMessageActionProps extends Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
-  'children'
+  'children' | 'type'
 > {
   /**
    * Provide an optional class to be applied to the containing node
@@ -145,6 +148,11 @@ export interface ChatMessageActionProps extends Omit<
    * icon-only allow-list, so the name carries the meaning either way.
    */
   label: string;
+
+  /**
+   * The button's type. A MegaButton never submits a form by accident.
+   */
+  type?: 'button' | 'submit';
 }
 
 /**
@@ -195,4 +203,9 @@ ChatMessageAction.propTypes = {
    * icon-only allow-list, so the name carries the meaning either way.
    */
   label: PropTypes.string.isRequired,
+
+  /**
+   * The button's type. A MegaButton never submits a form by accident.
+   */
+  type: PropTypes.oneOf(['button', 'submit'] as const),
 } as React.WeakValidationMap<ChatMessageActionProps>;

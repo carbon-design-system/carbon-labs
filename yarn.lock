@@ -3468,7 +3468,7 @@ __metadata:
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.28.0"
-    "@carbon/element-styles": "npm:^0.3.0"
+    "@carbon/element-styles": "npm:^0.4.0"
     "@carbon/web-components": "npm:^2.40.0"
     "@tiptap/core": "npm:3.31.4"
     "@tiptap/extension-blockquote": "npm:3.31.4"
@@ -3572,14 +3572,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/element-styles@npm:^0.3.0":
-  version: 0.3.13
-  resolution: "@carbon/element-styles@npm:0.3.13"
+"@carbon/element-styles@npm:^0.4.0":
+  version: 0.4.3
+  resolution: "@carbon/element-styles@npm:0.4.3"
   dependencies:
     "@ibm/telemetry-js": "npm:^1.11.0"
   peerDependencies:
     "@carbon/styles": ^1.102.0
-  checksum: 10c0/e219f91959e0b54a19a50f94389a9afbbc6f15694e2237f888e6a9f0d4c63d65f54e23d07888ef0dde3773fd879a4229f6da53b3b8bad604141ccd04c49ac1d5
+  checksum: 10c0/fa076ec31d3d68f7943739f5ffbc39a82cf683cbf074687690c8d48cb8fc764bc16734ea9a49e550a8945d30701b0ff50ac5fdb7f3f4202ddd2a8f3b4bedec00
   languageName: node
   linkType: hard
 

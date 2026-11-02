@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.196.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fweb-components%400.195.0...%40carbon-labs%2Fweb-components%400.196.0) (2026-11-02)
+
+### Bug Fixes
+
+* **deps:** update dependency @carbon/element-styles to ^0.4.0 ([#1432](https://github.com/carbon-design-system/carbon-labs/issues/1432)) ([f211ad5](https://github.com/carbon-design-system/carbon-labs/commit/f211ad556987f140ee28eadfe93c43d0a109e505))
+
+
 # [0.195.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fweb-components%400.194.0...%40carbon-labs%2Fweb-components%400.195.0) (2026-10-19)
 
 ### Features

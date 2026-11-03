@@ -361,5 +361,7 @@ RecipeRenderer.propTypes = {
   /**
    * The components a recipe may name
    */
-  registry: PropTypes.objectOf(PropTypes.elementType.isRequired),
+  registry: PropTypes.objectOf(
+    PropTypes.elementType.isRequired
+  ) as unknown as PropTypes.Validator<Record<string, ElementType>>,
 };

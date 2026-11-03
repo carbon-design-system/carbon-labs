@@ -162,7 +162,9 @@ export const registry: Record<string, ElementType> = {
   '@carbon/react:TabList': TabList,
   '@carbon/react:TabPanel': TabPanel,
   '@carbon/react:TabPanels': TabPanels,
-  '@carbon/react:Tabs': Tabs,
+  // Carbon types Tabs as a component with static members, which ElementType
+  // does not admit; it renders as one.
+  '@carbon/react:Tabs': Tabs as ElementType,
   '@carbon/react:Tag': Tag,
   '@carbon/react:TextArea': TextArea,
   '@carbon/react:TextInput': TextInput,

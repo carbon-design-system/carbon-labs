@@ -50,7 +50,7 @@
     "codeceptjs/joi": "^18.2.9",
     "codeceptjs/uuid": "^11.1.1",
     "vega-lite/vega-expression": "~5.2.1",
-    "nx/undici": "^7.29.1"
+    "nx/undici": "^8.0.0"
   },
   "devDependencies": {
     "@carbon/icons-react": "^11.90.0",

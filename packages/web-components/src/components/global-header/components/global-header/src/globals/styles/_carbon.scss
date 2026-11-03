@@ -14,6 +14,7 @@
 
 clabs-global-header-apaas,
 clabs-global-header-hybrid-ipaas {
+  --clabs-global-header-background-color: var(--cds-background);
   @include theme.theme(themes.$g100);
 }
 

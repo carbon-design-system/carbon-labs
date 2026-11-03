@@ -5,10 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { forwardRef, type ReactNode } from 'react';
+import React, {
+  Children,
+  Fragment,
+  forwardRef,
+  isValidElement,
+  type ReactElement,
+  type ReactNode,
+} from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { usePrefix } from '@carbon/react';
+import { ChatMessage } from './ChatMessage';
 
 export type ChatThreadAlign = 'bottom' | 'top';
 export type ChatThreadDensity = 'balanced' | 'compact';
@@ -27,7 +35,8 @@ export interface ChatThreadProps extends React.HTMLAttributes<HTMLOListElement> 
   announcement?: string;
 
   /**
-   * The turns: ChatMessage children, in the order they happened.
+   * The turns: ChatMessage children, in the order they happened. Anything
+   * else — a divider — is given a list item of its own and scrolls with them.
    */
   children?: ReactNode;
 
@@ -56,6 +65,17 @@ export interface ChatThreadProps extends React.HTMLAttributes<HTMLOListElement> 
  * carries no orphan margin. Scrolling, stick-to-bottom and the
  * scroll-to-bottom control belong to the pane, not to the thread.
  */
+/** The children with fragments opened, so a fragment of turns stays turns. */
+function flatten(children: ReactNode): ReactNode[] {
+  return Children.toArray(children).flatMap((child) =>
+    isValidElement(child) && child.type === Fragment
+      ? flatten(
+          (child as ReactElement<{ children?: ReactNode }>).props.children
+        )
+      : [child]
+  );
+}
+
 export const ChatThread = forwardRef<HTMLOListElement, ChatThreadProps>(
   function ChatThread(
     {
@@ -84,7 +104,20 @@ export const ChatThread = forwardRef<HTMLOListElement, ChatThreadProps>(
             className
           )}
           {...rest}>
-          {children}
+          {/* A turn is its own list item. Anything else in the flow — a day
+              or iteration divider, a SystemMessage — is wrapped in one, so it
+              scrolls with the turns it sits between and the list stays a list. */}
+          {flatten(children).map((child, index) =>
+            isValidElement(child) && child.type === ChatMessage ? (
+              child
+            ) : (
+              <li
+                key={(isValidElement(child) && child.key) || `item-${index}`}
+                className={`${block}__item`}>
+                {child}
+              </li>
+            )
+          )}
         </ol>
         {/* One region for the whole thread: a region per turn would announce
             every streamed fragment. */}

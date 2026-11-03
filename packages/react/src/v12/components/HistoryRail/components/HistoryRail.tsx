@@ -8,6 +8,7 @@
 import React, {
   forwardRef,
   useCallback,
+  useEffect,
   useId,
   useLayoutEffect,
   useRef,
@@ -41,6 +42,13 @@ export interface HistoryIteration {
    * `failed` marks a run that did not finish.
    */
   status?: 'done' | 'failed';
+
+  /**
+   * The id of the element that marks where this iteration begins in the
+   * conversation — its divider. Choosing the mark scrolls that element to the
+   * top, and scrolling the conversation past it moves the rail's selection.
+   */
+  target?: string;
 }
 
 export interface HistoryRailTranslations {
@@ -117,6 +125,20 @@ const defaultTranslations: HistoryRailTranslations = {
       .join('. '),
 };
 
+/** The nearest ancestor that scrolls, or null for the document. */
+function scrollParent(el: HTMLElement): HTMLElement | null {
+  for (let node = el.parentElement; node; node = node.parentElement) {
+    const { overflowY } = window.getComputedStyle(node);
+    if (
+      /(auto|scroll)/.test(overflowY) &&
+      node.scrollHeight > node.clientHeight
+    ) {
+      return node;
+    }
+  }
+  return null;
+}
+
 /** Keeps `count` marks around `index`, biased to the end of the history. */
 function windowOf(total: number, index: number, count?: number) {
   if (!count || total <= count) {
@@ -168,6 +190,10 @@ export const HistoryRail = forwardRef<HTMLDivElement, HistoryRailProps>(
       items.findIndex((item) => item.id === value)
     );
 
+    // While the conversation scrolls to a mark the person chose, the dividers
+    // it passes must not take the selection back from them.
+    const following = useRef(true);
+
     const select = useCallback(
       (index: number) => {
         const next = items[index];
@@ -178,9 +204,80 @@ export const HistoryRail = forwardRef<HTMLDivElement, HistoryRailProps>(
           setValueState(next.id);
         }
         onChange?.(next, index);
+        const target = next.target && document.getElementById(next.target);
+        if (target) {
+          following.current = false;
+          const reduce = window.matchMedia?.(
+            '(prefers-reduced-motion: reduce)'
+          )?.matches;
+          target.scrollIntoView?.({
+            block: 'start',
+            behavior: reduce ? 'auto' : 'smooth',
+          });
+          // `scrollend` where it exists; a timeout where it does not, so the
+          // rail never stops following for good.
+          const resume = () => {
+            following.current = true;
+          };
+          window.addEventListener('scrollend', resume, {
+            once: true,
+            capture: true,
+          });
+          window.setTimeout(resume, 800);
+        }
       },
       [items, onChange, value, valueProp]
     );
+
+    // The other direction: as the conversation scrolls, the selection follows
+    // the last divider that has reached the top third of its scroller. Only
+    // when uncontrolled — a controlled rail is the product's to move.
+    useEffect(() => {
+      const targets = items
+        .map((item) => ({
+          id: item.id,
+          el: item.target ? document.getElementById(item.target) : null,
+        }))
+        .filter((t): t is { id: string; el: HTMLElement } => Boolean(t.el));
+      if (targets.length === 0 || valueProp !== undefined) {
+        return;
+      }
+      let frame = 0;
+      const update = () => {
+        frame = 0;
+        if (!following.current) {
+          return;
+        }
+        let reached: string | undefined;
+        for (const { id, el } of targets) {
+          const scroller = scrollParent(el);
+          const top = scroller ? scroller.getBoundingClientRect().top : 0;
+          const height = scroller ? scroller.clientHeight : window.innerHeight;
+          if (el.getBoundingClientRect().top <= top + height / 3) {
+            reached = id;
+          }
+        }
+        if (reached) {
+          setValueState(reached);
+        }
+      };
+      const onScroll = () => {
+        if (!frame) {
+          frame = window.requestAnimationFrame(update);
+        }
+      };
+      // Where the conversation already is when the rail arrives.
+      update();
+      // Scroll does not bubble; captured on the document it reaches us from
+      // whichever element scrolls the conversation.
+      document.addEventListener('scroll', onScroll, true);
+      return () => {
+        document.removeEventListener('scroll', onScroll, true);
+        if (frame) {
+          window.cancelAnimationFrame(frame);
+        }
+      };
+    }, [items, valueProp]);
 
     const { start, end } = windowOf(items.length, selected, maxMarks);
     const shown = items.slice(start, end);
@@ -370,6 +467,7 @@ HistoryRail.propTypes = {
       id: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
       status: PropTypes.oneOf(['done', 'failed'] as const),
+      target: PropTypes.string,
     })
   ).isRequired,
 

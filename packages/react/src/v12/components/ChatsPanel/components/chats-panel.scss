@@ -41,6 +41,17 @@ $block: '#{$prefix}--chats-panel';
   gap: $spacing-03;
 }
 
+// In a card the bar is the card's own header: 16 at the sides, as the
+// frames inset a header's controls from the card's edge.
+.#{$block}--in-card .#{$block}__bar {
+  padding-inline: $spacing-05;
+}
+
+.#{$block}__bar-end {
+  display: flex;
+  margin-inline-start: auto;
+}
+
 .#{$block}__body {
   // The overlay is positioned against this, not the viewport: the panel
   // belongs to the surface it was opened from, and a fixed panel would escape

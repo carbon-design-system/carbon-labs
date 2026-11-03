@@ -51,6 +51,12 @@ export interface ChatsPanelProps extends Omit<
   bar?: ReactNode;
 
   /**
+   * What sits at the far end of the bar — the side panels' toggles, when the
+   * bar is a card's own header.
+   */
+  barEnd?: ReactNode;
+
+  /**
    * The content the panel sits beside, or over, depending on `presentation`.
    */
   children?: ReactNode;
@@ -142,6 +148,7 @@ export const ChatsPanel = forwardRef<HTMLDivElement, ChatsPanelProps>(
   function ChatsPanel(
     {
       bar,
+      barEnd,
       children,
       className,
       currentId,
@@ -201,7 +208,13 @@ export const ChatsPanel = forwardRef<HTMLDivElement, ChatsPanelProps>(
         className={cx(
           block,
           `${block}--${presented}`,
-          { [`${block}--open`]: open },
+          {
+            [`${block}--open`]: open,
+            // Declared, not presented: an overlay panel lives in a card, so
+            // its bar is the card's header and takes the card's inset. A push
+            // that floats at narrow widths is still the shell's bar.
+            [`${block}--in-card`]: presentation === 'overlay',
+          },
           className
         )}
         {...rest}
@@ -246,6 +259,7 @@ export const ChatsPanel = forwardRef<HTMLDivElement, ChatsPanelProps>(
             {label}
           </MegaButton>
           {bar}
+          {barEnd ? <div className={`${block}__bar-end`}>{barEnd}</div> : null}
         </div>
         <div className={`${block}__body`}>
           {/* The surface state, not `hidden`: display:none cannot transition,
@@ -329,6 +343,11 @@ ChatsPanel.propTypes = {
    * What sits beside the trigger in the bar it opens from.
    */
   bar: PropTypes.node,
+
+  /**
+   * What sits at the far end of the bar.
+   */
+  barEnd: PropTypes.node,
 
   /**
    * The content the panel sits beside, or over.

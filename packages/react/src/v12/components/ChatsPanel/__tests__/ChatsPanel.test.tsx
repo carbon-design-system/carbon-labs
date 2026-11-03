@@ -332,6 +332,23 @@ describe('ChatsPanel', () => {
     expect(bar?.querySelector('.cds--chats-panel__trigger')).not.toBeNull();
   });
 
+  // A card's header carries the side panels' toggles at its far end.
+  it('renders what goes at the bar’s end after everything else', () => {
+    const { container } = render(
+      <ChatsPanel
+        sections={sections}
+        presentation="overlay"
+        bar={<span>Session</span>}
+        barEnd={<span>Toggles</span>}>
+        Hello
+      </ChatsPanel>
+    );
+    const bar = container.querySelector('.cds--chats-panel__bar');
+    expect(bar?.lastElementChild).toHaveClass('cds--chats-panel__bar-end');
+    expect(bar?.lastElementChild).toHaveTextContent('Toggles');
+    expect(container.firstChild).toHaveClass('cds--chats-panel--in-card');
+  });
+
   it('applies the cds prefix and a custom class name', () => {
     const { container } = render(
       <ChatsPanel sections={sections} className="custom-class">

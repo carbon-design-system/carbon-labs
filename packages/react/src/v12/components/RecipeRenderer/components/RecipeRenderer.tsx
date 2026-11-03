@@ -198,13 +198,21 @@ function renderNode(node: RecipeNode, ctx: Context, key?: number): ReactNode {
       </Theme>
     );
   }
-  if (node.padding) {
-    spacingStep(node.padding);
+  if (node.padding || node.paddingBlock || node.paddingInline) {
+    [node.padding, node.paddingBlock, node.paddingInline].forEach(
+      (token) => token && spacingStep(token)
+    );
     // The padding wrapper sits OUTSIDE the component, so a filling node needs
     // the fill class here too: otherwise this plain div stands between the
-    // component and its parent and the chain stops at it.
+    // component and its parent and the chain stops at it. An axis given its
+    // own token comes after the all-round one, so it wins on that axis.
     const padClasses = [
-      `${ctx.prefix}--recipe-renderer__padding--${node.padding}`,
+      node.padding &&
+        `${ctx.prefix}--recipe-renderer__padding--${node.padding}`,
+      node.paddingBlock &&
+        `${ctx.prefix}--recipe-renderer__padding-block--${node.paddingBlock}`,
+      node.paddingInline &&
+        `${ctx.prefix}--recipe-renderer__padding-inline--${node.paddingInline}`,
       node.fill && `${ctx.prefix}--recipe-renderer__fill--${node.fill}`,
       node.measure &&
         `${ctx.prefix}--recipe-renderer__measure--${node.measure}`,

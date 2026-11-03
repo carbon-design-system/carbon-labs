@@ -25,6 +25,7 @@ import {
   FormGroup,
   Grid,
   Heading,
+  preview_Text,
   InlineLoading,
   InlineNotification,
   Layer,
@@ -79,6 +80,11 @@ import {
 import { MegaButton } from '@carbon-labs/react-mega-button';
 import { SessionSwitcher } from '@carbon-labs/react-session-switcher';
 import { ChatsPanel } from '@carbon-labs/react-chats-panel';
+import {
+  ChatPanels,
+  ChatPanelToggles,
+  ChatPanelArea,
+} from '@carbon-labs/react-chat-panels';
 
 // Carbon's components are styled by the global `@carbon/styles`; a labs component
 // ships its own sheet and renders unstyled without it. The registry is the only
@@ -97,6 +103,7 @@ import '@carbon-labs/react-code-snippet/scss/code-snippet.scss';
 import '@carbon-labs/react-mega-button/scss/mega-button.scss';
 import '@carbon-labs/react-session-switcher/scss/session-switcher.scss';
 import '@carbon-labs/react-chats-panel/scss/chats-panel.scss';
+import '@carbon-labs/react-chat-panels/scss/chat-panels.scss';
 
 /**
  * Every component a recipe can name, written out. A recipe's "component" string
@@ -124,6 +131,8 @@ export const registry: Record<string, ElementType> = {
   '@carbon/react:FormGroup': FormGroup,
   '@carbon/react:Grid': Grid,
   '@carbon/react:Heading': Heading,
+  // Carbon's text primitive, for words beside a component in one turn.
+  '@carbon/react:preview_Text': preview_Text,
   '@carbon/react:InlineLoading': InlineLoading,
   '@carbon/react:InlineNotification': InlineNotification,
   '@carbon/react:Layer': Layer,
@@ -174,4 +183,7 @@ export const registry: Record<string, ElementType> = {
   '@carbon-labs/react-mega-button:MegaButton': MegaButton,
   '@carbon-labs/react-session-switcher:SessionSwitcher': SessionSwitcher,
   '@carbon-labs/react-chats-panel:ChatsPanel': ChatsPanel,
+  '@carbon-labs/react-chat-panels:ChatPanels': ChatPanels,
+  '@carbon-labs/react-chat-panels:ChatPanelToggles': ChatPanelToggles,
+  '@carbon-labs/react-chat-panels:ChatPanelArea': ChatPanelArea,
 };

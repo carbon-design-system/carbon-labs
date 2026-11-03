@@ -28,6 +28,10 @@ export interface RecipeNode {
   gap?: SpacingToken;
   /** Space inside, as a Carbon spacing token */
   padding?: SpacingToken;
+  /** Space above and below, over padding on the block axis */
+  paddingBlock?: SpacingToken;
+  /** Space at the start and end, over padding on the inline axis */
+  paddingInline?: SpacingToken;
   /** Corner radius, as a Carbon border-radius token, on the component's own element */
   radius?: RadiusToken;
   /** Fill the screen ("viewport"), the node above ("parent"), or absorb the overflow ("scroll") */

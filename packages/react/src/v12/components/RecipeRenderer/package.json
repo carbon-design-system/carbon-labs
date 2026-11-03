@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "@carbon-labs/react-chat-input": "workspace:*",
+    "@carbon-labs/react-chat-panels": "workspace:*",
     "@carbon-labs/react-chat-thread": "workspace:*",
     "@carbon-labs/react-chats-panel": "workspace:*",
     "@carbon-labs/react-code-snippet": "workspace:*",

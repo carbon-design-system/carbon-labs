@@ -3,7 +3,7 @@
   "name": "chat-shell",
   "kind": "pattern-draft",
   "status": "draft",
-  "description": "The chat surface as a whole screen: a dark application shell wrapping a light page container that holds the conversation, its history rail and the composer. The shell bar carries two separate controls — the chats panel's own expand, which pushes the card aside to make room for the list, and the session switcher, which says which conversation you are in. They are not one control: opening the list and changing session are different acts.",
+  "description": "The chat surface as a whole screen: a dark application shell wrapping a light page container that holds the conversation, its history rail and the composer. The shell bar carries two separate controls — the chats panel's own expand, which pushes the card aside to make room for the list, and the session switcher, which says which conversation you are in. They are not one control: opening the list and changing session are different acts. The card has its own header, whose toggles open the side panels (knowledge, code, files, settings, canvas) along the card's inline end, pushing the conversation aside.",
   "meta": {
     "intent": "Hold one conversation at full width, and keep every other conversation one keystroke away without moving the one you are in.",
     "useWhen": [
@@ -114,168 +114,252 @@
             "fill": "parent",
             "children": [
               {
-                "component": "@carbon/react:Stack",
-                "props": {
-                  "orientation": "horizontal"
-                },
-                "gap": "spacing-05",
-                "padding": "spacing-05",
-                "fill": "parent",
+                "component": "@carbon-labs/react-chat-panels:ChatPanels",
                 "children": [
                   {
-                    "component": "@carbon-labs/react-history-rail:HistoryRail",
-                    "props": {
-                      "label": "History of this conversation",
-                      "items": [
-                        {
-                          "id": "iteration-1",
-                          "label": "Iteration 1",
-                          "description": "Loaded the Q3 filings"
-                        },
-                        {
-                          "id": "iteration-2",
-                          "label": "Iteration 2"
-                        },
-                        {
-                          "id": "iteration-3",
-                          "label": "Iteration 3"
-                        },
-                        {
-                          "id": "iteration-4",
-                          "label": "Iteration 4",
-                          "description": "Narrowed to the three recurring themes"
-                        },
-                        {
-                          "id": "iteration-5",
-                          "label": "Iteration 5"
-                        },
-                        {
-                          "id": "iteration-6",
-                          "label": "Iteration 6"
-                        },
-                        {
-                          "id": "iteration-7",
-                          "label": "Iteration 7"
-                        },
-                        {
-                          "id": "iteration-8",
-                          "label": "Iteration 8",
-                          "description": "Drafted the briefing"
-                        },
-                        {
-                          "id": "iteration-9",
-                          "label": "Iteration 9"
-                        },
-                        {
-                          "id": "iteration-10",
-                          "label": "Iteration 10"
-                        },
-                        {
-                          "id": "iteration-11",
-                          "label": "Iteration 11",
-                          "description": "Export to PDF did not finish",
-                          "status": "failed"
-                        },
-                        {
-                          "id": "iteration-12",
-                          "label": "Iteration 12"
-                        },
-                        {
-                          "id": "iteration-13",
-                          "label": "Iteration 13",
-                          "description": "Rewrote the opening paragraph"
-                        }
-                      ],
-                      "current": "iteration-13",
-                      "defaultValue": "iteration-8"
-                    }
-                  },
-                  {
                     "component": "@carbon/react:Stack",
-                    "gap": "spacing-06",
                     "fill": "parent",
-                    "measure": "reading",
                     "children": [
                       {
-                        "component": "@carbon-labs/react-system-message:SystemMessage",
-                        "props": {
-                          "text": "Model changed to Granite 3.1",
-                          "severity": "status"
-                        }
-                      },
-                      {
-                        "component": "@carbon-labs/react-chat-thread:ChatThread",
-                        "props": {
-                          "label": "Conversation",
-                          "align": "bottom",
-                          "density": "balanced"
-                        },
-                        "fill": "scroll",
+                        "component": "@carbon/react:Stack",
+                        "paddingBlock": "spacing-03",
+                        "paddingInline": "spacing-05",
                         "children": [
                           {
-                            "component": "@carbon-labs/react-chat-thread:ChatMessage",
+                            "component": "@carbon-labs/react-chat-panels:ChatPanelToggles",
                             "props": {
-                              "from": "user",
-                              "children": "Can you synthesize insights into a briefing?"
-                            }
-                          },
-                          {
-                            "component": "@carbon-labs/react-chat-thread:ChatMessage",
-                            "props": {
-                              "from": "assistant",
-                              "children": "Here is the briefing. The three themes that recur are consolidation, pricing pressure, and on-device inference."
+                              "label": "Panels"
                             }
                           }
                         ]
                       },
                       {
-                        "component": "@carbon-labs/react-reasoning-trace:ReasoningTrace",
+                        "component": "@carbon-labs/react-chat-panels:ChatPanelArea",
                         "props": {
-                          "label": "Thinking",
-                          "duration": "22s",
-                          "status": "complete"
-                        }
-                      },
-                      {
-                        "component": "@carbon-labs/react-chat-input:ChatInput",
-                        "props": {
-                          "placeholder": "Type “/” to try a command, or ask anything",
-                          "models": [
-                            {
-                              "id": "granite-3-1",
-                              "label": "Granite 3.1"
+                          "presentation": "push"
+                        },
+                        "fill": "parent",
+                        "children": [
+                          {
+                            "component": "@carbon/react:Stack",
+                            "props": {
+                              "orientation": "horizontal"
                             },
-                            {
-                              "id": "granite-3-1-vision",
-                              "label": "Granite 3.1 Vision"
-                            },
-                            {
-                              "id": "llama-4",
-                              "label": "Llama 4"
-                            }
-                          ],
-                          "connections": [
-                            {
-                              "id": "box",
-                              "label": "Box",
-                              "enabled": true
-                            },
-                            {
-                              "id": "sharepoint",
-                              "label": "SharePoint",
-                              "enabled": false
-                            }
-                          ],
-                          "onAddFile": {
-                            "$event": "add-file"
-                          },
-                          "onModelChange": {
-                            "$event": "change-model"
-                          },
-                          "onSpeechToggle": {
-                            "$event": "toggle-speech"
+                            "gap": "spacing-03",
+                            "paddingInline": "spacing-03",
+                            "paddingBlock": "spacing-06",
+                            "fill": "parent",
+                            "children": [
+                              {
+                                "component": "@carbon-labs/react-history-rail:HistoryRail",
+                                "props": {
+                                  "label": "History of this conversation",
+                                  "items": [
+                                    {
+                                      "id": "iteration-1",
+                                      "label": "Iteration 1",
+                                      "description": "Loaded the Q3 filings"
+                                    },
+                                    {
+                                      "id": "iteration-2",
+                                      "label": "Iteration 2"
+                                    },
+                                    {
+                                      "id": "iteration-3",
+                                      "label": "Iteration 3"
+                                    },
+                                    {
+                                      "id": "iteration-4",
+                                      "label": "Iteration 4",
+                                      "description": "Narrowed to the three recurring themes"
+                                    },
+                                    {
+                                      "id": "iteration-5",
+                                      "label": "Iteration 5"
+                                    },
+                                    {
+                                      "id": "iteration-6",
+                                      "label": "Iteration 6"
+                                    },
+                                    {
+                                      "id": "iteration-7",
+                                      "label": "Iteration 7"
+                                    },
+                                    {
+                                      "id": "iteration-8",
+                                      "label": "Iteration 8",
+                                      "description": "Drafted the briefing"
+                                    },
+                                    {
+                                      "id": "iteration-9",
+                                      "label": "Iteration 9"
+                                    },
+                                    {
+                                      "id": "iteration-10",
+                                      "label": "Iteration 10"
+                                    },
+                                    {
+                                      "id": "iteration-11",
+                                      "label": "Iteration 11",
+                                      "description": "Export to PDF did not finish",
+                                      "status": "failed"
+                                    },
+                                    {
+                                      "id": "iteration-12",
+                                      "label": "Iteration 12",
+                                      "target": "divider-iteration-12"
+                                    },
+                                    {
+                                      "id": "iteration-13",
+                                      "label": "Iteration 13",
+                                      "description": "Rewrote the opening paragraph"
+                                    }
+                                  ],
+                                  "current": "iteration-13",
+                                  "defaultValue": "iteration-8"
+                                }
+                              },
+                              {
+                                "component": "@carbon/react:Stack",
+                                "gap": "spacing-06",
+                                "fill": "parent",
+                                "measure": "reading",
+                                "children": [
+                                  {
+                                    "component": "@carbon-labs/react-chat-thread:ChatThread",
+                                    "props": {
+                                      "label": "Conversation",
+                                      "align": "bottom",
+                                      "density": "balanced"
+                                    },
+                                    "fill": "scroll",
+                                    "children": [
+                                      {
+                                        "component": "@carbon-labs/react-system-message:SystemMessage",
+                                        "props": {
+                                          "text": "Today",
+                                          "variant": "divider",
+                                          "id": "divider-iteration-12"
+                                        }
+                                      },
+                                      {
+                                        "component": "@carbon-labs/react-chat-thread:ChatMessage",
+                                        "props": {
+                                          "from": "user",
+                                          "children": "Can you synthesize insights into a briefing?"
+                                        }
+                                      },
+                                      {
+                                        "component": "@carbon-labs/react-chat-thread:ChatMessage",
+                                        "props": {
+                                          "from": "assistant"
+                                        },
+                                        "children": [
+                                          {
+                                            "component": "@carbon-labs/react-reasoning-trace:ReasoningTrace",
+                                            "props": {
+                                              "label": "Thinking",
+                                              "duration": "22s",
+                                              "status": "complete"
+                                            }
+                                          },
+                                          {
+                                            "component": "@carbon/react:preview_Text",
+                                            "props": {
+                                              "as": "p",
+                                              "children": "Here is the briefing. The three themes that recur are consolidation, pricing pressure, and on-device inference."
+                                            }
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "component": "@carbon-labs/react-chat-thread:ChatMessage",
+                                        "props": {
+                                          "from": "user",
+                                          "children": "Can you synthesize insights into a briefing?"
+                                        }
+                                      },
+                                      {
+                                        "component": "@carbon-labs/react-chat-thread:ChatMessage",
+                                        "props": {
+                                          "from": "assistant"
+                                        },
+                                        "children": [
+                                          {
+                                            "component": "@carbon-labs/react-reasoning-trace:ReasoningTrace",
+                                            "props": {
+                                              "label": "Thinking",
+                                              "duration": "22s",
+                                              "status": "complete",
+                                              "defaultOpen": true
+                                            },
+                                            "children": [
+                                              {
+                                                "component": "@carbon-labs/react-code-snippet:CodeSnippet",
+                                                "props": {
+                                                  "language": "javascript",
+                                                  "code": "'use strict';\n// Increase max listeners for event emitters\nrequire('events').EventEmitter.defaultMaxListeners = 100;\n\nconst gulp = require('gulp');\nconst util = require('./build/lib/util');\nconst path = require('path');\nconst compilation = require('./build/lib/compilation');"
+                                                }
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "component": "@carbon/react:preview_Text",
+                                            "props": {
+                                              "as": "p",
+                                              "children": "Here is the briefing. The three themes that recur are consolidation, pricing pressure, and on-device inference."
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "component": "@carbon-labs/react-chat-input:ChatInput",
+                                    "props": {
+                                      "placeholder": "Type “/” to try a command, or ask anything",
+                                      "models": [
+                                        {
+                                          "id": "granite-3-1",
+                                          "label": "Granite 3.1"
+                                        },
+                                        {
+                                          "id": "granite-3-1-vision",
+                                          "label": "Granite 3.1 Vision"
+                                        },
+                                        {
+                                          "id": "llama-4",
+                                          "label": "Llama 4"
+                                        }
+                                      ],
+                                      "connections": [
+                                        {
+                                          "id": "box",
+                                          "label": "Box",
+                                          "enabled": true
+                                        },
+                                        {
+                                          "id": "sharepoint",
+                                          "label": "SharePoint",
+                                          "enabled": false
+                                        }
+                                      ],
+                                      "onAddFile": {
+                                        "$event": "add-file"
+                                      },
+                                      "onModelChange": {
+                                        "$event": "change-model"
+                                      },
+                                      "onSpeechToggle": {
+                                        "$event": "toggle-speech"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
                           }
-                        }
+                        ]
                       }
                     ]
                   }

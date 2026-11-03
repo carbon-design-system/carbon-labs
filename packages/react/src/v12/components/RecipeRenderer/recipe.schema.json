@@ -179,6 +179,14 @@
           "description": "Space inside this node, as a Carbon spacing token. Rendered as a wrapper whose padding is that $spacing token.",
           "$ref": "#/$defs/spacingToken"
         },
+        "paddingBlock": {
+          "description": "Space above and below inside this node, as a Carbon spacing token, over `padding` on the block axis. A header is 8 above and below and 16 at the sides; one token for all four sides cannot say that.",
+          "$ref": "#/$defs/spacingToken"
+        },
+        "paddingInline": {
+          "description": "Space at the start and end inside this node, as a Carbon spacing token, over `padding` on the inline axis.",
+          "$ref": "#/$defs/spacingToken"
+        },
         "radius": {
           "description": "This node's corner radius, as a Carbon border-radius token. It goes on the component's own element, not a wrapper, because the radius must cut the surface the component paints. The design law assigns a rung per role (ibm-design-rules \u203a shape.md): containers 8, modals 16, fields 6, controls full \u2014 a container left square has left the ladder.",
           "$ref": "#/$defs/radiusToken"

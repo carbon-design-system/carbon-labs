@@ -25,6 +25,23 @@ $prefix: 'cds' !default;
   }
 }
 
+// One axis over the all-round padding: declared after it, so it wins.
+.#{$prefix}--recipe-renderer__padding-block {
+  @each $name, $value in $spacing {
+    &--#{$name} {
+      padding-block: $value;
+    }
+  }
+}
+
+.#{$prefix}--recipe-renderer__padding-inline {
+  @each $name, $value in $spacing {
+    &--#{$name} {
+      padding-inline: $value;
+    }
+  }
+}
+
 // The radius ladder is Carbon's own $border-radius map, so a recipe names a
 // rung and the value stays Carbon's. ibm-design-rules › shape.md assigns the
 // rung per role; a container left square has left the ladder.

@@ -1,0 +1,122 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon foundations only. gap is Carbon's own Stack; grid spans are Carbon's
+// own Column. Padding, radius and fill are the three things a recipe asks for
+// that Carbon has no component for, so each is one class per Carbon token,
+// generated from Carbon's own maps: a token @carbon/layout adds is available
+// here without an edit, and no value is written that Carbon did not define.
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/border-radius' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/utilities/convert';
+
+$prefix: 'cds' !default;
+
+.#{$prefix}--recipe-renderer__padding {
+  @each $name, $value in $spacing {
+    &--#{$name} {
+      padding: $value;
+    }
+  }
+}
+
+// The radius ladder is Carbon's own $border-radius map, so a recipe names a
+// rung and the value stays Carbon's. ibm-design-rules › shape.md assigns the
+// rung per role; a container left square has left the ladder.
+.#{$prefix}--recipe-renderer__radius {
+  @each $name, $value in $border-radius {
+    &--#{$name} {
+      border-radius: $value;
+    }
+  }
+}
+
+// A filling node is also a column, so the node below it can fill in turn: the
+// chain is explicit, every link marked, because a rule reaching into `> *`
+// would decide the layout of children a recipe never said anything about.
+.#{$prefix}--recipe-renderer__fill {
+  // A filling node must be a flex container for the node below it to fill, and
+  // a plain wrapper has no direction of its own, so it is given one. A Carbon
+  // Stack already declares its direction, and `cds--stack-horizontal` has the
+  // same specificity as this class — whichever stylesheet came last would win.
+  // So a horizontal Stack is excluded by name rather than left to source order:
+  // without this the rail stretched to the full width of the card.
+  &--viewport:not(.#{$prefix}--stack-horizontal),
+  &--parent:not(.#{$prefix}--stack-horizontal),
+  &--scroll:not(.#{$prefix}--stack-horizontal) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &--viewport.#{$prefix}--stack-horizontal,
+  &--parent.#{$prefix}--stack-horizontal,
+  &--scroll.#{$prefix}--stack-horizontal {
+    display: flex;
+  }
+
+  // block-size, not min-block-size: a minimum lets the shell grow past the
+  // screen, and then every flex child grows with it and the scroller never
+  // engages — a 1200px transcript grew the card to 1592px and scrolled the page
+  // 912px. A height caps the chain, which is what makes the scroller work.
+  // dvh first so mobile browser chrome does not cut the composer off; vh is the
+  // fallback for engines without it.
+  &--viewport {
+    block-size: 100dvh;
+  }
+
+  // min-block-size: 0 so a filling child may also scroll: without it a flex
+  // item's automatic minimum size is its content, and the scroller grows the
+  // page instead of scrolling.
+  &--parent,
+  &--scroll {
+    flex: 1 1 auto;
+    min-block-size: 0;
+  }
+
+  // The scroller is where a shell that fills the screen puts the overflow. It
+  // takes what its siblings leave and scrolls inside that, so a long transcript
+  // never pushes the composer below the fold — measured at 158px below the card
+  // before this existed.
+  &--scroll {
+    overflow-y: auto;
+  }
+}
+
+// The reading measure. A recipe names the role, never the number, so the
+// column a person reads is one decision in one place rather than a width
+// repeated on every part that sits in it — the transcript, the composer, the
+// traces and the notices all take it from here.
+//
+// 624 is what the Carbon2027_v2 ChatShell frames are BUILT at: the reading
+// column and ChatInput are both 624 wide and share an x. The frame's own
+// annotation says the measure is 760, and the two disagree; the built value is
+// the one that can be measured, so it is the one here, and the disagreement is
+// a question for the design file rather than something to average.
+.#{$prefix}--recipe-renderer__measure {
+  // Centred, because a capped column against the left edge of a wide shell is
+  // just a narrow page.
+  &--reading {
+    inline-size: 100%;
+    margin-inline: auto;
+    max-inline-size: convert.to-rem(624px);
+  }
+}
+
+// The rung a node rests on, inside whatever polarity it is in. The step is
+// Carbon's own layer token, so a card is one rung above its canvas in every
+// theme without a value being written here — which is what keeps the dark
+// screen a shell with a card on it, rather than one flat field of $background.
+.#{$prefix}--recipe-renderer__surface {
+  &--base {
+    background-color: $background;
+  }
+
+  &--raised {
+    background-color: $layer;
+  }
+}

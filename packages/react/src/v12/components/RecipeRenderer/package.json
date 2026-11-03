@@ -1,0 +1,62 @@
+{
+  "name": "@carbon-labs/react-recipe-renderer",
+  "version": "0.0.1",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "type": "module",
+  "description": "Carbon Labs - RecipeRenderer for React: layouts, flows and widgets as JSON recipes of Carbon components",
+  "labs": {
+    "status": "draft",
+    "title": "React RecipeRenderer"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "packages/react/src/v12/components/RecipeRenderer"
+  },
+  "types": "./es/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./es/index.js",
+      "require": "./lib/index.js"
+    },
+    "./es/*": "./es/*",
+    "./lib/*": "./lib/*",
+    "./scss/*": "./scss/*",
+    "./recipes/*": "./recipes/*",
+    "./recipe.schema.json": "./recipe.schema.json"
+  },
+  "files": [
+    "es",
+    "lib",
+    "scss",
+    "telemetry.yml",
+    "recipes",
+    "recipe.schema.json"
+  ],
+  "scripts": {
+    "build": "node ../../../../tasks/build.js",
+    "clean": "rimraf es lib scss"
+  },
+  "dependencies": {
+    "@carbon-labs/react-chat-input": "workspace:*",
+    "@carbon-labs/react-chat-thread": "workspace:*",
+    "@carbon-labs/react-chats-panel": "workspace:*",
+    "@carbon-labs/react-code-snippet": "workspace:*",
+    "@carbon-labs/react-history-rail": "workspace:*",
+    "@carbon-labs/react-mega-button": "workspace:*",
+    "@carbon-labs/react-reasoning-trace": "workspace:*",
+    "@carbon-labs/react-session-switcher": "workspace:*",
+    "@carbon-labs/react-system-message": "workspace:*",
+    "classnames": "^2.3.2",
+    "prop-types": "^15.8.1"
+  },
+  "peerDependencies": {
+    "@carbon/react": "^1.95.0",
+    "react": "^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0",
+    "react-dom": "^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0"
+  }
+}

@@ -1,0 +1,80 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as RecipeStories from './Recipes.stories';
+
+<Meta isTemplate />
+
+# Recipes
+
+- **Initiative owner(s):** FILL THIS LINE
+- **Status:** Draft
+- **Target library:** to be decided — a renderer may stay a labs package (see
+  "Where this goes" below)
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+## Overview
+
+> **Problem statement:** a layout, a flow or a small widget built from Carbon
+> components is today either prose in a guideline or code someone copies. A
+> **recipe** is the same composition written as data, so a person can preview it
+> here, a tool can check it, and an agent can assemble a screen from it without
+> anyone writing freeform UI.
+
+<Canvas of={RecipeStories.Playground} />
+
+## What a recipe is
+
+A JSON file in `recipes/<name>.recipe.json`, held to `recipe.schema.json`:
+
+- **Real components only.** Each node names `"<package>:<Export>"` —
+  `@carbon/react` or a labs v12 package — and is rendered from an explicit
+  registry. A recipe adds no component and no styling of its own.
+- **Carbon's grid.** `grid.span` places a node in a Carbon `Column` of its
+  parent `Grid`.
+- **Carbon's spacing.** `gap` and `padding` are spacing token names
+  (`"spacing-05"`), never values. `gap` is rendered by Carbon's `Stack`.
+- **No literals.** No `style`, no `className`, no px, rem, hex or colour
+  function anywhere in props.
+- **Selectable.** `meta` carries `intent`, `useWhen` and `preferInstead`, the
+  same fields a component's metadata uses, so a recipe is chosen by what it is
+  for and stopped by what is better.
+
+A **flow** is a list of steps, each a screen and the events that leave it:
+`{ "$event": "next" }` in a prop raises `next`, and the step's `on.next` names
+where it goes. Only the current step is rendered, and focus moves with it.
+
+## The recipes here
+
+- **settings-page** (layout): one form, the lead, on the grid.
+- **create-topic** (flow): the three steps of Carbon's `CreateFullPage` example
+  (`packages/react/src/examples/CreateFullPage`, carbon#23309), plus the two
+  places it can end.
+- **status-tile** (widget): one resource's health and the way to its detail.
+
+## What a recipe cannot do yet
+
+- Hold state between controls (validation, a field that enables another).
+- Load data, or show a loading or error state that depends on a request.
+- Pass an icon or any other component as a prop value.
+- Align a child to the start of a gap. Carbon's `Stack` stretches every child to
+  its column, and has no align prop: the tags in status-tile show it.
+
+Each is a design question before it is a schema field.
+
+## Checking a recipe
+
+`recipe-lint` (in the Carbon Design Harness) validates the schema, resolves
+every component against the installed `@carbon/react` and labs packages, checks
+spacing tokens against `@carbon/layout`, walks every flow for unreachable steps
+and dead events, and refuses literals.
+
+## Where this goes
+
+Recipes are published with this package, so they reach npm, and later the Carbon
+MCP, from one place. Whether the renderer itself should ever move into
+`@carbon/react`, and whether the schema becomes a Carbon format, are open
+questions for the Carbon maintainers.
+
+## Component API
+
+<ArgTypes of={RecipeStories.Playground} />

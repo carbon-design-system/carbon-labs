@@ -1,0 +1,287 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon foundations only: a labs v12 component consumes @carbon/styles and
+// never mirrors it. Every value here is a Carbon token; the two panel widths
+// are dimensions, written through convert.to-rem as Carbon writes its own.
+@use '@carbon/styles/scss/config' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/motion' as *;
+@use '@carbon/styles/scss/border-radius' as *;
+@use '@carbon/styles/scss/utilities/box-shadow' as *;
+@use '@carbon/styles/scss/utilities/convert';
+@use '@carbon/styles/scss/utilities/custom-property';
+@use '@carbon/styles/scss/utilities/focus-outline' as *;
+@use '@carbon/styles/scss/utilities/z-index' as *;
+
+$block: '#{$prefix}--chats-panel';
+
+.#{$block} {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-block-size: 0;
+}
+
+// ---- the bar the panel opens from -------------------------------------------
+
+// The trigger is the panel's; `bar` is whatever else the shell puts beside it.
+// 8 all round, so the 40 control makes the bar the 56 the frames carry.
+.#{$block}__bar {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  padding: $spacing-03;
+  gap: $spacing-03;
+}
+
+.#{$block}__body {
+  // The overlay is positioned against this, not the viewport: the panel
+  // belongs to the surface it was opened from, and a fixed panel would escape
+  // a card that is inset from the shell.
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  min-block-size: 0;
+}
+
+.#{$block}__content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-block-size: 0;
+  // Without this a long transcript sets the column's width and the panel can
+  // never take its share back.
+  min-inline-size: 0;
+}
+
+// ---- the list ----------------------------------------------------------------
+
+.#{$block}__panel {
+  // It paints nothing. Pushed, the panel is a column of the shell and takes
+  // the shell's own background; only the overlay, which floats over the card,
+  // paints a surface of its own.
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+// The padding and the width live here so the panel itself can animate to a
+// real zero, and so the list keeps its measure while the column opens.
+.#{$block}__panel-inner {
+  box-sizing: border-box;
+  padding: $spacing-05;
+}
+
+.#{$block}--push .#{$block}__panel-inner {
+  inline-size: convert.to-rem(310px);
+}
+
+.#{$block}--overlay .#{$block}__panel-inner {
+  inline-size: convert.to-rem(320px);
+}
+
+.#{$block}__section + .#{$block}__section {
+  margin-block-start: $spacing-06;
+}
+
+.#{$block}__section-title {
+  @include type-style('label-01');
+
+  color: $text-secondary;
+  margin-block-end: $spacing-02;
+
+  padding-inline: $spacing-04;
+}
+
+.#{$block}__list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.#{$block}__chat {
+  @include type-style('body-compact-01');
+
+  display: flex;
+  align-items: center;
+  border-radius: $border-radius-04;
+  block-size: $spacing-08;
+  color: $text-secondary;
+  padding-inline: $spacing-04;
+  text-decoration: none;
+  transition: background-color $duration-fast-02 motion(standard, productive);
+}
+
+// One step on ADR 0020's blue-gray ladder, the same as a menu row's hover.
+.#{$block}__chat:hover {
+  // @carbon-proposal token: chats-panel-shell-chat-hover — Carbon's hover is a neutral, not a step on the selected ladder. TBD
+  background-color: custom-property.get-var(
+    'chats-panel-shell-chat-hover',
+    $layer-hover
+  );
+  color: $text-primary;
+}
+
+// The overlay's rows rest on the panel's own surface, a rung above the page,
+// so they step one further along the same ladder.
+.#{$block}--overlay .#{$block}__chat:hover {
+  // @carbon-proposal token: chats-panel-chat-hover — a row on the panel's surface is one rung further than one on the page. TBD
+  background-color: custom-property.get-var(
+    'chats-panel-chat-hover',
+    $layer-hover
+  );
+}
+
+// Where you are, not where the pointer is: the one row that is current keeps
+// its mark after the pointer has gone. The weight is the mark that does not
+// depend on colour: on the dark shell the fill is 1.24:1 against the page
+// (ACC-5, WCAG 1.4.1), so the fill confirms and the semibold label says it.
+.#{$block}__chat--current {
+  // @carbon-proposal token: chats-panel-shell-chat-current — Carbon has no selected fill; two steps from the page. TBD
+  background-color: custom-property.get-var(
+    'chats-panel-shell-chat-current',
+    $layer-selected
+  );
+  // Hover brightens a label to $text-primary; only the current row is blue
+  // (the human's decision, 2026-11-03).
+  // @carbon-proposal token: chats-panel-shell-chat-current-text — the brand blue solved on the current fill. TBD
+  color: custom-property.get-var(
+    'chats-panel-shell-chat-current-text',
+    $text-primary
+  );
+  font-weight: font-weight('semibold');
+}
+
+.#{$block}--overlay .#{$block}__chat--current {
+  // @carbon-proposal token: chats-panel-chat-current — two steps from the panel's own surface. TBD
+  background-color: custom-property.get-var(
+    'chats-panel-chat-current',
+    $layer-selected
+  );
+  // @carbon-proposal token: chats-panel-chat-current-text — the brand blue solved on the overlay's current fill. TBD
+  color: custom-property.get-var(
+    'chats-panel-chat-current-text',
+    $text-primary
+  );
+}
+
+// ---- push: the panel takes a column -----------------------------------------
+
+.#{$block}--push .#{$block}__panel {
+  // A disclosure on the inline axis. Carbon's catalogue has no side-panel
+  // surface, so this is an inline definition of the same shape — which the
+  // motion API sanctions precisely so a one-off still goes through the token
+  // system: the duration and both easings are token names, not values, and
+  // `surface()` refuses one it cannot resolve. The pair is `disclosure`'s own
+  // choice (moderate-01, productive) because that is what this is; only the
+  // axis differs, because the panel opens a column rather than a row.
+  //
+  // visibility is in the maps so a closed panel leaves the tab order at the
+  // end of the transition rather than the start — it is a discrete property,
+  // so it flips when the movement finishes.
+  @include surface(
+    (
+      kind: reveal,
+      duration: moderate-01,
+      enter: (
+        inline-size: convert.to-rem(310px),
+        opacity: 1,
+        visibility: visible,
+      ),
+      exit: (
+        inline-size: 0,
+        opacity: 0,
+        visibility: hidden,
+      ),
+      enter-easing: (
+        name: entrance,
+        mode: productive,
+      ),
+      exit-easing: (
+        name: exit,
+        mode: productive,
+      ),
+    )
+  );
+
+  flex: 0 0 auto;
+  // A flex item's automatic minimum size is its content, so a panel animated
+  // to inline-size 0 still measured its own padding — 32px of column the push
+  // never gave back. This is what makes closed mean closed.
+  min-inline-size: 0;
+}
+
+// ---- overlay: the panel lies over the content -------------------------------
+
+.#{$block}--overlay .#{$block}__panel {
+  @include box-shadow;
+
+  position: absolute;
+  z-index: z('overlay');
+
+  border: 1px solid $border-subtle;
+  border-radius: $border-radius-08;
+
+  // A floating surface is Carbon's layer, on the neutral — not a tint of ours.
+  // The blue-gray is an interactive colour; the ladder a surface travels is the
+  // neutral's, "hue and chroma unchanged by the ladder" (themes-regions.md).
+  // The pushed panel paints nothing at all: it is a column of the shell.
+  background-color: $layer;
+  inline-size: convert.to-rem(320px);
+  inset-block: 0;
+  inset-inline-start: 0;
+
+  // It slides in from the edge it is anchored to rather than growing a
+  // column, because it is taking no space from anything: moderate-02 and the
+  // expressive easings, which is what Carbon gives a surface this size.
+  @include surface(
+    (
+      kind: reveal,
+      duration: moderate-02,
+      enter: (
+        opacity: 1,
+        transform: translateX(0),
+        visibility: visible,
+      ),
+      exit: (
+        opacity: 0,
+        transform: translateX(-100%),
+        visibility: hidden,
+      ),
+      enter-easing: (
+        name: entrance,
+        mode: expressive,
+      ),
+      exit-easing: (
+        name: exit,
+        mode: expressive,
+      ),
+    )
+  );
+}
+
+// The panel is read over the scrim, so it stacks after it.
+.#{$block}--overlay .#{$block}__panel {
+  z-index: calc(#{z('overlay')} + 1);
+}
+
+.#{$block}__chat:focus-visible {
+  @include focus-outline('outline');
+}
+
+.#{$block}__chat:focus:not(:focus-visible) {
+  @include focus-outline('reset');
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .#{$block}__chat {
+    transition: none;
+  }
+}

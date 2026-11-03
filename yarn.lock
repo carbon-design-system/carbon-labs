@@ -2989,6 +2989,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-chat-panels@workspace:*, @carbon-labs/react-chat-panels@workspace:packages/react/src/v12/components/ChatPanels":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-chat-panels@workspace:packages/react/src/v12/components/ChatPanels"
+  dependencies:
+    "@carbon-labs/react-mega-button": "workspace:*"
+    "@carbon/layout": "npm:^11.61.0"
+    classnames: "npm:^2.3.2"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    "@carbon/react": ^1.95.0
+    react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+    react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-chat-thread@workspace:*, @carbon-labs/react-chat-thread@workspace:packages/react/src/v12/components/ChatThread":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-chat-thread@workspace:packages/react/src/v12/components/ChatThread"
@@ -3209,6 +3224,7 @@ __metadata:
   resolution: "@carbon-labs/react-recipe-renderer@workspace:packages/react/src/v12/components/RecipeRenderer"
   dependencies:
     "@carbon-labs/react-chat-input": "workspace:*"
+    "@carbon-labs/react-chat-panels": "workspace:*"
     "@carbon-labs/react-chat-thread": "workspace:*"
     "@carbon-labs/react-chats-panel": "workspace:*"
     "@carbon-labs/react-code-snippet": "workspace:*"

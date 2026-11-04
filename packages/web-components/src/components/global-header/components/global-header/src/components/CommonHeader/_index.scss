@@ -13,6 +13,8 @@
 
 .#{automation.$namespace-prefix}__header {
   z-index: 8050;
+  /* Override the CDS tokens that the Shadow DOM stylesheet reads internally */
+  --cds-background: var(--clabs-global-header-background-color);
 }
 
 .#{automation.$namespace-prefix}__header-name {

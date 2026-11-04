@@ -107,6 +107,7 @@ cds-custom-header-menu::part(trigger) {
   flex-wrap: nowrap !important;
   align-items: center !important;
   justify-content: space-between !important;
+  background-color: var(--clabs-global-header-background-color);
   max-inline-size: 224px;
   text-overflow: ellipsis;
   white-space: nowrap;

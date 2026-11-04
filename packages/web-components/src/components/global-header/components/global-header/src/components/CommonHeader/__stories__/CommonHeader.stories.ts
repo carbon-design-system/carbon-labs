@@ -551,3 +551,37 @@ export const Logo: Story = {
     </div>
   `,
 };
+
+const setCustomTheme = () => {
+  const element = document.querySelector('clabs-global-header-apaas');
+  if (element instanceof HTMLElement) {
+    element.style.setProperty(
+      '--clabs-global-header-background-color',
+      'darkblue'
+    );
+  }
+};
+
+const setDefaultTheme = () => {
+  const element = document.querySelector('clabs-global-header-apaas');
+  if (element instanceof HTMLElement) {
+    element.style.setProperty(
+      '--clabs-global-header-background-color',
+      '#161616'
+    );
+  }
+};
+
+export const Theme: Story = {
+  render: () => html`
+    <div role="main">
+      <clabs-global-header-apaas .headerProps="${headerProps}">
+      </clabs-global-header-apaas>
+      <br />
+      <br />
+      <br />
+      <button @click="${setCustomTheme}">Set custom theme</button>
+      <button @click="${setDefaultTheme}">Restore G100 theme</button>
+    </div>
+  `,
+};

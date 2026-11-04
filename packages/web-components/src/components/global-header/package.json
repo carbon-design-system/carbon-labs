@@ -46,7 +46,7 @@
     "@web/test-runner": "^0.20.2",
     "codeceptjs": "^3.7.9",
     "selenium-standalone": "^10.0.2",
-    "vite": "^6.4.2",
+    "vite": "^7.3.7",
     "webdriverio": "^9.23.2"
   }
 }

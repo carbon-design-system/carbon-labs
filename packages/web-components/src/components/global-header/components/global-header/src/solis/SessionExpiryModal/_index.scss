@@ -26,3 +26,7 @@
 }
 
 @include notification.inline-notification;
+
+.cds--inline-notification__title {
+  margin-block: 0;
+}

@@ -11,6 +11,8 @@
 import { LitElement, css, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities';
+import '@carbon/web-components/es-custom/components/ui-shell/header.js';
+import '@carbon/web-components/es-custom/components/ui-shell/header-name.js';
 import { AUTOMATION_HEADER_BASE_CLASS } from '../../constant';
 import styles from './_index.scss?inline' with { type: 'css' };
 

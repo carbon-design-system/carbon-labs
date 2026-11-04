@@ -12,7 +12,7 @@ import { html, nothing } from 'lit';
 import type { TrialTooltipProps } from './TrialContent.types';
 import { AUTOMATION_HEADER_BASE_CLASS } from '../../constant';
 import { renderCarbonIcon, trackEvent } from '../../globals/utils';
-import '@carbon/web-components/es-custom/components/button/index.js';
+import '@carbon/web-components/es-custom/components/button/button.js';
 import { TrialLinkType } from '../../types/Header.types';
 
 // emit an event (does nothing if analytics has not been configured)

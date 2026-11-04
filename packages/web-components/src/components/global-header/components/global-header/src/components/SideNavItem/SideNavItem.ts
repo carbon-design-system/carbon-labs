@@ -16,6 +16,11 @@ import cx from 'classnames';
 import { AUTOMATION_NAMESPACE_PREFIX } from '../../constant';
 import { customElement, property, state } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities';
+import '@carbon/web-components/es-custom/components/ui-shell/side-nav-menu.js';
+import '@carbon/web-components/es-custom/components/ui-shell/side-nav-menu-item.js';
+import '@carbon/web-components/es-custom/components/ui-shell/side-nav-link.js';
+import '@carbon/web-components/es-custom/components/popover/popover.js';
+import '@carbon/web-components/es-custom/components/popover/popover-content.js';
 import { renderCarbonIcon, trackEvent } from '../../globals/utils';
 import styles from './SideNavItem.scss?inline';
 

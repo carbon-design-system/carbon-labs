@@ -12,6 +12,9 @@ import { LitElement, css, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { settings } from '@carbon-labs/utilities';
+import '@carbon/web-components/es-custom/components/ui-shell/header-global-action.js';
+import '@carbon/web-components/es-custom/components/ui-shell/header-menu.js';
+import '@carbon/web-components/es-custom/components/ui-shell/header-menu-item.js';
 import {
   AUTOMATION_HEADER_BASE_CLASS,
   AUTOMATION_NAMESPACE_PREFIX,

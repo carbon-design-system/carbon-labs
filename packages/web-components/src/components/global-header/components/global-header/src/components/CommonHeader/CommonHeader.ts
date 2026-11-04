@@ -11,8 +11,12 @@
 import { LitElement, css, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities';
-import '@carbon/web-components/es-custom/components/ui-shell/index.js';
-import '@carbon/web-components/es-custom/components/popover/index.js';
+import '@carbon/web-components/es-custom/components/ui-shell/header.js';
+import '@carbon/web-components/es-custom/components/ui-shell/header-menu-button.js';
+import '@carbon/web-components/es-custom/components/ui-shell/header-name.js';
+import '@carbon/web-components/es-custom/components/ui-shell/side-nav-items.js';
+import '@carbon/web-components/es-custom/components/ui-shell/side-nav-divider.js';
+import '@carbon/web-components/es-custom/components/ui-shell/side-nav.js';
 import type { HeaderProps } from '../../types/Header.types';
 import {
   AUTOMATION_NAMESPACE_PREFIX,

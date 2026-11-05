@@ -11,7 +11,8 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities';
-import '@carbon/web-components/es-custom/components/popover/index.js';
+import '@carbon/web-components/es-custom/components/popover/popover.js';
+import '@carbon/web-components/es-custom/components/popover/popover-content.js';
 import { TrialContent } from '../TrialContent/TrialContent';
 import { unsafeCSS } from 'lit';
 import { animate, fadeIn, fadeOut } from '@lit-labs/motion';

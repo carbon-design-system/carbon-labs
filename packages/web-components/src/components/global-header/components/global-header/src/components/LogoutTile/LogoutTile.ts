@@ -10,8 +10,8 @@
 
 import { LitElement, css, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import '@carbon/web-components/es-custom/components/tile/index.js';
-import '@carbon/web-components/es-custom/components/button/index.js';
+import '@carbon/web-components/es-custom/components/tile/tile.js';
+import '@carbon/web-components/es-custom/components/button/button.js';
 import { settings } from '@carbon-labs/utilities';
 import { renderCarbonIcon } from '../../globals/utils';
 

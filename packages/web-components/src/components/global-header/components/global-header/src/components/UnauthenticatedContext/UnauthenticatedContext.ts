@@ -13,7 +13,8 @@ import { customElement, property } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities';
 import type { NoAuthHeaderLinks } from '../../types/Header.types';
 import { renderCarbonIcon } from '../../globals/utils';
-import '@carbon/web-components/es-custom/components/ui-shell/index.js';
+import '@carbon/web-components/es-custom/components/ui-shell/header-nav.js';
+import '@carbon/web-components/es-custom/components/ui-shell/header-nav-item.js';
 
 /* c8 ignore next */
 import cx from 'classnames';

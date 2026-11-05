@@ -11,7 +11,7 @@
 import { LitElement, css, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities';
-import '@carbon/web-components/es-custom/components/search/index.js';
+import '@carbon/web-components/es-custom/components/search/search.js';
 
 import styles from './_index.scss?inline' with { type: 'css' };
 import type { SearchConfigs } from '../../types/Header.types';

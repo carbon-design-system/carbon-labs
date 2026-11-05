@@ -419,20 +419,22 @@ describe('HeaderContext Component', () => {
     });
   });
 
-  describe('webMethods Hybrid Integration divider', async () => {
-    const el = await fixture(
-      html`<clabs-global-header-context
-        .props="${{
-          ...headerProps,
-          isHybridIpaas: true,
-        }}"></clabs-global-header-context>`
-    );
-    expect(el).not.to.be.null;
+  describe('webMethods Hybrid Integration divider', () => {
+    it('renders the divider when isHybridIpaas is true', async () => {
+      const el = await fixture(
+        html`<clabs-global-header-context
+          .props="${{
+            ...headerProps,
+            isHybridIpaas: true,
+          }}"></clabs-global-header-context>`
+      );
+      expect(el).not.to.be.null;
 
-    const divider = el?.shadowRoot?.querySelector(
-      `.${AUTOMATION_HEADER_BASE_CLASS}__divider`
-    );
-    expect(divider).to.exist;
+      const divider = el?.shadowRoot?.querySelector(
+        `.${AUTOMATION_HEADER_BASE_CLASS}__divider`
+      );
+      expect(divider).to.exist;
+    });
   });
 
   describe('Search Component', () => {

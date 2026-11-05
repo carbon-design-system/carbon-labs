@@ -24,6 +24,7 @@ import type { AuthContextProps } from './AuthContext.types';
 import '../UserProfileImage/UserProfileImage';
 import { customElement, property } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities';
+import '@carbon/web-components/es-custom/components/button/button.js';
 
 import styles from './_index.scss?inline';
 

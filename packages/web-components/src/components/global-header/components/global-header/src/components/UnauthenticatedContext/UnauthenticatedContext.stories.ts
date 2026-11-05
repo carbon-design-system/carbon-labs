@@ -12,7 +12,9 @@ import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import { UnauthenticatedContext } from './UnauthenticatedContext';
 
 import { html } from 'lit';
-import '@carbon/web-components/es-custom/components/ui-shell/index.js';
+import '@carbon/web-components/es-custom/components/ui-shell/header.js';
+import '@carbon/web-components/es-custom/components/ui-shell/header-name.js';
+import '@carbon/web-components/es-custom/components/ui-shell/header-nav.js';
 
 const defaultNoAuthHeaderLinks = [
   {

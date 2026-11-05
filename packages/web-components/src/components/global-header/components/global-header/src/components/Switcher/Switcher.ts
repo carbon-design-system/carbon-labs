@@ -11,6 +11,8 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities';
+import '@carbon/web-components/es-custom/components/ui-shell/header-menu.js';
+import '@carbon/web-components/es-custom/components/ui-shell/header-menu-item.js';
 
 /* c8 ignore next */
 import cx from 'classnames';

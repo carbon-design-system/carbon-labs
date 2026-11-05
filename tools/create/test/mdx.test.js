@@ -215,6 +215,28 @@ describe('injectMdxMetadata', () => {
     expect(count).toBe(1);
   });
 
+  it('nests a v12 story under V12 and tags a .stories.tsx file', async () => {
+    const v12Dir = join(tmpDir, 'V12Button');
+    await mkdir(join(v12Dir, '__stories__'), { recursive: true });
+    await writeFile(join(v12Dir, '__stories__', 'V12Button.mdx'), SAMPLE_MDX);
+    await writeFile(
+      join(v12Dir, '__stories__', 'V12Button.stories.tsx'),
+      SAMPLE_STORIES.replace("'Components/ExampleButton'", "'V12/V12Button'")
+    );
+    await injectMdxMetadata({
+      componentDir: v12Dir,
+      componentName: 'V12Button',
+      owners: [],
+      storybookGroup: 'V12/Patterns',
+    });
+    const content = await readFile(
+      join(v12Dir, '__stories__', 'V12Button.stories.tsx'),
+      'utf8'
+    );
+    expect(content).toContain("title: 'V12/Patterns/V12Button'");
+    expect(content).toContain("tags: ['squad', 'incubating']");
+  });
+
   it('handles missing stories file gracefully (no throw)', async () => {
     const emptyDir = join(tmpDir, 'Empty');
     await mkdir(join(emptyDir, '__stories__'), { recursive: true });

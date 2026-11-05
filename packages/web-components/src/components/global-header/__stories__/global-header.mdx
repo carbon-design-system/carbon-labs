@@ -30,6 +30,12 @@ Here's a quick example to get you started.
 import '@carbon-labs/wc-global-header';
 ```
 
+### CSS
+
+```css
+@import '@carbon-labs/wc-global-header/styles.css';
+```
+
 ### HTML
 
 For the base global header component `clabs-global-header-apaas` you first define your header properties in an object, for example:
@@ -68,4 +74,4 @@ base component. For example:
 ```
 
 As above the wrapper component supports some properties like `productName` so that a basic form of the header can be rendered until the
-backend options call returns.
+backend options call returns. Also note that the wrapper component loads the CSS itself, so it does not need to be imported separately.

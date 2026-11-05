@@ -22,12 +22,12 @@ storybook-static/
 
 ### URL Structure (GitHub Pages)
 
-- **Standard (Public):**
+- **Standard:**
   - Root: `https://labs.carbondesignsystem.com/`
   - Web Components: `https://labs.carbondesignsystem.com/web-components/`
   - React: `https://labs.carbondesignsystem.com/react/`
 
-- **V12 (Internal):**
+- **V12:**
   - Root: `https://labs.carbondesignsystem.com/v12/`
   - Web Components: `https://labs.carbondesignsystem.com/v12/web-components/`
   - React: `https://labs.carbondesignsystem.com/v12/react/`
@@ -50,7 +50,7 @@ storybook-static/
 
 ### Running Storybooks
 
-**Standard (Public):**
+**Standard:**
 
 ```bash
 # Root
@@ -63,7 +63,7 @@ yarn workspace @carbon-labs/web-components storybook
 yarn workspace @carbon-labs/react storybook
 ```
 
-**V12 (Internal):**
+**V12:**
 
 ```bash
 # Root
@@ -162,6 +162,27 @@ control which stories are loaded:
 
 - Loads stories from `src/v12/` only
 - Excludes standard components from `src/components/`
+
+### The `enable-v12-release` Feature Flag
+
+The v12 Storybooks render with Carbon's `enable-v12-release` feature flag on,
+the same way Carbon's own v12 Storybook does. When `STORYBOOK_INCLUDE_V12=true`:
+
+- **Sass:** every `.scss` file is compiled with
+  `@use '@carbon/styles/scss/feature-flags' with ($feature-flags: (...))`
+  prepended, which turns on `enable-v12-release` (and with it every
+  `enable-v12-*` flag). The map also repeats the flags `@carbon/styles` enables
+  by default, because configuring `$feature-flags` replaces that default map.
+  This applies to the root, React and Web Components Storybooks.
+- **React:** every story is wrapped in `<FeatureFlags enableV12Release>` from
+  `@carbon/react`, so Carbon components that read the flag at runtime render
+  their v12 behavior.
+- **Web Components:** only the Sass flag applies for now. The `<feature-flags>`
+  element in the installed `@carbon/web-components` does not observe
+  `enable-v12-release` yet.
+
+Carbon Labs does not add feature flags of its own. The standard Storybooks are
+unchanged and keep Carbon's defaults.
 
 ### Root Storybook Refs
 

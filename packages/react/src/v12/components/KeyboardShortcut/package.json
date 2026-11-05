@@ -1,0 +1,49 @@
+{
+  "name": "@carbon-labs/react-keyboard-shortcut",
+  "version": "0.0.1",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "type": "module",
+  "description": "Carbon Labs - KeyboardShortcut for React",
+  "labs": {
+    "status": "draft",
+    "title": "React KeyboardShortcut"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "packages/react/src/v12/components/KeyboardShortcut"
+  },
+  "types": "./es/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./es/index.js",
+      "require": "./lib/index.js"
+    },
+    "./es/*": "./es/*",
+    "./lib/*": "./lib/*",
+    "./scss/*": "./scss/*"
+  },
+  "files": [
+    "es",
+    "lib",
+    "scss",
+    "telemetry.yml"
+  ],
+  "scripts": {
+    "build": "node ../../../../tasks/build.js",
+    "clean": "rimraf es lib scss"
+  },
+  "dependencies": {
+    "classnames": "^2.3.2",
+    "prop-types": "^15.8.1"
+  },
+  "peerDependencies": {
+    "@carbon/react": "^1.95.0",
+    "react": "^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0",
+    "react-dom": "^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0"
+  }
+}

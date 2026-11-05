@@ -33,6 +33,12 @@ $prefix: 'cds' !default;
   }
 
   .#{$prefix}--header-overflow-panel
+    .#{$prefix}--header-overflow-panel-secondary-container
+    .#{$prefix}--side-nav__items {
+    padding: 0;
+  }
+
+  .#{$prefix}--header-overflow-panel
     .#{$prefix}--side-nav__menu-secondary-wrapper-expanded {
     z-index: 1;
     background-color: $background;

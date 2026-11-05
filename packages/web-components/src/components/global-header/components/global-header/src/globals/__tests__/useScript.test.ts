@@ -14,7 +14,7 @@ import type { HeaderProps } from '../../types/Header.types';
 const propsWithAssisitMeConfig: HeaderProps = {
   brand: {
     company: 'IBM',
-    product: 'webMethods Hybrid Integration',
+    product: 'Integration',
   },
   capabilityName: {
     label: 'App Connect',
@@ -169,7 +169,7 @@ const propsWithAssisitMeConfig: HeaderProps = {
 const propsNoAssisitMe: HeaderProps = {
   brand: {
     company: 'IBM',
-    product: 'webMethods Hybrid Integration',
+    product: 'Integration',
   },
   capabilityName: {
     label: 'App Connect',

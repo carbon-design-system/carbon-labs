@@ -34,8 +34,7 @@ import mockHeaderOptionsForRebrand from './headeroptionsforrebrand.json';
 initialize();
 
 const meta: Meta = {
-  title:
-    'Components/Global Header/Subcomponents/webMethods Hybrid Integration Header',
+  title: 'Components/Global Header/Subcomponents/IBM Integration Header',
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   render: () => new HybridIpaasHeader(),

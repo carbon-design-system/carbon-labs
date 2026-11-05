@@ -37,7 +37,7 @@ type Story = StoryObj<typeof UnauthenticatedContext>;
 export const Basic: Story = {
   render: () => html`
     <div role="main">
-      <cds-custom-header aria-label="IBM webMethods Hybrid Integration">
+      <cds-custom-header aria-label="IBM Integration">
         <cds-custom-header-name>IBM</cds-custom-header-name>
         <cds-custom-header-nav menu-bar-label="IBM [Platform]">
         </cds-custom-header-nav>

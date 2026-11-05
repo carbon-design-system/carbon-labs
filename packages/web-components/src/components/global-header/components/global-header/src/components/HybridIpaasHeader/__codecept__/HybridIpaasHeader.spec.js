@@ -13,17 +13,17 @@
 
 Feature('HybridIpaasHeader');
 const localhost =
-  'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--basic&viewMode=story';
+  'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-ibm-integration-header--basic&viewMode=story';
 const localhostWithChat =
-  'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--with-ai-chat&viewMode=story';
+  'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-ibm-integration-header--with-ai-chat&viewMode=story';
 const localhostWithSearch =
-  'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--search-callback&viewMode=story';
+  'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-ibm-integration-header--search-callback&viewMode=story';
 const localhostWithTrial =
-  'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--basic-with-trial&viewMode=story';
+  'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-ibm-integration-header--basic-with-trial&viewMode=story';
 const localhostWithCustomFooter =
-  'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--custom-footer&viewMode=story';
+  'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-ibm-integration-header--custom-footer&viewMode=story';
 const localhostWithSolis =
-  'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--with-solis&viewMode=story';
+  'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-ibm-integration-header--with-solis&viewMode=story';
 
 Scenario('It checks the header content', async ({ I }) => {
   I.amOnPage(localhost);

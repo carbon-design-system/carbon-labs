@@ -419,7 +419,7 @@ describe('HeaderContext Component', () => {
     });
   });
 
-  describe('webMethods Hybrid Integration divider', async () => {
+  describe('IBM Integration divider', async () => {
     const el = await fixture(
       html`<clabs-global-header-context
         .props="${{

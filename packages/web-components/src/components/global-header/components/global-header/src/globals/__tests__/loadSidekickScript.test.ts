@@ -15,7 +15,7 @@ import { solisDeploymentEnvironment } from '../../types/Header.types';
 const propsWithSidekickConfig: HeaderProps = {
   brand: {
     company: 'IBM',
-    product: 'webMethods Hybrid Integration',
+    product: 'Integration',
   },
   capabilityName: {
     label: 'App Connect',
@@ -186,7 +186,7 @@ const propsWithSidekickConfig: HeaderProps = {
 const propsNoSidekickConfig: HeaderProps = {
   brand: {
     company: 'IBM',
-    product: 'webMethods Hybrid Integration',
+    product: 'Integration',
   },
   capabilityName: {
     label: 'App Connect',

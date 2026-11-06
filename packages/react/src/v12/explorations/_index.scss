@@ -72,3 +72,7 @@ $explore-elevated: 0 8px 24px 2px $shadow;
     background-color: $button-primary;
   }
 }
+
+/// composer-corner — radius. 20px (1.25rem)
+/// Law: ibm-design-rules/reference/shape.md#the-radius-ladder. Would become: new.
+$explore-composer-corner: convert.to-rem(20px);

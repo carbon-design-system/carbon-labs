@@ -1,0 +1,43 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Story-only layout, on Carbon's tokens.
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+
+// The foot of a conversation: the page, with room above for the menus and
+// the command list to open into.
+.chat-input-story__page {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: $spacing-07;
+  background-color: $background;
+  gap: $spacing-05;
+  min-block-size: 32rem;
+}
+
+.chat-input-story__page > .cds--chat-input {
+  inline-size: 100%;
+  margin-inline: auto;
+  max-inline-size: 42.5rem;
+}
+
+.chat-input-story__sent {
+  @include type-style('body-01');
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 0;
+  margin: 0;
+  color: $text-primary;
+  gap: $spacing-03;
+  list-style: none;
+}

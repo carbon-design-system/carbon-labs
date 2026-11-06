@@ -2974,6 +2974,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-chat-input@workspace:packages/react/src/v12/components/ChatInput":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-chat-input@workspace:packages/react/src/v12/components/ChatInput"
+  dependencies:
+    "@carbon-labs/react-mega-button": "workspace:*"
+    classnames: "npm:^2.3.2"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    "@carbon/icons-react": ^11.0.0
+    "@carbon/react": ^1.95.0
+    react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+    react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-checklist@workspace:packages/react/src/components/Checklist":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-checklist@workspace:packages/react/src/components/Checklist"

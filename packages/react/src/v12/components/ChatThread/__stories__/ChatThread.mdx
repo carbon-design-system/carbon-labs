@@ -1,0 +1,96 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ChatThreadStories from './ChatThread.stories';
+
+<Meta isTemplate />
+
+# ChatThread
+
+- **Initiative owner(s):** @ryanmellody
+- **Status:** Draft
+- **Target library:** @carbon/react
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Component API](#component-api)
+- [Getting started](#getting-started)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+> **Problem statement:** a chat transcript is not a list of paragraphs. A turn
+> has to say who spoke without an avatar or a label, hold whatever the agent
+> produced — a reasoning trace, code, a plan — and offer its controls without
+> reserving a row for them on every turn. Carbon has no chat components, and the
+> nearest neighbours are a plain `<ol>` and `Button`.
+
+ChatThread is the transcript; ChatMessage is one turn in it. The user sits flush
+right in a bubble at three quarters of the measure; the assistant sits flush
+left at full measure, with no container, because a reply is the page's content
+rather than an aside.
+
+### What a turn does not carry
+
+A turn has no padding and no footer at rest. The thread sets the gap —
+`$spacing-08` balanced, `$spacing-07` compact — so a turn used on its own has no
+orphan margin, and the actions live in that gap rather than in a row of their
+own. Showing them moves nothing.
+
+### Actions, and the time
+
+`actions` takes `ChatMessageAction` children: a small ghost button, icon-only
+with a tooltip. They appear on hover and on keyboard focus, and they stay in the
+tab order while unseen, so focus can reveal them.
+
+`timestamp` sits beside them. Leave it out when the turn carries a trace or a
+plan, which already says how long the work took.
+
+### Proposal — icon-only feedback
+
+Thumbs up, thumbs down and regenerate are drawn icon-only. Carbon's icon-only
+allow-list does not include feedback or regenerate, so this is a deliberate
+proposal rather than a quiet divergence: these three are near-universal in chat,
+and three labels do not fit under a turn. Each keeps a tooltip and an accessible
+name.
+
+<Canvas of={ChatThreadStories.Default} />
+
+## Component API
+
+<ArgTypes of={ChatThreadStories.Default} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-chat-thread
+```
+
+### JS (via import)
+
+```javascript
+import { ChatThread } from '@carbon-labs/react-chat-thread/es/index';
+
+function App() {
+  return <ChatThread />;
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-chat-thread/scss/chat-thread';
+```

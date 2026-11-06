@@ -68,6 +68,21 @@ describe('ChatThread', () => {
       'cds--chat-thread--bottom'
     );
   });
+
+  // A divider scrolls with the turns it sits between, so it is in the list.
+  it('gives anything that is not a turn a list item of its own', () => {
+    render(
+      <ChatThread label="Conversation">
+        <div id="divider">Today</div>
+        <ChatMessage from="user">Hello</ChatMessage>
+      </ChatThread>
+    );
+    const list = screen.getByRole('list', { name: 'Conversation' });
+    expect(within(list).getAllByRole('listitem')).toHaveLength(2);
+    expect(document.getElementById('divider')!.parentElement?.tagName).toBe(
+      'LI'
+    );
+  });
 });
 
 describe('ChatMessage', () => {

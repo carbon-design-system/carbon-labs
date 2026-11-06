@@ -30,20 +30,19 @@ import * as HistoryRailStories from './HistoryRail.stories';
 > links costs a line each and buries the shape of the history. Carbon has no
 > scrubber; the nearest neighbours are `Slider` and a list.
 
-HistoryRail is a scrubber: a column of marks down the edge of the panel, one
-per iteration, with the live one drawn as a square. Moving a pointer down the
-track or arrowing through it lights the nearest iteration and opens a card
-saying what changed there.
+HistoryRail is a scrubber: a column of marks down the edge of the panel, one per
+iteration, with the live one drawn as a square. Moving a pointer down the track
+or arrowing through it lights the nearest iteration and opens a card saying what
+changed there.
 
 ### One control, not one per mark
 
-The whole track takes the pointer and resolves to the nearest iteration. That
-is what lets the marks sit 14px apart and stay hittable: there is a single
-24 x 196 target rather than fourteen small ones, so WCAG 2.2 SC 2.5.8 Target
-Size is met outright, on a mouse and under a finger alike. A mark is
-decoration — `aria-hidden`, no focus, no pointer region of its own — and it
-grows in place when it lights, so nothing ever moves under a pointer in
-flight.
+The whole track takes the pointer and resolves to the nearest iteration. That is
+what lets the marks sit 14px apart and stay hittable: there is a single 24 x 196
+target rather than fourteen small ones, so WCAG 2.2 SC 2.5.8 Target Size is met
+outright, on a mouse and under a finger alike. A mark is decoration —
+`aria-hidden`, no focus, no pointer region of its own — and it grows in place
+when it lights, so nothing ever moves under a pointer in flight.
 
 ### What it says
 

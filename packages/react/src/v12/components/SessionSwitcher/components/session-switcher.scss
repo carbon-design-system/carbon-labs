@@ -1,0 +1,105 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon foundations only: a labs v12 component consumes @carbon/styles and
+// never mirrors it. The trigger is a MegaButton and the menu is Carbon's own,
+// so this file carries nothing but the box the two are positioned in.
+@use '@carbon/styles/scss/config' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/utilities/custom-property';
+@use '@carbon/styles/scss/utilities/focus-outline' as *;
+
+.#{$prefix}--session-switcher {
+  position: relative;
+  display: inline-flex;
+}
+
+// The anchor is a zero-size reference, not a visible part. Carbon's Menu is
+// position: fixed, so the component measures the offset between this box and
+// the trigger rather than assuming the two share a coordinate space — a
+// transformed or contained ancestor would otherwise move the menu.
+.#{$prefix}--session-switcher__anchor {
+  position: absolute;
+  block-size: 0;
+  inline-size: 0;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+}
+
+// ---- the menu --------------------------------------------------------------
+//
+// The same treatment ChatInput gives its own menus, because they are the same
+// menu in the same shell and a session row that reads differently from a model
+// row is just an inconsistency.
+
+// Carbon's Menu focuses its first row the moment it opens — that is the
+// menu-button pattern, so the arrow keys work straight away — and Carbon rings
+// a menu item on :focus rather than :focus-visible. Opened with a pointer the
+// ring therefore lands on the first row and stays, which reads as a choice
+// nobody made. It shows for a keyboard arrival only (the human's decision 8).
+.#{$prefix}--session-switcher__menu.#{$prefix}--menu--open:focus:not(
+    :focus-visible
+  ),
+.#{$prefix}--session-switcher__menu
+  .#{$prefix}--menu-item:focus:not(:focus-visible) {
+  @include focus-outline('reset');
+}
+
+// Carbon hovers a menu row on $layer-hover, a plain neutral. On the blue-gray
+// ladder hover is one step from the surface and selected is two, so the two
+// read as the same ladder rather than a grey and then a tint. It comes before
+// the selected rule, so the row the person is in keeps its tint under the
+// pointer, as the composer's menus do. A row's label stays $text-primary on
+// hover; only the selected row is blue. The trigger is a button, not a row, so
+// it keeps MegaButton's blue reveal: on the chrome its hover fill is 1.10:1
+// from the bar, and the label is the cue that carries it (the human's
+// decision, 2026-11-03).
+.#{$prefix}--session-switcher__menu .#{$prefix}--menu-item:hover {
+  // @carbon-proposal token: session-switcher-menu-hover — Carbon's menu hover is a neutral, not a step on the selected ladder. TBD
+  background-color: custom-property.get-var(
+    'session-switcher-menu-hover',
+    $layer-hover
+  );
+}
+
+// Carbon marks selection with a checkmark and nothing else, so the row the
+// person is already in is told apart by one small glyph. The tint is ADR
+// 0020's blue-gray at the selected step, with the brand label solved on it.
+.#{$prefix}--session-switcher__menu
+  .#{$prefix}--menu-item[aria-checked='true'] {
+  // @carbon-proposal token: session-switcher-menu-selected — Carbon's Menu has no selected fill; the checkmark is the whole mark. TBD
+  background-color: custom-property.get-var(
+    'session-switcher-menu-selected',
+    $layer-selected
+  );
+  // @carbon-proposal token: session-switcher-menu-selected-text — the brand label solved on the selected tint. TBD
+  color: custom-property.get-var(
+    'session-switcher-menu-selected-text',
+    $text-primary
+  );
+}
+
+// The checkmark is a fixed fill in Carbon, so on the selected tint it stops
+// agreeing with the label beside it.
+.#{$prefix}--session-switcher__menu
+  .#{$prefix}--menu-item[aria-checked='true']
+  .#{$prefix}--menu-item__selection-icon
+  svg {
+  fill: currentColor;
+}
+
+// The press is the ladder's active rung, one step past selected, as the
+// composer's menus press (the human's decision, 2026-11-03). Last, so pressing
+// the selected row still shows the press.
+.#{$prefix}--session-switcher__menu .#{$prefix}--menu-item:active {
+  // @carbon-proposal token: session-switcher-menu-active — Carbon's menu press is a neutral, not a step on the selected ladder. replaces: layer-active-01. TBD
+  background-color: custom-property.get-var(
+    'session-switcher-menu-active',
+    $layer-active
+  );
+}

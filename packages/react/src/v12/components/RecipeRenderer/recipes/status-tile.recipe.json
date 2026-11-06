@@ -1,0 +1,77 @@
+{
+  "$schema": "../recipe.schema.json",
+  "name": "status-tile",
+  "kind": "widget",
+  "status": "draft",
+  "description": "One resource’s health at a glance, and the one way in to the detail.",
+  "meta": {
+    "intent": "Tells a person whether one resource is healthy and how full it is, with a way to the detail.",
+    "useWhen": [
+      "a dashboard shows several resources side by side",
+      "health is a single state, not a trend"
+    ],
+    "preferInstead": [
+      {
+        "when": "the person needs the trend over time",
+        "use": "a chart from @carbon/charts-react",
+        "because": "a progress bar shows now, not how it got here"
+      }
+    ]
+  },
+  "tree": {
+    "component": "@carbon/react:Tile",
+    "gap": "spacing-04",
+    "children": [
+      {
+        "component": "@carbon/react:Heading",
+        "props": {
+          "children": "Cluster east-1"
+        }
+      },
+      {
+        "component": "@carbon/react:Stack",
+        "props": {
+          "orientation": "horizontal"
+        },
+        "gap": "spacing-03",
+        "children": [
+          {
+            "component": "@carbon/react:Tag",
+            "props": {
+              "type": "green",
+              "size": "sm",
+              "children": "Healthy"
+            }
+          },
+          {
+            "component": "@carbon/react:Tag",
+            "props": {
+              "type": "gray",
+              "size": "sm",
+              "children": "us-east-1"
+            }
+          }
+        ]
+      },
+      {
+        "component": "@carbon/react:ProgressBar",
+        "props": {
+          "label": "Storage used",
+          "value": 62,
+          "max": 100,
+          "helperText": "62 of 100 GB"
+        }
+      },
+      {
+        "component": "@carbon/react:Link",
+        "props": {
+          "href": "#",
+          "children": "View cluster",
+          "onClick": {
+            "$event": "open"
+          }
+        }
+      }
+    ]
+  }
+}

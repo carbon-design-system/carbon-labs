@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { HistoryRail } from '../components/HistoryRail';
 import { HistoryMarkerCard } from '../components/HistoryMarkerCard';
@@ -115,6 +115,70 @@ describe('HistoryRail', () => {
     expect(onChange).toHaveBeenLastCalledWith(items[0], 0);
     await userEvent.keyboard('{End}');
     expect(onChange).toHaveBeenLastCalledWith(items[3], 3);
+  });
+
+  // A mark with a target is a place in the conversation: its divider.
+  describe('linked to the conversation', () => {
+    const linked = items.map((item) => ({ ...item, target: `div-${item.id}` }));
+
+    function withDividers(props = {}, tops: Record<string, number> = {}) {
+      const result = render(
+        <div>
+          {linked.map((item) => (
+            <div key={item.id} id={item.target} />
+          ))}
+          <HistoryRail
+            label="History of this conversation"
+            items={linked}
+            {...props}
+          />
+        </div>
+      );
+      for (const item of linked) {
+        const el = document.getElementById(item.target)!;
+        el.scrollIntoView = jest.fn();
+        el.getBoundingClientRect = () =>
+          ({ top: tops[item.id] ?? 10000 }) as DOMRect;
+      }
+      return result;
+    }
+
+    // Controlled, so the rail stays on a and the arrow chooses b.
+    it('scrolls the chosen mark’s divider to the top', async () => {
+      withDividers({ value: 'a', onChange: () => {} });
+      screen.getByRole('slider').focus();
+      await userEvent.keyboard('{ArrowDown}');
+      expect(
+        document.getElementById('div-b')!.scrollIntoView
+      ).toHaveBeenCalledWith(expect.objectContaining({ block: 'start' }));
+      expect(
+        document.getElementById('div-c')!.scrollIntoView
+      ).not.toHaveBeenCalled();
+    });
+
+    it('follows the last divider scrolled into the top third', async () => {
+      withDividers({ defaultValue: 'a' }, { a: -400, b: -100, c: 50 });
+      await act(async () => {
+        fireEvent.scroll(document, {});
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+      });
+      expect(screen.getByRole('slider')).toHaveAttribute(
+        'aria-valuetext',
+        expect.stringContaining('Iteration 3')
+      );
+    });
+
+    it('leaves a controlled rail where the product put it', async () => {
+      withDividers({ value: 'a' }, { a: -400, b: -100, c: 50 });
+      await act(async () => {
+        fireEvent.scroll(document, {});
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+      });
+      expect(screen.getByRole('slider')).toHaveAttribute(
+        'aria-valuetext',
+        expect.stringContaining('Iteration 1')
+      );
+    });
   });
 
   it('stops at both ends instead of wrapping', async () => {

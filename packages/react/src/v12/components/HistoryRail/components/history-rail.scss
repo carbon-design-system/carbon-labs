@@ -36,6 +36,13 @@ $-push: math.div($-pitch-reached - $-pitch, 2);
 .#{$block} {
   position: relative;
   display: inline-block;
+  // Centred in the column it is given: the rail marks where you are in the
+  // whole conversation, not where the transcript happens to start, so it is
+  // read against the middle of the surface rather than hung from its top. An
+  // auto block margin is how a flex item centres on the cross axis without the
+  // parent having to say anything — in the Carbon2027_v2 frames the rail sits
+  // at y=316 of an 828 card, which is exactly centred.
+  margin-block: auto;
   padding-block: $-push;
 }
 

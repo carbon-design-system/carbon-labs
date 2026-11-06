@@ -1,0 +1,147 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as KeyboardShortcutStories from './KeyboardShortcut.stories';
+
+<Meta isTemplate />
+
+# KeyboardShortcut
+
+- **Initiative owner(s):** @ryanmellody
+- **Status:** Draft
+- **Target library:** @carbon/react
+- **Target library maintainer(s) / PR Reviewer(s):** TODO — to be named by the initiative owner
+- **Support channel:** `#carbon-labs`
+
+{/* graduation-ready:status */}
+
+> **Graduation readiness:** 2 FAIL, 16 pass, 3 n-a — not ready. Advisory: it
+> never blocks a draft. Written by `graduation-ready --write-status`; run it for
+> the reasons.
+
+- FAIL `status`
+- FAIL `proposals`
+
+{/* /graduation-ready:status */}
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Platforms](#platforms)
+- [Accessibility](#accessibility)
+- [On surfaces](#on-surfaces)
+- [Inside a menu](#inside-a-menu)
+- [Component API](#component-api)
+- [Getting started](#getting-started)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+> **Problem statement:** Carbon can show a keyboard shortcut only as a plain
+> string in `MenuItem`'s `shortcut` prop. Every product hand-types its own
+> glyphs, shows `⌘` to Windows users or `Ctrl` to Mac users, and leaves screen
+> readers to announce `⌘` as "place of interest sign". `KeyboardShortcut` takes
+> the keys once (`keys={['mod', 'K']}`), shows `⌘K` on macOS and `Ctrl+K`
+> elsewhere, and names the combination in words ("Command K"). Its nearest
+> Carbon neighbour is `MenuItem.shortcut`, and `kind="plain"` matches it.
+
+It only **displays** a shortcut. Like `MenuItem.shortcut`, it never registers or
+listens for the keys.
+
+<Canvas of={KeyboardShortcutStories.Default} />
+
+`kind="plain"` is text only:
+
+<Canvas of={KeyboardShortcutStories.Plain} />
+
+## Platforms
+
+`mod` is ⌘ on macOS and Ctrl elsewhere, and `remove` is ⌫ on macOS and Del
+elsewhere. macOS shows glyphs (⌘ ⌥ ⇧ ⌃ ↩ ⌫ ⎋ ←); Windows and Linux show words
+(Ctrl, Alt, Shift, Win, Enter). Modifiers are shown in each platform's order —
+⌃⌥⇧⌘ on macOS, Ctrl+Alt+Shift+Win elsewhere — whatever order they are written
+in, and the spoken name follows the same order. `platform="auto"`
+detects it in the browser. A server render cannot know the platform, so it
+renders the Windows and Linux words and the browser takes over straight after
+hydration. Pass `platform="mac"` or `"other"` when the server knows better, for
+example from the request's `User-Agent`.
+
+<Canvas of={KeyboardShortcutStories.PlatformMac} />
+<Canvas of={KeyboardShortcutStories.PlatformOther} />
+
+## Accessibility
+
+- The markup is the HTML standard's own for a key combination: one `<kbd>` per
+  key inside an outer `<kbd>`.
+- The whole shortcut is named in words, through visually hidden text. A `<kbd>`
+  has the generic role, which ARIA 1.2 forbids naming, so `aria-label` on it is
+  dropped or read inconsistently. The glyph keys are hidden from assistive
+  technology so the name is not read twice.
+- Inside a control, the words become part of its name: a menu item reads
+  "Copy Command C", not "Copy ⌘C".
+- `translateWithId` translates both what each key shows and its spoken name,
+  with separate ids: `carbon.keyboard-shortcut.control.label` ("Strg") and
+  `carbon.keyboard-shortcut.control.name` ("Steuerung").
+- In a right-to-left page the combination stays left to right, as on the
+  keyboard.
+
+## On surfaces
+
+- **In a tooltip.** Inside Carbon's high-contrast popover (`Tooltip`,
+  `DefinitionTooltip`, an `IconButton`'s label), keycaps take Carbon's inverse
+  family by themselves: `$background-inverse-hover` fill, `$border-inverse`
+  edge, `$text-inverse` label. `kind="plain"` inherits the popover's text
+  colour. Nothing to set.
+
+<Canvas of={KeyboardShortcutStories.InIconButtonTooltip} />
+
+- **On a Tile or any other layer.** A keycap's fill is the contextual
+  `$layer`, so directly on a `Tile` it is the tile's own colour and only its
+  border draws the key. Put the content in a `<Layer>` inside the tile, as
+  Carbon does for any control on a layer; or use `kind="plain"` where a keycap
+  is not wanted.
+
+<Canvas of={KeyboardShortcutStories.OnTileWithLayer} />
+
+## Inside a menu
+
+Left, Carbon's `MenuItem` with its own `shortcut` strings; right,
+`KeyboardShortcut kind="plain"` in the same slot.
+
+<Canvas of={KeyboardShortcutStories.InsideMenu} />
+
+## Component API
+
+<ArgTypes of={KeyboardShortcutStories.Default} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-keyboard-shortcut
+```
+
+### JS (via import)
+
+```javascript
+import { KeyboardShortcut } from '@carbon-labs/react-keyboard-shortcut/es/index';
+
+function App() {
+  return <KeyboardShortcut keys={['mod', 'K']} />;
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-keyboard-shortcut/scss/keyboard-shortcut';
+```

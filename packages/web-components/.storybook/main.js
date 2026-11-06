@@ -24,6 +24,11 @@ function getAbsolutePath(value) {
 
 const includeV12 = process.env.STORYBOOK_INCLUDE_V12 === 'true';
 
+// The v12 Storybook compiles Carbon's Sass with `enable-v12-release` on, as
+// core's `.storybook-v12` does. Configuring `$feature-flags` replaces the map
+// @carbon/styles sets by default, so its enabled defaults are repeated here.
+const v12FeatureFlags = `@use '@carbon/styles/scss/feature-flags' with ($feature-flags: ('enable-css-custom-properties': true, 'enable-css-grid': true, 'enable-v12-release': true));\n`;
+
 // Build stories array based on environment variable
 const storiesGlobs = includeV12
   ? [
@@ -61,6 +66,15 @@ const config = {
       build: {
         cssMinify: 'esbuild',
       },
+      ...(includeV12 && {
+        css: {
+          preprocessorOptions: {
+            scss: {
+              additionalData: v12FeatureFlags,
+            },
+          },
+        },
+      }),
       plugins: [
         postcss(),
         postcssLit({

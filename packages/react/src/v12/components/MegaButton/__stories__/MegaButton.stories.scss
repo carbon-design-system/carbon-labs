@@ -1,0 +1,17 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Story layout only: rows of buttons, spaced with Carbon's tokens.
+@use '@carbon/styles/scss/spacing' as *;
+
+.mega-button-story-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $spacing-05;
+  margin-block-end: $spacing-05;
+}

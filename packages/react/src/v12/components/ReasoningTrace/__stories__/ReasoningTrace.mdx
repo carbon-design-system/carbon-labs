@@ -1,0 +1,114 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ReasoningTraceStories from './ReasoningTrace.stories';
+
+<Meta isTemplate />
+
+# ReasoningTrace
+
+- **Initiative owner(s):** Ryan Mellody (@ryanmellody)
+- **Status:** Draft
+- **Target library:** @carbon/react
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Anatomy](#anatomy)
+- [Behaviour](#behaviour)
+- [The thinking animation](#the-thinking-animation)
+- [Component API](#component-api)
+- [Getting started](#getting-started)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+> **Problem statement:** while an agent works, a person needs to see that it is
+> working, what it is doing now, and afterwards what it did and how long it
+> took, without the transcript turning into a log. Carbon has no equivalent:
+> `Accordion` is a disclosure but not a status, `InlineLoading` is a status but
+> holds no steps, and `@carbon/ai-chat`'s reasoning steps are part of a whole
+> chat application. ReasoningTrace is the disclosure alone, standalone React: a
+> header that says what happened and how long it took, and, when open, the steps
+> (ReasoningStep) or the code it ran (CodeSnippet).
+
+It replaces the library's earlier Trajectory and labs's `Processing` for v12.
+
+<Canvas of={ReasoningTraceStories.Turn} />
+
+## Anatomy
+
+- **Header** — one button: the thinking animation while it thinks, the label
+  ("Thinking", "Complete", "Running", "Used tool"), an optional subject as
+  `InlineCode`, the duration, and the chevron.
+- **Card** — ReasoningSteps, joined by square rules; the card rounds the whole
+  at `$border-radius-08`. Content that is not a step list brings its own card.
+- **Footer** — "View plan details" (or "Planning…" while it runs) opens the full
+  trace in the PlanCanvas pattern. It is a button that reads as a link, with
+  `aria-expanded` and `aria-controls` for the region it opens.
+
+## Behaviour
+
+- **Opens and closes** on Carbon's disclosure motion (`moderate-01`; entrance
+  easing in, exit out). Closed content leaves the tab order.
+- **Resolves flush.** Once `status` is `complete` the animation leaves and the
+  header sits flush, with no icon. The change is announced politely.
+- **The live step** is primary text with Carbon's small `Loading`, so it reads
+  as live rather than disabled. A failed step says "Failed" as well as showing
+  `ErrorFilled`.
+
+<Canvas of={ReasoningTraceStories.Live} />
+
+## The thinking animation
+
+`ThinkingIndicator` is the processing animation from Carbon2027 - Modelling:
+three dots settle, ripple, a darker square passes along them, they collapse to a
+point and spread again. One cycle is four `slow-02` durations (2.8s; the source
+video measured 2.6s), on Carbon's standard productive easing. Dots are
+`$interactive`; the square is `$link-primary-hover`. It is decorative, and it
+holds still under reduced motion.
+
+## Component API
+
+<ArgTypes of={ReasoningTraceStories.Thinking} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-reasoning-trace
+```
+
+### JS (via import)
+
+```javascript
+import {
+  ReasoningTrace,
+  ReasoningStep,
+} from '@carbon-labs/react-reasoning-trace/es/index';
+
+function App() {
+  return (
+    <ReasoningTrace label="Complete" duration="1m 48s">
+      <ReasoningStep label="Read files" />
+    </ReasoningTrace>
+  );
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-reasoning-trace/scss/reasoning-trace';
+```

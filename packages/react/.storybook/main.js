@@ -39,13 +39,20 @@ const config = {
         },
       },
     },
+    // The v12 workbench (tools/v12-workbench): toolbar, Motion panel, matrix
+    // and compare. The v12 build only.
+    ...(includeV12 ? [getAbsolutePath('@carbon-labs/v12-workbench')] : []),
   ],
   babel: async (config) => {
     return {
       ...config,
       presets: [
         '@babel/preset-env',
-        '@babel/preset-react',
+        // The v12 packages are written for the automatic JSX runtime; the
+        // classic preset's pragma would clash with it.
+        includeV12
+          ? ['@babel/preset-react', { runtime: 'automatic' }]
+          : '@babel/preset-react',
         '@babel/preset-typescript',
       ],
     };
@@ -71,7 +78,9 @@ const config = {
     });
 
     config.module.rules.push({
-      test: /\.s?css$/,
+      // The v12 build leaves plain CSS (the seam's tokens.css) to Storybook's
+      // own CSS rule: both rules on one file would load it twice.
+      test: includeV12 ? /\.scss$/ : /\.s?css$/,
       sideEffects: true,
       use: [
         {

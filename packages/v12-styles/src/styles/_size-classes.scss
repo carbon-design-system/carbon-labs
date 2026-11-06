@@ -1,0 +1,21 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+/* The size classes' edges, for CSS (a container query can't read script):
+ * the narrowest width of each class above compact, the 2x Grid's md, lg and
+ * xlg breakpoints. They are `SIZE_CLASS_EDGES` (app-shell/useSizeClass.ts),
+ * the one source; size-classes.test.ts fails if these drift from it.
+ *
+ *   compact    < $medium
+ *   medium     $medium – $expanded
+ *   expanded   $expanded – $large
+ *   large      ≥ $large
+ */
+
+$medium: 672px;
+$expanded: 1056px;
+$large: 1312px;

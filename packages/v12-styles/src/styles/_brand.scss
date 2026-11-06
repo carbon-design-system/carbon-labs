@@ -1,0 +1,173 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use 'sass:list';
+@use 'sass:map';
+@use '@carbon/react/scss/colors' as c;
+@use '@carbon/react/scss/theme';
+
+/* The hero colour: one brand setting for the kit, wherever there is a
+   selector or fill. A component's `variant="hero"` reads these tokens; the
+   brand picks the hue they come from. IBM blue by default, and then every token but the
+   loader's is the Carbon token it replaces, value for value:
+
+     --cds-hero              a line on the page: the tabs' underline, a hero
+                            field's edge, the slider's knob and fill, the
+                            toggle's on track, the side nav's dot.
+                            ($interactive, $border-interactive: 60 / 50)
+     --cds-hero-loader       a loader's arc, dots or fill: the primary
+                            button's blue. (60 in every theme)
+     --cds-hero-fill         a filled selector: the selection kit's hero
+                            (content switcher, tabs, vertical tabs, select
+                            list, side nav, tree view, menu, date picker,
+                            pagination), and Button's, IconButton's and the
+                            split and menu buttons' `kind="primary"`.
+                            ($button-primary: 60 in every theme)
+     --cds-hero-fill-hover   the hover glow round that selector; a primary
+                            button's hover. ($button-primary-hover: 60 hover
+                            in every theme)
+     --cds-hero-fill-active  a primary button held open or selected (a menu
+                            button's open trigger, ButtonGrid's selected
+                            cell). ($button-primary-active: 80 in every theme)
+     --cds-hero-ink          a small mark in the hue on a surface, a hero
+                            menu's check. ($link-primary: 60 light, 40 dark)
+     --cds-hero-ink-inverse  the ink on an inverse surface. ($link-inverse)
+     --cds-hero-ink-selected the ink on a selected fill: 60 light, 20 dark.
+     --cds-hero-on-fill      text and icons on the fill. ($text-on-color:
+                            white, for every hue below)
+
+   The pressed step, the focus ring on the fill and the date picker's range
+   band are mixed from these by the components, so they follow too. Focus
+   rings elsewhere, links and the status colours are Carbon's meaning
+   colours, not hero: they stay. A loader's base under hero is the neutral
+   gray under every brand, the loaders' own
+   `--cds-loader-neutral-base` (feedback/_loader-color.scss).
+
+   The brand is set on a zone, `[data-cds-brand='<hue>']`: `KitDefaults`'s
+   `brand` prop draws one (a `display: contents` wrapper), or a page can put
+   the attribute on any element, a theme zone included. With none, the blue.
+
+   Each step is the hue's own Carbon grade, so every hue sits where the blue
+   does:
+
+                hero    loader   fill    fill hover   active   ink   inverse   selected
+     white      60      70       60      60 hover     80       60    40        60
+     g100       50      40       60      60 hover     80       40    60        20
+
+   Carbon's grades are matched in luminance, so every hue reads as the blue
+   does: white on
+   the fill 4.99–5.01:1, on its hover 6.14–6.63:1, on the active step
+   11.32–11.54:1; the hero line on its page 4.52–5.44:1, the loader
+   6.39–7.79:1; the ink on its page 4.54–7.75:1. White holds on every hue in
+   the list. A hue whose 60 is light (yellow, which is not offered) would need
+   dark text: it would set `--cds-hero-on-fill` in its zone.
+
+   The theme-dependent steps (`--cds-hue-<hue>`, `--cds-hue-<hue>-ink`) are
+   set on the theme scopes, and a brand zone points the `--cds-hero` tokens
+   at them both on itself and on any theme scope inside it, so a dark theme
+   nested in a brand zone takes the dark steps. (Two brand zones nested,
+   with a theme scope inside the inner one: the later hue in the list below
+   wins there. Thin for now.) */
+
+/* The hues a brand can be (quoted: an unquoted name is a CSS colour, which
+   Sass can rewrite, magenta to fuchsia), each with its Carbon grades and its
+   60's hover step, which `c.$colors` doesn't carry. Carbon's tag hues, less
+   the grays (the gray is neutral) and the status colours: red, yellow and green
+   keep their meaning, so a red brand can't be read as danger. */
+$hues: (
+  'blue': (
+    map.get(c.$colors, blue),
+    c.$blue-60-hover,
+  ),
+  'purple': (
+    map.get(c.$colors, purple),
+    c.$purple-60-hover,
+  ),
+  'magenta': (
+    map.get(c.$colors, magenta),
+    c.$magenta-60-hover,
+  ),
+  'cyan': (
+    map.get(c.$colors, cyan),
+    c.$cyan-60-hover,
+  ),
+  'teal': (
+    map.get(c.$colors, teal),
+    c.$teal-60-hover,
+  ),
+);
+
+/* Per theme: the hero line's grade, the loader's and the inks'. The fill is 60 in every theme. */
+$steps: (
+  'white': (
+    hero: 60,
+    loader: 60,
+    ink: 60,
+    ink-inverse: 40,
+    ink-selected: 60,
+  ),
+  'g100': (
+    hero: 50,
+    loader: 60,
+    ink: 40,
+    ink-inverse: 60,
+    ink-selected: 20,
+  ),
+);
+
+$theme-scopes: (
+  'white': ":root, [data-carbon-theme='white'], .cds--white",
+  'g100': "[data-carbon-theme='g100'], .cds--g100",
+);
+
+/* The tokens for one hue: the theme's steps through its `--cds-hue-*`, the fill's as they are. */
+@mixin brand($hue, $tones) {
+  --cds-hero: var(--cds-hue-#{$hue});
+  --cds-hero-loader: var(--cds-hue-#{$hue}-loader);
+  --cds-hero-ink: var(--cds-hue-#{$hue}-ink);
+  --cds-hero-ink-inverse: var(--cds-hue-#{$hue}-ink-inverse);
+  --cds-hero-ink-selected: var(--cds-hue-#{$hue}-ink-selected);
+  --cds-hero-fill: #{map.get(list.nth($tones, 1), 60)};
+  --cds-hero-fill-hover: #{list.nth($tones, 2)};
+  --cds-hero-fill-active: #{map.get(list.nth($tones, 1), 80)};
+}
+
+@each $theme, $scopes in $theme-scopes {
+  #{$scopes} {
+    $step: map.get($steps, $theme);
+
+    @each $hue, $tones in $hues {
+      $grades: list.nth($tones, 1);
+      --cds-hue-#{$hue}: #{map.get($grades, map.get($step, hero))};
+      --cds-hue-#{$hue}-loader: #{map.get($grades, map.get($step, loader))};
+      --cds-hue-#{$hue}-ink: #{map.get($grades, map.get($step, ink))};
+      --cds-hue-#{$hue}-ink-inverse: #{map.get(
+          $grades,
+          map.get($step, ink-inverse)
+        )};
+      --cds-hue-#{$hue}-ink-selected: #{map.get(
+          $grades,
+          map.get($step, ink-selected)
+        )};
+    }
+
+    /* The default brand: IBM blue. */
+    @include brand('blue', map.get($hues, 'blue'));
+  }
+}
+
+:root {
+  --cds-hero-on-fill: #{theme.$text-on-color};
+}
+
+/* A brand zone, and any theme scope inside it. */
+@each $hue, $tones in $hues {
+  [data-cds-brand='#{$hue}'],
+  [data-cds-brand='#{$hue}'] :is([data-carbon-theme], .cds--white, .cds--g100) {
+    @include brand($hue, $tones);
+  }
+}

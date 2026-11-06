@@ -1,0 +1,28 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use 'rollover' as *;
+
+/* The ghost's rollover colours: v11's ghost text in link blue, toned
+ * (`@mixin rollover-tone`): its hover and press are tints of link blue
+ * solved against the backdrop, the label steps one Carbon step on hover
+ * (eased) and on a press (at once), and an icon inside takes the label's
+ * colour. Include it after `@mixin rollover`, on a control that
+ * `attachRollover` drives with its default steps (the Button's own call).
+ *
+ * The ghost Button (`.cds-btn--ghost`) and anything that is in effect a
+ * blue ghost button in another shape (NotificationsPanel's View all, the
+ * whole footer cell) share it, so the two can't drift.
+ * Shape and size motion (the 1px grow and press) stay the control's own. */
+@mixin rollover-ghost {
+  @include rollover-tone(#{theme.$link-primary});
+
+  svg {
+    fill: currentColor;
+  }
+}

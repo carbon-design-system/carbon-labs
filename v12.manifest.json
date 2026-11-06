@@ -1,0 +1,169 @@
+{
+  "items": [
+    {
+      "id": "styles/anchor-inset",
+      "kind": "styles",
+      "path": "packages/v12-styles/src/styles/_anchor-inset.scss",
+      "labsStatus": "draft",
+      "publishable": false,
+      "source": {
+        "repo": "carbon-next",
+        "ref": "b36c1f77a810df54239b9e26f4910a687f78a6fe"
+      }
+    },
+    {
+      "id": "styles/brand",
+      "kind": "styles",
+      "path": "packages/v12-styles/src/styles/_brand.scss",
+      "labsStatus": "draft",
+      "publishable": false,
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "styles/cast-shadow",
+      "kind": "styles",
+      "path": "packages/v12-styles/src/styles/_cast-shadow.scss",
+      "labsStatus": "draft",
+      "publishable": false,
+      "source": {
+        "repo": "carbon-next",
+        "ref": "db8a7637e319090df402ada3bfc0f4b3e30639d7"
+      }
+    },
+    {
+      "id": "styles/container-fade",
+      "kind": "styles",
+      "path": "packages/v12-styles/src/styles/_container-fade.scss",
+      "labsStatus": "draft",
+      "publishable": false,
+      "source": {
+        "repo": "carbon-next",
+        "ref": "db8a7637e319090df402ada3bfc0f4b3e30639d7"
+      }
+    },
+    {
+      "id": "styles/corners",
+      "kind": "styles",
+      "path": "packages/v12-styles/src/styles/_corners.scss",
+      "labsStatus": "draft",
+      "publishable": false,
+      "source": {
+        "repo": "carbon-next",
+        "ref": "b36c1f77a810df54239b9e26f4910a687f78a6fe"
+      }
+    },
+    {
+      "id": "styles/field-fill",
+      "kind": "styles",
+      "path": "packages/v12-styles/src/styles/_field-fill.scss",
+      "labsStatus": "draft",
+      "publishable": false,
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "styles/ghost",
+      "kind": "styles",
+      "path": "packages/v12-styles/src/styles/_ghost.scss",
+      "labsStatus": "draft",
+      "publishable": false,
+      "source": {
+        "repo": "carbon-next",
+        "ref": "b36c1f77a810df54239b9e26f4910a687f78a6fe"
+      }
+    },
+    {
+      "id": "styles/hold-weight",
+      "kind": "styles",
+      "path": "packages/v12-styles/src/styles/_hold-weight.scss",
+      "labsStatus": "draft",
+      "publishable": false,
+      "source": {
+        "repo": "carbon-next",
+        "ref": "16a3b77a85ed09bbe646ee5f368167a23ae328e4"
+      }
+    },
+    {
+      "id": "styles/rollover",
+      "kind": "styles",
+      "path": "packages/v12-styles/src/styles/_rollover.scss",
+      "labsStatus": "draft",
+      "publishable": false,
+      "source": {
+        "repo": "carbon-next",
+        "ref": "16a3b77a85ed09bbe646ee5f368167a23ae328e4"
+      }
+    },
+    {
+      "id": "styles/size-classes",
+      "kind": "styles",
+      "path": "packages/v12-styles/src/styles/_size-classes.scss",
+      "labsStatus": "draft",
+      "publishable": false,
+      "source": {
+        "repo": "carbon-next",
+        "ref": "db8a7637e319090df402ada3bfc0f4b3e30639d7"
+      }
+    },
+    {
+      "id": "styles/skeleton",
+      "kind": "styles",
+      "path": "packages/v12-styles/src/styles/_skeleton.scss",
+      "labsStatus": "draft",
+      "publishable": false,
+      "source": {
+        "repo": "carbon-next",
+        "ref": "b36c1f77a810df54239b9e26f4910a687f78a6fe"
+      }
+    },
+    {
+      "id": "styles/surface",
+      "kind": "styles",
+      "path": "packages/v12-styles/src/styles/_surface.scss",
+      "labsStatus": "draft",
+      "publishable": false,
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "styles/tertiary",
+      "kind": "styles",
+      "path": "packages/v12-styles/src/styles/_tertiary.scss",
+      "labsStatus": "draft",
+      "publishable": false,
+      "source": {
+        "repo": "carbon-next",
+        "ref": "b36c1f77a810df54239b9e26f4910a687f78a6fe"
+      }
+    },
+    {
+      "id": "styles/text-pairs",
+      "kind": "styles",
+      "path": "packages/v12-styles/src/styles/_text-pairs.scss",
+      "labsStatus": "draft",
+      "publishable": false,
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "styles/tile-art",
+      "kind": "styles",
+      "path": "packages/v12-styles/src/styles/_tile-art.scss",
+      "labsStatus": "draft",
+      "publishable": false,
+      "source": {
+        "repo": "carbon-next",
+        "ref": "b36c1f77a810df54239b9e26f4910a687f78a6fe"
+      }
+    }
+  ]
+}

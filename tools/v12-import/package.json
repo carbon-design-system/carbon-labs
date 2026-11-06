@@ -1,0 +1,26 @@
+{
+  "name": "@carbon-labs/v12-import",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Carbon Labs - brings kit components and whole packages into the v12 lane",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "tools/v12-import"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "bin": "./bin/v12-import.js",
+  "scripts": {
+    "import": "node ./bin/v12-import.js",
+    "test": "vitest run",
+    "contract": "node ./bin/contract.js",
+    "check": "node ./bin/check.js"
+  },
+  "devDependencies": {
+    "vitest": "^4.0.0"
+  }
+}

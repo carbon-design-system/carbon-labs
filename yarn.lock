@@ -3008,6 +3008,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-file-chip@workspace:packages/react/src/v12/components/FileChip":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-file-chip@workspace:packages/react/src/v12/components/FileChip"
+  dependencies:
+    "@carbon-labs/react-mega-button": "workspace:*"
+    classnames: "npm:^2.3.2"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    "@carbon/icons-react": ^11.0.0
+    "@carbon/react": ^1.95.0
+    react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+    react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-first-time-orientation@workspace:packages/react/src/components/FirstTimeOrientation":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-first-time-orientation@workspace:packages/react/src/components/FirstTimeOrientation"
@@ -3040,7 +3055,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-mega-button@workspace:packages/react/src/v12/components/MegaButton":
+"@carbon-labs/react-mega-button@workspace:*, @carbon-labs/react-mega-button@workspace:packages/react/src/v12/components/MegaButton":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-mega-button@workspace:packages/react/src/v12/components/MegaButton"
   dependencies:

@@ -1,0 +1,51 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+
+/* Two text relationships, one spacing each, across the kit:
+
+   - a title and the line under it (a summary, a description, a subtitle):
+     8px from the title's box to the line's box;
+   - a group's label (a fieldset's legend) and its controls: 8px from the
+     label's box to the first control's row.
+
+   Both are Carbon's form-label margin ($spacing-03). The line under a title
+   is `$text-secondary`: body-compact-01 when it is one line (a summary),
+   body-01 when it wraps (a description). */
+
+/// A title's box to its summary, description or subtitle's box.
+$title-to-summary: $spacing-03;
+
+/// A group's label (a legend) to its first control's row.
+$label-to-controls: $spacing-03;
+
+/// A one-line summary under a title.
+@mixin summary {
+  @include type-style('body-compact-01');
+
+  color: theme.$text-secondary;
+}
+
+/// A description or subtitle under a title, which may wrap.
+@mixin description {
+  @include type-style('body-01');
+
+  color: theme.$text-secondary;
+}
+
+/// A group's label: a fieldset's legend above its controls.
+@mixin group-label {
+  @include type-style('label-01');
+
+  padding: 0;
+
+  margin: 0 0 $label-to-controls;
+  color: theme.$text-secondary;
+}

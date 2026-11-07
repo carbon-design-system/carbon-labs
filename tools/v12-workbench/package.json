@@ -1,0 +1,57 @@
+{
+  "name": "@carbon-labs/v12-workbench",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Carbon Labs - the v12 workbench, a Storybook add-on for reviewing components and their motion",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "tools/v12-workbench"
+  },
+  "labs": {
+    "status": "draft",
+    "title": "V12 workbench"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./manager": "./manager.js",
+    "./preview": "./preview.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "manager.js",
+    "preview.js",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.json",
+    "!src/**/__tests__"
+  ],
+  "scripts": {
+    "build": "tsc --noEmit",
+    "explorations": "node ./scripts/explorations.js",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@carbon-labs/v12-motion": "workspace:*"
+  },
+  "peerDependencies": {
+    "@carbon/react": "^1.0.0",
+    "react": "^18.2.0 || ^19.0.0",
+    "react-dom": "^18.2.0 || ^19.0.0",
+    "storybook": "^9.0.0"
+  },
+  "devDependencies": {
+    "@carbon/react": "^1.118.0",
+    "@storybook/react": "^9.1.2",
+    "@types/node": "^20.17.10",
+    "@types/react": "^18.3.12",
+    "jsdom": "^26.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "storybook": "^9.1.2",
+    "typescript": "^5.7.2",
+    "vitest": "^4.0.0"
+  }
+}

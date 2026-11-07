@@ -1,0 +1,18 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+// Carbon's motion names at carbon-motion's values: `$duration-*`, `$easings`,
+// `motion($name, $mode)` and `surface($map)`. A component written against
+// `@carbon/styles/scss/motion` switches with its `@use` line:
+//
+//   @use '@carbon-labs/v12-motion/scss' as *;
+//
+// Its timings change to carbon-motion's.
+//
+// The path is the module's file in the package: Sass load paths do not read
+// package `exports`.
+@forward '@carbon-labs/motion-core/scss/carbon-names';

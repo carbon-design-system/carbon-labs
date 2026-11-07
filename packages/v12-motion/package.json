@@ -1,0 +1,68 @@
+{
+  "name": "@carbon-labs/v12-motion",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Carbon Labs - the one motion seam for v12 components",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "packages/v12-motion"
+  },
+  "labs": {
+    "status": "draft",
+    "title": "V12 motion"
+  },
+  "main": "./es/index.js",
+  "module": "./es/index.js",
+  "types": "./es/index.d.ts",
+  "sideEffects": [
+    "*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./es/index.d.ts",
+      "import": "./es/index.js",
+      "default": "./es/index.js"
+    },
+    "./selection": {
+      "types": "./es/selection.d.ts",
+      "import": "./es/selection.js",
+      "default": "./es/selection.js"
+    },
+    "./scss/*": "./scss/*",
+    "./tokens.css": "./es/tokens.css"
+  },
+  "files": [
+    "es/**/*.js",
+    "es/**/*.d.ts",
+    "es/tokens.css",
+    "scss",
+    "src/**/*.ts",
+    "!src/**/__tests__"
+  ],
+  "scripts": {
+    "build": "bash scripts/build.sh",
+    "clean": "rimraf es scss",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@carbon-labs/motion-core": "^0.1.1",
+    "@carbon-labs/motion-react": "^0.1.1"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0 || ^19.0.0",
+    "react-dom": "^18.2.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.10",
+    "jsdom": "^26.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rimraf": "^6.1.3",
+    "sass": "~1.106.0",
+    "typescript": "^5.7.2",
+    "vitest": "^4.0.0"
+  }
+}

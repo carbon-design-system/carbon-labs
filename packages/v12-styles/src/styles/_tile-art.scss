@@ -1,0 +1,24 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+
+/* The kit's illustrations' line: no fill, a 1px non-scaling `$border-inverse`
+   line, round caps and joins. The family adds its size and dashes. */
+@mixin tile-art {
+  fill: none;
+  stroke: theme.$border-inverse;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+
+  * {
+    fill: none;
+    vector-effect: non-scaling-stroke;
+  }
+}

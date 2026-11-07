@@ -179,7 +179,9 @@ const devTools = {
   },
 };
 
-export const globalTypes = {
+// The lane's own picks. The v12 build takes theme and text direction from the
+// workbench add-on (tools/v12-workbench), with the lane's two themes.
+const laneGlobalTypes = {
   dir: {
     name: 'Text direction',
     description: 'Set the text direction for the story',
@@ -215,6 +217,12 @@ export const globalTypes = {
       items: ['white', 'g10', 'g90', 'g100'],
     },
   },
+};
+
+const includeV12 = process.env.STORYBOOK_INCLUDE_V12 === 'true';
+
+export const globalTypes = {
+  ...(includeV12 ? {} : laneGlobalTypes),
   ...(process.env.NODE_ENV === 'development' ? devTools : {}),
 };
 

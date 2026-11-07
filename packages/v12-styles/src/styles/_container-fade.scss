@@ -1,0 +1,27 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+// The fade standard in CSS: the fade with a movement of `$clock` (a CSS time) is `fast-00` when
+// the clock is `moderate-02` or less, else `fast-01`, never longer than the clock. The CSS form of
+// carbon-motion's snap (`snapFadeFor`, `SNAP_FADE_SHORT_MS` 220, `SNAP_FADE_SHORT`, `SNAP_FADE`),
+// for a surface on a CSS transition (the select list); keep the line equal to `SNAP_FADE_SHORT_MS`.
+
+// The tokens are read as the page sets them, so a slowed lab (which scales every
+// duration token) keeps the comparison: the step is a `clamp`, 0 at or under
+// the line and the whole difference a hair past it.
+@function container-fade($clock) {
+  $short: var(--cds-motion-duration-fast-00);
+  $long: var(--cds-motion-duration-fast-01);
+  $line: var(--cds-motion-duration-moderate-02);
+  @return min(
+    calc(
+      #{$short} +
+        clamp(0ms, (#{$clock} - #{$line}) * 1000, #{$long} - #{$short})
+    ),
+    #{$clock}
+  );
+}

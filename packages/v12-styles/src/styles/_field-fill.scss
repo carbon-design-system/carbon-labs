@@ -1,0 +1,21 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+
+/* The field fill: the one fill under every field container (the text, password and number inputs,
+   the multi-field input, Search, the Dropdown / ComboBox / MultiSelect and Select fields, the date
+   and time pickers) and the easing graph's plot.
+
+   On the page it is Carbon's `$field`: `$field-01`, and `$field-02` inside Carbon's `Layer`, as
+   v11 has it. A step off `--cds-surface` would land off the panel colour, not the page (the theme
+   scopes name `--cds-surface` too): #e9e9e9 on white, the `$border-subtle` hairline 1.09:1 off it.
+   On a kit surface (a card, a tile, a panel, a
+   modal) the surface names the fill for the fields on it, `--cds-field-fill`
+   (`surface.fields-on-surface`, styles/_surface.scss): one Carbon field token off the surface, so
+   the field still reads on the card. */
+$field-fill: var(--cds-field-fill, #{theme.$field});

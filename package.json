@@ -16,7 +16,7 @@
     "tools/*"
   ],
   "scripts": {
-    "build": "yarn clean && lerna run build --scope '@carbon-labs/utilities' && lerna run build --scope '@carbon-labs/primitives' && lerna run build --scope '@carbon-labs/vscode-snippets' && lerna run build --scope '@carbon-labs/react' && lerna run build --scope '@carbon-labs/web-components'",
+    "build": "yarn clean && lerna run build --scope '@carbon-labs/utilities' && lerna run build --scope '@carbon-labs/primitives' && lerna run build --scope '@carbon-labs/vscode-snippets' && yarn workspaces foreach -A --include 'packages/v12-*' --topological run build && lerna run build --scope '@carbon-labs/react' && lerna run build --scope '@carbon-labs/web-components'",
     "build:dist": "lerna run build:dist --stream",
     "build:dist:canary": "lerna run build:dist:canary --stream",
     "ci-check": "yarn run format:diff && yarn lint:license && yarn lint && yarn lint:styles",

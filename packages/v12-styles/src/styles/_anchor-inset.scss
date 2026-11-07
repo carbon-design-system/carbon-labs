@@ -1,0 +1,18 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+/* A trigger's fill inset: how far inside its box it paints its hover and
+ * press fill. A freestanding ghost IconButton and the OverflowMenu's trigger
+ * declare it; the motion layer's placement.ts `anchorInset` reads it, so a tooltip or a
+ * menu opened off the trigger sits its gap from the fill rather than the box,
+ * while a `-start` / `-end` one lines up with the box. Registered: not inherited (a trigger inside one keeps its
+ * own 0), and computed to px. */
+@property --cds-anchor-inset {
+  inherits: false;
+  initial-value: 0px;
+  syntax: '<length>';
+}

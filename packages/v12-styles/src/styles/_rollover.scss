@@ -1,0 +1,757 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+/* The rollover — motion-core's `attachRollover`, painted.
+ *
+ * The one hover + press for any control with a hover color and a pressed
+ * color. The control declares its colors; this
+ * paints them on one pseudo-element behind its content, and motion-core
+ * drives the state.
+ *
+ *   --rollover-rest     color at rest (default transparent)
+ *   --rollover-hover    color under the cursor on hover (required)
+ *   --rollover-stroke   an optional 1px stroke — the same at rest, hover and
+ *                       press. Nothing draws a stroke unless this is set.
+ *   --rollover-shadow   optional inset box-shadows that are part of the
+ *                       surface — an inner contour, a bevel — the same at
+ *                       rest, hover and press. Must be `inset`.
+ *   --rollover-ring     optional, a status ring's color: 2px centred on the
+ *                       surface's edge, 1px over the stroke and 1px outside
+ *                       it (the Checkbox's and RadioButton's error and
+ *                       warning). It is painted by the surface,
+ *                       so it grows on hover and returns on press with it,
+ *                       at the same thickness, instead of the hover's fill
+ *                       growing over a ring drawn on the control. ONE shape
+ *                       (an outline, 1px in): a 1px ring outside the 1px
+ *                       stroke would leave a hairline of the page where their
+ *                       two anti-aliased edges meet.
+ *   --rollover-press    optional. Otherwise derived at press time:
+ *                       press = hover + (hover − rest).
+ *   (By default motion-core replaces hover and press with MATCHED LIGHTNESS
+ *   colors computed from the rest color — `colors: 'lightness'` in
+ *   attachRollover — so these two act as the fallback / `'tokens'` mode.)
+ *   --rollover-tone     optional: a toned control, its hover and press tints
+ *                       of this colour (`@mixin rollover-tone`, below).
+ *   --rollover-scale    optional multiplier on the size-driven glow and soft
+ *                       edge (default 1).
+ *   --rollover-flat     optional, 1 = the hover is an even wash of the hover
+ *                       color instead of a glow at the cursor — for rows in a
+ *                       wide list, where a cursor glow reads as a small spot
+ *                       in a long bar. The press and the
+ *                       release circle are unchanged.
+ *   --rollover-inset    optional, 0–8px (0 = off): clips the hover glow and the
+ *                       press / release layers that far inside the control's
+ *                       shape (its corners follow). The rest color and the
+ *                       stroke stay full size. Inherited, so it can be set
+ *                       on a container for everything in it.
+ *   --rollover-expand   default 1px (0 = off): on hover the
+ *                       whole surface (rest, stroke, glow) grows that far past
+ *                       every edge — the mirror of the press's 1px shrink. The
+ *                       press still insets from the REST edge. Inherited.
+ *   --rollover-size-exclusive  1 (default) = hover expand OR press shrink:
+ *                       with an expand, the press returns the surface to its
+ *                       rest size instead of shrinking it. 0 = both.
+ *                       Inherited.
+ *   --rollover-press-inset  optional, overrides `$press-inset` (default 1px):
+ *                       how far the surface shrinks on press. Inherited. A
+ *                       control built with `$press-inset: 0` never shrinks.
+ *
+ * Layers, top first: the stroke and `--rollover-shadow` as inset shadows,
+ * the pressed color (a soft circle opens in it on release), the hover glow
+ * (follows the cursor), then the rest color. Every layer paints the whole
+ * border box, so the rest color never shows as a ring round the hover.
+ *
+ * THE SURFACE IS THE CONTROL'S WHOLE SHAPE. The press insets this one
+ * pseudo-element 1px; anything else that paints the control's shape — a
+ * `background`, `border` or `box-shadow` on the control, a contour on its
+ * other pseudo-element — stays full size, and on press the backdrop shows
+ * as a 1px ring between it and the inset surface: an outline round the
+ * pressed color (the status pills' contour). Paint the
+ * shape only through these tokens.
+ *
+ * `$pseudo` picks the painting element; `$positioned: false` when the control
+ * is already positioned (absolute etc.). `$bleed-x` / `$bleed-y` let the
+ * painted surface reach past the control's box (a row's hover wash that
+ * extends beyond its text); the glow and the release circle stay under the
+ * cursor, and the press still insets 1px from the bled edge. `$press-inset`
+ * sets that inset (default 1px); 0 keeps a pressed row full size.
+ *
+ * `$control` (optional) is a selector for the native control inside the
+ * surface (`'> .cds-checkbox__input'`). Its `:hover` and `:active` drive the
+ * surface's hover and press too, and a `<label>` passes both on to its
+ * control (HTML's rule), so hovering and pressing a control's label shows
+ * the control's hover and press, however the label wraps. Hovered from the label, the glow sits at the
+ * surface's center. */
+
+/* NESTED CONTROLS. The innermost control owns the hover and the
+ * press, here so every rollover keeps it (README, "Controls inside a surface"):
+ *
+ *   contained  a rollover's tokens (`--rollover-rest`, `-hover`, `-press`,
+ *              `-stroke`, `-shadow`, `-ring`, `-flat`) stop at its children,
+ *              so a ghost button on a card never paints the card's colours.
+ *              A child that wants a token declares it. `--rollover-inset`,
+ *              `-expand`, `-size-exclusive` and `-press-inset` inherit: a
+ *              container sets them for everything in it.
+ *   yields     a surface (`data-rollover-surface`: a tile, a card) shows no
+ *              hover, growth or press while a control in it is hovered or
+ *              pressed, and fades back in (`fast-02`) when the pointer is on
+ *              it again. A control doing the surface's own action is
+ *              `data-rollover-own` (on it or its wrapper): the surface keeps
+ *              its hover over it.
+ *   by content a surface holding controls (`$rollover-controls`) hovers with
+ *              a 1px `$border-strong-01` inset ring and keeps its fill, with
+ *              no press: a fill takes links, fields and 3:1 edges under their
+ *              contrast. A text-only surface keeps the fill.
+ *              `data-rollover-surface="ring"` or `"fill"` overrides. */
+
+/** What answers its own hover and press inside a surface: motion-core's
+    NESTED (rollover.ts), and checkboxes and radios. */
+$rollover-nested: ':is(a[href], button, input, select, textarea, summary, label, [contenteditable], ' +
+  '[role="button"], [role="slider"], [role="tab"], [role="menuitem"], [role="option"], ' +
+  '[role="checkbox"], [role="radio"], [data-rollover-nested])' +
+  ':not([data-rollover-own], [data-rollover-own] *)';
+
+/** What makes a surface hover with the ring: a control in it not its own, or
+    any checkbox or radio (its 3:1 edge falls under 3:1 on the fill). */
+$rollover-controls: ':is(a[href], button, input:not([type="hidden"]), select, textarea, summary, ' +
+  '[contenteditable], [tabindex]:not([tabindex="-1"]), [role="button"], [role="slider"], ' +
+  '[role="tab"], [role="menuitem"], [role="option"], [role="checkbox"], [role="radio"], ' +
+  '[role="switch"]):not([data-rollover-own], [data-rollover-own] *), ' +
+  'input:is([type="checkbox"], [type="radio"])';
+
+/** A hover the pointer moved into, not one held under a still pointer (`data-rollover-still`).
+    Every tinting `:hover` takes it; `:where()` keeps the rule's specificity. */
+$rollover-moved: ':not(:where([data-rollover-still]))';
+
+/** One of them hovered or pressed: for `:has()` on the surface (its cast shadow steps back with it). */
+$rollover-nested-engaged: '#{$rollover-nested}:is(:hover, :active)';
+
+/* The hover's IN leg (the control hovered or keyboard-focused, or its native
+   control hovered: `$control`). */
+@mixin _rollover-hover-in($hover-expand) {
+  --cds-motion-rollover-hover: 1;
+  --cds-motion-rollover-grow: 1;
+  --_re: var(--rollover-expand, #{$hover-expand});
+
+  transition:
+    --cds-motion-rollover-hover var(--cds-motion-duration-fast-02)
+      var(--cds-motion-easing-standard-productive),
+    --cds-motion-rollover-grow var(--cds-motion-duration-moderate-02)
+      var(--cds-motion-easing-entrance-productive),
+    inset var(--cds-motion-duration-fast-01)
+      var(--cds-motion-easing-standard-productive);
+
+  /* Reduced motion: at once (1ms), the IN leg too. The rest rule's 1ms
+     (below) loses to this one's higher specificity, so this sets it again:
+     never the full clock under reduced motion. */
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: var(--cds-motion-duration-floor);
+  }
+}
+
+@mixin rollover(
+  $pseudo: '::before',
+  $positioned: true,
+  $bleed-x: 0px,
+  $bleed-y: 0px,
+  $press-inset: 1px,
+  $control: null
+) {
+  /* The hover expand defaults to the press inset's size (1px) — and to 0 with it, so rows built flush stay flush. */
+  $hover-expand: 1px;
+  @if $press-inset == 0 or $press-inset == 0px {
+    $hover-expand: 0px;
+  }
+
+  @if $positioned {
+    position: relative;
+  }
+
+  isolation: isolate;
+
+  /* A rollover inside a rollover (a button on a tile) must not inherit its
+     parent's press — these reset per control; motion-core's inline writes
+     and animations override them on the pressed control only. */
+  --cds-motion-rollover-press: 0;
+  --cds-motion-rollover-r: 0px;
+  --cds-motion-rollover-rehover: 1;
+  /* motion-core's matched-lightness colors (written per control). */
+  --cds-motion-rollover-hover-color: initial;
+  --cds-motion-rollover-press-color: initial;
+  --cds-motion-rollover-label: initial;
+  /* Nor its tone: a button on a toned tile is not toned. */
+  --rollover-tone: initial;
+
+  /* Contained (NESTED CONTROLS, above): its tokens stop at its children. */
+  @at-root :where(#{&}) > * {
+    --rollover-rest: initial;
+    --rollover-hover: initial;
+    --rollover-press: initial;
+    --rollover-stroke: initial;
+    --rollover-shadow: initial;
+    --rollover-ring: initial;
+    --rollover-flat: initial;
+  }
+
+  &#{$pseudo} {
+    /* The live pointer is registered non-inherited (motion-core writes it on
+       every pointermove; inherited, each write would restyle the control's
+       whole subtree). Only the painting pseudo-element pulls it in. */
+    --cds-motion-rollover-x: inherit;
+    --cds-motion-rollover-y: inherit;
+
+    /* The press color, the hover strength and the press strength. */
+    /* Matched lightness (motion-core) wins over the control's own tokens. */
+    --_rhc: var(--cds-motion-rollover-hover-color, var(--rollover-hover));
+    --_rc: var(
+      --cds-motion-rollover-press-color,
+      var(
+        --rollover-press,
+        var(--cds-motion-rollover-color, var(--rollover-hover))
+      )
+    );
+    --_rh: calc(
+      var(--cds-motion-rollover-hover) * var(--cds-motion-rollover-rehover)
+    );
+    --_rp: var(--cds-motion-rollover-press);
+    --_rr: var(--cds-motion-rollover-r);
+    --_rs: var(--cds-motion-rollover-soft, 16px);
+    /* How far the surface sits outside the control's (bled) box: 0 at rest,
+       --rollover-expand on hover, minus the press inset on press. The
+       gradients add it back so they stay on the cursor. */
+    --_re: 0px;
+
+    position: absolute;
+    z-index: -1;
+    box-sizing: border-box;
+    padding: var(--rollover-inset, 0px);
+    border-radius: inherit;
+    background-clip: content-box, content-box, border-box;
+    background-image:
+      /* The pressed color, with the release circle's smoothstep soft edge. */
+      radial-gradient(
+        circle farthest-corner at
+          calc(var(--cds-motion-rollover-px, 50%) + #{$bleed-x} + var(--_re))
+          calc(var(--cds-motion-rollover-py, 50%) + #{$bleed-y} + var(--_re)),
+        transparent calc(var(--_rr) - var(--_rs)),
+        color-mix(in srgb, var(--_rc) calc(var(--_rp) * 15.6%), transparent)
+          calc(var(--_rr) - var(--_rs) * 0.75),
+        color-mix(in srgb, var(--_rc) calc(var(--_rp) * 50%), transparent)
+          calc(var(--_rr) - var(--_rs) * 0.5),
+        color-mix(in srgb, var(--_rc) calc(var(--_rp) * 84.4%), transparent)
+          calc(var(--_rr) - var(--_rs) * 0.25),
+        color-mix(in srgb, var(--_rc) calc(var(--_rp) * 100%), transparent)
+          var(--_rr)
+      ),
+      /* The hover glow: the hover color at the cursor, easing to nothing at
+         its reach (size-driven), which grows 80% -> 100% on hover. */
+        radial-gradient(
+          circle
+            calc(
+              var(--cds-motion-rollover-glow, 64px) *
+                var(--cds-motion-rollover-grow) + var(--rollover-flat, 0) *
+                100000px
+            )
+            at
+            calc(var(--cds-motion-rollover-x, 50%) + #{$bleed-x} + var(--_re))
+            calc(var(--cds-motion-rollover-y, 50%) + #{$bleed-y} + var(--_re)),
+          color-mix(in srgb, var(--_rhc) calc(var(--_rh) * 100%), transparent)
+            0%,
+          color-mix(in srgb, var(--_rhc) calc(var(--_rh) * 84.4%), transparent)
+            25%,
+          color-mix(in srgb, var(--_rhc) calc(var(--_rh) * 50%), transparent)
+            50%,
+          color-mix(in srgb, var(--_rhc) calc(var(--_rh) * 15.6%), transparent)
+            75%,
+          transparent 100%
+        ),
+      /* The rest color, as a layer so it can stay full size under an inset. */
+        linear-gradient(
+          var(--rollover-rest, transparent),
+          var(--rollover-rest, transparent)
+        );
+    /* Positions are the control's own box; the glow and press are clipped to
+       the content box, i.e. inside `--rollover-inset`. */
+    background-origin: border-box;
+    box-shadow:
+      inset 0 0 0 1px var(--rollover-stroke, transparent),
+      var(--rollover-shadow, inset 0 0 transparent);
+
+    content: '';
+    inset: calc(-1 * #{$bleed-y} - var(--_re))
+      calc(-1 * #{$bleed-x} - var(--_re));
+    pointer-events: none;
+    /* The OUT leg: this rule governs the transition back to rest. */
+    transition:
+      --cds-motion-rollover-hover var(--cds-motion-duration-fast-01)
+        var(--cds-motion-easing-standard-productive),
+      --cds-motion-rollover-grow var(--cds-motion-duration-moderate-02)
+        var(--cds-motion-easing-entrance-productive),
+      inset var(--cds-motion-duration-fast-01)
+        var(--cds-motion-easing-standard-productive);
+    /* No fallback: unset, the shorthand is invalid at computed time and
+       the outline is none (no transparent outline for forced colors to
+       paint). */
+    @if $pseudo != '' {
+      outline: 2px solid var(--rollover-ring);
+      outline-offset: -1px;
+    }
+  }
+
+  &:hover#{$rollover-moved}#{$pseudo},
+  &:focus-visible#{$pseudo} {
+    @include _rollover-hover-in($hover-expand);
+  }
+
+  /* Its native control hovered, the surface or the control's label. */
+  @if $control {
+    &:has(#{$control}:hover#{$rollover-moved})#{$rollover-moved}:not(
+        :disabled
+      ):not([aria-disabled='true'])#{$pseudo} {
+      @include _rollover-hover-in($hover-expand);
+    }
+
+    /* From the label: motion-core tracks the pointer over the surface only. */
+    &:has(#{$control}:hover):not(:hover)#{$pseudo} {
+      --cds-motion-rollover-x: 50%;
+      --cds-motion-rollover-y: 50%;
+    }
+  }
+
+  /* The press: the surface insets `$press-inset` (1px) from every (bled)
+     edge. 0 for rows in a list, where a shrinking row pulls away from its
+     separators. A press dragged off its control
+     (`data-rollover-slid`, motion-core) is at rest, though Chrome keeps
+     `:active` on it while the pointer is held. One that has only slipped
+     off it, a few px (`data-rollover-off`), is still pressed. */
+  @if $press-inset != 0 and $press-inset != 0px {
+    /* Exclusive (`--rollover-size-exclusive: 1`, the default): a control
+       that grows on hover doesn't also shrink on press — the press returns
+       it to its rest size. Without a hover expand, the press shrinks. */
+    &:active:not(:disabled):not([aria-disabled='true']):not(
+        [data-rollover-slid]
+      )#{$pseudo} {
+      --_re: calc(
+        -1 *
+          var(--rollover-press-inset, #{$press-inset}) *
+          (
+            1 - var(--rollover-size-exclusive, 1) *
+              sign(var(--rollover-expand, #{$hover-expand}))
+          )
+      );
+    }
+
+    /* A press with no hover growth to reverse (a key, a touch: not under the
+       pointer) pushes in from rest, whatever the hover does. Not a pointer press
+       that has slipped just off its control (`data-rollover-off`,
+       motion-core): it is the same press, and stays pressed. */
+    &:active:not(:hover):not(:disabled):not([aria-disabled='true']):not(
+        [data-rollover-slid],
+        [data-rollover-off]
+      )#{$pseudo} {
+      --_re: calc(-1 * var(--rollover-press-inset, #{$press-inset}));
+    }
+
+    /* The same two, pressed through its native control (its label). */
+    @if $control {
+      &:has(#{$control}:active):not(:disabled):not([aria-disabled='true']):not(
+          [data-rollover-slid]
+        )#{$pseudo} {
+        --_re: calc(
+          -1 *
+            var(--rollover-press-inset, #{$press-inset}) *
+            (
+              1 - var(--rollover-size-exclusive, 1) *
+                sign(var(--rollover-expand, #{$hover-expand}))
+            )
+        );
+      }
+
+      &:has(#{$control}:active:not(:hover)):not(:disabled):not(
+          [aria-disabled='true']
+        ):not([data-rollover-slid], [data-rollover-off])#{$pseudo} {
+        --_re: calc(-1 * var(--rollover-press-inset, #{$press-inset}));
+      }
+    }
+  }
+
+  /* Yields (NESTED CONTROLS, above): a surface with a control in it hovered
+     or pressed is at rest, its size too; it goes there on the hover's OUT
+     leg. Specific enough to beat its own `:hover` and `:active` rules. */
+  &[data-rollover-surface]:has(#{$rollover-nested-engaged}):not(:disabled):not(
+      [aria-disabled='true']
+    )#{$pseudo} {
+    --cds-motion-rollover-hover: 0;
+    --cds-motion-rollover-grow: 0.8;
+    --_re: 0px;
+
+    transition:
+      --cds-motion-rollover-hover var(--cds-motion-duration-fast-01)
+        var(--cds-motion-easing-standard-productive),
+      --cds-motion-rollover-grow var(--cds-motion-duration-moderate-02)
+        var(--cds-motion-easing-entrance-productive),
+      inset var(--cds-motion-duration-fast-01)
+        var(--cds-motion-easing-standard-productive);
+
+    @media (prefers-reduced-motion: reduce) {
+      transition-duration: var(--cds-motion-duration-floor);
+    }
+  }
+
+  /* By content: a 1px inset ring on the surface's shape at the hover's
+     strength (its timing, yield and reduced motion); no glow, press or growth. */
+  &[data-rollover-surface]:not([data-rollover-surface='fill']):is(
+      [data-rollover-surface='ring'],
+      :has(#{$rollover-controls})
+    )#{$pseudo} {
+    --_rhc: transparent;
+    --_rc: transparent;
+    --rollover-expand: 0px;
+    --rollover-press-inset: 0px;
+
+    box-shadow:
+      inset 0 0 0 1px
+        color-mix(
+          in srgb,
+          var(--cds-border-strong-01, #8d8d8d)
+            calc(var(--cds-motion-rollover-hover) * 100%),
+          transparent
+        ),
+      inset 0 0 0 1px var(--rollover-stroke, transparent),
+      var(--rollover-shadow, inset 0 0 transparent);
+  }
+
+  /* Disabled: no hover, no expand, no press — and no transition into or out
+     of one, so the pointer crossing a disabled control changes nothing (v11's disabled controls have no hover either).
+     `aria-disabled` too: v11's IconButton and the menu's rows use it. */
+  &:is(:disabled, [aria-disabled='true'])#{$pseudo} {
+    --cds-motion-rollover-hover: 0;
+    --cds-motion-rollover-grow: 0.8;
+    --_re: 0px;
+
+    transition: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &#{$pseudo} {
+      transition-duration: var(--cds-motion-duration-floor);
+    }
+  }
+}
+
+/* A TONED rollover — a coloured control with a transparent
+ * rest (an outline or ghost button in blue or red): its hover and press are
+ * tints of its own colour, `$tone`, not the backdrop's gray. Include it
+ * after `@mixin rollover` (which resets the tone per control), in the same
+ * rule or a later one (a kind's class).
+ *
+ *   tints     motion-core solves them against the measured backdrop, so the
+ *             tint moves it a fixed L*: 6 / 12 in every theme; a gray tone (white on g100) the
+ *             neutral's 9 / 18
+ *             on dark (`toneHoverLight` / `toneHoverDark` in
+ *             `LIGHTNESS_STEPS`). `color-mix` 10% is the fallback, before
+ *             motion-core has measured or under `colors: 'tokens'`
+ *   label     `$tone` is also the control's `color` (its label and icon).
+ *             motion-core writes a stepped one
+ *             (`--cds-motion-rollover-label`): one Carbon step further from
+ *             the backdrop in every theme, and more where it would still
+ *             fall under 4.5:1 on either tint (white, off the ramps, stays).
+ *             The label takes it on hover and focus (eased in, `fast-02`) and on a
+ *             press (at once, `data-rollover-held`: a touch has no hover);
+ *             it fades back over `fast-01`. A press dragged off
+ *             (`data-rollover-slid`) is at rest
+ *
+ * `$tone` must be a color, not `currentColor` (motion-core reads it from a
+ * probe inside the control, where currentColor is the label mid-step). */
+@mixin rollover-tone($tone) {
+  --rollover-tone: #{$tone};
+  --rollover-hover: color-mix(in srgb, var(--rollover-tone) 10%, transparent);
+  --_rt-ms: var(--cds-motion-duration-fast-01);
+
+  color: var(--rollover-tone);
+  transition: color var(--_rt-ms) var(--cds-motion-easing-standard-productive);
+
+  &:is(:hover#{$rollover-moved}, :focus-visible, [data-rollover-held]):not(
+      :disabled,
+      [aria-disabled='true'],
+      [data-rollover-slid]
+    ) {
+    --_rt-ms: var(--cds-motion-duration-fast-02);
+
+    color: var(--cds-motion-rollover-label, var(--rollover-tone));
+
+    &[data-rollover-held] {
+      --_rt-ms: 0s;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: var(--cds-motion-duration-floor);
+  }
+}
+
+/* The rollover on TEXT — for INTERACTIVE text only: a
+ * label that is itself the control, beside its affordance (a dropdown's
+ * chevron, a drag handle). Not for static or descriptive text. Grayscale,
+ * with hand-picked hover and press grays per theme (motion-principles,
+ * the rollover's Text entry); the text dims on hover and further on press. The same layers as `@mixin rollover`, painted into the
+ * glyphs (`background-clip: text`) instead of behind the control: letters
+ * near the cursor take the hover color, a press turns them the pressed
+ * color, and on release a soft circle reveals the hover color back through
+ * the letters. Same tokens: `--rollover-rest` is the text color at rest
+ * (required here), `--rollover-hover`, optional `--rollover-press` (e.g.
+ * Carbon's near-black `text-primary` for links), `--rollover-scale`.
+ *
+ * The underline and any icon inside take `color`, which follows flat:
+ * rest → hover → pressed. `$underline`: `hover` (Carbon's link: fades in on
+ * hover), `always` or `none`. The underline is its own 1px layer
+ * (`::after`): with `background-clip: text`, Chromium counts a text
+ * decoration as text, so the rest color would paint a real one even when
+ * it is transparent.
+ *
+ * `$colors`: `picked` (the default) paints the control's own
+ * `--rollover-hover` / `--rollover-press` — the grays, the design lead's picks.
+ * `matched` lets motion-core's matched lightness for text win over them
+ * (`colors: 'lightness'` in attachRollover): the text dims toward its
+ * background by fractions fitted to those picks, in its own hue — the
+ * link-blue text (`@mixin rollover-link`).
+ *
+ * Disabled (`:disabled`, `aria-disabled`): no hover, no press, no
+ * transition, as `@mixin rollover`.
+ *
+ * Single-line text only (it is made `inline-block`): a wrapped link would
+ * spread one gradient across both lines. In forced-colors mode the glyphs
+ * fall back to a plain color. */
+@mixin rollover-text(
+  $underline: hover,
+  $display: inline-block,
+  $colors: picked,
+  $rest: image
+) {
+  /* Tells motion-core this is text: its matched colors dim (above). */
+  --rollover-text: 1;
+  --cds-motion-rollover-press: 0;
+  --cds-motion-rollover-r: 0px;
+  --cds-motion-rollover-rehover: 1;
+  @if $colors == matched {
+    /* Per control, as `@mixin rollover`: a link on a tile must not inherit
+       the tile's matched colors. */
+    --cds-motion-rollover-hover-color: initial;
+    --cds-motion-rollover-press-color: initial;
+    --_rhc: var(--cds-motion-rollover-hover-color, var(--rollover-hover));
+    --_rc: var(
+      --cds-motion-rollover-press-color,
+      var(
+        --rollover-press,
+        var(--cds-motion-rollover-color, var(--rollover-hover))
+      )
+    );
+  } @else {
+    --_rhc: var(--rollover-hover);
+    --_rc: var(
+      --rollover-press,
+      var(--cds-motion-rollover-color, var(--rollover-hover))
+    );
+  }
+  --_rh: calc(
+    var(--cds-motion-rollover-hover) * var(--cds-motion-rollover-rehover)
+  );
+  --_rp: var(--cds-motion-rollover-press);
+  --_rr: var(--cds-motion-rollover-r);
+  --_rs: var(--cds-motion-rollover-soft, 16px);
+
+  position: relative;
+  display: $display;
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-image:
+    radial-gradient(
+      circle farthest-corner at var(--cds-motion-rollover-px, 50%)
+        var(--cds-motion-rollover-py, 50%),
+      transparent calc(var(--_rr) - var(--_rs)),
+      color-mix(in srgb, var(--_rc) calc(var(--_rp) * 15.6%), transparent)
+        calc(var(--_rr) - var(--_rs) * 0.75),
+      color-mix(in srgb, var(--_rc) calc(var(--_rp) * 50%), transparent)
+        calc(var(--_rr) - var(--_rs) * 0.5),
+      color-mix(in srgb, var(--_rc) calc(var(--_rp) * 84.4%), transparent)
+        calc(var(--_rr) - var(--_rs) * 0.25),
+      color-mix(in srgb, var(--_rc) calc(var(--_rp) * 100%), transparent)
+        var(--_rr)
+    ),
+    radial-gradient(
+      circle
+        calc(
+          var(--cds-motion-rollover-glow, 64px) *
+            var(--cds-motion-rollover-grow) + var(--rollover-flat, 0) * 100000px
+        )
+        at var(--cds-motion-rollover-x, 50%) var(--cds-motion-rollover-y, 50%),
+      color-mix(in srgb, var(--_rhc) calc(var(--_rh) * 100%), transparent) 0%,
+      color-mix(in srgb, var(--_rhc) calc(var(--_rh) * 84.4%), transparent) 25%,
+      color-mix(in srgb, var(--_rhc) calc(var(--_rh) * 50%), transparent) 50%,
+      color-mix(in srgb, var(--_rhc) calc(var(--_rh) * 15.6%), transparent) 75%,
+      transparent 100%
+    ),
+    linear-gradient(var(--rollover-rest), var(--rollover-rest));
+  background-origin: border-box;
+  color: var(--rollover-rest);
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-text-fill-color: transparent;
+  transition:
+    --cds-motion-rollover-hover var(--cds-motion-duration-fast-01)
+      var(--cds-motion-easing-standard-productive),
+    --cds-motion-rollover-grow var(--cds-motion-duration-moderate-02)
+      var(--cds-motion-easing-entrance-productive),
+    color var(--cds-motion-duration-fast-01)
+      var(--cds-motion-easing-standard-productive);
+  white-space: nowrap;
+
+  /* `$rest: color` paints the rest as `background-color` (clipped to the
+     letters like the layers above it) and drops the rest image: unlike an
+     image, a background colour can change under `:visited` (the Link's
+     visited style). */
+  @if $rest == color {
+    background-color: var(--rollover-rest);
+    background-size:
+      auto,
+      auto,
+      0 0;
+  }
+
+  @if $underline != none {
+    &::after {
+      position: absolute;
+      background: currentColor;
+      block-size: 1px;
+      content: '';
+      inset: auto 0 1px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity
+        var(--cds-motion-duration-fast-01)
+        var(--cds-motion-easing-standard-productive);
+    }
+  }
+
+  &:hover#{$rollover-moved},
+  &:focus-visible {
+    --cds-motion-rollover-hover: 1;
+    --cds-motion-rollover-grow: 1;
+
+    color: var(--_rhc);
+
+    transition:
+      --cds-motion-rollover-hover var(--cds-motion-duration-fast-02)
+        var(--cds-motion-easing-standard-productive),
+      --cds-motion-rollover-grow var(--cds-motion-duration-moderate-02)
+        var(--cds-motion-easing-entrance-productive),
+      color var(--cds-motion-duration-fast-02)
+        var(--cds-motion-easing-standard-productive);
+  }
+
+  @if $underline == always {
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  @if $underline == hover {
+    &:hover#{$rollover-moved}::after,
+    &:focus-visible::after {
+      opacity: 1;
+      transition-duration: var(--cds-motion-duration-fast-02);
+    }
+  }
+
+  &:active:not(:disabled):not([aria-disabled='true']):not(
+      [data-rollover-slid]
+    ) {
+    color: var(--_rc);
+    transition-duration: 0s;
+  }
+
+  /* Disabled: rest only (the control sets its disabled rest color). */
+  &:is(:disabled, [aria-disabled='true']) {
+    --cds-motion-rollover-hover: 0;
+    --cds-motion-rollover-grow: 0.8;
+
+    color: var(--rollover-rest);
+    cursor: not-allowed;
+    transition: none;
+
+    &::after {
+      opacity: 0;
+      transition: none;
+    }
+  }
+
+  /* Selected text stays readable. */
+  &::selection,
+  *::selection {
+    -webkit-text-fill-color: currentColor;
+  }
+
+  @media (forced-colors: active) {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: var(--cds-motion-duration-floor);
+  }
+}
+
+/* The rollover on LINK-BLUE TEXT, the blue text-only style ('Hide/Show
+ * settings') — a bare text button in Carbon's link color: no padding,
+ * border or background, so nothing to glow behind, inset or shrink.
+ * `@mixin rollover-text` with matched colors:
+ *
+ *   hover     the glow in the letters; they dim toward the background, as
+ *             the grays do (fast-02 in, fast-01 out)
+ *   press     dimmer still, flat; nothing moves or scales (text keeps its
+ *             weight and place)
+ *   release   the default circle, through the letters: the hover color
+ *             returns from the release point while the press recedes
+ *   focus     the family's keyboard ring, 2px `focus`, outside the text
+ *   disabled  `text-disabled`, no hover
+ *
+ * The rest is `link-primary` in every theme; `link-primary-hover` is the
+ * hover only under `colors: 'tokens'` (Carbon's, which steps away from
+ * the background — darker on light themes, lighter on dark). Needs an
+ * `attachRollover` over it for the glow, press and release; the app's
+ * `.cds-text-button` has one from the shell. */
+@mixin rollover-link($underline: none, $rest: image) {
+  --rollover-rest: var(--cds-link-primary, #0f62fe);
+  --rollover-hover: var(--cds-link-primary-hover, #0043ce);
+
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+
+  /* No margin: a button has none, and the place it sits is the caller's. */
+  appearance: none;
+  background-color: transparent;
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+
+  @include rollover-text(
+    $underline: $underline,
+    $colors: matched,
+    $rest: $rest
+  );
+
+  /* Keyboard focus: a 2px ring in the link's own color, as on every
+     control; no v11 blue. */
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  &:is(:disabled, [aria-disabled='true']) {
+    --rollover-rest: var(--cds-text-disabled, rgb(22 22 22 / 25%));
+  }
+}

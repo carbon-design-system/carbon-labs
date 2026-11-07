@@ -1,3 +1,4 @@
+import fs from 'fs';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path, { join, dirname } from 'path';
 import remarkGfm from 'remark-gfm';
@@ -71,6 +72,21 @@ const config = {
       __dirname,
       '../../utilities/es'
     );
+
+    if (includeV12) {
+      // A v12 package's built JavaScript leaves its stylesheet import out (the
+      // package ships `scss/` for the app to compile), so a component that
+      // uses another would show it unstyled. Here each v12 package resolves to
+      // its source, whose own stylesheet import then compiles.
+      const v12 = path.resolve(__dirname, '../src/v12/components');
+      for (const dir of fs.existsSync(v12) ? fs.readdirSync(v12) : []) {
+        const pkg = path.join(v12, dir, 'package.json');
+        if (fs.existsSync(pkg)) {
+          const { name } = JSON.parse(fs.readFileSync(pkg, 'utf8'));
+          config.resolve.alias[`${name}$`] = path.join(v12, dir, 'index.ts');
+        }
+      }
+    }
 
     config.module.rules.push({
       test: /\.svg$/,

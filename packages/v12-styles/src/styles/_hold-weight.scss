@@ -1,0 +1,46 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+/* ── text keeps its width when its weight rises (the blanket rule) ────────
+   docs/components/README.md,
+   "Text keeps its width when its weight rises".
+
+   `@mixin hold-weight-width`: on a label whose weight rises with a state
+   (current, selected, highlighted), a hidden copy of its text at the heavier
+   weight, a 0-tall block under it, so the label's box is always as wide as
+   its heavier self: the state changes the weight, never the width, and
+   nothing after it moves. The element carries its text in `data-text`
+   (`$attr`); without it the rule is off (a label that isn't plain text).
+
+   The copy is `visibility: hidden`, takes no pointer or selection, and its
+   alternative text is empty (`/ ''`), so it's never read. It's in the box
+   from the first layout, before anything measures it: a list the selection
+   engine measures lands on the reserved width. The element must size to its
+   content (block, inline-block, a flex or grid item), and a 0-tall block
+   doesn't add height. The text itself stays the element's own inline
+   content, so `text-overflow: ellipsis` still clips it.
+
+   The selection kit's items hold their width another way (SelectionFaces:
+   the regular face is the one in flow; the heavier face lies over it,
+   absolutely placed, its letters drawn closer to the regular width), and
+   ButtonGrid's cells use this same copy (`.cds-btn-cell__label[data-label]`).
+
+   @param $weight  the heavier weight the label takes (600 semibold, or a
+                   custom property such as `var(--sel-on-weight, 500)`)
+   @param $attr    the attribute carrying the label's text */
+@mixin hold-weight-width($weight: 600, $attr: 'data-text') {
+  &[#{$attr}]::after {
+    display: block;
+    overflow: hidden;
+    block-size: 0;
+    content: attr(#{$attr}) / '';
+    font-weight: $weight;
+    pointer-events: none;
+    user-select: none;
+    visibility: hidden;
+  }
+}

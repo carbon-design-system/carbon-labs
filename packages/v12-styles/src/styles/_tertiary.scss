@@ -1,0 +1,33 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+
+/* The tertiary kind's colour, `--cds-tertiary`, neutral in hue on the light
+   themes: its outline, label, icon, focus ring and toned hover.
+
+     white        `$text-primary` (gray 100), not Carbon's `$button-tertiary`
+                  (blue 60)
+     g100         Carbon's `$button-tertiary`, white. It is already
+                  neutral; `$text-primary` there is gray 10, a step off it,
+                  so the dark themes keep Carbon's colour.
+
+   The Button, the icon-only Button (IconButton) and the button shell's
+   tertiary (SplitButton, MenuButton, ButtonGrid) read it. `danger--tertiary`
+   stays red. Set on the theme scopes themselves, as `--cds-surface`
+   (styles/_surface.scss), so the nearest theme wins. */
+
+:root,
+[data-carbon-theme='white'],
+.cds--white {
+  --cds-tertiary: #{theme.$text-primary};
+}
+
+[data-carbon-theme='g100'],
+.cds--g100 {
+  --cds-tertiary: var(--cds-button-tertiary, #ffffff);
+}

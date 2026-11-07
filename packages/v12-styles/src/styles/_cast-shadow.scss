@@ -1,0 +1,236 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+/* The cast shadow — motion-core's `attachCastShadow`, painted. The tile
+ * shadow, the rollover's sibling.
+ *
+ * A stack of layers per control (`[data-cast-layer]`, injected by motion-core
+ * from the `--cast-layers` this declares). Each is a solid shape in its
+ * solved color, blurred once, and a pointer move changes only its
+ * `translate`, the fade only its `opacity` — composited in Chromium, Gecko
+ * and WebKit, so nothing repaints or lays out while it follows the cursor.
+ * Promoted only
+ * while lit.
+ *
+ *   ambient   the tile shadow: away from the pointer, x ±5px, y 4–6px — never
+ *             up, anywhere — blur 6px (`blur(3px)` is a 6px
+ *             box-shadow blur). The default.
+ *   contact   tight and darker at the card's foot, where it nearly touches
+ *             the backdrop: x ±1.5px, y 1–2px, blur 3px
+ *
+ * DISTANCE. `--cast-distance` (default 1; `$distance` sets it per control,
+ * and it inherits, so a container can set it) is how far the card stands off
+ * its backdrop: every offset and blur scales with it. The strength stays
+ * solved for the same contrast.
+ *
+ * PRESS. Pressing pushes the card toward its backdrop: the shadow draws in
+ * to `--cast-press-distance` of its distance (default 0.35), on fast-01, as
+ * the surface insets 1px. Only the surface and its shadow answer the press
+ * — the content never moves or scales. Composited: the press animates a
+ * registered number (`--cast-press`) that only feeds `translate`; the blur
+ * holds, so nothing re-rasterizes.
+ *
+ * SIZE (a toggle — `--cast-size: on`; it can read too dramatic).
+ * motion-core writes `--cast-k` = (longest side ÷
+ * `--cast-size-ref`, default 300px) ^ `--cast-size-exp` (default 0.5) on
+ * the layers, and every offset and blur scales by it: a 48px chip throws
+ * 0.4× the shadow, a 1200px panel 2×. Off, `--cast-k` is 1.
+ *
+ * ELEVATIONS. `$elevation: resting | raised | floating` sets a distance and
+ * both contrasts from `$elevations` (mirrored in motion-core as
+ * `CAST_ELEVATIONS`; dialed in on the lab).
+ *
+ * Offsets NEVER transition with the pointer; the strength fades on
+ * moderate-01 standard-productive.
+ *
+ * TRANSFORMS. Every layer takes the surface's lift (`$lift`, on the same
+ * timing) and press (`$press-inset` on `:active`, fast-01), so none parts
+ * from the card's edge (a shadow layer moving on its own would leave a
+ * gap). A control that lifts itself, not its surface, leaves
+ * `$lift` at 0 — the layers move with it.
+ *
+ * Needs: the control positioned and `isolation: isolate`, its surface at
+ * `z-index: -1` (`::before`) and OPAQUE — the shadows sit under it.
+ *
+ * Color: see `cast-shadow.ts` — every layer solved for one contrast against
+ * what it paints on; `--cast-shadow`, `--cast-contact` and
+ * `--cast-*-contrast` tune it.
+ *
+ *   .tile {
+ *     @include cast-shadow.cast-shadow($lift: var(--tile-lift));
+ *     @include cast-shadow.cast-shadow($layers: (contact, ambient), $distance: 2);
+ *   }
+ *
+ * `$lit` lists the states that light it, each appended to the control. */
+
+@use 'sass:list';
+@use 'sass:map';
+
+$_standard: var(--cds-motion-easing-standard-productive);
+
+/* Per layer: x swing, y at rest, y swing (downward only), blur σ. */
+$ambient: (
+  x: 5px,
+  y: 4px,
+  swing: 2px,
+  blur: 3px,
+);
+$contact: (
+  x: 1.5px,
+  y: 1px,
+  swing: 1px,
+  blur: 1.5px,
+);
+
+/* Elevations: distance, ambient contrast, contact contrast — the fallbacks
+   for `pattern.elevation.*` (CAST_ELEVATIONS in core's cast-shadow.ts; a
+   parity test holds the two together). */
+$elevations: (
+  resting: (
+    distance: 0.75,
+    ambient: 1.1,
+    contact: 1.15,
+  ),
+  raised: (
+    distance: 1.5,
+    ambient: 1.2,
+    contact: 1.2,
+  ),
+  floating: (
+    distance: 2.5,
+    ambient: 1.3,
+    contact: 1.25,
+  ),
+);
+
+/* Distance × size (blur), and × the press (offset). */
+$_d: calc(var(--cast-distance, 1) * var(--cast-k, 1));
+$_dp: calc(
+  #{$_d} * (1 - var(--cast-press, 0) * (1 - var(--cast-press-distance, 0.35)))
+);
+
+@function _offset($g) {
+  @return calc(var(--cast-x, 0) * -#{map.get($g, x)} * #{$_dp})
+    calc(
+      (
+          max(0px, var(--cast-y, 0) * -#{map.get($g, swing)}) +
+            #{map.get($g, y)}
+        ) *
+        #{$_dp}
+    );
+}
+
+@function _blur($g) {
+  @return blur(calc(#{map.get($g, blur)} * #{$_d}));
+}
+
+/** An elevation's variables, for a control or a container. The values are
+    the pattern tokens `pattern.elevation.*`: a draft sets
+    `--cds-motion-elevation-<name>-*` on the root; these are the fallbacks. */
+@mixin elevation($name) {
+  $e: map.get($elevations, $name);
+  --cast-distance: var(
+    --cds-motion-elevation-#{$name}-distance,
+    #{map.get($e, distance)}
+  );
+  --cast-shadow-contrast: var(
+    --cds-motion-elevation-#{$name}-ambient,
+    #{map.get($e, ambient)}
+  );
+  --cast-contact-contrast: var(
+    --cds-motion-elevation-#{$name}-contact,
+    #{map.get($e, contact)}
+  );
+}
+
+@mixin cast-shadow(
+  $layers: (
+    ambient,
+  ),
+  $lit: (
+    ':hover',
+    ':focus-visible',
+  ),
+  $lift: 0px,
+  $lift-duration: var(--cds-motion-duration-fast-02),
+  $press-inset: 1px,
+  $press: ':active:not(:disabled)',
+  $distance: null,
+  $elevation: null
+) {
+  --cast-layers: #{$layers};
+
+  @if $elevation {
+    @include elevation($elevation);
+  }
+
+  @if $distance {
+    --cast-distance: #{$distance};
+  }
+
+  > [data-cast-layer] {
+    position: absolute;
+    z-index: -2;
+    border-radius: inherit;
+    background: var(--cast-c, transparent);
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY($lift);
+    transition:
+      opacity var(--cds-motion-duration-moderate-01) $_standard,
+      transform $lift-duration $_standard,
+      inset var(--cds-motion-duration-fast-01) $_standard,
+      --cast-press var(--cds-motion-duration-fast-01) $_standard;
+  }
+
+  > [data-cast-layer='ambient'] {
+    filter: _blur($ambient);
+    translate: _offset($ambient);
+  }
+
+  > [data-cast-layer='contact'] {
+    filter: _blur($contact);
+    translate: _offset($contact);
+  }
+
+  $sel: ();
+  @each $state in $lit {
+    $sel: list.append(
+      $sel,
+      '&#{$state} > [data-cast-layer]',
+      $separator: comma
+    );
+  }
+
+  #{$sel} {
+    opacity: 1;
+    will-change: translate, opacity;
+
+    /* A layer injected on this very hover fades in rather than popping. */
+    @starting-style {
+      opacity: 0;
+    }
+  }
+
+  /* Forced colors (Windows High Contrast) would repaint the layers' fill as
+     a solid system color — a slab behind the card. The system draws its
+     own borders there; the shadow steps aside. Print likewise. */
+  @media (forced-colors: active), print {
+    > [data-cast-layer] {
+      display: none;
+    }
+  }
+
+  @if $press {
+    &#{$press} > [data-cast-layer] {
+      --cast-press: 1;
+
+      inset: $press-inset;
+    }
+  }
+}

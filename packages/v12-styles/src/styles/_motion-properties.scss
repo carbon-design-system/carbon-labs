@@ -1,0 +1,21 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use 'sass:meta';
+@use '@carbon-labs/v12-motion/scss/tokens';
+
+/// carbon-motion's `--cds-motion-*` custom properties, one per generated
+/// token, read from the seam's tokens module; none is written here.
+///
+///   :root {
+///     @include motion-properties;
+///   }
+@mixin motion-properties() {
+  @each $name, $value in meta.module-variables('tokens') {
+    --cds-motion-#{$name}: #{$value};
+  }
+}

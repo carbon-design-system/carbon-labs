@@ -8,5 +8,40 @@
         "ignorePseudoClasses": ["global"]
       }
     ]
-  }
+  },
+  # The v12 lane: styles imported from the source kit (tools/v12-import).
+  # Property order and the empty-line rules stay on: `stylelint --fix` applies
+  # them, and the import tool runs it. Off, here only, is what no fixer can
+  # apply without changing the CSS or the kit's structure:
+  #   length-zero-no-unit        0px is kept where a unit is needed (calc, @property)
+  #   selector-not-notation      :not(a):not(b) to :not(a, b) changes specificity
+  #   no-duplicate-selectors     the kit repeats a theme scope, in cascade order
+  #   no-descending-specificity  a fix would reorder the cascade
+  #   a11y/media-prefers-reduced-motion
+  #                              its fixer wraps rules in a broken media block; the
+  #                              kit handles reduced motion in its tokens and tests
+  # rule-empty-line-before also ignores a rule after a comment, so the fixer
+  # does not detach a comment from the rule it describes.
+  "overrides": [
+    {
+      "files": [
+        "packages/react/src/v12/components/**/*.scss",
+        "packages/v12-styles/**/*.scss"
+      ],
+      "rules": {
+        "rule-empty-line-before": [
+          "always",
+          {
+            "except": ["after-single-line-comment", "first-nested"],
+            "ignore": ["after-comment"]
+          }
+        ],
+        "length-zero-no-unit": null,
+        "selector-not-notation": null,
+        "no-duplicate-selectors": null,
+        "no-descending-specificity": null,
+        "a11y/media-prefers-reduced-motion": null
+      }
+    }
+  ]
 }

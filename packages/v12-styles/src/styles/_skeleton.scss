@@ -1,0 +1,90 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/colors' as c;
+
+/* The skeleton block — motion-core's `attachSkeletonWave`, painted.
+ *
+ * Ported from the design lead's SkeletonLayout (Motion-Components): Carbon's skeleton
+ * colour at a low, pulsing opacity, with an AI-tinted variant. The fill is on
+ * `::before`, whose opacity the wave pulses; the block's own opacity is its
+ * entrance. Both are motion-core's to drive — this only paints.
+ *
+ *   --skeleton-fill     the fill colour (default Carbon's skeleton element)
+ *   --skeleton-peak     the pulse's peak opacity
+ *   --skeleton-trough   the pulse's trough opacity
+ *
+ * The theme values are SkeletonLayout's (`themes.css`): neutral 0.3 / 0.15
+ * on the light themes and 0.25 / 0.15 on g100; AI pulses 0.4 / 0.15 on Blue
+ * 20 (light) or Blue 50 (dark). These are the fallback: the wave solves
+ * each block's peak and trough against its own backdrop (motion-core
+ * `SKELETON_CONTRAST`, 6 / 3 L*) and writes them on the block. Without the
+ * wave (reduced motion, or before it attaches) the fill rests at its peak.
+ *
+ * The theme is read from <html data-carbon-theme>, or from the nearest
+ * Carbon <Theme> zone when `skeleton-theme-zones` is emitted (the Skeleton
+ * family's stylesheet does): the zone sets `--skeleton-ai-fill` and
+ * `--skeleton-neutral-peak`, which inherit, so the closest theme wins.
+ * Forced colors (Windows high contrast): the fill is CanvasText, as v11's. */
+
+// `$own-radius`: the block keeps the element's own corners (a component's
+// part standing in for itself, SkeletonOf), not `--skeleton-radius`.
+@mixin skeleton-block($ai: false, $own-radius: false) {
+  @if $ai {
+    --skeleton-fill: var(--skeleton-ai-fill, #{c.$blue-20});
+    --skeleton-peak: 0.4;
+    --skeleton-trough: 0.15;
+
+    [data-carbon-theme='g100'] & {
+      --skeleton-fill: var(--skeleton-ai-fill, #{c.$blue-50});
+    }
+  } @else {
+    --skeleton-fill: var(--cds-skeleton-element, #c6c6c6);
+    --skeleton-peak: var(--skeleton-neutral-peak, 0.3);
+    --skeleton-trough: 0.15;
+
+    [data-carbon-theme='g100'] & {
+      --skeleton-peak: var(--skeleton-neutral-peak, 0.25);
+    }
+  }
+
+  position: relative;
+
+  @if not $own-radius {
+    border-radius: var(--skeleton-radius, 0px);
+  }
+
+  &::before {
+    position: absolute;
+    border-radius: inherit;
+    background: var(--skeleton-fill);
+    content: '';
+    inset: 0;
+    opacity: var(--skeleton-peak);
+  }
+
+  @media (forced-colors: active) {
+    &::before {
+      background: CanvasText;
+      forced-color-adjust: none;
+    }
+  }
+}
+
+/* The theme values for Carbon <Theme> zones (`.cds--white` … `.cds--g100`),
+ * emitted once by a stylesheet that uses the mixin inside such zones. */
+@mixin skeleton-theme-zones {
+  .cds--white {
+    --skeleton-ai-fill: #{c.$blue-20};
+    --skeleton-neutral-peak: 0.3;
+  }
+
+  .cds--g100 {
+    --skeleton-ai-fill: #{c.$blue-50};
+    --skeleton-neutral-peak: 0.25;
+  }
+}

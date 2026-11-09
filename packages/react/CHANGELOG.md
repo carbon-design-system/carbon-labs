@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.216.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.215.0...%40carbon-labs%2Freact%400.216.0) (2026-11-09)
+
+### Features
+
+* **v12-motion:** the v12 motion seam and shared styles ([#1452](https://github.com/carbon-design-system/carbon-labs/issues/1452)) ([47dedf1](https://github.com/carbon-design-system/carbon-labs/commit/47dedf17591c83c2417187229188aaed6d6add87))
+* **v12-workbench:** the v12 workbench in the v12 Storybook ([#1453](https://github.com/carbon-design-system/carbon-labs/issues/1453)) ([fffe37e](https://github.com/carbon-design-system/carbon-labs/commit/fffe37ef9b214b1b28a8ae4a107ea473b5db6765))
+
+
 # [0.215.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.214.0...%40carbon-labs%2Freact%400.215.0) (2026-10-21)
 
 ### Features

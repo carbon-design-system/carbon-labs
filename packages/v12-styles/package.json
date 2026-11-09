@@ -37,7 +37,7 @@
   "devDependencies": {
     "@types/node": "^20.17.10",
     "rimraf": "^6.1.3",
-    "sass": "~1.106.0",
+    "sass": "~1.107.0",
     "vitest": "^4.0.0"
   }
 }

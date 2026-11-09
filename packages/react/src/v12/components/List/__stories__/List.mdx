@@ -1,0 +1,45 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ListStories from './List.stories.tsx';
+
+<Meta of={ListStories} />
+
+# List
+
+Carbon's UnorderedList, OrderedList and ListItem: static text lists, their
+markers one step under their text.
+
+<Canvas of={ListStories.Default} />
+
+## Motion
+
+| Pattern        | Where    | Values                                                        |
+| -------------- | -------- | ------------------------------------------------------------- |
+| None           | The list | A list is content, principle 5: it doesn't answer the pointer |
+| Reduced motion | The list | Nothing changes                                               |
+
+## Props beyond Carbon's
+
+None. Carbon's props: UnorderedList `nested`, `isExpressive`; OrderedList
+`nested`, `native`, `isExpressive`; ListItem `className`, `children`. Every
+other attribute reaches the element.
+
+### Look
+
+- Type: `body-01`, 14 / 20px. `isExpressive` takes `body-02`, 16 / 24px, nested
+  lists included.
+- Unordered: an en dash 16px out; nested, a small square.
+- Ordered: a counter and a period 24px out, inside the list's own box; nested,
+  lower-latin. `native` leaves the decimal markers to the browser.
+- Nested lists sit 32px in, their items 4px further.
+- Space between items: 8px at the top level, 4px in a nested list and down to
+  its first item.
+- Class names are the kit's (`cds-list…`), so Carbon's global list styles never
+  mix in.
+
+| Part                                             | Top level         | Nested            |
+| ------------------------------------------------ | ----------------- | ----------------- |
+| Item text                                        | `$text-primary`   | `$text-secondary` |
+| Marker: dash, square, number, letter, `::marker` | `$text-secondary` | `$text-helper`    |
+
+Every pair is 4.5:1 or more on the four themes. A host that needs a nested list
+at full strength sets `color` on it; the markers follow (`--cds-list-marker`).

@@ -1,0 +1,28 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as IconMotionStories from './IconMotion.stories.tsx';
+
+<Meta of={IconMotionStories} />
+
+# IconMotion
+
+Makes the motion icons follow the kit's reduced motion. Without it, a motion
+icon looks only at its own `animated` prop, the nearest `MotionIconProvider`
+and the OS, so a `MotionProvider level="reduced"` would leave icons moving.
+
+- `FollowKitMotion` wraps its children in a `MotionIconProvider` set from the
+  nearest `MotionProvider`'s level, else the OS. Put it inside each
+  `MotionProvider` that sets a level. An icon's own `animated` still wins.
+- `useIconAnimated()` returns the same boolean, for a component that passes
+  `animated` to an icon it draws.
+
+<Canvas of={IconMotionStories.Default} />
+
+## Reduced motion
+
+Under the OS setting, icons use the motion icons' reduced mode: the rest
+shape, with changes at once. Under a reduced level while the OS does not
+reduce, icons draw still.
+
+## Props
+
+<ArgTypes of={IconMotionStories} />

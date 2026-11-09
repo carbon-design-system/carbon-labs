@@ -1,6 +1,134 @@
 {
   "items": [
     {
+      "id": "icon-motion",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/IconMotion",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "MotionProvider",
+        "usePrefersReducedMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "illustrations",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Illustrations",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "clamp01"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "4f2a12b253ef68bbed31f80de38387b67d6fb582"
+      }
+    },
+    {
+      "id": "kit-defaults",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/KitDefaults",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "CastElevation"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      },
+      "testsWaiting": [
+        {
+          "file": "kit-defaults.test.tsx",
+          "waitingOn": [
+            "accordion",
+            "app-shell",
+            "button",
+            "card",
+            "contained-list",
+            "data-table",
+            "date-picker",
+            "feedback",
+            "loading",
+            "number-input",
+            "pagination",
+            "progress-bar",
+            "progress-ring",
+            "side-nav",
+            "structured-list",
+            "tag",
+            "text-input",
+            "time-picker",
+            "tooltip",
+            "tree-view"
+          ]
+        },
+        {
+          "file": "kit-portal.test.tsx",
+          "waitingOn": [
+            "menu",
+            "modal",
+            "tearsheet"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "link",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Link",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "TooltipMotionContext",
+        "attachRollover"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "list",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/List",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "b82caeebe75f97e76601b460fcbc7eb40898316b"
+      }
+    },
+    {
+      "id": "list-reflow",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/ListReflow",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "CONTENT_SLIDE_PX",
+        "DURATION_FLOOR_MS",
+        "DurationToken",
+        "REDUCED_MOTION",
+        "RELAYOUT",
+        "animateLayout",
+        "cubicBezier",
+        "durationStepForDistance",
+        "motionTokens",
+        "toEasing"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
       "id": "package/motion-icons",
       "kind": "package",
       "path": "packages/react/src/v12/components/MotionIcons",
@@ -34,6 +162,94 @@
         "repo": "carbon-next",
         "ref": "6f8b71c063976cdba7667b74b6291aacda5d9b7e",
         "path": "packages/motion-icons-wc"
+      }
+    },
+    {
+      "id": "processing",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Processing",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "DurationToken",
+        "EasingToken",
+        "SKELETON_WAVE",
+        "clamp01",
+        "easingCss",
+        "motionTokens",
+        "useFeedbackMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "props",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Props",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "roll-text",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/RollText",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "cubicBezier",
+        "motionTokens",
+        "toEasing",
+        "usePrefersReducedMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "shimmer-text",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/ShimmerText",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "DURATION_FLOOR_MS",
+        "RGBA",
+        "SKELETON_WAVE",
+        "contrastRatio",
+        "cubicBezier",
+        "motionTokens",
+        "parseColor",
+        "useFeedbackMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "snap",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Snap",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "SNAP",
+        "SNAP_PROPOSED_EASE",
+        "SnapProfile",
+        "axialPlan",
+        "snapEaseCss"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "4f2a12b253ef68bbed31f80de38387b67d6fb582"
       }
     },
     {
@@ -200,6 +416,48 @@
         "repo": "carbon-next",
         "ref": "b36c1f77a810df54239b9e26f4910a687f78a6fe"
       }
+    },
+    {
+      "id": "theme-zone",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/ThemeZone",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "util",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Util",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "LIGHTNESS_STEPS",
+        "LightnessSteps",
+        "MotionProvider",
+        "parseColor",
+        "useLatest",
+        "usePrefersReducedMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "testsWaiting": [
+        {
+          "file": "ref.test.ts",
+          "waitingOn": [
+            "notification",
+            "popover",
+            "tag",
+            "toggletip"
+          ]
+        }
+      ]
     }
   ]
 }

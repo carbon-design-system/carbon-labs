@@ -1,0 +1,53 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import * as PropsStories from './Props.stories.tsx';
+
+<Meta of={PropsStories} />
+
+# Prop vocabulary
+
+One name for each idea across the v12 components. Carbon v11's names stay where
+v11 has them and they fit (`size`, `type` on Tag, `labelText`, `lowContrast`,
+`invalidText` …).
+
+**No aliases:** one name per concept for v12, including v11 names that break the
+system (Tabs' `contained`, Button's `tertiary` and `ghost` kinds). The earlier
+names are gone, not accepted; the migration table lists each one.
+
+The shared types and the resolutions that are more than `a ?? b` are in
+`props.ts`, with tests beside it (`props.test.ts`).
+
+## motion
+
+_One tuning pattern._
+
+A component's tuning (the numbers a review dials: a segment's share, a swing, a
+band's width, a pass's period) is **one `motion` object prop**,
+`Partial<…Motion>`: each key left out is the component's shipped number. Never
+top-level props, and never a store a product calls.
+
+| Component                                                         | `motion`                                            | Keys                                                                                                                                                                                  |
+| ----------------------------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| The selection family, Menu and its buttons, Slider, PaginationNav | `Partial<SelectionMotion>`, `Partial<MenuMotion>` … | their clocks, and `timeScale` (above)                                                                                                                                                 |
+| Spinner, ProgressRing                                             | `Partial<SpinnerMotion>`                            | `arc`, `swing`, `swingPeriods`, `gapSmall`, `gapLarge`, `gapStyle`, `strokeScale`, `strokeMax`, `enterScale`, `enter` (the scale-in's scale and its shortest clock, a duration token) |
+| ProgressBar                                                       | `Partial<ProgressBarMotion>`                        | `segment`, `pulsePeriods`                                                                                                                                                             |
+| ShimmerText                                                       | `Partial<ShimmerTextMotion>`                        | `shortSpeed`, `longSpeed`, `restMs` (the length rule: the speed by the words' length, then one rest; it replaces `speed` and `periods`), `band`, `weight`, `weightAt`                 |
+| PageHeader                                                        | `Partial<PageHeaderMotion>` (`PAGE_HEADER_MOTION`)  | `fade` (default true: the collapse's soft edges and the slash's fade; false, hard edges, opaque to the last frame)                                                                    |
+
+- **Where every instance should follow, a lab-only global store** besides the
+  prop: the spinner's `setSpinnerMotion` (`resetSpinnerMotion`,
+  `useSpinnerMotion`), which writes `SPINNER_MOTION` and redraws every Spinner
+  and ProgressRing on the page, so the Loading page's Tuning dials busy buttons,
+  InlineLoading and the uploader at once. It is for the lab; an instance's own
+  `motion` wins for the keys it sets.
+- A lab keeps its draft itself (the spinner's in `localStorage`); the kit stores
+  nothing.
+- Processing has no tuning props (its clocks are the loading clock's and the
+  tokens'), so it has no `motion`.
+- **DataTableReveal's `stagger` and `staggerCap`** are top-level, as
+  `SkeletonReveal`'s options are: `stagger`, how far apart the arriving rows
+  fade in, ms (default `LOADING_MOTION.rowStaggerMs`, 30); `staggerCap`, where
+  that stagger stops growing, ms (default `LOADING_MOTION.staggerCapMs`,
+  `moderate-02`, 220; `Infinity` for none). They are tuning by the rule above,
+  so they would move into a `motion` object; that is not done yet.
+
+## Props

@@ -1,0 +1,45 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ShimmerTextStories from './ShimmerText.stories.tsx';
+
+<Meta of={ShimmerTextStories} />
+
+# Shimmer text
+
+A label that shows live work: a band sweeps through words that rest a step
+quieter and show one weight step heavier under the band. It runs on the skeleton
+wave's angle.
+
+<Canvas of={ShimmerTextStories.Default} />
+
+## Motion
+
+| Pattern        | Where                      | Values                                                                                                                    |
+| -------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| Pass           | While `active`             | The band crosses from wholly before the words to wholly past them, standard-productive, then rests 500ms and passes again |
+| Speed          | By the words' length       | 0.09px/ms at 66px of words, 0.16px/ms at 381px, linearly between, held outside                                            |
+| Band           | Each pass                  | Soft, 75% of the words' width along the sweep, between 96 and 240px; one weight step up, as a stroke                      |
+| Colours        | Per theme                  | The rest 4.5:1 on its backdrop; the band 2.25:1 on the rest; solved as it starts and when a theme changes                 |
+| Start          | Mount, or turning active   | The first pass sets off at once, from before the words                                                                    |
+| Wave           | Labels that start together | One wave on the skeleton wave's 45° angle; a change of words keeps the phase                                              |
+| Active off     | `active` false             | The band goes at once; the words' colour moves to the host's over fast-02, standard-productive, and back                  |
+| Reveal         | `playShimmerReveal`        | Words arrive under one crossing at the label's own speed, without the rest; the first pass follows one rest after         |
+| Off screen     | A hidden label             | The pass holds and comes back on its phase                                                                                |
+| Reduced motion | Every change               | Plain text in its host's colour; the reveal shows the words at once                                                       |
+
+## Props beyond Carbon's
+
+| Prop                | What it does                                                                                                              |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `active`            | Whether the band sweeps. Off, the label is plain text. Default on.                                                        |
+| `motion`            | Tuning, an object. Each key left out is the default.                                                                      |
+| `motion.shortSpeed` | The band's average speed for a short label, 66px of words, px per ms. Default 0.09.                                       |
+| `motion.longSpeed`  | Its speed for a long label, 381px; a length between takes a speed between. Default 0.16.                                  |
+| `motion.restMs`     | The rest between passes, ms, every label's. Default 500.                                                                  |
+| `motion.band`       | The band's width: px along the sweep, or a share of the label's width, kept between 96 and 240px. Default 75%.            |
+| `motion.weight`     | The weight under the band: regular, medium or semibold, as a stroke. Default semibold.                                    |
+| `motion.weightAt`   | Which size's weight step the band adds: the next smaller on the type scale, or the label's own. Default the next smaller. |
+| `as`                | The element. Default a span.                                                                                              |
+| `children`          | The words: a real stage of the work, never a stand-in.                                                                    |
+
+The band needs plain words; other children are plain text. Its copy of the words
+is silent to assistive technology. Slow motion multiplies the pass.

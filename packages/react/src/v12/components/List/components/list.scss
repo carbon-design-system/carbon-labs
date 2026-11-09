@@ -1,0 +1,138 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+
+/* UnorderedList, OrderedList, ListItem — `List.tsx`. v11's list on the
+   kit's type scale: `body-01`, `body-02` expressive. Markers sit outside the
+   text column (16px out for the dash, 24px for a number), so wrapped lines
+   align with the first. Static: no hover, no transition.
+
+   Text colours, three steps, so it doesn't read flat: Carbon's text ladder as the kit's quiet
+   standard uses it:
+     item          $text-primary, the content
+     nested item   $text-secondary, it qualifies the item it sits in
+     marker        one step under its item's text: $text-secondary at the
+                   top level, $text-helper nested (the dash, the square,
+                   the number, the letter, and the browser's own ::marker)
+   v11 draws everything in $text-primary. */
+
+.cds-list {
+  @include type-style('body-01');
+
+  padding: 0;
+
+  margin: 0;
+  color: theme.$text-primary;
+  list-style: none;
+}
+
+.cds-list--expressive,
+.cds-list--expressive .cds-list--nested {
+  @include type-style('body-02');
+}
+
+.cds-list__item {
+  --cds-list-marker: #{theme.$text-secondary};
+
+  color: theme.$text-primary;
+
+  &::before,
+  &::marker {
+    color: var(--cds-list-marker);
+  }
+}
+
+/* A nested list's items: secondary text, helper markers (every level
+   below the first). */
+.cds-list--nested > .cds-list__item {
+  --cds-list-marker: #{theme.$text-helper};
+
+  color: theme.$text-secondary;
+}
+
+/* Unordered: an en dash, 16px out. */
+.cds-list--unordered:not(.cds-list--nested) {
+  margin-inline-start: $spacing-05;
+}
+
+.cds-list--unordered > .cds-list__item {
+  position: relative;
+
+  &::before {
+    position: absolute;
+    content: '\2013';
+    inset-inline-start: calc(-1 * #{$spacing-05});
+  }
+}
+
+/* Nested: a small square, closer in (it's narrower than the dash). */
+.cds-list--unordered.cds-list--nested > .cds-list__item::before {
+  content: '\25AA\FE0E';
+  inset-inline-start: calc(-1 * #{$spacing-04});
+}
+
+/* Ordered: a counter and a period, 24px out. */
+.cds-list--ordered:not(.cds-list--nested) {
+  counter-reset: cds-list-item;
+  margin-inline-start: $spacing-06;
+
+  > .cds-list__item {
+    position: relative;
+
+    &::before {
+      position: absolute;
+      content: counter(cds-list-item) '.';
+      counter-increment: cds-list-item;
+      font-variant-numeric: tabular-nums;
+      inset-inline-start: calc(-1 * #{$spacing-06});
+    }
+  }
+}
+
+/* Native: the browser's own markers, outside the text. */
+.cds-list--ordered-native {
+  list-style: decimal outside;
+  margin-inline-start: $spacing-06;
+}
+
+.cds-list--ordered.cds-list--nested,
+.cds-list--ordered-native.cds-list--nested {
+  list-style: lower-latin outside;
+}
+
+/* Nested lists: 32px in, their items 4px further. */
+.cds-list--nested {
+  margin-inline-start: 2rem;
+
+  .cds-list__item {
+    padding-inline-start: $spacing-02;
+  }
+}
+
+/* 8px between top-level items, each its own point; 4px within a nested list and down to its
+   first item (its margin, below), so it reads as one group under its item. */
+.cds-list:not(.cds-list--nested) > .cds-list__item + .cds-list__item {
+  margin-block-start: $spacing-03;
+}
+
+.cds-list--nested > .cds-list__item + .cds-list__item {
+  margin-block-start: $spacing-02;
+}
+
+.cds-list__item > .cds-list--nested {
+  margin-block: $spacing-02 0;
+}
+
+@media (forced-colors: active) {
+  .cds-list__item::before,
+  .cds-list__item::marker {
+    color: CanvasText;
+  }
+}

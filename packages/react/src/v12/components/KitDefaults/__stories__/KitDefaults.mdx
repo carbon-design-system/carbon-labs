@@ -1,0 +1,42 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as KitDefaultsStories from './KitDefaults.stories.tsx';
+
+<Meta of={KitDefaultsStories} />
+
+# KitDefaults
+
+`KitDefaults` sets `density`, `corners`, `containerCorners`, `variant`, `brand`,
+`frame` and `shadow` for everything inside it. A component uses them only for a
+prop it isn't given, so **its own prop always wins**. With no provider, every
+component keeps its own defaults. Recipes use it per region (a filter bar is
+usually `compact`); see `../recipes/README.md` ("Density").
+
+```tsx
+import { KitDefaults } from '@carbon-labs/react-kit-defaults';
+
+<KitDefaults density="compact" corners="rounded">
+  <Search labelText="Filter" />           {/* sm 32, 8px */}
+  <Dropdown … />                          {/* sm 32 */}
+  <Button size="lg">Create</Button>       {/* lg 48: the prop wins */}
+  <KitDefaults density="spacious">        {/* nests: corners stay rounded */}
+    <TextInput … />                       {/* lg 48 */}
+  </KitDefaults>
+</KitDefaults>
+```
+
+<Canvas of={KitDefaultsStories.Default} />
+
+## Props
+
+| Prop               | Values                                                                                                           | Meaning                                                                                                                                                                                                                                                                                                                                                                        |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `density`          | `compact` · `default` · `spacious`                                                                               | Mapped onto each component's own size scale (below).                                                                                                                                                                                                                                                                                                                           |
+| `corners`          | `full` · `rounded` · `square`                                                                                    | The kit's corners vocabulary; `rounded` is each component's own radius (8px, Tag's 2px). `square` and `rounded` reach the containers too.                                                                                                                                                                                                                                      |
+| `containerCorners` | `square` · `rounded`                                                                                             | The containers' alone (DataTable, Accordion, ContainedList, StructuredList), so a rounded region can round its tables and lists without rounding a pill button or a tag. A `Region` sets it from its radius: square at 0, rounded otherwise. No provider: square (v11).                                                                                                        |
+| `variant`          | `inverse` · `tonal` · `outlined` · `hero` · `neutral`                                                            | A treatment. A component takes it only when it is one of its own variants, and ignores it otherwise: the fields and the loaders take `neutral` · `hero`.                                                                                                                                                                                                                       |
+| `brand`            | `blue` · `purple` · `magenta` · `cyan` · `teal` (`KIT_BRANDS`; never red, yellow or green, IBM's status colours) | The hue `variant="hero"` draws in (default, no provider: IBM blue). A prop of the provider that no component reads: it reaches them through CSS, as the provider draws a box-less zone (`data-cds-brand`, `display: contents`) that points the `--cds-hero` tokens at the hue's Carbon grades in every theme (the kit's `_brand.scss`). Every hero follows it: "Brand", below. |
+| `frame`            | `inset` · `ghost`                                                                                                | The default frame of the selection and navigation components inside: the select list, TabsVertical, SideNav and a toolbar's exclusive groups. A Region sets it from its surface (below); a component takes it only when it has that frame.                                                                                                                                     |
+| `shadow`           | `false` · `true` · `resting` · `raised` · `floating` (`KitShadow`, the surfaces' `SurfaceShadowOption`)          | The cast shadow on the kit's surfaces; `true` is the `floating` elevation. No provider: `false`, none (`KIT_SHADOW`: cast shadows are off by default). Below, "shadow".                                                                                                                                                                                                        |
+
+An inner provider overrides only what it sets; the rest comes from the outer
+one.

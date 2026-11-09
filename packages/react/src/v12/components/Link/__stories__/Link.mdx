@@ -1,0 +1,43 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as LinkStories from './Link.stories.tsx';
+
+<Meta of={LinkStories} />
+
+# Link
+
+Carbon's Link, prop for prop, on the rollover's text standard in link blue: the text, an underline and an optional icon after it.
+
+<Canvas of={LinkStories.Default} />
+
+## Motion
+
+| Pattern | Where | Values |
+| --- | --- | --- |
+| Rollover, link blue | The whole link | A glow of the dimmed colour in the letters under the pointer, fast-02 in, fast-01 out, growing 80% to 100% over moderate-02; press dimmer, flat; the release circle |
+| Colours | Every state | Matched lightness in the blue's own hue; the rest is `link-primary` in every theme |
+| Underline, standalone | On hover | The rollover-text underline layer, fading in over fast-02 and out over fast-01 |
+| Underline, inline | Always | A real text decoration under the letters' paint, so it takes the glow and press with them |
+| Motion icon | `renderIcon` | The icon's hover plays on the link's hover or keyboard focus; it dims with the text, flatly |
+| Slow motion | All | The CSS steps read the duration tokens' variables; the release circle takes `timeScale` |
+| Reduced motion | All | The hover still dims and the press still shows; the release and the hover's return take 1ms |
+
+Reduced motion comes from a TooltipMotion `reduced`, else the provider,
+else the system. See "reduced" in props.md.
+
+## Props beyond Carbon's
+
+| Prop | What it does |
+| --- | --- |
+| `timeScale` | The release circle's clock, for slow motion. Default 1. |
+
+### Behaviour
+
+- An `<a>`, or `as`; `rel="noopener"` with `target="_blank"`.
+- Disabled: no `href`, `role="link"` and `aria-disabled="true"`, and a
+  click does nothing.
+- The icon shows only on a standalone link, after the text, 8px from it:
+  16px, or 20px at `lg`.
+- Visited: `.cds-link--visited:visited` sets the colour to `link-visited`
+  through a background colour, since `:visited` can change only colours.
+  Hovered, focused or pressed, a visited link takes the blue rollover.
+- The keyboard ring is the rest colour, 2px, 2px outside the text.

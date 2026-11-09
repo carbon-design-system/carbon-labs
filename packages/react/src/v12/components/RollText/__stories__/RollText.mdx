@@ -1,0 +1,19 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as RollTextStories from './RollText.stories.tsx';
+
+<Meta of={RollTextStories} />
+
+# RollText
+
+A short text that rolls to its next value, like a counter: only the characters
+that change move. For a value that steps through a list, such as a slider's
+step, a status word or a count's label.
+
+The rules for when to use it are below; the mechanics (what stays, what rolls,
+the clip, the blur) are in the header of `RollText.tsx`.
+
+<Canvas of={RollTextStories.Default} />
+
+## Props
+
+<ArgTypes of={RollTextStories} />

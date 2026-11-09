@@ -3054,6 +3054,35 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-icon-motion@workspace:packages/react/src/v12/components/IconMotion":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-icon-motion@workspace:packages/react/src/v12/components/IconMotion"
+  dependencies:
+    "@carbon-labs/react-motion-icons": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    vitest: "npm:^4.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+    react-dom: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-illustrations@workspace:packages/react/src/v12/components/Illustrations":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-illustrations@workspace:packages/react/src/v12/components/Illustrations"
+  dependencies:
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    jsdom: "npm:^26.0.0"
+    vitest: "npm:^4.0.0"
+  peerDependencies:
+    react-dom: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-inline-tip@workspace:packages/react/src/components/InlineTip":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-inline-tip@workspace:packages/react/src/components/InlineTip"
@@ -3063,7 +3092,64 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-motion-icons@workspace:packages/react/src/v12/components/MotionIcons":
+"@carbon-labs/react-kit-defaults@workspace:*, @carbon-labs/react-kit-defaults@workspace:packages/react/src/v12/components/KitDefaults":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-kit-defaults@workspace:packages/react/src/v12/components/KitDefaults"
+  dependencies:
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+    react-dom: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-link@workspace:packages/react/src/v12/components/Link":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-link@workspace:packages/react/src/v12/components/Link"
+  dependencies:
+    "@carbon-labs/react-motion-icons": "workspace:*"
+    "@carbon-labs/react-props": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-list-reflow@workspace:packages/react/src/v12/components/ListReflow":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-list-reflow@workspace:packages/react/src/v12/components/ListReflow"
+  dependencies:
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-list@workspace:packages/react/src/v12/components/List":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-list@workspace:packages/react/src/v12/components/List"
+  dependencies:
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-motion-icons@workspace:*, @carbon-labs/react-motion-icons@workspace:packages/react/src/v12/components/MotionIcons":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-motion-icons@workspace:packages/react/src/v12/components/MotionIcons"
   dependencies:
@@ -3128,12 +3214,41 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-processing-v2@workspace:packages/react/src/v12/components/Processing":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-processing-v2@workspace:packages/react/src/v12/components/Processing"
+  dependencies:
+    "@carbon-labs/react-kit-defaults": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    vitest: "npm:^4.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+    react-dom: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-processing@workspace:packages/react/src/components/Processing":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-processing@workspace:packages/react/src/components/Processing"
   dependencies:
     "@carbon-labs/utilities": "npm:0.28.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-props@workspace:*, @carbon-labs/react-props@workspace:packages/react/src/v12/components/Props":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-props@workspace:packages/react/src/v12/components/Props"
+  dependencies:
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    vitest: "npm:^4.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
   languageName: unknown
   linkType: soft
 
@@ -3163,6 +3278,48 @@ __metadata:
   dependencies:
     "@carbon-labs/utilities": "npm:0.28.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-roll-text@workspace:packages/react/src/v12/components/RollText":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-roll-text@workspace:packages/react/src/v12/components/RollText"
+  dependencies:
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-shimmer-text@workspace:packages/react/src/v12/components/ShimmerText":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-shimmer-text@workspace:packages/react/src/v12/components/ShimmerText"
+  dependencies:
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    vitest: "npm:^4.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-snap@workspace:packages/react/src/v12/components/Snap":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-snap@workspace:packages/react/src/v12/components/Snap"
+  dependencies:
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    jsdom: "npm:^26.0.0"
+    vitest: "npm:^4.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
   languageName: unknown
   linkType: soft
 
@@ -3218,6 +3375,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-theme-zone@workspace:packages/react/src/v12/components/ThemeZone":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-theme-zone@workspace:packages/react/src/v12/components/ThemeZone"
+  dependencies:
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-ui-shell@workspace:packages/react/src/components/UIShell":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-ui-shell@workspace:packages/react/src/components/UIShell"
@@ -3225,6 +3396,20 @@ __metadata:
     "@carbon-labs/utilities": "npm:0.28.0"
     "@carbon/ibm-products": "npm:^2.76.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-util@workspace:*, @carbon-labs/react-util@workspace:packages/react/src/v12/components/Util":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-util@workspace:packages/react/src/v12/components/Util"
+  dependencies:
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    vitest: "npm:^4.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+    react-dom: ^18.2.0 || ^19.0.0
   languageName: unknown
   linkType: soft
 
@@ -3391,7 +3576,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/v12-styles@workspace:packages/v12-styles":
+"@carbon-labs/v12-styles@workspace:*, @carbon-labs/v12-styles@workspace:packages/v12-styles":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/v12-styles@workspace:packages/v12-styles"
   dependencies:

@@ -1,0 +1,81 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+
+/* RollText (RollText.tsx): at rest one plain run of text (`__still`). Mid-change, the parts that
+ * stay are still runs, and each part that changes rolls in a window (`__win`) its text's size,
+ * plus a little room on the two edges the text crosses, so the motion blur has somewhere to go at
+ * the ends of a roll. The window clips with a hard edge (`clip-path`, which keeps the text's
+ * baseline, where an `overflow` would move it); the blur along the roll, on the moving texts only
+ * while they move, softens what crosses it. */
+.cds-roll {
+  --roll-room: 0.2em;
+
+  display: inline-block;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.cds-roll__win {
+  position: relative;
+  display: inline-block;
+  /* Its width (which the roll animates) is its text's, the room outside it. */
+  box-sizing: content-box;
+  clip-path: inset(0);
+  margin-block: calc(-1 * var(--roll-room));
+  padding-block: var(--roll-room);
+  vertical-align: baseline;
+}
+
+/* Across, the room is on the text's outer ends only: inside the text, it would overlap the still
+   letters beside the window. */
+.cds-roll--horizontal .cds-roll__win {
+  margin-block: 0;
+  padding-block: 0;
+
+  &:first-child {
+    margin-inline-start: calc(-1 * var(--roll-room));
+    padding-inline-start: var(--roll-room);
+  }
+
+  &:last-child {
+    margin-inline-end: calc(-1 * var(--roll-room));
+    padding-inline-end: var(--roll-room);
+  }
+}
+
+.cds-roll__cur {
+  display: inline-block;
+}
+
+/* A window with nothing in it (a character on its way in, or gone) keeps its line, so it sits on
+   the baseline like the text beside it. */
+.cds-roll__cur:empty::before {
+  content: '\200b';
+}
+
+.cds-roll__ghost {
+  position: absolute;
+  inset-block-start: var(--roll-room);
+  inset-inline-start: 0;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.cds-roll--horizontal .cds-roll__ghost {
+  inset-block-start: 0;
+}
+
+.cds-roll--horizontal .cds-roll__win:first-child > .cds-roll__ghost {
+  inset-inline-start: var(--roll-room);
+}
+
+/* The AI tone: IBM blue (the leaving text keeps the tone it had). */
+.cds-roll [data-tone='ai'] {
+  color: theme.$link-primary;
+}

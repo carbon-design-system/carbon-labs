@@ -1,0 +1,125 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+
+/* ShimmerText (ShimmerText.tsx) and its reveal (reveal.ts).
+ *
+ * Banded (plain words, motion on), the label carries the band: its `::after`
+ * is the same words (`data-shimmer-words`) in `--cds-shimmer-band-color` if a
+ * host sets one, else the color the component solves over the rest
+ * (`--cds-shimmer-band-solved`: the primary over the rest at 2.5:1 on it, per
+ * theme), else `$text-primary`, one step up in weight (a stroke in their own
+ * color, `--cds-shimmer-weight`, so every glyph keeps its advance; the
+ * component sets it from the label's size: the step at the next smaller
+ * size on the type scale), shown only
+ * under a soft mask: the band, `--cds-shimmer-band` wide along the sweep, its
+ * middle half a band behind `--cds-shimmer-at`. The script moves
+ * `--cds-shimmer-at`; at rest it is 0, the band wholly before the words. A
+ * reveal rides its own copy, `::before`, on `--cds-shimmer-ride`.
+ *
+ * Active, the words rest at `--cds-shimmer-rest-color` if a host sets one,
+ * else at the color the component solves against the backdrop
+ * (`--cds-shimmer-rest-solved`: the band's ink, a host's band color or the
+ * primary, over the backdrop at 4.5:1 on it, per theme), else, before the first solve, `$text-primary` at 60%.
+ *
+ * Inactive, reduced motion and forced colors: plain text in the host's color.
+ * Turning `active` on or off moves the words between the two on the rest's
+ * own token (`SHIMMER_TEXT.restToken`), set by the component for that change
+ * alone; under reduced motion and forced colors, at once. */
+
+/* The band's soft profile, its middle `$b / 2` behind `$at`: eased stops (the
+ * rollover's 15.6 / 50 / 84.4), so there is no hard middle. */
+@function band-mask($angle, $at, $b) {
+  $q: calc(#{$b} / 8);
+
+  @return linear-gradient(
+    $angle,
+    transparent calc(#{$at} - #{$b}),
+    rgb(0 0 0 / 15.6%) calc(#{$at} - 7 * #{$q}),
+    rgb(0 0 0 / 50%) calc(#{$at} - 6 * #{$q}),
+    rgb(0 0 0 / 84.4%) calc(#{$at} - 5 * #{$q}),
+    #000 calc(#{$at} - 4 * #{$q}),
+    rgb(0 0 0 / 84.4%) calc(#{$at} - 3 * #{$q}),
+    rgb(0 0 0 / 50%) calc(#{$at} - 2 * #{$q}),
+    rgb(0 0 0 / 15.6%) calc(#{$at} - #{$q}),
+    transparent #{$at}
+  );
+}
+
+.cds-shimmer-text--banded {
+  position: relative;
+
+  /* The band's copies: `::after` for the label's own passes, `::before` for
+     a reveal's band (reveal.ts), so the two never contend for one place. */
+  &::before,
+  &::after {
+    position: absolute;
+    overflow: hidden;
+    color: var(
+      --cds-shimmer-band-color,
+      var(--cds-shimmer-band-solved, #{theme.$text-primary})
+    );
+    content: attr(data-shimmer-words) / '';
+    inset: 0;
+    pointer-events: none;
+    -webkit-text-fill-color: currentColor;
+    text-overflow: inherit;
+    -webkit-text-stroke: var(--cds-shimmer-weight, 0.041em) currentColor;
+    user-select: none;
+    white-space: inherit;
+  }
+
+  &::after {
+    -webkit-mask-image: band-mask(
+      var(--cds-shimmer-angle, 135deg),
+      var(--cds-shimmer-at),
+      var(--cds-shimmer-band, 160px)
+    );
+    mask-image: band-mask(
+      var(--cds-shimmer-angle, 135deg),
+      var(--cds-shimmer-at),
+      var(--cds-shimmer-band, 160px)
+    );
+  }
+
+  &::before {
+    -webkit-mask-image: band-mask(
+      var(--cds-shimmer-angle, 135deg),
+      var(--cds-shimmer-ride),
+      var(--cds-shimmer-band, 160px)
+    );
+    mask-image: band-mask(
+      var(--cds-shimmer-angle, 135deg),
+      var(--cds-shimmer-ride),
+      var(--cds-shimmer-band, 160px)
+    );
+  }
+}
+
+/* Two classes: the rest is the shimmer's own, over a host's color for its
+ * words (set `--cds-shimmer-rest-color` to change it). */
+.cds-shimmer-text.cds-shimmer-text--active {
+  color: var(
+    --cds-shimmer-rest-color,
+    var(
+      --cds-shimmer-rest-solved,
+      color-mix(in srgb, #{theme.$text-primary} 60%, transparent)
+    )
+  );
+}
+
+@media (forced-colors: active) {
+  .cds-shimmer-text.cds-shimmer-text--active {
+    color: inherit;
+  }
+
+  .cds-shimmer-text--banded::before,
+  .cds-shimmer-text--banded::after {
+    content: none;
+  }
+}

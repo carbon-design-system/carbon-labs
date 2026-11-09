@@ -3054,7 +3054,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-icon-motion@workspace:packages/react/src/v12/components/IconMotion":
+"@carbon-labs/react-icon-motion@workspace:*, @carbon-labs/react-icon-motion@workspace:packages/react/src/v12/components/IconMotion":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-icon-motion@workspace:packages/react/src/v12/components/IconMotion"
   dependencies:
@@ -3593,6 +3593,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/v12-workbench@workspace:tools/v12-workbench"
   dependencies:
+    "@carbon-labs/react-icon-motion": "workspace:*"
+    "@carbon-labs/react-kit-defaults": "workspace:*"
     "@carbon-labs/v12-motion": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@storybook/react": "npm:^9.1.2"

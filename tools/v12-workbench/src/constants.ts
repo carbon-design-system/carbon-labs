@@ -21,7 +21,6 @@ export const EVENTS = {
 /** The toolbar's picks, in the order they are shown. */
 export const THEMES = ['white', 'g100'] as const;
 export const DENSITIES = ['default', 'compact'] as const;
-export const CORNERS = ['rounded', 'square'] as const;
 export const REDUCED_MOTION = ['off', 'shorter-clock', 'at-once'] as const;
 /** The clock's speed: 1x, a quarter, a tenth. Strings, as the URL carries them. */
 export const CLOCKS = ['1', '0.25', '0.1'] as const;
@@ -29,7 +28,6 @@ export const DIRECTIONS = ['ltr', 'rtl'] as const;
 
 export type Theme = (typeof THEMES)[number];
 export type Density = (typeof DENSITIES)[number];
-export type Corners = (typeof CORNERS)[number];
 export type ReducedMotion = (typeof REDUCED_MOTION)[number];
 export type Clock = (typeof CLOCKS)[number];
 export type Direction = (typeof DIRECTIONS)[number];
@@ -37,7 +35,6 @@ export type Direction = (typeof DIRECTIONS)[number];
 export interface WorkbenchGlobals {
   theme: Theme;
   density: Density;
-  corners: Corners;
   reducedMotion: ReducedMotion;
   clock: Clock;
   dir: Direction;
@@ -46,7 +43,6 @@ export interface WorkbenchGlobals {
 export const DEFAULT_GLOBALS: WorkbenchGlobals = {
   theme: 'white',
   density: 'default',
-  corners: 'rounded',
   reducedMotion: 'off',
   clock: '1',
   dir: 'ltr',
@@ -75,6 +71,8 @@ export interface V12Parameters {
   reduced?: Record<string, ReducedBehaviour>;
   /** The states the component has, for the matrix. */
   states?: string[];
+  /** A whole app (the review app): it applies its own picks, and the decorators stand down. */
+  app?: boolean;
 }
 
 /**
@@ -82,7 +80,7 @@ export interface V12Parameters {
  * so a stale or hand-typed URL falls back to the default.
  *
  * @param globals The story context's globals.
- * @returns The six picks.
+ * @returns The five picks.
  */
 export function readGlobals(
   globals: Record<string, unknown>
@@ -95,7 +93,6 @@ export function readGlobals(
   return {
     theme: pick(THEMES, globals.theme, DEFAULT_GLOBALS.theme),
     density: pick(DENSITIES, globals.density, DEFAULT_GLOBALS.density),
-    corners: pick(CORNERS, globals.corners, DEFAULT_GLOBALS.corners),
     reducedMotion: pick(
       REDUCED_MOTION,
       globals.reducedMotion,

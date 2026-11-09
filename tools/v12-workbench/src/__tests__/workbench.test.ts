@@ -97,4 +97,13 @@ describe('the compare frame', () => {
     expect(url.searchParams.get('id')).toBe('v12-x--y');
     expect(url.searchParams.get('globals')).toBe('theme:g100;clock:0.25');
   });
+
+  it("writes a boolean in Storybook's URL form", () => {
+    const url = new URL(
+      storyFrameUrl('v12-x--y', { outline: false, measureEnabled: true })
+    );
+    expect(url.searchParams.get('globals')).toBe(
+      'outline:!false;measureEnabled:!true'
+    );
+  });
 });

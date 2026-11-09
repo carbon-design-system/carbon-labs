@@ -17,7 +17,10 @@ export { useDatePicker } from './hooks/useDatePicker';
 // Types
 export type { DatePickerProps } from './components/DatePicker';
 export type { DatePickerInputProps } from './components/DatePickerInput';
-export type { CalendarProps } from './components/Calendar';
+export type {
+  CalendarProps,
+  CalendarDayRenderProps,
+} from './components/Calendar';
 export type { DatePickerSkeletonProps } from './components/DatePickerSkeleton';
 export type {
   UseDatePickerConfig,

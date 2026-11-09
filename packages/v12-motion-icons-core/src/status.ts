@@ -460,9 +460,9 @@ const mul = (m: Mat, n: Mat): Mat => [
 /** An SVG transform list (matrix, translate, scale, rotate, skewX/Y) as one matrix. */
 export function parseTransform(t: string): Mat {
   let m: Mat = [1, 0, 0, 1, 0, 0];
-  for (const [, fn, args] of t.matchAll(/(\w+)\s*\(([^)]*)\)/g)) {
+  for (const [, fn, args] of t.matchAll(/(?<!\w)(\w+)\s*\(([^)]*)\)/g)) {
     const a = (
-      args.match(/[-+]?(?:\d+\.?\d*|\.\d+)(?:[eE][-+]?\d+)?/g) ?? []
+      args.match(/[-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?/g) ?? []
     ).map(Number);
     const rad = ((a[0] ?? 0) * Math.PI) / 180;
     let n: Mat = [1, 0, 0, 1, 0, 0];

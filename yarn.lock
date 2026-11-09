@@ -3841,16 +3841,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icons@npm:^11.70.0, @carbon/icons@npm:^11.82.0":
-  version: 11.82.0
-  resolution: "@carbon/icons@npm:11.82.0"
-  dependencies:
-    "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/2949bb1be4c4a55984f50ae05cf6303eb4aafeb3543aac66b6ec9e98f7a9dafdd3f0ce7ef945faff1cb569a5f2698b1afeefd41f2018f60ddfbf844c27843dfd
-  languageName: node
-  linkType: hard
-
-"@carbon/icons@npm:^11.89.0 || ^12.0.0":
+"@carbon/icons@npm:^11.70.0, @carbon/icons@npm:^11.82.0, @carbon/icons@npm:^11.89.0 || ^12.0.0":
   version: 11.92.0
   resolution: "@carbon/icons@npm:11.92.0"
   dependencies:

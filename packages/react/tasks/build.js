@@ -67,8 +67,15 @@ async function build() {
       format.directory
     );
 
+    // A package may name more entries beside its index (`labs.entries`),
+    // each built as its own module under es/ and lib/.
+    const entries = (componentPackageJSON.labs?.entries ?? []).map((e) =>
+      path.resolve(process.cwd(), e)
+    );
     const reactInputConfig = getRollupConfig(
-      reactEntrypoint.filepath,
+      entries.length
+        ? [reactEntrypoint.filepath, ...entries]
+        : reactEntrypoint.filepath,
       reactEntrypoint.rootDir,
       outputDirectory
     );
@@ -122,6 +129,28 @@ const babelConfig = {
 };
 
 /**
+ * The babel config for a package: the automatic JSX runtime when its tsconfig
+ * asks for it (the v12 components declare it per file, and the classic
+ * preset's pragma would clash with that), the classic one otherwise.
+ * @param {object} tsOptions the package's tsconfig options
+ * @returns babel config object
+ */
+function babelConfigFor(tsOptions) {
+  const jsx = String(tsOptions.jsx ?? '').toLowerCase();
+  if (jsx !== 'react-jsx' && jsx !== '4') {
+    return babelConfig;
+  }
+  return {
+    ...babelConfig,
+    presets: babelConfig.presets.map((preset) =>
+      preset === '@babel/preset-react'
+        ? ['@babel/preset-react', { runtime: 'automatic' }]
+        : preset
+    ),
+  };
+}
+
+/**
  * Gets tsconfig options
  * @returns tsconfig options object
  */
@@ -141,6 +170,23 @@ function getTsCompilerOptions() {
 
   return { ...baseOpts, ...overrideOpts, ...componentOpts };
 }
+
+/**
+ * The v12 components import their own stylesheet, as the kit writes them. The
+ * package ships its styles under `scss/` for the app to compile, so the
+ * JavaScript build leaves those imports out.
+ */
+const styleImports = {
+  name: 'style-imports',
+  resolveId(source) {
+    return /\.s?css$/.test(source)
+      ? { id: `\0style:${source}`, moduleSideEffects: false }
+      : null;
+  },
+  load(id) {
+    return id.startsWith('\0style:') ? '' : null;
+  },
+};
 
 /**
  *
@@ -175,6 +221,7 @@ function getRollupConfig(input, rootDir, outDir) {
       return new RegExp(`^${name}(/.*)?`);
     }),
     plugins: [
+      styleImports,
       nodeResolve({
         extensions: ['.mjs', '.js', '.jsx', '.json', '.node', '.ts', '.tsx'],
       }),
@@ -205,7 +252,7 @@ function getRollupConfig(input, rootDir, outDir) {
           outDir,
         },
       }),
-      babel(babelConfig),
+      babel(babelConfigFor(getTsCompilerOptions())),
       stripBanner(),
       url({
         include: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.svg', '**/*.gif'],

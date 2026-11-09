@@ -26,6 +26,12 @@ export default {
   ],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 
+  // The imported v12 packages run their own tests with vitest.
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '<rootDir>/src/v12/components/[^/]+/__tests__/',
+  ],
+
   // Test file patterns to match
   testMatch: [
     '<rootDir>/src/components/**/__tests__/**/*.[jt]s?(x)',

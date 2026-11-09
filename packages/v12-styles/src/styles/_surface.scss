@@ -1,0 +1,273 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+
+/* The kit's standard surface: the side nav's panel fill and hairline,
+   defined here once, per theme, and read by every quiet surface in the kit
+   (SideNav, DataTable, the tiles, ContextualBar, the selectable tag's
+   outline, the skeleton table).
+
+     --cds-surface         the fill: a 3.8 L* step off the page in both
+                          themes (white keeps Carbon's $layer-01)
+     --cds-surface-rule    the hairline: 12 L* off the page, darker on the
+                          light themes, lighter on the dark
+     --cds-surface-raised  one contrast step up from the fill (3.8 L* toward
+                          the text): a data table's header and its zebra
+                          stripes (Carbon's zebra: both on $layer-accent)
+     --cds-surface-lift    the outlined selector's raised step, up in elevation
+                          as Carbon's `$layer-02`, so the selector reads lighter
+                          than its track: white #ffffff; g100 keeps the raised step
+     --cds-surface-up      a surface on the quiet one (a workspace's content), one
+                          step off it: darker on light, lighter on dark
+     --cds-surface-lift-field  a field on that content, a step off it
+     --cds-surface-divider a line inside the surface (a table's rows, its
+                          header's underline): 8 L* off the fill. The rule
+                          is 12 L* off the PAGE, which is the same line in
+                          white and g100 (their fill is 3.8 L* off the
+                          page toward the line)
+
+     --cds-selected-wash   the share of the text colour washed over a row
+                          that is one of many chosen (many chosen data rows
+                          get a checkbox and the wash): a
+                          data table's selected row, a structured list's
+                          chosen row, a tree's other selected nodes. 10%,
+                          the data table's, over whatever the row sits on.
+                          A percentage, so a row can mix it into its own
+                          fill (`color-mix(in srgb, $text-primary <wash>,
+                          fill)`) or wash it over the surface behind
+                          (`… <wash>, transparent)`): the same colour.
+
+     --cds-surface-field   the fill of a field on the surface (styles/_field-fill.scss): one
+                          Carbon field token off it, so the field reads on the card and its
+                          `$border-subtle` hairline keeps its contrast. White: `$field-02`
+                          (#ffffff on #f4f4f4), Carbon's field one layer up;
+                          g100: `$field-01` (#262626 on #1e1e1e),
+                          as the quiet dark surface sits below Carbon's `$layer-01`, where
+                          `$field-02` would land on the hairline's own colour. A
+                          surface puts it on itself with `fields-on-surface` (below).
+
+     --cds-surface-code    the fill of code: a code snippet's well, inline code
+                          (code-snippet.scss), a quiet fill. A well, so a step BELOW the page in
+                          both themes (darker), where a field steps up on
+                          g100: #0f0f0f,
+                          about 3 L* off the page, as the code environments draw
+                          theirs.
+                          White has no room above the field (#f4f4f4, 3.8 L*
+                          down), so its code goes past it: #efefef, 5.6 L* off
+                          the page, 1.7 past the field
+
+     --cds-surface-secondary        the secondary Button's quiet fill, and its hover
+     --cds-surface-secondary-hover  (button.scss): one step off
+                          whatever it sits on, toward the text, so it reads the
+                          same on the page and on every raised layer. The step
+                          is `$text-primary` mixed into the fill behind, in
+                          srgb, at `--cds-secondary-share` (18% light, 17%
+                          dark) and `--cds-secondary-hover-share` (24.75% / 22.75%):
+                          1.46–1.66:1 off what's behind, and about 5 L* more
+                          on hover. On the page they're set here per theme
+                          from the page's own colour (white #d5d5d5,
+                          g100 #393939; the formula
+                          gives these to a unit). A raised surface re-solves
+                          them from its own fill with `secondary-on-surface`
+                          (below): a modal, a tearsheet, a side panel, a card
+                          or tile, a popover; with the page's values the
+                          secondary would sit 1.08:1 off the g100 modal.
+
+   `--cds-panel` and `--cds-rule` are the same fill and hairline under their
+   first names, kept for what already reads them.
+
+   Set on the theme scopes themselves (the page's [data-carbon-theme] and
+   Carbon's <Theme> classes), so the nearest theme wins. A component that
+   uses them `@use`s this file, so they're there without the app shell's
+   stylesheet too. */
+
+:root,
+[data-carbon-theme='white'],
+.cds--white {
+  --cds-surface: #f4f4f4;
+  --cds-surface-rule: #dddddd;
+  --cds-surface-raised: #e9e9e9;
+  --cds-surface-lift: #ffffff;
+  --cds-surface-up: #f4f4f4;
+  --cds-surface-lift-field: #ffffff;
+  --cds-surface-divider: #dddddd;
+  --cds-surface-field: var(--cds-field-02, #ffffff);
+  --cds-surface-code: #efefef;
+  --cds-surface-secondary: #d5d5d5;
+  --cds-surface-secondary-hover: #c5c5c5;
+}
+
+[data-carbon-theme='g100'],
+.cds--g100 {
+  --cds-surface: #1e1e1e;
+  --cds-surface-rule: #2f2f2f;
+  --cds-surface-raised: #262626;
+  --cds-surface-lift: #262626;
+  --cds-surface-up: #161616;
+  --cds-surface-lift-field: #262626;
+  --cds-surface-divider: #2f2f2f;
+  --cds-surface-field: var(--cds-field-01, #262626);
+  --cds-surface-code: #0f0f0f;
+  --cds-surface-secondary: #393939;
+  --cds-surface-secondary-hover: #464646;
+}
+
+/* `--cds-surface-raised-rule`: the hairline of a surface drawn on the raised fill (a modal on the
+   dark themes), the rule moved by the fill's own step. The light themes keep the rule. */
+:root,
+[data-carbon-theme='white'],
+.cds--white {
+  --cds-surface-raised-rule: var(--cds-surface-rule);
+}
+
+[data-carbon-theme='g100'],
+.cds--g100 {
+  --cds-surface-raised-rule: #373737;
+}
+
+:root,
+[data-carbon-theme],
+.cds--white,
+.cds--g100 {
+  --cds-panel: var(--cds-surface);
+  --cds-rule: var(--cds-surface-rule);
+  --cds-selected-wash: 10%;
+}
+
+/* The secondary's step off what it sits on (`--cds-surface-secondary`, above): a share of the text. */
+:root,
+[data-carbon-theme='white'],
+.cds--white {
+  --cds-secondary-share: 18%;
+  --cds-secondary-hover-share: 24.75%;
+}
+
+/* The track's step off a surface (`track-on-surface`): the share of the text that takes the standard
+   surface to `--cds-surface-raised` in each theme. */
+:root,
+[data-carbon-theme='white'],
+.cds--white {
+  --cds-track-share: 5%;
+}
+
+[data-carbon-theme='g100'],
+.cds--g100 {
+  --cds-track-share: 3.75%;
+}
+
+[data-carbon-theme='g100'],
+.cds--g100 {
+  --cds-secondary-share: 17%;
+  --cds-secondary-hover-share: 22.75%;
+}
+
+/* A raised surface's secondary Button: one step off the surface's own fill (`$fill`, by default
+   `--cds-surface`, which every kit surface paints or re-sets to its fill), not off the page. */
+@mixin secondary-on-surface($fill: var(--cds-surface)) {
+  /* In srgb, so the rollover reads them (motion-core's parseColor reads rgb and srgb, not oklab). */
+  --cds-surface-secondary: color-mix(
+    in srgb,
+    #{$fill},
+    #{theme.$text-primary} var(--cds-secondary-share, 18%)
+  );
+  --cds-surface-secondary-hover: color-mix(
+    in srgb,
+    #{$fill},
+    #{theme.$text-primary} var(--cds-secondary-hover-share, 24.75%)
+  );
+}
+
+/* A theme scope inside a surface (an inset of the other theme) is a page: it drops the outer
+   surface's track and field fill, solved in the outer theme. Zero specificity, so a surface wins. */
+:where([data-carbon-theme], [data-theme-zone], .cds--white, .cds--g100) {
+  --cds-surface-track: initial;
+  --cds-field-fill: initial;
+  --cds-table-fill: initial;
+  --cds-table-raised: initial;
+}
+
+/* A raised surface's tracks (a content switcher's): one quiet step off the surface's own fill, as the
+   page's track is off the page. Without it a track on the surface is the surface's own colour. */
+@mixin track-on-surface($fill: var(--cds-surface)) {
+  --cds-surface-track: color-mix(
+    in srgb,
+    #{$fill},
+    #{theme.$text-primary} var(--cds-track-share, 5%)
+  );
+}
+
+/* A kit surface (a card, a tile, a side panel, a popover, a modal) puts this on the element that
+   paints its fill (or its root, when a frame behind the content paints it): the controls on it
+   step off its fill, not the page's: the fields take `--cds-surface-field`, or the `$field` given,
+   instead of the page's `$field` (styles/_field-fill.scss), and the secondary Button its step off
+   `--cds-surface` (`secondary-on-surface`). */
+@mixin fields-on-surface($field: var(--cds-surface-field)) {
+  /* A table on this surface draws on it, not on the workspace's table steps round it. */
+  --cds-table-fill: initial;
+  --cds-table-raised: initial;
+  --cds-field-fill: #{$field};
+
+  @include secondary-on-surface;
+  @include track-on-surface;
+}
+
+.cds-side-panel {
+  @include fields-on-surface;
+}
+
+/* The modal family sets `--cds-surface` to its own fill on its container (modal.scss,
+   tearsheet.scss): the raised fill on the dark themes. */
+.cds-modal__container,
+.cds-tearsheet__container {
+  @include secondary-on-surface;
+  @include track-on-surface;
+}
+
+.cds-tearsheet__container {
+  --cds-field-fill: var(--cds-modal-field, var(--cds-surface-field));
+}
+
+/* Which way a step off a surface goes (a hover, a raised row): darker on the light themes, lighter on the dark. */
+:root,
+[data-carbon-theme='white'],
+.cds--white {
+  --cds-step-dir: -1;
+}
+
+[data-carbon-theme='g100'],
+.cds--g100 {
+  --cds-step-dir: 1;
+}
+
+/* The page's base: white–gray 10's middle (#fafafa) and black–gray 100's (#0b0b0b), so light steps
+   darker off it and dark lighter. Over Carbon's own page and zone rules (`html[…]`, `[class]`). */
+html[data-carbon-theme='white'],
+.cds--white[class] {
+  --cds-background: #fafafa;
+  /* What steps off the page, re-solved for it (they were for #ffffff): the field, its hairline and
+     the track a quiet step off it, the code well 5 off the field, the secondary 1.47:1 as before. */
+  --cds-field: #efefef;
+  --cds-field-01: #efefef;
+  --cds-border-subtle: #dadada;
+  --cds-border-subtle-01: #dadada;
+  --cds-surface-code: #eaeaea;
+  --cds-surface-track: #efefef;
+  --cds-shell-selected-page: 17.25%;
+  --cds-surface-secondary: #d0d0d0;
+  --cds-surface-secondary-hover: #c2c2c2;
+}
+
+html[data-carbon-theme='g100'],
+.cds--g100[class] {
+  --cds-background: #0b0b0b;
+  /* Re-solved for it (they were for #161616): the secondary 1.56:1 as before, the code well below it. */
+  --cds-surface-secondary: #333333;
+  --cds-surface-secondary-hover: #404040;
+  --cds-surface-code: #050505;
+  --cds-shell-selected-page: 13.5%;
+}

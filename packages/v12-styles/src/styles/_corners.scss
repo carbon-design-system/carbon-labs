@@ -1,0 +1,42 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+/* The kit's corners ladder (docs/components/README.md, "Corners"):
+ *
+ *   over      16  a surface over the page: modal, tearsheet, popover, the
+ *                 notifications panel, the chat shell
+ *   in        8   in the page: tiles, cards, menus, fields, tracks,
+ *                 notifications, and a rounded container (`corners="rounded"`)
+ *   row       4   a row in a track; in general an inner part is the outer
+ *                 radius less its inset (`inner()`)
+ *   small     4   a small surface: the tooltip (label, description,
+ *                 definition), the row's step
+ *   mark      2   tags and marks
+ *   attached  0   attached to an edge: the data table, the page header and
+ *                 the side panel by default (v11's square)
+ *
+ * And off the ladder:
+ *
+ *   full      999px  full round: a circle on a square, a pill on a wider
+ *                 box. An icon or a short number on its own hovers on it
+ *                 (README.md, "Hovers"). Never a fixed half height: the
+ *                 hover grows 1px and the press shrinks it, and only a
+ *                 radius past half of every size keeps the shape
+ */
+
+$over: 16px;
+$in: 8px;
+$row: 4px;
+$small: $row;
+$mark: 2px;
+$attached: 0px;
+$full: 999px;
+
+/// An inner part's radius: the outer radius less the part's inset, never below 0.
+@function inner($outer, $inset) {
+  @return max(0px, calc(#{$outer} - #{$inset}));
+}

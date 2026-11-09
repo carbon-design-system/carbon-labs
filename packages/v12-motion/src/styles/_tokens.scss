@@ -1,0 +1,12 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+// carbon-motion's generated tokens under their own names
+// (`$duration-fast-02`, `$easing-standard-productive`, `$scale-enter`, ...),
+// for shared styles that emit the `--cds-motion-*` custom properties.
+// Components use the index module instead.
+@forward '@carbon-labs/motion-core/generated/tokens';

@@ -2931,6 +2931,28 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/motion-core@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@carbon-labs/motion-core@npm:0.1.1"
+  dependencies:
+    motion: "npm:^13.0.0"
+  checksum: 10c0/6e3888fab42c94399093cb17b8d9b309d891dbeed475679bf6d5023fd2e823ca324306316153bfa6496a22b3e48c8bbc09c6c30dd8cbe7c50d23b61a8a6efd9c
+  languageName: node
+  linkType: hard
+
+"@carbon-labs/motion-react@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@carbon-labs/motion-react@npm:0.1.1"
+  dependencies:
+    "@carbon-labs/motion-core": "npm:^0.1.1"
+    motion: "npm:^13.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+    react-dom: ^18.2.0 || ^19.0.0
+  checksum: 10c0/ce80e6e78a7b2ec0ffbd9f42abe9bbdbdb19ecb105685c4472c12a9469127675d2e4bd2cd78329a55ae4e2673795d3071cd02ee477d70865fc1ab6961d29fc9f
+  languageName: node
+  linkType: hard
+
 "@carbon-labs/primitives@workspace:*, @carbon-labs/primitives@workspace:packages/primitives":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/primitives@workspace:packages/primitives"
@@ -3296,6 +3318,39 @@ __metadata:
   peerDependencies:
     react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
     react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/v12-motion@workspace:*, @carbon-labs/v12-motion@workspace:packages/v12-motion":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/v12-motion@workspace:packages/v12-motion"
+  dependencies:
+    "@carbon-labs/motion-core": "npm:^0.1.1"
+    "@carbon-labs/motion-react": "npm:^0.1.1"
+    "@types/node": "npm:^20.17.10"
+    jsdom: "npm:^26.0.0"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+    rimraf: "npm:^6.1.3"
+    sass: "npm:~1.107.0"
+    typescript: "npm:^5.7.2"
+    vitest: "npm:^4.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+    react-dom: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/v12-styles@workspace:packages/v12-styles":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/v12-styles@workspace:packages/v12-styles"
+  dependencies:
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@types/node": "npm:^20.17.10"
+    rimraf: "npm:^6.1.3"
+    sass: "npm:~1.107.0"
+    vitest: "npm:^4.0.0"
   languageName: unknown
   linkType: soft
 

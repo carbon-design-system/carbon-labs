@@ -1,0 +1,43 @@
+{
+  "name": "@carbon-labs/v12-styles",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Carbon Labs - shared styles for v12 components",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "packages/v12-styles"
+  },
+  "labs": {
+    "status": "draft",
+    "title": "V12 styles"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "exports": {
+    "./scss/*": "./scss/*",
+    "./css/*": "./es/*"
+  },
+  "files": [
+    "es/**/*.css",
+    "scss"
+  ],
+  "scripts": {
+    "build": "bash scripts/build.sh",
+    "clean": "rimraf es scss",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@carbon-labs/v12-motion": "workspace:*",
+    "@carbon/react": "^1.118.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.10",
+    "rimraf": "^6.1.3",
+    "sass": "~1.107.0",
+    "vitest": "^4.0.0"
+  }
+}

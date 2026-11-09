@@ -16,7 +16,9 @@ import { scanLeaks } from './doc.js';
 import { motionLiterals } from './importer.js';
 
 const SEAM_DIR = 'packages/v12-motion';
-const SKIP = /(^|\/)(node_modules|es|lib|dist|scss|storybook-static)(\/|$)/;
+// Built output, and the changelog the release writes (dated, by design).
+const SKIP =
+  /(^|\/)(node_modules|es|lib|dist|scss|storybook-static)(\/|$)|(^|\/)CHANGELOG\.md$/;
 // Motion from anywhere but the seam.
 const DIRECT_MOTION =
   /^(?:@carbon-labs\/motion-(?:core|react)|@carbon-motion\/[\w-]+|@carbon\/motion|@carbon\/styles\/scss\/motion)(?:\/|$)/;

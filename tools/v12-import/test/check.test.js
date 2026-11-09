@@ -47,6 +47,8 @@ write(
   'export const Notes = () => <p>It runs over 120ms.</p>;\n'
 );
 write('packages/v12-thing/package.json', JSON.stringify({ name: 'thing' }));
+// The release's changelog carries dates; the check leaves it alone.
+write('packages/v12-thing/CHANGELOG.md', '## 0.1.0 (2026-11-09)\n');
 write(
   'packages/react/src/v12/components/Widget/package.json',
   JSON.stringify({ name: 'widget', private: true })

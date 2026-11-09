@@ -1,0 +1,195 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+export {
+  now,
+  nextFrame,
+  setScheduler,
+  manualScheduler,
+  easeFn,
+  tweenBezier,
+  type AnimateOptions,
+  type Playback,
+  type Scheduler,
+  type Easing,
+  type Bezier,
+} from './animate';
+// The tween, skippable (skip.ts): what icon specs and bindings animate with.
+export {
+  animate,
+  skipping,
+  addSkipSource,
+  onSkipChange,
+  type SkipSource,
+} from './skip';
+export {
+  paint,
+  paintKeyed,
+  shapesMarkup,
+  attrName,
+  type Shapes,
+  type ShapeAttrs,
+} from './shapes';
+export {
+  prefersReducedMotion,
+  onReducedMotionChange,
+  observeVisibility,
+  bindHover,
+  playHover,
+  isDisabledFrame,
+  frameOf,
+  isHovered,
+  insideControl,
+  ownButtonOf,
+  FRAME_SELECTOR,
+  CONTROL_SELECTOR,
+  type HoverHandlers,
+  type HoverBinding,
+} from './env';
+export {
+  bindPress,
+  mayPress,
+  Press,
+  pressesByDefault,
+  pressScale,
+  pressTransform,
+  type PressOptions,
+} from './press';
+export {
+  noAction,
+  waitForAction,
+  handingOff,
+  type ActionHost,
+  type ActionInput,
+  type ActionOptions,
+  type ActionSpec,
+  type ActionTail,
+  type ActionTarget,
+  type ActionThen,
+} from './action';
+export {
+  defineAction,
+  ActionPlayer,
+  actionPlayerOf,
+  registerActionTarget,
+  actionTarget,
+  playAction,
+  HandOff,
+  type HandOffHost,
+  type ActionStage,
+  type ActionHolder,
+} from './actionPlayer';
+export { startTurn, type Turn } from './turn';
+export {
+  defineLoop,
+  LoopRunner,
+  type LoopInput,
+  type LoopSpec,
+  type LoopStage,
+} from './loop';
+export {
+  HOVER,
+  HOVER_OUT,
+  TOGGLE_IN,
+  TOGGLE_OUT,
+  LOOP_IN,
+  PRESS_IN,
+  PRESS_OUT,
+  leaveOf,
+  type TweenOpts,
+  type TweenTiming,
+} from './timing';
+export {
+  FrameController,
+  fromToggle,
+  fromHover,
+  fillThenClear,
+  instanceState,
+  knownState,
+  type Frame,
+  type ToggleFrameIn,
+  type Geo,
+  type HoverSpec,
+  type StateSpec,
+  type ToggleSpec,
+  type TweenFn,
+  type Painter,
+} from './frame';
+export {
+  StatusEngine,
+  PipEngine,
+  StatusController,
+  actionOf,
+  statusTiming,
+  placementOf,
+  geoAt,
+  resolveStatus,
+  stillShapes,
+  refuseStatus,
+  type SpinLayer,
+  type FrameGeo,
+  type StatusIconSpec,
+  type StatusInput,
+  type PipInput,
+  type StatusEngineOptions,
+} from './statusEngine';
+export {
+  hoverIcon,
+  withStatic,
+  toggleIcon,
+  stateIcon,
+  variantToggle,
+  aliasOf,
+  statusIcon,
+  type CarbonIcon,
+  type ToggleFrame,
+  type ToggleGeo,
+  type StateTweenFn,
+  type HoverInput,
+  type HoverIconSpec,
+  type ToggleInput,
+  type ToggleIconSpec,
+  type StateInput,
+  type StateIconSpec,
+  type BooleanStateIconSpec,
+  type MutableStateIconSpec,
+  type DrawingSpec,
+  type VariantProps,
+  type VariantIconSpec,
+  type AliasIconSpec,
+  type ProcessStatus,
+  type StatusSpec,
+  type StatusIconDataSpec,
+  type IconSpec,
+  type AnimatedIconProps,
+  type ToggleIconProps,
+  type StateIconProps,
+  type MutedStateIconProps,
+  type StatusProps,
+  type CountStatusProps,
+} from './spec';
+// The status layer's names icon modules use (placements, hand fixes), from the engine as the React engine had them.
+export {
+  cutAway,
+  wallEnd,
+  type BaseGeo,
+  type CountPlacement,
+  type FixContext,
+  type Mark,
+  type Placement,
+  type Region,
+  type Status,
+  type Tone,
+} from '../status';
+export {
+  carbonArt,
+  mirrored,
+  specStill,
+  geoStill,
+  type Still,
+  type CarbonArt,
+} from '../static/index';

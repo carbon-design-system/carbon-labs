@@ -1,6 +1,42 @@
 {
   "items": [
     {
+      "id": "package/motion-icons",
+      "kind": "package",
+      "path": "packages/react/src/v12/components/MotionIcons",
+      "labsStatus": "draft",
+      "publishable": false,
+      "source": {
+        "repo": "carbon-next",
+        "ref": "6f8b71c063976cdba7667b74b6291aacda5d9b7e",
+        "path": "packages/motion-icons"
+      }
+    },
+    {
+      "id": "package/motion-icons-core",
+      "kind": "package",
+      "path": "packages/v12-motion-icons-core",
+      "labsStatus": "draft",
+      "publishable": false,
+      "source": {
+        "repo": "carbon-next",
+        "ref": "6f8b71c063976cdba7667b74b6291aacda5d9b7e",
+        "path": "packages/motion-icons-core"
+      }
+    },
+    {
+      "id": "package/motion-icons-wc",
+      "kind": "package",
+      "path": "packages/v12-motion-icons-wc",
+      "labsStatus": "draft",
+      "publishable": false,
+      "source": {
+        "repo": "carbon-next",
+        "ref": "6f8b71c063976cdba7667b74b6291aacda5d9b7e",
+        "path": "packages/motion-icons-wc"
+      }
+    },
+    {
       "id": "styles/anchor-inset",
       "kind": "styles",
       "path": "packages/v12-styles/src/styles/_anchor-inset.scss",

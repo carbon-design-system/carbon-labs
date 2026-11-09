@@ -1,0 +1,639 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`no status: the icons as they were > Activity: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "4c532bbfeeaee069",
+  "20": "4c532bbfeeaee069",
+  "24": "4c532bbfeeaee069",
+  "32": "4c532bbfeeaee069",
+}
+`;
+
+exports[`no status: the icons as they were > Activity: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "6435f052d559a888",
+  "16 static": "11fcc8e0e8530090",
+  "20 animated": "1a222c0968b3c008",
+  "20 static": "496c6916d63411c1",
+  "24 animated": "15481aef04fcdbd8",
+  "24 static": "8084d09192823084",
+  "32 animated": "ed9d0f99cb28444b",
+  "32 static": "77cf89299df15735",
+}
+`;
+
+exports[`no status: the icons as they were > Calendar: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "ba20d9efc529cff6",
+  "20": "ba20d9efc529cff6",
+  "24": "ba20d9efc529cff6",
+  "32": "ba20d9efc529cff6",
+}
+`;
+
+exports[`no status: the icons as they were > Calendar: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "9965f912654771e7",
+  "16 static": "71d586784ce9ea6d",
+  "20 animated": "8d309c87d277e3e1",
+  "20 static": "df2606e04e5da303",
+  "24 animated": "ef8e0a106198a282",
+  "24 static": "8669bad9e597b7c5",
+  "32 animated": "d95011e955d90dd8",
+  "32 static": "c5d01fd47bb660b7",
+}
+`;
+
+exports[`no status: the icons as they were > Chat: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "09c1de9d8f838a33",
+  "20": "09c1de9d8f838a33",
+  "24": "09c1de9d8f838a33",
+  "32": "09c1de9d8f838a33",
+}
+`;
+
+exports[`no status: the icons as they were > Chat: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "3ede8e77123a7af1",
+  "16 static": "19c4c18756f30b92",
+  "20 animated": "264f841a5b68023c",
+  "20 static": "e31e7bff286dcfd4",
+  "24 animated": "963b369c05ba05a7",
+  "24 static": "3eaffbc58bdbcc0f",
+  "32 animated": "92dbca95a5b4f324",
+  "32 static": "36d9d78320e3787c",
+}
+`;
+
+exports[`no status: the icons as they were > CheckmarkFilled: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "3c098e507342192b",
+  "20": "391381fa56c526ad",
+  "24": "e326dd3ee8dd8c3b",
+  "32": "d91a1921ad19e909",
+}
+`;
+
+exports[`no status: the icons as they were > CheckmarkFilled: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "97251f89f9dd9625",
+  "16 static": "0ac8fb8fcdaf8654",
+  "20 animated": "6dd3c79c915ed0d3",
+  "20 static": "6f4b2ca7649d0988",
+  "24 animated": "f773195dc13afe46",
+  "24 static": "2fd3da0a0de34d0f",
+  "32 animated": "6ff7672b2e783684",
+  "32 static": "6d18fe7c577848f4",
+}
+`;
+
+exports[`no status: the icons as they were > CheckmarkOutline: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "3f0ded72296ef318",
+  "20": "3f0ded72296ef318",
+  "24": "3f0ded72296ef318",
+  "32": "3f0ded72296ef318",
+}
+`;
+
+exports[`no status: the icons as they were > CheckmarkOutline: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "8fef758f94e42e59",
+  "16 static": "a313b3235c370faf",
+  "20 animated": "ebb86bcf0e4da27a",
+  "20 static": "8d8cbd0b11dccbe4",
+  "24 animated": "46348064ed39549a",
+  "24 static": "17995f87d48a39b8",
+  "32 animated": "81b474c655645847",
+  "32 static": "da116bd50b0d86e8",
+}
+`;
+
+exports[`no status: the icons as they were > CloudDownload: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "9f606ea20ff09b1b",
+  "20": "9f606ea20ff09b1b",
+  "24": "9f606ea20ff09b1b",
+  "32": "9f606ea20ff09b1b",
+}
+`;
+
+exports[`no status: the icons as they were > CloudDownload: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "6a0f734e06b8c3b3",
+  "16 static": "c1a126e85b4db2d0",
+  "20 animated": "f183b3a76626d19e",
+  "20 static": "4f0640128c98ab55",
+  "24 animated": "da7689b385d204b6",
+  "24 static": "d017a707baf601f8",
+  "32 animated": "1d53ae2ca5e5fc46",
+  "32 static": "f3eb267640fe94dd",
+}
+`;
+
+exports[`no status: the icons as they were > CloudUpload: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "c3fee059017fd945",
+  "20": "c3fee059017fd945",
+  "24": "c3fee059017fd945",
+  "32": "c3fee059017fd945",
+}
+`;
+
+exports[`no status: the icons as they were > CloudUpload: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "60d0cf0308fd0276",
+  "16 static": "20dce56429441869",
+  "20 animated": "a368371c6e324622",
+  "20 static": "1fd6c8754ba4b6fa",
+  "24 animated": "49830a8701db94d5",
+  "24 static": "140da073992e6d1e",
+  "32 animated": "a13b66d7b0ae7747",
+  "32 static": "d4805cc910eb3675",
+}
+`;
+
+exports[`no status: the icons as they were > Copy: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "4d148b3993c9bc8a",
+  "20": "4d148b3993c9bc8a",
+  "24": "4d148b3993c9bc8a",
+  "32": "4d148b3993c9bc8a",
+}
+`;
+
+exports[`no status: the icons as they were > Copy: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "1b1ed7389b6e660c",
+  "16 static": "2f733039514cdb7a",
+  "20 animated": "33becd02f2c79e00",
+  "20 static": "ed445150e4127a2e",
+  "24 animated": "e7c277461c89a057",
+  "24 static": "208aa3021e2e3331",
+  "32 animated": "8d21ebe32cb33709",
+  "32 static": "916f4f0e7f4e215e",
+}
+`;
+
+exports[`no status: the icons as they were > DataBase: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "32e0f51ea1c6428f",
+  "20": "32e0f51ea1c6428f",
+  "24": "32e0f51ea1c6428f",
+  "32": "32e0f51ea1c6428f",
+}
+`;
+
+exports[`no status: the icons as they were > DataBase: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "ece37deff100fa5b",
+  "16 static": "bfb2b63179e286f2",
+  "20 animated": "70173ba7284790a4",
+  "20 static": "a8db0af758833350",
+  "24 animated": "52134620ad39f417",
+  "24 static": "9b87edcc7b29f3cc",
+  "32 animated": "385242125133fcc0",
+  "32 static": "9a4f113559214eaa",
+}
+`;
+
+exports[`no status: the icons as they were > Document: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "5479e8c1f82e58cd",
+  "20": "5479e8c1f82e58cd",
+  "24": "5479e8c1f82e58cd",
+  "32": "5479e8c1f82e58cd",
+}
+`;
+
+exports[`no status: the icons as they were > Document: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "ae2a87dfee888954",
+  "16 static": "432fe8dde16b2b24",
+  "20 animated": "afa31ac46b0dbc85",
+  "20 static": "569e5b45769ded83",
+  "24 animated": "0e647eed26476a25",
+  "24 static": "7afdc13e91e17e2f",
+  "32 animated": "5a4e4dd5225e183c",
+  "32 static": "3cdae41db45798e7",
+}
+`;
+
+exports[`no status: the icons as they were > DocumentExport: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "fe248d744b1231b8",
+  "20": "fe248d744b1231b8",
+  "24": "fe248d744b1231b8",
+  "32": "fe248d744b1231b8",
+}
+`;
+
+exports[`no status: the icons as they were > DocumentExport: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "c7576e56bf7015e0",
+  "16 static": "9b93fecb0b641a78",
+  "20 animated": "f70cfd2e6b894e0a",
+  "20 static": "3b8120f7767c5081",
+  "24 animated": "e2d4e292fb84d353",
+  "24 static": "1d6cfe0ed2b1d513",
+  "32 animated": "9356ba1e70986f0f",
+  "32 static": "42d4376f863edcf4",
+}
+`;
+
+exports[`no status: the icons as they were > DocumentImport: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "c22f0bcd6a2ed457",
+  "20": "c22f0bcd6a2ed457",
+  "24": "c22f0bcd6a2ed457",
+  "32": "c22f0bcd6a2ed457",
+}
+`;
+
+exports[`no status: the icons as they were > DocumentImport: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "2803e376ec15fe14",
+  "16 static": "c88519329f1cb84b",
+  "20 animated": "65720bb04ce73767",
+  "20 static": "9144a6da6ce9c77c",
+  "24 animated": "37fd943d7f389fea",
+  "24 static": "0b98ee079eebe919",
+  "32 animated": "3cad217a116f6fe8",
+  "32 static": "2c5d7573c3d4150a",
+}
+`;
+
+exports[`no status: the icons as they were > Download: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "add262d8c31d7ff6",
+  "20": "95898d41fb78a96a",
+  "24": "95898d41fb78a96a",
+  "32": "95898d41fb78a96a",
+}
+`;
+
+exports[`no status: the icons as they were > Download: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "32484b09ec20c479",
+  "16 static": "d25574ac659c8956",
+  "20 animated": "c69e8d07d00384cc",
+  "20 static": "2b84f622cdc97d23",
+  "24 animated": "94429e619ce3e707",
+  "24 static": "90b200b9bb4c837a",
+  "32 animated": "2ca22038662367d5",
+  "32 static": "007b2404f9b3f805",
+}
+`;
+
+exports[`no status: the icons as they were > Email: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "54bf7f665096ea65",
+  "20": "54bf7f665096ea65",
+  "24": "54bf7f665096ea65",
+  "32": "54bf7f665096ea65",
+}
+`;
+
+exports[`no status: the icons as they were > Email: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "ed79a127fc0a9aa2",
+  "16 static": "543085669567a321",
+  "20 animated": "214b2e6386a1f30f",
+  "20 static": "79a2153a464cc4a8",
+  "24 animated": "452c4d118c4d3289",
+  "24 static": "4b39126d4e142d64",
+  "32 animated": "4c9b06b829a721bf",
+  "32 static": "d0adf7882c248080",
+}
+`;
+
+exports[`no status: the icons as they were > Export: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "76d63a94b63b9e2f",
+  "20": "451c7a475b7b5ec8",
+  "24": "451c7a475b7b5ec8",
+  "32": "451c7a475b7b5ec8",
+}
+`;
+
+exports[`no status: the icons as they were > Export: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "7c1f91f12610c98e",
+  "16 static": "9185e17a2b55ada8",
+  "20 animated": "830aa33f3b5f796f",
+  "20 static": "2176f75d08340197",
+  "24 animated": "2c9a29e4ef32b217",
+  "24 static": "96eccd69f063fc4d",
+  "32 animated": "0b784e7fb9fc7f41",
+  "32 static": "cdfe97f1063c2ed9",
+}
+`;
+
+exports[`no status: the icons as they were > Folder: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "2bfa8c5a572fbb4e",
+  "20": "2bfa8c5a572fbb4e",
+  "24": "2bfa8c5a572fbb4e",
+  "32": "2bfa8c5a572fbb4e",
+}
+`;
+
+exports[`no status: the icons as they were > Folder: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "13d8c1ec9de07c81",
+  "16 static": "6ca6c109eab0cb78",
+  "20 animated": "cd1c4bbc28da9720",
+  "20 static": "b851ce9fe0144ce7",
+  "24 animated": "baee398ba1ce9bfa",
+  "24 static": "cd9cde713da24588",
+  "32 animated": "ead409771842dbc5",
+  "32 static": "e94712352ad116f3",
+}
+`;
+
+exports[`no status: the icons as they were > InProgress: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "ce9cb3eba5e05c5e",
+  "20": "ce9cb3eba5e05c5e",
+  "24": "ce9cb3eba5e05c5e",
+  "32": "ce9cb3eba5e05c5e",
+}
+`;
+
+exports[`no status: the icons as they were > InProgress: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "446518ab92a8ddc7",
+  "16 static": "948c6656748ead24",
+  "20 animated": "9d9d6b8f8f5ef9f9",
+  "20 static": "f6bcede8a0795224",
+  "24 animated": "ee1ed2b96b9b99b3",
+  "24 static": "5303af101f0d1edb",
+  "32 animated": "4eddc80229c8d15e",
+  "32 static": "131f6ed685615e01",
+}
+`;
+
+exports[`no status: the icons as they were > Incomplete: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "8085e703a556bd04",
+  "20": "8085e703a556bd04",
+  "24": "8085e703a556bd04",
+  "32": "8085e703a556bd04",
+}
+`;
+
+exports[`no status: the icons as they were > Incomplete: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "5b5ead428d86f435",
+  "16 static": "e3cfd01ddc6f64f9",
+  "20 animated": "ae59ea3c08a80079",
+  "20 static": "b55d46fde989e8ee",
+  "24 animated": "0db52226566796ee",
+  "24 static": "4c1223bc8780db76",
+  "32 animated": "51ae4e85bcf43253",
+  "32 static": "0175421a1e8faa9b",
+}
+`;
+
+exports[`no status: the icons as they were > Notification: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "b2866710eec57927",
+  "20": "744c5b914443276d",
+  "24": "744c5b914443276d",
+  "32": "744c5b914443276d",
+}
+`;
+
+exports[`no status: the icons as they were > Notification: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "b0205671e22d380e",
+  "16 static": "c4e9431a4901d48d",
+  "20 animated": "62a6370686c15127",
+  "20 static": "ab7689f4de2513a7",
+  "24 animated": "cc967f45c4952caf",
+  "24 static": "40477d2c3ad68677",
+  "32 animated": "4bf2ae4becc7ba33",
+  "32 static": "f6fce82ea6e3d4a1",
+}
+`;
+
+exports[`no status: the icons as they were > Printer: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "bc16d61c4d8f461c",
+  "20": "bc16d61c4d8f461c",
+  "24": "bc16d61c4d8f461c",
+  "32": "bc16d61c4d8f461c",
+}
+`;
+
+exports[`no status: the icons as they were > Printer: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "cb7d9c77e6ee26d4",
+  "16 static": "8f5733ba2d78dc6b",
+  "20 animated": "c40d61b7087adace",
+  "20 static": "6c5471906d9768f5",
+  "24 animated": "f4164fd6bf380efd",
+  "24 static": "4db466e30ccced73",
+  "32 animated": "369a8b5424aa5e55",
+  "32 static": "47328654d1314be9",
+}
+`;
+
+exports[`no status: the icons as they were > Renew: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "292fd15c5971a6a6",
+  "20": "292fd15c5971a6a6",
+  "24": "292fd15c5971a6a6",
+  "32": "292fd15c5971a6a6",
+}
+`;
+
+exports[`no status: the icons as they were > Renew: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "4ca7881089f1b001",
+  "16 static": "aa4b0c32ffb41df5",
+  "20 animated": "fe1c5ff8ef18537b",
+  "20 static": "a4082246ea8daa2d",
+  "24 animated": "b6119a63fd04507c",
+  "24 static": "d6c85d3363f78711",
+  "32 animated": "4cf3d286e5afa0b9",
+  "32 static": "ee1688afe1e8bee0",
+}
+`;
+
+exports[`no status: the icons as they were > Save: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "67ff103b48aea62a",
+  "20": "06be88e854c0b4fb",
+  "24": "67ff103b48aea62a",
+  "32": "67ff103b48aea62a",
+}
+`;
+
+exports[`no status: the icons as they were > Save: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "27e5bad0f1c4580c",
+  "16 static": "fc9e07ec06dae97b",
+  "20 animated": "515f58cd74761c68",
+  "20 static": "6f7b18cbbae26e17",
+  "24 animated": "d6a59ea40f1df940",
+  "24 static": "3f4a64ed28765e42",
+  "32 animated": "dbd33285b3d6f017",
+  "32 static": "76ba144e4e6124c9",
+}
+`;
+
+exports[`no status: the icons as they were > Send: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "2952f7eda4ed894a",
+  "20": "2952f7eda4ed894a",
+  "24": "2952f7eda4ed894a",
+  "32": "2952f7eda4ed894a",
+}
+`;
+
+exports[`no status: the icons as they were > Send: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "48a7616afd88b486",
+  "16 static": "a2ca2810d0dd2b15",
+  "20 animated": "37f610a99d9a0032",
+  "20 static": "323239a52fc4d51f",
+  "24 animated": "12a71e8e87b362de",
+  "24 static": "842be41f419199a6",
+  "32 animated": "51709fad01ea955c",
+  "32 static": "cb4c1709811763d6",
+}
+`;
+
+exports[`no status: the icons as they were > Settings: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "129f7638e714093b",
+  "20": "1ec3ea0886e8675e",
+  "24": "1ec3ea0886e8675e",
+  "32": "1ec3ea0886e8675e",
+}
+`;
+
+exports[`no status: the icons as they were > Settings: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "c0c97bf29510f2e1",
+  "16 static": "e21753640ef78be6",
+  "20 animated": "c328aca5be14f22c",
+  "20 static": "1a5a35042b330e15",
+  "24 animated": "9ecf40b6a83df14c",
+  "24 static": "cc36a95127b2c818",
+  "32 animated": "f5f03f02fad316c4",
+  "32 static": "4c359a74916a8dfa",
+}
+`;
+
+exports[`no status: the icons as they were > Share: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "60060e5e2a1e5e7f",
+  "20": "60060e5e2a1e5e7f",
+  "24": "60060e5e2a1e5e7f",
+  "32": "60060e5e2a1e5e7f",
+}
+`;
+
+exports[`no status: the icons as they were > Share: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "9b80f1790951c6bf",
+  "16 static": "f952af3edd81b21a",
+  "20 animated": "5831805f4c1efe6f",
+  "20 static": "07e76f64baa48688",
+  "24 animated": "5354a276e3eaca25",
+  "24 static": "1140bf697395273d",
+  "32 animated": "8d6c0bc6abccd8ca",
+  "32 static": "069739a7dce2c559",
+}
+`;
+
+exports[`no status: the icons as they were > ShoppingCart: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "01493716718ee60a",
+  "20": "01493716718ee60a",
+  "24": "01493716718ee60a",
+  "32": "01493716718ee60a",
+}
+`;
+
+exports[`no status: the icons as they were > ShoppingCart: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "99991257371b4db6",
+  "16 static": "a1ebfbbcc4002da2",
+  "20 animated": "024bb2b659a37d82",
+  "20 static": "75a48f1f33dc224e",
+  "24 animated": "8254ea4d1c635185",
+  "24 static": "1b19cce992cfe3fc",
+  "32 animated": "88b52f54206447ee",
+  "32 static": "c481d10f8d5e5bfe",
+}
+`;
+
+exports[`no status: the icons as they were > Upload: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "e04359c13264b7f5",
+  "20": "64122a4066741e48",
+  "24": "64122a4066741e48",
+  "32": "64122a4066741e48",
+}
+`;
+
+exports[`no status: the icons as they were > Upload: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "55f266e6099f5087",
+  "16 static": "8e311961c9539fc2",
+  "20 animated": "030af87b2bb34015",
+  "20 static": "69f0f100a99746f0",
+  "24 animated": "02606adc90e55327",
+  "24 static": "7a1596ee75f94d14",
+  "32 animated": "c16f96f9252c3358",
+  "32 static": "0ec55c0fcf7e6551",
+}
+`;
+
+exports[`no status: the icons as they were > User: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "f89942896d629b12",
+  "20": "f89942896d629b12",
+  "24": "f89942896d629b12",
+  "32": "f89942896d629b12",
+}
+`;
+
+exports[`no status: the icons as they were > User: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "d70603c8cfd1bf0f",
+  "16 static": "ed9f84508d35ea4c",
+  "20 animated": "2195d183d2da9eb0",
+  "20 static": "6452f9cca98d2dd7",
+  "24 animated": "c623edd8a01a99b0",
+  "24 static": "00c39b385aa243e2",
+  "32 animated": "9ffd771224b23c5b",
+  "32 static": "84782e183390682b",
+}
+`;
+
+exports[`no status: the icons as they were > UserAvatar: the same geometry at every hover frame, entering and leaving, at every size 1`] = `
+{
+  "16": "50133146b8ede21f",
+  "20": "45bf2cc5bafe1a8a",
+  "24": "45bf2cc5bafe1a8a",
+  "32": "45bf2cc5bafe1a8a",
+}
+`;
+
+exports[`no status: the icons as they were > UserAvatar: the same painted SVG at rest, animated and static, at every size 1`] = `
+{
+  "16 animated": "2ecac0c8db613229",
+  "16 static": "2f39201296fbcbf3",
+  "20 animated": "0e8581f8dcedfc38",
+  "20 static": "1fea692e10f876c2",
+  "24 animated": "8c9298e0d2b439e9",
+  "24 static": "e6f169fb86766730",
+  "32 animated": "edae3ff7263fe511",
+  "32 static": "21e830ac2319575b",
+}
+`;

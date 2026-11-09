@@ -1,0 +1,55 @@
+{
+  "name": "@carbon-labs/motion-icons-core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Carbon Labs - the motion icons' engine and every icon's spec, framework-free",
+  "labs": {
+    "status": "draft",
+    "title": "V12 motion icons core"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "packages/v12-motion-icons-core"
+  },
+  "main": "./es/index.js",
+  "module": "./es/index.js",
+  "types": "./es/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./es/index.d.ts",
+      "default": "./es/index.js"
+    },
+    "./engine": {
+      "types": "./es/engine/index.d.ts",
+      "default": "./es/engine/index.js"
+    },
+    "./package.json": "./package.json",
+    "./*": {
+      "types": "./es/*.d.ts",
+      "default": "./es/*.js"
+    }
+  },
+  "files": [
+    "es"
+  ],
+  "scripts": {
+    "build": "yarn clean && tsc -p tsconfig.build.json && node scripts/extensions.js",
+    "clean": "rimraf es",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@carbon-labs/motion-core": "^0.1.1",
+    "@carbon/icons": "^11.89.0 || ^12.0.0"
+  },
+  "devDependencies": {
+    "jsdom": "^26.0.0",
+    "motion": "^12.0.0 || ^13.0.0",
+    "rimraf": "^6.1.3",
+    "typescript": "^5.2.2",
+    "vitest": "^4.0.0"
+  }
+}

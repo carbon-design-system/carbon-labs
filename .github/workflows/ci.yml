@@ -114,6 +114,8 @@ jobs:
     # @carbon-labs/v12-motion), the motion contract, its packages' tests and
     # the v12 Storybook build.
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v7
       - name: Use Node.js version from .nvmrc

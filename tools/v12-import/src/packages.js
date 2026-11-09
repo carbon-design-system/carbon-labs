@@ -32,7 +32,12 @@ import {
   sourcePointers,
 } from './importer.js';
 import { langOf, lineOf } from './regions.js';
-import { licenseHeader, parseImports, replaceSpecifiers } from './rewrite.js';
+import {
+  escapeRegExp,
+  licenseHeader,
+  parseImports,
+  replaceSpecifiers,
+} from './rewrite.js';
 
 const posix = path.posix;
 
@@ -278,7 +283,7 @@ function renamePackages(text, count) {
     (a, b) => b.length - a.length
   );
   const re = new RegExp(
-    `(${names.map((n) => n.replace(/[/.]/g, '\\$&')).join('|')})(?![\\w-])`,
+    `(${names.map((n) => escapeRegExp(n)).join('|')})(?![\\w-])`,
     'g'
   );
   return text.replace(re, (m) => {
@@ -1087,9 +1092,7 @@ function vitestFor(spec, header) {
   // tests.
   const inline = [
     '/@carbon-labs\\/motion-/',
-    ...Object.values(CONFIG.packageMap).map(
-      (n) => `/${n.replace(/[/.]/g, '\\$&')}/`
-    ),
+    ...Object.values(CONFIG.packageMap).map((n) => `/${escapeRegExp(n)}/`),
   ];
   const test = {
     environment: 'jsdom',

@@ -21,6 +21,17 @@ const TS_URL =
   /\bnew\s+URL\s*\(\s*(['"])(\.{1,2}\/[^'"\n]+)\1\s*,\s*import\.meta\.url\s*\)/g;
 
 /**
+ * Escapes every character a regular expression treats specially, the
+ * backslash among them, so a name matches as it is written.
+ *
+ * @param {string} text Text to match literally.
+ * @returns {string} The text, safe inside a pattern.
+ */
+export function escapeRegExp(text) {
+  return text.replace(/[\\^$.*+?()[\]{}|/]/g, '\\$&');
+}
+
+/**
  * Every import in a source: its specifier, where the specifier sits and the
  * names it takes.
  *

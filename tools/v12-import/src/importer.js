@@ -52,6 +52,7 @@ import {
 } from './regions.js';
 import {
   dropTokenFallbacks,
+  escapeRegExp,
   licenseHeader,
   parseImports,
   replaceSpecifiers,
@@ -1116,7 +1117,7 @@ export function planImport(opts) {
     };
     // Import examples in the doc's code name the lane's packages.
     const kitSub = new RegExp(
-      `(['"])${cfg.source.kitPackage.replace(/[/.]/g, '\\$&')}/([\\w-]+)\\1`,
+      `(['"])${escapeRegExp(cfg.source.kitPackage)}/([\\w-]+)\\1`,
       'g'
     );
     plan.outputs.push({

@@ -10,6 +10,7 @@
 
 import { CONFIG } from './config.js';
 import { escapeMdx } from './doc.js';
+import { escapeRegExp } from './rewrite.js';
 
 /**
  * A component id in PascalCase: `split-button` is `SplitButton`.
@@ -289,7 +290,7 @@ function inlinePackages() {
   return Object.values(CONFIG.packages)
     .map((p) => p.name)
     .filter((n) => !n.startsWith(CONFIG.target.labsPrefix))
-    .map((n) => `          /${n.replace(/[/.]/g, (c) => `\\${c}`)}/,\n`)
+    .map((n) => `          /${escapeRegExp(n)}/,\n`)
     .join('');
 }
 

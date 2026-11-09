@@ -1,0 +1,87 @@
+{
+  "name": "@carbon-labs/wc-motion-icons",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Carbon Labs - the motion icons as custom elements (Lit), on the same engine",
+  "labs": {
+    "status": "draft",
+    "title": "V12 motion icons (web components)"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "packages/v12-motion-icons-wc"
+  },
+  "main": "./es/index.js",
+  "module": "./es/index.js",
+  "types": "./es/index.d.ts",
+  "sideEffects": [
+    "./es/define-all.js",
+    "./es/icons/*/index.js",
+    "./es/motion-icon.js",
+    "*.css"
+  ],
+  "customElements": "custom-elements.json",
+  "exports": {
+    ".": {
+      "types": "./es/index.d.ts",
+      "default": "./es/index.js"
+    },
+    "./icons/*": {
+      "types": "./es/icons/*/index.d.ts",
+      "default": "./es/icons/*/index.js"
+    },
+    "./elements/*": {
+      "types": "./es/icons/*/*.d.ts",
+      "default": "./es/icons/*/*.js"
+    },
+    "./define": {
+      "types": "./es/define-all.d.ts",
+      "default": "./es/define-all.js"
+    },
+    "./motion-icon": {
+      "types": "./es/motion-icon.d.ts",
+      "default": "./es/motion-icon.js"
+    },
+    "./ssr": {
+      "types": "./es/ssr.d.ts",
+      "default": "./es/ssr.js"
+    },
+    "./runtime": {
+      "types": "./es/runtime.d.ts",
+      "default": "./es/runtime.js"
+    },
+    "./clock": {
+      "types": "./es/clock.d.ts",
+      "default": "./es/clock.js"
+    },
+    "./preupgrade.css": "./es/preupgrade.css",
+    "./carbon-compat.css": "./es/carbon-compat.css",
+    "./custom-elements.json": "./custom-elements.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "es",
+    "custom-elements.json"
+  ],
+  "scripts": {
+    "build": "yarn clean && tsc -p tsconfig.build.json && node scripts/extensions.js && cp src/preupgrade.css src/carbon-compat.css es/",
+    "clean": "rimraf es",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@carbon-labs/motion-icons-core": "workspace:*",
+    "lit": "^3.1.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.1.0",
+    "jsdom": "^26.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rimraf": "^6.1.3",
+    "typescript": "^5.2.2",
+    "vitest": "^4.0.0"
+  }
+}

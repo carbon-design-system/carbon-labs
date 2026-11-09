@@ -1,0 +1,30 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="V12/Motion Icons/Overview" />
+
+# Motion icons
+
+Carbon's UI icons that move: each matches its Carbon icon at rest, size for size. It moves on hover; a toggle switches between two Carbon drawings; some icons take a status mark or play an action.
+
+## Motion
+
+| Pattern | Where | Values |
+| --- | --- | --- |
+| Hover | The icon, or the nearest `data-motion-icon-frame` ancestor; keyboard focus on that frame | 160ms entrance in, 120ms exit out; constant 2px line weight; touch never plays it |
+| Toggle | A `…Toggle` icon on a change of state | One drawing becomes the other: a slash, a fill or a match cut, per icon |
+| Status mark | A status icon's corner | Draws in over moderate-01, leaves over fast-02; a knockout keeps the mark clear of the drawing |
+| Pending | A status icon's corner | The loading arc, one turn a second, on the page's shared loading phase |
+| Action | `actionKey`, `actionOn="click"` or the ref's `trigger()` | One-shot inside the 36×36 box, or a loop; may hand off to a status; the hover waits for it |
+| Press | An icon that is the control | 1px in on every side while held; release over fast-02, exit easing |
+| Reduced motion | All | Still by default; pending shows three still dots; no press |
+
+## Props beyond Carbon's
+
+| Prop | What it does |
+| --- | --- |
+| `animated` | Moves or draws still. Default: still under reduced motion, else moving; `false` draws Carbon's art. |
+| `toggled`, `onToggle`, `value`, `initial`, `onChange` | A toggle's state, two-state or named. |
+| `asButton`, `disabled` | Wraps the svg in a button with `aria-pressed`. |
+| `status`, `count`, `max`, `countPlacement`, `tone` | A status icon's mark and count. Default none. |
+| `actionKey`, `actionOn`, `loop`, `actionThen` | Plays the icon's action declaratively. |
+| `press` | Forces the press on or off. Default: only when the icon is the control. |

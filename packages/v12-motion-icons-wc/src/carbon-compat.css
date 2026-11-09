@@ -1,0 +1,65 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+/*
+ * Carbon v12 compatibility (@carbon/web-components 3.x): Carbon colours some
+ * icons with `::slotted(svg)` from inside its shadow roots, which matches
+ * only a slotted <svg>, never a motion icon's host. These rules give a
+ * slotted icon that isn't an <svg> the same fill, from the light DOM.
+ * Load once per page that slots motion icons into these components.
+ *
+ * The list is Carbon's (apps/wc-harness/scripts/carbon-svg-rules.mjs lists
+ * every svg-only rule in its button, icon-button, tabs, content-switcher and
+ * ui-shell styles); the button and icon-button rules match `[slot=icon]`,
+ * so motion icons get those already.
+ */
+
+/* Header global action (ui-shell): secondary, primary on hover. */
+cds-header-global-action > :not(svg) {
+  fill: var(--cds-icon-secondary, #525252);
+}
+
+cds-header-global-action:hover > :not(svg) {
+  fill: var(--cds-icon-primary, #161616);
+}
+
+/* Content switcher, icon items. */
+cds-content-switcher-item[icon]:not([low-contrast]) > :not(svg) {
+  fill: var(--cds-icon-primary, #161616);
+}
+
+cds-content-switcher-item[icon]:not([low-contrast])[selected] > :not(svg) {
+  fill: var(--cds-icon-inverse, #ffffff);
+}
+
+cds-content-switcher-item[icon]:not([low-contrast])[disabled] > :not(svg) {
+  fill: var(--cds-icon-disabled, rgba(22, 22, 22, 0.25));
+}
+
+cds-content-switcher-item[icon][low-contrast] > :not(svg) {
+  fill: var(--cds-icon-secondary, #525252);
+}
+
+cds-content-switcher-item[icon][low-contrast]:hover > :not(svg) {
+  fill: var(--cds-icon-primary, #161616);
+}
+
+cds-content-switcher-item[icon][low-contrast][selected] > :not(svg) {
+  fill: var(--cds-icon-primary, #161616);
+}
+
+cds-content-switcher-item[icon][low-contrast][disabled] > :not(svg),
+cds-content-switcher-item[icon][low-contrast][selected][disabled] > :not(svg) {
+  fill: var(--cds-icon-disabled, rgba(22, 22, 22, 0.25));
+}
+
+/* Icon-only tabs. */
+cds-tab[icon-only] > :not(svg),
+cds-tab.cds--tabs__nav-item--icon-only > :not(svg) {
+  display: block;
+  fill: currentColor;
+}

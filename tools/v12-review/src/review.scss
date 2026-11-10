@@ -135,54 +135,17 @@
   list-style: none;
 }
 
-@media screen and (prefers-reduced-motion: reduce) {
-  .v12r-card {
-    display: flex;
-    box-sizing: border-box;
-    flex-direction: column;
-    padding: 16px;
-    border-radius: 8px;
-    background: var(--cds-layer-01);
-    block-size: 100%;
-    color: var(--cds-text-primary);
-    gap: 8px;
-    min-block-size: 168px;
-    text-decoration: none;
-    transition: none;
-
-    &:hover {
-      background: var(--cds-layer-hover-01);
-    }
-
-    &:focus-visible {
-      outline: 2px solid var(--cds-focus);
-      outline-offset: 2px;
-    }
-  }
-}
-
+// Each card is the lane's clickable Tile (Home.tsx): its surface, hover,
+// press, focus ring and reduced motion are the Tile's. Here, only its size
+// and the content's layout.
 .v12r-card {
-  display: flex;
-  box-sizing: border-box;
-  flex-direction: column;
-  padding: 16px;
-  border-radius: 8px;
-  background: var(--cds-layer-01);
   block-size: 100%;
-  color: var(--cds-text-primary);
-  gap: 8px;
   min-block-size: 168px;
-  text-decoration: none;
-  transition: background-color var(--cds-motion-duration-fast-02, 110ms)
-    var(--cds-motion-easing-standard-productive, ease);
 
-  &:hover {
-    background: var(--cds-layer-hover-01);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--cds-focus);
-    outline-offset: 2px;
+  > .cds-kit-tile__content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
 }
 
@@ -208,20 +171,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
-}
-
-.v12r-card__foot {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  color: var(--cds-text-secondary);
-  font-size: 12px;
-  gap: 8px;
-
-  svg {
-    flex: none;
-    fill: currentColor;
-  }
 }
 
 // ── a component's page ──
@@ -373,11 +322,4 @@
 .v12r-required {
   color: var(--cds-text-error);
   font-size: 12px;
-}
-
-// Reduced motion: the card's fill changes at once.
-@media (prefers-reduced-motion: reduce) {
-  .v12r-card {
-    transition: none;
-  }
 }

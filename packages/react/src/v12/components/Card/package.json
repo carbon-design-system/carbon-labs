@@ -59,6 +59,7 @@
     "@carbon-labs/utilities": "0.28.0",
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
     "jsdom": "^26.0.0",
     "vitest": "^4.0.0"
   }

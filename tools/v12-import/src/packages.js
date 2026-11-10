@@ -925,7 +925,9 @@ export function packageJsonFor(spec, { dependencies, peers, devDependencies }) {
           scripts: {
             build: 'node ../../../../tasks/build.js',
             clean: 'rimraf es lib',
-            postinstall: 'ibmtelemetry --config=telemetry.yml',
+            // No telemetry postinstall while private: nothing installs the package,
+            // and many postinstalls racing for one binary break installs. The
+            // publishable pull request adds it, with telemetry.yml already here.
             test: 'vitest run',
           },
         };

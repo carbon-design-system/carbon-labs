@@ -50,6 +50,7 @@ import type { Entry, StoryFiles } from './model';
 import { Home } from './Home';
 import { ComponentPage } from './ComponentPage';
 import { PageTop } from './PageTop';
+import { useMarkFavicon } from './favicon';
 import './review.scss';
 
 export interface ReviewAppProps {
@@ -195,6 +196,8 @@ function ReviewHeader({
   onPicks: (next: Partial<WorkbenchGlobals>) => void;
 }) {
   const [open, setOpen] = useState(false);
+  const mark = useRef<HTMLSpanElement>(null);
+  useMarkFavicon(mark);
   // Each open mounts the switchers again: the selection measures its
   // selected face's width as it mounts, and a closed popover has none.
   const [opened, setOpened] = useState(0);
@@ -204,7 +207,11 @@ function ReviewHeader({
       className="v12r-header"
       frame="ghost"
       href="#/"
-      logo={<Carbon size={20} aria-hidden="true" />}
+      logo={
+        <span ref={mark} className="v12r-mark">
+          <Carbon size={20} aria-hidden="true" />
+        </span>
+      }
       name="Carbon"
       product="v12 review"
       actions={

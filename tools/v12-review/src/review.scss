@@ -16,6 +16,13 @@
   min-block-size: 100vh;
 }
 
+// The Carbon mark in the header: the lower-contrast tone (the favicon's,
+// favicon.ts).
+.v12r-mark {
+  display: inline-flex;
+  color: var(--cds-icon-secondary);
+}
+
 .v12r-picks {
   display: grid;
   box-sizing: border-box;

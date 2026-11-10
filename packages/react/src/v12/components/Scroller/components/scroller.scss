@@ -1,0 +1,420 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+
+/* The scroller — motion-core's `attachScroller`, painted.
+ *
+ * One floating pill per axis over the viewport. The engine writes, on the
+ * root: --scroller-inset / -thickness / -hover-thickness / -hit, and
+ * data-reduced; on each rail: --scroller-offset / -length / -arrive and the
+ * states (data-scroller-active, -shown, data-near, data-pressed,
+ * data-dragging); on the pill: its matched-lightness hover and press colors.
+ * Every clock is a motion token (no raw ms).
+ *
+ * Rest color: `$border-strong`, Carbon's contextual token, so the pill steps
+ * with `<Layer>` (border-strong-01 / -02 / -03). Against what it sits on it
+ * clears 3:1 in all four themes at the first two layers (3.0–4.6:1). */
+
+.cds-scroller {
+  /* The pill's colors: rest is the contextual strong border. */
+  --scroller-color: #{theme.$border-strong};
+  /* Opaque at rest unless faint (below); set on every root, so a nested
+     scroller doesn't inherit its parent's. */
+  --scroller-rest-opacity: 1;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+  min-inline-size: 0;
+}
+
+.cds-scroller__viewport {
+  overflow: auto;
+  flex: 1 1 auto;
+  border-radius: inherit;
+  /* A `max-block-size` on the root bounds the viewport too. */
+  max-block-size: inherit;
+  min-block-size: 0;
+  min-inline-size: 0;
+  outline: none;
+  /* The engine drives its own smooth scroll; a CSS one would stack on it. */
+  scroll-behavior: auto;
+  /* The native scrollbar goes; native scrolling stays. */
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ── the soft edge on scroll ──────────────────────────────────────────
+ *
+ * Content leaves into a soft edge as it scrolls (every list alike;
+ * softEdge.ts). The script writes how much content is past each side
+ * (`--scroller-past-*`, clamped to the token); each edge is
+ * `min(token, half the viewport, past)`, so it grows over the first 16px
+ * scrolled and closes over the last. Only while some side has content past
+ * it (`data-soft-edge`), so at rest at the top there's no mask. Registered
+ * and not inherited: a scroll writes them on the viewport alone, so the
+ * content's styles aren't recomputed with each frame. In `:where()`, so a
+ * component that masks its own viewport (a code snippet's fade) keeps its
+ * own. The mask is the viewport's, so the pill (the rails, siblings) stays
+ * whole. */
+@property --scroller-past-top {
+  inherits: false;
+  initial-value: 0px;
+  syntax: '<length>';
+}
+
+@property --scroller-past-right {
+  inherits: false;
+  initial-value: 0px;
+  syntax: '<length>';
+}
+
+@property --scroller-past-bottom {
+  inherits: false;
+  initial-value: 0px;
+  syntax: '<length>';
+}
+
+@property --scroller-past-left {
+  inherits: false;
+  initial-value: 0px;
+  syntax: '<length>';
+}
+
+/* The edges as one mask value (`--cds-scroll-edge-mask`, two layers, to be
+ * intersected), on every viewport whatever its state (all shown while
+ * nothing is past a side), so a component that has to mask the same
+ * viewport for its own reason composes the edges into its mask instead of
+ * replacing them: the contextual bar's mask round itself
+ * (contextual-bar.scss), so a checkbox list's bottom soft edge stays when a
+ * checkbox is selected. Not inherited:
+ * read on any other element it's unset, and a `var()` fallback applies.
+ * `.cds-scroll-edge` is a scroll box that isn't a Scroller's viewport but
+ * takes the same edges from `attachScrollSoftEdge` (the Select's list,
+ * select.scss). */
+@property --cds-scroll-edge-mask {
+  inherits: false;
+  syntax: '*';
+}
+
+:where(.cds-scroller__viewport, .cds-scroll-edge) {
+  --cds-scroll-edge-mask:
+    linear-gradient(
+      to bottom,
+      transparent 0,
+      #000000
+        min(var(--cds-motion-soft-edge, 16px), 50%, var(--scroller-past-top)),
+      #000000
+        calc(
+          100% - min(
+              var(--cds-motion-soft-edge, 16px),
+              50%,
+              var(--scroller-past-bottom)
+            )
+        ),
+      transparent 100%
+    ),
+    linear-gradient(
+      to right,
+      transparent 0,
+      #000000
+        min(var(--cds-motion-soft-edge, 16px), 50%, var(--scroller-past-left)),
+      #000000
+        calc(
+          100% - min(
+              var(--cds-motion-soft-edge, 16px),
+              50%,
+              var(--scroller-past-right)
+            )
+        ),
+      transparent 100%
+    );
+}
+
+:where(
+  .cds-scroller__viewport[data-soft-edge],
+  .cds-scroll-edge[data-soft-edge]
+) {
+  mask-composite: intersect;
+  mask-image: var(--cds-scroll-edge-mask);
+}
+
+.cds-scroller--y > .cds-scroller__viewport {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.cds-scroller--x > .cds-scroller__viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* Keyboard focus on the viewport: the family's 2px ring in the text color,
+   inside the edge, over the content. Only for the keyboard: the engine
+   tracks the last input (data-input), as the selection kit does. No v11 blue;
+   no transition (the ring is instant, 3f). */
+.cds-scroller::after {
+  position: absolute;
+  z-index: 2;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 2px theme.$text-primary;
+  content: '';
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cds-scroller:not([data-input='pointer']):has(
+    > .cds-scroller__viewport:focus-visible
+  )::after {
+  opacity: 1;
+}
+
+/* The window's pills: fixed to the viewport (insets keep them off fixed chrome). */
+.cds-scroller-window {
+  --scroller-color: #{theme.$border-strong};
+  /* Opaque at rest unless faint (below); set on every root, so a nested
+     scroller doesn't inherit its parent's. */
+  --scroller-rest-opacity: 1;
+
+  position: fixed;
+  z-index: 6000;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* The document's scrollbar while a window scroller is mounted (the engine
+   also sets `scrollbar-width: none` on <html> inline). */
+html[data-scroller-window]::-webkit-scrollbar,
+html[data-scroller-window] body::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── the rail: the proximity strip, holding the pill ──────────────────── */
+
+.cds-scroller__rail {
+  position: absolute;
+  z-index: 3;
+  display: none;
+  /* The engine hit-tests the strip itself, so a wheel over the pill still
+     reaches the content and scrolls natively. */
+  pointer-events: none;
+
+  &[data-scroller-active] {
+    display: block;
+  }
+}
+
+/* The track insets (`insets` on `<Scroller>`, or these variables on its
+   root): the rails start and end clear of a control overlaid on the edge —
+   an overlaid control insets the track, so the pill and its hover strip
+   never pass under it (a code snippet's copy button). The engine measures
+   the rail, so the track, the pill's length and the strip follow. Not set
+   on the window's rails: `WindowScroller`'s `insets` move its whole frame. */
+.cds-scroller__rail--y {
+  inline-size: var(--scroller-hit, 16px);
+  inset-block: var(--scroller-track-top, 0px) var(--scroller-track-bottom, 0px);
+  inset-inline-end: var(--scroller-track-right, 0px);
+}
+
+.cds-scroller__rail--x {
+  block-size: var(--scroller-hit, 16px);
+  inset-block-end: var(--scroller-track-bottom, 0px);
+  inset-inline: var(--scroller-track-left, 0px) var(--scroller-track-right, 0px);
+}
+
+/* A nested scroller doesn't inherit its parent's insets (no specificity, so
+   a consumer's class or the inline `insets` set them). */
+:where(.cds-scroller) {
+  --scroller-track-top: initial;
+  --scroller-track-right: initial;
+  --scroller-track-bottom: initial;
+  --scroller-track-left: initial;
+}
+
+/* ── the rest look (the kit's `rest`) ─────────────────────────────────── */
+
+/* Shown but unhovered: `faint` (the default, 4px) paints
+   the rest color at 75% (2.2–3.2:1 against the theme's background) and `both` (2px) at 60% (1.8–2.6:1); `thin`
+   and `full` are opaque (3.0–4.6:1), for comparison. The same under
+   `visibility: 'always'`. Near, pressed or dragged it's opaque. The
+   thickness is the engine's (`--scroller-thickness`). */
+:is(.cds-scroller, .cds-scroller-window)[data-rest='faint'] {
+  --scroller-rest-opacity: 0.75;
+}
+
+:is(.cds-scroller, .cds-scroller-window)[data-rest='both'] {
+  --scroller-rest-opacity: 0.6;
+}
+
+/* ── the pill ─────────────────────────────────────────────────────────── */
+
+.cds-scroller__pill {
+  /* Its clocks, per state (the transition list reads these). */
+  --_fade: var(--cds-motion-duration-fast-02)
+    var(--cds-motion-easing-exit-productive);
+  /* Hidden: hold the full thickness while it fades, then reset to the
+     arrival's start. */
+  --_grow: 0s linear var(--cds-motion-duration-fast-02);
+  --_size: var(--cds-motion-duration-fast-01)
+    var(--cds-motion-easing-standard-productive);
+  --_t: var(--scroller-thickness, 4px);
+  /* The gap from the edge: the thickness changes about the pill's center
+     line, which sits where the hover footprint's does (the inset from the
+     edge at hover), so hover's growth and the press's shrink both happen
+     from the center. At rest 4 / hover 6 (faint, the
+     default), the pill sits 5px in at rest and 4px in on hover; at 2 / 6
+     (thin), 6px. */
+  --_gap: calc(
+    var(--scroller-inset, 4px) +
+      (var(--scroller-hover-thickness, 6px) - var(--_t)) / 2
+  );
+
+  position: absolute;
+  border-radius: 9999px;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  opacity: 0;
+  pointer-events: none;
+
+  /* The painted surface: inset 0.5px on press, the shape kept; faint at
+     rest (`rest` faint / both), opaque near. */
+  &::before {
+    position: absolute;
+    border-radius: inherit;
+    background-color: var(--scroller-color);
+    content: '';
+    inset: 0;
+    opacity: var(--scroller-rest-opacity, 1);
+    /* Hover out on fast-01 (the rollover's out leg); the press returns on the same. */
+    transition:
+      background-color var(--cds-motion-duration-fast-01)
+        var(--cds-motion-easing-standard-productive),
+      opacity var(--cds-motion-duration-fast-01)
+        var(--cds-motion-easing-standard-productive),
+      inset var(--cds-motion-duration-fast-01)
+        var(--cds-motion-easing-standard-productive);
+  }
+}
+
+.cds-scroller__rail--y > .cds-scroller__pill {
+  block-size: var(--scroller-length, 0px);
+  inline-size: var(--_t);
+  inset-inline-end: var(--_gap);
+  inset-inline-start: auto;
+  /* The arrival grows the thickness about its center. */
+  scale: var(--scroller-arrive, 0.9) 1;
+  transform: translate3d(0, var(--scroller-offset, 0px), 0);
+  transition:
+    opacity var(--_fade),
+    scale var(--_grow),
+    inline-size var(--_size),
+    inset-inline-end var(--_size);
+}
+
+.cds-scroller__rail--x > .cds-scroller__pill {
+  block-size: var(--_t);
+  inline-size: var(--scroller-length, 0px);
+  inset-block-end: var(--_gap);
+  /* Physical: the engine's offset runs from the left in either direction. */
+  inset-block-start: auto;
+  inset-inline: 0 auto;
+  scale: 1 var(--scroller-arrive, 0.9);
+  transform: translate3d(var(--scroller-offset, 0px), 0, 0);
+  transition:
+    opacity var(--_fade),
+    scale var(--_grow),
+    block-size var(--_size),
+    inset-block-end var(--_size);
+}
+
+/* Shown: fade in on fast-01 linear while the thickness grows from the
+   arrival's start over fast-02, entrance-productive. */
+.cds-scroller__rail[data-scroller-shown] > .cds-scroller__pill {
+  --_fade: var(--cds-motion-duration-fast-01) var(--cds-motion-easing-linear);
+  --_grow: var(--cds-motion-duration-fast-02)
+    var(--cds-motion-easing-entrance-productive);
+
+  opacity: 1;
+  scale: 1;
+}
+
+/* A layer of its own only while it shows or is held (none at rest). */
+.cds-scroller__rail:is(
+    [data-scroller-shown],
+    [data-near],
+    [data-pressed],
+    [data-dragging]
+  )
+  > .cds-scroller__pill {
+  will-change: transform, opacity;
+}
+
+/* Hover (the strip), press and drag: thicker, the hover's in leg on fast-02. */
+.cds-scroller__rail:is([data-near], [data-pressed], [data-dragging])
+  > .cds-scroller__pill {
+  --_t: var(--scroller-hover-thickness, 6px);
+  --_size: var(--cds-motion-duration-fast-02)
+    var(--cds-motion-easing-standard-productive);
+
+  &::before {
+    background-color: var(--scroller-hover-color, var(--scroller-color));
+    opacity: 1;
+    transition:
+      background-color var(--cds-motion-duration-fast-02)
+        var(--cds-motion-easing-standard-productive),
+      opacity var(--cds-motion-duration-fast-02)
+        var(--cds-motion-easing-standard-productive),
+      inset var(--cds-motion-duration-fast-01)
+        var(--cds-motion-easing-standard-productive);
+  }
+}
+
+/* The press: the rollover's pressed step, flat and at once, and the box
+   insets 0.5px on every side — at hover 6, 6 → 5px thick and 1px shorter.
+   Held while dragging. */
+.cds-scroller__rail[data-pressed] > .cds-scroller__pill::before {
+  background-color: var(
+    --scroller-press-color,
+    var(--scroller-hover-color, var(--scroller-color))
+  );
+  inset: 0.5px;
+  transition: inset var(--cds-motion-duration-fast-01)
+    var(--cds-motion-easing-standard-productive);
+}
+
+/* Reduced motion (the engine's `data-reduced`, from prefers-reduced-motion
+   or the component's `reduced`): no grow, thickness or arrival; the
+   fades stay, shorter… */
+[data-reduced] .cds-scroller__pill {
+  --_fade: calc(
+      var(--cds-motion-duration-fast-02) * var(--cds-motion-reduced-clock, 0.5)
+    )
+    linear;
+  --_size: var(--cds-motion-duration-instant, 0ms) linear;
+
+  scale: 1;
+}
+
+/* …and the fades run on the reduced clock (pattern.reduced-motion). */
+[data-reduced] .cds-scroller__rail[data-scroller-shown] > .cds-scroller__pill {
+  --_fade: calc(
+      var(--cds-motion-duration-fast-01) * var(--cds-motion-reduced-clock, 0.5)
+    )
+    linear;
+}
+
+@media (forced-colors: active) {
+  .cds-scroller__pill::before {
+    background-color: CanvasText;
+  }
+}

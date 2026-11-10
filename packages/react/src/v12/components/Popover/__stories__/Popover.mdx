@@ -1,0 +1,50 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as PopoverStories from './Popover.stories.tsx';
+
+<Meta of={PopoverStories} />
+
+# Popover
+
+A surface opened from a trigger, for content that is not a list of actions:
+filters, settings, a short form. `Popover` and `PopoverContent` take Carbon's
+props. With `anchor`, the popover is a portalled panel opened from that element
+instead. There is no caret: the surface sits 4px off its trigger. The content
+has no padding of its own; the host pads it.
+
+<Canvas of={PopoverStories.Default} />
+
+<Canvas of={PopoverStories.Toggle} />
+
+<Canvas of={PopoverStories.Variants} />
+
+<Canvas of={PopoverStories.Anchored} />
+
+## Motion
+
+- **Open:** the frame grows from its cause, as geometry: the press on the
+  trigger, else the trigger's center. The content slides out of it on y and
+  never scales. Opened from the start, with no gesture, it is there with no
+  motion.
+- **Close:** the far edge folds back toward the cause. The surface is gone on
+  the fold's last frame.
+- **Fade:** it fades up over the first part of the open and out over the last
+  part of the close: 40ms on a clock of 220ms or less, else 80ms.
+  `exitFade={false}` folds back opaque.
+- **Interrupted:** reopened while it leaves, it turns round from where it is.
+- **Soft edge:** on every side where the container clips the content,
+  `min(16px, h, H − h)` per side, from the snap's live geometry. Only the
+  content is masked, and there is no mask at rest.
+- **Timing by size:** a large popover, such as a form, opens and closes on the
+  slower surface clock.
+- **Cast shadow:** off by default. `shadow` or `dropShadow` turns it on; it
+  follows the surface on every frame.
+- **While open:** scrolling and resizing place it again once a frame, with no
+  motion.
+
+## Reduced motion
+
+There at once and gone at once: no growth, slide, fade or soft edge.
+
+## Props
+
+<ArgTypes of={PopoverStories} />

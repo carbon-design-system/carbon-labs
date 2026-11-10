@@ -1,0 +1,511 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use 'sass:map';
+@use 'sass:math';
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon-labs/react-feedback/scss/loader-color';
+
+/* ProgressBar (ProgressBar.tsx). The label above, the line, the helper
+ * text below. The line is the loaders', as thin: a quiet base and a loud
+ * fill in the loaders' colours
+ * (_loader-color.scss): neutral (default), `$icon-primary`; hero, the fill
+ * in the kit's brand (styles/_brand.scss, IBM blue unless a brand zone says
+ * otherwise); success and error in their support colours. Every one of
+ * them over the neutral base. The two are
+ * knocked out from each other by a gap of 2× the stroke, every end round.
+ *
+ * ProgressBar.tsx animates two numbers on the track: the share cut from the
+ * fill's start and from its end (`--cds-progress-bar-l` / `-r`, physical).
+ * Everything here is drawn from them, so nothing here times the fill:
+ *
+ *   fill        a box from l to 1 − r of the track, round ends
+ *   base        two boxes: from 0 to l − knock, and from 1 − r + knock to 1,
+ *               round ends. The knock is the gap (2× the stroke), or the
+ *               fill's width while the fill is narrower than the gap, so a
+ *               fill growing from nothing opens its knockout as it grows
+ *               instead of jumping
+ *
+ * Boxes (left / right), not clips: a box's background is snapped to the
+ * device's pixels, so a 1px line at a half-pixel offset stays one crisp row
+ * on a 1× screen (a clip there smears it over two rows at half strength).
+ *
+ * The status color crossfades on `fast-02`, linear (half that under reduced
+ * motion). */
+
+@property --cds-progress-bar-l {
+  inherits: true;
+  initial-value: 0;
+  syntax: '<number>';
+}
+
+@property --cds-progress-bar-r {
+  inherits: true;
+  initial-value: 1;
+  syntax: '<number>';
+}
+
+/* The share of the work the line's weight follows (ProgressBar.tsx): the value at rest, 0 while indeterminate. */
+@property --cds-progress-bar-w {
+  inherits: true;
+  initial-value: 0;
+  syntax: '<number>';
+}
+
+@property --cds-progress-bar-pulse {
+  inherits: false;
+  initial-value: 1;
+  syntax: '<number>';
+}
+
+/* The loaders' stroke for a loader size: size / 16, at most 2px (1px at
+   16px, 2px from 32px), the kit Spinner's rule. The bar takes the stroke of
+   the loader it sits with: small, a 16px loader's; big, a 32px loader's.
+   To share: once the Spinner's `loaderStroke` and `SPINNER_MOTION.gap`
+   (packages/kit/src/feedback/Spinner.tsx) land, the bar reads its stroke and gap from
+   them (written on the track by ProgressBar.tsx) instead of this rule. */
+@function loader-stroke($loader-size) {
+  @return math.min(math.div($loader-size, 16), 2) * 1px;
+}
+
+$loader-size: (
+  small: 16,
+  big: 32,
+);
+
+.cds-progress-bar {
+  --_bar: #{theme.$icon-primary};
+  --cds-loader-base: var(--cds-loader-neutral-base);
+  /* Tokens, a host's to set on the bar or any ancestor: the base's color
+     (`--cds-progress-bar-base`, default the loaders' neutral base, as the
+     Spinner's base ring), and the pulse's (`--cds-progress-bar-pulse-color`,
+     default the bar's color mixed `--cds-progress-bar-pulse-mix`, 55%,
+     toward the glint: $text-on-color, white in all four themes, a lighter
+     glint of the fill; a neutral fill's, `--cds-loader-neutral-glint`, is
+     the page's gray on g100, _loader-color.scss). */
+  --_base: var(--cds-progress-bar-base, var(--cds-loader-base));
+  --_glint: var(--cds-loader-neutral-glint);
+  --_pulse: var(
+    --cds-progress-bar-pulse-color,
+    color-mix(
+      in srgb,
+      var(--_bar),
+      var(--_glint) var(--cds-progress-bar-pulse-mix, 55%)
+    )
+  );
+
+  min-inline-size: 3rem;
+}
+
+/* Hero: the brand's fill over the neutral base, its pulse a
+   white glint in every theme. */
+.cds-progress-bar--hero {
+  --_bar: var(--cds-hero-loader);
+  --_glint: #{theme.$text-on-color};
+}
+
+.cds-progress-bar__label {
+  @include type-style('body-compact-01');
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: theme.$text-primary;
+  gap: $spacing-05;
+  margin-block-end: $spacing-03;
+}
+
+.cds-progress-bar__label-text {
+  overflow: hidden;
+  min-inline-size: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The status icon's place: 16px, reserved only while it shows something.
+   One place in every example, the same for error and success: the icon's
+   end on the bar's end, centred on the label row, 17px above the line's top
+   edge, at either size, with a label or without, with helper text or
+   without. Indented sets the text in, not the icon (below); inline, with
+   the line gone, has the icon at the bar's end on its one row (below); a
+   hidden label keeps its row while the icon shows (below). */
+.cds-progress-bar__status {
+  color: var(--_bar);
+
+  &:has(svg) {
+    block-size: 16px;
+    inline-size: 16px;
+  }
+
+  /* A status icon isn't a control: it plays its beat once, never on hover. */
+  svg {
+    display: block;
+    fill: currentColor;
+    pointer-events: none;
+  }
+}
+
+/* The line's weight: the fill grows with the value,
+   `--_grow` (1px, PROGRESS_BAR_LINE.growPx) more from 15% to 85% of the work
+   (the loaders' LOADER_GROWTH), linearly, held outside: big 2px → 3px, small
+   1px → 2px. Only the fill, not the base line: the base keeps the rest
+   stroke, and the fill grows down out of the track's box, its top edge held
+   with the base's, so the label and the status icon never move. The track's
+   box stays the rest stroke, so nothing in the layout moves. The gap and the ends' radius: the
+   gap stays the rest stroke's 2×; the fill's ends are half its live line,
+   the base's half the rest stroke, so both stay round. */
+.cds-progress-bar__track {
+  --_stroke: #{loader-stroke(map.get($loader-size, big))};
+  /* The growth's numbers are PROGRESS_BAR_LINE's, written on the track by ProgressBar.tsx (these are the same, for no script). */
+  --_t: clamp(
+    0,
+    (var(--cds-progress-bar-w) - var(--cds-progress-bar-grow-from, 0.15)) /
+      (
+        var(--cds-progress-bar-grow-to, 0.85) - var(
+            --cds-progress-bar-grow-from,
+            0.15
+          )
+      ),
+    1
+  );
+  --_line: calc(var(--_stroke) + var(--cds-progress-bar-grow, 1px) * var(--_t));
+  --_gap: calc(var(--_stroke) * 2);
+  --_cap: calc(var(--_line) / 2);
+  /* The knockout: the gap, or the fill's width while it is narrower. */
+  --_knock: max(
+    0px,
+    min(
+      var(--_gap),
+      (1 - var(--cds-progress-bar-l) - var(--cds-progress-bar-r)) * 100%
+    )
+  );
+
+  position: relative;
+  /* Clipped along the line only: the grown line hangs below the box. */
+  overflow: clip visible;
+  block-size: var(--_stroke);
+  inline-size: 100%;
+  min-inline-size: 3rem;
+}
+
+.cds-progress-bar--small .cds-progress-bar__track {
+  --_stroke: #{loader-stroke(map.get($loader-size, small))};
+}
+
+/* Physical left / right throughout: right to left mirrors the whole drawing (below). */
+.cds-progress-bar__base,
+.cds-progress-bar__bar {
+  position: absolute;
+}
+
+/* The base keeps the rest stroke at every value, in the track's box: only the fill line grows. */
+.cds-progress-bar__base {
+  border-radius: calc(var(--_stroke) / 2);
+  background-color: var(--_base);
+  block-size: var(--_stroke);
+  inset-block-start: 0;
+}
+
+/* Before the fill: from the start to the fill's start, less the knock. */
+.cds-progress-bar__base--start {
+  inset-inline: 0 calc((1 - var(--cds-progress-bar-l)) * 100% + var(--_knock));
+}
+
+/* After the fill: from the fill's end, plus the knock, to the end. */
+.cds-progress-bar__base--end {
+  inset-inline: calc((1 - var(--cds-progress-bar-r)) * 100% + var(--_knock)) 0;
+}
+
+/* The fill alone grows, down from the track's top (its top edge held with the base's): a whole px of
+   growth stays on whole pixels, where a centred growth would put the line on half pixels. */
+.cds-progress-bar__bar {
+  overflow: hidden;
+  border-radius: var(--_cap);
+  background-color: var(--_bar);
+  block-size: var(--_line);
+  inset-block-start: 0;
+  inset-inline: calc(var(--cds-progress-bar-l) * 100%)
+    calc(var(--cds-progress-bar-r) * 100%);
+  transition: background-color var(--cds-motion-duration-fast-02) linear;
+}
+
+/* The pulse (`pulse`): a highlight that resolves along the filled part, from
+   behind its start to out through the leading edge (`--cds-progress-bar-pulse`
+   0 → 1, ProgressBar.tsx). It is inside the fill, which clips it, so it is
+   never outside the fill. A ramp up to the pulse color near its front, so it
+   reads as pushing toward the edge. Its width is 30% of the filled part (12px
+   at the least, the fill at the most). */
+.cds-progress-bar__pulse {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cds-progress-bar__pulse-band {
+  --_band: min(100%, max(30%, 12px));
+
+  position: absolute;
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    var(--_pulse) 80%,
+    transparent
+  );
+  inline-size: var(--_band);
+  inset-block: 0;
+  inset-inline-start: calc(
+    var(--cds-progress-bar-pulse) * (100% + var(--_band))
+  );
+  transform: translateX(-100%);
+}
+
+/* Right to left: the drawing is mirrored, so the fill grows from the right,
+   the segment crosses right to left and the pulse runs right to left. The
+   numbers stay physical (ProgressBar.tsx reads and writes them as they
+   are). */
+.cds-progress-bar__track:dir(rtl) {
+  transform: scaleX(-1);
+}
+
+.cds-progress-bar--reduced .cds-progress-bar__bar {
+  transition-duration: calc(
+    var(--cds-motion-duration-fast-02) * var(--cds-motion-reduced-clock, 0.5)
+  );
+}
+
+/* Reduced motion, indeterminate: a still texture, not a loop. Three short
+   segments evenly spaced on the track (at a quarter, a half and three
+   quarters), in the bar's color, with the base knocked out round each by
+   the gap: the still dots' rhythm in bar form. An unknown amount carries its
+   own texture, so it never reads as a full or an empty bar; the helper
+   text's words carry the state. ProgressBar.tsx leaves the fill empty and
+   the base whole; the segments are drawn on the bar, opened to the whole
+   track. (A
+   background position's percentage is of the track less the segment, hence
+   the quarter-segment corrections.) */
+.cds-progress-bar--reduced.cds-progress-bar--indeterminate {
+  .cds-progress-bar__track {
+    --_seg: clamp(4px, 6%, 24px);
+    /* Half a segment and the gap: the base's window round each segment's centre. */
+    --_win: calc(var(--_seg) / 2 + var(--_gap));
+  }
+
+  .cds-progress-bar__bar {
+    border-radius: 0;
+    background-color: transparent;
+    background-image:
+      linear-gradient(var(--_bar), var(--_bar)),
+      linear-gradient(var(--_bar), var(--_bar)),
+      linear-gradient(var(--_bar), var(--_bar));
+    background-position:
+      calc(25% - var(--_seg) / 4) 0,
+      50% 0,
+      calc(75% + var(--_seg) / 4) 0;
+    background-repeat: no-repeat;
+    background-size: var(--_seg) 100%;
+    inset-inline: 0;
+  }
+
+  .cds-progress-bar__base--end {
+    mask-image: linear-gradient(
+      to right,
+      #000000 calc(25% - var(--_win)),
+      transparent 0 calc(25% + var(--_win)),
+      #000000 0 calc(50% - var(--_win)),
+      transparent 0 calc(50% + var(--_win)),
+      #000000 0 calc(75% - var(--_win)),
+      transparent 0 calc(75% + var(--_win)),
+      #000000 0
+    );
+  }
+}
+
+.cds-progress-bar__helper-text {
+  @include type-style('helper-text-01');
+
+  color: theme.$text-secondary;
+
+  margin-block-start: $spacing-03;
+}
+
+.cds-progress-bar--finished {
+  --_bar: #{theme.$support-success};
+}
+
+.cds-progress-bar--error {
+  --_bar: #{theme.$support-error};
+
+  .cds-progress-bar__helper-text {
+    color: theme.$text-error;
+  }
+}
+
+/* inline: the label beside the bar; no helper text on screen. Finished or
+   in error, the label alone (the track hidden), as v11. */
+.cds-progress-bar--inline {
+  display: flex;
+  align-items: center;
+
+  .cds-progress-bar__label {
+    flex-shrink: 0;
+    margin-block-end: 0;
+    margin-inline-end: $spacing-05;
+  }
+
+  .cds-progress-bar__track {
+    flex: 1 1 0;
+  }
+
+  .cds-progress-bar__helper-text {
+    position: absolute;
+    overflow: hidden;
+    padding: 0;
+    margin: -1px;
+    block-size: 1px;
+    clip-path: inset(50%);
+    inline-size: 1px;
+    white-space: nowrap;
+  }
+
+  /* The label alone, across the bar, so the icon is at the bar's end as in every type, not beside the label's words.
+     With no mark (`mark={false}`) the line stays: it is what shows the status. */
+  &:not(.cds-progress-bar--markless):is(
+      .cds-progress-bar--finished,
+      .cds-progress-bar--error
+    ) {
+    .cds-progress-bar__label {
+      flex: 1 1 auto;
+      margin-inline-end: 0;
+      min-inline-size: 0;
+    }
+
+    .cds-progress-bar__track {
+      position: absolute;
+      overflow: hidden;
+      margin: -1px;
+      block-size: 1px;
+      clip-path: inset(50%);
+      inline-size: 1px;
+      min-inline-size: 0;
+    }
+  }
+}
+
+/* indented: the label and helper text set 16px in. The status icon stays at the bar's end, as in every type. */
+.cds-progress-bar--indented {
+  .cds-progress-bar__label,
+  .cds-progress-bar__helper-text {
+    padding-inline: $spacing-05;
+  }
+
+  .cds-progress-bar__status:has(svg) {
+    margin-inline-end: -$spacing-05;
+  }
+}
+
+/* A hidden label (`hideLabel`): the words stay hidden (they still name the
+   bar), and the row is reserved to hold the status icon, in the same place as
+   a shown label's, whether or not one shows. Every bar can end in a status,
+   so the row is always there: the bar never grows 26px as it finishes or
+   fails, or shrinks back (the kit's "don't jump"). A departure
+   from v11, whose hidden label takes no room. Not inline: there the label is
+   the bar's one row (below). Not with no mark (`mark={false}`): there is no
+   icon to hold room for, so a hidden label takes none, as v11's (the bare
+   line). */
+.cds-progress-bar:not(.cds-progress-bar--inline, .cds-progress-bar--markless)
+  .cds-progress-bar__label.cds-progress-bar__hidden {
+  position: static;
+  overflow: visible;
+  justify-content: flex-end;
+  margin: 0 0 $spacing-03;
+  block-size: 1.125rem;
+  clip-path: none;
+  inline-size: auto;
+  white-space: normal;
+
+  .cds-progress-bar__label-text {
+    position: absolute;
+    overflow: hidden;
+    margin: -1px;
+    block-size: 1px;
+    clip-path: inset(50%);
+    inline-size: 1px;
+    white-space: nowrap;
+  }
+}
+
+/* Inline with a hidden label: the bar is its label row's height (18px)
+   whatever its status, so it doesn't grow 16px when the line goes and the
+   row shows again for the icon. */
+.cds-progress-bar--inline:not(.cds-progress-bar--markless):has(
+    > .cds-progress-bar__label.cds-progress-bar__hidden
+  ) {
+  min-block-size: 1.125rem;
+}
+
+/* Inline with a hidden label and a status: the line is gone, so the row shows again for the icon, at the bar's end. */
+.cds-progress-bar--inline:is(
+    .cds-progress-bar--finished,
+    .cds-progress-bar--error
+  )
+  .cds-progress-bar__label.cds-progress-bar__hidden:has(
+    .cds-progress-bar__status svg
+  ) {
+  position: static;
+  overflow: visible;
+  justify-content: flex-end;
+  margin: 0;
+  block-size: 1.125rem;
+  clip-path: none;
+  inline-size: auto;
+
+  .cds-progress-bar__label-text {
+    position: absolute;
+    overflow: hidden;
+    margin: -1px;
+    block-size: 1px;
+    clip-path: inset(50%);
+    inline-size: 1px;
+    white-space: nowrap;
+  }
+}
+
+/* Visually hidden, still read (hideLabel, the live region). */
+.cds-progress-bar__hidden {
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+@media (forced-colors: active) {
+  .cds-progress-bar__base {
+    background-color: GrayText;
+  }
+
+  .cds-progress-bar__bar {
+    --_bar: CanvasText;
+
+    background-color: CanvasText;
+  }
+
+  .cds-progress-bar__pulse {
+    display: none;
+  }
+
+  .cds-progress-bar--reduced.cds-progress-bar--indeterminate
+    .cds-progress-bar__bar {
+    background-color: transparent;
+  }
+}

@@ -1,0 +1,73 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use 'cast-shadow';
+
+/* The cast shadow lit from above — a floating surface's (motion-core
+   `attachFloatingCastShadow`; a menu, a popover, a toast). A sibling drawn
+   just before the surface — the same fixed box, outside the snap's clip —
+   whose frame carries the cast shadow's layers. The frame's insets and the
+   surface's fade are played on it in step with the surface (its `follow`).
+   Global (styles/index.scss), so any floating surface can take one. */
+
+.cast-floating {
+  /* The surface's box, copied (client px). Under it: the same z-index, and
+     drawn first. */
+  position: fixed;
+  z-index: 9000;
+  box-sizing: border-box;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  pointer-events: none;
+}
+
+/* The backdrop's tone: a surface marked `data-cast-tone="backdrop"` casts a shadow in the hue
+   of what it floats over (`--cast-shadow-from`), solved for the same contrast. */
+.cast-floating:has(+ [data-cast-tone='backdrop']) > .cast-floating__frame {
+  --cast-shadow-from: backdrop;
+}
+
+/* A surface drawn in flow (a gallery's `inline` menu): inside it, under its
+   frame (the surface is `isolation: isolate`, its frame at −1). */
+.cast-floating--inline {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+}
+
+.cast-floating__frame {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+  /* Lit whenever it's drawn (the `''` state: the frame itself), light from
+     above (no pointer), no press. */
+  @include cast-shadow.cast-shadow(
+    $layers: (
+      contact,
+      ambient,
+    ),
+    $lit: (
+      '',
+    ),
+    $press: null,
+    $elevation: floating
+  );
+
+  /* Part of the container: at full strength from the first frame, its size
+     the frame's — no fade of its own. */
+  > [data-cast-layer] {
+    transition: none;
+  }
+
+  &[data-elevation='resting'] {
+    @include cast-shadow.elevation(resting);
+  }
+
+  &[data-elevation='raised'] {
+    @include cast-shadow.elevation(raised);
+  }
+}

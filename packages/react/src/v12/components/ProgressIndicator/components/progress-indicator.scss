@@ -1,0 +1,364 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/hold-weight' as *;
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/corners';
+
+/* ProgressIndicator (ProgressIndicator.tsx). v11's layout: each step a
+ * 128px column (8rem, min 7rem; `spaceEqually` shares the width) under its
+ * line, the label beside its icon; vertical, a column of steps at least 58px
+ * tall beside the line. Drawn as line tabs (tabs.scss `.tabs--line`) and
+ * vertical line tabs (vertical-tabs.scss `.vtabs__list--line`), with the
+ * line on the steps' top (their start, vertical) rather than their foot,
+ * in line with Tabs and Vertical Tabs:
+ *
+ *   line      the steps sit on the kit's quiet stroke, a 1px hairline
+ *             (`--cds-surface-rule`, line tabs'); ONE 2px fill over it in the
+ *             kit's brand (`--cds-hero`, line tabs' hero underline) from the
+ *             start to the current step (clipped, animated by
+ *             ProgressIndicator.tsx): the complete steps. A step after the
+ *             current one that is marked complete fills its own line
+ *   marker    the selection engine's marker (`--cds-motion-selection-l/t/r/b`)
+ *             over the current step's button, drawn as line tabs' selector:
+ *             a 2px bar on the line in `$layer-selected-inverse`, the box
+ *             itself transparent
+ *   steps     a button edge to edge in its step, under the line (beside it,
+ *             vertical), as a tab; labels as tabs': the current one primary
+ *             and semibold, the others `$text-secondary`; the second line
+ *             the kit's quiet text (`.sel__quiet`'s steps). A step you can
+ *             go to takes the kit's rollover (a press shrink, as the
+ *             selection family's items) and a keyboard-only 2px ring in the
+ *             text color */
+
+$sel: --cds-motion-selection;
+
+/* The line's thickness: the fill's and the marker's bar (line tabs' 2px). */
+$bar: 2px;
+
+.cds-progress {
+  position: relative;
+  display: flex;
+  padding: 0;
+  margin: 0;
+  isolation: isolate;
+  list-style: none;
+}
+
+.cds-progress-step {
+  --_line: var(--cds-surface-rule, #{theme.$border-subtle});
+  --_icon: var(--cds-hero, #{theme.$interactive});
+  /* The label's colors, as line tabs' (`--sel-off`, `--sel-on`) and its
+     second line's (`--sel-quiet`, `--sel-quiet-hover`, `--sel-on-quiet`). */
+  --_label: #{theme.$text-secondary};
+  --_label-hover: #{theme.$text-primary};
+  --_quiet: #{theme.$text-helper};
+  --_quiet-hover: #{theme.$text-secondary};
+
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  flex-direction: row;
+  inline-size: 8rem;
+  min-inline-size: 7rem;
+  padding-block-start: $bar;
+
+  /* The step's line: the hairline, at the top of the bar's 2px. */
+  &::before {
+    position: absolute;
+    background-color: var(--_line);
+    block-size: 1px;
+    content: '';
+    inset-block-start: 0;
+    inset-inline: 0;
+  }
+}
+
+/* Complete ahead of the current step: its own line, the fill's. */
+.cds-progress-step--ahead-complete::before {
+  background-color: var(--cds-hero, #{theme.$border-interactive});
+  block-size: $bar;
+}
+
+.cds-progress-step--current {
+  --_label: #{theme.$text-primary};
+  --_quiet: #{theme.$text-secondary};
+}
+
+.cds-progress-step--incomplete {
+  --_icon: #{theme.$icon-primary};
+}
+
+.cds-progress-step--invalid {
+  --_icon: #{theme.$support-error};
+}
+
+.cds-progress-step--disabled {
+  --_icon: #{theme.$icon-disabled};
+
+  cursor: not-allowed;
+}
+
+.cds-progress--space-equal .cds-progress-step {
+  flex-grow: 1;
+  min-inline-size: 8rem;
+}
+
+.cds-progress-step__button {
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  align-items: flex-start;
+  padding: $spacing-03;
+  border: 0;
+  border-radius: corners.$row;
+  margin: 0;
+  background: none;
+  color: var(--_label);
+  cursor: default;
+  font: inherit;
+  gap: $spacing-03;
+  inline-size: 100%;
+  min-inline-size: 0;
+  text-align: start;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid theme.$text-primary;
+    outline-offset: -2px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+/* A step you can go to: the kit's rollover, a press shrink (no hover growth:
+   the steps sit beside the marker, as the selection family's items). */
+.cds-progress-step__button--clickable {
+  @include rollover;
+  --rollover-hover: #{theme.$layer-hover};
+  --rollover-expand: 0px;
+
+  cursor: pointer;
+
+  &:is(:hover, :focus-visible) {
+    --_label: var(--_label-hover);
+    --_quiet: var(--_quiet-hover);
+  }
+}
+
+.cds-progress-step__label,
+.cds-progress-step__optional {
+  transition: color var(--cds-motion-duration-fast-01)
+    var(--cds-motion-easing-standard-productive);
+}
+
+.cds-progress-step__icon {
+  color: var(--_icon);
+  margin-block-start: 2px;
+
+  svg {
+    display: block;
+    fill: currentColor;
+  }
+}
+
+/* A step you can't go to isn't a control: its icon doesn't play on hover. */
+.cds-progress-step__button--unclickable svg {
+  pointer-events: none;
+}
+
+.cds-progress-step__text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.cds-progress-step__label {
+  @include type-style('body-compact-01');
+
+  overflow: hidden;
+  max-inline-size: 5.5rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  /* The current step's label is semibold, held to its semibold width at
+     every step, so becoming current never widens the step and the steps
+     after it don't move. */
+  // @carbon-explore hold-weight-width — A label that gets heavier on a state keeps its box width. TBD
+  @include hold-weight-width(600);
+
+  .cds-progress-step--current & {
+    font-weight: 600;
+  }
+}
+
+.cds-progress--space-equal .cds-progress-step__label {
+  max-inline-size: 100%;
+}
+
+.cds-progress-step__optional {
+  @include type-style('label-01');
+
+  overflow: hidden;
+  color: var(--_quiet);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cds-progress--vertical .cds-progress-step__optional {
+  white-space: normal;
+}
+
+.cds-progress-step--disabled .cds-progress-step__label,
+.cds-progress-step--disabled .cds-progress-step__optional {
+  color: theme.$text-disabled;
+}
+
+.cds-progress__assistive {
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+/* ── the overlay: the marker, its reduced-motion ghost and the line's fill ── */
+
+.cds-progress__overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cds-progress__marker,
+.cds-progress__ghost {
+  position: absolute;
+  z-index: 3;
+
+  /* Line tabs' selector: the bar on the line, over the current step. */
+  &::after {
+    position: absolute;
+    background: theme.$layer-selected-inverse;
+    block-size: $bar;
+    content: '';
+    inset-block-start: -$bar;
+    inset-inline: 0;
+  }
+}
+
+/* Physical placement: the engine's edges are px from the left and top in
+   either direction (selection-kit.scss, the header). */
+.cds-progress__marker {
+  block-size: calc(var(#{$sel}-b, 0px) - var(#{$sel}-t, 0px));
+  inline-size: calc(var(#{$sel}-r, 0px) - var(#{$sel}-l, 0px));
+  inset-block-start: var(#{$sel}-t, 0px);
+  inset-inline-start: var(#{$sel}-l, 0px);
+  transition: opacity var(--cds-motion-duration-fast-01) linear;
+}
+
+.cds-progress__ghost {
+  block-size: calc(var(#{$sel}-gb, 0px) - var(#{$sel}-gt, 0px));
+  inline-size: calc(var(#{$sel}-gr, 0px) - var(#{$sel}-gl, 0px));
+  inset-block-start: var(#{$sel}-gt, 0px);
+  inset-inline-start: var(#{$sel}-gl, 0px);
+  opacity: 0;
+}
+
+/* No current step (the current one is marked complete): no marker. */
+.cds-progress--no-current .cds-progress__marker {
+  opacity: 0;
+}
+
+.cds-progress__fill {
+  position: absolute;
+  z-index: 2;
+  background-color: var(--cds-hero, #{theme.$border-interactive});
+  block-size: $bar;
+  clip-path: inset(0 100% 0 0);
+  inset-block-start: 0;
+  inset-inline: 0;
+}
+
+/* ── vertical ─────────────────────────────────────────────────────────── */
+
+.cds-progress--vertical {
+  flex-direction: column;
+  /* The column hugs its widest step, as vertical tabs' list. */
+  inline-size: fit-content;
+  max-inline-size: 100%;
+
+  .cds-progress-step {
+    inline-size: auto;
+    min-block-size: 3.625rem;
+    min-inline-size: 0;
+    padding-block-start: 0;
+    padding-inline-start: $bar;
+
+    &::before {
+      block-size: auto;
+      inline-size: 1px;
+      inset-block: 0;
+      inset-inline: 0 auto;
+    }
+  }
+
+  .cds-progress-step--ahead-complete::before {
+    block-size: auto;
+    inline-size: $bar;
+  }
+
+  /* A row edge to edge beside the line, as a vertical line tab. */
+  .cds-progress-step__button {
+    margin: 0;
+    inline-size: 100%;
+  }
+
+  :is(.cds-progress__marker, .cds-progress__ghost)::after {
+    block-size: auto;
+    inline-size: $bar;
+    inset-block: 0;
+    inset-inline: -$bar auto;
+  }
+
+  .cds-progress-step__label {
+    max-inline-size: 10rem;
+    white-space: normal;
+  }
+
+  .cds-progress__fill {
+    block-size: auto;
+    clip-path: inset(0 0 100% 0);
+    inline-size: $bar;
+    inset-block: 0;
+    inset-inline: 0 auto;
+  }
+}
+
+@media (forced-colors: active) {
+  :is(.cds-progress__marker, .cds-progress__ghost)::after,
+  .cds-progress__fill {
+    background: Highlight;
+  }
+
+  .cds-progress-step__button:focus-visible {
+    outline-color: Highlight;
+  }
+}

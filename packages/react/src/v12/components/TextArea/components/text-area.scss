@@ -1,0 +1,176 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+
+/* TextArea — what the text input's field (text-input.scss) doesn't already
+ * draw for a multi-line field. The container
+ * is the text input's own, by class: the fill per theme, the outline's
+ * ladder (hover, press, focus, the error's edge), the label row, the counter,
+ * the message line and the mark. Nothing here changes a state's look.
+ *
+ *   height   the field grows with its textarea: `rows` lines of
+ *            body-compact-01 (18px) inside the size's block inset, so one
+ *            line is exactly the size's field height (xs 24 · sm 32 · md 40 ·
+ *            lg 48: an inset of 3 · 7 · 11 · 15px, v11's md 11px)
+ *   inline   the text starts at the size's edge inset (`--tf-pad`) and keeps
+ *            the mark's room at its end at all times (the gap and the 16px
+ *            mark), so a status arriving never re-wraps what's typed
+ *   mark     at the top of the trailing edge, centred on the first line (v11)
+ *   resize   vertical only (v11); none with `cols` (v11) or when disabled
+ *   scroll   the kit's pill instead of the native bar (scroller.scss), and
+ *            the soft edge the text leaves into (`.cds-scroll-edge`) */
+
+.cds-text-area {
+  /* The block inset: one line of 18px is the size's field height. */
+  --ta-line: 18px;
+  --ta-pad-block: calc((var(--tf-h) - var(--ta-line)) / 2);
+  /* The mark's room at the text's end: the gap and the mark. */
+  --ta-mark-room: calc(var(--tf-gap) + var(--tf-mark));
+  /* The resize marker: inset from the outline so there is visible space around it. */
+  --ta-resize-inset: 4px;
+  --ta-resize-size: 12px;
+}
+
+/* The field takes the textarea's height, not the one-line `--tf-h`. */
+.cds-text-area .cds-text-area__field {
+  block-size: auto;
+  min-block-size: var(--tf-h);
+}
+
+/* `cols`: the field is as wide as its columns (v11). */
+.cds-text-area--cols .cds-text-area__field {
+  inline-size: max-content;
+  max-inline-size: 100%;
+}
+
+/* The scroller's root: the textarea and its rail, filling the field. The
+   field's own `::after` stays the outline, above them. */
+.cds-text-area__scroller {
+  flex: 1 1 auto;
+  border-radius: inherit;
+  min-inline-size: 0;
+}
+
+/* The textarea: the field's input, multi-line. */
+.cds-text-area .cds-text-area__input {
+  display: block;
+  block-size: auto;
+  inline-size: 100%;
+  line-height: var(--ta-line);
+  min-block-size: var(--tf-h);
+  overflow-wrap: break-word;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-block: var(--ta-pad-block);
+  padding-inline: var(--tf-pad) calc(var(--tf-pad) + var(--ta-mark-room));
+  /* Vertical only (v11). */
+  resize: vertical;
+  /* The engine drives its own smooth scroll; the pill stands for the bar. */
+  scroll-behavior: auto;
+  scrollbar-width: none;
+  text-overflow: clip;
+  white-space: pre-wrap;
+
+  /* The browser's default resizer: hidden here; the custom marker is on ::before. */
+  &::-webkit-resizer {
+    display: none;
+  }
+}
+
+.cds-text-area--cols .cds-text-area__input,
+.cds-text-area.cds-text-input--disabled .cds-text-area__input,
+.cds-text-area.cds-text-input--readonly .cds-text-area__input {
+  resize: none;
+}
+
+/* The decorator sits beside the mark: its room too. */
+.cds-text-area--decorated .cds-text-area__input {
+  padding-inline-end: calc(
+    var(--tf-pad) + var(--ta-mark-room) + var(--tf-gap) + 24px
+  );
+}
+
+/* The revert button beside the mark: its room too, whenever it can show. */
+.cds-text-area--revertible .cds-text-area__input {
+  padding-inline-end: calc(
+    var(--tf-ctl-end) + var(--ta-mark-room) + var(--tf-ctl) + var(--tf-ctl-gap)
+  );
+}
+
+/* The resize marker, 4px in from the outline (`::after`); it takes no pointer, so the
+   textarea's own grip under it still drags. */
+.cds-text-area .cds-text-area__field::before {
+  position: absolute;
+  z-index: 1;
+  background-image:
+    linear-gradient(
+      -45deg,
+      transparent calc(25% - 0.5px),
+      theme.$border-strong-01 calc(25% - 0.5px),
+      theme.$border-strong-01 calc(25% + 0.5px),
+      transparent calc(25% + 0.5px)
+    ),
+    linear-gradient(
+      -45deg,
+      transparent calc(55% - 0.5px),
+      theme.$border-strong-01 calc(55% - 0.5px),
+      theme.$border-strong-01 calc(55% + 0.5px),
+      transparent calc(55% + 0.5px)
+    );
+  block-size: var(--ta-resize-size);
+  content: '';
+  inline-size: var(--ta-resize-size);
+  inset-block-end: var(--ta-resize-inset);
+  inset-inline-end: var(--ta-resize-inset);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* In right to left the grip is at the start corner; its strokes face it. */
+.cds-text-area .cds-text-area__field:dir(rtl)::before {
+  transform: scaleX(-1);
+}
+
+/* No marker when resize is disabled. */
+.cds-text-area--cols .cds-text-area__field::before,
+.cds-text-area.cds-text-input--disabled .cds-text-area__field::before,
+.cds-text-area.cds-text-input--readonly .cds-text-area__field::before {
+  display: none;
+}
+
+/* The trailing edge: at the top, on the first line's centre (v11's mark
+   is at the top of a text area). */
+.cds-text-area .cds-text-area__trail {
+  position: absolute;
+  block-size: var(--ta-line);
+  inset-block-start: var(--ta-pad-block);
+  inset-inline-end: 0;
+  pointer-events: none;
+
+  > * {
+    pointer-events: auto;
+  }
+}
+
+/* Under forced colors the field's ring is a real border (text-input.scss);
+   nothing of the text area's own needs one. */
+@media (forced-colors: active) {
+  .cds-text-area .cds-text-area__input {
+    scrollbar-width: auto;
+  }
+}
+
+/* TextAreaSkeleton: the bars on the field's own lines, over its unseen box. */
+.cds-text-area__skeleton.cds-text-area__skeleton {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  inset: 0;
+  min-block-size: 0;
+  pointer-events: none;
+}

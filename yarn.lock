@@ -2992,7 +2992,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-button@workspace:packages/react/src/v12/components/Button":
+"@carbon-labs/react-button@workspace:*, @carbon-labs/react-button@workspace:packages/react/src/v12/components/Button":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-button@workspace:packages/react/src/v12/components/Button"
   dependencies:
@@ -3034,6 +3034,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-checkbox@workspace:packages/react/src/v12/components/Checkbox":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-checkbox@workspace:packages/react/src/v12/components/Checkbox"
+  dependencies:
+    "@carbon-labs/react-feedback": "workspace:*"
+    "@carbon-labs/react-selection-kit": "workspace:*"
+    "@carbon-labs/react-text-input": "workspace:*"
+    "@carbon-labs/react-tooltip": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    vitest: "npm:^4.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+    react-dom: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-checklist@workspace:packages/react/src/components/Checklist":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-checklist@workspace:packages/react/src/components/Checklist"
@@ -3043,6 +3064,30 @@ __metadata:
     "@ibm/telemetry-js": "npm:^1.10.2"
   peerDependencies:
     "@carbon/colors": ">=11"
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-code-snippet@workspace:packages/react/src/v12/components/CodeSnippet":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-code-snippet@workspace:packages/react/src/v12/components/CodeSnippet"
+  dependencies:
+    "@carbon-labs/react-button": "workspace:*"
+    "@carbon-labs/react-copy-button": "workspace:*"
+    "@carbon-labs/react-disclosure": "workspace:*"
+    "@carbon-labs/react-feedback": "workspace:*"
+    "@carbon-labs/react-motion-icons": "workspace:*"
+    "@carbon-labs/react-roll-text": "workspace:*"
+    "@carbon-labs/react-scroller": "workspace:*"
+    "@carbon-labs/react-selection-kit": "workspace:*"
+    "@carbon-labs/react-tooltip": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
   languageName: unknown
   linkType: soft
 
@@ -3062,7 +3107,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-copy-button@workspace:packages/react/src/v12/components/CopyButton":
+"@carbon-labs/react-copy-button@workspace:*, @carbon-labs/react-copy-button@workspace:packages/react/src/v12/components/CopyButton":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-copy-button@workspace:packages/react/src/v12/components/CopyButton"
   dependencies:
@@ -3092,7 +3137,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-disclosure@workspace:packages/react/src/v12/components/Disclosure":
+"@carbon-labs/react-description-list@workspace:packages/react/src/v12/components/DescriptionList":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-description-list@workspace:packages/react/src/v12/components/DescriptionList"
+  dependencies:
+    "@carbon-labs/react-copy-button": "workspace:*"
+    "@carbon-labs/react-feedback": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-disclosure@workspace:*, @carbon-labs/react-disclosure@workspace:packages/react/src/v12/components/Disclosure":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-disclosure@workspace:packages/react/src/v12/components/Disclosure"
   dependencies:
@@ -3103,6 +3164,42 @@ __metadata:
     "@ibm/telemetry-js": "npm:^1.10.2"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-easing-graph@workspace:packages/react/src/v12/components/EasingGraph":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-easing-graph@workspace:packages/react/src/v12/components/EasingGraph"
+  dependencies:
+    "@carbon-labs/react-text-input": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-empty-state@workspace:packages/react/src/v12/components/EmptyState":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-empty-state@workspace:packages/react/src/v12/components/EmptyState"
+  dependencies:
+    "@carbon-labs/react-button": "workspace:*"
+    "@carbon-labs/react-illustrations": "workspace:*"
+    "@carbon-labs/react-kit-defaults": "workspace:*"
+    "@carbon-labs/react-link": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    vitest: "npm:^4.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+    react-dom: ^18.2.0 || ^19.0.0
   languageName: unknown
   linkType: soft
 
@@ -3132,6 +3229,28 @@ __metadata:
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
     react-dom: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-file-uploader@workspace:packages/react/src/v12/components/FileUploader":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-file-uploader@workspace:packages/react/src/v12/components/FileUploader"
+  dependencies:
+    "@carbon-labs/react-button": "workspace:*"
+    "@carbon-labs/react-disclosure": "workspace:*"
+    "@carbon-labs/react-feedback": "workspace:*"
+    "@carbon-labs/react-motion-icons": "workspace:*"
+    "@carbon-labs/react-progress-ring": "workspace:*"
+    "@carbon-labs/react-roll-text": "workspace:*"
+    "@carbon-labs/react-tooltip": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
   languageName: unknown
   linkType: soft
 
@@ -3202,6 +3321,53 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-jobs-tray@workspace:packages/react/src/v12/components/JobsTray":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-jobs-tray@workspace:packages/react/src/v12/components/JobsTray"
+  dependencies:
+    "@carbon-labs/react-button": "workspace:*"
+    "@carbon-labs/react-disclosure": "workspace:*"
+    "@carbon-labs/react-feedback": "workspace:*"
+    "@carbon-labs/react-icon-motion": "workspace:*"
+    "@carbon-labs/react-kit-defaults": "workspace:*"
+    "@carbon-labs/react-motion-icons": "workspace:*"
+    "@carbon-labs/react-notification": "workspace:*"
+    "@carbon-labs/react-popover": "workspace:*"
+    "@carbon-labs/react-progress-bar": "workspace:*"
+    "@carbon-labs/react-scroller": "workspace:*"
+    "@carbon-labs/react-selection-kit": "workspace:*"
+    "@carbon-labs/react-snap": "workspace:*"
+    "@carbon-labs/react-status-indicator": "workspace:*"
+    "@carbon-labs/react-tooltip": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    vitest: "npm:^4.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+    react-dom: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-jump-to@workspace:packages/react/src/v12/components/JumpTo":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-jump-to@workspace:packages/react/src/v12/components/JumpTo"
+  dependencies:
+    "@carbon-labs/react-button": "workspace:*"
+    "@carbon-labs/react-kit-defaults": "workspace:*"
+    "@carbon-labs/react-motion-icons": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    vitest: "npm:^4.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+    react-dom: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-kit-defaults@workspace:*, @carbon-labs/react-kit-defaults@workspace:packages/react/src/v12/components/KitDefaults":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-kit-defaults@workspace:packages/react/src/v12/components/KitDefaults"
@@ -3216,7 +3382,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-link@workspace:packages/react/src/v12/components/Link":
+"@carbon-labs/react-link@workspace:*, @carbon-labs/react-link@workspace:packages/react/src/v12/components/Link":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-link@workspace:packages/react/src/v12/components/Link"
   dependencies:
@@ -3275,6 +3441,54 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-menu@workspace:packages/react/src/v12/components/Menu":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-menu@workspace:packages/react/src/v12/components/Menu"
+  dependencies:
+    "@carbon-labs/react-button": "workspace:*"
+    "@carbon-labs/react-feedback": "workspace:*"
+    "@carbon-labs/react-kit-defaults": "workspace:*"
+    "@carbon-labs/react-loading": "workspace:*"
+    "@carbon-labs/react-motion-icons": "workspace:*"
+    "@carbon-labs/react-popover": "workspace:*"
+    "@carbon-labs/react-props": "workspace:*"
+    "@carbon-labs/react-selection-kit": "workspace:*"
+    "@carbon-labs/react-tooltip": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    vitest: "npm:^4.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-modal@workspace:packages/react/src/v12/components/Modal":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-modal@workspace:packages/react/src/v12/components/Modal"
+  dependencies:
+    "@carbon-labs/react-button": "workspace:*"
+    "@carbon-labs/react-feedback": "workspace:*"
+    "@carbon-labs/react-kit-defaults": "workspace:*"
+    "@carbon-labs/react-motion-icons": "workspace:*"
+    "@carbon-labs/react-scroller": "workspace:*"
+    "@carbon-labs/react-selection-kit": "workspace:*"
+    "@carbon-labs/react-tooltip": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+    react-dom: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-motion-icons@workspace:*, @carbon-labs/react-motion-icons@workspace:packages/react/src/v12/components/MotionIcons":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-motion-icons@workspace:packages/react/src/v12/components/MotionIcons"
@@ -3309,7 +3523,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-notification@workspace:packages/react/src/v12/components/Notification":
+"@carbon-labs/react-notification@workspace:*, @carbon-labs/react-notification@workspace:packages/react/src/v12/components/Notification":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-notification@workspace:packages/react/src/v12/components/Notification"
   dependencies:
@@ -3321,6 +3535,55 @@ __metadata:
     "@carbon-labs/utilities": "npm:0.28.0"
     "@carbon-labs/v12-motion": "workspace:*"
     "@carbon-labs/v12-styles": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-notifications-panel@workspace:packages/react/src/v12/components/NotificationsPanel":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-notifications-panel@workspace:packages/react/src/v12/components/NotificationsPanel"
+  dependencies:
+    "@carbon-labs/react-button": "workspace:*"
+    "@carbon-labs/react-disclosure": "workspace:*"
+    "@carbon-labs/react-feedback": "workspace:*"
+    "@carbon-labs/react-kit-defaults": "workspace:*"
+    "@carbon-labs/react-link": "workspace:*"
+    "@carbon-labs/react-motion-icons": "workspace:*"
+    "@carbon-labs/react-popover": "workspace:*"
+    "@carbon-labs/react-roll-text": "workspace:*"
+    "@carbon-labs/react-scroller": "workspace:*"
+    "@carbon-labs/react-selection-kit": "workspace:*"
+    "@carbon-labs/react-snap": "workspace:*"
+    "@carbon-labs/react-tooltip": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-number-input@workspace:packages/react/src/v12/components/NumberInput":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-number-input@workspace:packages/react/src/v12/components/NumberInput"
+  dependencies:
+    "@carbon-labs/react-feedback": "workspace:*"
+    "@carbon-labs/react-kit-defaults": "workspace:*"
+    "@carbon-labs/react-motion-icons": "workspace:*"
+    "@carbon-labs/react-props": "workspace:*"
+    "@carbon-labs/react-roll-text": "workspace:*"
+    "@carbon-labs/react-selection-kit": "workspace:*"
+    "@carbon-labs/react-text-input": "workspace:*"
+    "@carbon-labs/react-tooltip": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
   peerDependencies:
@@ -3444,7 +3707,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-progress-ring@workspace:packages/react/src/v12/components/ProgressRing":
+"@carbon-labs/react-progress-ring@workspace:*, @carbon-labs/react-progress-ring@workspace:packages/react/src/v12/components/ProgressRing":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-progress-ring@workspace:packages/react/src/v12/components/ProgressRing"
   dependencies:
@@ -3471,6 +3734,23 @@ __metadata:
     "@carbon-labs/v12-motion": "workspace:*"
     "@ibm/telemetry-js": "npm:^1.10.2"
     vitest: "npm:^4.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-radio-button@workspace:packages/react/src/v12/components/RadioButton":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-radio-button@workspace:packages/react/src/v12/components/RadioButton"
+  dependencies:
+    "@carbon-labs/react-feedback": "workspace:*"
+    "@carbon-labs/react-text-input": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
   languageName: unknown
@@ -3535,6 +3815,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-search@workspace:packages/react/src/v12/components/Search":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-search@workspace:packages/react/src/v12/components/Search"
+  dependencies:
+    "@carbon-labs/react-disclosure": "workspace:*"
+    "@carbon-labs/react-feedback": "workspace:*"
+    "@carbon-labs/react-kit-defaults": "workspace:*"
+    "@carbon-labs/react-motion-icons": "workspace:*"
+    "@carbon-labs/react-props": "workspace:*"
+    "@carbon-labs/react-text-input": "workspace:*"
+    "@carbon-labs/react-tooltip": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-select-list@workspace:packages/react/src/v12/components/SelectList":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-select-list@workspace:packages/react/src/v12/components/SelectList"
@@ -3544,6 +3845,29 @@ __metadata:
     "@carbon-labs/react-util": "workspace:*"
     "@carbon-labs/utilities": "npm:0.28.0"
     "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-select@workspace:packages/react/src/v12/components/Select":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-select@workspace:packages/react/src/v12/components/Select"
+  dependencies:
+    "@carbon-labs/react-feedback": "workspace:*"
+    "@carbon-labs/react-kit-defaults": "workspace:*"
+    "@carbon-labs/react-motion-icons": "workspace:*"
+    "@carbon-labs/react-props": "workspace:*"
+    "@carbon-labs/react-scroller": "workspace:*"
+    "@carbon-labs/react-snap": "workspace:*"
+    "@carbon-labs/react-text-input": "workspace:*"
+    "@carbon-labs/react-tooltip": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
   peerDependencies:
@@ -3586,6 +3910,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-slider@workspace:packages/react/src/v12/components/Slider":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-slider@workspace:packages/react/src/v12/components/Slider"
+  dependencies:
+    "@carbon-labs/react-feedback": "workspace:*"
+    "@carbon-labs/react-props": "workspace:*"
+    "@carbon-labs/react-roll-text": "workspace:*"
+    "@carbon-labs/react-selection-kit": "workspace:*"
+    "@carbon-labs/react-text-input": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    vitest: "npm:^4.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-snap@workspace:*, @carbon-labs/react-snap@workspace:packages/react/src/v12/components/Snap":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-snap@workspace:packages/react/src/v12/components/Snap"
@@ -3609,7 +3954,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-status-indicator@workspace:packages/react/src/v12/components/StatusIndicator":
+"@carbon-labs/react-status-indicator@workspace:*, @carbon-labs/react-status-indicator@workspace:packages/react/src/v12/components/StatusIndicator":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-status-indicator@workspace:packages/react/src/v12/components/StatusIndicator"
   dependencies:
@@ -3688,6 +4033,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-text-area@workspace:packages/react/src/v12/components/TextArea":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-text-area@workspace:packages/react/src/v12/components/TextArea"
+  dependencies:
+    "@carbon-labs/react-feedback": "workspace:*"
+    "@carbon-labs/react-kit-defaults": "workspace:*"
+    "@carbon-labs/react-props": "workspace:*"
+    "@carbon-labs/react-scroller": "workspace:*"
+    "@carbon-labs/react-selection-kit": "workspace:*"
+    "@carbon-labs/react-text-input": "workspace:*"
+    "@carbon-labs/react-tooltip": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-text-highlighter@workspace:packages/react/src/components/TextHighlighter":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-text-highlighter@workspace:packages/react/src/components/TextHighlighter"
@@ -3697,7 +4063,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-text-input@workspace:packages/react/src/v12/components/TextInput":
+"@carbon-labs/react-text-input@workspace:*, @carbon-labs/react-text-input@workspace:packages/react/src/v12/components/TextInput":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-text-input@workspace:packages/react/src/v12/components/TextInput"
   dependencies:

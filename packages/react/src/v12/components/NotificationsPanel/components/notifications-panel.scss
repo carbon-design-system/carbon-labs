@@ -1,0 +1,455 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/ghost' as *;
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/cast-shadow-floating';
+
+/* NotificationsPanel — NotificationsPanel.tsx (its header lists the
+   choices). The frame (`data-snap-frame`) draws the surface — the quiet
+   fill, its hairline and its corner — so the snap moves it as geometry; the
+   content sits on top. Corners step down inside it: the panel's 16px, a
+   row's wash 8px inside its 8px inset.
+
+   Compact: every part's content starts 12px in from the panel's edge
+   (`--cds-npanel-pad`, the sm field inset), a
+   row's wash 8px in (the inset) with 4px of padding inside it; the header
+   and the footer are 40px (an sm button and 4px round it); a row is 8px top
+   and bottom round its text, when on the title's line. */
+
+.cds-npanel-portal {
+  display: contents;
+}
+
+/* The first-open warm-up: a box, so its 0.5% opacity reaches the panel. */
+.cds-npanel-portal--warm {
+  position: fixed;
+  z-index: 9000;
+  display: block;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cds-npanel {
+  --cds-npanel-radius: 16px;
+  --cds-npanel-inset: 8px;
+  /* The content's inset from the panel's edge: the sm field inset. */
+  --cds-npanel-pad: 12px;
+
+  /* Physical: place() sets left and top, in either direction. */
+  position: fixed;
+  z-index: 9000;
+  box-sizing: border-box;
+  color: theme.$text-primary;
+  inline-size: min(22.5rem, calc(100vw - 16px));
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  isolation: isolate;
+  outline: none;
+
+  &[data-leaving] {
+    pointer-events: none;
+  }
+}
+
+.cds-npanel__frame {
+  position: absolute;
+  z-index: -1;
+  border-radius: var(--cds-npanel-radius);
+  background: var(--cds-surface);
+  box-shadow: inset 0 0 0 1px var(--cds-surface-rule);
+  inset: 0;
+}
+
+.cds-npanel__content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-block-size: min(38rem, calc(100vh - 4rem));
+}
+
+/* ── the header: the title, Dismiss all, Do not disturb, settings ─────── */
+
+/* 40px: its sm (32px) buttons 4px in from the top, the bottom and the end,
+   so a circle's glyph sits the content's 12px from the edge. */
+.cds-npanel__header {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  padding: 0.25rem 0.25rem 0.25rem var(--cds-npanel-pad);
+  border-block-end: 1px solid var(--cds-surface-divider);
+  gap: 0;
+  min-block-size: 2.5rem;
+}
+
+.cds-npanel__title {
+  @include type-style('heading-compact-01');
+
+  flex: 1 1 auto;
+  margin: 0;
+  min-inline-size: 0;
+}
+
+/* ── the list ─────────────────────────────────────────────────────────── */
+
+/* The kit's Scroller: it takes the panel's height left after the header,
+   and its viewport (the body) scrolls the rows. */
+.cds-npanel__scroller {
+  flex: 1 1 auto;
+}
+
+.cds-npanel__body {
+  box-sizing: border-box;
+  padding: 0 var(--cds-npanel-inset);
+  overscroll-behavior: contain;
+}
+
+.cds-npanel__group {
+  display: flex;
+  flex-direction: column;
+}
+
+.cds-npanel__group-title {
+  @include type-style('label-01');
+
+  padding: 0.5rem calc(var(--cds-npanel-pad) - var(--cds-npanel-inset)) 0.125rem;
+
+  margin: 0;
+  color: theme.$text-secondary;
+}
+
+/* An entry: the place a row takes, which closes when it's dismissed. Its
+   divider is inside it, so it goes with it. */
+.cds-npanel__entry {
+  position: relative;
+  display: flow-root;
+
+  & + &::before {
+    position: absolute;
+    background: var(--cds-surface-divider);
+    block-size: 1px;
+    content: '';
+    inset-block-start: 0;
+    inset-inline: calc(var(--cds-npanel-pad) - var(--cds-npanel-inset));
+  }
+}
+
+.cds-npanel__item {
+  /* The quiet card hover: an even wash (a row in a list); flush, no
+     press shrink, so it stays on its divider. */
+  @include rollover($press-inset: 0);
+  --rollover-flat: 1;
+  --rollover-hover: #{theme.$layer-hover};
+
+  display: grid;
+  align-items: start;
+  padding: 0.5rem 0.125rem 0.5rem
+    calc(var(--cds-npanel-pad) - var(--cds-npanel-inset));
+  border-radius: calc(var(--cds-npanel-radius) - var(--cds-npanel-inset));
+  gap: 0.5rem;
+  grid-template-columns: 16px minmax(0, 1fr) auto;
+  margin-block: 0.125rem;
+}
+
+.cds-npanel__item--clickable {
+  cursor: pointer;
+}
+
+.cds-npanel__mark {
+  margin-block-start: 2px;
+}
+
+/* Unread: a blue pip at the mark's top end, knocked out of the mark
+   as a cut, not a ring in the resting fill (that would show as a pale outline
+   on the hover wash and the press): the mark is masked away round the pip, so
+   whatever the row's fill is at that moment (rest, the hover's fade, the
+   press's circle, a selection) shows through, as the tabs' badge and
+   motion-icons' own status pips are cut (tabs.scss, `.tabs__badge`).
+
+     --cds-npanel-pip       the pip's size (6px)
+     --cds-npanel-pip-gap   the knockout round it (1.5px)
+
+   Its centre is the mark's top end corner, so the cut's centre is too;
+   RTL mirrors it with the pip. */
+.cds-npanel__item {
+  --cds-npanel-pip: 6px;
+  --cds-npanel-pip-gap: 1.5px;
+}
+
+.cds-npanel__item--unread .cds-npanel__mark {
+  --_pip-at: 100% 0;
+
+  &:dir(rtl) {
+    --_pip-at: 0 0;
+  }
+
+  &::after {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--cds-hero, #{theme.$interactive});
+    block-size: var(--cds-npanel-pip);
+    content: '';
+    inline-size: var(--cds-npanel-pip);
+    inset-block-start: calc(var(--cds-npanel-pip) / -2);
+    inset-inline-end: calc(var(--cds-npanel-pip) / -2);
+  }
+
+  > .fb-mark__icon {
+    $cut: calc(var(--cds-npanel-pip) / 2 + var(--cds-npanel-pip-gap));
+
+    mask-image: radial-gradient(
+      circle at var(--_pip-at),
+      transparent $cut,
+      #000000 calc(#{$cut} + 0.5px)
+    );
+  }
+}
+
+.cds-npanel__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-inline-size: 0;
+
+  p {
+    margin: 0;
+  }
+}
+
+/* The title's line: the title, then when at its end. */
+.cds-npanel__title-row {
+  display: flex;
+  align-items: baseline;
+  align-self: stretch;
+  gap: 0.5rem;
+  min-inline-size: 0;
+
+  > .cds-npanel__item-title {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+  }
+}
+
+.cds-npanel__when {
+  @include type-style('label-01');
+
+  flex: none;
+  color: theme.$text-secondary;
+  white-space: nowrap;
+}
+
+.cds-npanel__item-title {
+  @include type-style('body-compact-01');
+
+  color: theme.$text-primary;
+
+  .cds-npanel__item--unread & {
+    font-weight: 600;
+  }
+}
+
+/* A clickable row's title is its button: Enter on it is the row's click;
+   the keyboard ring goes round the whole row. */
+.cds-npanel__item-title--button {
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background: none;
+  cursor: pointer;
+  text-align: start;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible::before {
+    position: absolute;
+    border-radius: calc(var(--cds-npanel-radius) - var(--cds-npanel-inset));
+    box-shadow: inset 0 0 0 2px theme.$text-primary;
+    content: '';
+    inset: 0;
+    pointer-events: none;
+  }
+}
+
+/* The title's line to the summary: $spacing-01 (2px) between them, on
+   the type ramp's own lines (body-compact-01, 18px, both). Flush, the
+   title read as the summary's first line: the same face, size and leading
+   in a darker colour (a read row's title is regular weight), so only the
+   colour broke the stack. 2px is the spacing scale's smallest step and
+   keeps the compact row; the summary's own lines stay at 18px. */
+.cds-npanel__text > .cds-npanel__desc {
+  margin-block-start: $spacing-01;
+}
+
+.cds-npanel__desc {
+  @include type-style('body-compact-01');
+
+  overflow: hidden;
+
+  color: theme.$text-secondary;
+
+  &--clamped {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+}
+
+/* A place opening or shutting (a row arriving or dismissed, its group
+   going with its last row, Read more and Read less): clipped under the
+   disclosure's soft bottom edge (disclosure.scss), `min(16px, h − shut,
+   H − h)` for a place h tall of its open H (`--cds-npanel-open`) that rests
+   `--cds-npanel-shut` tall (Read less's two lines, else 0). It grows over the
+   first 16px of travel and closes over the last, both ways, so nothing pops
+   when the clip goes (NotificationsPanel.tsx, `clipPlace`). */
+.cds-npanel [data-npanel-clip] {
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to bottom,
+    #000000
+      calc(
+        100% - max(
+            0px,
+            min(
+              var(--cds-motion-soft-edge, 16px),
+              100% - var(--cds-npanel-shut, 0px),
+              var(--cds-npanel-open, 0px) - 100%
+            )
+          )
+      ),
+    transparent
+  );
+}
+
+/* The row's actions, one line under the summary ($spacing-02 above it):
+   Read more (the kit's text button, `Button frame="none"`, with the
+   disclosure's chevron) and the link (the kit's `Link`), $spacing-05
+   apart, both on body-compact-01's 18px line. Above the row's own control,
+   so a click on them isn't the row's. */
+.cds-npanel__actions {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: $spacing-05;
+  margin-block-start: $spacing-02;
+}
+
+/* The dismiss button: there on hover and focus (and always for touch),
+   fading in on the hover's clock. An xs circle (24px), centred on the
+   title's line. */
+.cds-npanel__dismiss {
+  position: relative;
+  z-index: 1;
+  margin-block: -3px;
+  opacity: 0;
+  transition: opacity var(--cds-motion-duration-fast-01)
+    var(--cds-motion-easing-standard-productive);
+
+  .cds-npanel__item:is(:hover, :focus-within) & {
+    opacity: 1;
+    transition-duration: var(--cds-motion-duration-fast-02);
+  }
+
+  @media (hover: none) {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: var(--cds-motion-duration-floor);
+  }
+}
+
+/* ── the empty state ──────────────────────────────────────────────────── */
+
+.cds-npanel__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem var(--cds-npanel-pad);
+  color: theme.$text-secondary;
+  gap: 0.5rem;
+  text-align: center;
+
+  svg {
+    fill: theme.$icon-secondary;
+  }
+
+  p {
+    @include type-style('body-compact-01');
+
+    margin: 0;
+  }
+}
+
+/* ── the footer: View all ─────────────────────────────────────────────── */
+
+/* 40px under its 1px divider. View all is the whole cell; the footer only
+   keeps it inside the panel's hairline (1px at the sides and the foot). */
+.cds-npanel__footer {
+  display: flex;
+  box-sizing: border-box;
+  padding: 0 1px 1px;
+  border-block-start: 1px solid var(--cds-surface-divider);
+  min-block-size: calc(2.5rem + 1px);
+}
+
+/* The whole footer cell, from the divider to the panel's foot, inside the hairline: top
+   corners square, bottom ones the panel's less the hairline (15px), so the hover follows the
+   panel's curve. The label sits at the content's 12px, in line with the title and the marks,
+   an arrow at the end inset. */
+/* Its rollover is the ghost Button's (`rollover-ghost`, the same `attachRollover` call):
+   glow, label step, pressed tint and release circle, colour for colour. The geometry is the
+   cell's: no 1px grow or press (`$press-inset: 0`), as a ButtonShell cell, so the wash never
+   covers the lines that bound it nor leaves a strip of the resting fill inside them. */
+.cds-npanel__view-all {
+  @include rollover($press-inset: 0);
+  @include rollover-ghost;
+  @include type-style('body-compact-01');
+
+  display: flex;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 calc(var(--cds-npanel-pad) - 1px);
+  border: 0;
+  border-radius: 0 0 calc(var(--cds-npanel-radius) - 1px)
+    calc(var(--cds-npanel-radius) - 1px);
+  margin: 0;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  gap: 0.5rem;
+  text-align: start;
+  text-decoration: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    box-shadow: inset 0 0 0 2px theme.$focus;
+  }
+
+  svg {
+    flex: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .cds-npanel__frame {
+    border: 1px solid CanvasText;
+  }
+}

@@ -1,0 +1,57 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as CheckboxStories from './Checkbox.stories.tsx';
+
+<Meta of={CheckboxStories} />
+
+# Checkbox
+
+A box that turns one option on or off. A parent of partly checked children shows
+mixed, a dash. `Checkbox` takes Carbon's props, plus `disabledReason` and
+`timeScale`. `CheckboxGroup` sets several checkboxes under one legend, stacked
+or in a row. `CheckboxSkeleton` is the checkbox while it loads.
+
+<Canvas of={CheckboxStories.Default} />
+
+<Canvas of={CheckboxStories.SelectAll} />
+
+<Canvas of={CheckboxStories.States} />
+
+<Canvas of={CheckboxStories.Group} />
+
+<Canvas of={CheckboxStories.Horizontal} />
+
+<Canvas of={CheckboxStories.StatusChange} />
+
+<Canvas of={CheckboxStories.DisabledReason} />
+
+<Canvas of={CheckboxStories.Skeleton} />
+
+## Motion
+
+- **Check:** the fill changes at once. 40ms later the check draws its stroke on,
+  on fast-02 with standard-productive. The state reads first.
+- **Uncheck:** the check fades out on fast-01.
+- **Mixed:** the dash grows from its middle, on fast-02, 40ms after the fill. It
+  is drawn from the input's own mixed state, so a click that clears it shows at
+  once. Assistive tech hears "mixed".
+- **Hover:** the rollover on the box. Off, a wash of the text color at 8%; on, a
+  toned step of the fill. The glow fades in on fast-02 and out on fast-01. The
+  box grows 1px. Hovering the label plays it too, however the label wraps.
+- **Press:** no press color of its own. The box presses 1px in.
+- **Status ring:** `invalid` and `warn` color the box's stroke and add 1px
+  outside it, red or yellow. The rollover paints the ring, so it grows with the
+  hover. Disabled and read-only show no status.
+- **Message line:** helper, warning and error share one line and swap in place,
+  out then in.
+- **Focus:** keyboard only, 2px `$text-primary`, 2px outside the box; 3px out
+  while a status shows. It has no transition.
+
+## Reduced motion
+
+The check and the dash appear at once. The hover changes at once. The press
+still shows; the release and the return to hover are at once. The message line
+changes at once.
+
+## Props
+
+<ArgTypes of={CheckboxStories} />

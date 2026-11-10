@@ -1,0 +1,62 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SelectStories from './Select.stories.tsx';
+
+<Meta of={SelectStories} />
+
+# Select
+
+Carbon's Select, a native `<select>`, on the kit's text field: a label, the
+field with a chevron and a status mark at its trailing edge, and one message
+line. `Select` takes Carbon's props, and its options are `SelectItem` and
+`SelectItemGroup`. The select fills the field, so a press anywhere on it opens
+the list. Where the browser lets the page style the list, it is drawn in the
+page with the Dropdown's look; elsewhere it is the platform's own. Read-only
+takes focus but never opens. `inline` puts the label beside a quiet field.
+`SelectSkeleton` is the select while its value loads.
+
+<Canvas of={SelectStories.Default} />
+
+<Canvas of={SelectStories.Validation} />
+
+<Canvas of={SelectStories.StatusChange} />
+
+<Canvas of={SelectStories.States} />
+
+<Canvas of={SelectStories.Groups} />
+
+<Canvas of={SelectStories.Inline} />
+
+<Canvas of={SelectStories.Skeleton} />
+
+## Motion
+
+- **Outline ladder:** the text input's. Hover moves the hairline a step, a press
+  steps it further, and focus is the accent at 2px. The fill never changes.
+- **Error border:** an error settles in once.
+- **Message line:** helper text, warning and error share one line and swap in
+  place, out then in.
+- **Status mark:** a change is the content swap: the old mark leaves on fast-01,
+  then the new one arrives on fast-02. From no status, it arrives at once.
+  `statusBeat` plays the mark's icon once as it arrives. A choice is one act,
+  not typing, so a status shows at once.
+- **Icon hover:** the field is the chevron's icon frame, so the chevron's motion
+  plays on the field's hover. It does not turn.
+- **List snap in:** the page-drawn list grows from the field's center on its
+  near edge, its width from 25% and its height from 75%, over fast-01 on the
+  entrance curve.
+- **List snap out:** the far edge pulls back to 70% over fast-01 on the
+  pull-back curve, and the list is gone on its last frame.
+- **List fade:** the list fades up over the entrance's first fast-00 and out
+  over the exit's last, linear.
+
+The platform's own list has no motion of ours.
+
+## Reduced motion
+
+The outline and the error border change on half of fast-01. The message line and
+the status mark change at once. The page-drawn list fades in at its final size
+on the reduced clock, and closes at once.
+
+## Props
+
+<ArgTypes of={SelectStories} />

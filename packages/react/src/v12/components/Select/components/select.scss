@@ -1,0 +1,503 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/container-fade' as *;
+@use '@carbon-labs/v12-styles/scss/corners';
+
+/* Select — what the text input's field (text-input.scss) doesn't already
+ * draw. The native `<select>` fills the field, so a
+ * press anywhere on it opens the list; the trailing edge (the status mark, a
+ * decorator, the chevron) lies over its end and lets the pointer through. */
+
+.cds-select {
+  /* The room the trailing edge takes at the select's end: the chevron
+     (`--tf-icon`, 20px at lg) and the field's gap before it. */
+  --sel-trail: calc(var(--tf-icon, 16px) + var(--tf-gap, 8px));
+}
+
+/* A status: the mark's slot (the gap and the mark) opens before the chevron. */
+.cds-select:is([data-status='warn'], [data-status='error']) {
+  --sel-trail: calc(
+    var(--tf-icon, 16px) + 2 * var(--tf-gap, 8px) + var(--tf-mark)
+  );
+}
+
+/* The AI fill's revert (or its room): a trailing control before the chevron. */
+.cds-select--revertible {
+  --sel-ai: calc(var(--tf-ctl) + var(--tf-ctl-gap));
+}
+
+/* A decorator: about its 16px and 8px more. */
+.cds-select--decorated {
+  --sel-deco: 24px;
+}
+
+.cds-select__field {
+  cursor: pointer;
+}
+
+.cds-select__input {
+  position: absolute;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: inherit;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+  block-size: 100%;
+  color: theme.$text-primary;
+  cursor: inherit;
+  font: inherit;
+  inline-size: 100%;
+  inset: 0;
+  letter-spacing: inherit;
+  outline: 0;
+  padding-block: 0;
+  padding-inline: var(--tf-pad)
+    calc(
+      var(--tf-pad) + var(--sel-trail) + var(--sel-deco, 0px) +
+        var(--sel-ai, 0px)
+    );
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  /* Focus is the field's own edge (`data-focus`), never the browser's ring. */
+  &:focus-visible {
+    outline: none;
+  }
+
+  &:disabled {
+    color: theme.$text-disabled;
+    cursor: not-allowed;
+    opacity: 1;
+  }
+
+  /* The options in the platform's list: the floating surface's fill (the
+     listbox's), where the platform lets the page colour it. */
+  option,
+  optgroup {
+    background-color: var(--cds-surface, #{theme.$layer});
+    color: theme.$text-primary;
+  }
+
+  option:disabled {
+    color: theme.$text-disabled;
+  }
+}
+
+/* Carbon's global `select[data-invalid]` outline (v11's form styles, loaded
+   for v11 components on the page) would draw a second ring; the field draws
+   the status. */
+.cds-select .cds-select__input:is(*, [data-invalid]) {
+  box-shadow: none;
+  outline: 0;
+}
+
+/* The trailing edge lies over the select's end and lets the pointer through,
+   except to a decorator. */
+.cds-select__trail {
+  position: relative;
+  margin-inline-start: auto;
+  pointer-events: none;
+}
+
+.cds-select__decorator,
+.cds-select__trail .cds-icon-tooltip:has(> .cds-field-ai-revert) {
+  pointer-events: auto;
+}
+
+.cds-select__chevron {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  color: theme.$icon-primary;
+  margin-inline-start: var(--tf-gap);
+
+  svg {
+    display: block;
+    fill: currentColor;
+  }
+}
+
+.cds-select.cds-text-input--readonly .cds-select__field {
+  cursor: default;
+}
+
+.cds-select.cds-text-input--disabled .cds-select__field {
+  cursor: not-allowed;
+}
+
+.cds-select:is(.cds-text-input--disabled, .cds-text-input--readonly)
+  .cds-select__chevron {
+  color: theme.$icon-disabled;
+}
+
+/* Inline (v11): the label beside a quiet field — no fill and no hairline at
+   rest; hover, press and focus step as any field's. The field hugs its
+   value; the message sits beside it. */
+.cds-select--inline {
+  flex-direction: row;
+  align-items: center;
+
+  .cds-field-label-row {
+    margin: 0;
+  }
+
+  .cds-text-input__outer {
+    flex: 0 1 auto;
+  }
+
+  .cds-text-input__field {
+    --tf-fill: transparent;
+    --tf-edge: transparent;
+
+    inline-size: auto;
+  }
+
+  /* In flow, so the field takes the select's width. */
+  .cds-select__input {
+    position: static;
+    inline-size: auto;
+    max-inline-size: 100%;
+  }
+
+  .cds-select__trail {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: 0;
+  }
+}
+
+/* ── the open list, where the browser lets the page style it ─────────
+ *
+ * Customizable select (`appearance: base-select`): the browser draws the
+ * select's own list in the page, and `::picker(select)` styles it. Where
+ * it's supported, the list takes the Dropdown's look; elsewhere the
+ * platform's list stays (the option colours above).
+ *
+ *   surface   the listbox's frame, the floating surface: `--cds-surface`,
+ *             8px corners, the `--cds-surface-divider` hairline (the
+ *             Popover's and the menu's; a border here, so rows that
+ *             scroll pass under it), 4px below the field, the field's width,
+ *             five and a half rows before it scrolls. Above the field when
+ *             there's no room below (the browser's own fallback)
+ *   rows      the kit's rows at the field's size: a row is the size less
+ *             the list's inset top and bottom (32px at md), the inset
+ *             between rows, corners concentric with the frame's, the text
+ *             the kit's padding less twice the inset from the row's edge
+ *   highlight the listbox's inverse highlight (`$layer-selected-inverse`
+ *             under `$text-inverse`) on the hovered or focused option, at
+ *             once: no marker glides, the browser moves focus row by row
+ *   chosen    the trailing check, neutral (`$icon-primary`; the brand's
+ *             ink, `--cds-hero-ink`, under `variant="hero"`), the marker's
+ *             text colour where the highlight covers it
+ *   groups    the menu's group label: label-01 in `$text-secondary`
+ *   scroll    the kit's Scroller inside the picker (Select.tsx): its pill,
+ *             and the soft edge content leaves into as it scrolls.
+ *             The picker itself never scrolls: a mask on
+ *             it would take its frame and fill with the content
+ *   shadow    none: the cast shadow is painted by script, as layers beside
+ *             the surface, and the picker has no room for them
+ *   motion    the floating surface's snap in CSS (`@starting-style`,
+ *             `transition-behavior: allow-discrete`): in, the container
+ *             grows from the field's center on the near edge, its width
+ *             from 25% and its height from 75%, over fast-01 on the
+ *             entrance curve; out, the far edge pulls back to 70% over
+ *             fast-01 on the pull-back curve, gone on its last frame. The
+ *             fade standard (`container-fade()`, the CSS
+ *             form of carbon-motion's `snapFadeFor`): a clock of 220ms or less fades over
+ *             fast-00, so this one, on fast-01, fades up over the entrance's first fast-00 and
+ *             out over the exit's last, linear (`--sel-list-fade-in` /
+ *             `-out`, never longer than the motion). Reduced motion: a
+ *             fade at the final size on the reduced clock in, gone at
+ *             once out (the
+ *             clocks and distances read `--cds-motion-reduce-*`, which
+ *             the motion preference sets)
+ * ------------------------------------------------------------------------ */
+
+.cds-select {
+  /* The list's row metrics, from the field's size (the selection kit's). */
+  --sel-list-h: 40px;
+  --sel-list-inset: 4px;
+  --sel-list-pad: 16px;
+  --sel-list-icon: 16px;
+}
+
+.cds-select.cds-text-input--xs {
+  --sel-list-h: 24px;
+  --sel-list-inset: 2px;
+  --sel-list-pad: 8px;
+}
+
+.cds-select.cds-text-input--sm {
+  --sel-list-h: 32px;
+  --sel-list-inset: 3px;
+  --sel-list-pad: 12px;
+}
+
+.cds-select.cds-text-input--lg {
+  --sel-list-h: 48px;
+  --sel-list-icon: 20px;
+}
+
+@supports (appearance: base-select) {
+  .cds-select__input {
+    /* The floating surface's clocks: fast-01 in and out (slow
+       motion scales the token); the reduced clock in, and at once
+       out (the snap's reduced form), from the motion preference. */
+    --sel-list-in: calc(
+      var(--cds-motion-duration-fast-01) *
+        var(--cds-motion-reduce-duration-scale, 1)
+    );
+    --sel-list-out: calc(
+      var(--cds-motion-duration-fast-01) *
+        var(--cds-motion-reduce-distance-scale, 1)
+    );
+    /* 1 at full motion, 0 under reduced: how far the container travels. */
+    --sel-list-travel: var(--cds-motion-reduce-distance-scale, 1);
+    /* The fade standard (`container-fade()`, styles/_container-fade.scss; the
+       snap's `snapFadeFor`): a clock of 220ms or less fades over fast-00
+       (40ms), a longer one over fast-01, each direction by its own clock,
+       never longer than it. Both of the list's clocks are fast-01, so
+       fast-00: up over the entrance's first, out over the exit's last. */
+    --sel-list-fade-in: #{container-fade(var(--sel-list-in))};
+    --sel-list-fade-out: #{container-fade(var(--sel-list-out))};
+    /* The field draws everything round the value. */
+    display: block;
+    overflow: hidden;
+
+    appearance: base-select;
+    line-height: var(--tf-h, 40px);
+    min-block-size: 0;
+
+    /* The field's chevron stands for the browser's. */
+    &::picker-icon {
+      display: none;
+    }
+  }
+
+  /* The value in the field (Select.tsx's in-page button): the chosen
+     option's text, ellipsized at the trailing edge's room. */
+  .cds-select__value {
+    all: unset;
+    display: block;
+    overflow: hidden;
+    box-sizing: border-box;
+    inline-size: 100%;
+
+    selectedcontent {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .cds-select__input::picker(select) {
+    @include type-style('body-compact-01');
+    /* The Scroller inside scrolls (below); the picker never does. */
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: calc(var(--sel-list-inset) - 1px);
+    border: 1px solid var(--cds-surface-divider, #{theme.$border-subtle-01});
+    border-radius: corners.$in;
+
+    appearance: base-select;
+    background: var(--cds-surface, #{theme.$layer});
+
+    /* Closed, and leaving: the far edge back to 70%, fading out over the
+       exit's last fast-00 and gone on its last frame (the fade standard). */
+    clip-path: inset(0 0 calc(30% * var(--sel-list-travel)) 0 round 8px);
+    color: theme.$text-primary;
+    inline-size: anchor-size(self-inline);
+    margin-block: 4px;
+    max-block-size: calc(5.5 * var(--sel-list-h));
+    opacity: 0;
+    transition:
+      clip-path var(--sel-list-out)
+        var(--cds-exit-pullback, var(--cds-motion-easing-exit-productive)),
+      opacity var(--sel-list-fade-out) linear
+        calc(var(--sel-list-out) - var(--sel-list-fade-out)),
+      display var(--sel-list-out) allow-discrete,
+      overlay var(--sel-list-out) allow-discrete;
+  }
+
+  .cds-select__input:open::picker(select) {
+    clip-path: inset(0 round 8px);
+    opacity: 1;
+    transition:
+      clip-path var(--sel-list-in) var(--cds-motion-easing-entrance-productive),
+      opacity var(--sel-list-fade-in) linear,
+      display var(--sel-list-in) allow-discrete,
+      overlay var(--sel-list-in) allow-discrete;
+  }
+
+  /* Arriving: from the near edge's center, the width at 25% and the height
+     at 75%, from transparent (the fade up). Reduced: the final size, the
+     fade alone. */
+  @starting-style {
+    .cds-select__input:open::picker(select) {
+      clip-path: inset(
+        0 calc(37.5% * var(--sel-list-travel))
+          calc(25% * var(--sel-list-travel))
+          calc(37.5% * var(--sel-list-travel)) round 8px
+      );
+      opacity: 0;
+    }
+  }
+
+  /* The list's Scroller: five and a half rows less the picker's inset (its
+     padding and hairline), so the picker never overflows. Its rows scroll
+     under the Scroller's soft edge and pill. */
+  .cds-select__scroller {
+    max-block-size: calc(5.5 * var(--sel-list-h) - 2 * var(--sel-list-inset));
+  }
+
+  .cds-select__list {
+    overscroll-behavior: contain;
+  }
+
+  /* Inline: the list hugs its options, at least the field's width. */
+  .cds-select--inline .cds-select__input::picker(select) {
+    inline-size: auto;
+    max-inline-size: 18rem;
+    min-inline-size: anchor-size(self-inline);
+  }
+
+  .cds-select.cds-text-input--xs .cds-select__input::picker(select) {
+    @include type-style('label-01');
+  }
+
+  .cds-select__input option:not([hidden]) {
+    display: block;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-radius: max(
+      #{corners.$mark},
+      calc(#{corners.$in} - var(--sel-list-inset))
+    );
+    background: none;
+    block-size: calc(var(--sel-list-h) - 2 * var(--sel-list-inset));
+    color: theme.$text-primary;
+    cursor: pointer;
+    font: inherit;
+    line-height: calc(var(--sel-list-h) - 2 * var(--sel-list-inset));
+    min-block-size: 0;
+    padding-block: 0;
+    padding-inline: calc(var(--sel-list-pad) - 2 * var(--sel-list-inset));
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    ~ option {
+      margin-block-start: var(--sel-list-inset);
+    }
+
+    /* The check: only on the chosen option, at the row's end. */
+    &::checkmark {
+      display: none;
+    }
+
+    &:checked::checkmark {
+      display: block;
+      background: theme.$icon-primary;
+      block-size: 100%;
+      content: '';
+      float: inline-end;
+      inline-size: var(--sel-list-icon);
+      margin-inline: 16px -2px;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24z'/%3E%3C/svg%3E")
+        center / var(--sel-list-icon) no-repeat;
+    }
+
+    &:disabled {
+      background: none;
+      color: theme.$text-disabled;
+      cursor: not-allowed;
+    }
+  }
+
+  /* Hero (`variant="hero"`): the check in the brand's ink, as a hero
+     menu's: blue only under hero. */
+  .cds-select.cds-text-input--primary
+    .cds-select__input
+    option:checked:not(:hover, :focus-visible)::checkmark {
+    background: var(--cds-hero-ink, #{theme.$link-primary});
+  }
+
+  /* The highlight: one, the pointer's row while it's over the list, else
+     the keys' (a hover leaves focus where the keys put it). */
+  .cds-select__input option:not(:disabled):hover,
+  .cds-select__input:not(:has(option:hover))
+    option:not(:disabled):focus-visible {
+    background: theme.$layer-selected-inverse;
+    color: theme.$text-inverse;
+    outline: none;
+
+    &::checkmark {
+      background: currentColor;
+    }
+  }
+
+  /* A group: its label as the menu's (label-01, the inset above it and
+     the rows' text inset), the inset between it, its options and the next
+     group. The browser pads the label 6px (half its 12px), so the
+     group takes the rest of the rows' inset and its options give it back. */
+  .cds-select__input optgroup {
+    @include type-style('label-01');
+
+    display: block;
+    padding: var(--sel-list-inset) 0 0;
+    background: none;
+    color: theme.$text-secondary;
+    padding-inline: max(
+      0px,
+      calc(var(--sel-list-pad) - 2 * var(--sel-list-inset) - 6px)
+    );
+
+    ~ :is(optgroup, option) {
+      margin-block-start: var(--sel-list-inset);
+    }
+
+    option:not([hidden]) {
+      @include type-style('body-compact-01');
+
+      line-height: calc(var(--sel-list-h) - 2 * var(--sel-list-inset));
+
+      margin-inline: min(
+        0px,
+        calc(6px + 2 * var(--sel-list-inset) - var(--sel-list-pad))
+      );
+    }
+
+    option:not([hidden]):first-of-type {
+      margin-block-start: var(--sel-list-inset);
+    }
+  }
+
+  .cds-select.cds-text-input--xs
+    .cds-select__input
+    optgroup
+    option:not([hidden]) {
+    @include type-style('label-01');
+
+    line-height: calc(var(--sel-list-h) - 2 * var(--sel-list-inset));
+  }
+}
+
+/* Forced colors: the system's own text in the select. */
+@media (forced-colors: active) {
+  .cds-select__input {
+    color: CanvasText;
+  }
+
+  .cds-select__chevron svg {
+    fill: CanvasText;
+  }
+}

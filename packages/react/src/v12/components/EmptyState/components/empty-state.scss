@@ -1,0 +1,225 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon-labs/v12-styles/scss/size-classes';
+@use '@carbon-labs/v12-styles/scss/tile-art';
+@use '@carbon-labs/v12-styles/scss/text-pairs';
+
+/* EmptyState (EmptyState.tsx).
+ *
+ *   look      no surface of its own: it sits on its region's. The title in
+ *             `$text-primary`, the subtitle in `$text-secondary`, an icon in
+ *             `$icon-secondary`
+ *   art       a kind's illustration (illustrations/), the Full page error's
+ *             line and tiles: `$background` paper, two shades toward the
+ *             `$border-inverse` line, one `$border-interactive` accent, all
+ *             tokens, so every theme colours the one drawing (the rules
+ *             below, `.cds-empty-state-art`). Products' sizes: 80px
+ *             (`$spacing-11`) at lg, 64px (`$spacing-10`) at sm
+ *   sizes     lg title `heading-03` (20px), sm title `heading-02` (16px),
+ *             the subtitle `body-01` at both
+ *   context   start aligned everywhere (Carbon's empty-states pattern).
+ *             Page and table (in place of the whole table): a block at most
+ *             28rem wide with a wide start margin, one column of the 2x
+ *             Grid (1/16 of the region from the expanded size class, 1/8
+ *             from medium, none below: `styles/_size-classes.scss`,
+ *             useSizeClass's edges), and room above and below. Panel and tile: compact at
+ *             the region's edge; in a tile the visual is centred above the
+ *             start-aligned text
+ *   position  the visual above (default), below, before or after the text
+ *
+ * No motion here, and none in the component. */
+
+.cds-empty-state {
+  display: flex;
+  box-sizing: border-box;
+  color: theme.$text-primary;
+  inline-size: 100%;
+}
+
+.cds-empty-state__block {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-05;
+  min-inline-size: 0;
+}
+
+.cds-empty-state--lg .cds-empty-state__block {
+  gap: $spacing-06;
+}
+
+/* ── where the visual sits ─────────────────────────────────────────────── */
+.cds-empty-state--bottom .cds-empty-state__block {
+  flex-direction: column-reverse;
+}
+
+.cds-empty-state--start .cds-empty-state__block {
+  flex-direction: row;
+}
+
+.cds-empty-state--end .cds-empty-state__block {
+  flex-direction: row-reverse;
+}
+
+.cds-empty-state__visual {
+  display: flex;
+  flex: none;
+  color: theme.$icon-secondary;
+
+  /* An icon. */
+  svg:not(.cds-empty-state-art) {
+    fill: currentColor;
+  }
+}
+
+.cds-empty-state__illustration {
+  display: block;
+  block-size: auto;
+  inline-size: $spacing-10;
+  max-inline-size: 100%;
+}
+
+.cds-empty-state--lg .cds-empty-state__illustration {
+  inline-size: $spacing-11;
+}
+
+/* The kind's drawing (illustrations/index.tsx): lines only, in tokens.
+   The line is `$border-inverse`, one weight (`--cds-empty-state-art-line`);
+   the accent `$border-interactive`; absent parts dashed. The nudge puts a
+   1px line on its pixel: half a line, 0.5 units at lg, 0.625 at sm. */
+.cds-empty-state-art {
+  --cds-empty-state-art-line: 1px;
+  --cds-empty-state-art-nudge: 0.5px;
+
+  @include tile-art.tile-art;
+
+  overflow: visible;
+  aspect-ratio: 1;
+  block-size: auto;
+
+  stroke-width: var(--cds-empty-state-art-line);
+
+  .cds-empty-state-art__px {
+    transform: translateX(var(--cds-empty-state-art-nudge));
+  }
+
+  .cds-empty-state-art__missing {
+    stroke-dasharray: 2.5 2.5;
+  }
+
+  .cds-empty-state-art__accent {
+    stroke: theme.$border-interactive;
+  }
+}
+
+/* sm: 0.8px a unit, so half a pixel is 0.625 units. */
+.cds-empty-state--sm .cds-empty-state-art {
+  --cds-empty-state-art-nudge: 0.625px;
+}
+
+/* ── the text ──────────────────────────────────────────────────────────── */
+.cds-empty-state__content {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.cds-empty-state__title {
+  @include type-style('heading-02');
+
+  margin: 0;
+  color: theme.$text-primary;
+}
+
+.cds-empty-state--lg .cds-empty-state__title {
+  @include type-style('heading-03');
+}
+
+.cds-empty-state__subtitle {
+  /* The kit's title → description pair (styles/_text-pairs.scss). */
+  @include text-pairs.description;
+
+  margin: text-pairs.$title-to-summary 0 0;
+
+  p {
+    margin: 0;
+  }
+}
+
+.cds-empty-state__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $spacing-03 $spacing-05;
+  margin-block-start: $spacing-05;
+}
+
+.cds-empty-state--lg .cds-empty-state__actions {
+  margin-block-start: $spacing-06;
+}
+
+/* ── the region ────────────────────────────────────────────────────────── */
+
+/* Page and table: start aligned with a wide start margin, one column of the
+   2x Grid at the region's own width (16 columns from lg, 8 from md, 4 below,
+   where there's no offset). The region is the container, so a narrow page
+   or a table beside a pushed panel gets the narrower grid's column. */
+.cds-empty-state--page,
+.cds-empty-state--table {
+  container: cds-empty-state / inline-size;
+
+  .cds-empty-state__block {
+    margin-inline-start: calc(100cqi / 16);
+    max-inline-size: 28rem;
+  }
+
+  @container cds-empty-state (width < #{size-classes.$expanded}) {
+    .cds-empty-state__block {
+      margin-inline-start: calc(100cqi / 8);
+    }
+  }
+
+  @container cds-empty-state (width < #{size-classes.$medium}) {
+    .cds-empty-state__block {
+      margin-inline-start: 0;
+    }
+  }
+}
+
+/* A page's content has its own inset; in the table's place, the table's
+   cell inset (16px) is the edge the margin counts from. */
+.cds-empty-state--page {
+  padding-block: $spacing-12;
+}
+
+.cds-empty-state--table {
+  padding: $spacing-10 $spacing-05;
+}
+
+.cds-empty-state--panel {
+  padding-block: $spacing-07;
+}
+
+/* A small tile: the visual centred above the start-aligned text, so it
+   doesn't read as content to skip (Carbon's pattern). */
+.cds-empty-state--tile {
+  padding-block: $spacing-03;
+
+  .cds-empty-state__block {
+    flex: 1 1 auto;
+  }
+
+  &.cds-empty-state--top,
+  &.cds-empty-state--bottom {
+    .cds-empty-state__visual {
+      justify-content: center;
+    }
+  }
+}

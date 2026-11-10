@@ -1,0 +1,43 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as EasingGraphStories from './EasingGraph.stories.tsx';
+
+<Meta of={EasingGraphStories} />
+
+# EasingGraph
+
+A cubic-bezier as a graph: progress up, time across, on a quarter grid with the
+linear diagonal for reference. The curve is 3px solid, a `reference` curve 3px
+dotted behind it, the handles' arms 2px dashed. Without `onChange` it is read
+only, with the four numbers as text. With `onChange`, the two handles drag or
+take the arrow keys, and the four numbers edit as one field in four segments.
+Handles stay inside the unit box, so a curve never overshoots. A typed number
+outside 0 to 1 is flagged and not applied.
+
+<Canvas of={EasingGraphStories.Default} />
+
+<Canvas of={EasingGraphStories.Editable} />
+
+<Canvas of={EasingGraphStories.NamedCurves} />
+
+## Motion
+
+- **Handle ring:** each handle is a 2px ring on the plot's fill, on the house
+  rollover. The ring steps up in contrast: into hover on fast-02, to the press
+  color at once, back on fast-01.
+- **Handle press:** pressed or dragged, the handle grows from 12px to 18px on
+  fast-01, and shrinks back on fast-02. The pointer is captured, so the press
+  holds while the handle follows it.
+- **Arm:** the grabbed handle's arm turns solid, in the press color, its color
+  on fast-02.
+- **Curve:** follows the handles and the numbers as they change, with no tween.
+- **Keys:** the arrows move a handle 0.01, or 0.1 with Shift: left and right its
+  x, up and down its y.
+
+## Reduced motion
+
+The ring and the handle's size change at once. The arm's color keeps its clock.
+The curve is the same as with full motion.
+
+## Props
+
+<ArgTypes of={EasingGraphStories} />

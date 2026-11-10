@@ -1,0 +1,80 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SliderStories from './Slider.stories.tsx';
+
+<Meta of={SliderStories} />
+
+# Slider
+
+A value or a range on a line. `Slider` takes Carbon's API: one knob, or two with
+`unstable_valueUpper`, the number fields beside it, `invalid` and `warn` with
+one message line under it. It adds `shape` (line, track or knob), `steps` for a
+few named stops, `snap` and `ticks`, `fillStyle`, `knobShape`, `status`,
+`gradient`, `reference`, `ai` and `loading`. `SliderSkeleton` is the slider
+while it loads, at its own size.
+
+<Canvas of={SliderStories.Default} />
+
+<Canvas of={SliderStories.Controlled} />
+
+<Canvas of={SliderStories.Meeting} />
+
+<Canvas of={SliderStories.Steps} />
+
+<Canvas of={SliderStories.StatusChange} />
+
+<Canvas of={SliderStories.Loading} />
+
+## Motion
+
+- **Glide:** a key or a click sends the knob from where it is to the new value,
+  on standard-productive. Its duration comes from the distance. The leading edge
+  runs a little ahead, then both land together. A held key's repeats move at
+  once.
+- **Press:** a press on the line starts the knob toward the pressed point. The
+  release lands there.
+- **Drag:** the knob follows the pointer exactly and squashes against the ends
+  and the other knob. A drag begun from a press glides to the pointer first.
+- **Snap:** with `snap`, the knob glides stop to stop as the pointer passes each
+  halfway point. With `sticky`, the default, it holds until the pointer is a
+  quarter stop past halfway, at most 8px, and leans up to 3px toward the pull.
+- **Hover and press:** hover grows the knob 2px. A pointer press takes back 1px.
+  A press with no hover, a key or a touch, insets it 1px. On fast-01.
+- **Fill:** rides the knob's live center on every frame. With `fillStyle` both,
+  hover steps it toward the knob's color and from 2px to 3px; a press keeps the
+  hover's weight. `contrast` is the color only, `thickness` the weight only. On
+  fast-02, standard-productive.
+- **Stop dots:** on the track shape, the dot under the pointer grows, and a
+  press on it glides the knob there. While dragging, the stop the knob left
+  shows as a short pill.
+- **Status:** a change of `status` wipes the new color in from the knob along
+  the fill, with a soft edge, on a glide's clock for the fill's length. On a
+  range the two wipes meet midway. A change mid-wipe stops the old one where it
+  is and wipes in over it.
+- **Message:** the old message fades out on fast-01, then the new one fades in
+  where it is. An error fades in on moderate-02.
+- **Meeting:** two pills swell into one shape as they near. Two circles fill
+  their overlap. On one value they join as one pill with a line at the seam; the
+  seam grows on moderate-01, entrance-productive, and goes on fast-01,
+  exit-productive. Let go within 4px of each other, they snap together. Two
+  triangles stop where their stems meet, and the shared stem grows 2px taller.
+- **Readout:** with `steps` and `readout`, the step's label rolls as it changes,
+  up and down or, with `readoutDirection="horizontal"`, across.
+- **AI:** with `ai` on the track, dots cover the fill and the knob is their
+  lens. A change sends a wave from the knob's new place. On the special step the
+  dots come in from the knob, each on slow-01, entrance-productive; leaving,
+  they go left to right, each on moderate-03, exit-productive, over a slow-01
+  sweep. There the knob becomes a disc in the AI color, scaling in on
+  moderate-02, entrance-expressive, and out on fast-02.
+
+## Reduced motion
+
+No glide: the knob moves to the new value and fades in there, on half the clock.
+A snap is the same fade. There is no press reach and no lean. A status lands at
+once. The message changes at once. The readout swaps in place. The joined seam
+and the triangles' stem change at once. The AI dots come and go at once and hold
+still, and the AI disc scales on fast-01. The knob's hover and press keep their
+clock.
+
+## Props
+
+<ArgTypes of={SliderStories} />

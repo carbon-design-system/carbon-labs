@@ -1,0 +1,1829 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/corners';
+
+/* Slider (Slider.tsx). The `line` variant, v11's look: a 2px line in
+ * `$border-subtle`, a round knob in one color (`$layer-selected-inverse`, v11's thumb), the filled section
+ * toward it. The `track` variant, the step slider's: below.
+ * The knob is the selection engine's marker; the fill reads the same live
+ * edges, so the two never part.
+ *
+ *   layout   v11's: [field] min [track] max field. The track is the hit area
+ *            (the knob's height plus room for its hover); the line runs from
+ *            the knob's center at one end to its center at the other
+ *   knob     hover +2px; a pointer press takes back 1px (1px above rest); a
+ *            key or touch press −1px (`--cds-slider-press`, on fast-01). A pill
+ *            (a 3px stroke, 2px at sm, round a surface-colored center; one knob or two)
+ *            grows 1px and a pointer press returns it to rest. Two knobs may
+ *            be v11's triangles with a stem. A status never marks the knob
+ *            (the line carries it). Each knob's hit area is at least
+ *            24 × 24px (`.cds-slider__hit`), bigger than it looks, and covers
+ *            the hovered knob
+ *   fill     `fillStyle`: both (default: a step below the knob and 2px at
+ *            rest, closer and 3px on hover, the knob's own on press, still
+ *            3px: no press growth), contrast (the color only) or
+ *            thickness (the weight only, on hover).
+ *            `status` colors it in a support color, wiping in from the knob
+ *            with a soft leading edge; `gradient` is a ramp fixed to the
+ *            track, which steps toward the knob's color on hover and press
+ *   ticks    1px marks, 8px tall, behind the line, a step off its color
+ *   track    the `track` variant (the step slider's look): a 24px track in
+ *            `$layer-accent`, filled in `$background-inverse` up to the knob
+ *            (wrapping it), the knob in `$background` inset 3px, its stops as
+ *            dots; `corners`; `ai`'s projection texture on the fill */
+
+$fast-01: var(--cds-motion-duration-fast-01);
+$fast-02: var(--cds-motion-duration-fast-02);
+$standard: var(--cds-motion-easing-standard-productive);
+
+/* The knob's size change: negative grows (hover), positive insets (a key's press). Registered so it eases. */
+@property --cds-slider-press {
+  inherits: false;
+  initial-value: 0px;
+  syntax: '<length>';
+}
+
+/* Two knobs on one value (pills, circles): each grows this much a side, so the pair is one pill
+   2px wider than a knob. Registered so it eases. */
+@property --cds-slider-merge {
+  inherits: false;
+  initial-value: 0px;
+  syntax: '<length>';
+}
+
+/* Sticky snapping's lean, per knob (Slider.tsx sets it on the track while a snapping drag holds a
+   stop). Registered and inherited, so it eases on the track and the knob and fill read it. */
+@property --cds-slider-lean-lower {
+  inherits: true;
+  initial-value: 0px;
+  syntax: '<length>';
+}
+
+@property --cds-slider-lean-upper {
+  inherits: true;
+  initial-value: 0px;
+  syntax: '<length>';
+}
+
+/* A gradient's contrast step on hover and press: how far its colors mix toward the knob's. */
+@property --cds-slider-step {
+  inherits: false;
+  initial-value: 0%;
+  syntax: '<percentage>';
+}
+
+/* A stop dot's attention (0–1: it grows with the pointer's pull; the `track` variant). */
+@property --cds-dot-t {
+  inherits: false;
+  initial-value: 0;
+  syntax: '<number>';
+}
+
+/* A status wipe's progress along the fill, 0 → 1 (Slider.tsx animates it). Registered so it interpolates. */
+@property --cds-slider-wipe {
+  inherits: false;
+  initial-value: 1;
+  syntax: '<number>';
+}
+
+.cds-slider {
+  --sl-knob: 14px;
+  /* The knob's box (the engine's marker): the round knob's square, or a shape's. */
+  --sl-knob-w: var(--sl-knob);
+  --sl-knob-h: var(--sl-knob);
+  --sl-h: 24px;
+  /* The knob's inset from the track's ends: none on the line; the track variant's 3px. */
+  --sl-inset: 0px;
+  --sl-line: 2px;
+  --sl-fill-h: var(--sl-line);
+  --_track: #{theme.$border-subtle};
+  --_knob: #{theme.$layer-selected-inverse};
+  --_tick: color-mix(
+    in srgb,
+    #{theme.$border-subtle},
+    #{theme.$text-primary} 22%
+  );
+  /* The fill's contrast ladder (fillStyle contrast / both): a step below the knob at rest. */
+  --_fill-rest: color-mix(in srgb, var(--_knob) 55%, var(--_track));
+  --_fill-hover: color-mix(in srgb, var(--_knob) 78%, var(--_track));
+  --_fill-press: var(--_knob);
+  --_fill: var(--_fill-rest);
+  /* What the slider sits on: a pill's center. Measured from the nearest opaque backdrop
+     (statusRing.ts: `$background`, a `$layer` in `<Layer>`, a card). */
+  --_surface: var(--cds-slider-surface, #{theme.$background});
+  /* The pill's stroke: 3px; 2px at sm. The pill is 1px wider than the line's knob, so its
+     surface-colored center lands on whole pixels. */
+  --_ring: 3px;
+  /* A knob's hit area, at least (WCAG 2.2's target size). */
+  --_hit: 24px;
+  /* The hover's growth and a pointer press's size, per side (negative grows). */
+  --_grow: -2px;
+  --_pressed: -1px;
+
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.cds-slider--sm {
+  --sl-knob: 10px;
+  --sl-h: 16px;
+  --_ring: 2px;
+}
+
+.cds-slider--lg {
+  --sl-knob: 18px;
+  --sl-h: 32px;
+}
+
+/* Pills (one knob or two): a vertical capsule, 7 × 12 · 9 × 16 · 11 × 20px, a 3px stroke (2px at sm) round a
+   surface-colored center (3 · 3 · 5px). The hover grows it 1px a side; a pointer press returns it to rest (half
+   of 1px would put the stroke's edges on half pixels and blur it); a key or touch press insets it
+   1px. */
+.cds-slider--knob-pill {
+  --sl-knob-w: calc(var(--sl-knob) / 2 + 2px);
+  --sl-knob-h: calc(var(--sl-knob) + 2px);
+  --_grow: -1px;
+  --_pressed: 0px;
+}
+
+/* v11's range handles: a triangle pointing in at a 2px stem on the value, 8 · 12 · 16px tall,
+   2px short of it. The box is symmetric round the stem (the engine's center is the value); each
+   knob draws in its outer half. */
+.cds-slider--knob-triangle {
+  --sl-knob-h: calc(var(--sl-knob) - 2px);
+  --sl-knob-w: calc(2 * var(--sl-knob-h) + 2px);
+}
+
+/* thickness: the fill is the knob's color (v11's) and grows instead. */
+.cds-slider--fill-thickness {
+  --_fill-rest: var(--_knob);
+  --_fill-hover: var(--_knob);
+}
+
+.cds-slider__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-block-end: 8px;
+}
+
+/* `hideTextInput`: the value beside the label (v11 shows it in a tooltip on the thumb). */
+.cds-slider__readout {
+  @include type-style('label-01');
+
+  color: theme.$text-primary;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The rolling readout's room: every step's label stacked unseen in one cell with the roll, so it
+   keeps the widest's size from the first render. */
+.cds-slider__readout-room {
+  display: inline-grid;
+  justify-items: start;
+
+  > * {
+    grid-area: 1 / 1;
+  }
+}
+
+.cds-slider__readout-sizer {
+  visibility: hidden;
+  white-space: nowrap;
+}
+
+.cds-slider__readout-slot {
+  position: relative;
+  color: transparent;
+}
+
+.cds-slider__readout-bar,
+.cds-slider__label-bar {
+  position: absolute;
+  margin: 0;
+  inset: 0;
+}
+
+.cds-slider__label-bar {
+  position: relative;
+  display: inline-block;
+  block-size: 1rem;
+}
+
+.cds-slider__row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cds-slider__range-label {
+  @include type-style('body-compact-01');
+
+  flex: none;
+  color: theme.$text-primary;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.cds-slider--disabled .cds-slider__range-label,
+.cds-slider--disabled .cds-slider__readout {
+  color: theme.$text-disabled;
+}
+
+/* v11's slider width: 200px to 640px. */
+.cds-slider__bar {
+  flex: 1 1 auto;
+  max-inline-size: 40rem;
+  min-inline-size: 12.5rem;
+}
+
+/* The number field: v11's is 64px; this one has room for four figures and the status mark. */
+.cds-slider__field {
+  --tf-pad: 12px;
+
+  flex: none;
+  inline-size: 5.5rem;
+
+  /* No spinner: the keys and the slider step it. */
+  input {
+    appearance: textfield;
+  }
+
+  input::-webkit-inner-spin-button,
+  input::-webkit-outer-spin-button {
+    margin: 0;
+    appearance: none;
+  }
+}
+
+.cds-slider__field-slot {
+  display: contents;
+}
+
+/* ── the track ─────────────────────────────────────────────────────────── */
+
+.cds-slider__track {
+  /* The lower knob's live edges, aliased here (where its engine writes them)
+     so the fill, inside the upper knob's engine, reads both knobs. */
+  --cds-lo-l: var(--cds-motion-selection-l, 0px);
+  --cds-lo-r: var(--cds-motion-selection-r, 0px);
+  --cds-lo-t: var(--cds-motion-selection-t, 0px);
+  --cds-lo-b: var(--cds-motion-selection-b, 0px);
+
+  position: relative;
+  block-size: var(--sl-h);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none;
+  transition:
+    --cds-slider-lean-lower $fast-01 $standard,
+    --cds-slider-lean-upper $fast-01 $standard;
+  user-select: none;
+}
+
+/* The upper knob's engine root: the track's box. */
+.cds-slider__upper {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Where a knob rests (its value) and where a press aims: knob-sized spots. */
+.cds-slider__spot {
+  position: absolute;
+  block-size: var(--sl-knob-h);
+  inline-size: var(--sl-knob-w);
+  inset-block-start: calc((var(--sl-h) - var(--sl-knob-h)) / 2);
+  inset-inline-start: calc(
+    var(--sl-inset) + (100% - var(--sl-knob-w) - 2 * var(--sl-inset)) *
+      var(--cds-slider-p, 0)
+  );
+  pointer-events: none;
+  /* Measured the moment the value changes: never in transition (`none` sets
+     no property, so a rule that only shortens durations starts none). */
+  transition: none;
+}
+
+.cds-slider__line,
+.cds-slider__fill {
+  position: absolute;
+  inset-block-start: 50%;
+  pointer-events: none;
+  translate: 0 -50%;
+}
+
+/* The line: from the knob's center at min to its center at max. */
+.cds-slider__line {
+  background: var(--_track);
+  block-size: var(--sl-line);
+  inset-inline: calc(var(--sl-knob-w) / 2);
+}
+
+.cds-slider__tick {
+  position: absolute;
+  background: var(--_tick);
+  block-size: 8px;
+  inline-size: 1px;
+  inset-block-start: 50%;
+  inset-inline-start: calc(
+    var(--sl-inset) + var(--sl-knob-w) / 2 +
+      (100% - var(--sl-knob-w) - 2 * var(--sl-inset)) * var(--cds-slider-p)
+  );
+  pointer-events: none;
+  translate: -50% -50%;
+}
+
+/* `reference`: a second value (the last set value, a baseline) as a mark across the line, as the
+   duration bar drew it. Solid, inside the slider: 2px and the knob's height on
+   the line, 3px and the track's height on the track variant.
+   Above the fill, under the knob. Its colors hold 4.5:1 in every theme
+   (measured, white / g100): `$icon-secondary` on the line and the empty track (5.92 /
+   6.76 on the track); on the track variant's fill, the knob's color 70% into the
+   fill's (6.59 / 6.41). */
+.cds-slider__reference {
+  position: absolute;
+  z-index: 2;
+  background: theme.$icon-secondary;
+  block-size: var(--sl-knob-h);
+  inline-size: 2px;
+  inset-block-start: 50%;
+  inset-inline-start: calc(
+    var(--sl-inset) + var(--sl-knob-w) / 2 +
+      (100% - var(--sl-knob-w) - 2 * var(--sl-inset)) * var(--cds-slider-p)
+  );
+  pointer-events: none;
+  translate: -50% -50%;
+}
+
+/* The track variant (the step slider's look): 3px; the line variant's is 2px. */
+.cds-slider--track .cds-slider__reference {
+  block-size: var(--sl-h);
+  inline-size: 3px;
+
+  &[data-passed] {
+    background: color-mix(in srgb, var(--_knob) 70%, var(--_fill));
+  }
+}
+
+@media (forced-colors: active) {
+  /* Backgrounds are forced to Canvas: keep the mark's own, in the text color. */
+  .cds-slider__reference,
+  .cds-slider--track .cds-slider__reference[data-passed] {
+    background: CanvasText;
+    forced-color-adjust: none;
+  }
+}
+
+/* The fill rides the knob's live center (the engine's edges), every frame. */
+.cds-slider__fill {
+  z-index: 1;
+  background: var(--_fill);
+  block-size: var(--sl-fill-h);
+  inset-inline: 0;
+  transition:
+    background-color $fast-02 $standard,
+    block-size $fast-02 $standard,
+    --cds-slider-step $fast-02 $standard;
+}
+
+/* The fill's ends (`--_a` to `--_b`, px from the track's start): the line's start, or the lower
+   knob's live center, to the (upper) knob's live center. */
+.cds-slider--single .cds-slider__fill {
+  --_a: calc(var(--sl-knob-w) / 2);
+  --_b: calc(
+    (var(--cds-lo-l) + var(--cds-lo-r)) / 2 + var(--cds-slider-lean-lower)
+  );
+}
+
+.cds-slider--range .cds-slider__fill {
+  --_a: calc(
+    (var(--cds-lo-l) + var(--cds-lo-r)) / 2 + var(--cds-slider-lean-lower)
+  );
+  --_b: calc(
+    (var(--cds-motion-selection-l, 0px) + var(--cds-motion-selection-r, 0px)) /
+      2 + var(--cds-slider-lean-upper)
+  );
+}
+
+.cds-slider__fill {
+  clip-path: inset(0 calc(100% - var(--_b)) 0 var(--_a));
+}
+
+/* `status`: the fill in the status's color: the support color where it passes 3:1
+   against the measured surface, stepped as far as 3:1 takes where it doesn't (statusRing.ts;
+   warning on a light surface keeps Carbon's yellow). On hover and press (fillStyle contrast and both) it steps as a gradient does:
+   it mixes `--cds-slider-step` toward the knob's color in OKLCH, 20% and 40%, so it keeps
+   its hue; thickness only thickens. The step is the only color transition. */
+/* The track variant's knob reads the same color for its stroke (the stroke is the fill's color). */
+.cds-slider__fill[data-tone],
+.cds-slider--track[data-tone] .cds-slider__knob {
+  --_fill: color-mix(
+    in oklch,
+    var(--_tone),
+    var(--_ink, var(--_knob)) var(--cds-slider-step)
+  );
+}
+
+.cds-slider__fill[data-tone] {
+  transition:
+    block-size $fast-02 $standard,
+    --cds-slider-step $fast-02 $standard;
+}
+
+.cds-slider__fill[data-tone='success'],
+.cds-slider--track[data-tone='success'] .cds-slider__knob {
+  --_tone: var(--cds-slider-success, #{theme.$support-success});
+}
+
+/* Warning steps half as far and keeps its chroma, so it still reads yellow: the full mix would take
+   40% of its chroma with it, and a darker yellow with less chroma is olive. The mix moves
+   lightness; dividing the chroma back out restores the yellow's (the knob is a neutral gray, so
+   the mix only scales it). */
+.cds-slider__fill[data-tone='warning'],
+.cds-slider--track[data-tone='warning'] .cds-slider__knob {
+  --_tone: var(--cds-slider-warning, #{theme.$support-warning});
+  --_fill: oklch(
+    from
+      color-mix(
+        in oklch,
+        var(--_tone),
+        var(--_ink, var(--_knob)) calc(var(--cds-slider-step) / 2)
+      )
+      l calc(c / (1 - var(--cds-slider-step) / 200%)) h
+  );
+}
+
+.cds-slider__fill[data-tone='error'],
+.cds-slider--track[data-tone='error'] .cds-slider__knob {
+  --_tone: var(--cds-slider-error, #{theme.$support-error});
+}
+
+.cds-slider__fill[data-tone='info'],
+.cds-slider--track[data-tone='info'] .cds-slider__knob {
+  --_tone: var(--cds-slider-info, #{theme.$support-info});
+}
+
+/* `gradient`: a ramp fixed to the line (min to max), so a color always means the same value; the
+   fill reveals the part up to the knob. Interpolated in OKLCH, so its lightness holds between the
+   ends instead of dipping to a pale or muddy middle. */
+.cds-slider--gradient-red-green :is(.cds-slider__fill, .cds-slider__knob) {
+  --_g0: #{theme.$support-error};
+  --_g1: #{theme.$support-success};
+}
+
+.cds-slider--gradient-cold-warm :is(.cds-slider__fill, .cds-slider__knob) {
+  --_g0: #{theme.$support-info};
+  --_g1: #{theme.$support-error};
+}
+
+/* Its hover and press (fillStyle contrast and both): each end mixes `--cds-slider-step` toward the
+   knob's color in OKLCH, as the plain fill steps toward it. The knob is achromatic, so each end
+   keeps its hue (an achromatic color's hue is powerless in the mix) and only its lightness and
+   chroma move: darker on a light theme, lighter on a dark one, the ramp's hues where they were. */
+@mixin gradient-ramp {
+  background: linear-gradient(
+    to right in oklch,
+    color-mix(in oklch, var(--_g0), var(--_knob) var(--cds-slider-step))
+      calc(var(--sl-knob-w) / 2),
+    color-mix(in oklch, var(--_g1), var(--_knob) var(--cds-slider-step))
+      calc(100% - var(--sl-knob-w) / 2)
+  );
+}
+
+:is(.cds-slider--gradient-red-green, .cds-slider--gradient-cold-warm)
+  .cds-slider__fill:not([data-tone]) {
+  @include gradient-ramp;
+}
+
+/* A status change: the new fill over the old, revealed from the knob
+   back along the fill behind a soft leading edge (motion-core's soft edge, 16px, at most a
+   quarter of the fill), which leaves past the fill's start as the wipe ends, so nothing is masked
+   at rest. A range's wipe starts at both knobs and meets in the middle. */
+.cds-slider__fill--wipe {
+  --_e: min(var(--cds-motion-soft-edge, 16px), (var(--_b) - var(--_a)) / 4);
+}
+
+.cds-slider--single .cds-slider__fill--wipe {
+  --_x: calc(
+    var(--_b) + var(--_e) - (var(--_b) - var(--_a) + var(--_e)) *
+      var(--cds-slider-wipe)
+  );
+
+  mask-image: linear-gradient(
+    to right,
+    transparent calc(var(--_x) - var(--_e)),
+    #000000 var(--_x)
+  );
+}
+
+.cds-slider--range .cds-slider__fill--wipe {
+  --_m: calc((var(--_a) + var(--_b)) / 2);
+  --_xl: calc(
+    var(--_a) + (var(--_m) - var(--_a) + var(--_e)) * var(--cds-slider-wipe)
+  );
+  --_xr: calc(
+    var(--_b) - (var(--_b) - var(--_m) + var(--_e)) * var(--cds-slider-wipe)
+  );
+
+  mask-image:
+    linear-gradient(
+      to right,
+      #000000 calc(var(--_xl) - var(--_e)),
+      transparent var(--_xl)
+    ),
+    linear-gradient(
+      to right,
+      transparent var(--_xr),
+      #000000 calc(var(--_xr) + var(--_e))
+    );
+}
+
+/* Hover and press on the slider step the fill toward the knob (contrast) and/or thicken it. The
+   thickening is the hover's only:
+   2px at rest, 3px on hover, and a pointer's press or drag keeps the 3px (so a drag that strays off
+   the track doesn't thin it) but doesn't grow it. A key's press, or a touch, stays 2px. */
+.cds-slider:not(
+  .cds-slider--disabled,
+  .cds-slider--readonly,
+  .cds-slider--loading
+) {
+  @media (hover: hover) {
+    .cds-slider__track:hover {
+      --_fill: var(--_fill-hover);
+    }
+
+    &:is(.cds-slider--fill-thickness, .cds-slider--fill-both)
+      .cds-slider__track:is(:hover, [data-pressed]) {
+      --sl-fill-h: 3px;
+    }
+  }
+
+  .cds-slider__track:is(
+    [data-pressed],
+    [data-press-lower],
+    [data-press-upper]
+  ) {
+    --_fill: var(--_fill-press);
+  }
+}
+
+/* A gradient's and a status's contrast step: 20% toward the knob on hover, 40% pressed. */
+.cds-slider:not(
+    .cds-slider--disabled,
+    .cds-slider--readonly,
+    .cds-slider--loading
+  ):is(.cds-slider--fill-contrast, .cds-slider--fill-both) {
+  @media (hover: hover) {
+    .cds-slider__track:hover :is(.cds-slider__fill, .cds-slider__knob) {
+      --cds-slider-step: 20%;
+    }
+  }
+
+  .cds-slider__track:is([data-pressed], [data-press-lower], [data-press-upper])
+    :is(.cds-slider__fill, .cds-slider__knob) {
+    --cds-slider-step: 40%;
+  }
+}
+
+/* ── the knob ──────────────────────────────────────────────────────────── */
+
+.cds-slider__knob {
+  position: absolute;
+  z-index: 2;
+  box-sizing: border-box;
+  border-radius: corners.$full;
+  background: var(--_knob);
+  block-size: calc(
+    var(--cds-motion-selection-b, 0px) - var(--cds-motion-selection-t, 0px) -
+      2 * var(--cds-slider-press)
+  );
+  inline-size: calc(
+    var(--cds-motion-selection-r, 0px) - var(--cds-motion-selection-l, 0px) -
+      2 * var(--cds-slider-press) + 2 * var(--cds-slider-merge)
+  );
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  outline: none;
+  pointer-events: auto;
+  transition:
+    --cds-slider-press $fast-01 $standard,
+    --cds-slider-merge $fast-02 $standard,
+    background-color $fast-02 $standard,
+    box-shadow $fast-02 $standard;
+  /* The engine's live rect, less the press (or plus the hover) on every side; plus a sticky lean. */
+  translate: calc(
+      var(--cds-motion-selection-l, 0px) + var(--cds-slider-press) +
+        var(--_lean, 0px) - var(--cds-slider-merge)
+    )
+    calc(var(--cds-motion-selection-t, 0px) + var(--cds-slider-press));
+}
+
+/* ── two knobs meeting ──────────────────────────────────────────────────
+   Pills merge into one pill with one outline and fill, 2px wider. Each pill draws its outline (the
+   knob's color, its whole shape) and its fill (the surface, inset by the stroke) as two layers,
+   and every outline sits under every fill: where they overlap, only the union's edge shows. */
+/* The knobs make no stacking context of their own here, so the layers of both interleave (they
+   are placed by their insets, as a transform would make one). On one value each pill grows 1px a
+   side (`--cds-slider-merge`, fast-02): one pill, 2px wider. */
+/* Circles: overlapping, their intersection (the lens, Slider.tsx: the lower circle clipping the
+   upper) fills with the joined pill's fill (the surface), like a Venn diagram. On one value both
+   become a pill knob 4px wider than the circle, the surface inside a ring in the knob's color;
+   the lens goes. Let go within 4px they snap together (`JOIN_GAP`); a line marks the seam. */
+.cds-slider[data-merged] :is(.cds-slider__knob, .cds-slider__blob) {
+  --cds-slider-merge: 1px;
+}
+
+/* Circles join 2px a side: a pill 4px wider than the circle. */
+.cds-slider--range:not(
+    .cds-slider--track,
+    .cds-slider--knob-pill,
+    .cds-slider--knob-triangle
+  )[data-merged]
+  .cds-slider__knob {
+  --cds-slider-merge: 2px;
+}
+
+/* Two pills: the knobs themselves are only their hit areas, focus and keys; the goo layer draws
+   them (below). */
+.cds-slider--knob-pill.cds-slider--range .cds-slider__track .cds-slider__knob {
+  background: none;
+  box-shadow: none;
+}
+
+/* The goo layer: pills meeting blob together with smooth curves, a lava lamp. The two pills as
+   plain shapes on one layer, placed by the same engine edges, press, lean and merge as the knobs,
+   under one SVG filter (Slider.tsx). Their alpha is blurred and thresholded steeply: a metaball
+   union, so as they near a smooth neck swells between them, with a crisp edge (the goo). */
+/* The outline is the pills exactly plus the goo, in the knob's color; the fill is the pills' own
+   fills exactly plus the goo eroded by the stroke, in the surface. So each pill keeps its true
+   shape, and the neck's stroke is as even as the pills'. All CSS-driven: nothing runs in JS per
+   frame. */
+.cds-slider__goo {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Filtered only while the pills are near (`data-near`, Slider.tsx `syncGoo`): an SVG
+   filter on HTML is drawn again on every frame under it. Apart, where the goo has nothing to join,
+   each pill is drawn in its own colors (below), the same picture as the filter's. */
+.cds-slider__goo[data-near] {
+  filter: var(--cds-slider-goo);
+}
+
+.cds-slider__goo:not([data-near]) .cds-slider__blob {
+  background: var(--_knob);
+
+  &::after {
+    background: var(--_surface);
+  }
+}
+
+.cds-slider__goo-defs {
+  position: absolute;
+  block-size: 0;
+  inline-size: 0;
+}
+
+/* Each pill as the filter reads it: its shape in red, its fill (inset by the stroke) in yellow, so
+   the filter has both exactly, the fill in the green channel. */
+.cds-slider__blob {
+  position: absolute;
+  border-radius: corners.$full;
+  background: #ff0000;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+
+  transition:
+    --cds-slider-press $fast-01 $standard,
+    --cds-slider-merge $fast-02 $standard;
+
+  &::after {
+    position: absolute;
+    border-radius: inherit;
+    background: #ffff00;
+    content: '';
+    inset: var(--_ring);
+  }
+}
+
+.cds-slider__blob--lower {
+  block-size: calc(
+    var(--cds-lo-b) - var(--cds-lo-t) - 2 * var(--cds-slider-press)
+  );
+  inline-size: calc(
+    var(--cds-lo-r) - var(--cds-lo-l) - 2 * var(--cds-slider-press) + 2 *
+      var(--cds-slider-merge)
+  );
+  translate: calc(
+      var(--cds-lo-l) + var(--cds-slider-press) +
+        var(--cds-slider-lean-lower, 0px) - var(--cds-slider-merge)
+    )
+    calc(var(--cds-lo-t) + var(--cds-slider-press));
+}
+
+.cds-slider__blob--upper {
+  block-size: calc(
+    var(--cds-motion-selection-b, 0px) - var(--cds-motion-selection-t, 0px) -
+      2 * var(--cds-slider-press)
+  );
+  inline-size: calc(
+    var(--cds-motion-selection-r, 0px) - var(--cds-motion-selection-l, 0px) -
+      2 * var(--cds-slider-press) + 2 * var(--cds-slider-merge)
+  );
+  translate: calc(
+      var(--cds-motion-selection-l, 0px) + var(--cds-slider-press) +
+        var(--cds-slider-lean-upper, 0px) - var(--cds-slider-merge)
+    )
+    calc(var(--cds-motion-selection-t, 0px) + var(--cds-slider-press));
+}
+
+/* Circles: the join is one shape change, with no grey frame (crossfading the knob's color into
+   the surface, with the lens fading out over it, would flash grey). They join only once
+   they have landed together (Slider.tsx), when the lens already shows the joined fill inside a
+   1px rim; so the fill switches at once (no color transition) and the ring starts at that 1px
+   (an unseen 1px ring in the knob's own color while apart), thickening to the pill's stroke on
+   fast-02 as the pill widens. */
+.cds-slider--range:not(
+    .cds-slider--track,
+    .cds-slider--knob-pill,
+    .cds-slider--knob-triangle
+  )
+  .cds-slider__knob {
+  box-shadow: inset 0 0 0 1px var(--_knob);
+  transition:
+    --cds-slider-press $fast-01 $standard,
+    --cds-slider-merge $fast-02 $standard,
+    box-shadow $fast-02 $standard;
+}
+
+.cds-slider--range:not(
+    .cds-slider--track,
+    .cds-slider--knob-pill,
+    .cds-slider--knob-triangle
+  )[data-merged]
+  .cds-slider__knob {
+  background: var(--_surface);
+  box-shadow: inset 0 0 0 var(--_ring) var(--_knob);
+}
+
+/* Joined or parted by a drag (one knob pushing the other), the ring changes at once, so it doesn't
+   blink. A drag joins them a step apart, the lens covering less than the whole circle, so a ring
+   starting at 1px would draw a frame of an empty circle between the two dark knobs and the joined
+   pill. */
+.cds-slider--range:not(
+    .cds-slider--track,
+    .cds-slider--knob-pill,
+    .cds-slider--knob-triangle
+  )
+  .cds-slider__track[data-dragging]
+  .cds-slider__knob {
+  transition:
+    --cds-slider-press $fast-01 $standard,
+    --cds-slider-merge $fast-02 $standard;
+}
+
+/* Joined (one value): a 2px line at the seam, past the knob 4px above and below, so the two values
+   still read. In the knob's color, the ring's: on the
+   joined fill (the surface) that is 16–17:1 in every theme. It grows from its middle on
+   moderate-01 (entrance) as they join and shrinks on fast-01 (exit) as they split; at once with
+   reduced motion. */
+.cds-slider__seam {
+  position: absolute;
+  /* Under the knobs: it shows only past the knob, above and below. */
+  z-index: 1;
+  background: var(--_knob);
+  block-size: calc(
+    var(--cds-motion-selection-b, 0px) - var(--cds-motion-selection-t, 0px) +
+      8px
+  );
+  inline-size: 2px;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  pointer-events: none;
+  scale: 1 0;
+  transition: scale $fast-01 var(--cds-motion-easing-exit-productive);
+  translate: calc(
+      (
+          var(--cds-motion-selection-l, 0px) +
+            var(--cds-motion-selection-r, 0px)
+        ) /
+        2 - 1px
+    )
+    calc(var(--cds-motion-selection-t, 0px) - 4px);
+
+  .cds-slider[data-merged] & {
+    scale: 1 1;
+    transition: scale var(--cds-motion-duration-moderate-01)
+      var(--cds-motion-easing-entrance-productive);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &,
+    .cds-slider[data-merged] & {
+      transition: none;
+    }
+  }
+}
+
+@media (forced-colors: active) {
+  .cds-slider__seam {
+    background: CanvasText;
+    forced-color-adjust: none;
+  }
+}
+
+.cds-slider__lens {
+  position: absolute;
+  z-index: 4;
+  overflow: hidden;
+  border-radius: 50%;
+  block-size: calc(var(--cds-lo-b) - var(--cds-lo-t) - 2px);
+  inline-size: calc(var(--cds-lo-r) - var(--cds-lo-l) - 2px);
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  pointer-events: none;
+  /* The lower circle, 1px in (so the lens stays inside both knobs through a hover or a press). */
+  translate: calc(var(--cds-lo-l) + 1px) calc(var(--cds-lo-t) + 1px);
+
+  /* Joined, it goes at once: by then it covers the circle but its 1px rim, which the joined
+     knob's ring starts as (below), so nothing fades over anything. */
+  .cds-slider[data-merged] & {
+    visibility: hidden;
+  }
+}
+
+/* The upper circle, 1px in, placed relative to the lower: clipped by it, the intersection. */
+.cds-slider__lens-in {
+  position: absolute;
+  border-radius: 50%;
+  /* Overlapping circles take the joined pill's fill. */
+  background: var(--_surface);
+  block-size: calc(
+    var(--cds-motion-selection-b, 0px) - var(--cds-motion-selection-t, 0px) -
+      2px
+  );
+  inline-size: calc(
+    var(--cds-motion-selection-r, 0px) - var(--cds-motion-selection-l, 0px) -
+      2px
+  );
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  translate: calc(var(--cds-motion-selection-l, 0px) - var(--cds-lo-l))
+    calc(var(--cds-motion-selection-t, 0px) - var(--cds-lo-t));
+}
+
+/* The knob's hit area: at least 24 × 24px, or the track's height where that is taller (lg),
+   centered on the knob. Sized from the hovered knob, it covers the knob's visible shape at rest,
+   hover and press and doesn't change with them. Where a range's two areas overlap, the knob whose
+   center is nearer takes the pointer (Slider.tsx `pick`). */
+.cds-slider__hit {
+  position: absolute;
+  block-size: max(
+    100%,
+    var(--_hit),
+    var(--sl-h),
+    var(--sl-knob-h) - 2 * var(--_grow)
+  );
+  inline-size: max(100%, var(--_hit), var(--sl-knob-w) - 2 * var(--_grow));
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  translate: -50% -50%;
+}
+
+/* Two knobs: the one in hand is drawn over the other (`data-active`, Slider.tsx), which it pushes
+   along where they meet; they never swap. */
+.cds-slider__track[data-active='lower'] .cds-slider__knob--lower,
+.cds-slider__track[data-active='upper'] .cds-slider__knob--upper {
+  z-index: 3;
+}
+
+.cds-slider__knob--lower {
+  --_lean: var(--cds-slider-lean-lower);
+}
+
+.cds-slider__knob--upper {
+  --_lean: var(--cds-slider-lean-upper);
+}
+
+.cds-slider__track:not([data-placed]) .cds-slider__knob {
+  visibility: hidden;
+}
+
+/* The hover grows the knob 2px on each side, for visibility; a press under the
+   pointer takes back 1px (1px above rest); a press with no hover (a key, a touch) insets it 1px.
+   The hover is the hit area's (`data-hover`, Slider.tsx), so it agrees with the press on which
+   knob a pointer between two would take. */
+.cds-slider:not(
+  .cds-slider--disabled,
+  .cds-slider--readonly,
+  .cds-slider--loading
+) {
+  @media (hover: hover) {
+    .cds-slider__track[data-hover='lower']
+      :is(.cds-slider__knob--lower, .cds-slider__blob--lower),
+    .cds-slider__track[data-hover='upper']
+      :is(.cds-slider__knob--upper, .cds-slider__blob--upper) {
+      --cds-slider-press: var(--_grow);
+    }
+  }
+
+  .cds-slider__track[data-press-lower='pointer']
+    :is(.cds-slider__knob--lower, .cds-slider__blob--lower),
+  .cds-slider__track[data-press-upper='pointer']
+    :is(.cds-slider__knob--upper, .cds-slider__blob--upper) {
+    --cds-slider-press: var(--_pressed);
+  }
+
+  .cds-slider__track[data-press-lower='inset']
+    :is(.cds-slider__knob--lower, .cds-slider__blob--lower),
+  .cds-slider__track[data-press-upper='inset']
+    :is(.cds-slider__knob--upper, .cds-slider__blob--upper) {
+    --cds-slider-press: 1px;
+  }
+
+  /* Merged (one value, pills or circles): the two knobs are one pill, so a hover or a press on
+     either sizes both, or the pair would show two edges. */
+  @media (hover: hover) {
+    &[data-merged]
+      .cds-slider__track[data-hover]
+      :is(.cds-slider__knob, .cds-slider__blob) {
+      --cds-slider-press: var(--_grow);
+    }
+  }
+
+  &[data-merged]
+    .cds-slider__track:is(
+      [data-press-lower='pointer'],
+      [data-press-upper='pointer']
+    )
+    :is(.cds-slider__knob, .cds-slider__blob) {
+    --cds-slider-press: var(--_pressed);
+  }
+
+  &[data-merged]
+    .cds-slider__track:is(
+      [data-press-lower='inset'],
+      [data-press-upper='inset']
+    )
+    :is(.cds-slider__knob, .cds-slider__blob) {
+    --cds-slider-press: 1px;
+  }
+}
+
+/* Pills: a stroke (3px; 2px at sm) in the knob's color round the surface. A status doesn't change it. */
+.cds-slider--knob-pill .cds-slider__knob {
+  background: var(--_surface);
+  box-shadow: inset 0 0 0 var(--_ring) var(--_knob);
+}
+
+/* Triangles: each knob's box is cut to its visible half (its triangle, the gap and the stem), so
+   the hover hugs it. The stem stays on the value: the box's inner edge is 1px past
+   the engine's center; its outer edge takes the press and the hover. */
+.cds-slider--knob-triangle .cds-slider__knob {
+  border-radius: corners.$mark;
+  background: none;
+  box-shadow: none;
+  inline-size: calc(
+    (var(--cds-motion-selection-r, 0px) - var(--cds-motion-selection-l, 0px)) /
+      2 + 1px - var(--cds-slider-press)
+  );
+
+  &::before,
+  &::after {
+    position: absolute;
+    background: var(--_knob);
+    content: '';
+    inset-block: 0;
+  }
+
+  /* The stem. Two knobs on one value (`data-joined`): the shared stem grows 1px past each end,
+     in on moderate-01, out on fast-01. */
+  &::before {
+    inline-size: 2px;
+    transition: inset-block $fast-01 var(--cds-motion-easing-exit-productive);
+  }
+
+  /* The triangle, pointing in at the stem, 2px short of it: solid, with a status too. */
+  &::after {
+    inline-size: calc(100% - 4px);
+  }
+}
+
+.cds-slider--knob-triangle[data-joined] .cds-slider__knob::before {
+  inset-block: -1px;
+  transition: inset-block var(--cds-motion-duration-moderate-01)
+    var(--cds-motion-easing-entrance-productive);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cds-slider--knob-triangle .cds-slider__knob::before,
+  .cds-slider--knob-triangle[data-joined] .cds-slider__knob::before {
+    transition: none;
+  }
+}
+
+/* A triangle's hit area is centered on its stem (the value), as a round knob's is on its center,
+   and at least as wide as the triangles' shared box (both sides of the stem) grown by the hover,
+   so a hovered triangle (2px further out) stays inside it. Its box is the half with the
+   stem at its inner edge, 1px in. */
+.cds-slider--knob-triangle .cds-slider__hit {
+  inline-size: max(var(--_hit), var(--sl-knob-w) - 2 * var(--_grow));
+}
+
+.cds-slider--knob-triangle .cds-slider__knob--lower .cds-slider__hit {
+  inset-inline: auto 1px;
+  translate: 50% -50%;
+}
+
+.cds-slider--knob-triangle .cds-slider__knob--upper .cds-slider__hit {
+  inset-inline-start: 1px;
+}
+
+.cds-slider--knob-triangle .cds-slider__knob--lower {
+  &::before {
+    inset-inline-end: 0;
+  }
+
+  &::after {
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    inset-inline-start: 0;
+  }
+}
+
+.cds-slider--knob-triangle .cds-slider__knob--upper {
+  translate: calc(
+      (
+          var(--cds-motion-selection-l, 0px) +
+            var(--cds-motion-selection-r, 0px)
+        ) /
+        2 - 1px + var(--_lean)
+    )
+    calc(var(--cds-motion-selection-t, 0px) + var(--cds-slider-press));
+
+  &::before {
+    inset-inline-start: 0;
+  }
+
+  &::after {
+    clip-path: polygon(100% 0, 0 50%, 100% 100%);
+    inset-inline-end: 0;
+  }
+}
+
+/* The keyboard's ring (`data-input`, set by the engine on the track; no v11 blue). The family's 2px
+   ring in `$text-primary`, outside the knob and following its shape (an outline follows the radius: a
+   circle, a capsule, the AI circle, a triangle's own half), with the 2px between it and the knob
+   painted in the slider's surface (a spread shadow, after the knob's own). Two tones, so it reads
+   on whatever it crosses: on the page and the empty track the ring does (`$text-primary` on
+   them, 4.6:1 or more in every theme), and on a fill the ring matches (white on g100,
+   near-black on white) the gap does, the surface against the fill. On the track variant it
+   sits outside the knob's stroke (the fill's color, as wide as the inset). At once, as the kit's
+   other keyboard rings. */
+.cds-slider__track:not([data-input='pointer']) .cds-slider__knob:focus-visible {
+  --_gap: 2px;
+  --_ring-at: var(--_gap);
+
+  z-index: 3;
+  box-shadow: 0 0 0 var(--_gap) var(--_surface);
+  outline: 2px solid theme.$text-primary;
+  outline-offset: var(--_ring-at);
+}
+
+/* Knobs that already wear a shadow keep it, the gap after it. */
+.cds-slider--knob-pill:not(.cds-slider--range)
+  .cds-slider__track:not([data-input='pointer'])
+  .cds-slider__knob:focus-visible {
+  box-shadow:
+    inset 0 0 0 var(--_ring) var(--_knob),
+    0 0 0 var(--_gap) var(--_surface);
+}
+
+.cds-slider--range:not(
+    .cds-slider--track,
+    .cds-slider--knob-pill,
+    .cds-slider--knob-triangle
+  )
+  .cds-slider__track:not([data-input='pointer'])
+  .cds-slider__knob:focus-visible {
+  box-shadow:
+    inset 0 0 0 1px var(--_knob),
+    0 0 0 var(--_gap) var(--_surface);
+}
+
+.cds-slider--range:not(
+    .cds-slider--track,
+    .cds-slider--knob-pill,
+    .cds-slider--knob-triangle
+  )[data-merged]
+  .cds-slider__track:not([data-input='pointer'])
+  .cds-slider__knob:focus-visible {
+  box-shadow:
+    inset 0 0 0 var(--_ring) var(--_knob),
+    0 0 0 var(--_gap) var(--_surface);
+}
+
+/* The track variant: the ring outside the knob's stroke, the gap between them. */
+.cds-slider--track
+  .cds-slider__track:not([data-input='pointer'])
+  .cds-slider__knob:focus-visible {
+  --_ring-at: calc(var(--sl-inset) + var(--cds-slider-press) + var(--_gap));
+
+  box-shadow:
+    0 0 0 calc(var(--sl-inset) + var(--cds-slider-press)) var(--_fill),
+    0 0 0 var(--_ring-at) var(--_surface);
+}
+
+.cds-slider--track:is(
+    .cds-slider--gradient-red-green,
+    .cds-slider--gradient-cold-warm
+  ):not([data-tone], .cds-slider--disabled)
+  .cds-slider__track:not([data-input='pointer'])
+  .cds-slider__knob:focus-visible {
+  box-shadow: 0 0 0 var(--_ring-at) var(--_surface);
+}
+
+/* Two knobs joined (one pill): the focused knob's ring on its own side of the seam only, so it is
+   clear which value has focus. */
+.cds-slider[data-merged] .cds-slider__track:not([data-input='pointer']) {
+  .cds-slider__knob--lower:focus-visible {
+    clip-path: inset(-12px 50% -12px -12px);
+  }
+
+  .cds-slider__knob--upper:focus-visible {
+    clip-path: inset(-12px -12px -12px 50%);
+  }
+}
+
+@media (forced-colors: active) {
+  .cds-slider__track:not([data-input='pointer'])
+    .cds-slider__knob:focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+/* ── states ────────────────────────────────────────────────────────────── */
+
+/* v11's disabled: knob, line and fill in `$border-disabled`. */
+.cds-slider--disabled {
+  --_knob: #{theme.$border-disabled};
+  --_fill: #{theme.$border-disabled};
+  --_tick: #{theme.$border-disabled};
+
+  .cds-slider__track {
+    cursor: not-allowed;
+  }
+
+  .cds-slider__knob {
+    pointer-events: none;
+  }
+}
+
+.cds-slider.cds-slider--disabled .cds-slider__fill {
+  background: theme.$border-disabled;
+}
+
+/* ── read only: a fixed value (Slider.tsx) ──
+   A bar half the row's height (4px on the line), filled to the value (or between two) in
+   `$icon-secondary` on `$layer-accent` (4.57–6.76:1 in the four themes), its end where the knob's
+   center would be, so it lines up with an interactive slider. No knob, no stops, no hover: a
+   measure, not a control. The value is text in the field's column. */
+/* The knob's center at a share of the track (as the interactive one's). */
+@function knob-at($p) {
+  @return calc(
+    var(--sl-inset) + var(--sl-knob-w) / 2 +
+      (100% - var(--sl-knob-w) - 2 * var(--sl-inset)) * #{$p}
+  );
+}
+
+.cds-slider--readonly {
+  --_bar: 4px;
+}
+
+.cds-slider--readonly.cds-slider--track {
+  --_bar: calc(var(--sl-h) / 2);
+}
+
+.cds-slider__meter {
+  position: relative;
+  block-size: var(--sl-h);
+  cursor: default;
+
+  &::before {
+    position: absolute;
+    border-radius: corners.$full;
+    background: theme.$layer-accent;
+    content: '';
+    inset-block: calc((var(--sl-h) - var(--_bar)) / 2);
+    inset-inline: 0;
+  }
+}
+
+.cds-slider__meter-fill {
+  position: absolute;
+  border-radius: corners.$full;
+  background: theme.$icon-secondary;
+  inline-size: knob-at(var(--cds-slider-p));
+  inset-block: calc((var(--sl-h) - var(--_bar)) / 2);
+  inset-inline-start: 0;
+
+  /* Two values: between them. */
+  &[data-from] {
+    inline-size: max(
+      var(--_bar),
+      knob-at(var(--cds-slider-p)) - knob-at(var(--cds-slider-p0))
+    );
+    inset-inline-start: knob-at(var(--cds-slider-p0));
+  }
+}
+
+/* The `knob` variant: the meter is the base, the box's height (or inset, as the interactive
+   one's), and no fill. The value is a solid dot in the meter's ink, as tall as the track variant's
+   read-only bar (half the box: 8 / 12 / 16px), one at each value of a range. */
+.cds-slider--readonly.cds-slider--bare {
+  --_bar: var(--sl-h);
+
+  &.cds-slider--base-inset {
+    --_bar: calc(var(--sl-h) - 2 * var(--sl-inset));
+
+    .cds-slider__meter::before {
+      inset-inline: var(--sl-inset);
+    }
+  }
+}
+
+.cds-slider__meter-dot {
+  position: absolute;
+  border-radius: corners.$full;
+  background: theme.$icon-secondary;
+  block-size: calc(var(--sl-h) / 2);
+  inline-size: calc(var(--sl-h) / 2);
+  inset-block-start: calc(var(--sl-h) / 4);
+  inset-inline-start: knob-at(var(--cds-slider-p));
+  translate: -50% 0;
+}
+
+/* The reference, as the interactive one's (2px; 3px on the track): `$icon-secondary` on the empty
+   bar, the page's color cut through the fill. */
+.cds-slider__meter-reference {
+  position: absolute;
+  background: theme.$icon-secondary;
+  inline-size: 2px;
+  inset-block: calc((var(--sl-h) - var(--_bar)) / 2);
+  inset-inline-start: knob-at(var(--cds-slider-p));
+  translate: -50% 0;
+
+  .cds-slider--track & {
+    inline-size: 3px;
+  }
+
+  &[data-passed] {
+    background: theme.$background;
+  }
+}
+
+/* The value, where the number field would be. */
+.cds-slider__value {
+  @include type-style('body-compact-01');
+
+  flex: none;
+  color: theme.$text-primary;
+  font-variant-numeric: tabular-nums;
+  inline-size: 5.5rem;
+  text-align: end;
+}
+
+@media (forced-colors: active) {
+  .cds-slider__meter::before {
+    border: 1px solid CanvasText;
+  }
+
+  .cds-slider__meter-fill,
+  .cds-slider__meter-dot,
+  .cds-slider__meter-reference {
+    background: CanvasText;
+    forced-color-adjust: none;
+  }
+
+  .cds-slider__meter-reference[data-passed] {
+    background: Canvas;
+  }
+}
+
+/* ── steps: the step slider's labels and readout ──────────────────────── */
+
+/* The label, and beside it the current step's text, rolling through a clip (RollText). */
+.cds-slider--steps .cds-slider__head {
+  justify-content: flex-start;
+}
+
+.cds-slider--steps .cds-slider__readout {
+  @include type-style('body-compact-01');
+}
+
+/* Its container's width, with no upper bound; at least a knob per step. */
+.cds-slider--steps {
+  inline-size: 100%;
+}
+
+.cds-slider--steps .cds-slider__bar {
+  max-inline-size: none;
+  min-inline-size: calc(var(--sl-knob-w) * var(--cds-slider-n, 2));
+}
+
+.cds-slider__step-labels {
+  position: relative;
+  block-size: 1rem;
+  margin-block-start: 8px;
+}
+
+/* Centered under its step; the first and last held to the track's ends. */
+.cds-slider__step-label {
+  @include type-style('label-01');
+
+  position: absolute;
+  color: theme.$text-secondary;
+  inset-block-start: 0;
+  inset-inline-start: calc(
+    var(--sl-inset) + var(--sl-knob-w) / 2 +
+      (100% - var(--sl-knob-w) - 2 * var(--sl-inset)) * var(--cds-slider-p)
+  );
+  transition: color $fast-02 $standard;
+  translate: -50% 0;
+  white-space: nowrap;
+
+  &[data-current] {
+    color: theme.$text-primary;
+  }
+
+  &:first-child {
+    inset-inline-start: 0;
+    translate: none;
+  }
+
+  &:last-child {
+    inset-inline: auto 0;
+    translate: none;
+  }
+}
+
+.cds-slider--disabled .cds-slider__step-label {
+  color: theme.$text-disabled;
+}
+
+/* ── the track variant: the step slider's look ────────────────────────── */
+
+/* The knob sits in the track, inset 3px (2 / 4 at sm / lg), concentric with its corners. The fill
+   runs from the track's start to the knob's far edge plus the inset, so it wraps the knob, clipped
+   to the track's shape. The knob carries a stroke in the fill's color as wide as that inset, so
+   the stop dots and the texture never show round it. That is the rule with a status or a
+   gradient too: the stroke is the fill's color where the fill wraps the knob. */
+.cds-slider--track {
+  --sl-h: 24px;
+  --sl-inset: 3px;
+  --sl-knob: 18px;
+  --sl-dot: 4px;
+  --sl-radius: calc(var(--sl-h) / 2);
+  --_track: #{theme.$layer-accent};
+  --_knob: #{theme.$background};
+  --_fill-rest: #{theme.$background-inverse};
+  --_fill-hover: var(--_fill-rest);
+  --_fill-press: var(--_fill-rest);
+  /* A status steps toward the fill's own ink, not the knob's (here the page color). */
+  --_ink: #{theme.$background-inverse};
+  /* The hover grows the knob 1px a side (the track leaves it 3px); a pointer press returns it to
+     rest; a key or touch insets it 1px. */
+  --_grow: -1px;
+  --_pressed: 0px;
+}
+
+/* `hero` (the selection kit's hero): the
+   kit's brand, `--cds-hero` (styles/_brand.scss; by default `$interactive`,
+   blue 60 on white, blue 50 on g100), where the neutral
+   slider has its inverse ink. On the line, the knob
+   (and so the fill's ladder toward it), 4.55–5.41:1 against the page; on the
+   track, the fill round a page-colored knob (5.00:1 white on blue 60, 5.41:1
+   #161616 on blue 50). No text sits on it. A status still colors the fill;
+   disabled is disabled's. */
+.cds-slider--hero:not(.cds-slider--disabled) {
+  --_knob: var(--cds-hero, #{theme.$interactive});
+}
+
+.cds-slider--track.cds-slider--hero:not(.cds-slider--disabled) {
+  --_knob: #{theme.$background};
+  --_fill-rest: var(--cds-hero, #{theme.$interactive});
+  --_ink: var(--cds-hero, #{theme.$interactive});
+}
+
+.cds-slider--track.cds-slider--sm {
+  --sl-h: 16px;
+  --sl-inset: 2px;
+  --sl-knob: 12px;
+  --sl-dot: 3px;
+}
+
+.cds-slider--track.cds-slider--lg {
+  --sl-h: 32px;
+  --sl-inset: 4px;
+  --sl-knob: 24px;
+}
+
+.cds-slider--track.cds-slider--rounded {
+  --sl-radius: min(#{corners.$in}, calc(var(--sl-h) / 2));
+}
+
+.cds-slider--track.cds-slider--square {
+  --sl-radius: 0px;
+}
+
+.cds-slider--track .cds-slider__head {
+  margin-block-end: 1rem;
+}
+
+.cds-slider--track .cds-slider__track {
+  border-radius: var(--sl-radius);
+  background: var(--_track);
+}
+
+/* `base="inset"`, the default: the base sits inside the slider's box by the knob's own inset
+   (2 / 3 / 4px at sm / md / lg), its radius the box's less that, concentric with the box and the
+   knob (at rest the knob and the base are one height). The `knob` variant has it too, no fill. */
+/* The fill keeps the whole box, so the fill and the knob stand proud of the base; the stops sit
+   on it, unmoved. */
+.cds-slider--base-inset .cds-slider__track {
+  background: none;
+
+  &::before {
+    position: absolute;
+    border-radius: max(0px, calc(var(--sl-radius) - var(--sl-inset)));
+    background: var(--_track);
+    content: '';
+    inset: var(--sl-inset);
+    pointer-events: none;
+  }
+}
+
+.cds-slider--track .cds-slider__line {
+  display: none;
+}
+
+.cds-slider--track .cds-slider__fill {
+  border-radius: var(--sl-radius);
+  block-size: auto;
+  clip-path: inset(
+    0 max(0px, calc(100% - var(--_b))) 0 var(--_a) round var(--sl-radius)
+  );
+  inset-block: 0;
+  translate: none;
+}
+
+.cds-slider--track.cds-slider--single .cds-slider__fill {
+  --_a: 0px;
+  --_b: calc(var(--cds-lo-r) + var(--sl-inset) + var(--cds-slider-lean-lower));
+}
+
+.cds-slider--track.cds-slider--range .cds-slider__fill {
+  --_a: calc(var(--cds-lo-l) - var(--sl-inset) + var(--cds-slider-lean-lower));
+  --_b: calc(
+    var(--cds-motion-selection-r, 0px) + var(--sl-inset) +
+      var(--cds-slider-lean-upper)
+  );
+}
+
+.cds-slider--track .cds-slider__knob {
+  border-radius: max(0px, calc(var(--sl-radius) - var(--sl-inset)));
+  /* Its outer edge stays at the track's edge as the knob grows or insets. The color is the
+     fill's: plain, or a status's (the knob reads the status's color and its hover and press
+     step, above). */
+  box-shadow: 0 0 0 calc(var(--sl-inset) + var(--cds-slider-press)) var(--_fill);
+  transition:
+    --cds-slider-press $fast-01 $standard,
+    --cds-slider-step $fast-02 $standard;
+}
+
+/* Full corners: the knob's radius is half its short side, whatever its size (999px), so a hover
+   that grows it is a bigger circle and the overdrag's squash at a wall is a capsule, the two
+   reading as one rule: a hovered knob stays circular.
+   The concentric radius (the track's less the inset) is the same at rest but not once the knob
+   grows. 8px and square corners keep it, concentric with their track. */
+.cds-slider--track:not(.cds-slider--rounded, .cds-slider--square)
+  .cds-slider__knob {
+  border-radius: corners.$full;
+}
+
+/* A gradient: the stroke is the ramp where it wraps the knob. A box-shadow takes one color, so
+   the stroke is a ring behind the knob painted with the fill's own ramp, sized to the track
+   (`cqi`) and shifted by the ring's place on it, so it lines up with the fill exactly. */
+.cds-slider--track:is(
+    .cds-slider--gradient-red-green,
+    .cds-slider--gradient-cold-warm
+  ):not([data-tone], .cds-slider--disabled) {
+  .cds-slider__track {
+    container-type: inline-size;
+  }
+
+  .cds-slider__knob {
+    box-shadow: none;
+
+    /* The ring: the knob's box grown by the stroke, its center masked out (the knob's own). */
+    &::before {
+      --cds-slider-press: inherit;
+      --cds-slider-step: inherit;
+      --_s: calc(var(--sl-inset) + var(--cds-slider-press));
+
+      position: absolute;
+      box-sizing: border-box;
+      border: var(--_s) solid transparent;
+      border-radius: calc(
+        max(0px, var(--sl-radius) - var(--sl-inset)) + var(--_s)
+      );
+
+      background-origin: border-box;
+      background-position-x: calc(
+        var(--sl-inset) - var(--cds-motion-selection-l, 0px) - var(--_lean, 0px)
+      );
+      background-repeat: no-repeat;
+      background-size: 100cqi 100%;
+      content: '';
+      inset: calc(-1 * var(--_s));
+      mask:
+        linear-gradient(#000000 0 0) padding-box exclude,
+        linear-gradient(#000000 0 0) border-box;
+      pointer-events: none;
+      @include gradient-ramp;
+    }
+  }
+
+  &.cds-slider--square .cds-slider__knob::before {
+    border-radius: 0;
+  }
+}
+
+/* The stops: a dot at each, above the fill, under the knob. Ahead of the knob, on the base, in
+   `$icon-secondary` (4.6–6.8:1 on the inset base, where `$icon-disabled` is only 2.3–2.5:1); on the fill, the knob's color softened toward
+   it. Disabled, ahead of the knob, `$icon-disabled`. A hover or a drag's pull grows it 2px
+   (`--cds-dot-t`); while the knob is dragged, the stop it left is a short pill. */
+.cds-slider--track .cds-slider__tick {
+  --_size: calc(var(--sl-dot) + 2px * var(--cds-dot-t));
+  --_tall: var(--_size);
+
+  z-index: 2;
+  border-radius: corners.$full;
+  background: theme.$icon-secondary;
+  block-size: var(--_tall);
+  inline-size: var(--_size);
+  transition:
+    --cds-dot-t $fast-01 $standard,
+    block-size $fast-02 $standard,
+    background-color $fast-02 $standard;
+
+  &[data-passed] {
+    background: color-mix(in srgb, var(--_knob) 55%, var(--_fill));
+  }
+
+  /* A special step (the AI step): IBM blue, ahead of the knob and on the fill. */
+  &[data-special] {
+    background: theme.$link-primary;
+  }
+
+  &[data-special][data-passed] {
+    background: theme.$link-inverse;
+  }
+
+  &[data-origin] {
+    --_tall: calc(var(--sl-dot) * 2);
+  }
+}
+
+.cds-slider--track.cds-slider--disabled
+  .cds-slider__tick:not([data-passed], [data-special]) {
+  background: theme.$icon-disabled;
+}
+
+/* `variant="knob"`: the track's knob, stops and base (inset by default), with no fill. The knob is
+   the track knob's ring (the fill's color) round a page-colored center, and every stop is the same
+   dot (nothing reads as an amount), on the base, in the step slider's unfilled-stop color,
+   `$icon-secondary` (`$border-strong-01` is only 2.3–2.5:1 there). */
+.cds-slider--bare {
+  .cds-slider__fill {
+    visibility: hidden;
+  }
+
+  .cds-slider__tick,
+  .cds-slider__tick[data-passed] {
+    background: theme.$icon-secondary;
+  }
+
+  .cds-slider__tick[data-special],
+  .cds-slider__tick[data-special][data-passed] {
+    background: theme.$link-primary;
+  }
+
+  &.cds-slider--disabled
+    .cds-slider__tick:is(*, [data-passed], [data-special]) {
+    background: theme.$icon-disabled;
+  }
+}
+
+/* `ai`: the projection texture, on a canvas the size of the track, clipped to the fill (a pixel
+   inside its end, so no sliver shows past the knob's stroke). Its dots are IBM blue, the link
+   color on the inverse fill. */
+/* The AI knob's disc: the blue the AI dots read as on the fill. On white the fill
+   is dark and the dots are `$link-inverse` (blue 40); on g100 the fill is light and the
+   dots, `$link-inverse` there (blue 60) but under a pixel across, read lighter, so the disc is
+   `$link-primary` (blue 40 there). Set on the theme scopes, so the nearest theme wins. */
+:root,
+[data-carbon-theme='white'],
+.cds--white {
+  --cds-slider-ai-disc: #{theme.$link-inverse};
+}
+
+[data-carbon-theme='g100'],
+.cds--g100 {
+  --cds-slider-ai-disc: #{theme.$link-primary};
+}
+
+/* AI mode: on the special step the knob is a circle, and a disc in the AI blue scales in from its
+   center inside a ring in the knob's own color, drawn inward so the knob keeps its size (3 · 4 ·
+   5px at sm · md · lg). In on moderate-02 (entrance, expressive), out on fast-02 (exit,
+   productive); reduced, both on fast-01. */
+.cds-slider--ai .cds-slider__knob--lower {
+  transition:
+    --cds-slider-press $fast-01 $standard,
+    --cds-slider-step $fast-02 $standard,
+    border-radius var(--cds-motion-duration-fast-02) $standard;
+
+  &::after {
+    position: absolute;
+    /* A capsule, as the knob is: squashed at a wall it keeps the ring even all round. */
+    border-radius: corners.$full;
+    background: var(--cds-slider-ai-disc, #{theme.$link-inverse});
+    content: '';
+    inset: var(--_ai-ring, 4px);
+    pointer-events: none;
+    scale: 0;
+    transition: scale var(--cds-motion-duration-fast-02)
+      var(--cds-motion-easing-exit-productive);
+  }
+}
+
+.cds-slider--ai.cds-slider--sm {
+  --_ai-ring: 3px;
+}
+
+.cds-slider--ai.cds-slider--lg {
+  --_ai-ring: 5px;
+}
+
+/* A circle at rest; squashed at a wall (the engine's overdrag) a capsule, as the regular knob
+   squashes, with the disc inside it squashing the same way (a 50% ellipse would squash differently from the ring). */
+.cds-slider--ai[data-ai-on] .cds-slider__knob--lower {
+  border-radius: corners.$full;
+
+  &::after {
+    scale: 1;
+    transition: scale var(--cds-motion-duration-moderate-02)
+      var(--cds-motion-easing-entrance-expressive);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cds-slider--ai .cds-slider__knob--lower::after,
+  .cds-slider--ai[data-ai-on] .cds-slider__knob--lower::after {
+    transition-duration: $fast-01;
+  }
+}
+
+@media (forced-colors: active) {
+  .cds-slider--ai .cds-slider__knob--lower::after {
+    background: Highlight;
+    forced-color-adjust: none;
+  }
+}
+
+.cds-slider__dots {
+  position: absolute;
+  z-index: 1;
+  border-radius: var(--sl-radius);
+  block-size: 100%;
+  clip-path: inset(
+    0
+      max(
+        0px,
+        calc(
+          100% - var(--cds-lo-r) - var(--sl-inset) - var(
+              --cds-slider-lean-lower
+            ) +
+            1px
+        )
+      )
+      0 0 round var(--sl-radius)
+  );
+  color: theme.$link-inverse;
+  inline-size: 100%;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Disabled: the fill a step off the track (opaque: the knob's stroke is in this color, and a
+   translucent one would stack on the fill), the knob the track's color. */
+.cds-slider--track.cds-slider--disabled {
+  --_fill: color-mix(
+    in srgb,
+    #{theme.$layer-accent},
+    #{theme.$text-primary} 25%
+  );
+  --_knob: #{theme.$layer-accent};
+}
+
+.cds-slider.cds-slider--track.cds-slider--disabled .cds-slider__fill {
+  background: var(--_fill);
+}
+
+/* ── loading: the knob's band is one block (the value is data) ─────────── */
+
+.cds-slider__skeleton {
+  position: absolute;
+  z-index: 3;
+  overflow: hidden;
+  border-radius: calc(var(--sl-knob-h) / 2);
+  block-size: var(--sl-knob-h);
+  inset-block-start: 50%;
+  inset-inline: 0;
+  translate: 0 -50%;
+}
+
+.cds-slider__skeleton-block {
+  border-radius: inherit;
+  block-size: 100%;
+  inline-size: 100%;
+}
+
+.cds-slider--loading .cds-slider__track {
+  cursor: default;
+}
+
+@media (forced-colors: active) {
+  .cds-slider__track {
+    forced-color-adjust: none;
+  }
+
+  .cds-slider__line,
+  .cds-slider__tick {
+    background: GrayText;
+  }
+
+  /* The knob's color as a variable, so the shapes' parts take it too; a pill's center is Canvas. */
+  .cds-slider .cds-slider__track {
+    --_knob: ButtonText;
+    --_surface: Canvas;
+  }
+
+  .cds-slider .cds-slider__track .cds-slider__fill {
+    background: Highlight;
+  }
+
+  .cds-slider__track:not([data-input='pointer'])
+    .cds-slider__knob:focus-visible {
+    outline-color: Highlight;
+  }
+
+  .cds-slider.cds-slider--disabled .cds-slider__track {
+    --_knob: GrayText;
+
+    .cds-slider__fill {
+      background: GrayText;
+    }
+  }
+
+  .cds-slider.cds-slider--track .cds-slider__track {
+    --_fill: Highlight;
+
+    background: Canvas;
+    outline: 1px solid ButtonText;
+  }
+
+  /* The inset base carries the outline. */
+  .cds-slider.cds-slider--base-inset .cds-slider__track {
+    background: none;
+    outline: none;
+  }
+
+  .cds-slider--base-inset .cds-slider__track::before {
+    background: Canvas;
+    outline: 1px solid ButtonText;
+  }
+
+  .cds-slider--track .cds-slider__tick {
+    background: GrayText;
+  }
+}

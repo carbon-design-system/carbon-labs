@@ -1,0 +1,67 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ModalStories from './Modal.stories.tsx';
+
+<Meta of={ModalStories} />
+
+# Modal
+
+A centred dialog over a dimmed page, with Carbon's props. `Modal` is one piece
+and controlled: every way of closing calls `onRequestClose`, and only `open`
+closes it. `ComposedModal` is its shell, built from `ModalHeader`, `ModalBody`
+and `ModalFooter`; it closes itself unless `onClose` returns `false`. A passive
+modal has no footer. The body scrolls when it overflows, and the footer's
+primary button can show a loading status.
+
+<Canvas of={ModalStories.Default} />
+
+<Canvas of={ModalStories.Sizes} />
+
+<Canvas of={ModalStories.WithForm} />
+
+<Canvas of={ModalStories.LongContent} />
+
+<Canvas of={ModalStories.Composed} />
+
+<Canvas of={ModalStories.Backdrop} />
+
+## Motion
+
+- **Overlay:** the dim fades in over moderate-01 (entrance-productive) and out
+  over fast-02 (exit-productive), from wherever it is.
+- **Snap arrival:** the frame grows to its place in the centre, from 92% of its
+  box on each axis, or 16px in on a side where that is more. It runs over
+  fast-02 on entrance-snap. The content moves in with it on y.
+- **Cursor origin:** it grows from its top or bottom edge facing the press that
+  opened it, at the press's x. Opened from a key, it grows from the focused
+  launcher's centre the same way. With no launcher, it grows from its own
+  centre.
+- **Pull-back:** leaving, the frame shrinks back to the same start, toward the
+  same origin, over fast-01 on exit-pullback, fading as it goes. Reopened while
+  it leaves, it turns round from where it is.
+- **Page recede and blur:** the page behind draws back to 99% about the
+  viewport's centre, under one even blur, on the overlay's clocks. `backdrop`
+  leaves either out.
+- **Content swap:** a new `swapKey` on `ModalBody` swaps its content. The old
+  content leaves 16px up over fast-01, fading, then the new content enters from
+  16px below over fast-02. The height holds through the out, then glides with
+  the in, and the modal re-centres. The primary button's loading label swaps the
+  same way, its width gliding.
+- **Loading:** the mark at the primary button's end changes in place, from the
+  spinner to the check or the error mark. `onLoadingSuccess` is called 1.5s
+  after `finished`.
+- **Cast shadow:** off by default; `shadow` turns it on. It grows and pulls back
+  with the frame. While the pointer is over or near the modal, the shadow falls
+  away from it, and it eases back to rest when the pointer leaves.
+- **Focus:** focus moves in on open and Tab wraps inside. Focus goes back to
+  `launcherButtonRef`, else to what had it, as the modal starts to leave.
+
+## Reduced motion
+
+The overlay and the surface only fade, at their final geometry, on half the
+clock. The blur is there at once, and the page doesn't scale. A content swap
+shows the new content at once, with no fade or glide. The shadow's light moves
+at once.
+
+## Props
+
+<ArgTypes of={ModalStories} />

@@ -1,0 +1,67 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as NumberInputStories from './NumberInput.stories.tsx';
+
+<Meta of={NumberInputStories} />
+
+# NumberInput
+
+A field for a number, with − and + steppers inset at its trailing edge. It is
+the text input's field: its label, outline, status mark and one message line. On
+a step the number rolls to its next value. `NumberInput` takes Carbon's props,
+plus `corners`, `frame`, `variant`, `lateErrors`, `typingPauseMs`,
+`messagePlacement`, `statusBeat`, `timeScale` and the AI fill state.
+`type="text"` parses and formats the number for a locale. `NumberInputSkeleton`
+is the field while its value loads.
+
+<Canvas of={NumberInputStories.Default} />
+
+<Canvas of={NumberInputStories.Stepping} />
+
+<Canvas of={NumberInputStories.Range} />
+
+<Canvas of={NumberInputStories.States} />
+
+<Canvas of={NumberInputStories.Sizes} />
+
+<Canvas of={NumberInputStories.Locale} />
+
+<Canvas of={NumberInputStories.Frames} />
+
+<Canvas of={NumberInputStories.AiFill} />
+
+<Canvas of={NumberInputStories.Skeleton} />
+
+## Motion
+
+- **Roll:** a step rolls the number to its next value: up as it rises, down as
+  it falls, only the digits that change. It runs on moderate-01 with
+  standard-productive; a roll that interrupts one already moving carries on at
+  speed. A step is a stepper, ↑ or ↓ in the field, or a `value` set from outside
+  that isn't the one the field reported. The roll sits over the input's own
+  text, which stays a real input. Typing never rolls, and neither does a step
+  held at a bound.
+- **Outline ladder:** the text input's. Hover, press and focus step the outline.
+- **Error border:** an error settles in once, with the text input's border.
+- **Message line:** helper, warning and error share one line and swap in place,
+  out then in.
+- **Status mark:** the warning or error mark sits before the steppers and swaps
+  as the status changes. `statusBeat` plays its icon once as it arrives.
+- **Late status:** an error that rises while typing, a number out of range say,
+  waits for a pause (`typingPauseMs`, default 1000ms) or blur. One that falls
+  shows on the keystroke. `lateErrors={false}` shows every status at once.
+- **Rollover:** the steppers are ghost icon buttons, with the rollover's press
+  shrink and no hover expand. Each icon plays on its button's hover.
+- **Tooltip:** the two steppers share one tooltip. Moving from − to + puts it
+  there at once, with its text changing in place.
+- **AI fill:** a fill and a revert swap the value; they never roll.
+
+## Reduced motion
+
+The number changes at once, with no roll. The outline and the error border
+change on half of fast-01. The message line, the status mark, the steppers'
+release, the tooltip and an AI fill change at once. A rising status still waits
+for the pause or blur.
+
+## Props
+
+<ArgTypes of={NumberInputStories} />

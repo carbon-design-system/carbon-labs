@@ -16,6 +16,36 @@
       }
     },
     {
+      "id": "checkbox",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Checkbox",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "attachRollover"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "code-snippet",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/CodeSnippet",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "TooltipMotionContext",
+        "attachRollover",
+        "usePrefersReducedMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
       "id": "content-switcher",
       "kind": "component",
       "path": "packages/react/src/v12/components/ContentSwitcher",
@@ -47,6 +77,18 @@
       }
     },
     {
+      "id": "description-list",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/DescriptionList",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
       "id": "disclosure",
       "kind": "component",
       "path": "packages/react/src/v12/components/Disclosure",
@@ -65,6 +107,34 @@
         "motionTokens",
         "stepDown"
       ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "easing-graph",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/EasingGraph",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "CubicBezier",
+        "attachRollover",
+        "clamp01"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "16a3b77a85ed09bbe646ee5f368167a23ae328e4"
+      }
+    },
+    {
+      "id": "empty-state",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/EmptyState",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [],
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
@@ -134,6 +204,27 @@
       }
     },
     {
+      "id": "file-uploader",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/FileUploader",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "STAGGER",
+        "attachRollover",
+        "easingCss",
+        "motionTokens",
+        "playContentSwap",
+        "staggerMsForSize",
+        "staggerSteps",
+        "useFeedbackMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
       "id": "full-page-error",
       "kind": "component",
       "path": "packages/react/src/v12/components/FullPageError",
@@ -185,6 +276,54 @@
       "source": {
         "repo": "carbon-next",
         "ref": "4f2a12b253ef68bbed31f80de38387b67d6fb582"
+      }
+    },
+    {
+      "id": "jobs-tray",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/JobsTray",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "SNAP",
+        "SNAP_FRAME",
+        "SnapProfile",
+        "SurfaceAlignment",
+        "SurfaceShadowOption",
+        "placeOnAnchor",
+        "playContentSwap",
+        "themeOf",
+        "usePrefersReducedMotion",
+        "useSnapSurface"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "jump-to",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/JumpTo",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "SELECTION_ARRIVAL",
+        "SNAP_FRAME",
+        "SnapProfile",
+        "arrivalRect",
+        "deriveCastShadowColor",
+        "durationStepForDistance",
+        "motionTokens",
+        "snapClocks",
+        "snapEaseAt",
+        "snapFadeFor",
+        "usePrefersReducedMotion",
+        "useSnapSurface"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
       }
     },
     {
@@ -308,6 +447,80 @@
       }
     },
     {
+      "id": "menu",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Menu",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "CastElevation",
+        "EDGE",
+        "Placement",
+        "Range",
+        "SNAP_EXIT_FADE_ATTR",
+        "SNAP_FRAME",
+        "SelectionMoveInfo",
+        "SurfaceAlignment",
+        "SurfaceShadowOption",
+        "anchorInset",
+        "attachFloatingCastShadow",
+        "cubicBezier",
+        "originCause",
+        "placeAtPoint",
+        "placeBesideRow",
+        "placeOnAnchor",
+        "range",
+        "snapAnimations",
+        "snapProfileFor",
+        "themeOf",
+        "toEasing",
+        "useMenuTrigger",
+        "usePrefersReducedMotion",
+        "useSnapSurface"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      }
+    },
+    {
+      "id": "modal",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Modal",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "RGBA",
+        "SNAP_FRAME",
+        "SNAP_PROPOSED_EASE",
+        "SnapProfile",
+        "SurfaceShadowOption",
+        "deriveCastShadowColor",
+        "distanceTokens",
+        "easingCss",
+        "motionTokens",
+        "parseColor",
+        "playContentSwap",
+        "reducedClock",
+        "stepDown",
+        "themeOf",
+        "usePrefersReducedMotion",
+        "useSnapSurface"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "testsWaiting": [
+        {
+          "file": "modal.test.tsx",
+          "waitingOn": [
+            "accordion"
+          ]
+        }
+      ]
+    },
+    {
       "id": "notification",
       "kind": "component",
       "path": "packages/react/src/v12/components/Notification",
@@ -342,6 +555,57 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "notifications-panel",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/NotificationsPanel",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "REDUCED_MOTION",
+        "SNAP",
+        "SNAP_FRAME",
+        "SnapProfile",
+        "SurfaceAlignment",
+        "SurfaceShadowOption",
+        "animateLayout",
+        "attachRollover",
+        "durationStepForDistance",
+        "motionTokens",
+        "placeOnAnchor",
+        "playContentSwap",
+        "staggerSteps",
+        "stepDown",
+        "themeOf",
+        "usePrefersReducedMotion",
+        "useSnapSurface",
+        "useStagger"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "number-input",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/NumberInput",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "FIELD_TIMING",
+        "fieldAria",
+        "hasText",
+        "motionTokens",
+        "normalizeFieldProps",
+        "useLateStatus",
+        "usePrefersReducedMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
       }
     },
     {
@@ -512,6 +776,20 @@
       }
     },
     {
+      "id": "radio-button",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/RadioButton",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "attachRollover"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
       "id": "roll-text",
       "kind": "component",
       "path": "packages/react/src/v12/components/RollText",
@@ -544,6 +822,42 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "search",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Search",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "SNAP",
+        "animateLayout",
+        "distanceTokens",
+        "easingCss",
+        "motionTokens",
+        "usePrefersReducedMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      }
+    },
+    {
+      "id": "select",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Select",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "fieldAria",
+        "hasText",
+        "normalizeFieldProps",
+        "useLateStatus"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
       }
     },
     {
@@ -618,6 +932,34 @@
         "motionTokens",
         "parseColor",
         "useFeedbackMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "slider",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Slider",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "CubicBezier",
+        "DOT_BEHAVIORS",
+        "DOT_PHYSICS",
+        "DotBehaviors",
+        "DotField",
+        "DotFieldOptions",
+        "DotPhysics",
+        "SelectionMoveInfo",
+        "bezierEase",
+        "createDotField",
+        "easedStaggerAt",
+        "easingCss",
+        "motionTokens",
+        "selectionDuration",
+        "usePrefersReducedMotion"
       ],
       "source": {
         "repo": "carbon-next",
@@ -883,6 +1225,27 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "text-area",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/TextArea",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "FIELD_TIMING",
+        "attachScroller",
+        "counterAnnouncement",
+        "fieldAria",
+        "hasText",
+        "normalizeFieldProps",
+        "useLateStatus",
+        "usePrefersReducedMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
       }
     },
     {

@@ -1,6 +1,7 @@
 {
   "name": "@carbon-labs/react-keyboard-shortcut",
   "version": "0.0.1",
+  "private": true,
   "publishConfig": {
     "access": "public",
     "provenance": true

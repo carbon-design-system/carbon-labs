@@ -14,6 +14,11 @@ function getAbsolutePath(value) {
 // Check if v12 stories should be included
 const includeV12 = process.env.STORYBOOK_INCLUDE_V12 === 'true';
 
+// The v12 Storybook compiles Carbon's Sass with `enable-v12-release` on, as
+// core's `.storybook-v12` does. Configuring `$feature-flags` replaces the map
+// @carbon/styles sets by default, so its enabled defaults are repeated here.
+const v12FeatureFlags = `@use '@carbon/styles/scss/feature-flags' with ($feature-flags: ('enable-css-custom-properties': true, 'enable-css-grid': true, 'enable-v12-release': true));\n`;
+
 // Build stories array based on environment variable
 const storiesGlobs = includeV12
   ? ['../src/v12/**/*.mdx', '../src/v12/**/*.stories.@(js|jsx|mjs|ts|tsx)']
@@ -77,13 +82,19 @@ const config = {
       // A v12 package's built JavaScript leaves its stylesheet import out (the
       // package ships `scss/` for the app to compile), so a component that
       // uses another would show it unstyled. Here each v12 package resolves to
-      // its source, whose own stylesheet import then compiles.
+      // its source, whose own stylesheet import then compiles. Its `scss/`
+      // path, which the build copies from `components/`, resolves there too.
       const v12 = path.resolve(__dirname, '../src/v12/components');
       for (const dir of fs.existsSync(v12) ? fs.readdirSync(v12) : []) {
         const pkg = path.join(v12, dir, 'package.json');
         if (fs.existsSync(pkg)) {
           const { name } = JSON.parse(fs.readFileSync(pkg, 'utf8'));
           config.resolve.alias[`${name}$`] = path.join(v12, dir, 'index.ts');
+          config.resolve.alias[`${name}/scss`] = path.join(
+            v12,
+            dir,
+            'components'
+          );
         }
       }
     }
@@ -137,6 +148,13 @@ const config = {
             },
             warnRuleAsWarning: true,
             sourceMap: true,
+            ...(includeV12 && {
+              // Plain .css files cannot take a Sass `@use`.
+              additionalData: (content, loaderContext) =>
+                loaderContext.resourcePath.endsWith('.scss')
+                  ? v12FeatureFlags + content
+                  : content,
+            }),
           },
         },
       ],

@@ -9,9 +9,9 @@ import React, { createElement, Fragment, type ComponentType } from 'react';
 import { Theme, unstable_Layout as Layout } from '@carbon/react';
 import {
   DENSITIES,
-  THEMES,
+  ZONE_THEMES,
   type Density,
-  type Theme as ThemeName,
+  type ZoneTheme,
 } from './constants';
 
 /** A state of the matrix: its name and the args that put the component in it. */
@@ -29,8 +29,11 @@ export interface MatrixOptions<P> {
    * spec to act on. An object gives the state's args itself.
    */
   states?: ReadonlyArray<string | MatrixState<P>>;
-  /** The themes across; the lane's two by default. */
-  themes?: readonly ThemeName[];
+  /**
+   * The themes across. Each cell is a Carbon `Theme` zone, so only the themes
+   * Carbon draws as one: white and g100, both by default.
+   */
+  themes?: readonly ZoneTheme[];
   /** The densities across, under each theme; both by default. */
   densities?: readonly Density[];
 }
@@ -47,7 +50,7 @@ export const PROP_STATES = [
   'checked',
 ];
 
-const THEME_LABEL: Record<ThemeName, string> = {
+const THEME_LABEL: Record<ZoneTheme, string> = {
   white: 'White',
   g100: 'Gray 100',
 };
@@ -76,7 +79,7 @@ interface MatrixProps<P> {
   component: ComponentType<P>;
   args: Partial<P>;
   states: ReadonlyArray<MatrixState<P>>;
-  themes: readonly ThemeName[];
+  themes: readonly ZoneTheme[];
   densities: readonly Density[];
 }
 
@@ -156,7 +159,7 @@ export function matrixStory<P extends object>(
   const {
     args = {} as Partial<P>,
     states = ['rest'],
-    themes = THEMES,
+    themes = ZONE_THEMES,
     densities = DENSITIES,
   } = options;
   const rows = states.map(toState);

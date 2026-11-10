@@ -11,6 +11,11 @@ function getAbsolutePath(value) {
 // Check if v12 stories should be included
 const includeV12 = process.env.STORYBOOK_INCLUDE_V12 === 'true';
 
+// The v12 Storybook compiles Carbon's Sass with `enable-v12-release` on, as
+// core's `.storybook-v12` does. Configuring `$feature-flags` replaces the map
+// @carbon/styles sets by default, so its enabled defaults are repeated here.
+const v12FeatureFlags = `@use '@carbon/styles/scss/feature-flags' with ($feature-flags: ('enable-css-custom-properties': true, 'enable-css-grid': true, 'enable-v12-release': true));\n`;
+
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
 const config = {
   stories: [
@@ -22,6 +27,21 @@ const config = {
     name: getAbsolutePath('@storybook/web-components-vite'),
     options: {},
   },
+  async viteFinal(config) {
+    if (!includeV12) {
+      return config;
+    }
+    const { mergeConfig } = await import('vite');
+    return mergeConfig(config, {
+      css: {
+        preprocessorOptions: {
+          scss: {
+            additionalData: v12FeatureFlags,
+          },
+        },
+      },
+    });
+  },
   refs: (config, { configType }) => {
     if (configType === 'DEVELOPMENT') {
       // In development mode:
@@ -29,7 +49,7 @@ const config = {
       // - V12 root (port 6016) points to v12 packages (6017, 6018)
       const webComponentsPort = includeV12 ? 6017 : 6007;
       const reactPort = includeV12 ? 6018 : 6008;
-      
+
       return {
         'web-components': {
           title: 'Web Components',
@@ -48,7 +68,7 @@ const config = {
     return {
       'web-components': {
         title: 'Web Components',
-       url: './web-components',
+        url: './web-components',
       },
       react: {
         title: 'React components',

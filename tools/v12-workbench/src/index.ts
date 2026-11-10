@@ -24,6 +24,7 @@ export {
   DIRECTIONS,
   REDUCED_MOTION,
   THEMES,
+  ZONE_THEMES,
   readGlobals,
   timeScaleOf,
 } from './constants';
@@ -36,4 +37,5 @@ export type {
   Theme,
   V12Parameters,
   WorkbenchGlobals,
+  ZoneTheme,
 } from './constants';

@@ -1,0 +1,102 @@
+{
+  "axes": {
+    "frame": {
+      "why": "what a component stands on: one shared set, of which a component declares a subset",
+      "values": ["ghost", "inset", "flush", "floating", "line", "none"]
+    },
+    "variant": {
+      "why": "the colour treatment: the shared set, Button's own three, and Toggle's status",
+      "values": [
+        "inverse",
+        "tonal",
+        "outlined",
+        "hero",
+        "neutral",
+        "filled",
+        "status"
+      ]
+    },
+    "kind": {
+      "why": "a role, a status or a preset, never a look",
+      "values": [
+        "primary",
+        "secondary",
+        "danger",
+        "default",
+        "error",
+        "warning",
+        "warning-alt",
+        "success",
+        "info",
+        "info-square",
+        "pending",
+        "not-started",
+        "paused",
+        "unknown"
+      ]
+    },
+    "size": {
+      "why": "a control size on Carbon's ladder, or a glyph size in pixels, never both and never a free string",
+      "values": ["xs", "sm", "md", "lg", "xl", "2xl"],
+      "numbers": true
+    },
+    "corners": {
+      "why": "the corner ladder: full, rounded or square",
+      "values": ["full", "rounded", "square"]
+    }
+  },
+  "banned": {
+    "density": {
+      "why": "density is a context value: KitDefaults carries it, a component takes it from there",
+      "except": ["KitDefaults"]
+    },
+    "isFlush": {
+      "why": "a frame is spelled with frame"
+    },
+    "isInset": {
+      "why": "a frame is spelled with frame"
+    },
+    "contained": {
+      "why": "a frame is spelled with frame"
+    },
+    "isOpen": {
+      "why": "open state is open"
+    },
+    "expanded": {
+      "why": "open state is open"
+    },
+    "isExpanded": {
+      "why": "open state is open"
+    },
+    "defaultExpanded": {
+      "why": "open state is defaultOpen"
+    },
+    "pressed": {
+      "why": "a pressed toggle is selected"
+    },
+    "warning": {
+      "why": "validation is warn"
+    }
+  },
+  "bannedBeside": {
+    "highContrast": {
+      "beside": "variant",
+      "why": "the treatment is variant"
+    },
+    "dropShadow": {
+      "beside": "shadow",
+      "why": "the shadow is shadow"
+    }
+  },
+  "deprecated": {
+    "light": {
+      "why": "Carbon v11 deprecates it in favour of Layer"
+    },
+    "slug": {
+      "why": "Carbon v11 deprecates it in favour of decorator"
+    },
+    "ariaLabel": {
+      "why": "Carbon v11 deprecates it in favour of aria-label"
+    }
+  }
+}

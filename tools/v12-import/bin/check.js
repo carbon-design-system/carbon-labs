@@ -7,8 +7,9 @@
  */
 
 // The lane's checks: a manifest row for every component folder, leaks, motion
-// literals and motion from anywhere but the seam, over every v12 folder.
-// Prints every finding; exits 1 on an error, never on a warning alone.
+// literals and motion from anywhere but the seam, over every v12 folder; and,
+// as warnings, the motion rules and the prop vocabulary. Prints every finding
+// and the warnings' count by rule; exits 1 on an error, never on a warning.
 
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -20,14 +21,23 @@ const labs = path.resolve(
 );
 const findings = checkLane(labs);
 const errors = findings.filter((f) => f.level === 'error');
-const warnings = findings.filter((f) => f.level !== 'error');
+const warnings = findings.filter((f) => f.level === 'warning');
+const allowed = findings.filter((f) => f.level === 'allowed');
 for (const f of warnings) {
   console.warn(`${f.at}: warning: ${f.kind}: ${f.match}`);
 }
 for (const f of errors) {
   console.error(`${f.at}: ${f.kind}: ${f.match}`);
 }
+// Warnings by rule, so a count that moves is seen.
+const byRule = new Map();
+for (const f of warnings) {
+  byRule.set(f.kind, (byRule.get(f.kind) ?? 0) + 1);
+}
+for (const [kind, n] of [...byRule].sort()) {
+  console.log(`  ${String(n).padStart(4)}  ${kind}`);
+}
 console.log(
-  `v12 check: ${errors.length} error(s), ${warnings.length} warning(s)`
+  `v12 check: ${errors.length} error(s), ${warnings.length} warning(s), ${allowed.length} allowed by comment`
 );
 process.exit(errors.length ? 1 : 0);

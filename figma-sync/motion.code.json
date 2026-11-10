@@ -4206,6 +4206,57 @@
       ]
     },
     {
+      "key": "v12/labs/split-button",
+      "id": "labs/split-button",
+      "title": "V12/SplitButton",
+      "declared": true,
+      "items": [
+        {
+          "item": "hover",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "press-and-release",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "chevron",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "menu",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "busy",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "focus",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "hover",
+        "press",
+        "focus",
+        "open",
+        "disabled",
+        "busy"
+      ],
+      "seam": [
+        "SelectionMoveInfo",
+        "useMenuTrigger"
+      ]
+    },
+    {
       "key": "v12/link",
       "id": "link",
       "title": "V12/Link",

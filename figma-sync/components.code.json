@@ -31,7 +31,7 @@
     },
     "resolvedFrom": "figma-sync/state-colors.resolved.json",
     "resolved": 0,
-    "pending": 780
+    "pending": 786
   },
   "items": [
     {
@@ -4017,6 +4017,968 @@
       "motion": [],
       "reduced": {},
       "departures": [],
+      "stateColors": []
+    },
+    {
+      "key": "v12/labs/chat-input",
+      "id": "labs/chat-input",
+      "kind": "component",
+      "status": "draft",
+      "figma": {
+        "status": "unmapped"
+      },
+      "title": "V12/ChatInput",
+      "stories": [
+        "v12-chatinput--default",
+        "v12-chatinput--with-files",
+        "v12-chatinput--actions-inside",
+        "v12-chatinput--grown",
+        "v12-chatinput--busy",
+        "v12-chatinput--disabled"
+      ],
+      "docs": "v12-chatinput--overview",
+      "props": {
+        "proposals": {
+          "figma": "BOOLEAN"
+        },
+        "withFiles": {
+          "figma": "BOOLEAN"
+        },
+        "actionsPlacement": {
+          "figma": "VARIANT",
+          "values": [
+            "below",
+            "inside"
+          ]
+        },
+        "busy": {
+          "figma": "BOOLEAN"
+        },
+        "disabled": {
+          "figma": "BOOLEAN",
+          "surface": true
+        },
+        "label": {
+          "figma": "TEXT"
+        },
+        "placeholder": {
+          "figma": "TEXT"
+        },
+        "menuTheme": {
+          "figma": "VARIANT",
+          "values": [
+            null,
+            "white",
+            "g10",
+            "g90",
+            "g100"
+          ]
+        },
+        "submitOn": {
+          "figma": "VARIANT",
+          "values": [
+            "enter",
+            "mod-enter"
+          ]
+        }
+      },
+      "notMapped": [
+        "attachments",
+        "className",
+        "commands",
+        "connections",
+        "defaultValue",
+        "maxRows",
+        "models",
+        "modes",
+        "selectedModeId",
+        "selectedModelId",
+        "settings",
+        "speechActive",
+        "value"
+      ],
+      "state": [],
+      "motion": [],
+      "reduced": {},
+      "departures": [
+        "explore: composer-corner",
+        "proposal: token: chat-input-background",
+        "proposal: token: chat-input-menu-active",
+        "proposal: token: chat-input-menu-hover",
+        "proposal: token: chat-input-menu-selected",
+        "proposal: token: chat-input-menu-selected-text"
+      ],
+      "stateColors": []
+    },
+    {
+      "key": "v12/labs/chat-panels",
+      "id": "labs/chat-panels",
+      "kind": "component",
+      "status": "draft",
+      "figma": {
+        "status": "unmapped"
+      },
+      "title": "V12/ChatPanels",
+      "stories": [
+        "v12-chatpanels--default"
+      ],
+      "docs": "v12-chatpanels--overview",
+      "props": {
+        "children": {
+          "figma": "SLOT"
+        },
+        "presentation": {
+          "figma": "VARIANT",
+          "values": [
+            "push",
+            "overlay"
+          ]
+        }
+      },
+      "notMapped": [
+        "className",
+        "panelContent"
+      ],
+      "state": [],
+      "motion": [],
+      "reduced": {},
+      "departures": [
+        "proposal: api: chat-panel-toggle-icon-only"
+      ],
+      "stateColors": []
+    },
+    {
+      "key": "v12/labs/chat-thread",
+      "id": "labs/chat-thread",
+      "kind": "component",
+      "status": "draft",
+      "figma": {
+        "status": "unmapped"
+      },
+      "title": "V12/ChatThread",
+      "stories": [
+        "v12-chatthread--default",
+        "v12-chatthread--agent-turn",
+        "v12-chatthread--long-question",
+        "v12-chatthread--compact",
+        "v12-chatthread--align-top",
+        "v12-chatthread--conversation"
+      ],
+      "docs": "v12-chatthread--overview",
+      "props": {
+        "align": {
+          "figma": "VARIANT",
+          "values": [
+            "bottom",
+            "top"
+          ]
+        },
+        "density": {
+          "figma": "VARIANT",
+          "values": [
+            "balanced",
+            "compact"
+          ]
+        },
+        "children": {
+          "figma": "SLOT"
+        },
+        "label": {
+          "figma": "TEXT"
+        }
+      },
+      "notMapped": [
+        "announcement",
+        "className"
+      ],
+      "state": [],
+      "motion": [],
+      "reduced": {},
+      "departures": [],
+      "stateColors": []
+    },
+    {
+      "key": "v12/labs/chats-panel",
+      "id": "labs/chats-panel",
+      "kind": "component",
+      "status": "draft",
+      "figma": {
+        "status": "unmapped"
+      },
+      "title": "V12/ChatsPanel",
+      "stories": [
+        "v12-chatspanel--default"
+      ],
+      "docs": "v12-chatspanel--overview",
+      "props": {
+        "children": {
+          "figma": "TEXT",
+          "as": "label"
+        },
+        "currentId": {
+          "figma": "TEXT"
+        }
+      },
+      "notMapped": [
+        "className",
+        "sections"
+      ],
+      "state": [],
+      "motion": [],
+      "reduced": {},
+      "departures": [
+        "proposal: token: chats-panel-chat-current",
+        "proposal: token: chats-panel-chat-current-text",
+        "proposal: token: chats-panel-chat-hover",
+        "proposal: token: chats-panel-shell-chat-current",
+        "proposal: token: chats-panel-shell-chat-current-text",
+        "proposal: token: chats-panel-shell-chat-hover"
+      ],
+      "stateColors": []
+    },
+    {
+      "key": "v12/labs/code-snippet-alt",
+      "id": "labs/code-snippet-alt",
+      "kind": "component",
+      "status": "draft",
+      "figma": {
+        "status": "unmapped"
+      },
+      "title": "V12/CodeSnippetAlt",
+      "stories": [
+        "v12-codesnippetalt--default",
+        "v12-codesnippetalt--expanded",
+        "v12-codesnippetalt--short",
+        "v12-codesnippetalt--plain",
+        "v12-codesnippetalt--inline"
+      ],
+      "docs": "v12-codesnippetalt--overview",
+      "props": {
+        "highlight": {
+          "figma": "BOOLEAN"
+        },
+        "proposals": {
+          "figma": "BOOLEAN"
+        },
+        "code": {
+          "figma": "TEXT"
+        },
+        "language": {
+          "figma": "TEXT"
+        },
+        "showLineNumbers": {
+          "figma": "BOOLEAN"
+        },
+        "defaultExpanded": {
+          "figma": "BOOLEAN"
+        }
+      },
+      "notMapped": [
+        "className",
+        "collapsedLines",
+        "onCopy",
+        "onExpandedChange",
+        "translations"
+      ],
+      "state": [],
+      "motion": [],
+      "reduced": {},
+      "departures": [
+        "proposal: token: code-snippet-syntax-function",
+        "proposal: token: code-snippet-syntax-keyword",
+        "proposal: token: code-snippet-syntax-number",
+        "proposal: token: code-snippet-syntax-string",
+        "proposal: token: code-snippet-syntax-variable"
+      ],
+      "stateColors": []
+    },
+    {
+      "key": "v12/labs/date-picker",
+      "id": "labs/date-picker",
+      "kind": "component",
+      "status": null,
+      "figma": {
+        "status": "unmapped"
+      },
+      "title": "V12/DatePicker",
+      "stories": [
+        "v12-datepicker--default",
+        "v12-datepicker--range-with-calendar",
+        "v12-datepicker--range-with-calendar-with-layer",
+        "v12-datepicker--simple",
+        "v12-datepicker--simple-with-layer",
+        "v12-datepicker--single-with-calendar",
+        "v12-datepicker--single-with-calendar-with-layer",
+        "v12-datepicker--skeleton",
+        "v12-datepicker--with-ai-label"
+      ],
+      "docs": "v12-datepicker--overview",
+      "props": {
+        "readOnly": {
+          "figma": "BOOLEAN",
+          "surface": true
+        },
+        "size": {
+          "figma": "VARIANT",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "surface": true
+        },
+        "disabled": {
+          "figma": "BOOLEAN",
+          "surface": true
+        },
+        "invalid": {
+          "figma": "BOOLEAN",
+          "surface": true
+        },
+        "invalidText": {
+          "figma": "TEXT"
+        },
+        "placeholder": {
+          "figma": "TEXT"
+        },
+        "warn": {
+          "figma": "BOOLEAN",
+          "surface": true
+        },
+        "warnText": {
+          "figma": "TEXT"
+        },
+        "helperText": {
+          "figma": "TEXT"
+        },
+        "datePickerType": {
+          "figma": "VARIANT",
+          "values": [
+            "single",
+            "simple",
+            "range"
+          ]
+        }
+      },
+      "notMapped": [
+        "light",
+        "onChange",
+        "onClose",
+        "onOpen"
+      ],
+      "state": [
+        "enabled",
+        "disabled",
+        "readOnly",
+        "invalid"
+      ],
+      "motion": [],
+      "reduced": {},
+      "departures": [],
+      "stateColors": []
+    },
+    {
+      "key": "v12/labs/file-chip",
+      "id": "labs/file-chip",
+      "kind": "component",
+      "status": "draft",
+      "figma": {
+        "status": "unmapped"
+      },
+      "title": "V12/FileChip",
+      "stories": [
+        "v12-filechip--default",
+        "v12-filechip--matrix",
+        "v12-filechip--in-the-input-bar"
+      ],
+      "docs": "v12-filechip--overview",
+      "props": {
+        "proposals": {
+          "figma": "BOOLEAN"
+        },
+        "kind": {
+          "figma": "VARIANT",
+          "values": [
+            "file",
+            "image",
+            "video"
+          ],
+          "surface": true
+        },
+        "status": {
+          "figma": "VARIANT",
+          "values": [
+            "idle",
+            "uploading",
+            "error",
+            "complete"
+          ]
+        },
+        "name": {
+          "figma": "TEXT"
+        },
+        "errorMessage": {
+          "figma": "TEXT"
+        },
+        "description": {
+          "figma": "TEXT"
+        },
+        "showName": {
+          "figma": "BOOLEAN"
+        },
+        "renderIcon": {
+          "figma": "INSTANCE_SWAP"
+        }
+      },
+      "notMapped": [
+        "className",
+        "successDelay",
+        "thumbnailSrc"
+      ],
+      "state": [],
+      "motion": [],
+      "reduced": {},
+      "departures": [
+        "explore: radius-field",
+        "proposal: token: file-chip-background",
+        "proposal: token: file-chip-video-icon-size"
+      ],
+      "stateColors": []
+    },
+    {
+      "key": "v12/labs/history-rail",
+      "id": "labs/history-rail",
+      "kind": "component",
+      "status": "draft",
+      "figma": {
+        "status": "unmapped"
+      },
+      "title": "V12/HistoryRail",
+      "stories": [
+        "v12-historyrail--default",
+        "v12-historyrail--in-a-conversation",
+        "v12-historyrail--with-a-failed-run",
+        "v12-historyrail--long-history",
+        "v12-historyrail--marks",
+        "v12-historyrail--card"
+      ],
+      "docs": "v12-historyrail--overview",
+      "props": {
+        "label": {
+          "figma": "TEXT"
+        },
+        "current": {
+          "figma": "TEXT"
+        },
+        "defaultValue": {
+          "figma": "TEXT"
+        }
+      },
+      "notMapped": [
+        "className",
+        "items",
+        "maxMarks",
+        "onChange",
+        "translations"
+      ],
+      "state": [],
+      "motion": [],
+      "reduced": {},
+      "departures": [],
+      "stateColors": []
+    },
+    {
+      "key": "v12/labs/keyboard-shortcut",
+      "id": "labs/keyboard-shortcut",
+      "kind": "component",
+      "status": "draft",
+      "figma": {
+        "status": "unmapped"
+      },
+      "title": "V12/KeyboardShortcut",
+      "stories": [
+        "v12-keyboardshortcut--default",
+        "v12-keyboardshortcut--plain",
+        "v12-keyboardshortcut--platform-mac",
+        "v12-keyboardshortcut--platform-other",
+        "v12-keyboardshortcut--long-combination",
+        "v12-keyboardshortcut--single-key",
+        "v12-keyboardshortcut--modifier-order",
+        "v12-keyboardshortcut--digits",
+        "v12-keyboardshortcut--right-to-left",
+        "v12-keyboardshortcut--in-tooltip",
+        "v12-keyboardshortcut--in-icon-button-tooltip",
+        "v12-keyboardshortcut--in-definition-tooltip",
+        "v12-keyboardshortcut--on-tile",
+        "v12-keyboardshortcut--on-tile-with-layer",
+        "v12-keyboardshortcut--inside-menu"
+      ],
+      "docs": "v12-keyboardshortcut--overview",
+      "props": {
+        "kind": {
+          "figma": "VARIANT",
+          "values": [
+            "keycap",
+            "plain"
+          ],
+          "surface": true
+        },
+        "platform": {
+          "figma": "VARIANT",
+          "values": [
+            "auto",
+            "mac",
+            "other"
+          ]
+        }
+      },
+      "notMapped": [
+        "className",
+        "keys",
+        "translateWithId"
+      ],
+      "state": [],
+      "motion": [],
+      "reduced": {},
+      "departures": [
+        "proposal: api: menu-item-shortcut-node",
+        "proposal: mixin: keycap-slashed-zero"
+      ],
+      "stateColors": []
+    },
+    {
+      "key": "v12/labs/mega-button",
+      "id": "labs/mega-button",
+      "kind": "component",
+      "status": "draft",
+      "figma": {
+        "status": "unmapped"
+      },
+      "title": "V12/MegaButton",
+      "stories": [
+        "v12-megabutton--default",
+        "v12-megabutton--icon-only",
+        "v12-megabutton--matrix",
+        "v12-megabutton--beside-carbon-button"
+      ],
+      "docs": "v12-megabutton--overview",
+      "props": {
+        "children": {
+          "figma": "TEXT",
+          "as": "label"
+        },
+        "kind": {
+          "figma": "VARIANT",
+          "values": [
+            "primary",
+            "secondary",
+            "tertiary",
+            "ghost",
+            "danger",
+            "danger--secondary"
+          ],
+          "surface": true
+        },
+        "size": {
+          "figma": "VARIANT",
+          "values": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+            "2xl"
+          ],
+          "surface": true
+        },
+        "icon": {
+          "figma": "VARIANT",
+          "values": [
+            "None",
+            "Add",
+            "ArrowRight",
+            "Copy",
+            "Save",
+            "TrashCan"
+          ]
+        },
+        "renderIcon": {
+          "figma": "INSTANCE_SWAP"
+        },
+        "iconPosition": {
+          "figma": "VARIANT",
+          "values": [
+            "leading",
+            "trailing"
+          ]
+        },
+        "isSelected": {
+          "figma": "BOOLEAN"
+        },
+        "proposals": {
+          "figma": "BOOLEAN"
+        },
+        "hasIconOnly": {
+          "figma": "BOOLEAN"
+        },
+        "disabled": {
+          "figma": "BOOLEAN",
+          "surface": true
+        }
+      },
+      "notMapped": [
+        "className",
+        "keyCommand",
+        "tooltipAlignment"
+      ],
+      "state": [],
+      "motion": [],
+      "reduced": {},
+      "departures": [
+        "explore: primary-rest",
+        "proposal: api: mega-button-danger-icon-only",
+        "proposal: api: mega-button-hide-tooltip",
+        "proposal: api: mega-button-icon-position",
+        "proposal: api: mega-button-key-command",
+        "proposal: api: mega-button-kinds",
+        "proposal: token: mega-button-danger-key-command-active",
+        "proposal: token: mega-button-danger-key-command-hover",
+        "proposal: token: mega-button-danger-text",
+        "proposal: token: mega-button-disabled-fill",
+        "proposal: token: mega-button-disabled-text",
+        "proposal: token: mega-button-interactive-text",
+        "proposal: token: mega-button-key-command-active",
+        "proposal: token: mega-button-key-command-hover",
+        "proposal: token: mega-button-key-command-neutral",
+        "proposal: token: mega-button-key-command-rest",
+        "proposal: token: mega-button-outline-border",
+        "proposal: token: mega-button-padding-inline-md",
+        "proposal: token: mega-button-primary-active",
+        "proposal: token: mega-button-primary-hover",
+        "proposal: token: mega-button-primary-selected",
+        "proposal: token: mega-button-selected-fill",
+        "proposal: token: mega-button-selected-text",
+        "proposal: token: mega-button-tonal-active",
+        "proposal: token: mega-button-tonal-hover",
+        "proposal: token: mega-button-tonal-rest",
+        "proposal: token: mega-button-tonal-text-disabled"
+      ],
+      "stateColors": [
+        {
+          "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+          "selector": ".#{$block} &::before",
+          "property": "background-image",
+          "state": null,
+          "spaces": [
+            "oklch"
+          ],
+          "expression": "radial-gradient( circle farthest-corner at var(--#{$block}-press-x, 50%) var(--#{$block}-press-y, 50%), var(--#{$block}-bg-active) 0%, var(--#{$block}-bg-active) 20%, color-mix(in oklch, var(--#{$block}-bg-active) 70%, transparent) 40%, color-mix(in oklch, var(--#{$block}-bg-active) 30%, transparent) 60%, transparent 85% )",
+          "values": {
+            "white": {
+              "pending": "browser-render"
+            },
+            "g10": {
+              "pending": "browser-render"
+            },
+            "g90": {
+              "pending": "browser-render"
+            },
+            "g100": {
+              "pending": "browser-render"
+            },
+            "v12-light": {
+              "pending": "browser-render"
+            },
+            "v12-dark": {
+              "pending": "browser-render"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "v12/labs/reasoning-trace",
+      "id": "labs/reasoning-trace",
+      "kind": "component",
+      "status": "draft",
+      "figma": {
+        "status": "unmapped"
+      },
+      "title": "V12/ReasoningTrace",
+      "stories": [
+        "v12-reasoningtrace--thinking",
+        "v12-reasoningtrace--complete",
+        "v12-reasoningtrace--closed",
+        "v12-reasoningtrace--used-tool",
+        "v12-reasoningtrace--running-code",
+        "v12-reasoningtrace--with-failure",
+        "v12-reasoningtrace--live",
+        "v12-reasoningtrace--turn"
+      ],
+      "docs": "v12-reasoningtrace--overview",
+      "props": {
+        "children": {
+          "figma": "SLOT"
+        },
+        "status": {
+          "figma": "VARIANT",
+          "values": [
+            "running",
+            "complete"
+          ]
+        },
+        "label": {
+          "figma": "TEXT"
+        },
+        "duration": {
+          "figma": "TEXT"
+        },
+        "defaultOpen": {
+          "figma": "BOOLEAN"
+        },
+        "thinking": {
+          "figma": "BOOLEAN"
+        }
+      },
+      "notMapped": [
+        "className",
+        "onOpenChange",
+        "onViewDetails",
+        "subject"
+      ],
+      "state": [],
+      "motion": [],
+      "reduced": {},
+      "departures": [],
+      "stateColors": []
+    },
+    {
+      "key": "v12/labs/recipe-renderer",
+      "id": "labs/recipe-renderer",
+      "kind": "component",
+      "status": "draft",
+      "figma": {
+        "status": "unmapped"
+      },
+      "title": "V12/RecipeRenderer",
+      "stories": [
+        "v12-reciperenderer--playground",
+        "v12-reciperenderer--chat-shell",
+        "v12-reciperenderer--chat-shell-embedded",
+        "v12-reciperenderer--create-topic",
+        "v12-reciperenderer--settings-page",
+        "v12-reciperenderer--status-tile"
+      ],
+      "docs": "v12-reciperenderer--overview",
+      "props": {
+        "recipe": {
+          "figma": "VARIANT",
+          "values": [
+            "chat-shell",
+            "chat-shell-embedded",
+            "create-topic",
+            "settings-page",
+            "status-tile"
+          ]
+        }
+      },
+      "notMapped": [
+        "className",
+        "onEvent"
+      ],
+      "state": [],
+      "motion": [],
+      "reduced": {},
+      "departures": [],
+      "stateColors": []
+    },
+    {
+      "key": "v12/labs/session-switcher",
+      "id": "labs/session-switcher",
+      "kind": "component",
+      "status": "draft",
+      "figma": {
+        "status": "unmapped"
+      },
+      "title": "V12/SessionSwitcher",
+      "stories": [
+        "v12-sessionswitcher--default"
+      ],
+      "docs": "v12-sessionswitcher--overview",
+      "props": {
+        "currentId": {
+          "figma": "TEXT"
+        }
+      },
+      "notMapped": [
+        "action",
+        "className",
+        "sessions"
+      ],
+      "state": [],
+      "motion": [],
+      "reduced": {},
+      "departures": [
+        "proposal: token: session-switcher-menu-active",
+        "proposal: token: session-switcher-menu-hover",
+        "proposal: token: session-switcher-menu-selected",
+        "proposal: token: session-switcher-menu-selected-text"
+      ],
+      "stateColors": []
+    },
+    {
+      "key": "v12/labs/split-button",
+      "id": "labs/split-button",
+      "kind": "component",
+      "status": "draft",
+      "figma": {
+        "status": "unmapped"
+      },
+      "title": "V12/SplitButton",
+      "stories": [
+        "v12-splitbutton--default",
+        "v12-splitbutton--looks",
+        "v12-splitbutton--sizes",
+        "v12-splitbutton--busy"
+      ],
+      "docs": "v12-splitbutton--overview",
+      "props": {
+        "kind": {
+          "figma": "VARIANT",
+          "values": [
+            "primary",
+            "secondary"
+          ],
+          "surface": true
+        },
+        "variant": {
+          "figma": "VARIANT",
+          "values": [
+            "filled",
+            "outlined",
+            "tonal"
+          ],
+          "surface": true
+        },
+        "size": {
+          "figma": "VARIANT",
+          "values": [
+            "xs",
+            "sm",
+            "md",
+            "lg"
+          ],
+          "surface": true
+        },
+        "corners": {
+          "figma": "VARIANT",
+          "values": [
+            "rounded",
+            "full",
+            "square"
+          ],
+          "surface": true
+        },
+        "menuAlignment": {
+          "figma": "VARIANT",
+          "values": [
+            "top-start",
+            "top-end",
+            "bottom-start",
+            "bottom-end"
+          ]
+        },
+        "children": {
+          "figma": "SLOT"
+        },
+        "label": {
+          "figma": "TEXT"
+        },
+        "disabled": {
+          "figma": "BOOLEAN",
+          "surface": true
+        },
+        "busy": {
+          "figma": "BOOLEAN"
+        }
+      },
+      "notMapped": [
+        "menuTarget",
+        "motion",
+        "timeScale"
+      ],
+      "state": [
+        "rest",
+        "hover",
+        "press",
+        "focus",
+        "open",
+        "disabled",
+        "busy"
+      ],
+      "motion": [
+        "hover",
+        "press-and-release",
+        "chevron",
+        "menu",
+        "busy",
+        "focus"
+      ],
+      "reduced": {
+        "hover": "at-once",
+        "press-and-release": "at-once",
+        "chevron": "at-once",
+        "menu": "at-once",
+        "busy": "at-once"
+      },
+      "departures": [],
+      "stateColors": []
+    },
+    {
+      "key": "v12/labs/system-message",
+      "id": "labs/system-message",
+      "kind": "component",
+      "status": "draft",
+      "figma": {
+        "status": "unmapped"
+      },
+      "title": "V12/SystemMessage",
+      "stories": [
+        "v12-systemmessage--default",
+        "v12-systemmessage--alert",
+        "v12-systemmessage--divider",
+        "v12-systemmessage--in-a-thread"
+      ],
+      "docs": "v12-systemmessage--overview",
+      "props": {
+        "severity": {
+          "figma": "VARIANT",
+          "values": [
+            "status",
+            "alert"
+          ]
+        },
+        "text": {
+          "figma": "TEXT"
+        },
+        "variant": {
+          "figma": "VARIANT",
+          "values": [
+            "default",
+            "divider"
+          ],
+          "surface": true
+        }
+      },
+      "notMapped": [
+        "className"
+      ],
+      "state": [],
+      "motion": [],
+      "reduced": {},
+      "departures": [
+        "proposal: token: system-message-icon-alert"
+      ],
       "stateColors": []
     },
     {

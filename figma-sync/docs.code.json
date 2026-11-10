@@ -457,6 +457,249 @@
       "sections": []
     },
     {
+      "key": "v12/labs/chat-input",
+      "id": "labs/chat-input",
+      "title": "V12/ChatInput",
+      "name": "ChatInput",
+      "status": "draft",
+      "docs": "v12-chatinput--overview",
+      "firstSentence": "> **Problem statement:** a conversation needs one place to write the next turn: > a prompt that grows as it is written, the files attached to it, what the model > may read, which model and mode answer, and a send that becomes Stop while a > reply is generating.",
+      "summary": "> **Problem statement:** a conversation needs one place to write the next turn: > a prompt that grows as it is written, the files attached to it, what the model > may read, which model and mode answer, and a send that becomes Stop while a > reply is generating. Carbon's `TextArea` is a form field, with a label above > and no actions. `@carbon/ai-chat` has an input, but it is part of a whole chat > application and cannot be used on its own. ChatInput is the composer alone, > standalone React built from Carbon's `Menu`, `Theme` and icons, labs > `MegaButton` for every control and labs `FileChip` for each attachment. Its nearest Carbon neighbours are `TextArea` and the input in `@carbon/ai-chat`. Use `TextArea` for a form field; use `@carbon/ai-chat` for a whole chat application.",
+      "sections": [
+        "Overview",
+        "Behaviour",
+        "Menus",
+        "Explorations",
+        "Proposals",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/chat-panels",
+      "id": "labs/chat-panels",
+      "title": "V12/ChatPanels",
+      "name": "ChatPanels",
+      "status": "draft",
+      "docs": "v12-chatpanels--overview",
+      "firstSentence": "> **Problem statement:** A conversation needs its working material beside it > (what it knows, the code it wrote, the files it was given, its settings and a > canvas to arrange results on) without leaving the conversation to reach any of > it.",
+      "summary": "> **Problem statement:** A conversation needs its working material beside it > (what it knows, the code it wrote, the files it was given, its settings and a > canvas to arrange results on) without leaving the conversation to reach any of > it. `ChatPanels` holds which side panel is open. `ChatPanelToggles` is the row of icon-only toggles in the surface's header, each naming its panel in a tooltip and saying `aria-expanded`. `ChatPanelArea` is the content with the panel opening along its inline end: pushed in a standalone chat, over the card when embedded, and over the content below `md`. Icon-only is a proposal: panel toggles are not on Carbon's icon-only allow-list.",
+      "sections": [
+        "Overview",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/chat-thread",
+      "id": "labs/chat-thread",
+      "title": "V12/ChatThread",
+      "name": "ChatThread",
+      "status": "draft",
+      "docs": "v12-chatthread--overview",
+      "firstSentence": "> **Problem statement:** a chat transcript is not a list of paragraphs.",
+      "summary": "> **Problem statement:** a chat transcript is not a list of paragraphs. A turn > has to say who spoke without an avatar or a label, hold whatever the agent > produced — a reasoning trace, code, a plan — and offer its controls without > reserving a row for them on every turn. Carbon has no chat components, and the > nearest neighbours are a plain `<ol>` and `Button`. ChatThread is the transcript; ChatMessage is one turn in it. The user sits flush right in a bubble at three quarters of the measure; the assistant sits flush left at full measure, with no container, because a reply is the page's content rather than an aside. ### What a turn does not carry A turn has no padding and no footer at rest. The thread sets the gap — `$spacing-08` balanced, `$spacing-07` compact — so a turn used on its own has no orphan margin, and the actions live in that gap rather than in a row of their own. Showing them moves nothing. ### Actions, and the time `actions` takes `ChatMessageAction` children: a small ghost button, icon-only with a tooltip. They appear on hover and on keyboard focus, and they stay in the tab order while unseen, so focus can reveal them. `timestamp` sits beside them. Leave it out when the turn carries a trace or a plan, which already says how long the work took. ### Proposal — icon-only feedback Thumbs up, thumbs down and regenerate are drawn icon-only. Carbon's icon-only allow-list does not include feedback or regenerate, so this is a deliberate proposal rather than a quiet divergence: these three are near-universal in chat, and three labels do not fit under a turn. Each keeps a tooltip and an accessible name.",
+      "sections": [
+        "Overview",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/chats-panel",
+      "id": "labs/chats-panel",
+      "title": "V12/ChatsPanel",
+      "name": "ChatsPanel",
+      "status": "draft",
+      "docs": "v12-chatspanel--overview",
+      "firstSentence": "> **Problem statement:** A chat surface has to let someone reach their other > conversations without losing the one they are in, and the right way to show > that list depends on who owns the screen.",
+      "summary": "> **Problem statement:** A chat surface has to let someone reach their other > conversations without losing the one they are in, and the right way to show > that list depends on who owns the screen. A standalone chat application can > give the list a column of its own and push the conversation aside, because the > layout is the chat's to spend. The same chat embedded in a product cannot: the > product owns the layout, so the list has to borrow the space and give it > straight back. Carbon has `SideNav` for a product's own navigation and `Menu` > for a short list of choices, and neither answers this — a list of > conversations is navigation inside one surface, not navigation of the > application, and it is browsed rather than picked from. ChatsPanel is that > list and the control that reveals it, with `presentation` deciding only > whether it takes space or borrows it.",
+      "sections": [
+        "Overview",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/code-snippet-alt",
+      "id": "labs/code-snippet-alt",
+      "title": "V12/CodeSnippetAlt",
+      "name": "CodeSnippetAlt",
+      "status": "draft",
+      "docs": "v12-codesnippetalt--overview",
+      "firstSentence": "An alternative to [CodeSnippet](?path=/docs/v12-codesnippet--overview), kept side by side for comparison: syntax colours, inline code and a MegaButton copy action.",
+      "summary": "An alternative to [CodeSnippet](?path=/docs/v12-codesnippet--overview), kept side by side for comparison: syntax colours, inline code and a MegaButton copy action. Its exports keep the names `CodeSnippet` and `InlineCode`.",
+      "sections": [
+        "Overview",
+        "Behaviour",
+        "Proposals",
+        "InlineCode",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/date-picker",
+      "id": "labs/date-picker",
+      "title": "V12/DatePicker",
+      "name": "Date picker",
+      "status": null,
+      "docs": "v12-datepicker--overview",
+      "firstSentence": "A date picker is a text field for a date with, in `single` and `range`, a calendar under it.",
+      "summary": "A date picker is a text field for a date with, in `single` and `range`, a calendar under it. `DatePicker` holds the state and the calendar; its children are `DatePickerInput`s, one for `simple` and `single`, two for `range`. Prop names follow Carbon React's `DatePicker`, but this is its own implementation and not every Carbon prop is supported: see [Component API](#component-api). ### Simple date picker `datePickerType=\"simple\"` renders the text field with no calendar and no calendar icon. ### Single date picker `datePickerType=\"single\"` pairs the text field with a calendar. Focusing or clicking the field opens the calendar; choosing a day fills the field. ### Range date picker `datePickerType=\"range\"` takes two `DatePickerInput`s. The first holds the start date and the second the end date. Until the end is chosen, the calendar shades the days between the start and the focused day. ### Skeleton state `DatePickerSkeleton` is the loading placeholder. `range` draws two fields. ### AI label `DatePickerInput` takes an AI label through `decorator`. An `AILabel` is drawn at its `mini` size.",
+      "sections": [
+        "Overview",
+        "Usage",
+        "Motion",
+        "Reduced motion",
+        "Keyboard",
+        "Accessibility",
+        "Known issues",
+        "Component API",
+        "How it is built",
+        "Feedback"
+      ]
+    },
+    {
+      "key": "v12/labs/file-chip",
+      "id": "labs/file-chip",
+      "title": "V12/FileChip",
+      "name": "FileChip",
+      "status": "draft",
+      "docs": "v12-filechip--overview",
+      "firstSentence": "> **Problem statement:** a chat input needs to show each file a person has > attached before they send it: what it is, whether it has uploaded, why it > failed if it did, and a way to take it back out.",
+      "summary": "> **Problem statement:** a chat input needs to show each file a person has > attached before they send it: what it is, whether it has uploaded, why it > failed if it did, and a way to take it back out. Carbon has no part for this. > `FileUploaderItem` belongs to `FileUploader`'s list, reads as a form row and > truncates the extension away. A dismissible `Tag` is a label, with no upload > state and no thumbnail. FileChip is one attached file, standalone, built on > Carbon's `Loading`, `Tooltip` and icons, with a labs `MegaButton` to remove > it. It is the first part of the chat input bar, one step lighter than the > input: `$layer-01` on a white input, `$layer-02` on the dark shell. Its nearest Carbon neighbours are `FileUploaderItem` and the dismissible `Tag`. Use `FileUploaderItem` inside a `FileUploader` form; use a `Tag` for a label that is not a file.",
+      "sections": [
+        "Overview",
+        "Behaviour",
+        "Explorations",
+        "Proposals",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/history-rail",
+      "id": "labs/history-rail",
+      "title": "V12/HistoryRail",
+      "name": "HistoryRail",
+      "status": "draft",
+      "docs": "v12-historyrail--overview",
+      "firstSentence": "> **Problem statement:** an agent's work goes through many iterations, and a > person needs to find one of them — the version before the table was replaced, > the run that failed — without reading the whole conversation again.",
+      "summary": "> **Problem statement:** an agent's work goes through many iterations, and a > person needs to find one of them — the version before the table was replaced, > the run that failed — without reading the whole conversation again. A list of > links costs a line each and buries the shape of the history. Carbon has no > scrubber; the nearest neighbours are `Slider` and a list. HistoryRail is a scrubber: a column of marks down the edge of the panel, one per iteration, with the live one drawn as a square. Moving a pointer down the track or arrowing through it lights the nearest iteration and opens a card saying what changed there. ### One control, not one per mark The whole track takes the pointer and resolves to the nearest iteration. That is what lets the marks sit 14px apart and stay hittable: there is a single 24 x 196 target rather than fourteen small ones, so WCAG 2.2 SC 2.5.8 Target Size is met outright, on a mouse and under a finger alike. A mark is decoration — `aria-hidden`, no focus, no pointer region of its own — and it grows in place when it lights, so nothing ever moves under a pointer in flight. ### What it says The rail is a `slider`: one tab stop, `aria-valuenow` on the position and `aria-valuetext` naming the iteration and what changed. The card repeats those words for the eye, so it is hidden from assistive technology rather than read out twice. Pass `translations.valueText` to change the sentence. ### Current is not the same as selected `current` is the live iteration — the state of the work — and stays put as you scrub. `value` is the one you are looking at. They are usually different, which is the point: you can look back without leaving where you are.",
+      "sections": [
+        "Overview",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/keyboard-shortcut",
+      "id": "labs/keyboard-shortcut",
+      "title": "V12/KeyboardShortcut",
+      "name": "KeyboardShortcut",
+      "status": "draft",
+      "docs": "v12-keyboardshortcut--overview",
+      "firstSentence": "> **Problem statement:** Carbon can show a keyboard shortcut only as a plain > string in `MenuItem`'s `shortcut` prop.",
+      "summary": "> **Problem statement:** Carbon can show a keyboard shortcut only as a plain > string in `MenuItem`'s `shortcut` prop. Every product hand-types its own > glyphs, shows `⌘` to Windows users or `Ctrl` to Mac users, and leaves screen > readers to announce `⌘` as \"place of interest sign\". `KeyboardShortcut` takes > the keys once (`keys={['mod', 'K']}`), shows `⌘K` on macOS and `Ctrl+K` > elsewhere, and names the combination in words (\"Command K\"). Its nearest > Carbon neighbour is `MenuItem.shortcut`, and `kind=\"plain\"` matches it. It only **displays** a shortcut. Like `MenuItem.shortcut`, it never registers or listens for the keys. `kind=\"plain\"` is text only:",
+      "sections": [
+        "Overview",
+        "Platforms",
+        "Accessibility",
+        "On surfaces",
+        "Inside a menu",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/mega-button",
+      "id": "labs/mega-button",
+      "title": "V12/MegaButton",
+      "name": "MegaButton",
+      "status": "draft",
+      "docs": "v12-megabutton--overview",
+      "firstSentence": "> **Problem statement:** products reach for a button with a visible keyboard > shortcut, and for one API across text, icon-and-text and icon-only buttons.",
+      "summary": "> **Problem statement:** products reach for a button with a visible keyboard > shortcut, and for one API across text, icon-and-text and icon-only buttons. > Carbon's `Button` has no key command, trails its only icon, and hands > icon-only to `IconButton`, which has no danger kinds. MegaButton is one button > for all of it, and the place to see, side by side with Carbon's `Button`, > three positions put to Carbon: primary rests neutral and turns blue only when > the person acts; blue responds on every kind; and colour is authored in OKLCH, > each value a lightness on a hue and chroma curve. Its nearest Carbon neighbours are `Button` and `IconButton`. Use those when you need none of the above.",
+      "sections": [
+        "Overview",
+        "How it differs from Carbon's Button",
+        "Proposals",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/reasoning-trace",
+      "id": "labs/reasoning-trace",
+      "title": "V12/ReasoningTrace",
+      "name": "ReasoningTrace",
+      "status": "draft",
+      "docs": "v12-reasoningtrace--overview",
+      "firstSentence": "> **Problem statement:** while an agent works, a person needs to see that it is > working, what it is doing now, and afterwards what it did and how long it > took, without the transcript turning into a log.",
+      "summary": "> **Problem statement:** while an agent works, a person needs to see that it is > working, what it is doing now, and afterwards what it did and how long it > took, without the transcript turning into a log. Carbon has no equivalent: > `Accordion` is a disclosure but not a status, `InlineLoading` is a status but > holds no steps, and `@carbon/ai-chat`'s reasoning steps are part of a whole > chat application. ReasoningTrace is the disclosure alone, standalone React: a > header that says what happened and how long it took, and, when open, the steps > (ReasoningStep) or the code it ran (CodeSnippet). It replaces the library's earlier Trajectory and labs's `Processing` for v12.",
+      "sections": [
+        "Overview",
+        "Anatomy",
+        "Behaviour",
+        "The thinking animation",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/recipe-renderer",
+      "id": "labs/recipe-renderer",
+      "title": "V12/RecipeRenderer",
+      "name": "Recipes",
+      "status": "draft",
+      "docs": "v12-reciperenderer--overview",
+      "firstSentence": "> **Problem statement:** a layout, a flow or a small widget built from Carbon > components is today either prose in a guideline or code someone copies.",
+      "summary": "> **Problem statement:** a layout, a flow or a small widget built from Carbon > components is today either prose in a guideline or code someone copies. A > **recipe** is the same composition written as data, so a person can preview it > here, a tool can check it, and an agent can assemble a screen from it without > anyone writing freeform UI.",
+      "sections": [
+        "Overview",
+        "What a recipe is",
+        "The recipes here",
+        "What a recipe cannot do yet",
+        "Checking a recipe",
+        "Where this goes"
+      ]
+    },
+    {
+      "key": "v12/labs/session-switcher",
+      "id": "labs/session-switcher",
+      "title": "V12/SessionSwitcher",
+      "name": "SessionSwitcher",
+      "status": "draft",
+      "docs": "v12-sessionswitcher--overview",
+      "firstSentence": "> **Problem statement:** _Describe the gap this component fills (edit or delete this line)._",
+      "summary": "> **Problem statement:** _Describe the gap this component fills (edit or delete this line)._",
+      "sections": [
+        "Overview",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/split-button",
+      "id": "labs/split-button",
+      "title": "V12/SplitButton",
+      "name": "SplitButton",
+      "status": "draft",
+      "docs": "v12-splitbutton--overview",
+      "firstSentence": "A primary action, and beside it a chevron that opens a menu of related actions, with Carbon's ComboButton props.",
+      "summary": "A primary action, and beside it a chevron that opens a menu of related actions, with Carbon's ComboButton props. Not for two equal actions: use two Buttons. One shell in two cells, on the Button's look: `kind` primary or secondary, `variant` filled, outlined or tonal, sizes xs to lg. `busy` shows a spinner in the action's place while it runs.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/labs/system-message",
+      "id": "labs/system-message",
+      "title": "V12/SystemMessage",
+      "name": "SystemMessage",
+      "status": "draft",
+      "docs": "v12-systemmessage--overview",
+      "firstSentence": "> **Problem statement:** A transcript needs to say what happened _to_ the > conversation — the model changed, the context was cleared, a new day began — > without that reading as something either party said.",
+      "summary": "> **Problem statement:** A transcript needs to say what happened _to_ the > conversation — the model changed, the context was cleared, a new day began — > without that reading as something either party said. Carbon has no such > object: `InlineNotification` is the nearest and is a different thing, with a > container, a kind and a dismiss affordance that a transcript notice should not > have. `SystemMessage` is the centred, recessive line between turns. It is the companion to `HistoryRail`. The rail is the whole history at a glance, down the edge of the panel; this is the same event in its place in the flow.",
+      "sections": [
+        "Overview",
+        "Severity",
+        "Boundaries",
+        "Getting started"
+      ]
+    },
+    {
       "key": "v12/link",
       "id": "link",
       "title": "V12/Link",

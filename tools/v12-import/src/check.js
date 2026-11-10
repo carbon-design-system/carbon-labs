@@ -6,8 +6,10 @@
  */
 
 // The lane's own checks, over every folder the manifest records and the v12
-// packages: the import's leak and motion-literal checks, and that motion comes
-// only through the seam. CI runs it; an import runs the same checks per file.
+// packages: every component folder has a manifest row, the import's leak and
+// motion-literal checks, and that motion comes only through the seam. CI runs
+// it; an import runs the same checks per file. A finding is an error, or a
+// warning when it is recorded as allowed; only errors fail the check.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -81,9 +83,11 @@ function specifiersOf(text) {
  * The findings in the lane.
  *
  * @param {string} labs The carbon-labs checkout.
- * @returns {{ kind: string, at: string, match: string }[]} The findings.
+ * @param {{ directMotion?: { file: string, spec: string }[] }} [options] The
+ *   recorded allowances, when not the configured ones.
+ * @returns {{ kind: string, at: string, match: string, level: 'error' | 'warning' }[]} The findings.
  */
-export function checkLane(labs) {
+export function checkLane(labs, { directMotion = CONFIG.directMotion } = {}) {
   const manifest = JSON.parse(
     fs.readFileSync(path.join(labs, 'v12.manifest.json'), 'utf8')
   );
@@ -103,25 +107,46 @@ export function checkLane(labs) {
     (r, k) => roots.findIndex((o) => o.dir === r.dir) === k
   );
   const findings = [];
-  // A v12 package stays private until its publishable pull request.
+  /**
+   * Records a finding.
+   *
+   * @param {string} kind The rule.
+   * @param {string} at The file and line.
+   * @param {string} match What it found.
+   * @param {'error' | 'warning'} [level] Whether it fails the check.
+   */
+  const report = (kind, at, match, level = 'error') =>
+    findings.push({ kind, at, match, level });
+  // Every component folder has a row, so every check below opens it.
+  const components = path.join(labs, 'packages/react/src/v12/components');
+  const folders = fs.existsSync(components) ? fs.readdirSync(components) : [];
+  for (const d of folders) {
+    const dir = `packages/react/src/v12/components/${d}`;
+    if (
+      fs.existsSync(path.join(labs, dir, 'package.json')) &&
+      !unique.some((r) => r.dir === dir)
+    ) {
+      report('unlisted folder', dir, d);
+    }
+  }
+  // A v12 package stays private until its publishable pull request; a row
+  // marked publishable is a package carbon-labs already publishes.
+  const publishable = new Set(
+    items.filter((i) => i.publishable === true).map((i) => i.path)
+  );
   for (const { kind, dir } of unique) {
     const file = path.join(labs, dir, 'package.json');
-    if (kind === 'styles' || !fs.existsSync(file)) {
+    if (kind === 'styles' || publishable.has(dir) || !fs.existsSync(file)) {
       continue;
     }
     const pkg = JSON.parse(fs.readFileSync(file, 'utf8'));
     if (pkg.private !== true) {
-      findings.push({
-        kind: 'not private',
-        at: `${dir}/package.json`,
-        match: pkg.name,
-      });
+      report('not private', `${dir}/package.json`, pkg.name);
     }
   }
   // A lane package the manifest doesn't record (a draft brought as its own
   // branch) is private too: the release publishes every package that isn't.
-  const components = path.join(labs, 'packages/react/src/v12/components');
-  for (const d of fs.existsSync(components) ? fs.readdirSync(components) : []) {
+  for (const d of folders) {
     const dir = `packages/react/src/v12/components/${d}`;
     const file = path.join(labs, dir, 'package.json');
     if (unique.some((r) => r.dir === dir) || !fs.existsSync(file)) {
@@ -129,13 +154,10 @@ export function checkLane(labs) {
     }
     const pkg = JSON.parse(fs.readFileSync(file, 'utf8'));
     if (pkg.labs?.status === 'draft' && pkg.private !== true) {
-      findings.push({
-        kind: 'not private',
-        at: `${dir}/package.json`,
-        match: pkg.name,
-      });
+      report('not private', `${dir}/package.json`, pkg.name);
     }
   }
+  const used = new Set();
   for (const { id, kind, dir } of unique) {
     const isSeam = dir === SEAM_DIR;
     // A package brought whole keeps its own allowances and its own
@@ -150,11 +172,7 @@ export function checkLane(labs) {
       const lang = langOf(at);
       const isTest = /(^|\/)(__tests__|test)\/|\.test\.[jt]sx?$/.test(rel);
       for (const leak of scanLeaks(text, [], { code: lang === 'ts' })) {
-        findings.push({
-          kind: `leak (${leak.kind})`,
-          at: `${at}:${leak.line}`,
-          match: leak.match,
-        });
+        report(`leak (${leak.kind})`, `${at}:${leak.line}`, leak.match);
       }
       if (isSeam || lang === 'other') {
         continue;
@@ -172,23 +190,32 @@ export function checkLane(labs) {
           (a) => a.file.test(rel) && a.match.test(l.match)
         );
         if (!allowed) {
-          findings.push({
-            kind: 'motion literal',
-            at: `${at}:${l.line}`,
-            match: l.match,
-          });
+          report('motion literal', `${at}:${l.line}`, l.match);
         }
       }
       for (const { spec, line } of specifiersOf(text)) {
         if (!isPackage && DIRECT_MOTION.test(spec)) {
-          findings.push({
-            kind: 'motion not through the seam',
-            at: `${at}:${line}`,
-            match: spec,
-          });
+          const known = directMotion.findIndex(
+            (a) => a.file === at && a.spec === spec
+          );
+          if (known >= 0) {
+            used.add(known);
+          }
+          report(
+            'motion not through the seam',
+            `${at}:${line}`,
+            spec,
+            known >= 0 ? 'warning' : 'error'
+          );
         }
       }
     }
   }
+  // An allowance whose import is gone comes off the list.
+  directMotion.forEach((a, k) => {
+    if (!used.has(k)) {
+      report('stale allowance', a.file, a.spec);
+    }
+  });
   return findings;
 }

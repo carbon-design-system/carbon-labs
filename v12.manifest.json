@@ -744,6 +744,174 @@
       ]
     },
     {
+      "id": "labs/chat-input",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/ChatInput",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [],
+      "source": {
+        "repo": "carbon-labs"
+      }
+    },
+    {
+      "id": "labs/chat-panels",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/ChatPanels",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [],
+      "source": {
+        "repo": "carbon-labs"
+      }
+    },
+    {
+      "id": "labs/chat-thread",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/ChatThread",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [],
+      "source": {
+        "repo": "carbon-labs"
+      }
+    },
+    {
+      "id": "labs/chats-panel",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/ChatsPanel",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [],
+      "source": {
+        "repo": "carbon-labs"
+      }
+    },
+    {
+      "id": "labs/code-snippet-alt",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/CodeSnippetAlt",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [],
+      "source": {
+        "repo": "carbon-labs"
+      }
+    },
+    {
+      "id": "labs/date-picker",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/DatePicker",
+      "labsStatus": null,
+      "publishable": true,
+      "motion": [],
+      "source": {
+        "repo": "carbon-labs"
+      }
+    },
+    {
+      "id": "labs/file-chip",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/FileChip",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [],
+      "source": {
+        "repo": "carbon-labs"
+      }
+    },
+    {
+      "id": "labs/history-rail",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/HistoryRail",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [],
+      "source": {
+        "repo": "carbon-labs"
+      }
+    },
+    {
+      "id": "labs/keyboard-shortcut",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/KeyboardShortcut",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [],
+      "source": {
+        "repo": "carbon-labs"
+      }
+    },
+    {
+      "id": "labs/mega-button",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/MegaButton",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [],
+      "source": {
+        "repo": "carbon-labs"
+      }
+    },
+    {
+      "id": "labs/reasoning-trace",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/ReasoningTrace",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [],
+      "source": {
+        "repo": "carbon-labs"
+      }
+    },
+    {
+      "id": "labs/recipe-renderer",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/RecipeRenderer",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [],
+      "source": {
+        "repo": "carbon-labs"
+      }
+    },
+    {
+      "id": "labs/session-switcher",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/SessionSwitcher",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [],
+      "source": {
+        "repo": "carbon-labs"
+      }
+    },
+    {
+      "id": "labs/split-button",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/SplitButton",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "SelectionMoveInfo",
+        "useMenuTrigger"
+      ],
+      "source": {
+        "repo": "carbon-labs"
+      }
+    },
+    {
+      "id": "labs/system-message",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/SystemMessage",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [],
+      "source": {
+        "repo": "carbon-labs"
+      }
+    },
+    {
       "id": "link",
       "kind": "component",
       "path": "packages/react/src/v12/components/Link",

@@ -8,9 +8,8 @@
 // Writes the review app's text: from each v12 component's docs page
 // (`__stories__/<Name>.mdx`), its title, the paragraphs under the title (the
 // summary) and each `##` section as Markdown, keyed by the component's story
-// title (`V12/<Name>`), and what the folder has: tests, and whether the
-// import from the components' source carried it (its labs status there). The
-// app runs in the browser and cannot read the docs pages' text, so it reads
+// title (`V12/<Name>`), and what the folder has: tests, and the labs status
+// its row in the manifest records. The app runs in the browser and cannot read the docs pages' text, so it reads
 // this map. `--check` writes nothing and exits 1 when the committed map is
 // out of date.
 
@@ -128,7 +127,7 @@ export function readPage(mdx) {
  * What a component's folder has, for the cards' tags.
  *
  * @param {string} folder the component's folder
- * @param {Map<string, { labsStatus?: string }>} manifest the import's items, by path
+ * @param {Map<string, { labsStatus?: string }>} manifest the manifest's items, by path
  * @param {string} path the folder from the root
  * @returns {{ tests: boolean, status: string | null }}
  */

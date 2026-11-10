@@ -18,7 +18,7 @@ shared pieces around it:
 | `tools/v12-import`    | the import tool that brings a component in (see below)                                                       |
 | `tools/v12-workbench` | a Storybook add-on for viewing and comparing v12 stories: theme, density, reduced motion, a matrix of states |
 | `docs/v12/`           | this page, the motion contract and contributing notes                                                        |
-| `v12.manifest.json`   | one row per v12 item: paths, status, the motion it uses, its source commit                                   |
+| `v12.manifest.json`   | one row per v12 item: paths, status, the motion it uses, its source commit, or `carbon-labs` for its own     |
 
 Each v12 component stays its own package, `@carbon-labs/react-<name>`, with
 stories titled `V12/<Name>`.
@@ -84,10 +84,13 @@ The `v12` job in CI runs, beside the repository's existing checks (`yarn build`,
 `yarn ci-check`, `yarn storybook:build`, license headers, stylelint,
 commitlint):
 
-- `yarn v12:check`: no internal references (hosts, file keys, tracker ids, dates
+- `yarn v12:check`: a manifest row for every v12 component folder, so every
+  check opens it; no internal references (hosts, file keys, tracker ids, dates
   in prose) in v12 code or docs; motion imported only from
   `@carbon-labs/v12-motion`; no literal duration, easing or transition value
-  outside it; every v12 package private until its publishable pull request;
+  outside it; every v12 package private until its publishable pull request. A
+  finding the tool's config records as known (each file named, with why) is a
+  warning; any other finding fails the check;
 - `yarn v12:contract --check`: [the motion contract](./motion-contract.md) is
   current;
 - `yarn v12:test`: every v12 package's tests;

@@ -1441,7 +1441,12 @@ describe('importedOnly', () => {
     const manifest = path.join(root, 'v12.manifest.json');
     fs.writeFileSync(
       manifest,
-      JSON.stringify({ items: [{ path: 'lane/Tag' }] })
+      JSON.stringify({
+        items: [
+          { path: 'lane/Tag' },
+          { path: 'lane/DatePicker', source: { repo: 'carbon-labs' } },
+        ],
+      })
     );
     expect([...importedOnly(lane, root, manifest).keys()]).toEqual([
       '@x/react-tag',

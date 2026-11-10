@@ -111,6 +111,25 @@ export const CONFIG = {
       },
     ],
   },
+  // Motion imported from outside the seam that the lane already carries, each
+  // file named, with why: reported as warnings, not failures, until the file
+  // moves onto the seam. An entry whose file no longer has the import fails,
+  // so the list only shrinks.
+  directMotion: [
+    'ChatInput/components/chat-input.scss',
+    'ChatPanels/components/chat-panels.scss',
+    'ChatThread/components/chat-thread.scss',
+    'ChatsPanel/components/chats-panel.scss',
+    'CodeSnippetAlt/components/code-snippet.scss',
+    'FileChip/components/file-chip.scss',
+    'HistoryRail/components/history-rail.scss',
+    'MegaButton/components/mega-button.scss',
+    'ReasoningTrace/components/reasoning-trace.scss',
+  ].map((file) => ({
+    file: `packages/react/src/v12/components/${file}`,
+    spec: '@carbon/styles/scss/motion',
+    why: "the chat stack's stylesheets take Carbon v11's motion module until they move onto the seam's Sass module",
+  })),
   // Whole packages, brought with `--package <id>`: their tree as it is, each
   // root under the target, with the files that don't travel left out.
   packages: {

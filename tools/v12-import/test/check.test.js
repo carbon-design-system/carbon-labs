@@ -32,6 +32,12 @@ write(
       path: 'packages/react/src/v12/components/Widget',
     },
     { id: 'package/thing', kind: 'package', path: 'packages/v12-thing' },
+    {
+      id: 'labs/published',
+      kind: 'component',
+      path: 'packages/react/src/v12/components/Published',
+      publishable: true,
+    },
   ])
 );
 write(
@@ -47,8 +53,8 @@ write(
   'export const Notes = () => <p>It runs over 120ms.</p>;\n'
 );
 write('packages/v12-thing/package.json', JSON.stringify({ name: 'thing' }));
-// A draft the manifest doesn't record must be private too; a published
-// component of carbon-labs' own (no draft status) is left alone.
+// A folder the manifest doesn't record is reported, and a draft among them
+// must be private too.
 write(
   'packages/react/src/v12/components/Loose/package.json',
   JSON.stringify({ name: 'loose', labs: { status: 'draft' } })
@@ -56,6 +62,16 @@ write(
 write(
   'packages/react/src/v12/components/Own/package.json',
   JSON.stringify({ name: 'own' })
+);
+// A row marked publishable is a package carbon-labs already publishes.
+write(
+  'packages/react/src/v12/components/Published/package.json',
+  JSON.stringify({ name: 'published' })
+);
+// Motion from outside the seam: an error, or a warning where it is recorded.
+write(
+  'packages/react/src/v12/components/Widget/components/old.scss',
+  "@use '@carbon/styles/scss/motion' as *;\n"
 );
 // The release's changelog carries dates; the check leaves it alone.
 write('packages/v12-thing/CHANGELOG.md', '## 0.1.0 (2026-11-09)\n');
@@ -74,15 +90,44 @@ write(
 
 afterAll(() => fs.rmSync(tmp, { recursive: true, force: true }));
 
+const dir = 'packages/react/src/v12/components';
+
 describe('the lane check', () => {
-  it('finds a leak, a literal, motion not through the seam and a public package, and nothing else', () => {
-    const found = checkLane(tmp).map((f) => `${f.kind} ${f.match}`);
+  it('finds a leak, a literal, motion not through the seam, a public package and a folder with no row, and nothing else', () => {
+    const found = checkLane(tmp, { directMotion: [] }).map(
+      (f) => `${f.level} ${f.kind} ${f.match}`
+    );
     expect(found.sort()).toEqual([
-      'leak (id) TASK-123',
-      'motion literal 120ms',
-      'motion not through the seam @carbon-labs/motion-core',
-      'not private loose',
-      'not private thing',
+      'error leak (id) TASK-123',
+      'error motion literal 120ms',
+      'error motion not through the seam @carbon-labs/motion-core',
+      'error motion not through the seam @carbon/styles/scss/motion',
+      'error not private loose',
+      'error not private thing',
+      'error unlisted folder Loose',
+      'error unlisted folder Own',
+    ]);
+  });
+
+  it('reports a recorded import as a warning, and a recorded one that is gone as an error', () => {
+    const found = checkLane(tmp, {
+      directMotion: [
+        {
+          file: `${dir}/Widget/components/old.scss`,
+          spec: '@carbon/styles/scss/motion',
+        },
+        {
+          file: `${dir}/Widget/components/gone.scss`,
+          spec: '@carbon/styles/scss/motion',
+        },
+      ],
+    })
+      .filter((f) => /seam|stale/.test(f.kind))
+      .map((f) => `${f.level} ${f.kind} ${f.at}`);
+    expect(found.sort()).toEqual([
+      'error motion not through the seam packages/react/src/v12/components/Widget/components/Widget.tsx:2',
+      'error stale allowance packages/react/src/v12/components/Widget/components/gone.scss',
+      'warning motion not through the seam packages/react/src/v12/components/Widget/components/old.scss:1',
     ]);
   });
 });

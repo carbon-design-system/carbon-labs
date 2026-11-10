@@ -283,7 +283,12 @@ export function importedOnly(lane, labs, manifestFile) {
   } catch {
     return lane;
   }
-  const dirs = new Set(items.map((i) => path.resolve(labs, i.path)));
+  // A row of the lane's own (its source is carbon-labs) is not from the kit.
+  const dirs = new Set(
+    items
+      .filter((i) => !i.source || i.source.repo === CONFIG.source.name)
+      .map((i) => path.resolve(labs, i.path))
+  );
   return new Map([...lane].filter(([, dir]) => dirs.has(path.resolve(dir))));
 }
 

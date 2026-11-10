@@ -178,7 +178,7 @@
     ],
     "facts": {
       "tests": true,
-      "status": null
+      "status": "draft"
     }
   },
   "V12/ChatPanels": {
@@ -196,7 +196,7 @@
     ],
     "facts": {
       "tests": true,
-      "status": null
+      "status": "draft"
     }
   },
   "V12/ChatThread": {
@@ -214,7 +214,7 @@
     ],
     "facts": {
       "tests": true,
-      "status": null
+      "status": "draft"
     }
   },
   "V12/ChatsPanel": {
@@ -232,7 +232,7 @@
     ],
     "facts": {
       "tests": true,
-      "status": null
+      "status": "draft"
     }
   },
   "V12/Checkbox": {
@@ -298,7 +298,7 @@
     ],
     "facts": {
       "tests": true,
-      "status": null
+      "status": "draft"
     }
   },
   "V12/ContainedList": {
@@ -608,7 +608,7 @@
     ],
     "facts": {
       "tests": true,
-      "status": null
+      "status": "draft"
     }
   },
   "V12/FileUploader": {
@@ -694,7 +694,7 @@
     ],
     "facts": {
       "tests": true,
-      "status": null
+      "status": "draft"
     }
   },
   "V12/IconMotion": {
@@ -805,7 +805,7 @@
     ],
     "facts": {
       "tests": true,
-      "status": null
+      "status": "draft"
     }
   },
   "V12/KitDefaults": {
@@ -895,7 +895,7 @@
     ],
     "facts": {
       "tests": true,
-      "status": null
+      "status": "draft"
     }
   },
   "V12/Menu": {
@@ -1219,7 +1219,7 @@
     ],
     "facts": {
       "tests": true,
-      "status": null
+      "status": "draft"
     }
   },
   "V12/RecipeRenderer": {
@@ -1253,7 +1253,7 @@
     ],
     "facts": {
       "tests": true,
-      "status": null
+      "status": "draft"
     }
   },
   "V12/Recipes": {
@@ -1396,7 +1396,7 @@
     ],
     "facts": {
       "tests": true,
-      "status": null
+      "status": "draft"
     }
   },
   "V12/ShimmerText": {
@@ -1491,7 +1491,7 @@
     ],
     "facts": {
       "tests": false,
-      "status": null
+      "status": "draft"
     }
   },
   "V12/StatusIndicator": {
@@ -1571,7 +1571,7 @@
     ],
     "facts": {
       "tests": true,
-      "status": null
+      "status": "draft"
     }
   },
   "V12/Tabs": {

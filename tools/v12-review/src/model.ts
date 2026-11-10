@@ -33,7 +33,7 @@ export interface PageText {
   title: string;
   summary: string;
   sections: { title: string; text: string }[];
-  /** What the folder has: tests, and the import's labs status (null: not from the import). */
+  /** What the folder has: tests, and its manifest row's labs status (null: none recorded). */
   facts?: { tests: boolean; status: string | null };
 }
 

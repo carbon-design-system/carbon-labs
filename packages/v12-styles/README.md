@@ -49,7 +49,7 @@ them.
 
 ## To do
 
-These come with the departures ledger: each value Carbon lacks is a marked
+These come with the departures registry: each value Carbon lacks is a marked
 proposal.
 
 - [ ] Surfaces: the standard panel fill and its hover

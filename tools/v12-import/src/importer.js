@@ -20,27 +20,18 @@ import {
   sortSections,
   stripPointers,
 } from './doc.js';
-import {
-  grepFiles,
-  lastChange,
-  listDir,
-  listFiles,
-  moveLine,
-  readAt,
-  resolveRef,
-} from './git.js';
+import { grepFiles, listDir, listFiles, readAt, resolveRef } from './git.js';
 import {
   mdxSource,
   packageJson,
   pascal,
-  proposalsReadme,
   storySource,
   targetPath,
   tsconfigJson,
   vitestConfig,
 } from './layout.js';
 import { exportedNames } from './exports.js';
-import { applyMarks, markText, marksFor, parseLedger } from './ledger.js';
+import { importPlacements, insertMarks, readRegistry } from './departures.js';
 import {
   CODE,
   COMMENT,
@@ -611,7 +602,7 @@ export function planImport(opts) {
     testsWaiting: [],
     indexAdded: [],
     rewrites: { imports: {}, prefix: {}, license: {}, tokenFallbacks: {} },
-    marks: { placed: [], unplaced: [], proposals: [] },
+    marks: { placed: [], unplaced: [] },
     dependencies: { kit: [], styles: [], external: [], seamGaps: [] },
     motion: [],
     story: null,
@@ -679,25 +670,31 @@ export function planImport(opts) {
     }
   }
 
-  // Departure marks, by the source's line numbers.
-  const ledgerSrc = readAt(from, sha, cfg.source.ledger);
-  const ledger = ledgerSrc ? parseLedger(ledgerSrc) : [];
-  const ledgerSha = ledgerSrc ? lastChange(from, sha, cfg.source.ledger) : sha;
-  if (!ledgerSrc) {
-    plan.warnings.push(`no departures ledger at ${cfg.source.ledger}`);
-  }
-  const marks = marksFor(ledger, id, rels);
-  for (const u of marks.unplaced) {
+  // Departure marks: the lane's registry, for the entries that apply to this
+  // folder, placed in the sources as they come.
+  const marks = importPlacements(
+    rels
+      .filter((rel) => /^components\//.test(targetPath(rel) ?? ''))
+      .map((rel) => ({
+        file: rel,
+        // As the lane writes it: the registry names the lane's classes.
+        text: rewritePrefix(
+          readAt(from, sha, `${folder}/${rel}`),
+          langOf(rel),
+          cfg.classPrefix
+        ).text,
+      })),
+    readRegistry(labs),
+    folderName
+  );
+  for (const u of marks.missing) {
     plan.marks.unplaced.push({
-      name: u.entry.name,
-      kind: u.entry.kind,
+      name: u.entry.id,
+      kind: u.entry.status,
       place: u.place,
       reason: u.reason,
     });
   }
-  plan.marks.proposals = marks.api.map((e) =>
-    markText(e).replace(/^@carbon-proposal /, '')
-  );
 
   for (const rel of rels) {
     const target = targetPath(rel);
@@ -709,33 +706,14 @@ export function planImport(opts) {
     let text = readAt(from, sha, `${folder}/${rel}`);
     const file = { from: rel, to: target, marks: [], imports: [], prefix: {} };
 
-    // The ledger's lines are from its own commit: move them to this one.
-    const mine = [];
-    for (const p of marks.placements.filter((x) => x.file === rel)) {
-      const start = moveLine(from, ledgerSha, sha, `${folder}/${rel}`, p.start);
-      const end = moveLine(from, ledgerSha, sha, `${folder}/${rel}`, p.end);
-      mine.push({
-        ...p,
-        start: start ?? p.start,
-        end: end ?? start ?? p.end,
-      });
-    }
+    const mine = marks.placements.filter((x) => x.file === rel);
     if (mine.length) {
-      const res = applyMarks(text, regions(text, lang), mine);
-      text = res.text;
-      for (const p of res.placed) {
+      text = insertMarks(text, mine);
+      for (const p of mine) {
         plan.marks.placed.push({
           file: target,
-          line: p.line,
-          stated: p.stated,
-          name: p.name,
-        });
-      }
-      for (const u of res.unplaced) {
-        plan.marks.unplaced.push({
-          name: u.name,
-          place: `${id}/${rel}:${u.line}`,
-          reason: u.reason,
+          line: p.line + mine.filter((x) => x.line < p.line).length,
+          name: p.entry.id,
         });
       }
     }
@@ -1170,14 +1148,6 @@ export function planImport(opts) {
       params,
     }),
   });
-
-  // Proposals.
-  if (plan.marks.proposals.length) {
-    plan.outputs.push({
-      path: 'proposals/README.md',
-      content: proposalsReadme(name, plan.marks.proposals),
-    });
-  }
 
   // Dependencies.
   const pkgs = [];

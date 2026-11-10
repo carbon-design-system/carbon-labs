@@ -5,311 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// The departures, and their marks. An import reads the source's ledger: each
-// row that names a file of the component becomes an `@carbon-explore` or
-// `@carbon-proposal` mark above the line it names. The lane's own registry,
-// departures.json, holds every departure as data, and its `appliesTo` places
-// the marks over the whole lane: an API departure's on each declaration of
-// its props, any other's above the first line that uses what it names.
+// The departures, and their marks. The lane's registry, departures.json,
+// holds every departure as data, and its `appliesTo` places an
+// `@carbon-explore` or `@carbon-proposal` mark over the whole lane: an API
+// departure's on each declaration of its props, any other's above the first
+// line that uses what it names. An import places the marks of the folder it
+// brings in from the same registry.
 
 import fs from 'node:fs';
 import path from 'node:path';
 import { COMMENT, langOf, regions } from './regions.js';
 import { componentOf, isOwn, laneProgram } from './vocab.js';
-
-/**
- * Splits a markdown table row into cells, ignoring pipes inside code spans.
- *
- * @param {string} row The row.
- * @returns {string[]} The cells.
- */
-function cells(row) {
-  const out = [];
-  let cur = '';
-  let code = false;
-  for (const c of row.trim().replace(/^\||\|$/g, '')) {
-    if (c === '`') {
-      code = !code;
-    }
-    if (c === '|' && !code) {
-      out.push(cur.trim());
-      cur = '';
-    } else {
-      cur += c;
-    }
-  }
-  out.push(cur.trim());
-  return out;
-}
-
-/**
- * A reader of one row's cells by the start of their column's name.
- *
- * @param {string[]} header The column names, lower case.
- * @param {string[]} row The row's cells.
- * @returns {function(string): string} The reader.
- */
-function cellsBy(header, row) {
-  return (name) => row[header.findIndex((h) => h.startsWith(name))] ?? '';
-}
-
-/**
- * The ledger's entries, keyed by its table's column names.
- *
- * @param {string} md The ledger.
- * @returns {{ name: string, kind: string, domain: string, what: string, ours: string, fallback: string, usedIn: string }[]} The entries.
- */
-export function parseLedger(md) {
-  const lines = md.split('\n');
-  const start = lines.findIndex((l) => /^##\s+Entries\b/.test(l));
-  if (start === -1) {
-    return [];
-  }
-  let header = null;
-  const entries = [];
-  for (const line of lines.slice(start + 1)) {
-    if (/^##\s/.test(line)) {
-      break;
-    }
-    if (!line.trim().startsWith('|')) {
-      continue;
-    }
-    const row = cells(line);
-    if (!header) {
-      header = row.map((h) => h.toLowerCase());
-      continue;
-    }
-    if (row.every((c) => /^:?-+:?$/.test(c))) {
-      continue;
-    }
-    const col = cellsBy(header, row);
-    entries.push({
-      name: col('name').replace(/`/g, ''),
-      kind: col('kind').toLowerCase(),
-      domain: col('domain').toLowerCase(),
-      what: col('what'),
-      ours: col('our value'),
-      fallback: col('carbon fallback'),
-      usedIn: col('used in'),
-    });
-  }
-  return entries;
-}
-
-/**
- * The places a "used in" cell names: a path, and each line range when it
- * gives lines.
- *
- * @param {string} cell The cell.
- * @returns {{ path: string, lines: { start: number, end: number }[] }[]} The places.
- */
-export function placesIn(cell) {
-  const places = [];
-  for (const raw of cell.split(/;|,\s+(?=\D)/)) {
-    const item = raw
-      .replace(/`/g, '')
-      .replace(/\band \d+ more( files)?\b/, '')
-      .trim();
-    if (!item) {
-      continue;
-    }
-    const m = /^([\w./-]+?)(?::([\d,\s-]+))?$/.exec(item);
-    if (!m) {
-      continue;
-    }
-    const lines = (m[2] ?? '')
-      .split(',')
-      .map((r) => r.split('-').map((n) => Number.parseInt(n, 10)))
-      .filter(([a]) => Number.isFinite(a))
-      .map(([a, b]) => ({ start: a, end: Number.isFinite(b) ? b : a }));
-    places.push({ path: m[1], lines });
-  }
-  return places;
-}
-
-/**
- * The marks the ledger asks for in one component.
- *
- * @param {ReturnType<typeof parseLedger>} entries The ledger.
- * @param {string} id The component's folder name.
- * @param {string[]} files The component's files, relative to its folder.
- * @returns {{ placements: { entry: object, file: string, start: number, end: number }[], unplaced: { entry: object, place: string, reason: string }[], api: object[] }} What to mark where.
- */
-export function marksFor(entries, id, files) {
-  const placements = [];
-  const unplaced = [];
-  const api = [];
-  for (const entry of entries) {
-    const mine = placesIn(entry.usedIn).filter(
-      (p) => p.path.split('/')[0] === id
-    );
-    if (!mine.length) {
-      continue;
-    }
-    const isApi = entry.domain === 'api' && entry.kind === 'proposal';
-    if (isApi) {
-      api.push(entry);
-    }
-    for (const place of mine) {
-      const rel = place.path.slice(id.length + 1);
-      const file = files.find((f) => f.toLowerCase() === rel.toLowerCase());
-      if (!rel || rel.endsWith('/')) {
-        if (!isApi) {
-          unplaced.push({
-            entry,
-            place: place.path,
-            reason: 'names the folder, not a line',
-          });
-        }
-      } else if (!file) {
-        unplaced.push({ entry, place: place.path, reason: 'no such file' });
-      } else if (!place.lines.length) {
-        if (!isApi) {
-          unplaced.push({
-            entry,
-            place: place.path,
-            reason: 'names the file, not a line',
-          });
-        }
-      } else {
-        for (const range of place.lines) {
-          placements.push({ entry, file, ...range });
-        }
-      }
-    }
-  }
-  return { placements, unplaced, api };
-}
-
-/**
- * The mark's comment text, in the ledger's form.
- *
- * @param {object} entry The ledger entry.
- * @returns {string} The text after `// `.
- */
-export function markText(entry) {
-  const reason = entry.what.replace(/\.\s*$/, '');
-  if (entry.kind === 'proposal') {
-    const what = entry.domain === 'api' ? 'api' : 'token';
-    const replaces =
-      what === 'token' && entry.fallback
-        ? ` replaces: ${entry.fallback.replace(/;.*$/, '').trim()}.`
-        : '';
-    return `@carbon-proposal ${what}: ${entry.name} — ${reason}.${replaces} TBD`;
-  }
-  return `@carbon-explore ${entry.name} — ${reason}. TBD`;
-}
-
-/**
- * What ties a line to an entry: the code names in its value and fallback
- * (worth two) and the longer words of its name (worth one).
- *
- * @param {object} entry The ledger entry.
- * @returns {{ text: string, weight: number }[]} The hints.
- */
-function hintsFor(entry) {
-  const hints = [];
-  for (const m of `${entry.ours} ${entry.fallback}`.matchAll(/`([^`]+)`/g)) {
-    for (const part of m[1].split(/[\s,]+/)) {
-      if (part.length > 3) {
-        hints.push({ text: part, weight: 2 });
-      }
-    }
-  }
-  for (const word of entry.name.split('-')) {
-    if (word.length > 4) {
-      hints.push({ text: word, weight: 1 });
-    }
-  }
-  return hints;
-}
-
-const WINDOW = 6;
-
-/**
- * Inserts marks above the lines they name. The ledger's line numbers are a
- * guide: the mark goes on the code line near the range that best matches
- * the entry, nearest the range on a tie, and is left out when nothing near
- * matches. Inserted from the bottom up so the line numbers hold.
- *
- * @param {string} src The source.
- * @param {Uint8Array} kinds The source's regions, to skip comment lines.
- * @param {{ entry: object, start: number, end: number }[]} marks The marks for this file.
- * @returns {{ text: string, placed: { name: string, line: number, stated: number }[], unplaced: { name: string, line: number, reason: string }[] }} The source and what was placed.
- */
-export function applyMarks(src, kinds, marks) {
-  const lines = src.split('\n');
-  const offsets = [];
-  let at = 0;
-  for (const l of lines) {
-    offsets.push(at);
-    at += l.length + 1;
-  }
-  /**
-   * Whether a line holds code that a mark can stand above.
-   *
-   * @param {number} n The 1-based line.
-   * @returns {boolean} Whether it does.
-   */
-  function markable(n) {
-    const text = lines[n - 1];
-    if (text === undefined) {
-      return false;
-    }
-    const bare = text.trim();
-    if (!bare || /^[{}()\]]+[;,]?$/.test(bare) || /^[<{)]/.test(bare)) {
-      return false;
-    }
-    const lead = offsets[n - 1] + text.indexOf(bare[0]);
-    return kinds[lead] !== 2;
-  }
-  const placed = [];
-  const unplaced = [];
-  const chosen = [];
-  for (const { entry, start, end } of marks) {
-    const hints = hintsFor(entry);
-    let best = null;
-    for (let n = Math.max(1, start - WINDOW); n <= end + WINDOW; n += 1) {
-      if (!markable(n)) {
-        continue;
-      }
-      const score = hints.reduce(
-        (sum, h) => sum + (lines[n - 1].includes(h.text) ? h.weight : 0),
-        0
-      );
-      const distance = n < start ? start - n : n > end ? n - end : 0;
-      if (
-        score > 0 &&
-        (!best ||
-          score > best.score ||
-          (score === best.score && distance < best.distance))
-      ) {
-        best = { n, score, distance };
-      }
-    }
-    if (!best) {
-      unplaced.push({
-        name: entry.name,
-        line: start,
-        reason: `nothing within ${WINDOW} lines matches the entry`,
-      });
-    } else {
-      chosen.push({ entry, line: best.n, stated: start });
-    }
-  }
-  for (const { entry, line, stated } of chosen.sort(
-    (a, b) => b.line - a.line
-  )) {
-    const text = markText(entry);
-    if ((lines[line - 2] ?? '').includes(text)) {
-      continue;
-    }
-    const indent = /^\s*/.exec(lines[line - 1])[0];
-    lines.splice(line - 1, 0, `${indent}// ${text}`);
-    placed.push({ name: entry.name, line, stated });
-  }
-  return { text: lines.join('\n'), placed: placed.reverse(), unplaced };
-}
 
 /** The lane's registry of departures, from the repository root. */
 export const REGISTRY = 'packages/react/src/v12/departures.json';
@@ -496,6 +202,32 @@ function markedAbove(lines, line, id) {
 }
 
 /**
+ * The line a mark goes above for a declaration on a line: in a script, above
+ * the declaration's doc comment when it has one.
+ *
+ * @param {string[]} lines The source's lines.
+ * @param {number} k The declaration's 0-based line.
+ * @param {string} file Its path, for its language.
+ * @returns {number} The 1-based line the mark goes above.
+ */
+function markAt(lines, k, file) {
+  if (
+    langOf(file) === 'ts' &&
+    /^\s*(\/\*\*|\*)/.test(lines[k - 1] ?? '') &&
+    /\*\/\s*$/.test(lines[k - 1])
+  ) {
+    let j = k - 1;
+    while (j > 0 && !/^\s*\/\*\*/.test(lines[j])) {
+      j = /^\s*\*/.test(lines[j]) ? j - 1 : -1;
+    }
+    if (j >= 0 && /^\s*\/\*\*/.test(lines[j])) {
+      return j + 1;
+    }
+  }
+  return k + 1;
+}
+
+/**
  * Every prop declaration of every component a lane folder exports, once,
  * where the lane declares it.
  *
@@ -631,20 +363,7 @@ export function planDepartures(
             (l, i) => code[i] && place.uses.some((u) => l.includes(u))
           );
           if (k >= 0) {
-            // In a script, above the declaration's doc comment, as a prop's.
-            let at = k;
-            if (
-              langOf(file) === 'ts' &&
-              /^\s*(\/\*\*|\*)/.test(lines[k - 1] ?? '') &&
-              /\*\/\s*$/.test(lines[k - 1])
-            ) {
-              let j = k - 1;
-              while (j > 0 && !/^\s*\/\*\*/.test(lines[j])) {
-                j = /^\s*\*/.test(lines[j]) ? j - 1 : -1;
-              }
-              at = j >= 0 && /^\s*\/\*\*/.test(lines[j]) ? j : k;
-            }
-            found = { file, line: at + 1 };
+            found = { file, line: markAt(lines, k, file) };
             break;
           }
         }
@@ -664,6 +383,100 @@ export function planDepartures(
 }
 
 /**
+ * The marks of the registry's entries that apply to one component folder,
+ * for sources about to be written: an entry's props are found by their
+ * declaration (a line that starts with the name), its `uses` as in
+ * `planDepartures`. What can't be placed is listed with why.
+ *
+ * @param {{ file: string, text: string }[]} sources The component's source files, relative to its folder.
+ * @param {object[]} entries The registry's entries.
+ * @param {string} folder The component's folder name in the lane.
+ * @returns {{ placements: { entry: object, file: string, line: number }[], missing: { entry: object, place: string, reason: string }[] }} The plan.
+ */
+export function importPlacements(sources, entries, folder) {
+  const placements = [];
+  const missing = [];
+  const read = sources
+    .filter((s) => /\.(scss|[jt]sx?)$/.test(s.file))
+    .map((s) => {
+      const lines = s.text.split('\n');
+      return { file: s.file, lines, code: codeLines(s.text, s.file) };
+    });
+  for (const entry of entries) {
+    if (!MARKED.has(entry.status)) {
+      continue;
+    }
+    for (const place of (entry.appliesTo ?? []).filter(
+      (p) => p.in === folder
+    )) {
+      for (const prop of place.props ?? []) {
+        const decl = new RegExp(`^\\s*(?:readonly\\s+)?${prop}\\??\\s*:`);
+        let found = false;
+        for (const { file, lines, code } of read) {
+          if (langOf(file) !== 'ts') {
+            continue;
+          }
+          lines.forEach((l, k) => {
+            if (code[k] && decl.test(l)) {
+              found = true;
+              placements.push({ entry, file, line: markAt(lines, k, file) });
+            }
+          });
+        }
+        if (!found) {
+          missing.push({
+            entry,
+            place: folder,
+            reason: `no declaration of ${prop}`,
+          });
+        }
+      }
+      if (place.uses?.length) {
+        let found = null;
+        for (const { file, lines, code } of read) {
+          const k = lines.findIndex(
+            (l, i) => code[i] && place.uses.some((u) => l.includes(u))
+          );
+          if (k >= 0) {
+            found = { file, line: markAt(lines, k, file) };
+            break;
+          }
+        }
+        if (found) {
+          placements.push({ entry, ...found });
+        } else {
+          missing.push({
+            entry,
+            place: folder,
+            reason: `no code line holds ${place.uses.map((u) => `"${u}"`).join(' or ')}`,
+          });
+        }
+      }
+    }
+  }
+  return { placements, missing };
+}
+
+/**
+ * Inserts marks above their lines, at the line's indent, from the bottom up
+ * so the line numbers hold.
+ *
+ * @param {string} text The source.
+ * @param {{ entry: object, line: number }[]} marks The marks for this file.
+ * @returns {string} The source with the marks in.
+ */
+export function insertMarks(text, marks) {
+  const lines = text.split('\n');
+  const ordered = marks.map((m, order) => ({ ...m, order }));
+  ordered.sort((a, b) => b.line - a.line || b.order - a.order);
+  for (const { entry, line } of ordered) {
+    const indent = /^\s*/.exec(lines[line - 1])[0];
+    lines.splice(line - 1, 0, `${indent}// ${registryMarkText(entry)}`);
+  }
+  return lines.join('\n');
+}
+
+/**
  * Writes the planned marks, each above its line at the line's indent, in the
  * registry's order where several share a line.
  *
@@ -673,74 +486,21 @@ export function planDepartures(
  */
 export function writeDepartures(labs, placements) {
   const byFile = new Map();
-  placements.forEach((p, order) => {
-    byFile.set(p.file, [...(byFile.get(p.file) ?? []), { ...p, order }]);
-  });
+  for (const p of placements) {
+    byFile.set(p.file, [...(byFile.get(p.file) ?? []), p]);
+  }
   for (const [file, marks] of byFile) {
     const abs = path.join(labs, file);
-    const lines = fs.readFileSync(abs, 'utf8').split('\n');
-    marks.sort((a, b) => b.line - a.line || b.order - a.order);
-    for (const { entry, line } of marks) {
-      const indent = /^\s*/.exec(lines[line - 1])[0];
-      lines.splice(line - 1, 0, `${indent}// ${registryMarkText(entry)}`);
-    }
-    fs.writeFileSync(abs, lines.join('\n'));
+    fs.writeFileSync(abs, insertMarks(fs.readFileSync(abs, 'utf8'), marks));
   }
   return [...byFile.keys()];
-}
-
-/**
- * The names a component folder's own proposals record: its tokens.json's
- * tokens (their path joined with hyphens) and the `<kind>: <name>` lines of
- * its README.
- *
- * @param {string} labs The carbon-labs checkout.
- * @param {string} root The folder.
- * @returns {Set<string>} The names.
- */
-function proposalNames(labs, root) {
-  const names = new Set();
-  const dir = path.join(labs, root, 'proposals');
-  const tokens = path.join(dir, 'tokens.json');
-  /**
-   * Adds every token under a group.
-   *
-   * @param {object} node The group.
-   * @param {string[]} at Its path.
-   */
-  const walk = (node, at) => {
-    if (!node || typeof node !== 'object') {
-      return;
-    }
-    if ('$value' in node || '$type' in node) {
-      names.add(at.join('-'));
-    }
-    for (const [k, v] of Object.entries(node)) {
-      if (!k.startsWith('$')) {
-        walk(v, [...at, k]);
-      }
-    }
-  };
-  if (fs.existsSync(tokens)) {
-    walk(JSON.parse(fs.readFileSync(tokens, 'utf8')), []);
-  }
-  const readme = path.join(dir, 'README.md');
-  if (fs.existsSync(readme)) {
-    for (const m of fs
-      .readFileSync(readme, 'utf8')
-      .matchAll(/\b(?:api|token|mixin|flag|icon):\s*([\w-]+)/g)) {
-      names.add(m[1]);
-    }
-  }
-  return names;
 }
 
 /**
  * The departure rule's findings: an entry that is not valid, a mark the
  * registry asks for that is not there, an entry with nothing to mark, a mark
  * of an entry outside its places or of the other kind, and a mark no
- * registry records. A mark is recorded by departures.json, the lane's
- * explorations.json, or its own folder's proposals.
+ * registry records, and an exploration of explorations.json with no mark.
  *
  * @param {string} labs The carbon-labs checkout.
  * @param {{ entries?: object[], lane?: ReturnType<typeof laneProgram> }} [options]
@@ -787,16 +547,8 @@ export function departureFindings(
     });
   }
   const byId = new Map(entries.map((e) => [e.id, e]));
-  const shared = new Set();
-  const explorations = path.join(labs, EXPLORATIONS);
-  if (fs.existsSync(explorations)) {
-    for (const e of JSON.parse(fs.readFileSync(explorations, 'utf8'))
-      .explorations ?? []) {
-      shared.add(e.name);
-    }
-  }
-  const local = new Map();
-  for (const mark of laneMarks(labs)) {
+  const marks = laneMarks(labs);
+  for (const mark of marks) {
     const at = `${mark.file}:${mark.line}`;
     const entry = byId.get(mark.name);
     if (entry) {
@@ -819,18 +571,25 @@ export function departureFindings(
       }
       continue;
     }
-    const folder = mark.file.startsWith(`${COMPONENTS}/`)
-      ? mark.file.split('/').slice(0, 6).join('/')
-      : null;
-    if (folder && !local.has(folder)) {
-      local.set(folder, proposalNames(labs, folder));
-    }
-    if (!shared.has(mark.name) && !local.get(folder)?.has(mark.name)) {
-      out.push({
-        kind: 'departure: mark without an entry',
-        at,
-        match: mark.name,
-      });
+    out.push({
+      kind: 'departure: mark without an entry',
+      at,
+      match: mark.name,
+    });
+  }
+  // An exploration's value is tried in some style: some mark must say so.
+  const explorations = path.join(labs, EXPLORATIONS);
+  if (fs.existsSync(explorations)) {
+    const marked = new Set(marks.map((m) => m.name));
+    for (const e of JSON.parse(fs.readFileSync(explorations, 'utf8'))
+      .explorations ?? []) {
+      if (!marked.has(e.name)) {
+        out.push({
+          kind: 'departure: exploration without a mark',
+          at: EXPLORATIONS,
+          match: e.name,
+        });
+      }
     }
   }
   return out;

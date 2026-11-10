@@ -12,7 +12,7 @@
 
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { planDepartures, writeDepartures } from '../src/ledger.js';
+import { planDepartures, writeDepartures } from '../src/departures.js';
 
 const labs = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),

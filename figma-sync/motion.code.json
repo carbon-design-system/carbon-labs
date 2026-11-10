@@ -1,0 +1,7178 @@
+{
+  "schema": "v12-figma/motion@1",
+  "side": "code",
+  "source": {
+    "carbonMotion": "0.1.1",
+    "contract": "docs/v12/motion-contract.md"
+  },
+  "levels": [
+    "full",
+    "reduced",
+    "none"
+  ],
+  "tokens": [
+    {
+      "name": "chartReveal-dissolve",
+      "css": null,
+      "type": "carbon-motion.role",
+      "status": "exploring",
+      "value": {
+        "duration": {
+          "value": 400,
+          "unit": "ms"
+        },
+        "easing": {
+          "name": "standard",
+          "mode": "productive"
+        }
+      }
+    },
+    {
+      "name": "chartReveal-front",
+      "css": null,
+      "type": "carbon-motion.role",
+      "status": "exploring",
+      "value": {
+        "duration": {
+          "value": 520,
+          "unit": "ms"
+        },
+        "easing": {
+          "name": "standard",
+          "mode": "productive"
+        }
+      }
+    },
+    {
+      "name": "chartReveal-move",
+      "css": null,
+      "type": "carbon-motion.role",
+      "status": "exploring",
+      "value": {
+        "duration": {
+          "value": 220,
+          "unit": "ms"
+        },
+        "easing": {
+          "name": "standard",
+          "mode": "productive"
+        }
+      }
+    },
+    {
+      "name": "chartReveal-phaseGap",
+      "css": null,
+      "type": "carbon-motion.role",
+      "status": "exploring",
+      "value": {
+        "duration": {
+          "value": 160,
+          "unit": "ms"
+        },
+        "easing": {
+          "name": "standard",
+          "mode": "productive"
+        }
+      }
+    },
+    {
+      "name": "chartReveal-projectedFront",
+      "css": null,
+      "type": "carbon-motion.role",
+      "status": "exploring",
+      "value": {
+        "duration": {
+          "value": 400,
+          "unit": "ms"
+        },
+        "easing": {
+          "name": "standard",
+          "mode": "productive"
+        }
+      }
+    },
+    {
+      "name": "chartReveal-rule",
+      "css": null,
+      "type": "carbon-motion.role",
+      "status": "exploring",
+      "value": {
+        "duration": {
+          "value": 220,
+          "unit": "ms"
+        },
+        "easing": {
+          "name": "entrance",
+          "mode": "productive"
+        }
+      }
+    },
+    {
+      "name": "depth-arrive",
+      "css": "--cds-motion-depth-arrive",
+      "type": "dimension",
+      "status": "exploring",
+      "value": "16px"
+    },
+    {
+      "name": "depth-recede-dim",
+      "css": "--cds-motion-depth-recede-dim",
+      "type": "number",
+      "status": "exploring",
+      "value": 0.72
+    },
+    {
+      "name": "depth-recede-scale",
+      "css": "--cds-motion-depth-recede-scale",
+      "type": "dimension",
+      "status": "exploring",
+      "value": 0.98
+    },
+    {
+      "name": "distance-lg",
+      "css": "--cds-motion-distance-lg",
+      "type": "dimension",
+      "status": "exploring",
+      "value": "32px"
+    },
+    {
+      "name": "distance-md",
+      "css": "--cds-motion-distance-md",
+      "type": "dimension",
+      "status": "exploring",
+      "value": "16px"
+    },
+    {
+      "name": "distance-nudge",
+      "css": "--cds-motion-distance-nudge",
+      "type": "dimension",
+      "status": "exploring",
+      "value": "2px"
+    },
+    {
+      "name": "distance-sm",
+      "css": "--cds-motion-distance-sm",
+      "type": "dimension",
+      "status": "exploring",
+      "value": "8px"
+    },
+    {
+      "name": "distance-xl",
+      "css": "--cds-motion-distance-xl",
+      "type": "dimension",
+      "status": "exploring",
+      "value": "64px"
+    },
+    {
+      "name": "distance-xs",
+      "css": "--cds-motion-distance-xs",
+      "type": "dimension",
+      "status": "exploring",
+      "value": "4px"
+    },
+    {
+      "name": "duration-fast-00",
+      "css": "--cds-motion-duration-fast-00",
+      "type": "duration",
+      "status": "approved",
+      "value": 40
+    },
+    {
+      "name": "duration-fast-01",
+      "css": "--cds-motion-duration-fast-01",
+      "type": "duration",
+      "status": "approved",
+      "value": 80
+    },
+    {
+      "name": "duration-fast-02",
+      "css": "--cds-motion-duration-fast-02",
+      "type": "duration",
+      "status": "approved",
+      "value": 120
+    },
+    {
+      "name": "duration-frame",
+      "css": "--cds-motion-duration-frame",
+      "type": "duration",
+      "status": "exploring",
+      "value": 16
+    },
+    {
+      "name": "duration-instant",
+      "css": "--cds-motion-duration-instant",
+      "type": "duration",
+      "status": "exploring",
+      "value": 0
+    },
+    {
+      "name": "duration-moderate-01",
+      "css": "--cds-motion-duration-moderate-01",
+      "type": "duration",
+      "status": "approved",
+      "value": 160
+    },
+    {
+      "name": "duration-moderate-02",
+      "css": "--cds-motion-duration-moderate-02",
+      "type": "duration",
+      "status": "approved",
+      "value": 220
+    },
+    {
+      "name": "duration-moderate-03",
+      "css": "--cds-motion-duration-moderate-03",
+      "type": "duration",
+      "status": "approved",
+      "value": 300
+    },
+    {
+      "name": "duration-slow-01",
+      "css": "--cds-motion-duration-slow-01",
+      "type": "duration",
+      "status": "promoted",
+      "value": 400
+    },
+    {
+      "name": "duration-slow-02",
+      "css": "--cds-motion-duration-slow-02",
+      "type": "duration",
+      "status": "approved",
+      "value": 520
+    },
+    {
+      "name": "duration-slow-03",
+      "css": "--cds-motion-duration-slow-03",
+      "type": "duration",
+      "status": "approved",
+      "value": 660
+    },
+    {
+      "name": "easing-entrance-expressive",
+      "css": "--cds-motion-easing-entrance-expressive",
+      "type": "cubicBezier",
+      "status": "approved",
+      "value": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "easing-entrance-productive",
+      "css": "--cds-motion-easing-entrance-productive",
+      "type": "cubicBezier",
+      "status": "approved",
+      "value": [
+        0,
+        0,
+        0.2,
+        1
+      ]
+    },
+    {
+      "name": "easing-exit-expressive",
+      "css": "--cds-motion-easing-exit-expressive",
+      "type": "cubicBezier",
+      "status": "approved",
+      "value": [
+        0.8,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "easing-exit-productive",
+      "css": "--cds-motion-easing-exit-productive",
+      "type": "cubicBezier",
+      "status": "approved",
+      "value": [
+        0.4,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "easing-standard-expressive",
+      "css": "--cds-motion-easing-standard-expressive",
+      "type": "cubicBezier",
+      "status": "approved",
+      "value": [
+        0.8,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "easing-standard-productive",
+      "css": "--cds-motion-easing-standard-productive",
+      "type": "cubicBezier",
+      "status": "approved",
+      "value": [
+        0.4,
+        0,
+        0.2,
+        1
+      ]
+    },
+    {
+      "name": "origin-center",
+      "css": null,
+      "type": "carbon-motion.origin",
+      "status": "exploring",
+      "value": {
+        "kind": "static",
+        "x": "50%",
+        "y": "50%"
+      }
+    },
+    {
+      "name": "origin-pointer",
+      "css": null,
+      "type": "carbon-motion.origin",
+      "status": "exploring",
+      "value": {
+        "kind": "pointer"
+      }
+    },
+    {
+      "name": "origin-top",
+      "css": null,
+      "type": "carbon-motion.origin",
+      "status": "exploring",
+      "value": {
+        "kind": "static",
+        "x": "50%",
+        "y": "0%"
+      }
+    },
+    {
+      "name": "origin-trigger",
+      "css": null,
+      "type": "carbon-motion.origin",
+      "status": "exploring",
+      "value": {
+        "kind": "trigger"
+      }
+    },
+    {
+      "name": "pattern-axial-default",
+      "css": null,
+      "type": "carbon-motion.axial",
+      "status": "exploring",
+      "value": {
+        "lead": "auto",
+        "leadShare": 0.55,
+        "in": {
+          "lead": "entrance-productive",
+          "follow": "entrance-expressive"
+        },
+        "out": {
+          "lead": "exit-productive",
+          "follow": "exit-expressive"
+        }
+      }
+    },
+    {
+      "name": "pattern-axial-floating",
+      "css": null,
+      "type": "carbon-motion.axial",
+      "status": "exploring",
+      "value": {
+        "lead": "auto",
+        "leadShare": 1,
+        "totalSteps": [
+          {
+            "under": 256,
+            "token": "fast-01"
+          },
+          {
+            "under": 512,
+            "token": "fast-02"
+          },
+          {
+            "under": 900,
+            "token": "moderate-01"
+          },
+          {
+            "under": null,
+            "token": "moderate-02"
+          }
+        ]
+      }
+    },
+    {
+      "name": "pattern-elevation-floating",
+      "css": null,
+      "type": "carbon-motion.elevation",
+      "status": "exploring",
+      "value": {
+        "distance": 2.5,
+        "ambient": 1.3,
+        "contact": 1.25
+      }
+    },
+    {
+      "name": "pattern-elevation-raised",
+      "css": null,
+      "type": "carbon-motion.elevation",
+      "status": "exploring",
+      "value": {
+        "distance": 1.5,
+        "ambient": 1.2,
+        "contact": 1.2
+      }
+    },
+    {
+      "name": "pattern-elevation-resting",
+      "css": null,
+      "type": "carbon-motion.elevation",
+      "status": "exploring",
+      "value": {
+        "distance": 0.75,
+        "ambient": 1.1,
+        "contact": 1.15
+      }
+    },
+    {
+      "name": "pattern-loading",
+      "css": null,
+      "type": "carbon-motion.loading",
+      "status": "exploring",
+      "value": {
+        "group": "fast-02",
+        "overlay": "fast-01",
+        "content": "fast-02",
+        "rowStep": "03",
+        "staggerCap": "moderate-02",
+        "easing": "linear"
+      }
+    },
+    {
+      "name": "pattern-pointer-origin",
+      "css": null,
+      "type": "carbon-motion.pointer-origin",
+      "status": "exploring",
+      "value": {
+        "withoutPointer": "trigger"
+      }
+    },
+    {
+      "name": "pattern-reduced-motion",
+      "css": null,
+      "type": "carbon-motion.reduced-motion",
+      "status": "exploring",
+      "value": {
+        "clock": 0.5
+      }
+    },
+    {
+      "name": "pattern-relayout-distance-steps",
+      "css": null,
+      "type": "carbon-motion.timing-table",
+      "status": "exploring",
+      "value": [
+        {
+          "under": 24,
+          "token": "fast-02"
+        },
+        {
+          "under": 120,
+          "token": "moderate-01"
+        },
+        {
+          "under": 480,
+          "token": "moderate-02"
+        },
+        {
+          "under": 900,
+          "token": "moderate-03"
+        },
+        {
+          "under": null,
+          "token": "slow-01"
+        }
+      ]
+    },
+    {
+      "name": "pattern-relayout-reflow",
+      "css": null,
+      "type": "carbon-motion.reflow",
+      "status": "exploring",
+      "value": {
+        "slidePx": 8,
+        "move": "standard-expressive",
+        "enterAt": 0.4,
+        "enter": "moderate-01",
+        "exit": "fast-02",
+        "inPlace": "moderate-01"
+      }
+    },
+    {
+      "name": "pattern-rollover-lightness",
+      "css": null,
+      "type": "carbon-motion.lightness-steps",
+      "status": "exploring",
+      "value": {
+        "hoverLight": 9,
+        "hoverDark": 9,
+        "pressRatio": 2,
+        "largeScale": 0.6,
+        "largeFrom": 120,
+        "largeAt": 400,
+        "darkBelow": 40,
+        "textHoverLight": 0.6,
+        "textPressLight": 0.8,
+        "textHoverDark": 0.33,
+        "textPressDark": 0.5,
+        "toneHoverLight": 6,
+        "toneHoverDark": 6,
+        "toneContrast": 4.5
+      }
+    },
+    {
+      "name": "pattern-rollover-rehover",
+      "css": "--cds-motion-pattern-rollover-rehover",
+      "type": "carbon-motion.token-ref",
+      "status": "exploring",
+      "value": "fast-01"
+    },
+    {
+      "name": "pattern-rollover-shape",
+      "css": null,
+      "type": "carbon-motion.rollover-shape",
+      "status": "exploring",
+      "value": {
+        "softModel": "shape",
+        "softReach": 1.7,
+        "softRound": 4.8,
+        "softAt0": 1.4,
+        "softAt560": 1.4,
+        "glowAt0": 1.8,
+        "glowAt560": 1.6,
+        "releaseAt20": 200,
+        "releaseAt560": 400,
+        "releaseAt1200": 700
+      }
+    },
+    {
+      "name": "pattern-selection-arrival",
+      "css": null,
+      "type": "carbon-motion.arrival",
+      "status": "exploring",
+      "value": {
+        "shrink": 4,
+        "ease": [
+          0,
+          0,
+          0.2,
+          1
+        ],
+        "in": "fast-02",
+        "out": "fast-01"
+      }
+    },
+    {
+      "name": "pattern-selection-lead-curve",
+      "css": "--cds-motion-pattern-selection-lead-curve",
+      "type": "cubicBezier",
+      "status": "exploring",
+      "value": [
+        0.05,
+        0.7,
+        0.1,
+        1
+      ]
+    },
+    {
+      "name": "pattern-selection-list-timing",
+      "css": null,
+      "type": "carbon-motion.timing-table",
+      "status": "exploring",
+      "value": [
+        {
+          "under": 48,
+          "token": "fast-00"
+        },
+        {
+          "under": 128,
+          "token": "fast-01"
+        },
+        {
+          "under": null,
+          "token": "fast-02"
+        }
+      ]
+    },
+    {
+      "name": "pattern-selection-reach",
+      "css": "--cds-motion-pattern-selection-reach",
+      "type": "dimension",
+      "status": "exploring",
+      "value": "4px"
+    },
+    {
+      "name": "pattern-selection-reach-duration",
+      "css": "--cds-motion-pattern-selection-reach-duration",
+      "type": "carbon-motion.token-ref",
+      "status": "exploring",
+      "value": "moderate-01"
+    },
+    {
+      "name": "pattern-selection-stretch",
+      "css": "--cds-motion-pattern-selection-stretch",
+      "type": "dimension",
+      "status": "exploring",
+      "value": "24px"
+    },
+    {
+      "name": "pattern-selection-timing",
+      "css": null,
+      "type": "carbon-motion.timing-table",
+      "status": "exploring",
+      "value": [
+        {
+          "under": 16,
+          "token": "fast-00"
+        },
+        {
+          "under": 64,
+          "token": "fast-01"
+        },
+        {
+          "under": 128,
+          "token": "fast-02"
+        },
+        {
+          "under": null,
+          "token": "moderate-01"
+        }
+      ]
+    },
+    {
+      "name": "pattern-skeleton-contrast",
+      "css": null,
+      "type": "carbon-motion.skeleton-contrast",
+      "status": "exploring",
+      "value": {
+        "peak": 6,
+        "trough": 3
+      }
+    },
+    {
+      "name": "pattern-skeleton-wave",
+      "css": null,
+      "type": "carbon-motion.skeleton-wave",
+      "status": "exploring",
+      "value": {
+        "periodMs": 1000,
+        "sweepPxPerMs": 2,
+        "angleDeg": 45,
+        "entrance": "moderate-02"
+      }
+    },
+    {
+      "name": "pattern-snap-floating",
+      "css": null,
+      "type": "carbon-motion.snap-profile",
+      "status": "exploring",
+      "value": {
+        "from": 0.5,
+        "fromX": 0.25,
+        "fromY": 0.75,
+        "toOut": 0.7,
+        "in": "fast-01",
+        "out": "fast-01",
+        "ease": [
+          0,
+          0,
+          0.2,
+          1
+        ],
+        "exitEase": [
+          0.6,
+          0,
+          1,
+          1
+        ],
+        "blinkOff": true,
+        "contentAxis": "y",
+        "contentOffset": 1.25,
+        "contentLag": "instant",
+        "contentLagOut": "instant",
+        "contentOut": "fast-01",
+        "timing": "axial",
+        "axial": "floating"
+      }
+    },
+    {
+      "name": "pattern-snap-mark",
+      "css": null,
+      "type": "carbon-motion.snap-profile",
+      "status": "exploring",
+      "value": {
+        "from": 0.5,
+        "in": "fast-02",
+        "ease": "entrance-productive"
+      }
+    },
+    {
+      "name": "pattern-snap-notification",
+      "css": null,
+      "type": "carbon-motion.snap-profile",
+      "status": "exploring",
+      "value": {
+        "out": "fast-02"
+      }
+    },
+    {
+      "name": "pattern-snap-surface",
+      "css": null,
+      "type": "carbon-motion.snap-profile",
+      "status": "exploring",
+      "value": {
+        "from": 0.75,
+        "in": "moderate-01",
+        "out": "fast-02",
+        "ease": "entrance-productive",
+        "exitEase": "exit-productive",
+        "blinkOff": false,
+        "exitMode": "collapse",
+        "collapseAxis": "auto",
+        "timing": "axial"
+      }
+    },
+    {
+      "name": "pattern-snap-tooltip",
+      "css": null,
+      "type": "carbon-motion.snap-profile",
+      "status": "exploring",
+      "value": {
+        "timing": "own",
+        "in": "fast-01",
+        "out": "fast-00",
+        "contentIn": "fast-01",
+        "contentOut": "fast-00",
+        "contentOffset": 1,
+        "blinkOff": false
+      }
+    },
+    {
+      "name": "pattern-stagger-size-steps",
+      "css": null,
+      "type": "carbon-motion.stagger-size-steps",
+      "status": "exploring",
+      "value": [
+        {
+          "under": 32,
+          "step": "02"
+        },
+        {
+          "under": 64,
+          "step": "03"
+        },
+        {
+          "under": 128,
+          "step": "04"
+        },
+        {
+          "under": 256,
+          "step": "05"
+        },
+        {
+          "under": null,
+          "step": "06"
+        }
+      ]
+    },
+    {
+      "name": "pattern-stagger-window",
+      "css": "--cds-motion-pattern-stagger-window",
+      "type": "carbon-motion.stagger-window",
+      "status": "exploring",
+      "value": "660ms"
+    },
+    {
+      "name": "pattern-stillness-window",
+      "css": "--cds-motion-pattern-stillness-window",
+      "type": "carbon-motion.stillness-window",
+      "status": "exploring",
+      "value": "400ms"
+    },
+    {
+      "name": "reduce-duration-floor",
+      "css": "--cds-motion-reduce-duration-floor",
+      "type": "number",
+      "status": "exploring",
+      "value": "1ms"
+    },
+    {
+      "name": "role-dismiss",
+      "css": null,
+      "type": "carbon-motion.role",
+      "status": "exploring",
+      "value": {
+        "duration": {
+          "value": 80,
+          "unit": "ms"
+        },
+        "easing": {
+          "name": "exit",
+          "mode": "expressive"
+        },
+        "distance": "4px"
+      }
+    },
+    {
+      "name": "role-emphasis",
+      "css": null,
+      "type": "carbon-motion.role",
+      "status": "exploring",
+      "value": {
+        "duration": {
+          "value": 80,
+          "unit": "ms"
+        },
+        "easing": {
+          "name": "standard",
+          "mode": "expressive"
+        },
+        "scale": 1.02,
+        "spring": {
+          "visualDuration": 0.15,
+          "bounce": 0
+        }
+      }
+    },
+    {
+      "name": "role-enter",
+      "css": null,
+      "type": "carbon-motion.role",
+      "status": "exploring",
+      "value": {
+        "duration": {
+          "value": 160,
+          "unit": "ms"
+        },
+        "easing": {
+          "name": "entrance",
+          "mode": "productive"
+        },
+        "distance": "8px",
+        "scale": 0.96
+      }
+    },
+    {
+      "name": "role-exit",
+      "css": null,
+      "type": "carbon-motion.role",
+      "status": "exploring",
+      "value": {
+        "duration": {
+          "value": 120,
+          "unit": "ms"
+        },
+        "easing": {
+          "name": "exit",
+          "mode": "productive"
+        },
+        "distance": "4px",
+        "scale": 0.96
+      }
+    },
+    {
+      "name": "role-move",
+      "css": null,
+      "type": "carbon-motion.role",
+      "status": "exploring",
+      "value": {
+        "duration": {
+          "value": 220,
+          "unit": "ms"
+        },
+        "easing": {
+          "name": "standard",
+          "mode": "productive"
+        }
+      }
+    },
+    {
+      "name": "scale-emphasis",
+      "css": "--cds-motion-scale-emphasis",
+      "type": "number",
+      "status": "exploring",
+      "value": 1.02
+    },
+    {
+      "name": "scale-enter",
+      "css": "--cds-motion-scale-enter",
+      "type": "number",
+      "status": "exploring",
+      "value": 0.96
+    },
+    {
+      "name": "scale-press",
+      "css": "--cds-motion-scale-press",
+      "type": "number",
+      "status": "exploring",
+      "value": 0.97
+    },
+    {
+      "name": "scale-subtle",
+      "css": "--cds-motion-scale-subtle",
+      "type": "number",
+      "status": "exploring",
+      "value": 0.98
+    },
+    {
+      "name": "soft-edge",
+      "css": "--cds-motion-soft-edge",
+      "type": "dimension",
+      "status": "exploring",
+      "value": "16px"
+    },
+    {
+      "name": "spring-bouncy",
+      "css": null,
+      "type": "carbon-motion.spring",
+      "status": "exploring",
+      "value": {
+        "visualDuration": 0.5,
+        "bounce": 0.4
+      }
+    },
+    {
+      "name": "spring-gentle",
+      "css": null,
+      "type": "carbon-motion.spring",
+      "status": "exploring",
+      "value": {
+        "visualDuration": 0.7,
+        "bounce": 0.05
+      }
+    },
+    {
+      "name": "spring-settle",
+      "css": null,
+      "type": "carbon-motion.spring",
+      "status": "exploring",
+      "value": {
+        "visualDuration": 0.3,
+        "bounce": 0.15
+      }
+    },
+    {
+      "name": "spring-snap",
+      "css": null,
+      "type": "carbon-motion.spring",
+      "status": "exploring",
+      "value": {
+        "visualDuration": 0.15,
+        "bounce": 0
+      }
+    },
+    {
+      "name": "stagger-step-01",
+      "css": "--cds-motion-stagger-step-01",
+      "type": "carbon-motion.stagger-step",
+      "status": "exploring",
+      "value": "10ms"
+    },
+    {
+      "name": "stagger-step-02",
+      "css": "--cds-motion-stagger-step-02",
+      "type": "carbon-motion.stagger-step",
+      "status": "exploring",
+      "value": "20ms"
+    },
+    {
+      "name": "stagger-step-03",
+      "css": "--cds-motion-stagger-step-03",
+      "type": "carbon-motion.stagger-step",
+      "status": "exploring",
+      "value": "30ms"
+    },
+    {
+      "name": "stagger-step-04",
+      "css": "--cds-motion-stagger-step-04",
+      "type": "carbon-motion.stagger-step",
+      "status": "exploring",
+      "value": "40ms"
+    },
+    {
+      "name": "stagger-step-05",
+      "css": "--cds-motion-stagger-step-05",
+      "type": "carbon-motion.stagger-step",
+      "status": "exploring",
+      "value": "50ms"
+    },
+    {
+      "name": "stagger-step-06",
+      "css": "--cds-motion-stagger-step-06",
+      "type": "carbon-motion.stagger-step",
+      "status": "exploring",
+      "value": "60ms"
+    },
+    {
+      "name": "stagger-step-07",
+      "css": "--cds-motion-stagger-step-07",
+      "type": "carbon-motion.stagger-step",
+      "status": "exploring",
+      "value": "70ms"
+    },
+    {
+      "name": "stagger-step-08",
+      "css": "--cds-motion-stagger-step-08",
+      "type": "carbon-motion.stagger-step",
+      "status": "exploring",
+      "value": "80ms"
+    },
+    {
+      "name": "stagger-step-09",
+      "css": "--cds-motion-stagger-step-09",
+      "type": "carbon-motion.stagger-step",
+      "status": "exploring",
+      "value": "90ms"
+    },
+    {
+      "name": "stagger-step-10",
+      "css": "--cds-motion-stagger-step-10",
+      "type": "carbon-motion.stagger-step",
+      "status": "exploring",
+      "value": "100ms"
+    },
+    {
+      "name": "surface-contextual",
+      "css": "--cds-motion-surface-contextual",
+      "type": "transition",
+      "status": "promoted",
+      "value": {
+        "duration": 120,
+        "delay": 0,
+        "timingFunction": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "css": "120ms cubic-bezier(0, 0, 0, 1)"
+      }
+    },
+    {
+      "name": "surface-disclosure",
+      "css": "--cds-motion-surface-disclosure",
+      "type": "transition",
+      "status": "promoted",
+      "value": {
+        "duration": 160,
+        "delay": 0,
+        "timingFunction": [
+          0,
+          0,
+          0.2,
+          1
+        ],
+        "css": "160ms cubic-bezier(0, 0, 0.2, 1)"
+      }
+    },
+    {
+      "name": "surface-expand",
+      "css": "--cds-motion-surface-expand",
+      "type": "transition",
+      "status": "promoted",
+      "value": {
+        "duration": 220,
+        "delay": 0,
+        "timingFunction": [
+          0.4,
+          0,
+          0.2,
+          1
+        ],
+        "css": "220ms cubic-bezier(0.4, 0, 0.2, 1)"
+      }
+    },
+    {
+      "name": "surface-invoke",
+      "css": "--cds-motion-surface-invoke",
+      "type": "transition",
+      "status": "promoted",
+      "value": {
+        "duration": 220,
+        "delay": 0,
+        "timingFunction": [
+          0.8,
+          0,
+          0,
+          1
+        ],
+        "css": "220ms cubic-bezier(0.8, 0, 0, 1)"
+      }
+    }
+  ],
+  "seam": [
+    {
+      "name": "motionTokens",
+      "kind": "tokens",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "DURATION_FLOOR_MS",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "DurationToken",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "EasingToken",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "CubicBezier",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "usePrefersReducedMotion",
+      "kind": "hook",
+      "from": "@carbon-labs/motion-react",
+      "entry": null
+    },
+    {
+      "name": "reducedClock",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react",
+      "entry": null
+    },
+    {
+      "name": "attachRollover",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "playContentSwap",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "staggerSteps",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "staggerMsForSize",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "durationStepForDistance",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "CONTENT_SWAP",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "SKELETON_WAVE",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "LOADING_MOTION",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "animateLayout",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "stepDown",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "toEasing",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "FeedbackMotion",
+      "kind": "component",
+      "from": "@carbon-labs/motion-react/motion",
+      "entry": null
+    },
+    {
+      "name": "placement",
+      "kind": "namespace",
+      "from": "@carbon-labs/motion-react/motion/placement",
+      "entry": null
+    },
+    {
+      "name": "shadow",
+      "kind": "namespace",
+      "from": "@carbon-labs/motion-react/motion/shadow",
+      "entry": null
+    },
+    {
+      "name": "selection",
+      "kind": "namespace",
+      "from": "@carbon-labs/motion-react/motion/selection",
+      "entry": null
+    },
+    {
+      "name": "MotionProvider",
+      "kind": "component",
+      "from": "@carbon-labs/motion-react",
+      "entry": null
+    },
+    {
+      "name": "MotionLevel",
+      "kind": "type",
+      "from": "@carbon-labs/motion-react",
+      "entry": null
+    },
+    {
+      "name": "tokens",
+      "kind": "tokens",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "applyDraft",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "getDraft",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "Draft",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "axialPlan",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "withAxial",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "attachStack",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "STACK_MOTION",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "Stack",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "StackOptions",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "StackSource",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "StackSwap",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "StackSwipe",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "createReflow",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "playSoftEdge",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "ReflowEntry",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "ReflowPiece",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "attachCastShadow",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "centerCastShadow",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "contrastRatio",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "deriveCastShadowColor",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "registerCastShadow",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "CastElevation",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "attachFloatingCastShadow",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "FloatingCastShadow",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "contentSwapClocks",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "ContentSwap",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "playCue",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "CueSeverity",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "SKELETON_WAVE_ATTR",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "attachSkeletonFallback",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "attachSkeletonWaveRoot",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "createArrivalGroup",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "playSkeletonHandoff",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "screenfulCount",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "ArrivalGroup",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "ScreenfulOptions",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "SkeletonHandoff",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "paneMove",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "playPaneContent",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "clamp01",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "originCause",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "REDUCED_MOTION",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "CONTENT_SLIDE_PX",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "RELAYOUT",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "reflowFadeTiming",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "reflowTiming",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "ReflowTiming",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "BACKDROP",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "LIGHTNESS_STEPS",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "deriveLightnessColors",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "lightnessColors",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "lightnessStep",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "parseColor",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "LightnessSteps",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "RGBA",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "attachScroller",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "Scroller",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "ScrollerOptions",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "ScrollerTrackInfo",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "SELECTION_ARRIVAL",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "SELECTION_LANDED_PX",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "arrivalRect",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "attachSelection",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "bezierEase",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "selectionDuration",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "Selection",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "SelectionMoveInfo",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "SelectionRect",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "SkeletonContrast",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "SkeletonWaveOptions",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "SNAP",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "SNAP_EXIT_FADE_ATTR",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "SNAP_FADE_SHORT",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "SNAP_FRAME",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "SNAP_PIN",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "SNAP_PROPOSED_EASE",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "SNAP_SLIVER_PX",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "snapAnimations",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "snapAxisClock",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "snapClocks",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "snapCollapseAxis",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "snapDurationMs",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "snapEaseAt",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "snapEaseBezier",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "snapEaseCss",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "snapFadeFor",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "snapFades",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "snapIn",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "snapProfileOn",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "snapSliverTimes",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "snapSliverWindow",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "SnapEase",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "SnapLive",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "SnapOrigin",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "SnapProfile",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "SNAP_COMPONENTS",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "snapFloating",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "snapProfileFor",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "STAGGER",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "easedStaggerAt",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "createStillness",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "StillnessMember",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "watchTonal",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "afterLayout",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "beginLayout",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "followLayout",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "holdLayout",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "inLayout",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "onLayout",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "LayoutTransaction",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "cubicBezier",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "easingCss",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "evaluateCurve",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "DEPTH",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "contentAfterMs",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "distanceTokens",
+      "kind": "tokens",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "reduceTokens",
+      "kind": "tokens",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "softEdgeToken",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "useSnapSurface",
+      "kind": "hook",
+      "from": "@carbon-labs/motion-react",
+      "entry": null
+    },
+    {
+      "name": "SnapSurface",
+      "kind": "type",
+      "from": "@carbon-labs/motion-react",
+      "entry": null
+    },
+    {
+      "name": "useLayoutTransaction",
+      "kind": "hook",
+      "from": "@carbon-labs/motion-react",
+      "entry": null
+    },
+    {
+      "name": "useStagger",
+      "kind": "hook",
+      "from": "@carbon-labs/motion-react",
+      "entry": null
+    },
+    {
+      "name": "useFeedbackMotion",
+      "kind": "hook",
+      "from": "@carbon-labs/motion-react/motion/FeedbackMotion",
+      "entry": null
+    },
+    {
+      "name": "DOT_BEHAVIORS",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-react/motion/dotField",
+      "entry": null
+    },
+    {
+      "name": "DOT_PHYSICS",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-react/motion/dotField",
+      "entry": null
+    },
+    {
+      "name": "createDotField",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react/motion/dotField",
+      "entry": null
+    },
+    {
+      "name": "DotBehaviors",
+      "kind": "type",
+      "from": "@carbon-labs/motion-react/motion/dotField",
+      "entry": null
+    },
+    {
+      "name": "DotField",
+      "kind": "type",
+      "from": "@carbon-labs/motion-react/motion/dotField",
+      "entry": null
+    },
+    {
+      "name": "DotFieldOptions",
+      "kind": "type",
+      "from": "@carbon-labs/motion-react/motion/dotField",
+      "entry": null
+    },
+    {
+      "name": "DotPhysics",
+      "kind": "type",
+      "from": "@carbon-labs/motion-react/motion/dotField",
+      "entry": null
+    },
+    {
+      "name": "FIELD_TIMING",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-react/motion/fieldStatus",
+      "entry": null
+    },
+    {
+      "name": "counterAnnouncement",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react/motion/fieldStatus",
+      "entry": null
+    },
+    {
+      "name": "fieldAria",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react/motion/fieldStatus",
+      "entry": null
+    },
+    {
+      "name": "hasText",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react/motion/fieldStatus",
+      "entry": null
+    },
+    {
+      "name": "normalizeFieldProps",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react/motion/fieldStatus",
+      "entry": null
+    },
+    {
+      "name": "useLateStatus",
+      "kind": "hook",
+      "from": "@carbon-labs/motion-react/motion/fieldStatus",
+      "entry": null
+    },
+    {
+      "name": "FieldStatus",
+      "kind": "type",
+      "from": "@carbon-labs/motion-react/motion/fieldStatus",
+      "entry": null
+    },
+    {
+      "name": "LateStatusOptions",
+      "kind": "type",
+      "from": "@carbon-labs/motion-react/motion/fieldStatus",
+      "entry": null
+    },
+    {
+      "name": "NormalizedFieldProps",
+      "kind": "type",
+      "from": "@carbon-labs/motion-react/motion/fieldStatus",
+      "entry": null
+    },
+    {
+      "name": "useMenuTrigger",
+      "kind": "hook",
+      "from": "@carbon-labs/motion-react/motion/menuTrigger",
+      "entry": null
+    },
+    {
+      "name": "EDGE",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-react/motion/placement",
+      "entry": null
+    },
+    {
+      "name": "GAP",
+      "kind": "constant",
+      "from": "@carbon-labs/motion-react/motion/placement",
+      "entry": null
+    },
+    {
+      "name": "anchorInset",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react/motion/placement",
+      "entry": null
+    },
+    {
+      "name": "placeAtPoint",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react/motion/placement",
+      "entry": null
+    },
+    {
+      "name": "placeBesideRow",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react/motion/placement",
+      "entry": null
+    },
+    {
+      "name": "placeOnAnchor",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react/motion/placement",
+      "entry": null
+    },
+    {
+      "name": "range",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react/motion/placement",
+      "entry": null
+    },
+    {
+      "name": "themeOf",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react/motion/placement",
+      "entry": null
+    },
+    {
+      "name": "Placement",
+      "kind": "type",
+      "from": "@carbon-labs/motion-react/motion/placement",
+      "entry": null
+    },
+    {
+      "name": "Range",
+      "kind": "type",
+      "from": "@carbon-labs/motion-react/motion/placement",
+      "entry": null
+    },
+    {
+      "name": "SurfaceAlignment",
+      "kind": "type",
+      "from": "@carbon-labs/motion-react/motion/placement",
+      "entry": null
+    },
+    {
+      "name": "recentArrowDirection",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react/motion/selection",
+      "entry": null
+    },
+    {
+      "name": "setSelectionFont",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react/motion/selection",
+      "entry": null
+    },
+    {
+      "name": "useLatest",
+      "kind": "hook",
+      "from": "@carbon-labs/motion-react/motion/selection",
+      "entry": null
+    },
+    {
+      "name": "useSelectionEngine",
+      "kind": "hook",
+      "from": "@carbon-labs/motion-react/motion/selection",
+      "entry": null
+    },
+    {
+      "name": "pitchAt",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react/motion/selection",
+      "entry": null
+    },
+    {
+      "name": "reachForLength",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react/motion/selection",
+      "entry": null
+    },
+    {
+      "name": "stretchForLength",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react/motion/selection",
+      "entry": null
+    },
+    {
+      "name": "resolveSelectionStyle",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react/motion/selection",
+      "entry": null
+    },
+    {
+      "name": "ResolvedSelectionStyle",
+      "kind": "type",
+      "from": "@carbon-labs/motion-react/motion/selection",
+      "entry": null
+    },
+    {
+      "name": "SelectionMotion",
+      "kind": "type",
+      "from": "@carbon-labs/motion-react/motion/selection",
+      "entry": null
+    },
+    {
+      "name": "SelectionStyleProps",
+      "kind": "type",
+      "from": "@carbon-labs/motion-react/motion/selection",
+      "entry": null
+    },
+    {
+      "name": "registerTwin",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react/motion/selection",
+      "entry": null
+    },
+    {
+      "name": "SurfaceShadowOption",
+      "kind": "type",
+      "from": "@carbon-labs/motion-react/motion/shadow",
+      "entry": null
+    },
+    {
+      "name": "createLeads",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react/motion/sideNavLeads",
+      "entry": null
+    },
+    {
+      "name": "Leads",
+      "kind": "type",
+      "from": "@carbon-labs/motion-react/motion/sideNavLeads",
+      "entry": null
+    },
+    {
+      "name": "useStepGesture",
+      "kind": "hook",
+      "from": "@carbon-labs/motion-react/motion/toggleGesture",
+      "entry": null
+    },
+    {
+      "name": "TooltipGroupContext",
+      "kind": "component",
+      "from": "@carbon-labs/motion-react/motion/useTooltipTrigger",
+      "entry": null
+    },
+    {
+      "name": "TooltipMotion",
+      "kind": "component",
+      "from": "@carbon-labs/motion-react/motion/useTooltipTrigger",
+      "entry": null
+    },
+    {
+      "name": "TooltipMotionContext",
+      "kind": "component",
+      "from": "@carbon-labs/motion-react/motion/useTooltipTrigger",
+      "entry": null
+    },
+    {
+      "name": "chain",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react/motion/useTooltipTrigger",
+      "entry": null
+    },
+    {
+      "name": "mergeRefs",
+      "kind": "function",
+      "from": "@carbon-labs/motion-react/motion/useTooltipTrigger",
+      "entry": null
+    },
+    {
+      "name": "useTooltipReduced",
+      "kind": "hook",
+      "from": "@carbon-labs/motion-react/motion/useTooltipTrigger",
+      "entry": null
+    },
+    {
+      "name": "useTooltipSurface",
+      "kind": "hook",
+      "from": "@carbon-labs/motion-react/motion/useTooltipTrigger",
+      "entry": null
+    },
+    {
+      "name": "useTooltipTrigger",
+      "kind": "hook",
+      "from": "@carbon-labs/motion-react/motion/useTooltipTrigger",
+      "entry": null
+    },
+    {
+      "name": "TooltipGroupValue",
+      "kind": "type",
+      "from": "@carbon-labs/motion-react/motion/useTooltipTrigger",
+      "entry": null
+    },
+    {
+      "name": "TooltipMotionValue",
+      "kind": "type",
+      "from": "@carbon-labs/motion-react/motion/useTooltipTrigger",
+      "entry": null
+    },
+    {
+      "name": "TooltipTriggerOptions",
+      "kind": "type",
+      "from": "@carbon-labs/motion-react/motion/useTooltipTrigger",
+      "entry": null
+    },
+    {
+      "name": "TooltipTriggerProps",
+      "kind": "type",
+      "from": "@carbon-labs/motion-react/motion/useTooltipTrigger",
+      "entry": null
+    },
+    {
+      "name": "*",
+      "kind": "module",
+      "from": "@carbon-labs/motion-react/motion/selection",
+      "entry": "@carbon-labs/v12-motion/selection"
+    }
+  ],
+  "items": [
+    {
+      "key": "v12/about-modal",
+      "id": "about-modal",
+      "title": "V12/AboutModal",
+      "declared": true,
+      "items": [
+        {
+          "item": "the-modal-s-snap",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "content",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "tabs",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "closed",
+        "open"
+      ],
+      "seam": [
+        "SurfaceShadowOption"
+      ]
+    },
+    {
+      "key": "v12/accordion",
+      "id": "accordion",
+      "title": "V12/Accordion",
+      "declared": true,
+      "items": [
+        {
+          "item": "body",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "one-motion",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "soft-edge",
+          "reduced": "at-once",
+          "tokens": [
+            "soft-edge"
+          ]
+        },
+        {
+          "item": "content-in",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "content-out",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "turn",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "chevron",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "rollover",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        }
+      ],
+      "states": [
+        "shut",
+        "opening",
+        "open",
+        "shutting",
+        "disabled"
+      ],
+      "seam": [
+        "Leads",
+        "attachRollover",
+        "createLeads",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/activity-feed",
+      "id": "activity-feed",
+      "title": "V12/ActivityFeed",
+      "declared": true,
+      "items": [
+        {
+          "item": "list-arrival",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "place-hold",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "floating-snap",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "disclosure",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "content-swap",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "soft-edge",
+          "reduced": null,
+          "tokens": [
+            "soft-edge"
+          ]
+        },
+        {
+          "item": "skeleton-reveal",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "stillness",
+          "reduced": null,
+          "tokens": [
+            "pattern-stillness-window"
+          ]
+        }
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "loaded"
+      ],
+      "seam": [
+        "CONTENT_SWAP",
+        "contentSwapClocks",
+        "motionTokens",
+        "playContentSwap",
+        "useFeedbackMotion"
+      ]
+    },
+    {
+      "key": "v12/app-shell",
+      "id": "app-shell",
+      "title": "V12/AppShell",
+      "declared": true,
+      "items": [
+        {
+          "item": "fold",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "overlay-nav",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "panel-push",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "class-edge",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "menu-button",
+          "reduced": "at-once",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "compact",
+        "medium",
+        "expanded",
+        "large"
+      ],
+      "seam": [
+        "DurationToken",
+        "afterLayout",
+        "attachRollover",
+        "durationStepForDistance",
+        "easingCss",
+        "inLayout",
+        "motionTokens",
+        "stepDown",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/breadcrumb",
+      "id": "breadcrumb",
+      "title": "V12/Breadcrumb",
+      "declared": true,
+      "items": [
+        {
+          "item": "rollover-link-form",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "snap-floating",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-snap-floating"
+          ]
+        },
+        {
+          "item": "list-reflow",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "removal",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "slash",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "interruption",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "hover",
+        "press",
+        "focus",
+        "current"
+      ],
+      "seam": [
+        "attachRollover",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/button",
+      "id": "button",
+      "title": "V12/Button",
+      "declared": true,
+      "items": [
+        {
+          "item": "hover",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "size",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "press-and-release",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "toned-steps",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "icon",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "busy",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "focus",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "hover",
+        "press",
+        "focus",
+        "disabled",
+        "busy"
+      ],
+      "seam": [
+        "TooltipMotionContext",
+        "attachRollover"
+      ]
+    },
+    {
+      "key": "v12/card",
+      "id": "card",
+      "title": "V12/Card",
+      "declared": true,
+      "items": [
+        {
+          "item": "rollover-text-card",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "rollover-card-with-controls",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "controls-inside",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "cast-shadow",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "snap",
+          "reduced": null,
+          "tokens": [
+            "pattern-snap-floating",
+            "pattern-snap-mark",
+            "pattern-snap-notification",
+            "pattern-snap-surface",
+            "pattern-snap-tooltip"
+          ]
+        },
+        {
+          "item": "motion-icons",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "hover",
+        "pressed",
+        "focus"
+      ],
+      "seam": [
+        "SurfaceShadowOption",
+        "attachCastShadow",
+        "mergeRefs"
+      ]
+    },
+    {
+      "key": "v12/chat",
+      "id": "chat",
+      "title": "V12/ChatShell",
+      "declared": true,
+      "items": [
+        {
+          "item": "content-swap-in-a-layout-move",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "arrival",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "pinned-scroll",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "streaming",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "history",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "send-to-stop",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "width-move",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "sideways-opening",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "status",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "rise",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "jump-to-a-question",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "marker",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "selection",
+          "reduced": null,
+          "tokens": [
+            "pattern-selection-arrival",
+            "pattern-selection-lead-curve",
+            "pattern-selection-list-timing",
+            "pattern-selection-reach",
+            "pattern-selection-reach-duration",
+            "pattern-selection-stretch",
+            "pattern-selection-timing"
+          ]
+        }
+      ],
+      "states": [
+        "empty",
+        "conversation",
+        "working",
+        "streaming",
+        "generating",
+        "stopped",
+        "notice",
+        "files",
+        "follow-up",
+        "disabled"
+      ],
+      "seam": [
+        "CONTENT_SWAP",
+        "DURATION_FLOOR_MS",
+        "FeedbackMotion",
+        "LOADING_MOTION",
+        "LayoutTransaction",
+        "SKELETON_WAVE",
+        "SurfaceShadowOption",
+        "animateLayout",
+        "attachRollover",
+        "beginLayout",
+        "bezierEase",
+        "durationStepForDistance",
+        "motionTokens",
+        "paneMove",
+        "playContentSwap",
+        "playPaneContent",
+        "playSoftEdge",
+        "reduceTokens",
+        "stepDown",
+        "toEasing",
+        "useFeedbackMotion",
+        "watchTonal"
+      ]
+    },
+    {
+      "key": "v12/checkbox",
+      "id": "checkbox",
+      "title": "V12/Checkbox",
+      "declared": true,
+      "items": [
+        {
+          "item": "check",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "uncheck",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "mixed",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "hover",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "press",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "status-ring",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "message-line",
+          "reduced": "at-once",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "checked",
+        "indeterminate",
+        "disabled",
+        "readOnly",
+        "invalid",
+        "warn"
+      ],
+      "seam": [
+        "attachRollover"
+      ]
+    },
+    {
+      "key": "v12/code-snippet",
+      "id": "code-snippet",
+      "title": "V12/CodeSnippet",
+      "declared": true,
+      "items": [
+        {
+          "item": "show-more",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "soft-edge-collapsed",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "label-roll",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "copy",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "rollover",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        },
+        {
+          "item": "scrollbar",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "loading",
+          "reduced": null,
+          "tokens": [
+            "pattern-loading"
+          ]
+        },
+        {
+          "item": "slow-motion",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "hover",
+        "focus",
+        "copied",
+        "expanded",
+        "disabled",
+        "loading"
+      ],
+      "seam": [
+        "TooltipMotionContext",
+        "attachRollover",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/contained-list",
+      "id": "contained-list",
+      "title": "V12/ContainedList",
+      "declared": true,
+      "items": [
+        {
+          "item": "rollover",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        },
+        {
+          "item": "out",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "move",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "in",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "typing",
+          "reduced": "at-once",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "hover",
+        "pressed",
+        "focus",
+        "disabled"
+      ],
+      "seam": [
+        "CONTENT_SWAP",
+        "DURATION_FLOOR_MS",
+        "LayoutTransaction",
+        "afterLayout",
+        "animateLayout",
+        "attachRollover",
+        "cubicBezier",
+        "easingCss",
+        "inLayout",
+        "motionTokens",
+        "reflowTiming",
+        "usePrefersReducedMotion",
+        "useStagger"
+      ]
+    },
+    {
+      "key": "v12/content-switcher",
+      "id": "content-switcher",
+      "title": "V12/ContentSwitcher",
+      "declared": true,
+      "items": [
+        {
+          "item": "glide",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "press-and-reach",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "drag",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "hover",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "tooltip",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "content-swap",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "container-resize",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "loading",
+          "reduced": null,
+          "tokens": [
+            "pattern-loading"
+          ]
+        }
+      ],
+      "states": [
+        "rest",
+        "hover",
+        "pressed",
+        "selected",
+        "disabled",
+        "loading"
+      ],
+      "seam": [
+        "SNAP_FRAME",
+        "SelectionMoveInfo",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/contextual-bar",
+      "id": "contextual-bar",
+      "title": "V12/ContextualBar",
+      "declared": true,
+      "items": [
+        {
+          "item": "one-ease",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "snap-in",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "fold-out",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "content",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "sliver-guard",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "content-fade",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "room",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "dock-mask",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "count",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "swap",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "stillness",
+          "reduced": null,
+          "tokens": [
+            "pattern-stillness-window"
+          ]
+        }
+      ],
+      "states": [
+        "closed",
+        "open"
+      ],
+      "seam": [
+        "DurationToken",
+        "SNAP_FRAME",
+        "SNAP_SLIVER_PX",
+        "SnapEase",
+        "SnapOrigin",
+        "SnapProfile",
+        "SurfaceShadowOption",
+        "animateLayout",
+        "cubicBezier",
+        "distanceTokens",
+        "durationStepForDistance",
+        "lightnessColors",
+        "lightnessStep",
+        "motionTokens",
+        "playContentSwap",
+        "snapEaseBezier",
+        "snapFadeFor",
+        "snapFades",
+        "snapSliverWindow",
+        "stepDown",
+        "usePrefersReducedMotion",
+        "useSnapSurface"
+      ]
+    },
+    {
+      "key": "v12/copy-button",
+      "id": "copy-button",
+      "title": "V12/CopyButton",
+      "declared": true,
+      "items": [
+        {
+          "item": "rollover",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        },
+        {
+          "item": "copied-mark",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "icon-hover",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "tooltip",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "feedback-roll",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "re-placing",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "slow-motion",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "hover",
+        "press",
+        "focus",
+        "copied",
+        "disabled"
+      ],
+      "seam": [
+        "TooltipMotionContext",
+        "motionTokens"
+      ]
+    },
+    {
+      "key": "v12/data-table",
+      "id": "data-table",
+      "title": "V12/DataTable",
+      "declared": true,
+      "items": [
+        {
+          "item": "expanding-row",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "expand-all",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "fills",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "reveal",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "reflow",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "sort-icon",
+          "reduced": "at-once",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "hover",
+        "selected",
+        "expanded",
+        "focus"
+      ],
+      "seam": [
+        "BACKDROP",
+        "LOADING_MOTION",
+        "attachRollover",
+        "useFeedbackMotion",
+        "usePrefersReducedMotion",
+        "useStagger"
+      ]
+    },
+    {
+      "key": "v12/date-picker",
+      "id": "date-picker",
+      "title": "V12/DatePickerV2",
+      "declared": true,
+      "items": [
+        {
+          "item": "snap-floating-profile",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "selection-hero",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "range-ends",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "band",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "rollover",
+          "reduced": null,
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        },
+        {
+          "item": "today-picked",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "tooltip",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "content-swap",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "roll",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        }
+      ],
+      "states": [
+        "rest",
+        "open",
+        "invalid",
+        "warning",
+        "disabled",
+        "readOnly"
+      ],
+      "seam": [
+        "SNAP_FRAME",
+        "SurfaceShadowOption",
+        "attachRollover",
+        "fieldAria",
+        "hasText",
+        "motionTokens",
+        "normalizeFieldProps",
+        "placeOnAnchor",
+        "playContentSwap",
+        "snapAnimations",
+        "snapProfileFor",
+        "themeOf",
+        "useLateStatus",
+        "usePrefersReducedMotion",
+        "useSnapSurface"
+      ]
+    },
+    {
+      "key": "v12/description-list",
+      "id": "description-list",
+      "title": "V12/DescriptionList",
+      "declared": true,
+      "items": [
+        {
+          "item": "skeleton-hand-off",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "copy-reveal",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "loaded",
+        "loading"
+      ],
+      "seam": []
+    },
+    {
+      "key": "v12/disclosure",
+      "id": "disclosure",
+      "title": "V12/Disclosure",
+      "declared": true,
+      "items": [
+        {
+          "item": "open",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "shut",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "content-arrival",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "one-motion",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "swap",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "soft-edge",
+          "reduced": "at-once",
+          "tokens": [
+            "soft-edge"
+          ]
+        },
+        {
+          "item": "turn",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "place-open",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "place-shut",
+          "reduced": "at-once",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "shut",
+        "opening",
+        "open",
+        "shutting"
+      ],
+      "seam": [
+        "DurationToken",
+        "LayoutTransaction",
+        "REDUCED_MOTION",
+        "animateLayout",
+        "beginLayout",
+        "distanceTokens",
+        "durationStepForDistance",
+        "easingCss",
+        "inLayout",
+        "motionTokens",
+        "stepDown"
+      ]
+    },
+    {
+      "key": "v12/dropdown",
+      "id": "dropdown",
+      "title": "V12/Dropdown",
+      "declared": true,
+      "items": [
+        {
+          "item": "snap",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-snap-floating",
+            "pattern-snap-mark",
+            "pattern-snap-notification",
+            "pattern-snap-surface",
+            "pattern-snap-tooltip"
+          ]
+        },
+        {
+          "item": "fold",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "highlight",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "press",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "chevron",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "filter",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "typing-burst",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "reorder",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "count-tag",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "check",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "soft-edge",
+          "reduced": null,
+          "tokens": [
+            "soft-edge"
+          ]
+        },
+        {
+          "item": "outline-ladder",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "error-border",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "message-line",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "status-mark",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "late-status",
+          "reduced": "full",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "invalid",
+        "warn",
+        "disabled",
+        "readOnly"
+      ],
+      "seam": [
+        "CONTENT_SWAP",
+        "FIELD_TIMING",
+        "FieldStatus",
+        "NormalizedFieldProps",
+        "SNAP_FRAME",
+        "SurfaceShadowOption",
+        "afterLayout",
+        "animateLayout",
+        "cubicBezier",
+        "easingCss",
+        "fieldAria",
+        "hasText",
+        "inLayout",
+        "motionTokens",
+        "normalizeFieldProps",
+        "placeOnAnchor",
+        "snapAnimations",
+        "snapProfileFor",
+        "themeOf",
+        "useLateStatus",
+        "usePrefersReducedMotion",
+        "useSnapSurface"
+      ]
+    },
+    {
+      "key": "v12/duration-bar",
+      "id": "duration-bar",
+      "title": "V12/DurationBar",
+      "declared": true,
+      "items": [
+        {
+          "item": "glide",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "press",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "drag",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "hover-and-press",
+          "reduced": "full",
+          "tokens": []
+        },
+        {
+          "item": "fill",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "editable",
+        "fixed",
+        "reference",
+        "hideNumber"
+      ],
+      "seam": []
+    },
+    {
+      "key": "v12/easing-graph",
+      "id": "easing-graph",
+      "title": "V12/EasingGraph",
+      "declared": true,
+      "items": [
+        {
+          "item": "handle-ring",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "handle-press",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "arm",
+          "reduced": "full",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "hover",
+        "pressed"
+      ],
+      "seam": [
+        "CubicBezier",
+        "attachRollover",
+        "clamp01"
+      ]
+    },
+    {
+      "key": "v12/empty-state",
+      "id": "empty-state",
+      "title": "V12/EmptyState",
+      "declared": true,
+      "items": [
+        {
+          "item": "content-swap",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "rollover",
+          "reduced": null,
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        }
+      ],
+      "states": [
+        "page",
+        "table",
+        "panel",
+        "tile"
+      ],
+      "seam": []
+    },
+    {
+      "key": "v12/feedback",
+      "id": "feedback",
+      "title": "V12/Feedback",
+      "declared": true,
+      "items": [
+        {
+          "item": "spinner",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "status-handoff",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "skeleton-wave",
+          "reduced": null,
+          "tokens": [
+            "pattern-skeleton-wave"
+          ]
+        },
+        {
+          "item": "count",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "pending",
+        "settled",
+        "loading",
+        "loaded"
+      ],
+      "seam": [
+        "ArrivalGroup",
+        "CueSeverity",
+        "DURATION_FLOOR_MS",
+        "DurationToken",
+        "LOADING_MOTION",
+        "REDUCED_MOTION",
+        "RELAYOUT",
+        "ReflowEntry",
+        "ReflowPiece",
+        "ReflowTiming",
+        "SKELETON_WAVE",
+        "SKELETON_WAVE_ATTR",
+        "SNAP",
+        "SNAP_COMPONENTS",
+        "ScreenfulOptions",
+        "SkeletonContrast",
+        "SkeletonHandoff",
+        "SkeletonWaveOptions",
+        "SnapProfile",
+        "Stack",
+        "StackSource",
+        "StackSwap",
+        "StackSwipe",
+        "afterLayout",
+        "animateLayout",
+        "attachRollover",
+        "attachSkeletonFallback",
+        "attachSkeletonWaveRoot",
+        "attachStack",
+        "createArrivalGroup",
+        "createReflow",
+        "cubicBezier",
+        "distanceTokens",
+        "durationStepForDistance",
+        "easingCss",
+        "inLayout",
+        "motionTokens",
+        "playContentSwap",
+        "playCue",
+        "playSkeletonHandoff",
+        "reducedClock",
+        "reflowFadeTiming",
+        "reflowTiming",
+        "screenfulCount",
+        "snapFadeFor",
+        "snapProfileFor",
+        "stepDown",
+        "toEasing",
+        "useFeedbackMotion",
+        "useLayoutTransaction"
+      ]
+    },
+    {
+      "key": "v12/file-uploader",
+      "id": "file-uploader",
+      "title": "V12/FileUploader",
+      "declared": true,
+      "items": [
+        {
+          "item": "disclosure",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "error-disclosure",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "arrival-stagger",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "layout-transaction",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "status-hand-off",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "content-swap",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "status-mark-beat",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "rollover",
+          "reduced": null,
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        },
+        {
+          "item": "drag-over",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "leaving",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "label-roll",
+          "reduced": "at-once",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "uploading",
+        "complete",
+        "edit"
+      ],
+      "seam": [
+        "STAGGER",
+        "attachRollover",
+        "easingCss",
+        "motionTokens",
+        "playContentSwap",
+        "staggerMsForSize",
+        "staggerSteps",
+        "useFeedbackMotion"
+      ]
+    },
+    {
+      "key": "v12/filter-panel",
+      "id": "filter-panel",
+      "title": "V12/FilterPanel",
+      "declared": true,
+      "items": [
+        {
+          "item": "disclosure",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "the-panel-s-snap-and-push",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "content-movement-in-place",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "list-presence",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "the-tags-snap-from-below",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "removal",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "room",
+          "reduced": "at-once",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "closed",
+        "open"
+      ],
+      "seam": [
+        "usePrefersReducedMotion",
+        "useStagger"
+      ]
+    },
+    {
+      "key": "v12/form-layout",
+      "id": "form-layout",
+      "title": "V12/FormLayout",
+      "declared": true,
+      "items": [
+        {
+          "item": "none",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "save",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "save-swap",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "saving-status",
+          "reduced": "at-once",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "disabled",
+        "readOnly"
+      ],
+      "seam": [
+        "SNAP_FRAME",
+        "SnapOrigin",
+        "SnapProfile",
+        "distanceTokens",
+        "durationStepForDistance",
+        "motionTokens",
+        "stepDown",
+        "usePrefersReducedMotion",
+        "useSnapSurface"
+      ]
+    },
+    {
+      "key": "v12/full-page-error",
+      "id": "full-page-error",
+      "title": "V12/FullPageError",
+      "declared": true,
+      "items": [
+        {
+          "item": "arrow-draw",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "group-fades",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "content-swap",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "arrive",
+        "swap"
+      ],
+      "seam": [
+        "CubicBezier",
+        "DURATION_FLOOR_MS",
+        "LOADING_MOTION",
+        "cubicBezier",
+        "durationStepForDistance",
+        "evaluateCurve",
+        "motionTokens",
+        "reducedClock",
+        "snapFadeFor",
+        "staggerSteps",
+        "useFeedbackMotion",
+        "useStagger"
+      ]
+    },
+    {
+      "key": "v12/icon-motion",
+      "id": "icon-motion",
+      "title": "V12/IconMotion",
+      "declared": true,
+      "items": [],
+      "states": [
+        "rest",
+        "hover"
+      ],
+      "seam": [
+        "MotionProvider",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/illustrations",
+      "id": "illustrations",
+      "title": "V12/Illustrations",
+      "declared": true,
+      "items": [],
+      "states": [
+        "rest"
+      ],
+      "seam": [
+        "clamp01"
+      ]
+    },
+    {
+      "key": "v12/inline-edit",
+      "id": "inline-edit",
+      "title": "V12/InlineEdit",
+      "declared": true,
+      "items": [
+        {
+          "item": "content-swap-in-place",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "layout-move",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "mark-snap",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "status-hand-off",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "quiet-hover",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "view",
+        "edit",
+        "saving",
+        "saved",
+        "invalid",
+        "readOnly",
+        "disabled"
+      ],
+      "seam": [
+        "ContentSwap",
+        "DURATION_FLOOR_MS",
+        "DurationToken",
+        "SNAP",
+        "animateLayout",
+        "attachRollover",
+        "durationStepForDistance",
+        "motionTokens",
+        "playContentSwap",
+        "useFeedbackMotion"
+      ]
+    },
+    {
+      "key": "v12/jobs-tray",
+      "id": "jobs-tray",
+      "title": "V12/JobsTray",
+      "declared": true,
+      "items": [
+        {
+          "item": "floating-snap",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "retarget",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "status-hand-off",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "list-arrival",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "place-shut",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "status-mark",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "count-roll",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "toast",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "closed",
+        "open"
+      ],
+      "seam": [
+        "SNAP",
+        "SNAP_FRAME",
+        "SnapProfile",
+        "SurfaceAlignment",
+        "SurfaceShadowOption",
+        "placeOnAnchor",
+        "playContentSwap",
+        "themeOf",
+        "usePrefersReducedMotion",
+        "useSnapSurface"
+      ]
+    },
+    {
+      "key": "v12/jump-to",
+      "id": "jump-to",
+      "title": "V12/JumpTo",
+      "declared": true,
+      "items": [
+        {
+          "item": "4px-arrival",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "scroll-glide",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "stick-to-end",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "hidden",
+        "shown",
+        "count"
+      ],
+      "seam": [
+        "SELECTION_ARRIVAL",
+        "SNAP_FRAME",
+        "SnapProfile",
+        "arrivalRect",
+        "deriveCastShadowColor",
+        "durationStepForDistance",
+        "motionTokens",
+        "snapClocks",
+        "snapEaseAt",
+        "snapFadeFor",
+        "usePrefersReducedMotion",
+        "useSnapSurface"
+      ]
+    },
+    {
+      "key": "v12/kit-defaults",
+      "id": "kit-defaults",
+      "title": "V12/KitDefaults",
+      "declared": true,
+      "items": [],
+      "states": [
+        "rest"
+      ],
+      "seam": [
+        "CastElevation"
+      ]
+    },
+    {
+      "key": "v12/link",
+      "id": "link",
+      "title": "V12/Link",
+      "declared": true,
+      "items": [
+        {
+          "item": "rollover-link-blue",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "colours",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "underline-standalone",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "underline-inline",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "motion-icon",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "slow-motion",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "hover",
+        "press",
+        "focus",
+        "visited",
+        "disabled"
+      ],
+      "seam": [
+        "TooltipMotionContext",
+        "attachRollover"
+      ]
+    },
+    {
+      "key": "v12/list-reflow",
+      "id": "list-reflow",
+      "title": "V12/ListReflow",
+      "declared": true,
+      "items": [
+        {
+          "item": "relayout",
+          "reduced": "shorter-clock",
+          "tokens": [
+            "pattern-relayout-distance-steps",
+            "pattern-relayout-reflow"
+          ]
+        }
+      ],
+      "states": [
+        "rest"
+      ],
+      "seam": [
+        "CONTENT_SLIDE_PX",
+        "DURATION_FLOOR_MS",
+        "DurationToken",
+        "REDUCED_MOTION",
+        "RELAYOUT",
+        "animateLayout",
+        "cubicBezier",
+        "durationStepForDistance",
+        "motionTokens",
+        "toEasing"
+      ]
+    },
+    {
+      "key": "v12/loading",
+      "id": "loading",
+      "title": "V12/Loading",
+      "declared": true,
+      "items": [
+        {
+          "item": "spinner",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "status-handoff",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "loading-gate",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "active",
+        "stopping",
+        "inactive",
+        "finished",
+        "error"
+      ],
+      "seam": [
+        "CONTENT_SWAP",
+        "DURATION_FLOOR_MS",
+        "DurationToken",
+        "SKELETON_WAVE",
+        "easingCss",
+        "motionTokens",
+        "reducedClock",
+        "useFeedbackMotion"
+      ]
+    },
+    {
+      "key": "v12/menu",
+      "id": "menu",
+      "title": "V12/Menu",
+      "declared": true,
+      "items": [
+        {
+          "item": "open",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "content",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "fade",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "close",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "highlight",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "danger",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "press",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "submenu",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "chevron",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "closed",
+        "open",
+        "loading"
+      ],
+      "seam": [
+        "CastElevation",
+        "EDGE",
+        "Placement",
+        "Range",
+        "SNAP_EXIT_FADE_ATTR",
+        "SNAP_FRAME",
+        "SelectionMoveInfo",
+        "SurfaceAlignment",
+        "SurfaceShadowOption",
+        "anchorInset",
+        "attachFloatingCastShadow",
+        "cubicBezier",
+        "originCause",
+        "placeAtPoint",
+        "placeBesideRow",
+        "placeOnAnchor",
+        "range",
+        "snapAnimations",
+        "snapProfileFor",
+        "themeOf",
+        "toEasing",
+        "useMenuTrigger",
+        "usePrefersReducedMotion",
+        "useSnapSurface"
+      ]
+    },
+    {
+      "key": "v12/modal",
+      "id": "modal",
+      "title": "V12/Modal",
+      "declared": true,
+      "items": [
+        {
+          "item": "overlay",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "snap-arrival",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "cursor-origin",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "pull-back",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "page-recede-and-blur",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "content-swap",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "cast-shadow",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "closed",
+        "open",
+        "loading"
+      ],
+      "seam": [
+        "RGBA",
+        "SNAP_FRAME",
+        "SNAP_PROPOSED_EASE",
+        "SnapProfile",
+        "SurfaceShadowOption",
+        "deriveCastShadowColor",
+        "distanceTokens",
+        "easingCss",
+        "motionTokens",
+        "parseColor",
+        "playContentSwap",
+        "reducedClock",
+        "stepDown",
+        "themeOf",
+        "usePrefersReducedMotion",
+        "useSnapSurface"
+      ]
+    },
+    {
+      "key": "v12/notification",
+      "id": "notification",
+      "title": "V12/Notification",
+      "declared": true,
+      "items": [
+        {
+          "item": "snap",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-snap-floating",
+            "pattern-snap-mark",
+            "pattern-snap-notification",
+            "pattern-snap-surface",
+            "pattern-snap-tooltip"
+          ]
+        },
+        {
+          "item": "out",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "cue",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "content-swap",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "duration-by-travel",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "timer",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "swipe",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "stack",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "swap",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "deal",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "count",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "stillness",
+          "reduced": null,
+          "tokens": [
+            "pattern-stillness-window"
+          ]
+        },
+        {
+          "item": "rollover",
+          "reduced": null,
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        },
+        {
+          "item": "cast-shadow",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "error",
+        "info",
+        "info-square",
+        "success",
+        "warning",
+        "warning-alt"
+      ],
+      "seam": [
+        "CastElevation",
+        "DURATION_FLOOR_MS",
+        "FloatingCastShadow",
+        "SnapLive",
+        "StackSource",
+        "StackSwap",
+        "SurfaceShadowOption",
+        "animateLayout",
+        "attachFloatingCastShadow",
+        "attachRollover",
+        "durationStepForDistance",
+        "holdLayout",
+        "inLayout",
+        "motionTokens",
+        "playContentSwap",
+        "reducedClock",
+        "snapAnimations",
+        "snapDurationMs",
+        "snapEaseAt",
+        "snapEaseCss",
+        "snapIn",
+        "snapProfileFor",
+        "stepDown",
+        "useFeedbackMotion"
+      ]
+    },
+    {
+      "key": "v12/notifications-panel",
+      "id": "notifications-panel",
+      "title": "V12/NotificationsPanel",
+      "declared": true,
+      "items": [
+        {
+          "item": "snap-floating",
+          "reduced": null,
+          "tokens": [
+            "pattern-snap-floating"
+          ]
+        },
+        {
+          "item": "collapse",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "layout-transaction",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "stagger",
+          "reduced": "shorter-clock",
+          "tokens": [
+            "pattern-stagger-size-steps",
+            "pattern-stagger-window",
+            "stagger-step-01",
+            "stagger-step-02",
+            "stagger-step-03",
+            "stagger-step-04",
+            "stagger-step-05",
+            "stagger-step-06",
+            "stagger-step-07",
+            "stagger-step-08",
+            "stagger-step-09",
+            "stagger-step-10"
+          ]
+        },
+        {
+          "item": "toggle-icons",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "rolltext",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "rollover",
+          "reduced": null,
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        }
+      ],
+      "states": [
+        "closed",
+        "open"
+      ],
+      "seam": [
+        "REDUCED_MOTION",
+        "SNAP",
+        "SNAP_FRAME",
+        "SnapProfile",
+        "SurfaceAlignment",
+        "SurfaceShadowOption",
+        "animateLayout",
+        "attachRollover",
+        "durationStepForDistance",
+        "motionTokens",
+        "placeOnAnchor",
+        "playContentSwap",
+        "staggerSteps",
+        "stepDown",
+        "themeOf",
+        "usePrefersReducedMotion",
+        "useSnapSurface",
+        "useStagger"
+      ]
+    },
+    {
+      "key": "v12/number-input",
+      "id": "number-input",
+      "title": "V12/NumberInput",
+      "declared": true,
+      "items": [
+        {
+          "item": "roll",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        },
+        {
+          "item": "outline-ladder",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "error-border",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "message-line",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "status-mark",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "late-status",
+          "reduced": "full",
+          "tokens": []
+        },
+        {
+          "item": "rollover",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        },
+        {
+          "item": "tooltip",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "ai-fill",
+          "reduced": "at-once",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "invalid",
+        "warn",
+        "disabled",
+        "readOnly"
+      ],
+      "seam": [
+        "FIELD_TIMING",
+        "fieldAria",
+        "hasText",
+        "motionTokens",
+        "normalizeFieldProps",
+        "useLateStatus",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/options-tile",
+      "id": "options-tile",
+      "title": "V12/OptionsTile",
+      "declared": true,
+      "items": [
+        {
+          "item": "open-and-shut",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "settings-in",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "sheet",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "summary-fade",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "summary-words",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "rollover",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        },
+        {
+          "item": "switch",
+          "reduced": "shorter-clock",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "shut",
+        "open",
+        "invalid",
+        "warn",
+        "locked"
+      ],
+      "seam": [
+        "CubicBezier",
+        "attachRollover",
+        "evaluateCurve",
+        "motionTokens",
+        "playContentSwap",
+        "snapFadeFor",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/page-header",
+      "id": "page-header",
+      "title": "V12/PageHeader",
+      "declared": true,
+      "items": [
+        {
+          "item": "collapse-and-expand",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "title-swap",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "details",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "the-jump",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "ghost-hairline",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "soft-edge",
+          "reduced": null,
+          "tokens": [
+            "soft-edge"
+          ]
+        },
+        {
+          "item": "the-room-it-keeps",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "no-fade",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "expanded",
+        "collapsed"
+      ],
+      "seam": [
+        "DURATION_FLOOR_MS",
+        "SNAP_FADE_SHORT",
+        "afterLayout",
+        "animateLayout",
+        "durationStepForDistance",
+        "inLayout",
+        "mergeRefs",
+        "motionTokens",
+        "onLayout",
+        "reflowTiming",
+        "stepDown",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/pagination",
+      "id": "pagination",
+      "title": "V12/Pagination",
+      "declared": true,
+      "items": [
+        {
+          "item": "content-swap",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "glide",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "snap-floating",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-snap-floating"
+          ]
+        },
+        {
+          "item": "rollover",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        },
+        {
+          "item": "stillness",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-stillness-window"
+          ]
+        }
+      ],
+      "states": [
+        "rest",
+        "hover",
+        "pressed",
+        "focus",
+        "disabled"
+      ],
+      "seam": [
+        "easingCss",
+        "playContentSwap",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/pagination-nav",
+      "id": "pagination-nav",
+      "title": "V12/PaginationNav",
+      "declared": true,
+      "items": [
+        {
+          "item": "selection-marker",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "selection-gesture",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "window-shift",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "list-reflow-carry",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "soft-edge",
+          "reduced": null,
+          "tokens": [
+            "soft-edge"
+          ]
+        },
+        {
+          "item": "snap-floating",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-snap-floating"
+          ]
+        },
+        {
+          "item": "rollover",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        },
+        {
+          "item": "stillness",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-stillness-window"
+          ]
+        }
+      ],
+      "states": [
+        "rest",
+        "hover",
+        "pressed",
+        "selected",
+        "focus"
+      ],
+      "seam": [
+        "SelectionMoveInfo",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/popover",
+      "id": "popover",
+      "title": "V12/Popover",
+      "declared": true,
+      "items": [
+        {
+          "item": "snap",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-snap-floating",
+            "pattern-snap-mark",
+            "pattern-snap-notification",
+            "pattern-snap-surface",
+            "pattern-snap-tooltip"
+          ]
+        },
+        {
+          "item": "out",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "fade",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "interrupted",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "soft-edge",
+          "reduced": "at-once",
+          "tokens": [
+            "soft-edge"
+          ]
+        },
+        {
+          "item": "cast-shadow",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "timing-by-size",
+          "reduced": "at-once",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "closed",
+        "open"
+      ],
+      "seam": [
+        "CastElevation",
+        "EDGE",
+        "GAP",
+        "SNAP_EXIT_FADE_ATTR",
+        "SNAP_FRAME",
+        "SelectionRect",
+        "SnapSurface",
+        "SurfaceShadowOption",
+        "anchorInset",
+        "mergeRefs",
+        "snapAnimations",
+        "snapProfileFor",
+        "softEdgeToken",
+        "usePrefersReducedMotion",
+        "useSnapSurface"
+      ]
+    },
+    {
+      "key": "v12/processing",
+      "id": "processing",
+      "title": "V12/Processing",
+      "declared": true,
+      "items": [
+        {
+          "item": "load-in",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "pulse",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "swing",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "swing-clock",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "spin",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "square-s-fourth-dot",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "wiggle",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "out",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "shared-clock",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "interruption",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "loading",
+        "triangle",
+        "square",
+        "out"
+      ],
+      "seam": [
+        "DurationToken",
+        "EasingToken",
+        "SKELETON_WAVE",
+        "clamp01",
+        "easingCss",
+        "motionTokens",
+        "useFeedbackMotion"
+      ]
+    },
+    {
+      "key": "v12/progress-bar",
+      "id": "progress-bar",
+      "title": "V12/ProgressBar",
+      "declared": true,
+      "items": [
+        {
+          "item": "duration-by-travel",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "burst-throttle",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "indeterminate-loop",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "shared-phase",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "loop-and-value",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "pulse",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "finished",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "error",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "content-swap",
+          "reduced": "at-once",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "active",
+        "indeterminate",
+        "finished",
+        "error"
+      ],
+      "seam": [
+        "DURATION_FLOOR_MS",
+        "DurationToken",
+        "SKELETON_WAVE",
+        "durationStepForDistance",
+        "easingCss",
+        "motionTokens",
+        "stepDown",
+        "useFeedbackMotion"
+      ]
+    },
+    {
+      "key": "v12/progress-indicator",
+      "id": "progress-indicator",
+      "title": "V12/ProgressIndicator",
+      "declared": true,
+      "items": [
+        {
+          "item": "stretch",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "reach",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "one-clock",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "icon-state-change",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "rollover",
+          "reduced": null,
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        }
+      ],
+      "states": [
+        "incomplete",
+        "current",
+        "complete",
+        "invalid",
+        "disabled"
+      ],
+      "seam": [
+        "DURATION_FLOOR_MS",
+        "Selection",
+        "attachRollover",
+        "attachSelection",
+        "durationStepForDistance",
+        "motionTokens",
+        "pitchAt",
+        "reachForLength",
+        "stretchForLength",
+        "useFeedbackMotion"
+      ]
+    },
+    {
+      "key": "v12/progress-ring",
+      "id": "progress-ring",
+      "title": "V12/ProgressRing",
+      "declared": true,
+      "items": [
+        {
+          "item": "draw-on",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "duration-by-travel",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "burst-throttle",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "hand-off-from-turning",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "status-hand-off",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "back-to-active",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "value-removed",
+          "reduced": "at-once",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "active",
+        "indeterminate",
+        "finished",
+        "error"
+      ],
+      "seam": [
+        "DURATION_FLOOR_MS",
+        "DurationToken",
+        "durationStepForDistance",
+        "easingCss",
+        "motionTokens",
+        "useFeedbackMotion"
+      ]
+    },
+    {
+      "key": "v12/radio-button",
+      "id": "radio-button",
+      "title": "V12/RadioButton",
+      "declared": true,
+      "items": [
+        {
+          "item": "dot-in",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "dot-out",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "hover",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "press",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "status-ring",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "message-line",
+          "reduced": "at-once",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "checked",
+        "disabled",
+        "readOnly",
+        "invalid",
+        "warn"
+      ],
+      "seam": [
+        "attachRollover"
+      ]
+    },
+    {
+      "key": "v12/recipes",
+      "id": "recipes",
+      "title": "V12/Recipes",
+      "declared": true,
+      "items": [],
+      "states": [],
+      "seam": [
+        "DURATION_FLOOR_MS",
+        "animateLayout",
+        "inLayout",
+        "reflowTiming",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/roll-text",
+      "id": "roll-text",
+      "title": "V12/RollText",
+      "declared": true,
+      "items": [
+        {
+          "item": "duration-moderate-01",
+          "reduced": "at-once",
+          "tokens": [
+            "duration-moderate-01"
+          ]
+        },
+        {
+          "item": "easing-standard-productive",
+          "reduced": "at-once",
+          "tokens": [
+            "easing-standard-productive"
+          ]
+        },
+        {
+          "item": "easing-entrance-productive",
+          "reduced": "at-once",
+          "tokens": [
+            "easing-entrance-productive"
+          ]
+        }
+      ],
+      "states": [
+        "rest"
+      ],
+      "seam": [
+        "cubicBezier",
+        "motionTokens",
+        "toEasing",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/scroller",
+      "id": "scroller",
+      "title": "V12/Scroller",
+      "declared": true,
+      "items": [
+        {
+          "item": "readout",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "length",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "arrival",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "leave",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "hover",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "press",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "squash",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "track-press",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "soft-edge",
+          "reduced": null,
+          "tokens": [
+            "soft-edge"
+          ]
+        }
+      ],
+      "states": [
+        "hidden",
+        "shown",
+        "near",
+        "pressed",
+        "dragging",
+        "disabled"
+      ],
+      "seam": [
+        "Scroller",
+        "ScrollerOptions",
+        "ScrollerTrackInfo",
+        "attachScroller",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/search",
+      "id": "search",
+      "title": "V12/Search",
+      "declared": true,
+      "items": [
+        {
+          "item": "expand",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "content-with-the-opening",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "soft-edge",
+          "reduced": null,
+          "tokens": [
+            "soft-edge"
+          ]
+        },
+        {
+          "item": "fill-and-hairline",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "clear-button-in",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "clear-button-out",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "hover",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "rollover",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        },
+        {
+          "item": "outline-ladder",
+          "reduced": "shorter-clock",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "hover",
+        "focus",
+        "typed",
+        "disabled",
+        "readOnly",
+        "collapsed",
+        "expanded"
+      ],
+      "seam": [
+        "SNAP",
+        "animateLayout",
+        "distanceTokens",
+        "easingCss",
+        "motionTokens",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/select",
+      "id": "select",
+      "title": "V12/Select",
+      "declared": true,
+      "items": [
+        {
+          "item": "outline-ladder",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "message-line",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "status-mark",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "error-border",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "icon-hover",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "list-snap-in",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "list-snap-out",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "list-fade",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "invalid",
+        "warn",
+        "disabled",
+        "readOnly"
+      ],
+      "seam": [
+        "fieldAria",
+        "hasText",
+        "normalizeFieldProps",
+        "useLateStatus"
+      ]
+    },
+    {
+      "key": "v12/select-list",
+      "id": "select-list",
+      "title": "V12/SelectList",
+      "declared": true,
+      "items": [
+        {
+          "item": "glide",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "reach",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "drag",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "arrival",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "hover",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "loading",
+          "reduced": null,
+          "tokens": [
+            "pattern-loading"
+          ]
+        }
+      ],
+      "states": [
+        "rest",
+        "hover",
+        "pressed",
+        "selected",
+        "none",
+        "disabled",
+        "loading"
+      ],
+      "seam": [
+        "Selection",
+        "SelectionMoveInfo",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/selection-kit",
+      "id": "selection-kit",
+      "title": "V12/SelectionKit",
+      "declared": true,
+      "items": [
+        {
+          "item": "content-swap",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "switching"
+      ],
+      "seam": [
+        "CONTENT_SWAP",
+        "DURATION_FLOOR_MS",
+        "LIGHTNESS_STEPS",
+        "LightnessSteps",
+        "ResolvedSelectionStyle",
+        "SELECTION_ARRIVAL",
+        "SELECTION_LANDED_PX",
+        "Selection",
+        "SelectionMotion",
+        "SelectionRect",
+        "SelectionStyleProps",
+        "animateLayout",
+        "beginLayout",
+        "cubicBezier",
+        "easingCss",
+        "holdLayout",
+        "inLayout",
+        "motionTokens",
+        "playContentSwap",
+        "recentArrowDirection",
+        "registerTwin",
+        "resolveSelectionStyle",
+        "selectionDuration",
+        "setSelectionFont",
+        "toEasing",
+        "useFeedbackMotion",
+        "usePrefersReducedMotion",
+        "useSelectionEngine"
+      ]
+    },
+    {
+      "key": "v12/shimmer-text",
+      "id": "shimmer-text",
+      "title": "V12/ShimmerText",
+      "declared": true,
+      "items": [
+        {
+          "item": "pass",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "speed",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "band",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "colours",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "start",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "wave",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "active-off",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "reveal",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "off-screen",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest"
+      ],
+      "seam": [
+        "DURATION_FLOOR_MS",
+        "RGBA",
+        "SKELETON_WAVE",
+        "contrastRatio",
+        "cubicBezier",
+        "motionTokens",
+        "parseColor",
+        "useFeedbackMotion"
+      ]
+    },
+    {
+      "key": "v12/side-nav",
+      "id": "side-nav",
+      "title": "V12/SideNav",
+      "declared": true,
+      "items": [
+        {
+          "item": "glide",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "jump",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "landing",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "pass",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "group",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "group-bar",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "arrival",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "rail",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "ghost-container",
+          "reduced": "at-once",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "current",
+        "disabled",
+        "open",
+        "shut",
+        "collapsed"
+      ],
+      "seam": [
+        "DURATION_FLOOR_MS",
+        "LayoutTransaction",
+        "Leads",
+        "SNAP_FRAME",
+        "Selection",
+        "SelectionMoveInfo",
+        "SurfaceShadowOption",
+        "attachCastShadow",
+        "beginLayout",
+        "bezierEase",
+        "centerCastShadow",
+        "clamp01",
+        "createLeads",
+        "cubicBezier",
+        "deriveCastShadowColor",
+        "deriveLightnessColors",
+        "durationStepForDistance",
+        "lightnessColors",
+        "lightnessStep",
+        "motionTokens",
+        "reducedClock",
+        "registerCastShadow",
+        "snapEaseCss",
+        "stepDown",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/side-panel",
+      "id": "side-panel",
+      "title": "V12/SidePanel",
+      "declared": true,
+      "items": [
+        {
+          "item": "snap-by-its-edge",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "axial-timing",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "snap-floating",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-snap-floating"
+          ]
+        },
+        {
+          "item": "content-arrival",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "collapse-exit",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "push",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "overlay",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "step-swap",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "condensed-title",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "tooltip-hold",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "closed",
+        "open"
+      ],
+      "seam": [
+        "DURATION_FLOOR_MS",
+        "SNAP",
+        "SNAP_FRAME",
+        "SnapOrigin",
+        "SnapProfile",
+        "SurfaceShadowOption",
+        "animateLayout",
+        "contentAfterMs",
+        "distanceTokens",
+        "easingCss",
+        "motionTokens",
+        "reducedClock",
+        "snapAnimations",
+        "snapAxisClock",
+        "snapClocks",
+        "snapCollapseAxis",
+        "snapEaseCss",
+        "snapFades",
+        "snapFloating",
+        "snapProfileOn",
+        "snapSliverTimes",
+        "stepDown",
+        "usePrefersReducedMotion",
+        "useSnapSurface"
+      ]
+    },
+    {
+      "key": "v12/slider",
+      "id": "slider",
+      "title": "V12/Slider",
+      "declared": true,
+      "items": [
+        {
+          "item": "glide",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "press",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "drag",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "snap",
+          "reduced": "shorter-clock",
+          "tokens": [
+            "pattern-snap-floating",
+            "pattern-snap-mark",
+            "pattern-snap-notification",
+            "pattern-snap-surface",
+            "pattern-snap-tooltip"
+          ]
+        },
+        {
+          "item": "hover-and-press",
+          "reduced": "full",
+          "tokens": []
+        },
+        {
+          "item": "fill",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "status",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "message",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "meeting",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "readout",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "ai",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "hover",
+        "pressed",
+        "disabled",
+        "readOnly",
+        "loading",
+        "invalid",
+        "warn"
+      ],
+      "seam": [
+        "CubicBezier",
+        "DOT_BEHAVIORS",
+        "DOT_PHYSICS",
+        "DotBehaviors",
+        "DotField",
+        "DotFieldOptions",
+        "DotPhysics",
+        "SelectionMoveInfo",
+        "bezierEase",
+        "createDotField",
+        "easedStaggerAt",
+        "easingCss",
+        "motionTokens",
+        "selectionDuration",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/snap",
+      "id": "snap",
+      "title": "V12/Snap",
+      "declared": true,
+      "items": [
+        {
+          "item": "snap",
+          "reduced": null,
+          "tokens": [
+            "pattern-snap-floating",
+            "pattern-snap-mark",
+            "pattern-snap-notification",
+            "pattern-snap-surface",
+            "pattern-snap-tooltip"
+          ]
+        }
+      ],
+      "states": [
+        "rest"
+      ],
+      "seam": [
+        "SNAP",
+        "SNAP_PROPOSED_EASE",
+        "SnapProfile",
+        "axialPlan",
+        "snapEaseCss"
+      ]
+    },
+    {
+      "key": "v12/status-indicator",
+      "id": "status-indicator",
+      "title": "V12/StatusIndicator",
+      "declared": true,
+      "items": [
+        {
+          "item": "status-handoff",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "label-swap",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "success",
+        "warning",
+        "error",
+        "info",
+        "pending",
+        "not-started",
+        "paused",
+        "unknown"
+      ],
+      "seam": [
+        "CONTENT_SWAP",
+        "DURATION_FLOOR_MS",
+        "playContentSwap",
+        "reflowTiming",
+        "useFeedbackMotion"
+      ]
+    },
+    {
+      "key": "v12/step-flow",
+      "id": "step-flow",
+      "title": "V12/StepFlow",
+      "declared": true,
+      "items": [
+        {
+          "item": "content-movement-in-place",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "height",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "the-marker-s-glide-and-reach",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "an-invalid-step",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "first",
+        "middle",
+        "last",
+        "invalid",
+        "submitting"
+      ],
+      "seam": [
+        "motionTokens",
+        "playContentSwap",
+        "useFeedbackMotion"
+      ]
+    },
+    {
+      "key": "v12/structured-list",
+      "id": "structured-list",
+      "title": "V12/StructuredList",
+      "declared": true,
+      "items": [
+        {
+          "item": "rollover",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        },
+        {
+          "item": "selection-glide",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "line-marker",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "ghost-marker",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "radio-mark",
+          "reduced": "at-once",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "hover",
+        "pressed",
+        "selected",
+        "focus"
+      ],
+      "seam": [
+        "Selection",
+        "attachRollover",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/tabs",
+      "id": "tabs",
+      "title": "V12/Tabs",
+      "declared": true,
+      "items": [
+        {
+          "item": "glide",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "labels",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "press",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "drag",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "landing",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "tooltip",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "panels",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "panel-box",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "close",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "overflow",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "hover",
+        "pressed",
+        "selected",
+        "disabled"
+      ],
+      "seam": [
+        "SNAP_FRAME",
+        "SelectionMoveInfo",
+        "animateLayout",
+        "attachRollover",
+        "cubicBezier",
+        "distanceTokens",
+        "followLayout",
+        "motionTokens",
+        "selectionDuration",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/tag",
+      "id": "tag",
+      "title": "V12/Tag",
+      "declared": true,
+      "items": [
+        {
+          "item": "snap-from-below-in",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "snap-from-below-out",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "stillness",
+          "reduced": null,
+          "tokens": [
+            "pattern-stillness-window"
+          ]
+        },
+        {
+          "item": "turn",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "rollover",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        },
+        {
+          "item": "close-icon",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "shown",
+        "hidden"
+      ],
+      "seam": [
+        "DURATION_FLOOR_MS",
+        "DurationToken",
+        "SNAP",
+        "StillnessMember",
+        "TooltipMotionContext",
+        "attachRollover",
+        "createStillness",
+        "motionTokens",
+        "snapDurationMs",
+        "snapEaseCss",
+        "snapFadeFor",
+        "staggerSteps",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/tag-set",
+      "id": "tag-set",
+      "title": "V12/TagSet",
+      "declared": true,
+      "items": [
+        {
+          "item": "reflow-out-then-in",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "n-slide",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "n-count",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "n-arriving-or-leaving",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "dismissal",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "arrival",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "popover",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "modal",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "bursts",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "multiline"
+      ],
+      "seam": [
+        "DURATION_FLOOR_MS",
+        "SurfaceAlignment",
+        "animateLayout",
+        "attachRollover",
+        "durationStepForDistance",
+        "motionTokens",
+        "usePrefersReducedMotion",
+        "useStagger"
+      ]
+    },
+    {
+      "key": "v12/tearsheet",
+      "id": "tearsheet",
+      "title": "V12/Tearsheet",
+      "declared": true,
+      "items": [
+        {
+          "item": "snap-rise",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "axial-timing",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "collapse-exit",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "content-arrival",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "dim-and-blur",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "page-recede",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "stack-depth",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "tooltip-hold",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "closed",
+        "open",
+        "stacked"
+      ],
+      "seam": [
+        "DEPTH",
+        "DurationToken",
+        "SNAP",
+        "SNAP_FRAME",
+        "SNAP_PIN",
+        "SnapOrigin",
+        "SnapProfile",
+        "axialPlan",
+        "easingCss",
+        "motionTokens",
+        "reducedClock",
+        "snapAnimations",
+        "snapClocks",
+        "snapFades",
+        "snapProfileOn",
+        "snapSliverTimes",
+        "stepDown",
+        "themeOf",
+        "usePrefersReducedMotion",
+        "useSnapSurface",
+        "withAxial"
+      ]
+    },
+    {
+      "key": "v12/text-area",
+      "id": "text-area",
+      "title": "V12/TextArea",
+      "declared": true,
+      "items": [
+        {
+          "item": "outline-ladder",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "error-border",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "message-line",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "status-mark",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "late-status",
+          "reduced": "full",
+          "tokens": []
+        },
+        {
+          "item": "scroller",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "ai-fill",
+          "reduced": "at-once",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "invalid",
+        "warn",
+        "disabled",
+        "readOnly"
+      ],
+      "seam": [
+        "FIELD_TIMING",
+        "attachScroller",
+        "counterAnnouncement",
+        "fieldAria",
+        "hasText",
+        "normalizeFieldProps",
+        "useLateStatus",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/text-input",
+      "id": "text-input",
+      "title": "V12/TextInput",
+      "declared": true,
+      "items": [
+        {
+          "item": "outline-ladder",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "placeholder",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "error-border",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "message-line",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "status-mark",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "late-status",
+          "reduced": "full",
+          "tokens": []
+        },
+        {
+          "item": "loading",
+          "reduced": null,
+          "tokens": [
+            "pattern-loading"
+          ]
+        },
+        {
+          "item": "ai-fill",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "stillness",
+          "reduced": null,
+          "tokens": [
+            "pattern-stillness-window"
+          ]
+        }
+      ],
+      "states": [
+        "rest",
+        "invalid",
+        "warn",
+        "disabled",
+        "readOnly"
+      ],
+      "seam": [
+        "FIELD_TIMING",
+        "FieldStatus",
+        "LateStatusOptions",
+        "NormalizedFieldProps",
+        "counterAnnouncement",
+        "fieldAria",
+        "hasText",
+        "normalizeFieldProps",
+        "playContentSwap",
+        "useFeedbackMotion",
+        "useLateStatus",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/tile",
+      "id": "tile",
+      "title": "V12/Tile",
+      "declared": true,
+      "items": [
+        {
+          "item": "hover-text-tile",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "hover-tile-with-controls",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "controls-inside",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "corner-icon",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "selection",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-selection-arrival",
+            "pattern-selection-lead-curve",
+            "pattern-selection-list-timing",
+            "pattern-selection-reach",
+            "pattern-selection-reach-duration",
+            "pattern-selection-stretch",
+            "pattern-selection-timing"
+          ]
+        },
+        {
+          "item": "fold",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "fold-content",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "expandabletile-hover",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "above-the-fold",
+          "reduced": "at-once",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "hover",
+        "pressed",
+        "selected",
+        "clicked",
+        "disabled",
+        "expanded"
+      ],
+      "seam": [
+        "LIGHTNESS_STEPS",
+        "attachRollover",
+        "mergeRefs",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/time-picker",
+      "id": "time-picker",
+      "title": "V12/TimePicker",
+      "declared": true,
+      "items": [
+        {
+          "item": "outline-ladder",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "error-border",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "message-line",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "status-mark",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "field-width",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "icon-hover",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "invalid",
+        "warning",
+        "disabled",
+        "readOnly"
+      ],
+      "seam": [
+        "fieldAria",
+        "hasText",
+        "normalizeFieldProps",
+        "useLateStatus"
+      ]
+    },
+    {
+      "key": "v12/toggle",
+      "id": "toggle",
+      "title": "V12/Toggle",
+      "declared": true,
+      "items": [
+        {
+          "item": "glide",
+          "reduced": "shorter-clock",
+          "tokens": []
+        },
+        {
+          "item": "color",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "mark",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "press",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "drag",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "state-text",
+          "reduced": "at-once",
+          "tokens": []
+        }
+      ],
+      "states": [
+        "off",
+        "on",
+        "disabled",
+        "readOnly"
+      ],
+      "seam": [
+        "SelectionMoveInfo",
+        "usePrefersReducedMotion",
+        "useStepGesture",
+        "watchTonal"
+      ]
+    },
+    {
+      "key": "v12/toggletip",
+      "id": "toggletip",
+      "title": "V12/Toggletip",
+      "declared": true,
+      "items": [
+        {
+          "item": "snap",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-snap-floating",
+            "pattern-snap-mark",
+            "pattern-snap-notification",
+            "pattern-snap-surface",
+            "pattern-snap-tooltip"
+          ]
+        },
+        {
+          "item": "out",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "fade",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "interrupted",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "soft-edge",
+          "reduced": "at-once",
+          "tokens": [
+            "soft-edge"
+          ]
+        },
+        {
+          "item": "rollover",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        },
+        {
+          "item": "motion-icon",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "closed",
+        "open"
+      ],
+      "seam": [
+        "attachRollover"
+      ]
+    },
+    {
+      "key": "v12/toolbar",
+      "id": "toolbar",
+      "title": "V12/Toolbar",
+      "declared": true,
+      "items": [
+        {
+          "item": "rollover",
+          "reduced": null,
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        },
+        {
+          "item": "selection-glide",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "pressed-fill",
+          "reduced": "full",
+          "tokens": []
+        },
+        {
+          "item": "tooltip",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "snap-mark",
+          "reduced": "at-once",
+          "tokens": [
+            "pattern-snap-mark"
+          ]
+        },
+        {
+          "item": "overflow",
+          "reduced": null,
+          "tokens": []
+        }
+      ],
+      "states": [
+        "rest",
+        "hover",
+        "pressed",
+        "disabled",
+        "overflowed"
+      ],
+      "seam": [
+        "SNAP",
+        "TooltipGroupContext",
+        "attachRollover",
+        "chain",
+        "deriveLightnessColors",
+        "holdLayout",
+        "mergeRefs",
+        "snapDurationMs",
+        "snapEaseCss",
+        "useMenuTrigger",
+        "usePrefersReducedMotion",
+        "useTooltipTrigger",
+        "watchTonal"
+      ]
+    },
+    {
+      "key": "v12/tooltip",
+      "id": "tooltip",
+      "title": "V12/Tooltip",
+      "declared": true,
+      "items": [
+        {
+          "item": "in",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "from-the-keyboard",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "fade",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "warm",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "moving-on",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "drift",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "out",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "leave-delay",
+          "reduced": "full",
+          "tokens": []
+        },
+        {
+          "item": "interrupted",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "stillness",
+          "reduced": "full",
+          "tokens": [
+            "pattern-stillness-window"
+          ]
+        }
+      ],
+      "states": [
+        "hidden",
+        "shown",
+        "warm"
+      ],
+      "seam": [
+        "SNAP_EXIT_FADE_ATTR",
+        "SNAP_FRAME",
+        "TooltipGroupContext",
+        "TooltipGroupValue",
+        "TooltipMotion",
+        "TooltipMotionContext",
+        "TooltipMotionValue",
+        "TooltipTriggerOptions",
+        "TooltipTriggerProps",
+        "attachRollover",
+        "chain",
+        "mergeRefs",
+        "motionTokens",
+        "useTooltipReduced",
+        "useTooltipSurface",
+        "useTooltipTrigger"
+      ]
+    },
+    {
+      "key": "v12/tree-view",
+      "id": "tree-view",
+      "title": "V12/TreeView",
+      "declared": true,
+      "items": [
+        {
+          "item": "glide",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "jump",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "landing-hover",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "press",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "arrival-fold",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "disclosure",
+          "reduced": null,
+          "tokens": []
+        },
+        {
+          "item": "caret",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "rollover",
+          "reduced": null,
+          "tokens": [
+            "pattern-rollover-lightness",
+            "pattern-rollover-rehover",
+            "pattern-rollover-shape"
+          ]
+        }
+      ],
+      "states": [
+        "rest",
+        "hover",
+        "pressed",
+        "focus",
+        "selected",
+        "expanded",
+        "collapsed",
+        "mixed",
+        "disabled"
+      ],
+      "seam": [
+        "Selection",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/user-avatar",
+      "id": "user-avatar",
+      "title": "V12/UserAvatar",
+      "declared": true,
+      "items": [
+        {
+          "item": "tooltip",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "content-swap",
+          "reduced": "at-once",
+          "tokens": []
+        },
+        {
+          "item": "stillness",
+          "reduced": null,
+          "tokens": [
+            "pattern-stillness-window"
+          ]
+        }
+      ],
+      "states": [
+        "initials",
+        "icon",
+        "image"
+      ],
+      "seam": [
+        "playContentSwap",
+        "usePrefersReducedMotion"
+      ]
+    },
+    {
+      "key": "v12/util",
+      "id": "util",
+      "title": "V12/Util",
+      "declared": true,
+      "items": [],
+      "states": [
+        "rest"
+      ],
+      "seam": [
+        "LIGHTNESS_STEPS",
+        "LightnessSteps",
+        "MotionProvider",
+        "parseColor",
+        "useLatest",
+        "usePrefersReducedMotion"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+/* CopyButton — the kit's IconButton (tooltip.scss) has its look; this only
+   hides the live region that reads the feedback out. */
+
+.cds-copy-btn__status {
+  position: absolute;
+  overflow: hidden;
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  white-space: nowrap;
+}

@@ -1,0 +1,49 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ToggletipStories from './Toggletip.stories.tsx';
+
+<Meta of={ToggletipStories} />
+
+# Toggletip
+
+A button that opens a small high-contrast panel on click, for help that holds a
+link or an action, where a tooltip can't. The parts take Carbon's props:
+`Toggletip`, `ToggletipLabel`, `ToggletipButton`, `ToggletipContent` and
+`ToggletipActions`. It is built on the kit's Popover and takes its props. A
+click on the button toggles it. Escape closes it and returns focus to the
+button; a press outside, focus leaving or the window losing focus closes it. The
+panel is rendered in place, so Tab goes from the button into it.
+
+<Canvas of={ToggletipStories.Default} />
+
+<Canvas of={ToggletipStories.Alignments} />
+
+<Canvas of={ToggletipStories.InText} />
+
+## Motion
+
+- **Open:** the Popover's floating snap. The frame grows from the press on the
+  button, or from its center by keyboard, and the content rides it on y. Opened
+  from the start, with no gesture, it is there with no motion.
+- **Close:** the far edge folds back toward the button. The panel is gone on the
+  fold's last frame.
+- **Fade:** it fades up over the first part of the open and out over the last
+  part of the close: 40ms on a clock of 220ms or less, else 80ms.
+  `exitFade={false}` folds back opaque.
+- **Interrupted:** pressed again while it leaves, it turns round from where it
+  is.
+- **Soft edge:** on every side where the frame clips the content,
+  `min(16px, h, H − h)` per side.
+- **Button:** the rollover in a 26px full-round fill: a neutral glow, grown 1px
+  on hover, a press back to rest, then the release. While open, the selected
+  fill.
+- **Icon:** the Information motion icon plays on hover.
+
+## Reduced motion
+
+The panel is there at once and gone at once: no growth, slide, fade or soft
+edge. The button's press still shows; its release and re-hover take the 1ms
+floor.
+
+## Props
+
+<ArgTypes of={ToggletipStories} />

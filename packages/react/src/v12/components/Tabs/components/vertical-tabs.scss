@@ -1,0 +1,304 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon-labs/react-selection-kit/scss/selection-landing' as *;
+@use '@carbon-labs/v12-styles/scss/corners';
+
+/* Vertical tabs — only what the selection kit and the tabs' shared styles
+ * (tabs.scss: the second label line, the panels' focus) lack: the list beside
+ * its panels, and v11's `height` (a list that scrolls, with gradient edges).
+ * The track, selector, rows, hover, press and focus are the kit's
+ * `.sel .sel--vertical` (selection-kit.scss). */
+
+/* ── layout: the list, then its panels beside it ─────────────────────── */
+
+.vtabs__layout {
+  display: grid;
+  align-items: start;
+  gap: $spacing-05;
+  /* The list hugs its widest tab (capped); the panels take the rest. */
+  grid-template-columns: max-content minmax(0, 1fr);
+
+  /* Narrow: the list above its panels, full width (v11 turns into horizontal
+     contained tabs below its md breakpoint). */
+  @media (width < 42rem) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* v11's `height`: the tabs take it; a longer list scrolls, a taller panel scrolls. */
+.vtabs--fixed .vtabs__layout {
+  block-size: var(--vtabs-height);
+  grid-template-rows: minmax(0, 1fr);
+
+  @media (width < 42rem) {
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+}
+
+/* ── the list ─────────────────────────────────────────────────────────── */
+
+.vtabs__list {
+  /* The scroll fades' colour (below): the track's. */
+  // @carbon-proposal token: surface-quiet — The quiet surface fill: side nav panel, tiles, tables, jobs tray, tabs fade. replaces: `$layer-01`. TBD
+  --vtabs-fade: var(--cds-surface, #{theme.$layer});
+
+  position: relative;
+  /* Over the panels: the truncation tooltip sits to the list's right. */
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  inline-size: max-content;
+  max-block-size: 100%;
+  max-inline-size: var(--vtabs-list-max, 16rem);
+  min-block-size: 0;
+
+  @media (width < 42rem) {
+    inline-size: auto;
+    max-inline-size: none;
+  }
+}
+
+/* The scroll container is outside the track, so the selector and the tabs
+   scroll together and the kit measures them in one space: the kit's
+   Scroller, its viewport clipped to the track's corners. The gradient edges
+   (v11's) still show there's more; the pill shows where. */
+.vtabs__scroller {
+  border-radius: corners.$in;
+
+  .vtabs__list--square & {
+    border-radius: 0;
+  }
+}
+
+.vtabs__viewport {
+  overscroll-behavior: contain;
+}
+
+/* `corners="full"`: pill rows, the list's corner concentric with them (set
+   by the component from the row height: v11's rows aren't the kit's). */
+.vtabs__list--full {
+  .vtabs__scroller {
+    border-radius: var(--vtabs-full-radius);
+  }
+
+  .sel.vtabs__track {
+    --sel-track-radius: var(--vtabs-full-radius);
+    --sel-radius: var(--vtabs-row-radius);
+  }
+}
+
+/* `frame="ghost"` (the kit's `.sel--ghost`): no track. The viewport clips to
+   the rows' own corner (4px; a pill's is set above), not the track's 8px,
+   and the gradient edges fade to the surface behind the list. */
+.vtabs__list--ghost {
+  --vtabs-fade: var(--sel-ghost-page, #{theme.$background});
+
+  &:not(.vtabs__list--full, .vtabs__list--square) .vtabs__scroller {
+    border-radius: corners.$row;
+  }
+
+  .vtabs__fade {
+    border-radius: 0;
+  }
+}
+
+/* `frame="line"` (Carbon's vertical tabs): line tabs (tabs.scss) on their side. No track, no
+   inset: square rows edge to edge on a hairline along the list's inline start (the quiet stroke),
+   the selector a 2px bar on it; its box is still the selected tab's, so the keyboard ring glides
+   with it. The label turns primary where the bar covers it. Hero: the bar in `--cds-hero`. */
+.vtabs__list--line {
+  --vtabs-fade: #{theme.$background};
+  --vtabs-bar: #{theme.$layer-selected-inverse};
+
+  .vtabs__scroller,
+  .vtabs__fade {
+    border-radius: 0;
+  }
+}
+
+.vtabs__list--line.vtabs__list--hero {
+  // @carbon-proposal token: hero-color — The hero tokens: brand colour for a line, a fill, a hover, an ink on a page and on a fill. replaces: `$border-interactive` / `$interactive`, `$button-primary`, `-hover`, `-active`, `$link-primary`, `$link-inverse`. TBD
+  --vtabs-bar: var(--cds-hero, #{theme.$border-interactive});
+}
+
+.vtabs__list--line .sel.vtabs__track {
+  --sel-track: transparent;
+  --sel-selector: transparent;
+  --sel-on: #{theme.$text-primary};
+  --sel-ring-color: var(--sel-off-hover);
+  --sel-outline: transparent;
+  --sel-glow-color: initial;
+  --sel-glow-inset: 0px;
+  --sel-gap: 0px;
+  --sel-reach: 0px;
+
+  /* The line's hairline on the list's inline start (`linePosition="end"`: its end, below). */
+  --vtabs-rule-x: 1px;
+
+  padding: 0;
+  border-radius: 0;
+  box-shadow: inset var(--vtabs-rule-x) 0 0 var(--cds-surface-rule, #dddddd);
+  /* A line's labels: the selected one primary, a step up from the others. */
+  --sel-on-quiet: #{theme.$text-secondary};
+
+  /* The pressed tab's hover until the bar lands (the kit's landing hold). */
+  @include selection-landing-line(inline-start);
+
+  &:dir(rtl) {
+    --vtabs-rule-x: -1px;
+  }
+}
+
+/* `linePosition="end"`: the hairline and the bar on the list's
+   inline end, toward the panels; the left in right to left. */
+.vtabs__list--line-end .sel.vtabs__track {
+  --vtabs-rule-x: -1px;
+
+  @include selection-landing-line(inline-end);
+
+  &:dir(rtl) {
+    --vtabs-rule-x: 1px;
+  }
+}
+
+.vtabs__list--line :is(.sel__indicator, .sel__ghost) {
+  background: transparent;
+
+  &::after {
+    position: absolute;
+    background: var(--vtabs-bar);
+    content: '';
+    inline-size: 2px;
+    /* The grab's 1px inset moves the box, not the bar. */
+    inset-block: calc(-1 * var(--sel-press, 0px));
+    inset-inline-start: calc(-1 * var(--sel-press, 0px));
+  }
+}
+
+.vtabs__list--line-end :is(.sel__indicator, .sel__ghost)::after {
+  inset-inline-end: calc(-1 * var(--sel-press, 0px));
+  inset-inline-start: auto;
+}
+
+@media (forced-colors: active) {
+  .vtabs__list--line :is(.sel__indicator, .sel__ghost)::after {
+    background: Highlight;
+  }
+
+  .vtabs__list--line .sel.vtabs__track {
+    box-shadow: inset var(--vtabs-rule-x) 0 0 CanvasText;
+  }
+}
+
+/* A block-level column of rows (the kit's track is inline). */
+.sel.vtabs__track {
+  display: flex;
+}
+
+/* Rows at v11's layout sizes (sm 32 / md 40 / lg 48 / xl 64px), not the
+   kit's control size less its inset. A list with any second line: every row
+   two lines tall, so the rhythm stays even (48 / 56 / 64 / 64px — xl's 64
+   already holds both lines). */
+.vtabs__track {
+  --vtabs-row: 64px;
+  --vtabs-row-2: 64px;
+}
+
+.vtabs__track--sm {
+  --vtabs-row: 32px;
+  --vtabs-row-2: 48px;
+}
+
+.vtabs__track--md {
+  --vtabs-row: 40px;
+  --vtabs-row-2: 56px;
+}
+
+.vtabs__track--lg {
+  --vtabs-row: 48px;
+  --vtabs-row-2: 64px;
+}
+
+.sel--vertical.vtabs__track > .sel__item {
+  block-size: var(--vtabs-row);
+}
+
+.sel--vertical.vtabs__track--two-line > .sel__item {
+  block-size: var(--vtabs-row-2);
+}
+
+/* Gradient edges where the list scrolls (v11's), in the track's color:
+   the quiet surface, as the selection kit's track (`--sel-surface`); the
+   contextual layer inside a Carbon <Layer>, as the track there (a ghost
+   list's fade is the page's, above). */
+:is(.cds--layer-two, .cds--layer-three) .vtabs__list:not(.vtabs__list--ghost) {
+  --vtabs-fade: #{theme.$layer};
+}
+
+.vtabs__fade {
+  position: absolute;
+  block-size: $spacing-07;
+  inset-inline: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--cds-motion-duration-fast-01)
+    var(--cds-motion-easing-standard-productive);
+
+  &--top {
+    background: linear-gradient(to bottom, var(--vtabs-fade), transparent);
+    border-start-end-radius: corners.$in;
+    border-start-start-radius: corners.$in;
+    inset-block-start: 0;
+  }
+
+  &--bottom {
+    background: linear-gradient(to top, var(--vtabs-fade), transparent);
+    border-end-end-radius: corners.$in;
+    border-end-start-radius: corners.$in;
+    inset-block-end: 0;
+  }
+
+  .vtabs__list[data-overflow-top] &--top,
+  .vtabs__list[data-overflow-bottom] &--bottom {
+    opacity: 1;
+  }
+
+  .vtabs__list--square & {
+    border-radius: 0;
+  }
+}
+
+/* The truncation tooltip (the kit's `.sel__tip`, to the list's right): a
+   long label wraps, at Carbon's tooltip width (18rem). */
+.vtabs__list .sel__tip {
+  inline-size: max-content;
+  max-inline-size: 18rem;
+  white-space: normal;
+}
+
+/* ── panels ──────────────────────────────────────────────────────────── */
+
+/* With `height`: the container is the height, and each panel scrolls in it,
+   in the kit's Scroller (its viewport is the panel's tab stop). */
+.vtabs--fixed {
+  .tabs__panels {
+    block-size: 100%;
+  }
+
+  .tabs__panel {
+    display: flex;
+    flex-direction: column;
+    block-size: 100%;
+  }
+
+  .tabs__panel-scroller {
+    flex: 1 1 auto;
+  }
+}

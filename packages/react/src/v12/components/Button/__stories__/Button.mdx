@@ -1,0 +1,56 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ButtonStories from './Button.stories.tsx';
+
+<Meta of={ButtonStories} />
+
+# Button
+
+An action's trigger, with Carbon's Button props. `kind` is the role: primary,
+secondary or danger. `variant` is the treatment: filled, outlined or tonal.
+`frame` is what it stands on: inset, ghost, or none for a text button; it wins
+over `variant`. Buttons are pills by default. `busy` shows a spinner in the
+icon's place while an action runs. The package also exports `ButtonSet`,
+`ButtonSkeleton` and `ButtonGrid`, a set of equal actions in one shell with one
+Tab stop.
+
+<Canvas of={ButtonStories.Default} />
+
+<Canvas of={ButtonStories.Kinds} />
+
+<Canvas of={ButtonStories.Icons} />
+
+<Canvas of={ButtonStories.Busy} />
+
+<Canvas of={ButtonStories.Sets} />
+
+## Motion
+
+- **Hover:** a glow of the matched-lightness hover color under the pointer, in
+  on fast-02 and out on fast-01.
+- **Size:** the button grows 1px on hover and presses 1px in from its rest edge.
+- **Press and release:** the flat pressed color while held. On release, the
+  pressed color recedes from the release point as a soft circle. A press dragged
+  off the button is cancelled; dragged back on, still held, it presses again.
+- **Toned steps:** outlined and ghost buttons hover and press in tints of their
+  own color. The label takes one Carbon step further from the backdrop, and more
+  if it would fall under 4.5:1.
+- **Icon:** a motion icon plays on the button's hover or keyboard focus.
+- **Busy:** out, then in. The icon fades out, then the spinner draws on
+  (moderate-01). When busy ends, the spinner closes (fast-02), then the icon
+  fades back. With no icon, the label takes the icon's turn. An icon with its
+  own pending motion, such as Save or Send, keeps it, with no spinner.
+- **Focus:** keyboard only. A 2px ring in the button's own text color just
+  inside its edge, with a 2px rim of the fill round it on a filled button.
+- **ButtonGrid:** each cell has the Button's hover, press and release circle,
+  clipped to the cell, with no growth or press-in.
+- **ButtonSkeleton:** it pulses on the page's skeleton wave.
+
+## Reduced motion
+
+The glow, the 1px growth and the press still show, at once. The release circle
+and a toned label's step land at once. A motion icon is a still drawing and does
+not play. Busy swaps at once, and the spinner is its still dots.
+
+## Props
+
+<ArgTypes of={ButtonStories} />

@@ -8,6 +8,8 @@
 // The review app's own parts. The shell, the nav and the controls are the
 // components'; this is the page's type, its cards, its stages and tables,
 // all on the theme's tokens.
+@use '@carbon/react/scss/type';
+
 .v12r-shell {
   background: var(--cds-background);
   color: var(--cds-text-primary);
@@ -58,12 +60,18 @@
 
   p,
   li {
-    font-size: 14px;
-    line-height: 20px;
+    @include type.type-style('body-01');
   }
 }
 
+// Descriptive text (a section's docs, a story's description, a prop's
+// description): body-01, as Carbon sets running text.
 .v12r-prose {
+  p,
+  li {
+    @include type.type-style('body-01');
+  }
+
   p,
   ul {
     margin: 0 0 12px;
@@ -75,13 +83,13 @@
   }
 
   li {
-    margin-block-end: 6px;
+    margin-block-end: 8px;
   }
 
   h4 {
+    @include type.type-style('heading-compact-01');
+
     margin: 16px 0 8px;
-    font-size: 14px;
-    font-weight: 600;
   }
 
   code {
@@ -328,10 +336,10 @@
 }
 
 .v12r-table {
+  @include type.type-style('body-01');
+
   border-collapse: collapse;
-  font-size: 14px;
   inline-size: 100%;
-  line-height: 20px;
 
   caption {
     color: var(--cds-text-secondary);

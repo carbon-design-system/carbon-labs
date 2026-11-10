@@ -6,7 +6,9 @@
  */
 
 import React, { useState } from 'react';
-import { Button, Checkbox, TextInput } from '@carbon/react';
+import { Button } from '@carbon-labs/react-button';
+import { Checkbox } from '@carbon/react';
+import { TextInput } from '@carbon-labs/react-text-input';
 import { Popover, PopoverContent } from '../index';
 import type { PopoverAlignment, PopoverProps } from '../index';
 import mdx from './Popover.mdx';
@@ -103,7 +105,7 @@ export const Default = {
   render: (args: PopoverProps) => (
     <div style={stage}>
       <Popover {...args}>
-        <Button size="sm" kind="tertiary">
+        <Button size="sm" variant="outlined">
           Filters
         </Button>
         <PopoverContent>
@@ -126,7 +128,7 @@ export const Toggle = {
         <Popover {...args} open={open} onRequestClose={() => setOpen(false)}>
           <Button
             size="sm"
-            kind="tertiary"
+            variant="outlined"
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}>
             Settings
@@ -165,7 +167,7 @@ export const Variants = {
       }}>
       {VARIANTS.map((variant) => (
         <Popover key={variant} open align="bottom-start" variant={variant}>
-          <Button size="sm" kind="tertiary">
+          <Button size="sm" variant="outlined">
             {variant}
           </Button>
           <PopoverContent>
@@ -174,7 +176,7 @@ export const Variants = {
         </Popover>
       ))}
       <Popover open align="bottom-start" corners="square" shadow>
-        <Button size="sm" kind="tertiary">
+        <Button size="sm" variant="outlined">
           square, shadow
         </Button>
         <PopoverContent>
@@ -194,7 +196,7 @@ export const Anchored = {
       <div style={stage}>
         <Button
           size="sm"
-          kind="tertiary"
+          variant="outlined"
           ref={setTrigger}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}>
@@ -216,7 +218,7 @@ export const Anchored = {
               labelText="Name"
               defaultValue="Quarterly report"
             />
-            <Button size="sm" kind="tertiary" type="submit">
+            <Button size="sm" variant="outlined" type="submit">
               Save
             </Button>
           </form>

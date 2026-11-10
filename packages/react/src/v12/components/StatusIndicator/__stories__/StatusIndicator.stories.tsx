@@ -6,7 +6,7 @@
  */
 
 import React, { useState } from 'react';
-import { Button } from '@carbon/react';
+import { Button } from '@carbon-labs/react-button';
 import { STATUS_INDICATOR_KINDS, StatusIndicator } from '../index';
 import type { StatusIndicatorKind } from '../index';
 import mdx from './StatusIndicator.mdx';
@@ -64,7 +64,7 @@ export const Changing = {
       <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
         <Button
           size="sm"
-          kind="tertiary"
+          variant="outlined"
           onClick={() => setI((v) => (v + 1) % STEPS.length)}>
           Next status
         </Button>

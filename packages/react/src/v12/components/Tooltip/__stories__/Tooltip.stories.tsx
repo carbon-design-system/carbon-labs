@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Button } from '@carbon/react';
+import { Button } from '@carbon-labs/react-button';
 import React from 'react';
 import { DefinitionTooltip, IconButton, Tooltip, TooltipGroup } from '../index';
 import type { TooltipAlign, TooltipProps } from '../index';
@@ -113,7 +113,7 @@ export const Default = {
   render: (args: TooltipProps) => (
     <div style={stage}>
       <Tooltip {...args}>
-        <Button size="sm" kind="tertiary">
+        <Button size="sm" variant="outlined">
           Copy link
         </Button>
       </Tooltip>
@@ -130,7 +130,7 @@ export const Sides = {
           key={align}
           align={align}
           description={`Opens on the ${align}`}>
-          <Button size="sm" kind="tertiary">
+          <Button size="sm" variant="outlined">
             {align}
           </Button>
         </Tooltip>

@@ -6,7 +6,7 @@
  */
 
 import React, { useState } from 'react';
-import { Button } from '@carbon/react';
+import { Button } from '@carbon-labs/react-button';
 import { InlineLoading, Loading } from '../index';
 import type { InlineLoadingStatus } from '../index';
 import mdx from './Loading.mdx';
@@ -49,7 +49,10 @@ export const Gate = {
     const [active, setActive] = useState(false);
     return (
       <div style={row}>
-        <Button size="sm" kind="tertiary" onClick={() => setActive((v) => !v)}>
+        <Button
+          size="sm"
+          variant="outlined"
+          onClick={() => setActive((v) => !v)}>
           {active ? 'Stop' : 'Start'}
         </Button>
         <Loading
@@ -88,7 +91,7 @@ export const Inline = {
           {STATUSES.map((s) => (
             <Button
               size="sm"
-              kind="tertiary"
+              variant="outlined"
               key={s}
               onClick={() => setStatus(s)}>
               {s}

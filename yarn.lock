@@ -3377,6 +3377,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-empty-state@workspace:packages/react/src/v12/components/EmptyState"
   dependencies:
+    "@carbon-labs/react-app-shell": "workspace:*"
     "@carbon-labs/react-button": "workspace:*"
     "@carbon-labs/react-illustrations": "workspace:*"
     "@carbon-labs/react-kit-defaults": "workspace:*"

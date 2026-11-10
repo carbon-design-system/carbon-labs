@@ -20,7 +20,7 @@
  *  - the code, both bindings.
  */
 import React, { useMemo, useState } from 'react';
-import { ComboBox } from '@carbon/react';
+import { ComboBox } from '@carbon-labs/react-dropdown';
 import * as Lib from '../index';
 import { MotionIconProvider } from '../context/MotionIconProvider';
 import type { AnimatedIconProps } from '../types';

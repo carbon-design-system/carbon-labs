@@ -279,16 +279,16 @@ function relativeTo(from, to, original) {
  * @returns {string} The source.
  */
 function renamePackages(text, count) {
-  const names = Object.keys(CONFIG.packageMap).sort(
-    (a, b) => b.length - a.length
-  );
+  // The source's own packages, and carbon-motion's by their published names.
+  const map = { ...CONFIG.seam.published, ...CONFIG.packageMap };
+  const names = Object.keys(map).sort((a, b) => b.length - a.length);
   const re = new RegExp(
     `(${names.map((n) => escapeRegExp(n)).join('|')})(?![\\w-])`,
     'g'
   );
   return text.replace(re, (m) => {
     count();
-    return CONFIG.packageMap[m];
+    return map[m];
   });
 }
 
@@ -1088,8 +1088,8 @@ console.log(\`extensions: \${changed} files\`);
  * @returns {string} The source.
  */
 function vitestFor(spec, header) {
-  // The packages the tool brings, and carbon-motion's, run inline with the
-  // tests.
+  // The packages the tool brings, and the motion packages, run inline with
+  // the tests.
   const inline = [
     '/@carbon-labs\\/motion-/',
     ...Object.values(CONFIG.packageMap).map((n) => `/${escapeRegExp(n)}/`),
@@ -1109,7 +1109,7 @@ function vitestFor(spec, header) {
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  // Lane packages are workspace links; they, and carbon-motion's packages
+  // Lane packages are workspace links; they, and the motion packages
   // behind the seam, run inline.
   resolve: { preserveSymlinks: true },
   test: ${body},

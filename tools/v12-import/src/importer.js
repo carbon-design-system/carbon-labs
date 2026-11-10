@@ -113,6 +113,17 @@ export function laneName(id) {
 }
 
 /**
+ * A kit folder's lane folder: its name in PascalCase, or the folder the
+ * config gives it.
+ *
+ * @param {string} id The kit folder.
+ * @returns {string} The lane folder.
+ */
+export function laneFolder(id) {
+  return CONFIG.target.laneFolders?.[id] ?? pascal(id);
+}
+
+/**
  * The names the content check keeps out of public text, read from the source
  * at the commit.
  *
@@ -564,7 +575,8 @@ export function planImport(opts) {
   const rels = sourceFiles.map((f) => f.slice(folder.length + 1));
   const relSet = new Set(rels);
   const name = pascal(id);
-  const dir = `${cfg.target.lane}/${name}`;
+  const folderName = laneFolder(id);
+  const dir = `${cfg.target.lane}/${folderName}`;
   const names = [
     ...namesFrom(readAt(from, sha, cfg.source.names)),
     ...(opts.names ?? []),
@@ -1121,24 +1133,37 @@ export function planImport(opts) {
       'g'
     );
     plan.outputs.push({
-      path: `__stories__/${name}.mdx`,
-      content: mdxSource({ name, title: doc.title, sections: out }).replace(
-        kitSub,
-        (_, q, seg) => `${q}${laneName(seg)}${q}`
-      ),
+      path: `__stories__/${folderName}.mdx`,
+      content: mdxSource({
+        name,
+        file: folderName,
+        title: doc.title,
+        sections: out,
+      }).replace(kitSub, (_, q, seg) => `${q}${laneName(seg)}${q}`),
     });
   } else {
     plan.warnings.push(`no doc at ${cfg.source.docs}/${id}.md`);
     plan.outputs.push({
-      path: `__stories__/${name}.mdx`,
-      content: mdxSource({ name, title: name, sections: [] }),
+      path: `__stories__/${folderName}.mdx`,
+      content: mdxSource({
+        name,
+        file: folderName,
+        title: name,
+        sections: [],
+      }),
     });
   }
   plan.story = params;
   const header = licenseHeader('', 'ts', year).text;
   plan.outputs.push({
-    path: `__stories__/${name}.stories.tsx`,
-    content: storySource({ name, header, exported, params }),
+    path: `__stories__/${folderName}.stories.tsx`,
+    content: storySource({
+      name,
+      file: folderName,
+      header,
+      exported,
+      params,
+    }),
   });
 
   // Proposals.
@@ -1505,6 +1530,21 @@ export function recordManifest(file, entry) {
  */
 export function writePlan(plan, { labs, out }) {
   const dir = out ? path.join(out, plan.name) : path.join(labs, plan.target);
+  // Once in the lane, a component is changed there: the source no longer
+  // carries the lane's fixes, so a second import would undo them.
+  const recorded = path.join(labs, CONFIG.target.manifest);
+  if (
+    !out &&
+    plan.manifest?.kind === 'component' &&
+    fs.existsSync(recorded) &&
+    (JSON.parse(fs.readFileSync(recorded, 'utf8')).items ?? []).some(
+      (i) => i.id === plan.manifest.id
+    )
+  ) {
+    throw new UsageError(
+      `${plan.manifest.id} is in the lane: change it there (--out to compare)`
+    );
+  }
   if (!out && fs.existsSync(dir)) {
     throw new UsageError(
       `${plan.target} exists: remove it or import with --out`

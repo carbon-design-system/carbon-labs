@@ -294,8 +294,12 @@ function WorkspaceTop({
   );
 }
 
-/** The strip a hidden nav leaves (`foldTo="hide"`): the toggle's room, app-shell.scss's `$_strip`. */
+/** The strip a hidden nav leaves (`foldTo="hide"`): the toggle (48) and its equal insets (4 a side), up to the
+ *  workspace (app-shell.scss, the strip). */
 const NAV_STRIP_PX = 56;
+
+/** The fold's progress on the column, 0 open to 1 folded, on the fold's own clock (app-shell.scss registers it). */
+const FOLD_VAR = '--cds-nav-fold';
 
 /** The column's content held at the width it has open, so the moving edge passes over it (app-shell.scss, "Folding"). */
 function holdContent(col: HTMLElement, width: number) {
@@ -370,13 +374,14 @@ export interface AppShellProps extends Omit<
    *  `page` or `inverse`. */
   chromeTheme?: ZoneTheme;
   /** The fold toggle: `header` (the nav column's top row), `foot` (its foot, the shell's lower start) or `nav` (the
-   *  SideNav's row). Default `header` with the header in the nav, else `foot`; for a nav function, medium up. */
+   *  SideNav's row). Default `header` with the header in the nav, else `foot`; for a nav function, medium up.
+   *  `header` with the header in the bar is the column's top row with `foldTo="hide"`, else the SideNav's. */
   foldToggle?: AppShellFoldPlacement;
   /** A class's layout changed from `APP_SHELL_LAYOUT`'s: `{ medium: { nav: 'overlay' } }` for a nav with no
    *  icons (nothing to show on a rail). */
   layout?: Partial<Record<SizeClass, Partial<AppShellLayout>>>;
   /** Folding: `rail` (default), the SideNav's icons; `overlay`, the nav opens from the menu button; `hide`, the
-   *  column narrows to a strip with the toggle at its foot, no menu button. */
+   *  column narrows to a strip with the toggle at its foot (`foldToggle="header"`: its top), no menu button. */
   foldTo?: 'rail' | 'overlay' | 'hide';
   /** `foldTo="hide"`: what the strip shows at its top, given `unfold` (a search button that opens the filter). */
   navStrip?: (strip: { unfold: () => void }) => ReactNode;
@@ -569,7 +574,9 @@ export function AppShell({
   // column's foot, the shell's lower start, outside the nav's own container.
   const foldAsked = foldToggleProp ?? (headerAt === 'nav' ? 'header' : 'foot');
   const foldAt: AppShellFoldPlacement =
-    foldAsked === 'header' && headerAt !== 'nav' ? 'nav' : foldAsked;
+    foldAsked === 'header' && headerAt !== 'nav' && foldTo !== 'hide'
+      ? 'nav'
+      : foldAsked;
   const foldToggle =
     foldAt !== 'nav' && typeof nav === 'function' && navMode !== 'overlay';
   const inHead = foldToggle && foldAt === 'header';
@@ -606,16 +613,37 @@ export function AppShell({
     null
   );
   const openWidth = useRef(0);
-  const growing = useRef<number | null>(null);
+  const growing = useRef(false);
   const colEl = () =>
     rootRef.current?.querySelector<HTMLElement>(
       ':scope > .cds-app-shell__body > .cds-app-shell__nav-col'
     );
-  /** The column's width from `from` to `to` px, on the fold's clock for the distance (shrinking, a step faster). */
+  /** The column's width folded: the strip's room less main's gap beside an open column (the strip has none). */
+  const stripWidth = () => {
+    const mainCol = rootRef.current?.querySelector<HTMLElement>(
+      ':scope > .cds-app-shell__body > .cds-app-shell__main-col'
+    );
+    const gap = mainCol
+      ? parseFloat(getComputedStyle(mainCol).paddingInlineStart) || 0
+      : 0;
+    return NAV_STRIP_PX - gap;
+  };
+  /** The fold's progress at a width: 0 open, 1 folded. */
+  const progressAt = (width: number) => {
+    const travel = openWidth.current - stripWidth();
+    return travel > 0
+      ? Math.min(1, Math.max(0, (openWidth.current - width) / travel))
+      : 1;
+  };
+  /** The column's width from `from` to `to` px, on the fold's clock for the distance (shrinking, a step faster).
+   *  Its progress (`--cds-nav-fold`) rides the same clock, so what's in it can move with the fold. */
   const moveColumn = (col: HTMLElement, from: number, to: number) => {
     const shrinking = to < from;
     const anim = col.animate(
-      [{ inlineSize: `${from}px` }, { inlineSize: `${to}px` }],
+      [
+        { inlineSize: `${from}px`, [FOLD_VAR]: progressAt(from) },
+        { inlineSize: `${to}px`, [FOLD_VAR]: shrinking ? 1 : 0 },
+      ],
       {
         duration:
           foldClock(Math.abs(from - to), shrinking ? 'out' : 'in') * timeScale,
@@ -644,7 +672,7 @@ export function AppShell({
   const foldColumn = (col: HTMLElement, from: number) => {
     if (!foldRun.current) openWidth.current = col.offsetWidth;
     holdContent(col, openWidth.current);
-    const anim = moveColumn(col, from, NAV_STRIP_PX);
+    const anim = moveColumn(col, from, stripWidth());
     anim.finished.then(
       () => {
         if (foldRun.current?.anim !== anim || !col.isConnected) return;
@@ -658,7 +686,7 @@ export function AppShell({
               !foldRun.current &&
               col.hasAttribute('data-folding')
             )
-              openColumn(col, NAV_STRIP_PX);
+              openColumn(col, stripWidth());
           })
         );
       },
@@ -679,7 +707,7 @@ export function AppShell({
     }
     if (next === folded) return;
     if (!next) {
-      growing.current = NAV_STRIP_PX;
+      growing.current = true;
       return onCollapsedChange(false);
     }
     if (!col) return onCollapsedChange(true);
@@ -705,13 +733,14 @@ export function AppShell({
       toggle.focus({ preventScroll: true });
   }, [folded]);
   useLayoutEffect(() => {
-    // Unfolded: the column is back at its open width; it grows to it from the strip, before the first paint.
-    const from = growing.current;
-    growing.current = null;
+    // Unfolded: the column is back at its open width; it grows to it from the strip, before the first paint
+    // (from the strip's width as main's gap beside the column has it now).
+    const grow = growing.current;
+    growing.current = false;
     const col = colEl();
-    if (from == null || hiddenAway || !col) return;
+    if (!grow || hiddenAway || !col) return;
     openWidth.current = col.offsetWidth;
-    openColumn(col, from);
+    openColumn(col, stripWidth());
     // Only when the fold changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hiddenAway]);
@@ -857,12 +886,17 @@ export function AppShell({
   );
   const navColumn =
     navNode == null || navMode === 'overlay' ? null : hiddenAway ? (
-      // Hidden: the strip it leaves, what the caller puts at its top and the toggle at its foot.
+      // Hidden: the strip it leaves, what the caller puts at its top and the toggle at its foot (or above it).
       <div
         key="strip"
         className="cds-app-shell__nav-col cds-app-shell__nav-strip"
         data-nav-mode="strip"
         {...modalPage}>
+        {inHead && (
+          <div className="cds-app-shell__nav-head" data-fold-toggle>
+            {foldButton('right')}
+          </div>
+        )}
         <div className="cds-app-shell__nav-strip-head">
           {navStrip?.({ unfold })}
         </div>
@@ -872,7 +906,7 @@ export function AppShell({
           {atFoot && foldButton('right')}
         </div>
       </div>
-    ) : headerAt === 'nav' || atFoot ? (
+    ) : headerAt === 'nav' || atFoot || inHead ? (
       // The column: the header as its top row (ghost: the column is the page) when it's there, the nav, then
       // the foot: the fold toggle at its start when it's there, and the header's actions (portalled in).
       <div
@@ -880,14 +914,17 @@ export function AppShell({
         className="cds-app-shell__nav-col"
         data-nav-mode={navMode}
         {...modalPage}>
-        {header != null && headerAt === 'nav' && (
+        {((header != null && headerAt === 'nav') || inHead) && (
           <div
             className="cds-app-shell__nav-head"
             data-fold-toggle={inHead || undefined}>
-            {inHead && foldButton('bottom-start')}
-            <AppShellHeaderSlotContext.Provider value="nav">
-              {header}
-            </AppShellHeaderSlotContext.Provider>
+            {inHead &&
+              foldButton(headerAt === 'nav' ? 'bottom-start' : 'right')}
+            {header != null && headerAt === 'nav' && (
+              <AppShellHeaderSlotContext.Provider value="nav">
+                {header}
+              </AppShellHeaderSlotContext.Provider>
+            )}
           </div>
         )}
         {navScroller}

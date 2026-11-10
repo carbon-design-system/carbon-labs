@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-code-snippet",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - CodeSnippet for React (v12)",

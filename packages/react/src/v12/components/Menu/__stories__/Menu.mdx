@@ -1,0 +1,66 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as MenuStories from './Menu.stories.tsx';
+
+<Meta of={MenuStories} />
+
+# Menu
+
+A floating list of actions and choices, with Carbon's API: `MenuItem`,
+`MenuItemSelectable`, `MenuItemRadioGroup`, `MenuItemGroup` and
+`MenuItemDivider`, and a MenuItem's own MenuItems as a submenu. `MenuButton` and
+`OverflowMenu` open one from a button, as SplitButton does; `x` and `y` place
+one at a point, as a context menu. One highlight serves the pointer and the
+keys, and labels take its color where it covers them. With `inline`, the menu is
+drawn in place, with no portal, placement, snap or close.
+
+<Canvas of={MenuStories.Default} />
+
+<Canvas of={MenuStories.WithMenuButton} />
+
+<Canvas of={MenuStories.Submenu} />
+
+<Canvas of={MenuStories.Selectable} />
+
+<Canvas of={MenuStories.Danger} />
+
+<Canvas of={MenuStories.ContextMenu} />
+
+## Motion
+
+- **Open:** the frame grows about its cause: the press that opened it, else the
+  trigger's center, as from the keyboard. `openFrom="trigger"` on a button
+  always starts at its center.
+- **Content:** the list slides out of the frame on y only.
+- **Fade:** it fades up over the first part of the open and out over the last
+  part of the close: 40ms on a clock of 220ms or less, else 80ms.
+  `exitFade={false}` folds back opaque.
+- **Close:** the far edge folds back into the point it grew from, the list
+  still. It is gone on the fold's last frame. Reopened while it leaves, it turns
+  round from where it is.
+- **Highlight:** its first arrival in an open menu grows in from the row's
+  center. Under the pointer it jumps from row to row. The arrow keys glide it,
+  timed by travel. It shrinks back and fades when the pointer leaves the list.
+- **Danger:** on a danger row the highlight turns to the danger button's color,
+  on the glide's clock.
+- **Press:** the highlight insets 1px while a row is held.
+- **Submenu:** one level deep, marked by a chevron. It opens beside its row
+  after 100ms of hover, or on → or Enter, and snaps from the row. ← and Escape
+  go back.
+- **Chevron:** on MenuButton, the chevron turns while the menu shows.
+- **Keyboard:** ↑ and ↓ wrap; Home, End and typeahead move too. Disabled rows
+  are skipped unless they have a `disabledReason`. A radio group's `shortcuts`
+  win over typeahead. A trigger opens on the first row with Enter, Space or ↓,
+  and on the last with ↑.
+- **Cast shadow:** off by default. `shadow` turns it on; it grows and folds with
+  the frame.
+
+## Reduced motion
+
+The menu and its submenus are there at once and gone at once: no growth, slide,
+fold or fade. The highlight does not travel: it fades in on the new row as it
+fades out of the old, on half the clock. A menu placed again while open moves at
+once.
+
+## Props
+
+<ArgTypes of={MenuStories} />

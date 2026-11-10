@@ -445,8 +445,6 @@ export const KIT_CSS = `
 .mi-page { max-width: 1200px; margin: 0 auto; padding: 32px 24px 64px; font-family: var(--cds-font-family, 'IBM Plex Sans', sans-serif);
   color: var(--cds-text-primary, #161616); }
 .mi-header { margin-bottom: 32px; }
-.mi-header__title { font-size: 42px; font-weight: 300; line-height: 50px; margin: 0 0 16px; }
-.mi-header__accent { color: var(--cds-border-interactive, #0f62fe); }
 .mi-header__lede { font-size: 16px; line-height: 24px; color: var(--cds-text-secondary, #525252); max-width: 640px; margin: 0; }
 .mi-behaviours { margin-bottom: 32px; }
 .mi-panels { position: relative; }

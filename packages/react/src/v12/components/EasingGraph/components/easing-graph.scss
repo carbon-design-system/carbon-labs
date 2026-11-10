@@ -1,0 +1,206 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/field-fill' as *;
+
+$fast-01: var(--cds-motion-duration-fast-01);
+$fast-02: var(--cds-motion-duration-fast-02);
+$standard: var(--cds-motion-easing-standard-productive);
+
+/* EasingGraph — `EasingGraph.tsx`. Strokes keep their width (and their
+   dashes) at any size. Each line has its own weight and pattern, so they tell
+   apart at a glance: the curve 3px solid, the reference
+   3px dotted, the arms 2px dashed, the linear diagonal 1px in sparse dashes.
+   The plot (the unit box) is a field: the kit's field fill, as the four
+   numbers under it, and the grid and box in the text input's own hairline (`$border-subtle`,
+   1px), as quiet as a field's edge. */
+
+.cds-easing-graph {
+  display: grid;
+  gap: $spacing-02;
+  grid-template-columns: minmax(0, 1fr);
+  min-inline-size: 0;
+}
+
+.cds-easing-graph__stage {
+  position: relative;
+}
+
+.cds-easing-graph__plot {
+  display: block;
+  overflow: visible;
+  block-size: auto;
+  inline-size: 100%;
+  touch-action: none;
+
+  * {
+    vector-effect: non-scaling-stroke;
+  }
+}
+
+.cds-easing-graph__grid line {
+  stroke: theme.$border-subtle;
+  stroke-width: 1;
+}
+
+.cds-easing-graph__box {
+  fill: $field-fill;
+  stroke: theme.$border-subtle;
+  stroke-width: 1;
+}
+
+.cds-easing-graph__linear {
+  stroke: theme.$border-subtle-01;
+  stroke-dasharray: 3 5;
+  stroke-width: 1;
+}
+
+/* The curve it started from: dotted, round 3px dots. */
+.cds-easing-graph__reference {
+  fill: none;
+  stroke: theme.$icon-secondary;
+  stroke-dasharray: 0 7;
+  stroke-linecap: round;
+  stroke-width: 3;
+}
+
+.cds-easing-graph__arm {
+  stroke: theme.$icon-secondary;
+  stroke-dasharray: 6 4;
+  stroke-width: 2;
+  transition: stroke $fast-02 $standard;
+
+  /* The grabbed handle's arm: solid, in the handle's press color, not blue: `$icon-primary`, white on g90 / g100;
+     on white / g10, where white would vanish on the graph's background, its near-black. */
+  &[data-active] {
+    stroke: theme.$icon-primary;
+    stroke-dasharray: none;
+  }
+}
+
+.cds-easing-graph__curve {
+  fill: none;
+  stroke: theme.$interactive;
+  stroke-linecap: round;
+  stroke-width: 3;
+}
+
+/* The handle's ring color: registered, so it steps between colors on the house clocks. */
+@property --cds-easing-ring {
+  inherits: true;
+  initial-value: transparent;
+  syntax: '<color>';
+}
+
+/* The handles: HTML over the plot, on the house rollover (its 1px hover growth and its release).
+   The rollover paints its rest color only once a hover color is defined, so all three are
+   declared: the plot's fill, in every state, never brightened on press (`colors: 'tokens'` in
+   EasingGraph.tsx keeps motion-core from deriving a brighter one).
+   The state is the 2px ring (the rollover's inset shadow, so it moves with the surface), stepping
+   up in contrast as hover, press and release do: rest `$interactive`, hover `$link-primary-hover`
+   (one Carbon step further from the background), press `$icon-primary` (the arm turns the same,
+   solid). Into hover on fast-02, the press at once, back on fast-01 — the text input's ladder.
+   Pressed, the handle grows from 12 to 18px, so it shows round the pointer. No halo. The hit area
+   reaches 6px past the dot (24px round). */
+.cds-easing-graph__handle {
+  @include rollover($positioned: false);
+  --_size: 12px;
+  --cds-easing-ring: #{theme.$interactive};
+  --rollover-rest: #{$field-fill};
+  --rollover-hover: #{$field-fill};
+  --rollover-press: #{$field-fill};
+  --rollover-shadow: inset 0 0 0 2px var(--cds-easing-ring);
+  --rollover-press-inset: 0px;
+
+  position: absolute;
+  z-index: 1;
+  border-radius: 50%;
+  block-size: var(--_size);
+  cursor: grab;
+  inline-size: var(--_size);
+  touch-action: none;
+  transition:
+    inline-size $fast-02 $standard,
+    block-size $fast-02 $standard,
+    --cds-easing-ring $fast-01 $standard;
+  translate: -50% -50%;
+
+  &::after {
+    position: absolute;
+    border-radius: 50%;
+    content: '';
+    inset: -6px;
+  }
+
+  &:hover {
+    --cds-easing-ring: #{theme.$link-primary-hover};
+
+    transition:
+      inline-size $fast-02 $standard,
+      block-size $fast-02 $standard,
+      --cds-easing-ring $fast-02 $standard;
+  }
+
+  /* Pressed or grabbed: grown, the ring at its highest contrast, at once. */
+  &:active,
+  &[data-dragging] {
+    --_size: 18px;
+    --cds-easing-ring: #{theme.$icon-primary};
+
+    cursor: grabbing;
+    transition:
+      inline-size $fast-01 $standard,
+      block-size $fast-01 $standard;
+  }
+
+  &:focus-visible {
+    outline: 2px solid theme.$text-primary;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: var(--cds-motion-duration-floor);
+  }
+}
+
+/* Read only: the dot alone. */
+.cds-easing-graph__handle--static {
+  border: 2px solid theme.$interactive;
+  background: $field-fill;
+  block-size: 7px;
+  cursor: default;
+  inline-size: 7px;
+  pointer-events: none;
+
+  &::before,
+  &::after {
+    content: none;
+  }
+}
+
+.cds-easing-graph--dragging {
+  cursor: grabbing;
+}
+
+/* The four numbers, one row, as wide as the plotted box (in by `PAD` of `W`, 5%); a floor keeps
+   each value whole once the names have gone. */
+.cds-easing-graph__numbers {
+  margin-block-start: $spacing-02;
+  margin-inline: 5%;
+  min-inline-size: 11.5rem;
+}
+
+.cds-easing-graph__css {
+  @include type-style('code-01');
+
+  color: theme.$text-secondary;
+  white-space: nowrap;
+}

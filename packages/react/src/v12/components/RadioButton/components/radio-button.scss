@@ -1,0 +1,274 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/text-pairs';
+
+/* RadioButton — `RadioButton.tsx` (first pass; its header lists the
+   choices). The mark (`.cds-radio__circle`) is RadioTile's too (RadioMark). */
+
+$fast-01: var(--cds-motion-duration-fast-01);
+$fast-02: var(--cds-motion-duration-fast-02);
+$entrance: var(--cds-motion-easing-entrance-productive);
+$exit: var(--cds-motion-easing-exit-productive);
+/* The dot waits this long after the fill (the Checkbox's mark delay). */
+$after-fill: calc(#{$fast-01} * 4 / 7);
+
+.cds-radio {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.cds-radio__row {
+  @include type-style('body-compact-01');
+
+  display: inline-flex;
+  align-items: flex-start;
+  color: theme.$text-primary;
+  cursor: pointer;
+  gap: 8px;
+  padding-block: 2px;
+}
+
+.cds-radio--start .cds-radio__row {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.cds-radio__label {
+  padding-block-start: 1px;
+}
+
+.cds-radio__label--hidden {
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip: rect(0, 0, 0, 0);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+/* ── the mark ─────────────────────────────────────────────────────────── */
+
+.cds-radio__circle {
+  /* The input's hover and press are its label's too (HTML): hovering or
+     pressing the label plays the circle's rollover, as the Checkbox. */
+  @include rollover($control: '> .cds-radio__input');
+
+  /* Off: a stroke and no fill; hover, a wash of the text color. No press colour: the press
+     holds the hover's, since the chosen fill replaces it in the same moment. */
+  --rollover-rest: transparent;
+  // @carbon-explore hover-tint — Hover and press as a share of the text colour mixed into the fill. TBD
+  --rollover-hover: color-mix(
+    in srgb,
+    var(--cds-text-primary, #161616) 8%,
+    transparent
+  );
+  --rollover-press: var(--rollover-hover);
+  --rollover-stroke: var(--cds-border-strong-01, #8d8d8d);
+
+  display: inline-grid;
+  box-sizing: border-box;
+  flex: none;
+  border-radius: 50%;
+  block-size: 16px;
+  color: theme.$icon-inverse;
+  inline-size: 16px;
+  margin-block-start: 2px;
+  place-items: center;
+
+  /* On: the family's inverse selector, its steps toned. */
+  &:has(> .cds-radio__input:checked),
+  &[data-checked] {
+    --rollover-rest: var(--cds-layer-selected-inverse, #161616);
+    --rollover-hover: color-mix(
+      in srgb,
+      var(--cds-layer-selected-inverse, #161616) 86%,
+      var(--cds-background, #ffffff)
+    );
+    --rollover-stroke: transparent;
+  }
+}
+
+/* The drawn mark alone (RadioTile): no pointer of its own. */
+.cds-radio__circle--mark {
+  pointer-events: none;
+
+  &[data-disabled] {
+    --rollover-stroke: #{theme.$border-disabled};
+  }
+
+  &[data-disabled][data-checked] {
+    --rollover-rest: color-mix(
+      in srgb,
+      var(--cds-layer-selected-inverse, #161616) 50%,
+      var(--cds-background, #ffffff)
+    );
+    --rollover-stroke: transparent;
+  }
+}
+
+/* The control: invisible, over the circle and 4px round it (a 24px target). */
+.cds-radio__input {
+  position: absolute;
+  z-index: 2;
+  border-radius: 50%;
+  margin: 0;
+  block-size: auto;
+  cursor: inherit;
+  inline-size: auto;
+  inset: -4px;
+  opacity: 0;
+}
+
+/* The dot: grows from its center when chosen, after the fill; shrinks and
+   fades when unchosen. */
+.cds-radio__dot {
+  position: relative;
+  z-index: 1;
+  border-radius: 50%;
+  background: currentColor;
+  block-size: 6px;
+  inline-size: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.5);
+  transition:
+    opacity $fast-01 $exit,
+    transform $fast-01 $exit;
+
+  .cds-radio__circle:is(:has(> .cds-radio__input:checked), [data-checked]) > & {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0s linear $after-fill,
+      transform $fast-02 $entrance $after-fill;
+  }
+}
+
+/* ── focus: the family's keyboard ring ───────────────────────────────── */
+
+.cds-radio__circle:has(> .cds-radio__input:focus-visible) {
+  outline: 2px solid theme.$text-primary;
+  outline-offset: 2px;
+}
+
+/* ── disabled ─────────────────────────────────────────────────────────── */
+
+.cds-radio--disabled {
+  .cds-radio__row {
+    color: theme.$text-disabled;
+    cursor: not-allowed;
+  }
+
+  .cds-radio__circle {
+    --rollover-stroke: #{theme.$border-disabled};
+
+    &:has(> .cds-radio__input:checked),
+    &[data-checked] {
+      --rollover-rest: color-mix(
+        in srgb,
+        var(--cds-layer-selected-inverse, #161616) 50%,
+        var(--cds-background, #ffffff)
+      );
+      --rollover-stroke: transparent;
+    }
+  }
+}
+
+/* ── read-only: v11's ─────────────────────────────────────────────────── */
+
+.cds-radio--readonly {
+  .cds-radio__row {
+    cursor: default;
+  }
+
+  .cds-radio__circle,
+  .cds-radio__circle:has(> .cds-radio__input:checked) {
+    --rollover-rest: transparent;
+    --rollover-stroke: #{theme.$border-disabled};
+
+    color: theme.$icon-primary;
+  }
+}
+
+/* ── status: error and warning, the Checkbox's ─────────────────────────
+   The circle's stroke in the status's color and 1px more outside, so its
+   shape never changes; warning all in `$support-warning` as error is all red.
+   The ring is the surface's
+   (`--rollover-ring`): it grows on hover with the fill, at the same 2px, and
+   comes back with it on press. While a status shows, the keyboard ring sits
+   3px out, so the hovered status ring never touches it. */
+
+.cds-radio--invalid .cds-radio__circle,
+.cds-radio--invalid .cds-radio__circle:has(> .cds-radio__input:checked) {
+  --rollover-stroke: #{theme.$support-error};
+  --rollover-ring: #{theme.$support-error};
+}
+
+.cds-radio--warn .cds-radio__circle,
+.cds-radio--warn .cds-radio__circle:has(> .cds-radio__input:checked) {
+  --rollover-stroke: #{theme.$support-warning};
+  --rollover-ring: #{theme.$support-warning};
+}
+
+.cds-radio:is(.cds-radio--invalid, .cds-radio--warn)
+  .cds-radio__circle:has(> .cds-radio__input:focus-visible) {
+  outline-offset: 3px;
+}
+
+.cds-radio__message {
+  padding-inline-start: 24px;
+}
+
+/* ── the group ────────────────────────────────────────────────────────── */
+
+.cds-radio-group {
+  padding: 0;
+  border: 0;
+  margin: 0;
+  min-inline-size: 0;
+}
+
+/* The kit's group label: 8px above the first button's row (styles/_text-pairs.scss). */
+.cds-radio-group__legend {
+  @include text-pairs.group-label;
+}
+
+.cds-radio-group__buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.cds-radio-group--horizontal .cds-radio-group__buttons {
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+
+.cds-radio-group--vertical .cds-radio-group__buttons {
+  flex-direction: column;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cds-radio__dot,
+  .cds-radio__circle:is(:has(> .cds-radio__input:checked), [data-checked])
+    > .cds-radio__dot {
+    transition-delay: 0s;
+    transition-duration: var(--cds-motion-duration-floor);
+  }
+}
+
+@media (forced-colors: active) {
+  .cds-radio__circle {
+    border: 1px solid CanvasText;
+  }
+}

@@ -7,7 +7,7 @@
 
 import React, { useState } from 'react';
 import { Button } from '@carbon-labs/react-button';
-import { Checkbox } from '@carbon/react';
+import { Checkbox } from '@carbon-labs/react-checkbox';
 import { TextInput } from '@carbon-labs/react-text-input';
 import { Popover, PopoverContent } from '../index';
 import type { PopoverAlignment, PopoverProps } from '../index';

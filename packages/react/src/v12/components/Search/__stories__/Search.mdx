@@ -1,0 +1,72 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SearchStories from './Search.stories.tsx';
+
+<Meta of={SearchStories} />
+
+# Search
+
+Carbon's Search on the text input's field: a magnifier at the start, the input,
+and a clear button at the end. `labelText` is hidden and names the search
+landmark. The clear button, or Escape with a value, empties the field, calls
+`onChange` and `onClear`, and puts focus back in the input. It does not show
+when disabled or read-only. `ExpandableSearch` is its magnifier button until
+pressed, then grows into the field and takes focus. Emptied and left, or on
+Escape in an empty field, it closes back into the button; `isExpanded` holds it
+open. Its open width is `100%`, or `--cds-search-expanded-inline-size`.
+`SearchSkeleton` is the search while it loads.
+
+<Canvas of={SearchStories.Default} />
+
+<Canvas of={SearchStories.Sizes} />
+
+<Canvas of={SearchStories.States} />
+
+<Canvas of={SearchStories.ClearButton} />
+
+<Canvas of={SearchStories.Expandable} />
+
+<Canvas of={SearchStories.Skeleton} />
+
+## Motion
+
+- **Expand:** an expandable search grows from its button's box to its full
+  width, and closes back into it. The clock follows the travel: under 24px
+  fast-02, under 120px moderate-01, under 480px moderate-02. It opens on
+  entrance-productive and closes one step faster, on exit-productive. The width
+  moves as one layout change, so what sits beside it moves on the same clock. A
+  turn mid-move takes the step of what is left.
+- **Content with the opening:** shut, the content waits 8px back toward the
+  button. Opening from shut, it starts at half the clock and comes into place
+  over fast-02, on entrance-productive. It is laid out at its open width
+  throughout, so its text never reflows. Closing, it holds still. Reopened while
+  closing, it resumes from where it is.
+- **Soft edge:** while it moves, the trailing edge fades over up to 16px, so
+  nothing pops as it lands.
+- **Fill and hairline:** opening, the field's fill and hairline fade in on
+  fast-02. Closing, they fade out on fast-01 once it has closed.
+- **Clear button in:** the first typed character brings it in as the snap's
+  mark: from half size, opaque, growing about its center on fast-02, on
+  entrance-productive. It keeps its place while hidden, so the text never
+  reflows. Typing never moves it.
+- **Clear button out:** emptied, it leaves one step faster, on fast-01 and
+  exit-productive, back to half size and fading.
+- **Hover:** the field is the magnifier's icon frame. Hovering anywhere on it
+  plays the magnifier's hover. Not while disabled or read-only.
+- **Rollover:** the magnifier button and the clear button take the press shrink,
+  never the hover expand.
+- **Outline ladder:** the text input's: hover, press and focus on the outline. A
+  press on a focused field holds its focus edge.
+
+The clocks are read from the token variables where the search is, so a page's
+slow motion reaches them.
+
+## Reduced motion
+
+No travel and no scale. An expandable search opens or shuts at once, and its
+content fades in on fast-02 at half the clock. The clear button only fades, on
+the reduced clock. The fill, the outline and the magnifier's color change on
+fast-01 at half the clock.
+
+## Props
+
+<ArgTypes of={SearchStories} />

@@ -45,8 +45,9 @@
   /* Its content's own width wherever it is placed: a fixed box's auto width
      would shrink against the viewport's edge once moved toward it. */
   inline-size: max-content;
-  inset-block-start: 0;
-  inset-inline-start: 0;
+  /* Physical: the script sets left and top in client px, in either
+     direction (a logical start inset is the right edge in RTL). */
+  inset: 0 auto auto 0;
   isolation: isolate;
   max-inline-size: calc(100vw - 16px);
   outline: none;
@@ -126,8 +127,9 @@
   display: block;
   background: var(--cds-surface, #{theme.$layer});
   block-size: 1px;
-  inset-block-start: 0;
-  inset-inline-start: 0;
+  /* Physical: the script sets left and top in client px, in either
+     direction (a logical start inset is the right edge in RTL). */
+  inset: 0 auto auto 0;
   pointer-events: none;
 
   &[hidden] {

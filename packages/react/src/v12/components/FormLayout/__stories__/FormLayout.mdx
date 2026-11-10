@@ -1,0 +1,60 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as FormLayoutStories from './FormLayout.stories.tsx';
+
+<Meta of={FormLayoutStories} />
+
+# Form layout
+
+One layout for settings, create and edit forms. `FormLayout` is the form and its
+widest: narrow 320px, medium 640px by default, wide 960px or full. `as="div"`
+puts it inside another form. `FormSection` is a title, a description 8px under
+it and its fields 24px below, in a fieldset. `FormRow` puts fields side by side
+from a 480px form, 16px apart, and stacks them under it; `columns` sets how
+many. Sections are 48px apart and fields 32px, the room a field's message line
+opens into. A layout's or a section's `disabled` and `readOnly` reach every
+field in it: the kit's fields read them with `useFormFieldState`, and a disabled
+section also disables any other control in it. `UnsavedChangesBar` holds Save
+and Discard at the bottom of its scroll while the form has changes, with
+`useDirtyForm` to track them. `SavingStatus` shows where a save stands.
+
+<Canvas of={FormLayoutStories.Default} />
+
+<Canvas of={FormLayoutStories.Sizes} />
+
+<Canvas of={FormLayoutStories.Rows} />
+
+<Canvas of={FormLayoutStories.SectionState} />
+
+<Canvas of={FormLayoutStories.UnsavedChanges} />
+
+<Canvas of={FormLayoutStories.Autosave} />
+
+<Canvas of={FormLayoutStories.SavingStates} />
+
+<Canvas of={FormLayoutStories.InSidePanel} />
+
+## Motion
+
+- **None:** a form holds still while it is filled in. Rows restack at once when
+  the form crosses 480px. Each field keeps its own motion.
+- **Save:** the unsaved changes bar arrives on the first change and holds still
+  after. It snaps in from its bottom edge, opaque from 4px. Its content moves
+  8px up into place from the first frame and lands just after the bar. The clock
+  is the step for the bar's height, on entrance-productive. Leaving, its top
+  edge folds back down a step faster, on exit-productive, and the content holds
+  still.
+- **Save swap:** the bar's message and actions swap in place, for the discard
+  question and a failed save. The count rolls to each new number.
+- **Saving status:** the mark hands off from one status to the next. The spinner
+  shrinks 4px, the disc grows in, and the check or slash draws on, with no
+  fades. The label swaps in place, out then in, on the content swap's clocks.
+
+## Reduced motion
+
+The layout has nothing to change. The bar only fades, at its final geometry, on
+the reduced clock. Its swaps change at once. The saving status's mark and label
+change at once.
+
+## Props
+
+<ArgTypes of={FormLayoutStories} />

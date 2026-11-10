@@ -1,4 +1,12 @@
 {
+  "V12/AppShell": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/AppShell/components/app-shell.scss",
+      "line": 487,
+      "text": "surface-step — Surfaces stepped up in elevation: the outlined selector's lift, a workspace's content, a field on it. TBD"
+    }
+  ],
   "V12/Button": [
     {
       "kind": "explore",
@@ -29,6 +37,20 @@
       "file": "packages/react/src/v12/components/Button/proposals/README.md",
       "line": 5,
       "text": "api: button-axes — Button splits v11's kinds into `kind` (role), `variant` (`outlined`, `tonal`) and `frame` (`ghost`, `none`). TBD"
+    }
+  ],
+  "V12/Card": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Card/components/card.scss",
+      "line": 52,
+      "text": "hover-tint — Hover and press as a share of the text colour mixed into the fill. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Card/proposals/README.md",
+      "line": 3,
+      "text": "api: logical-positions — Placement values are logical. TBD"
     }
   ],
   "V12/Checkbox": [
@@ -95,6 +117,20 @@
       "text": "api: variant-prop — The colour treatment is `variant`. TBD"
     }
   ],
+  "V12/Pagination": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Pagination/components/pagination.scss",
+      "line": 24,
+      "text": "token: surface-quiet — The quiet surface fill: side nav panel, tiles, tables, jobs tray, tabs fade. replaces: `$layer-01`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Pagination/components/pagination.scss",
+      "line": 26,
+      "text": "token: surface-divider — A line inside the surface (table rows, header underline). replaces: `$border-subtle`. TBD"
+    }
+  ],
   "V12/Popover": [
     {
       "kind": "explore",
@@ -157,6 +193,32 @@
       "file": "packages/react/src/v12/components/SelectionKit/proposals/README.md",
       "line": 3,
       "text": "api: variant-prop — The colour treatment is `variant`. TBD"
+    }
+  ],
+  "V12/SideNav": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/SideNav/components/side-nav.scss",
+      "line": 33,
+      "text": "token: surface-quiet — The quiet surface fill: side nav panel, tiles, tables, jobs tray, tabs fade. replaces: `$layer-01`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/SideNav/components/side-nav.scss",
+      "line": 35,
+      "text": "token: surface-rule — The quiet surface's hairline. replaces: `$border-subtle`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/SideNav/components/side-nav.scss",
+      "line": 109,
+      "text": "token: hero-color — The hero tokens: brand colour for a line, a fill, a hover, an ink on a page and on a fill. replaces: `$border-interactive` / `$interactive`, `$button-primary`, `-hover`, `-active`, `$link-primary`, `$link-inverse`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/SideNav/proposals/README.md",
+      "line": 3,
+      "text": "api: frame-prop — What a component stands on is `frame`. TBD"
     }
   ],
   "V12/SidePanel": [
@@ -231,6 +293,20 @@
       "file": "packages/react/src/v12/components/Tag/components/tag.scss",
       "line": 75,
       "text": "radius-tag-rounded — A tag's rounded corner at every size. TBD"
+    }
+  ],
+  "V12/Tearsheet": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Tearsheet/components/tearsheet.scss",
+      "line": 222,
+      "text": "token: surface-raised — One contrast step up from the fill: data table header and zebra. replaces: `$layer-accent-01`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Tearsheet/proposals/README.md",
+      "line": 3,
+      "text": "api: logical-positions — Placement values are logical. TBD"
     }
   ],
   "V12/TextArea": [

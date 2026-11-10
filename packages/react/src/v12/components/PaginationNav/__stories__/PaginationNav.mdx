@@ -1,0 +1,66 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as PaginationNavStories from './PaginationNav.stories.tsx';
+
+<Meta of={PaginationNavStories} />
+
+# PaginationNav
+
+Page numbers between a back and a forward button. The first and last pages
+always show. Between them is a window of numbers, and the pages hidden on each
+side sit behind a "…" that opens a list of them. It takes Carbon's props: `page`
+(from 0), `totalItems` (the number of pages), `itemsShown` (default 10, at least
+4), `loop`, `disableOverflow`, `size` (default lg), `tooltipAlignment`,
+`tooltipPosition`, `translateWithId` and `onChange(index)`. `variant` sets the
+marker's color: `inverse`, the default, or `hero`, the brand blue. `motion`
+takes the selection kit's dials; keys left out take the kit's. `onMove` is
+called as each glide of the marker starts.
+
+<Canvas of={PaginationNavStories.Default} />
+
+<Canvas of={PaginationNavStories.Controlled} />
+
+<Canvas of={PaginationNavStories.ManyPages} />
+
+## Motion
+
+- **Selection marker:** the current page's mark is an underline at the row's
+  foot, as line tabs draw it. It glides from page to page, timed by travel, its
+  leading edge ahead. The page label takes its selected weight, 600, and color
+  where the marker covers it.
+- **Selection gesture:** a press on a page reaches the marker toward it. The
+  release picks it.
+- **Window shift:** when the window of numbers shifts, the row reflows as one
+  strip. The numbers that stay slide to their new places, timed by travel. The
+  marker moves on the strip's clock, so a step that shifts the window by one
+  leaves it still while the numbers pass under it.
+- **List reflow, carry:** a number leaving slides on with the strip and fades
+  out, faster. A number arriving slides in and fades up.
+- **Soft edge:** the window's numbers sit between soft edges, 16px at most and
+  never wider than the room to the next icon box. A number travelling out is
+  gone before it reaches a "…". One arriving where a "…" went waits until it has
+  gone.
+- **Overflow list:** the "…" opens the kit's floating listbox of the hidden
+  pages, the Dropdown's, on the Menu's surface. It snaps from the press and
+  folds back into it. It shows five and a half rows and scrolls.
+- **Rollover:** the numbers and the "…" take the kit's rollover, full round: a
+  circle, or a pill on a long number. Hover adds a glow and the label steps
+  brighter. The press insets 1px and stays round while the marker reaches toward
+  it.
+- **Tooltips:** the back and forward buttons are the kit's ghost IconButtons, in
+  one `TooltipGroup`.
+- **Keyboard:** the "…", closed: ↓, Enter or Space open the list on the first
+  page, ↑ on the last; Home and End too. Open: ↑ and ↓ move, without wrapping;
+  Home and End; Page Up and Page Down move 10; digits find a page; Enter or
+  Space choose; Escape and Tab close. The current page has
+  `aria-current="page"`. A polite live region says "Page n of N".
+
+## Reduced motion
+
+Nothing travels. The marker fades across to the new page, on a shorter clock.
+The numbers land at once; leaving and arriving ones fade, on a shorter clock.
+The overflow list is there or gone at once. The rollover changes at once.
+Tooltips show and leave at once.
+
+## Props
+
+<ArgTypes of={PaginationNavStories} />

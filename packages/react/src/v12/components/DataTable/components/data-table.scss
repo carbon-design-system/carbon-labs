@@ -1,0 +1,510 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/corners';
+
+/* DataTable — `index.ts`. Carbon v11's DataTable on the kit's standard
+ * surface (styles/_surface.scss): the side nav's quieter fill and stroke, the
+ * header a contrast step up:
+ *
+ *   cells    every body cell on `--cds-surface` (the side nav's fill), painted
+ *            on the cells themselves, so nothing of Carbon's (its `$layer`
+ *            body, its row fills) shows the page through; the title and
+ *            toolbar on it too, so the table is one quiet surface
+ *   rows     the divider, `--cds-surface-divider` (8 L* off the cells)
+ *   header   `--cds-surface-raised`, one contrast step (3.8 L*) above the
+ *            cells; sortable and select-all cells too (v11 paints their
+ *            buttons `$layer-accent` over the cell); one divider under it,
+ *            the full width, in both looks
+ *   zebra    the even rows on the header's step, `--cds-surface-raised` (v11's
+ *            zebra: both on `$layer-accent`), with NO row dividers: the
+ *            stripes divide. Counted over the data rows only, so an
+ *            expanded row's content takes its parent's stripe
+ *   states   selected, a 10% wash of the text over the row's own fill; hover,
+ *            6 L* off it away from the page (over a selection or a stripe too);
+ *            the dividers stay through every state
+ *
+ * The row's fill and wash are custom properties on the row
+ * (`--cds-row-fill`, `--cds-row-wash`), so a state is one line and nothing
+ * fights v11's row rules but the one rule that paints the cells.
+ *
+ * Every `.cds--data-table` takes it, so DataTableSkeleton and DataTableReveal
+ * (feedback/skeleton) match the table they stand in for. Fills move on the
+ * rollover's clocks; the expandable rows push (expand.tsx). */
+
+/* In an inset workspace, its own (`--cds-table-*`, app-shell.scss): the rows nearest the workspace. */
+$_surface: var(--cds-table-fill, var(--cds-surface, #{theme.$layer-01}));
+$_divider: var(--cds-surface-divider, #{theme.$border-subtle-01});
+$_raised: var(
+  --cds-table-raised,
+  var(--cds-surface-raised, #{theme.$layer-accent-01})
+);
+$_step: var(--cds-text-primary, #161616);
+
+/* Over v11's row rules: its most specific (the zebra's selected first row)
+   is four classes and three elements. */
+$_t: 'table.cds--data-table.cds--data-table.cds--data-table.cds--data-table';
+
+.cds--data-table-header,
+.cds--table-toolbar {
+  background: $_surface;
+}
+
+.cds--data-table {
+  thead,
+  thead th,
+  th.cds--table-sort__header,
+  thead th.cds--table-column-checkbox,
+  thead th.cds--table-expand {
+    background: $_raised;
+  }
+
+  .cds--table-sort:not(:hover, .cds--table-sort--active) {
+    background: $_raised;
+  }
+
+  /* The sort icon: the motion icon SortDirection (header.tsx), one icon in
+     v11's two icons' place, at v11's size and margins. As v11: hidden while
+     the column is unsorted, shown on the button's hover and focus (v11's
+     `.cds--table-sort:hover svg` and `:focus svg` rules), always shown when
+     the column is sorted. No turn for descending: the icon draws it. */
+  .cds-table-sort__icon {
+    flex: none;
+    color: theme.$icon-primary;
+    fill: theme.$icon-primary;
+    inline-size: 1.25rem;
+    margin-inline: $spacing-03 $spacing-03;
+    min-inline-size: $spacing-05;
+    opacity: 0;
+  }
+
+  .cds--table-sort--active .cds-table-sort__icon {
+    opacity: 1;
+  }
+
+  &.cds--data-table--xl .cds-table-sort__icon {
+    margin-block-start: 0.8125rem;
+  }
+
+  .cds--table-sort__header--slug .cds-table-sort__icon,
+  .cds--table-sort__header--ai-label .cds-table-sort__icon,
+  .cds--table-sort__header--decorator .cds-table-sort__icon {
+    margin-inline: auto 0.5rem;
+  }
+
+  /* A sort button that can't sort yet (DataTableReveal's, until its rows
+     land): Carbon's disabled control (v11 has no disabled sort header). The
+     label in $text-disabled, an active sort's arrow in $icon-disabled, no
+     hover (no wash, no unsorted arrows) and the not-allowed cursor; native
+     `disabled`, so it isn't focusable. */
+  .cds--table-sort:disabled {
+    background: $_raised;
+    color: theme.$text-disabled;
+    cursor: not-allowed;
+
+    svg {
+      opacity: 0;
+    }
+
+    &.cds--table-sort--active svg.cds-table-sort__icon {
+      fill: theme.$icon-disabled;
+      opacity: 1;
+    }
+  }
+
+  tbody {
+    background: $_surface;
+  }
+
+  /* The row: its fill (the surface, or a stripe) and its state's wash. */
+  tbody tr {
+    --cds-row-fill: #{$_surface};
+    --cds-row-wash: 0%;
+    --cds-row: color-mix(
+      in srgb,
+      #{$_step} var(--cds-row-wash),
+      var(--cds-row-fill)
+    );
+  }
+
+  /* Hovered: 6 L* off the row's fill, away from the page (`--cds-step-dir`), so it parts from the
+     row and from what's behind the table alike. Rest keeps the srgb mix (a skeleton reads it). */
+  tbody tr:not(.cds-table-expanded):hover {
+    --cds-row: lab(
+      from
+        color-mix(in srgb, #{$_step} var(--cds-row-wash), var(--cds-row-fill))
+        calc(l + var(--cds-step-dir, -1) * 6) a b
+    );
+  }
+
+  /* Selected: the kit's selected wash (`--cds-selected-wash`, 10%), the one for every row that is
+     one of many chosen; hovered, the hover's step off it. */
+  tbody tr.cds--data-table--selected {
+    --cds-row-wash: var(--cds-selected-wash, 10%);
+  }
+
+  /* An expanded row's content doesn't take the hover: it's the parent's. */
+  tbody tr.cds-table-expanded {
+    --cds-row-wash: 0%;
+  }
+}
+
+.cds--data-table--zebra tbody {
+  tr:nth-child(even of :not(.cds-table-expanded)):not(
+      .cds--data-table--selected
+    ),
+  tr:nth-child(even of :not(.cds-table-expanded)):not(
+      .cds--data-table--selected
+    )
+    + tr.cds-table-expanded {
+    --cds-row-fill: #{$_raised};
+  }
+}
+
+/* The cells: the row's color; the dividers (none in zebra: each line is the
+   row's own color, as v11's zebra draws its borders in the stripe's). */
+#{$_t} {
+  thead th {
+    border-block-end: 1px solid $_divider;
+  }
+
+  tbody tr,
+  tbody tr > :is(td, th) {
+    background: var(--cds-row);
+  }
+
+  tbody tr > :is(td, th) {
+    border-block-end-color: $_divider;
+    border-block-start-color: $_divider;
+  }
+
+  /* (The lines on the fill's clock, so a hover doesn't flash a line.) */
+  &.cds--data-table--zebra tbody tr > :is(td, th) {
+    border-block-end-color: var(--cds-row);
+    border-block-start-color: var(--cds-row);
+  }
+}
+
+/* ── motion: fills and rings on the rollover's legs, not Carbon's 70ms ──
+   In on fast-02, back on fast-01, standard-productive; reduced, at once. */
+$_in: var(--cds-motion-duration-fast-02)
+  var(--cds-motion-easing-standard-productive);
+$_out: var(--cds-motion-duration-fast-01)
+  var(--cds-motion-easing-standard-productive);
+
+@mixin _fill-clock($clock, $a, $b) {
+  transition:
+    $a $clock,
+    $b $clock;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: var(--cds-motion-duration-floor);
+  }
+}
+
+#{$_t} {
+  tbody tr,
+  tbody tr > :is(td, th),
+  thead th.cds--table-column-checkbox {
+    @include _fill-clock($_out, background-color, border-color);
+  }
+
+  tbody tr:hover,
+  tbody tr:hover > :is(td, th) {
+    @include _fill-clock($_in, background-color, border-color);
+  }
+
+  .cds--table-sort {
+    @include _fill-clock($_out, background-color, outline);
+
+    &:is(:hover, :focus-visible) {
+      @include _fill-clock($_in, background-color, outline);
+    }
+  }
+}
+
+.cds--table-toolbar.cds--table-toolbar .cds--search .cds--search-input {
+  @include _fill-clock($_out, background-color, outline);
+
+  &:is(:hover, :focus) {
+    @include _fill-clock($_in, background-color, outline);
+  }
+}
+
+/* Table (parts.tsx): v11's table in the kit's Scroller, which scrolls in
+   its place (v11's own `overflow-x: auto` would show the native bar). */
+.cds-data-table__scroller {
+  inline-size: 100%;
+
+  > .cds-scroller__viewport > .cds--data-table-content {
+    overflow: visible;
+  }
+}
+
+/* Its intrinsic width is its container's, not the table's: a wide table
+   scrolls in the Scroller instead of widening the page and breaking the
+   layout. */
+.cds-data-table__scroller {
+  min-inline-size: 0;
+
+  > .cds-scroller__viewport {
+    contain: inline-size;
+    container-type: inline-size;
+  }
+}
+
+/* ── fitting before scrolling: no forced scroll at normal sizes. Long text wraps (Carbon's cells
+   already do); a field in a cell is never wider than its cell or a third of the table (the viewport
+   is a size container), so a wide input (a JSON value) can't hold a column open; a table that still
+   won't fit is marked tight (`Table`), its one-line cells wrapping; only then does it scroll. */
+.cds--data-table td {
+  overflow-wrap: break-word;
+
+  :is(input, select, textarea) {
+    max-inline-size: 33cqi;
+    min-inline-size: 0;
+  }
+}
+
+.cds-data-table--tight .cds--data-table td,
+.cds-data-table--tight .cds--data-table td * {
+  white-space: normal;
+}
+
+/* ── the toolbar ──────────────────────────────────────────────────────────
+   One band on the surface. The search takes no fill of its own at rest, as
+   v11's does (there `$field` is the toolbar's `$layer`), not Carbon's
+   `$field`, a lighter band that stops short of the button and leaves it in
+   a notch of the surface beside it. It takes the row hover's wash (5%) on
+   hover, while focused and once typed in.
+
+   v11's toolbar button is a full-height square at the edge; the kit's Button
+   keeps its own shape (a pill), so it sits inside the band, centred, and its
+   end lines up with the table's inline padding (16px: the title, the cells,
+   the search's icon at the start), not 8px from the edge, where the pill's
+   curve reads as cut off. The search takes the room left and can shrink; the
+   button never does. */
+.cds--table-toolbar {
+  min-inline-size: 0;
+}
+
+.cds--toolbar-content {
+  min-inline-size: 0;
+
+  > .cds--search {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+  }
+
+  > .cds-btn {
+    flex: none;
+    align-self: center;
+    margin-inline: 8px 16px;
+  }
+}
+
+.cds--table-toolbar.cds--table-toolbar .cds--search .cds--search-input {
+  background: transparent;
+
+  &:hover:not([disabled]),
+  &:focus,
+  &:not(:placeholder-shown) {
+    background: color-mix(in srgb, #{$_step} 5%, #{$_surface});
+  }
+}
+
+/* ── expandable rows (expand.tsx) ────────────────────────────────────── */
+
+.cds--data-table {
+  .cds-table-expand {
+    inline-size: 2.5rem;
+    padding-block: 0;
+    padding-inline: 8px 0;
+    vertical-align: middle;
+  }
+}
+
+/* The parent and its content are one row: no divider between them, and no
+   line of their own. While the content row is in the table (open, or
+   opening or closing) the parent's bottom line and the content's top line
+   are 0px wide, so the content row adds only its clip's height: shut, at
+   0px, the rows below are exactly in place (a collapsed border is
+   1px per line; a second line would be a 1px jump). The content row has no
+   height of its own either (v11's 48px row height on it would be a 48px jump
+   at both ends of every push). */
+#{$_t} {
+  tbody tr:has(+ tr.cds-table-expanded:not([hidden])) > td {
+    border-block-end-width: 0;
+  }
+
+  tbody tr.cds-table-expanded,
+  tbody tr.cds-table-expanded > td {
+    block-size: auto;
+  }
+
+  tbody tr.cds-table-expanded > td {
+    padding: 0;
+    border-block-start-width: 0;
+  }
+}
+
+.cds-table-expanded[hidden] {
+  display: none;
+}
+
+/* The push (expand.tsx) is the kit's disclosure (disclosure/disclosure.scss):
+   the body's height through the grid row, the soft edge
+   (`min(16px, h, H − h)`, `--cds-motion-soft-edge`) while it moves, the
+   content coming down 8px with the opening from half the open, and the clip
+   held while shut until the row hides. The content row's padding is its
+   content's, inside the clip, so a shut row is 0px. */
+.cds-table-expanded__content {
+  /* v11's expanded padding: in line with the first data column. */
+  padding-block: 1rem 1.5rem;
+  padding-inline: 3.5rem 1rem;
+}
+
+/* The chevron: 24px, the house rollover (a wash of the text color), full
+   round: an icon on its own (README.md, "Hovers"). */
+.cds-table-expand__button {
+  @include rollover;
+  --rollover-hover: color-mix(
+    in srgb,
+    var(--cds-text-primary, #161616) 8%,
+    transparent
+  );
+  --rollover-press: color-mix(
+    in srgb,
+    var(--cds-text-primary, #161616) 16%,
+    transparent
+  );
+
+  display: inline-grid;
+  padding: 0;
+  border: 0;
+  border-radius: #{corners.$full};
+  margin: 0;
+  background: none;
+  block-size: 24px;
+  color: theme.$icon-primary;
+  cursor: pointer;
+  inline-size: 24px;
+  place-items: center;
+
+  &:focus-visible {
+    outline: 2px solid theme.$text-primary;
+    outline-offset: 1px;
+  }
+}
+
+/* ── corners (DataTable `corners`, parts.tsx) ─────────────────────────────
+   Square by default (v11). Rounded: 8px on the outer box
+   (`.cds-data-table--rounded`: the TableContainer, or the Table's Scroller
+   when there is none), its fills clipped to it, and the parts in its corners
+   concentric with it (inner = outer − inset; they sit at inset 0, so 8px
+   too): the header row's end cells and their sort buttons, whose focus ring
+   then follows the corner, and the last row's end cells. */
+.cds-data-table--rounded {
+  --cds-table-radius: #{corners.$in};
+
+  overflow: clip;
+
+  border-radius: var(--cds-table-radius);
+  box-shadow: inset 0 0 0 1px
+    var(--cds-surface-divider, #{theme.$border-subtle-01});
+}
+
+/* The Table's Scroller in a rounded TableContainer takes the corners it
+   touches, so its keyboard ring (and its viewport's clip) follow them. */
+.cds-data-table--rounded > .cds-data-table__scroller:first-child {
+  border-start-end-radius: var(--cds-table-radius);
+  border-start-start-radius: var(--cds-table-radius);
+}
+
+.cds-data-table--rounded > .cds-data-table__scroller:last-child {
+  border-end-end-radius: var(--cds-table-radius);
+  border-end-start-radius: var(--cds-table-radius);
+}
+
+/* The table at the top of the box: the box is its Scroller, or nothing
+   (no title, no toolbar) comes before it. */
+:is(
+    .cds-data-table__scroller.cds-data-table--rounded,
+    .cds-data-table--rounded > .cds-data-table__scroller:first-child
+  )
+  thead
+  tr:first-child {
+  > :first-child,
+  > :first-child > .cds--table-sort {
+    border-start-start-radius: var(--cds-table-radius);
+  }
+
+  > :last-child,
+  > :last-child > .cds--table-sort {
+    border-start-end-radius: var(--cds-table-radius);
+  }
+}
+
+/* The last row shown (an expanded row's content, when it's open). */
+:is(
+    .cds-data-table__scroller.cds-data-table--rounded,
+    .cds-data-table--rounded > .cds-data-table__scroller:last-child
+  )
+  tbody
+  tr:nth-last-child(1 of :not([hidden])) {
+  > :first-child {
+    border-end-start-radius: var(--cds-table-radius);
+  }
+
+  > :last-child {
+    border-end-end-radius: var(--cds-table-radius);
+  }
+}
+
+/* A toolbar at the top of the box: its search and the batch bar's ends. */
+.cds-data-table--rounded > .cds--table-toolbar:first-child {
+  border-start-end-radius: var(--cds-table-radius);
+  border-start-start-radius: var(--cds-table-radius);
+
+  .cds--toolbar-content
+    > :first-child
+    :is(.cds--search-input, .cds--search-magnifier),
+  .cds--batch-summary {
+    border-start-start-radius: var(--cds-table-radius);
+  }
+
+  .cds--action-list > :last-child {
+    border-start-end-radius: var(--cds-table-radius);
+  }
+}
+
+/* The batch bar's actions (Carbon's TableBatchAction and its Cancel) are
+   v12 buttons: pills, 32px, centred in the bar, a little in from each
+   other, rather than v11's flat 48px blocks. */
+.cds--batch-actions .cds--action-list {
+  align-items: center;
+  gap: $spacing-02;
+  padding-inline-end: $spacing-03;
+}
+
+.cds--batch-actions .cds--action-list .cds--btn {
+  align-items: center;
+  align-self: center;
+  border-radius: corners.$full;
+  block-size: 32px;
+  min-block-size: 32px;
+  padding-block: 0;
+}
+
+/* Carbon's rule between the actions and Cancel: the pills' gap does it. */
+.cds--batch-actions .cds--batch-summary__cancel::before {
+  display: none;
+}

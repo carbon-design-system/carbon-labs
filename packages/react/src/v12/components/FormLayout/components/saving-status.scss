@@ -1,0 +1,25 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+
+/* SavingStatus (SavingStatus.tsx): the inline loader's row, its label in
+   the secondary text, Retry after it. */
+
+.cds-saving-status {
+  display: inline-flex;
+  align-items: center;
+  color: theme.$text-secondary;
+  gap: $spacing-03;
+  min-block-size: 2rem;
+}
+
+.cds-saving-status[data-status='fail'] {
+  color: theme.$text-error;
+}

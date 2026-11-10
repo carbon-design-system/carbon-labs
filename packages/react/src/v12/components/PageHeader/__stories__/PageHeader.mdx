@@ -1,0 +1,79 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as PageHeaderStories from './PageHeader.stories.tsx';
+
+<Meta of={PageHeaderStories} />
+
+# Page header
+
+The top of a page: a breadcrumb, a title, a subtitle, `children`, tags, page
+actions, an action bar and tabs (`navigation`). It sticks to the top of its
+scroll container, `pageHeaderOffset` below it. Past 16px of scroll it collapses
+to one 48px row of the breadcrumb, the title, the page actions and the action
+bar, then the tabs. Back at the top it expands. `collapseHeader` holds it
+collapsed, and `hasCollapseHeaderToggle` adds a button for it. Its layout
+follows its own width, not the window's. Below 672px the page actions go under
+the title, and the collapsed row has no breadcrumb. Each row is split 60/40
+between the title or breadcrumb and the actions from 672px up, and 75/25 below.
+Page actions given as descriptions fold as a set into a "Page actions" menu
+button when they don't fit; a node of your own stays as it is. The action bar
+gives its trailing items to an overflow menu. The title truncates on one line,
+with its full text in a tooltip. Its controls sit one size down from the density
+around it. `frame="flush"`, the default, is the quiet surface and its hairline;
+`ghost` paints the ground it sits on, with no hairline. `corners="rounded"`
+rounds it in the page or in a card.
+
+<Canvas of={PageHeaderStories.Default} />
+
+<Canvas of={PageHeaderStories.Ghost} />
+
+<Canvas of={PageHeaderStories.CollapseToggle} />
+
+<Canvas of={PageHeaderStories.NoFade} />
+
+<Canvas of={PageHeaderStories.Widths} />
+
+## Motion
+
+- **Collapse and expand:** one layout transaction. The header's height leads,
+  and the breadcrumb and the tabs move from where they were to where they land,
+  on its clock. The clock is the step for the farthest travel, one step faster
+  collapsing, on standard-productive.
+- **Title swap:** the title doesn't travel. Two copies swap in place, out then
+  in. Collapsing, the large title rolls up a line and away through a soft edge,
+  then the compact one rolls up into place from a line below, landing with the
+  header. Expanding is the mirror. The breadcrumb's last slash comes and goes on
+  the same beats.
+- **Details:** the subtitle, `children` and the tags fade in place on the
+  title's beats, out collapsing and in expanding. The edge that moves with the
+  header cuts them where it ends.
+- **The jump:** every button that changes place jumps: into or out of a menu
+  button, between its rows and the collapsed row, and on a resize. Copies of the
+  leaving buttons shrink out 4px, opaque, over the first third of the clock.
+  Then the arriving ones grow in from 4px small over the rest. In a collapse or
+  expand the clock is the move's; on a resize it is fast-01. A button within 4px
+  of its old place stays put.
+- **Ghost hairline:** with `frame="ghost"`, the collapsed row's hairline fades
+  in on fast-00 as the compact title lands, and out as the large one starts
+  back.
+- **Soft edge:** content scrolling under the header leaves into a soft edge at
+  its bottom, which grows over the first 16px of content under it.
+- **The room it keeps:** collapsing on the scroll, it keeps the room it gives up
+  as a margin below, moving with its height. Nothing below moves, the page's
+  height doesn't change, and a short page collapses too. A collapse from
+  `collapseHeader` or the toggle keeps no room: the content follows the header.
+- **No fade:** with `motion={{ fade: false }}`, the titles roll through a hard
+  edge, the edge over the details is hard, and the slash comes and goes on its
+  beats with no fade.
+- **Interruption:** a turn mid-move goes on from where everything is. An edge
+  the scroll crosses mid-move is answered when the move lands. A resize across
+  672px changes the layout at once.
+- `timeScale` multiplies the clock.
+
+## Reduced motion
+
+It collapses and expands at once, and the buttons don't jump. On the scroll it
+still keeps the room it gives up.
+
+## Props
+
+<ArgTypes of={PageHeaderStories} />

@@ -1,0 +1,127 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+
+/* TagSet — `TagSet.tsx` (its header lists the choices). The kit's tags in a
+   row, 8px apart; the "+N" is the selectable tag's outline pill (tag.scss)
+   with the rollover. The overflow popover is the kit's Popover (its
+   anchored form); this file sets only its width and its content. */
+
+.cds-tag-set {
+  position: relative;
+  min-inline-size: 0;
+}
+
+.cds-tag-set__row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: $spacing-03;
+  min-inline-size: 0;
+}
+
+.cds-tag-set--multiline .cds-tag-set__row {
+  flex-wrap: wrap;
+}
+
+/* The trigger: the selectable tag's outline pill, its count rolling inside. */
+.cds-tag-set__overflow {
+  font-variant-numeric: tabular-nums;
+
+  &[aria-expanded='true'] {
+    --rollover-stroke: #{theme.$border-strong-01};
+  }
+
+  /* The kit's ring (the button rule): 2px, in the label's color. */
+  &:focus-visible {
+    outline: 2px solid theme.$text-primary;
+    outline-offset: 2px;
+  }
+}
+
+/* The tags as they'd show, measured once: out of the flow, unseen, in a
+   box of no width (the tags keep theirs: `flex: none`), so a long set never
+   widens the page. */
+.cds-tag-set__measure {
+  position: absolute;
+  display: flex;
+  overflow: hidden;
+  inline-size: 0;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  pointer-events: none;
+  visibility: hidden;
+  white-space: nowrap;
+
+  /* A dismissible tag stops at its container's width (its text then cuts
+     short); in this box of no width it would measure as its padding, and
+     the set would never overflow. Here it is as wide as it would show. */
+  > .cds-dismissible-tag {
+    max-inline-size: none;
+  }
+}
+
+/* ── the popover ──────────────────────────────────────────────────────── */
+
+.cds-popover.cds-tag-set__popover {
+  max-inline-size: min(20rem, calc(100vw - 16px));
+}
+
+.cds-tag-set__popover-content {
+  padding: $spacing-03 0;
+}
+
+.cds-tag-set__overflow-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.cds-tag-set__overflow-item {
+  @include type-style('body-compact-01');
+
+  padding: $spacing-02 $spacing-05;
+  color: theme.$text-primary;
+  overflow-wrap: anywhere;
+}
+
+/* As tags: wrapped, 8px apart. */
+.cds-tag-set__overflow-list--tag {
+  display: flex;
+  flex-wrap: wrap;
+  padding: $spacing-02 $spacing-05;
+  gap: $spacing-03;
+
+  .cds-tag-set__overflow-item {
+    padding: 0;
+  }
+}
+
+.cds-tag-set__show-all {
+  padding: $spacing-03 $spacing-05 $spacing-02;
+  border-block-start: 1px solid theme.$border-subtle-01;
+  margin-block-start: $spacing-03;
+}
+
+/* ── the modal's list ─────────────────────────────────────────────────── */
+
+.cds-tag-set__all {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-05;
+}
+
+.cds-tag-set__all-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: $spacing-03;
+  min-block-size: 0;
+}

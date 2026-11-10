@@ -1,0 +1,64 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as CardStories from './Card.stories.tsx';
+
+<Meta of={CardStories} />
+
+# Card
+
+A tile with a header, a body, actions and a footer, on `--cds-surface` with 8px
+corners and 16px in. A card has a label, a title and a description, a body,
+action icons and an overflow menu, and primary and secondary buttons. With
+`onClick` it is a control, one tab stop; without it, it is a plain surface.
+`ProductiveCard` is dense, for product UI, with its actions at the top and a
+ghost primary button. Its `clickZone` sets where a click counts.
+`ExpressiveCard` holds media to the card's edge, or a pictogram, with its
+actions at the bottom. `CardSkeleton` is a card while it loads. `decorator` and
+`slug` are accepted and render nothing.
+
+<Canvas of={CardStories.Default} />
+
+<Canvas of={CardStories.Clickable} />
+
+<Canvas of={CardStories.WithControls} />
+
+<Canvas of={CardStories.CastShadow} />
+
+<Canvas of={CardStories.Productive} />
+
+<Canvas of={CardStories.ClickZones} />
+
+<Canvas of={CardStories.Expressive} />
+
+<Canvas of={CardStories.MediaStart} />
+
+<Canvas of={CardStories.ActionsPlacement} />
+
+<Canvas of={CardStories.Skeleton} />
+
+## Motion
+
+- **Rollover, text card:** a clickable card takes the tiles' quiet rollover,
+  painted behind the content, never over it. The surface grows 1px on hover and
+  presses 1px in. `hoverSteps="standard"` uses the house steps.
+- **Rollover, card with controls:** a clickable card that holds controls hovers
+  with a ring.
+- **Controls inside:** when a control in the card is hovered or pressed, the
+  card yields and its cast shadow steps back. The controls never take the card's
+  colors, and a click on one never clicks the card. Outside the click zone, a
+  click does nothing and the hover goes back to rest.
+- **Cast shadow:** off by default; `shadow` turns it on for a clickable card. It
+  is lit from the pointer: the offset follows at once, and the strength fades on
+  moderate-01. A press draws it in.
+- **Snap:** the overflow menu opens and closes with the kit's menu.
+- **Motion icons:** the action icons, the overflow trigger and the button icons
+  are motion icons, played by their own buttons.
+- `timeScale` multiplies the durations of the rollover, the buttons and the
+  overflow menu.
+
+## Reduced motion
+
+The rollover changes at once. The cast shadow's strength changes at once.
+
+## Props
+
+<ArgTypes of={CardStories} />

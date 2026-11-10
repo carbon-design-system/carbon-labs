@@ -1,0 +1,154 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/surface';
+
+/* Pagination (Pagination.tsx): v11's bar — the page size and the range on
+ * the start side, the page select, the page count and the two buttons on
+ * the end — on the kit's quiet surface. The controls are one size down from
+ * the bar, inset in it by the kit's inset (4px; 3px at sm), so their hover
+ * fills sit inside the bar as a toolbar's controls sit inside its surface. */
+
+.cds-pagination {
+  @include type-style('body-compact-01');
+  --cds-pag-h: 40px;
+  --cds-pag-inset: 4px;
+
+  box-sizing: border-box;
+  // @carbon-proposal token: surface-quiet — The quiet surface fill: side nav panel, tiles, tables, jobs tray, tabs fade. replaces: `$layer-01`. TBD
+  background: var(--cds-surface);
+  // @carbon-proposal token: surface-divider — A line inside the surface (table rows, header underline). replaces: `$border-subtle`. TBD
+  border-block-start: 1px solid var(--cds-surface-divider);
+  color: theme.$text-primary;
+  inline-size: 100%;
+  min-block-size: var(--cds-pag-h);
+}
+
+/* The controls' row: the kit's Scroller's viewport, so a bar narrower than
+   its controls scrolls along under the pill. */
+.cds-pagination__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-block-size: var(--cds-pag-h);
+}
+
+.cds-pagination--sm {
+  --cds-pag-h: 32px;
+  --cds-pag-inset: 4px;
+}
+
+.cds-pagination--lg {
+  --cds-pag-h: 48px;
+}
+
+.cds-pagination__left,
+.cds-pagination__right {
+  display: flex;
+  align-items: center;
+  block-size: var(--cds-pag-h);
+  white-space: nowrap;
+}
+
+.cds-pagination__left {
+  flex: none;
+  padding-inline: calc(16px - var(--cds-pag-inset)) 16px;
+}
+
+.cds-pagination__left--no-sizer {
+  padding-inline-start: 16px;
+}
+
+/* The texts: secondary, as v11's. */
+.cds-pagination__text {
+  color: theme.$text-secondary;
+}
+
+.cds-pagination__items-count {
+  border-inline-start: 1px solid var(--cds-surface-divider);
+  line-height: var(--cds-pag-h);
+  margin-inline-start: 8px;
+  padding-inline-start: 16px;
+
+  .cds-pagination__left--no-sizer > & {
+    border: 0;
+    margin: 0;
+    padding-inline-start: 0;
+  }
+}
+
+/* The part of a text that swaps with the page (PageSwap.tsx): the faces share one cell (along y), the old
+   leaving where the new arrives. */
+.cds-pagination__swap {
+  display: inline-grid;
+}
+
+.cds-pagination__swap-face {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+}
+
+/* Along x only the new face holds the room: the old one leaves out of the flow, so the text after
+   takes its new place at once and glides there (PageSwap.tsx). */
+.cds-pagination__swap--x {
+  position: relative;
+
+  > .cds-pagination__swap-face[data-swap-face='out'] {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+  }
+}
+
+.cds-pagination__swap-text {
+  display: inline-flex;
+  white-space: pre;
+}
+
+/* A transform needs a box; the leading space is part of the text. */
+.cds-pagination__swap-rest--after {
+  display: inline-block;
+}
+
+/* The selects: the kit's inline dropdown, its label in the bar's text style. */
+.cds-pagination__select {
+  .cds-field-label {
+    @include type-style('body-compact-01');
+
+    color: theme.$text-secondary;
+  }
+}
+
+.cds-pagination__right {
+  flex: none;
+  border-inline-start: 1px solid var(--cds-surface-divider);
+  padding-inline-start: var(--cds-pag-inset);
+}
+
+.cds-pagination__page-range,
+.cds-pagination__page-text {
+  padding-inline: 8px 16px;
+}
+
+.cds-pagination__page-text {
+  padding-inline-start: 16px;
+}
+
+.cds-pagination__buttons {
+  display: flex;
+  align-items: center;
+  block-size: 100%;
+  border-inline-start: 1px solid var(--cds-surface-divider);
+  gap: 2px;
+  padding-inline: var(--cds-pag-inset);
+}
+
+.cds-pagination--disabled .cds-pagination__text {
+  color: theme.$text-disabled;
+}

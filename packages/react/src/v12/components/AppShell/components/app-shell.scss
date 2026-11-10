@@ -1,0 +1,797 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/corners';
+@use '@carbon-labs/v12-styles/scss/surface';
+
+/* AppShell, Header and Region — AppShell.tsx, Header.tsx, Region.tsx.
+ *
+ *   header    48px, square, the quiet surface with a hairline under it
+ *   nav       a column at the start on the page's background (the SideNav's
+ *             own panel in it, 8px from its edges), sticky under the header
+ *             on the page; its width is the SideNav's (a rail's moves)
+ *   main      the rest; it scrolls with the page (`page`) or in the kit's
+ *             Scroller (container)
+ *   panel     the SidePanel, placed by the shell: under the header on the
+ *             page, in the shell's body in a container; the compact
+ *             sheet full width
+ *   region    a surface, corners from the ladder, padding from density
+ *
+ * The workspace layout (AppShell `frame="inset"`, `headerPlacement="nav"`):
+ *   workspace main's own rounded surface (16), the quiet fill with no
+ *             hairline, 8px from the nav's column and 16 from the other
+ *             edges; flush and square at compact
+ *   nav col   the header as its top row (ghost), the nav, and the header's
+ *             actions pinned to its foot, all on the page's background
+ *   panel     a second inset surface beside the workspace: its gutter (16)
+ *             and its corners (16) */
+
+$_surface: var(--cds-surface, #{theme.$layer-01});
+$_rule: var(--cds-surface-rule, #{theme.$border-subtle-01});
+$_divider: var(--cds-surface-divider, #{theme.$border-subtle-01});
+
+/* The header's height, written once: here, as `--cds-app-header-height`. The
+   header, the page's body and sticky nav under it, the side panel's top and
+   the window's scroller (AppShell.tsx, `APP_HEADER_HEIGHT`) all read it. */
+:root {
+  --cds-app-header-height: 3rem;
+}
+
+$_header-h: var(--cds-app-header-height);
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+
+.cds-app-header {
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  background: $_surface;
+  block-size: $_header-h;
+  box-shadow: inset 0 -1px 0 $_rule;
+  color: theme.$text-primary;
+  min-inline-size: 0;
+}
+
+/* Ghost: no surface and no hairline, on what's behind it (the nav column,
+   in the workspace layout). */
+.cds-app-header--ghost {
+  background: transparent;
+  box-shadow: none;
+}
+
+/* The name and the product; on a rail, kept for assistive tech only (the
+   logo alone shows). */
+.cds-app-header__words {
+  display: contents;
+}
+
+.cds-app-header__words--hidden {
+  position: absolute;
+  display: block;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip: rect(0, 0, 0, 0);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+/* The home link, on the family's controls: the rollover (a glow on a
+   surface inset 4px from the bar's edges, fully rounded, as the ghost
+   IconButtons beside it) and a keyboard-only 2px ring in its own text
+   color, just inside that surface. */
+.cds-app-header__home {
+  @include rollover($bleed-x: -4px, $bleed-y: -4px);
+  @include type-style('body-compact-01');
+  --rollover-hover: #{theme.$background-hover};
+
+  display: flex;
+  box-sizing: border-box;
+  flex: none;
+  align-items: center;
+  border-radius: 999px;
+  block-size: 100%;
+  color: theme.$text-primary;
+  margin-inline-start: $spacing-02;
+  min-inline-size: 0;
+  padding-inline: $spacing-05;
+  text-decoration: none;
+  user-select: none;
+  white-space: nowrap;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: -6px;
+  }
+}
+
+.cds-app-header--menu .cds-app-header__home {
+  margin-inline-start: 0;
+}
+
+.cds-app-header__logo {
+  display: inline-flex;
+  flex: none;
+  margin-inline-end: $spacing-03;
+
+  svg {
+    fill: currentColor;
+  }
+}
+
+.cds-app-header__name {
+  font-weight: 400;
+}
+
+.cds-app-header__product {
+  font-weight: 600;
+  margin-inline-start: 0.25em;
+}
+
+.cds-app-header__actions {
+  display: flex;
+  align-items: center;
+  margin-inline-start: auto;
+}
+
+/* The header's IconButtons: a hover inset 4px from its edges, as the home
+   link's; round from their own `corners="full"` (Header's menu button, and
+   the actions a caller passes), so a button's own `corners` is never
+   overridden here. */
+.cds-app-header .cds-icon-btn {
+  --icon-btn-inset: 4px;
+}
+
+/* ── AppShell ───────────────────────────────────────────────────────────── */
+
+.cds-app-shell {
+  --cds-side-panel-top: #{$_header-h};
+
+  color: theme.$text-primary;
+}
+
+/* The chrome in a theme of its own (dark by default): the shell is its page. */
+.cds-app-shell[data-cds-theme] {
+  background: theme.$background;
+}
+
+/* The panel in the workspace's theme: a zone that adds no box. */
+.cds-app-shell__panel-zone {
+  display: contents;
+}
+
+.cds-app-shell__body {
+  display: flex;
+  align-items: stretch;
+}
+
+/* The nav's column: on the page's background, the SideNav's panel 8px from
+   its edges (the hairline sits 1px outside the panel). A SideNav that folds
+   sets its own width; one that doesn't takes the column's 16rem. */
+.cds-scroller.cds-app-shell__nav {
+  flex: none;
+  background: theme.$background;
+}
+
+.cds-app-shell__nav[data-nav-mode='panel']:not(
+    :has(.sidenav[data-collapsible])
+  ) {
+  inline-size: 16rem;
+}
+
+.cds-app-shell__nav-viewport {
+  box-sizing: border-box;
+  padding: calc(#{$spacing-03} + 1px);
+}
+
+.cds-app-shell__main-col {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+.cds-app-shell__main {
+  display: block;
+  min-inline-size: 0;
+}
+
+/* The overlay nav: the SidePanel at the start, under the header, on the
+   page's background as the nav's column, the nav 8px from its edges. No bar
+   of its own: the header's menu button is its Close (Carbon's UI shell), so
+   the SidePanel's top bar and its empty title block are gone. */
+.cds-side-panel.cds-app-shell__nav-sheet {
+  .cds-side-panel__frame {
+    background: theme.$background;
+  }
+
+  .cds-side-panel__bar,
+  .cds-side-panel__title-block {
+    display: none;
+  }
+
+  .cds-side-panel__inner {
+    padding-block: calc(#{$spacing-03} + 1px);
+    padding-inline: calc(#{$spacing-03} + 1px);
+  }
+}
+
+/* The dim behind it takes presses only while it's open. */
+.cds-app-shell__nav-dim:not([data-open]) {
+  pointer-events: none;
+}
+
+/* The overlay's actions row: the header's actions that didn't fit, above the
+   nav, at the header's size (ghost lg IconButtons, 48px, `corners="full"`)
+   and with its inset hover. Empty, it takes no room. */
+.cds-app-shell__nav-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-block-end: $spacing-03;
+
+  &:empty {
+    display: none;
+  }
+
+  .cds-icon-btn {
+    --icon-btn-inset: 4px;
+  }
+}
+
+.cds-app-header__action {
+  display: flex;
+}
+
+/* ── the workspace layout: the workspace, the nav column with the header in it */
+
+/* The nav column with the header in it (`headerPlacement="nav"`): the
+   header its top row (48px, the column's width), the nav under it, and the
+   header's actions pinned to its foot. All on the page's background. */
+.cds-app-shell__nav-col {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  background: theme.$background;
+  min-block-size: 0;
+
+  > .cds-scroller.cds-app-shell__nav {
+    flex: 1 1 auto;
+    min-block-size: 0;
+  }
+}
+
+/* Folding (`foldTo="hide"`, AppShell.tsx): the column's width moves and main follows its edge; its content
+   keeps the open width under the moving edge, so nothing in it rewraps. */
+.cds-app-shell__nav-col[data-folding] {
+  overflow: clip;
+
+  > * {
+    flex-shrink: 0;
+    min-inline-size: var(--cds-fold-hold);
+  }
+}
+
+.cds-app-shell__nav-head {
+  flex: none;
+}
+
+.cds-app-header--in-nav {
+  inline-size: 100%;
+}
+
+/* The fold toggle in the header's row (the shell draws it; the SideNav leaves
+   its own out): at the row's start, beside the name, a ghost lg IconButton
+   with the header's 4px-inset round hover. On a rail the row is the logo's,
+   and the toggle stands over it, in place (it doesn't move as the nav folds). */
+.cds-app-shell__nav-head[data-fold-toggle] {
+  display: flex;
+  align-items: center;
+  padding-inline-start: $spacing-02;
+
+  .cds-icon-btn {
+    --icon-btn-inset: 4px;
+  }
+
+  .cds-app-shell__fold {
+    flex: none;
+  }
+
+  > .cds-app-header--in-nav {
+    flex: 1 1 auto;
+    inline-size: auto;
+    min-inline-size: 0;
+  }
+
+  .cds-app-header__home {
+    margin-inline-start: 0;
+  }
+}
+
+.cds-app-shell__nav-col[data-nav-mode='rail']
+  .cds-app-shell__nav-head[data-fold-toggle] {
+  flex-direction: column;
+  align-items: flex-start;
+
+  > .cds-app-header--in-nav {
+    flex: none;
+    inline-size: 100%;
+  }
+}
+
+/* The header's actions at the column's foot: ghost lg IconButtons in a row, stacked on a
+   rail, in line with the nav's rows (the column's 8px + 1); 8px clear above, so the nav's
+   scroll soft edge ends above the foot. */
+.cds-app-shell__nav-foot {
+  display: flex;
+  flex: none;
+  padding: $spacing-03 calc(#{$spacing-03} + 1px) calc(#{$spacing-03} + 1px);
+
+  &:empty {
+    display: none;
+  }
+
+  .cds-icon-btn {
+    --icon-btn-inset: 4px;
+  }
+}
+
+.cds-app-header__actions--foot {
+  margin-inline-start: 0;
+}
+
+/* `foldToggle="foot"`: the toggle's icon on the nav rows' icon line, as in the header's row;
+   last in a rail's stack, so it stays put as the nav folds. */
+.cds-app-shell__nav-foot[data-fold-toggle] {
+  align-items: center;
+  padding-inline-start: $spacing-02;
+
+  .cds-app-shell__fold {
+    flex: none;
+  }
+}
+
+/* `foldTo="overlay"`, folded: the toggle at the shell's lower start, where the column's foot
+   puts it, over the page and under the overlay nav's dim. */
+.cds-app-shell__fold-dock {
+  position: absolute;
+  z-index: 7980;
+  display: flex;
+  inset-block-end: calc(#{$spacing-03} + 1px);
+  inset-inline-start: $spacing-02;
+
+  .cds-icon-btn {
+    --icon-btn-inset: 4px;
+  }
+}
+
+.cds-app-shell--page > .cds-app-shell__body > .cds-app-shell__fold-dock {
+  position: fixed;
+}
+
+/* Back to top (WorkspaceTop): centred on the inset workspace, inside its
+   frame clear of the bar, gutter and soft edge (JumpTo's host is the window's). */
+.cds-jump-to__host:has(.cds-app-shell__top) {
+  z-index: 7975;
+}
+
+.cds-jump-to.cds-app-shell__top,
+.cast-floating:has(+ .cds-app-shell__top) {
+  inset-inline-start: var(--cds-app-shell-workspace-mid, 50%);
+}
+
+.cds-jump-to--top.cds-app-shell__top,
+.cast-floating:has(+ .cds-jump-to--top.cds-app-shell__top) {
+  inset-block-start: calc(#{$spacing-05} + var(--cds-motion-soft-edge, 16px));
+}
+
+.cds-jump-to--top.cds-app-shell__top--under-bar,
+.cast-floating:has(+ .cds-jump-to--top.cds-app-shell__top--under-bar) {
+  inset-block-start: calc(
+    var(--cds-app-header-height, 48px) + #{$spacing-05} +
+      var(--cds-motion-soft-edge, 16px)
+  );
+}
+
+.cds-jump-to--bottom.cds-app-shell__top,
+.cast-floating:has(+ .cds-jump-to--bottom.cds-app-shell__top) {
+  inset-block-end: calc(#{$spacing-05} + var(--cds-motion-soft-edge, 16px));
+}
+
+/* `foldTo="hide"`, folded: the strip the nav leaves, the toggle's room
+   (AppShell's NAV_STRIP_PX): what the caller gives at its top, the toggle at its foot. */
+.cds-app-shell__nav-strip {
+  inline-size: 3.5rem;
+
+  > .cds-app-shell__nav-strip-head {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: $spacing-02;
+
+    .cds-icon-btn {
+      --icon-btn-inset: 4px;
+    }
+  }
+
+  > .cds-app-shell__nav-foot {
+    padding-inline-end: $spacing-02;
+  }
+}
+
+.cds-app-shell__nav-col[data-nav-mode='rail']
+  .cds-app-shell__nav-foot[data-fold-toggle] {
+  flex-direction: column-reverse;
+  align-items: flex-start;
+}
+
+.cds-app-shell__nav-col[data-nav-mode='rail'] .cds-app-header__actions--foot {
+  flex-direction: column;
+}
+
+/* The workspace (`frame="inset"`): main's own rounded surface, standing in
+   from the page, 16px from its edges and 8px from the nav's column (the
+   column's own padding). The quiet fill, no hairline; the outermost surface
+   on the page, so 16 (its children round from 16 less their inset). It
+   clips what's in it to its corners, and it is the containing block for a
+   SidePanel scoped to it. A flush main in a theme of its own takes that
+   theme's page background; a flush main on the page's is a plain box. */
+.cds-app-shell__workspace {
+  box-sizing: border-box;
+  min-inline-size: 0;
+
+  &[data-frame='inset'],
+  &[data-theme-zone] {
+    position: relative;
+    background: theme.$background;
+    color: theme.$text-primary;
+  }
+
+  &[data-frame='inset'] {
+    /* Its own fill, kept under a name for what steps off it (a table's rows, the soft edges). */
+    --cds-workspace-fill: #{$_surface};
+
+    overflow: clip;
+
+    border-radius: corners.$over;
+    background: var(--cds-workspace-fill);
+  }
+
+  /* In a theme of its own (v12's App Shell, the inverse): its theme's base, the page colour
+     (#fafafa, #0b0b0b), so what's in it steps off that. */
+  &[data-frame='inset'][data-theme-zone] {
+    --cds-workspace-fill: #{theme.$background};
+    --cds-page-header-ground: #{theme.$background};
+  }
+}
+
+/* What's in an inset workspace stands one step off it (`--cds-surface-up`: darker on light, lighter on
+   dark), hairlines the raised rule, controls stepping off that (else the workspace's own fill). */
+.cds-app-shell__workspace[data-frame='inset'] > * {
+  /* Fields a step off the content, as Carbon pairs a layer with the next field (#fff on #f4f4f4,
+     #262626 on #161616). First: what follows re-sets what it resets (the table's). */
+  // @carbon-explore surface-step — Surfaces stepped up in elevation: the outlined selector's lift, a workspace's content, a field on it. TBD
+  @include surface.fields-on-surface(var(--cds-surface-lift-field));
+  --cds-surface: var(--cds-surface-up);
+  /* Raised (a table's header): one quiet step further off it, as raised is off the page's. */
+  --cds-surface-raised: color-mix(
+    in srgb,
+    var(--cds-surface-up),
+    #{theme.$text-primary} var(--cds-track-share, 4.5%)
+  );
+  --cds-surface-rule: var(--cds-surface-raised-rule);
+  --cds-surface-divider: var(--cds-surface-raised-rule);
+  --cds-panel: var(--cds-surface-up);
+  --cds-rule: var(--cds-surface-raised-rule);
+  /* A table: its rows the step nearest the workspace, half the content's;
+     its header and stripes one quiet step on from them. */
+  --cds-table-fill: color-mix(
+    in srgb,
+    var(--cds-workspace-fill),
+    var(--cds-surface-up)
+  );
+  --cds-table-raised: color-mix(
+    in srgb,
+    var(--cds-table-fill),
+    #{theme.$text-primary} var(--cds-track-share, 4.5%)
+  );
+  /* A tile or card on the lift steps its fields off it too (their `fields-on-surface`). */
+  --cds-surface-field: var(--cds-surface-lift-field);
+  /* Skeleton bars a step off the lift (Carbon's element is layer-01's; on a raised row it can't read). */
+  --cds-skeleton-element: color-mix(
+    in srgb,
+    var(--cds-surface-up),
+    #{theme.$text-primary} 18%
+  );
+}
+
+.cds-app-shell[data-main-frame='inset']
+  > .cds-app-shell__body
+  > .cds-app-shell__main-col {
+  box-sizing: border-box;
+  padding: $spacing-05;
+
+  &[data-beside-nav] {
+    padding-inline-start: $spacing-03;
+  }
+}
+
+/* The panel on an inset shell: a second inset surface beside the
+   workspace, its gutter and its corners. SidePanel's push takes its width
+   and its distance from the edge, so the workspace keeps 16 from it. */
+.cds-side-panel.cds-app-shell__panel--inset {
+  --cds-side-panel-gap: #{$spacing-05};
+  --cds-side-panel-radius: #{corners.$over};
+}
+
+/* The compact panel: a sheet the shell's full width. */
+.cds-side-panel.cds-app-shell__sheet {
+  --cds-side-panel-w: 100%;
+}
+
+/* On the page (`scope="page"`): the header fixed on top (its menu button closes the nav it
+   opened), the nav sticky under it, main with the page; its own parts only (a shell in it keeps its own). */
+.cds-app-shell--page {
+  min-block-size: 100vh;
+
+  > .cds-app-shell__header {
+    position: fixed;
+    z-index: 8001;
+    inset-block-start: 0;
+    inset-inline: 0;
+  }
+
+  > .cds-app-shell__body {
+    box-sizing: border-box;
+    min-block-size: 100vh;
+    padding-block-start: $_header-h;
+  }
+
+  > .cds-app-shell__body > .cds-scroller.cds-app-shell__nav {
+    position: sticky;
+    align-self: flex-start;
+    block-size: calc(100vh - #{$_header-h});
+    inset-block-start: $_header-h;
+  }
+
+  /* The header in the nav column: no bar across the top, so the body, the
+     column and the side panels start at the page's top. */
+  &[data-header-placement='nav'] {
+    --cds-side-panel-top: 0px;
+
+    > .cds-app-shell__body {
+      padding-block-start: 0;
+    }
+  }
+
+  > .cds-app-shell__body > .cds-app-shell__nav-col {
+    position: sticky;
+    align-self: flex-start;
+    block-size: 100vh;
+    inset-block-start: 0;
+
+    > .cds-scroller.cds-app-shell__nav {
+      position: static;
+      block-size: auto;
+    }
+  }
+
+  /* A column under a bar (the fold toggle at its foot): sticky under it. */
+  &[data-header-placement='bar']
+    > .cds-app-shell__body
+    > .cds-app-shell__nav-col {
+    block-size: calc(100vh - #{$_header-h});
+    inset-block-start: $_header-h;
+  }
+
+  /* It grows with its content, at least the window less its gutters and bar; it clips only
+     sideways, so what runs past its end still scrolls the page (the frame holds its corners). */
+  &[data-main-frame='inset']
+    > .cds-app-shell__body
+    > .cds-app-shell__main-col
+    > .cds-app-shell__workspace {
+    overflow: visible;
+    min-block-size: calc(100vh - 2 * #{$spacing-05});
+    overflow-x: clip;
+  }
+
+  &[data-main-frame='inset'][data-header-placement='bar']
+    > .cds-app-shell__body
+    > .cds-app-shell__main-col
+    > .cds-app-shell__workspace {
+    min-block-size: calc(100vh - #{$_header-h} - 2 * #{$spacing-05});
+  }
+
+  /* The bar is the page's fixed chrome: on the page's background whatever
+     its frame, so what scrolls goes under it. */
+  > .cds-app-shell__header {
+    background: theme.$background;
+  }
+
+  /* The workspace's frame holds as the page scrolls: a mat over its gutters,
+     clipped to them, its window the workspace's box and corners. */
+  &[data-main-frame='inset']
+    > .cds-app-shell__body
+    > .cds-app-shell__main-col::before {
+    position: sticky;
+    z-index: 7970;
+    display: block;
+    border-radius: corners.$over;
+    block-size: calc(100vh - 2 * #{$spacing-05});
+    /* Twice the gutter: the shadow's own outer corners round, outside the clip. */
+    box-shadow: 0 0 0 calc(2 * #{$spacing-05}) theme.$background;
+    clip-path: inset(calc(-1 * #{$spacing-05}) calc(-1 * #{$spacing-05}));
+    content: '';
+    inset-block-start: $spacing-05;
+    margin-block-end: calc(-100vh + 2 * #{$spacing-05});
+    pointer-events: none;
+  }
+
+  &[data-main-frame='inset'][data-header-placement='bar']
+    > .cds-app-shell__body
+    > .cds-app-shell__main-col::before {
+    block-size: calc(100vh - #{$_header-h} - 2 * #{$spacing-05});
+    inset-block-start: calc(#{$_header-h} + #{$spacing-05});
+    margin-block-end: calc(-100vh + #{$_header-h} + 2 * #{$spacing-05});
+  }
+
+  /* What scrolls fades into the workspace's soft edges at its top and bottom,
+     in its own colour; they stay at the frame's ends as the page scrolls. */
+  &[data-main-frame='inset']
+    > .cds-app-shell__body
+    > .cds-app-shell__main-col
+    > .cds-app-shell__workspace {
+    &::before,
+    &::after {
+      position: sticky;
+      z-index: 7960;
+      display: block;
+      block-size: var(--cds-motion-soft-edge, 16px);
+      content: '';
+      pointer-events: none;
+    }
+
+    &::before {
+      background: linear-gradient(
+        to bottom,
+        var(--cds-workspace-fill),
+        transparent
+      );
+      inset-block-start: $spacing-05;
+      margin-block-end: calc(-1 * var(--cds-motion-soft-edge, 16px));
+    }
+
+    &::after {
+      background: linear-gradient(
+        to top,
+        var(--cds-workspace-fill),
+        transparent
+      );
+      inset-block-end: $spacing-05;
+      margin-block-start: calc(-1 * var(--cds-motion-soft-edge, 16px));
+    }
+  }
+
+  &[data-main-frame='inset'][data-header-placement='bar']
+    > .cds-app-shell__body
+    > .cds-app-shell__main-col
+    > .cds-app-shell__workspace::before {
+    inset-block-start: calc(#{$_header-h} + #{$spacing-05});
+  }
+
+  &[data-main-frame='inset']
+    > .cds-app-shell__body
+    > .cds-app-shell__main-col[data-beside-nav]::before {
+    clip-path: inset(
+      calc(-1 * #{$spacing-05}) calc(-1 * #{$spacing-05})
+        calc(-1 * #{$spacing-05}) calc(-1 * #{$spacing-03})
+    );
+  }
+}
+
+/* In a container: the shell fills it; the nav, main and the panel are
+   placed in its body, under the header. */
+.cds-app-shell--container {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  block-size: 100%;
+  min-block-size: 0;
+
+  > .cds-app-shell__header {
+    position: relative;
+    z-index: 12;
+    flex: none;
+  }
+
+  > .cds-app-shell__body {
+    position: relative;
+    flex: 1 1 auto;
+    min-block-size: 0;
+  }
+
+  .cds-app-shell__main-col,
+  .cds-app-shell__workspace,
+  .cds-app-shell__main-scroller {
+    block-size: 100%;
+  }
+}
+
+/* ── Region ─────────────────────────────────────────────────────────────── */
+
+.cds-region {
+  box-sizing: border-box;
+  padding: var(--cds-region-pad, 0px);
+  border-radius: var(--cds-region-radius, 0px);
+  color: theme.$text-primary;
+  min-inline-size: 0;
+}
+
+.cds-region--quiet {
+  background: $_surface;
+  box-shadow: inset 0 0 0 1px $_rule;
+}
+
+/* Over the page: the popover's fill and edge. */
+.cds-region--raised {
+  background: $_surface;
+  box-shadow: inset 0 0 0 1px $_divider;
+}
+
+/* `outline={false}`: the fill alone. */
+.cds-region--no-outline {
+  box-shadow: none;
+}
+
+/* A page region in a theme of its own takes that theme's page. */
+.cds-region--page[data-theme-zone] {
+  background: theme.$background;
+}
+
+.cds-region--scroll-none {
+  overflow: clip;
+}
+
+/* Its own scroller: the padding moves inside it, so the content scrolls
+   under the region's edge, not its padding. */
+.cds-region--scroll-self {
+  display: flex;
+  overflow: clip;
+  flex-direction: column;
+  padding: 0;
+  min-block-size: 0;
+}
+
+.cds-region__scroller {
+  flex: 1 1 auto;
+  border-radius: inherit;
+}
+
+.cds-region__viewport {
+  box-sizing: border-box;
+  padding: var(--cds-region-pad, 0px);
+}
+
+@media (forced-colors: active) {
+  .cds-app-header--flush,
+  .cds-app-shell__workspace[data-frame='inset'],
+  .cds-region--quiet,
+  .cds-region--raised {
+    border: 1px solid CanvasText;
+  }
+}

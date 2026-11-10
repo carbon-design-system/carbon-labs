@@ -15,8 +15,17 @@
 // the workbench's, applied by its WorkbenchFrame, and kept in this browser.
 // The header and the nav stay dark; the theme pick is the workspace's, and
 // the page's, so what the stories portal to the body follows it too.
+// Folded, the nav is a strip of its toggle and a search button: the filter's
+// field folds into the button, its magnifier moving to the button's place,
+// size and color on the fold's clock (`--cds-nav-fold`, review.scss).
 
-import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { AppShell, Header } from '@carbon-labs/react-app-shell';
 import type { AppShellProps } from '@carbon-labs/react-app-shell';
 import {
@@ -29,6 +38,7 @@ import { IconButton } from '@carbon-labs/react-tooltip';
 import {
   AsleepAwakeToggle,
   Carbon,
+  Search,
   SettingsAdjust,
 } from '@carbon-labs/react-motion-icons';
 import { Popover, PopoverContent } from '@carbon-labs/react-popover';
@@ -79,6 +89,21 @@ export function ReviewApp({ stories }: ReviewAppProps) {
         mainTheme={picks.theme === 'g100' ? 'dark' : 'light'}
         layout={LAYOUT}
         foldTo="hide"
+        foldToggle="header"
+        navStrip={({ unfold }) => (
+          <IconButton
+            frame="ghost"
+            size="lg"
+            corners="full"
+            align="right"
+            label="Filter pages"
+            onClick={() => {
+              remembered.focus = true;
+              unfold();
+            }}>
+            <Search size={20} aria-hidden="true" />
+          </IconButton>
+        )}
         mainProps={{ id: 'main-content', className: 'v12r-main' }}
         header={<ReviewHeader picks={picks} onPicks={setPicks} />}
         nav={({ close }) => (
@@ -265,8 +290,51 @@ function ReviewHeader({
 
 /* ── the side nav ───────────────────────────────────────────────────────── */
 
-/** The filter's text, kept while the overlay is shut and across size classes. */
-const remembered = { query: '' };
+/** The filter's text, kept while the overlay is shut, across size classes and folds; and whether the strip's
+ *  search button asked for the field. */
+const remembered = { query: '', focus: false };
+
+/**
+ * The filter's fold: where its magnifier goes as the nav folds, so it lands on
+ * the strip's search button, the button under the toggle and its size
+ * (AppShell's strip). Written on the field as `--v12r-fold-dx`, `-dy` (px)
+ * and `-scale`; review.scss moves the magnifier's icon by them times the
+ * fold's progress. Measured from its slot, which doesn't move.
+ */
+function useFilterFold(input: React.RefObject<HTMLInputElement | null>) {
+  useLayoutEffect(() => {
+    const search = input.current?.closest<HTMLElement>('.cds-search');
+    const col = search?.closest('.cds-app-shell__nav-col');
+    const slot = search?.querySelector<HTMLElement>('.cds-search__magnifier');
+    const icon = slot?.querySelector('svg');
+    const toggle = col?.querySelector<HTMLElement>(
+      ':scope > .cds-app-shell__nav-head .cds-app-shell__fold'
+    );
+    const toggleIcon = toggle?.querySelector('svg');
+    if (!search || !slot || !icon || !toggle || !toggleIcon) return;
+    const place = () => {
+      const s = slot.getBoundingClientRect();
+      const t = toggle.getBoundingClientRect();
+      const size = parseFloat(icon.getAttribute('width') ?? '') || 16;
+      const pad = parseFloat(getComputedStyle(slot).paddingInlineStart) || 0;
+      const rtl = getComputedStyle(slot).direction === 'rtl';
+      // The icon's centre, untransformed: its slot puts it `pad` in, centred down.
+      const ox = rtl ? s.width - pad - size / 2 : pad + size / 2;
+      const oy = s.height / 2;
+      // The strip's search button: under the toggle, its size, in line with it.
+      const tx = t.left + t.width / 2;
+      const ty = t.top + t.height * 1.5;
+      const to = parseFloat(toggleIcon.getAttribute('width') ?? '') || size;
+      search.style.setProperty('--v12r-fold-dx', `${tx - (s.left + ox)}px`);
+      search.style.setProperty('--v12r-fold-dy', `${ty - (s.top + oy)}px`);
+      search.style.setProperty('--v12r-fold-scale', String(to / size));
+    };
+    place();
+    const ro = new ResizeObserver(place);
+    ro.observe(search);
+    return () => ro.disconnect();
+  }, [input]);
+}
 
 function ReviewNav({
   groups,
@@ -278,6 +346,14 @@ function ReviewNav({
   onEscape: () => void;
 }) {
   const [query, setQuery] = useState(remembered.query);
+  const input = useRef<HTMLInputElement>(null);
+  useFilterFold(input);
+  // Opened from the strip's search button: the field takes focus as the nav opens.
+  useEffect(() => {
+    if (!remembered.focus) return;
+    remembered.focus = false;
+    input.current?.focus({ preventScroll: true });
+  }, []);
   const link = (e: Entry) => (
     <SideNavLink
       key={e.name}
@@ -293,6 +369,7 @@ function ReviewNav({
       className="v12r-nav"
       frame="ghost"
       filter={{
+        inputRef: input,
         value: query,
         onChange: (next: string) => {
           remembered.query = next;

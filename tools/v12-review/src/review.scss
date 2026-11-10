@@ -392,3 +392,24 @@
     transition: none;
   }
 }
+
+// The filter's fold (ReviewApp.tsx, `useFilterFold`): as the nav folds, the
+// field's magnifier moves to the strip's search button, the toggle's size and
+// color, on the fold's own clock (`--cds-nav-fold`, 0 open to 1 folded, the
+// shell's). The field's text stays where it is while the column's edge passes
+// over it. Reduced motion: the fold lands at once, so this never runs.
+.v12r-nav .sidenav__filter .cds-search__magnifier {
+  color: color-mix(
+    in srgb,
+    var(--cds-icon-secondary),
+    var(--cds-icon-primary) calc(var(--cds-nav-fold, 0) * 100%)
+  );
+
+  svg {
+    transform: translate(
+        calc(var(--cds-nav-fold, 0) * var(--v12r-fold-dx, 0px)),
+        calc(var(--cds-nav-fold, 0) * var(--v12r-fold-dy, 0px))
+      )
+      scale(calc(1 + var(--cds-nav-fold, 0) * (var(--v12r-fold-scale, 1) - 1)));
+  }
+}

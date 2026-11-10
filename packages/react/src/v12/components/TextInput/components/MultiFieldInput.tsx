@@ -32,7 +32,7 @@ import type { FieldVariant } from '@carbon-labs/react-props';
 import './field.scss';
 import './text-input.scss';
 import './multi-field-input.scss';
-import { holdUntilRelease } from '@carbon-labs/react-util';
+import { holdUntilRelease, inlineKey } from '@carbon-labs/react-util';
 
 /* ============================================================================
  * MultiFieldInput — one text field in N segments: a value that is several
@@ -205,14 +205,16 @@ export function MultiFieldInput({
     const el = e.currentTarget;
     const caret =
       el.selectionStart === el.selectionEnd ? el.selectionStart : null;
+    // Right to left the next segment is to the left: ← at a value's end goes on.
+    const key = inlineKey(e.key, el);
     if (
-      e.key === 'ArrowRight' &&
+      key === 'ArrowRight' &&
       caret === el.value.length &&
       i < segments.length - 1
     ) {
       e.preventDefault();
       moveTo(i + 1, 'start');
-    } else if (e.key === 'ArrowLeft' && caret === 0 && i > 0) {
+    } else if (key === 'ArrowLeft' && caret === 0 && i > 0) {
       e.preventDefault();
       moveTo(i - 1, 'end');
     }

@@ -26,8 +26,23 @@ export const EVENTS = {
 export const THEMES = ['white', 'g100', 'v12-light', 'v12-dark'] as const;
 /** The themes Carbon's `Theme` draws as a zone of their own: the matrix's. */
 export const ZONE_THEMES = ['white', 'g100'] as const;
-export const DENSITIES = ['default', 'compact'] as const;
-export const REDUCED_MOTION = ['off', 'shorter-clock', 'at-once'] as const;
+/** The kit's three densities (`KitDefaults` `density`). */
+export const DENSITIES = ['compact', 'default', 'spacious'] as const;
+/**
+ * The kit's corners (`KitDefaults` `corners`). `default` leaves each
+ * component's own corners; the others are the provider's values.
+ */
+export const CORNERS = ['default', 'full', 'rounded', 'square'] as const;
+/**
+ * The motion pick. `system` is no pick: the operating system's reduced-motion
+ * setting decides. The others force a level, `full` included.
+ */
+export const REDUCED_MOTION = [
+  'system',
+  'full',
+  'shorter-clock',
+  'at-once',
+] as const;
 /** The clock's speed: 1x, a quarter, a tenth. Strings, as the URL carries them. */
 export const CLOCKS = ['1', '0.25', '0.1'] as const;
 export const DIRECTIONS = ['ltr', 'rtl'] as const;
@@ -35,6 +50,7 @@ export const DIRECTIONS = ['ltr', 'rtl'] as const;
 export type Theme = (typeof THEMES)[number];
 export type ZoneTheme = (typeof ZONE_THEMES)[number];
 export type Density = (typeof DENSITIES)[number];
+export type Corners = (typeof CORNERS)[number];
 export type ReducedMotion = (typeof REDUCED_MOTION)[number];
 export type Clock = (typeof CLOCKS)[number];
 export type Direction = (typeof DIRECTIONS)[number];
@@ -42,6 +58,7 @@ export type Direction = (typeof DIRECTIONS)[number];
 export interface WorkbenchGlobals {
   theme: Theme;
   density: Density;
+  corners: Corners;
   reducedMotion: ReducedMotion;
   clock: Clock;
   dir: Direction;
@@ -50,22 +67,42 @@ export interface WorkbenchGlobals {
 export const DEFAULT_GLOBALS: WorkbenchGlobals = {
   theme: 'white',
   density: 'default',
-  reducedMotion: 'off',
+  corners: 'default',
+  reducedMotion: 'system',
   clock: '1',
   dir: 'ltr',
 };
 
 /**
- * The level the reduced-motion pick forces on carbon-motion's provider.
- * `off` is `full` (the motion shown, whatever the system prefers); shorter
+ * The level the motion pick gives the motion provider. `system` leaves it to
+ * the operating system's setting (`reduced` when it asks to reduce, else
+ * `full`); `full` forces the motion on, whatever the system prefers; shorter
  * clock is `reduced` (fades at the reduced clock, no travel); at once is
  * `none` (every duration on the floor).
  */
-export const MOTION_LEVEL: Record<ReducedMotion, MotionLevel> = {
-  off: 'full',
+export const MOTION_LEVEL: Record<ReducedMotion, MotionLevel | 'system'> = {
+  system: 'system',
+  full: 'full',
   'shorter-clock': 'reduced',
   'at-once': 'none',
 };
+
+/**
+ * The level a motion pick gives: its own, or, under `system`, the one the
+ * operating system's reduced-motion setting asks for.
+ *
+ * @param reducedMotion The motion pick.
+ * @param systemReduces Whether the system asks to reduce motion.
+ * @returns The level.
+ */
+export function levelOf(
+  reducedMotion: ReducedMotion,
+  systemReduces: boolean
+): MotionLevel {
+  const pick = MOTION_LEVEL[reducedMotion];
+  if (pick !== 'system') return pick;
+  return systemReduces ? 'reduced' : 'full';
+}
 
 /** What a story declares a motion item does under reduced motion. */
 export type ReducedBehaviour = 'shorter-clock' | 'at-once' | 'full';
@@ -87,7 +124,7 @@ export interface V12Parameters {
  * so a stale or hand-typed URL falls back to the default.
  *
  * @param globals The story context's globals.
- * @returns The five picks.
+ * @returns The six picks.
  */
 export function readGlobals(
   globals: Record<string, unknown>
@@ -100,6 +137,7 @@ export function readGlobals(
   return {
     theme: pick(THEMES, globals.theme, DEFAULT_GLOBALS.theme),
     density: pick(DENSITIES, globals.density, DEFAULT_GLOBALS.density),
+    corners: pick(CORNERS, globals.corners, DEFAULT_GLOBALS.corners),
     reducedMotion: pick(
       REDUCED_MOTION,
       globals.reducedMotion,

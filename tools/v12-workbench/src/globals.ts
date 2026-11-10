@@ -8,7 +8,7 @@
 import { DEFAULT_GLOBALS } from './constants';
 
 /**
- * The toolbar: five picks, as Storybook globals. Storybook's own toolbar
+ * The toolbar: six picks, as Storybook globals. Storybook's own toolbar
  * draws them; `withWorkbench` applies them.
  */
 export const globalTypes = {
@@ -27,25 +27,44 @@ export const globalTypes = {
     },
   },
   density: {
-    description: 'Density: default or compact',
+    description:
+      'Density: compact, default or spacious, through the kit defaults',
     toolbar: {
       title: 'Density',
       icon: 'ruler',
       dynamicTitle: true,
       items: [
-        { value: 'default', title: 'Default density' },
         { value: 'compact', title: 'Compact density' },
+        { value: 'default', title: 'Default density' },
+        { value: 'spacious', title: 'Spacious density' },
+      ],
+    },
+  },
+  corners: {
+    description:
+      "Corners: each component's own, or the kit defaults' full, rounded or square",
+    toolbar: {
+      title: 'Corners',
+      icon: 'cube',
+      dynamicTitle: true,
+      items: [
+        { value: 'default', title: 'Own corners' },
+        { value: 'full', title: 'Full corners' },
+        { value: 'rounded', title: 'Rounded corners' },
+        { value: 'square', title: 'Square corners' },
       ],
     },
   },
   reducedMotion: {
-    description: 'Reduced motion: off, the shorter clock, or at once',
+    description:
+      'Motion: follow the system setting, or force full, the shorter clock, or at once',
     toolbar: {
       title: 'Reduced motion',
       icon: 'accessibility',
       dynamicTitle: true,
       items: [
-        { value: 'off', title: 'Reduced motion off' },
+        { value: 'system', title: 'Follow the system' },
+        { value: 'full', title: 'Full motion' },
         { value: 'shorter-clock', title: 'Shorter clock' },
         { value: 'at-once', title: 'At once' },
       ],

@@ -1,0 +1,29 @@
+<!--
+  Copyright IBM Corp. 2026
+
+  This source code is licensed under the Apache-2.0 license found in the
+  LICENSE file in the root directory of this source tree.
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>v12 review</title>
+    <script>
+      // The review app's short address, <storybook>/v12/review-app: it opens
+      // the app's own page, keeping a page's address (#/components/menu).
+      var base = location.pathname.replace(
+        /v12\/review-app(\/(index\.html)?)?$/,
+        ''
+      );
+      location.replace(
+        base + 'iframe.html?id=v12-review--app&viewMode=story' + location.hash
+      );
+    </script>
+  </head>
+  <body>
+    <a href="../../iframe.html?id=v12-review--app&amp;viewMode=story"
+      >Open the v12 review app</a
+    >
+  </body>
+</html>

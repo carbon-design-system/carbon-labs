@@ -1,6 +1,94 @@
 {
   "items": [
     {
+      "id": "feedback",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Feedback",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "ArrivalGroup",
+        "CueSeverity",
+        "DURATION_FLOOR_MS",
+        "DurationToken",
+        "LOADING_MOTION",
+        "REDUCED_MOTION",
+        "RELAYOUT",
+        "ReflowEntry",
+        "ReflowPiece",
+        "ReflowTiming",
+        "SKELETON_WAVE",
+        "SKELETON_WAVE_ATTR",
+        "SNAP",
+        "SNAP_COMPONENTS",
+        "ScreenfulOptions",
+        "SkeletonContrast",
+        "SkeletonHandoff",
+        "SkeletonWaveOptions",
+        "SnapProfile",
+        "Stack",
+        "StackSource",
+        "StackSwap",
+        "StackSwipe",
+        "afterLayout",
+        "animateLayout",
+        "attachRollover",
+        "attachSkeletonFallback",
+        "attachSkeletonWaveRoot",
+        "attachStack",
+        "createArrivalGroup",
+        "createReflow",
+        "cubicBezier",
+        "distanceTokens",
+        "durationStepForDistance",
+        "easingCss",
+        "inLayout",
+        "motionTokens",
+        "playContentSwap",
+        "playCue",
+        "playSkeletonHandoff",
+        "reducedClock",
+        "reflowFadeTiming",
+        "reflowTiming",
+        "screenfulCount",
+        "snapFadeFor",
+        "snapProfileFor",
+        "stepDown",
+        "toEasing",
+        "useFeedbackMotion",
+        "useLayoutTransaction"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "full-page-error",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/FullPageError",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "CubicBezier",
+        "DURATION_FLOOR_MS",
+        "LOADING_MOTION",
+        "cubicBezier",
+        "durationStepForDistance",
+        "evaluateCurve",
+        "motionTokens",
+        "reducedClock",
+        "snapFadeFor",
+        "staggerSteps",
+        "useFeedbackMotion",
+        "useStagger"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
       "id": "icon-motion",
       "kind": "component",
       "path": "packages/react/src/v12/components/IconMotion",
@@ -129,6 +217,27 @@
       }
     },
     {
+      "id": "loading",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Loading",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "CONTENT_SWAP",
+        "DURATION_FLOOR_MS",
+        "DurationToken",
+        "SKELETON_WAVE",
+        "easingCss",
+        "motionTokens",
+        "reducedClock",
+        "useFeedbackMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
       "id": "package/motion-icons",
       "kind": "package",
       "path": "packages/react/src/v12/components/MotionIcons",
@@ -214,6 +323,47 @@
       }
     },
     {
+      "id": "selection-kit",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/SelectionKit",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "CONTENT_SWAP",
+        "DURATION_FLOOR_MS",
+        "LIGHTNESS_STEPS",
+        "LightnessSteps",
+        "ResolvedSelectionStyle",
+        "SELECTION_ARRIVAL",
+        "SELECTION_LANDED_PX",
+        "Selection",
+        "SelectionMotion",
+        "SelectionRect",
+        "SelectionStyleProps",
+        "animateLayout",
+        "beginLayout",
+        "cubicBezier",
+        "easingCss",
+        "holdLayout",
+        "inLayout",
+        "motionTokens",
+        "playContentSwap",
+        "recentArrowDirection",
+        "registerTwin",
+        "resolveSelectionStyle",
+        "selectionDuration",
+        "setSelectionFont",
+        "toEasing",
+        "useFeedbackMotion",
+        "usePrefersReducedMotion",
+        "useSelectionEngine"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
       "id": "shimmer-text",
       "kind": "component",
       "path": "packages/react/src/v12/components/ShimmerText",
@@ -250,6 +400,24 @@
       "source": {
         "repo": "carbon-next",
         "ref": "4f2a12b253ef68bbed31f80de38387b67d6fb582"
+      }
+    },
+    {
+      "id": "status-indicator",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/StatusIndicator",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "CONTENT_SWAP",
+        "DURATION_FLOOR_MS",
+        "playContentSwap",
+        "reflowTiming",
+        "useFeedbackMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
       }
     },
     {

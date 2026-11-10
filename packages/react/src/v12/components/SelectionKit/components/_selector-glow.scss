@@ -1,0 +1,73 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+/* The selector's hover glow, shared by the kit (`aria-selected`) and the
+ * toolbar's exclusive groups (`aria-checked`). Output-free: a mixin only. */
+
+$-sel: --cds-motion-selection;
+
+/* `selectorGlow` (default on): the selected item's hover layer — the rollover's glow at the
+   cursor — painted ON the selector instead of cut out round it: clipped to the selector's live
+   rect and corners (as the selected face is), in a step off the selector's own fill toward its
+   label color. It sits under the label, over the selector's fill. */
+/* The step is 10%: ~9 L* lighter on the inverse selector, ~7 L* darker on the tonal one (the
+   rollover's matched-lightness steps). No press layer here: pressing the selector is the grab
+   (its 1px inset). Inside the selector's hairline (`--sel-glow-inset`, 1px where the selector has
+   one: the tonal contour, outlined), so the glow never covers it. */
+@mixin selector-glow {
+  /* A variant can name its own step (`--sel-glow-color`): hero's is Carbon's
+     primary hover, darker, since a lighter blue under white text drops
+     below 4.5:1. */
+  --_rhc: var(
+    --sel-glow-color,
+    color-mix(in srgb, var(--sel-selector) 90%, var(--sel-on))
+  );
+  --_rp: 0;
+  /* The press doesn't drop the glow: the selector has no press color of its
+     own, so a press keeps its fill and stroke — only its box insets. */
+  --_rh: var(--cds-motion-rollover-hover);
+
+  clip-path: inset(
+    calc(
+        max(0px, calc(var(#{$-sel}-t, 0px) - var(#{$-sel}-iy, 0px))) +
+          var(--_gi)
+      )
+      calc(
+        max(
+            0px,
+            calc(
+              var(#{$-sel}-ix, 0px) +
+                var(#{$-sel}-iw, 0px) - var(#{$-sel}-r, 0px)
+            )
+          ) +
+          var(--_gi)
+      )
+      calc(
+        max(
+            0px,
+            calc(
+              var(#{$-sel}-iy, 0px) +
+                var(#{$-sel}-ih, 0px) - var(#{$-sel}-b, 0px)
+            )
+          ) +
+          var(--_gi)
+      )
+      calc(
+        max(0px, calc(var(#{$-sel}-l, 0px) - var(#{$-sel}-ix, 0px))) +
+          var(--_gi)
+      )
+      round max(0px, calc(var(--sel-radius) - var(--_gi)))
+  );
+
+  mask: none;
+  /* Inside the hairline, inside the focus ring when there is one, and in
+     with the press (the selector's box insets by it). */
+  --_gi: calc(
+    var(--sel-glow-inset, 0px) + var(--sel-ring-gap, 0px) +
+      var(--sel-ring, 0px) + var(--sel-press, 0px)
+  );
+}

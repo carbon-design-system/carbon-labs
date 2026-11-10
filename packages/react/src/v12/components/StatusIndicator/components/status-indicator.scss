@@ -1,0 +1,84 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/colors' as c;
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+
+/* StatusIndicator — `StatusIndicator.tsx`. A status mark and its label: the
+ * mark's colour and shape both carry the status. */
+
+.cds-status-indicator {
+  @include type-style('body-compact-01');
+
+  display: inline-flex;
+  align-items: center;
+  color: theme.$text-secondary;
+  gap: $spacing-03;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.cds-status-indicator--sm {
+  @include type-style('label-01');
+
+  gap: $spacing-02;
+}
+
+.cds-status-indicator--lg {
+  @include type-style('body-compact-02');
+}
+
+.cds-status-indicator__mark {
+  display: inline-grid;
+  flex: none;
+}
+
+/* Every face in one cell: the slot is as wide as the widest face it holds.
+   Clipped across only, so a label's travel on y still shows. */
+.cds-status-indicator__label {
+  display: inline-grid;
+  min-inline-size: 0;
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+.cds-status-indicator__face,
+.cds-status-indicator__reserve {
+  grid-area: 1 / 1;
+  justify-self: start;
+}
+
+.cds-status-indicator__reserve {
+  block-size: 0;
+  visibility: hidden;
+}
+
+/* The warning triangle's yellow is under 3:1 on a light page: a dark edge
+   (Carbon's yellow outline) keeps its shape at 3:1. Dark themes need none. */
+:root,
+[data-carbon-theme='white'],
+.cds--white {
+  --cds-status-warning-edge: #{c.$yellow-60};
+}
+
+[data-carbon-theme='g100'],
+.cds--g100 {
+  --cds-status-warning-edge: transparent;
+}
+
+.cds-status-indicator--warning
+  .fb-mark__icon
+  svg
+  path:not([data-icon-path='inner-path']) {
+  paint-order: stroke;
+  stroke: var(--cds-status-warning-edge);
+  stroke-linejoin: round;
+  stroke-width: 2px;
+  vector-effect: non-scaling-stroke;
+}

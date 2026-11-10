@@ -1,0 +1,30 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as StatusIndicatorStories from './StatusIndicator.stories.tsx';
+
+<Meta of={StatusIndicatorStories} />
+
+# StatusIndicator
+
+A status as a mark and a label. Its props are Carbon's IconIndicator's (`kind`,
+`label`, `size`), plus `labels`, `labelSwap` and `variant`.
+
+<Canvas of={StatusIndicatorStories.Changing} />
+
+## Motion
+
+- **Mark:** a new kind cuts to the new mark; to and from pending, the status
+  hand-off (the spinner shrinks, the result's disc grows and its glyph draws).
+- **Label:** out, then in, 8px on y; `labelSwap="in-place"` swaps it with no
+  travel.
+- **Width:** the label's width moves to the new one's with the in. Given
+  `labels` (every label it can show), it keeps the widest one's width, so
+  nothing shifts.
+- **Pending:** the kit's spinner, held still while off screen.
+
+## Reduced motion
+
+The new mark and label are there at once, and the width changes with them.
+
+## Props
+
+<ArgTypes of={StatusIndicatorStories} />

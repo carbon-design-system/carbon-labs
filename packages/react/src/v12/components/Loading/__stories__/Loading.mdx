@@ -1,0 +1,35 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as LoadingStories from './Loading.stories.tsx';
+
+<Meta of={LoadingStories} />
+
+# Loading
+
+`Loading` and `InlineLoading`, with Carbon's props, on the kit's one spinner.
+
+<Canvas of={LoadingStories.Default} />
+
+## Motion
+
+- **Start:** the arc draws on, its tail lengthening back from its head; an
+  overlay fades up on that clock.
+- **Stop:** `active={false}`: the tail catches up with the head, and the spinner
+  shrinks to half and fades in its last frames.
+- **Gate:** `delay` and `minDuration` show nothing for the first `delay` ms,
+  then keep the spinner at least `minDuration` ms once it shows. Both default to
+  0, as in Carbon.
+- **InlineLoading:** a change of status changes the mark in place: the spinner
+  shrinks, the result's disc grows, then its check or slash draws on. The text
+  swaps out, then in, on the same clocks.
+
+<Canvas of={LoadingStories.Inline} />
+
+## Reduced motion
+
+Nothing turns: three still dots stand in for the arc, there or gone at once. The
+overlay fades on the reduced clock. InlineLoading's mark changes at once and its
+text snaps; the words carry the state.
+
+## Props
+
+<ArgTypes of={LoadingStories} />

@@ -1,0 +1,148 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon-labs/v12-styles/scss/tile-art';
+
+/* FullPageError (FullPageError.tsx). Carbon for IBM Products' look: the
+ * label in `$text-error` and the title in `fluid-heading-05`, the
+ * description in `body-02`, the actions under it, the illustration beside
+ * the text (6 / 10 of 16 columns wide, 3 / 5 of 8 at md, stacked below
+ * that). Laid out by its own width (a container query), so it fits the
+ * frame it's given as well as the page. No motion here: the entrance and
+ * the swap are FullPageError.tsx's. */
+
+.cds-full-page-error {
+  block-size: inherit;
+  color: theme.$text-primary;
+  container-type: inline-size;
+}
+
+.cds-full-page-error__container {
+  margin: 0 $spacing-06;
+  block-size: 100%;
+}
+
+/* The swap's slot (a new error: out, then in) passes the page's height on to
+   the face that's showing, so a page given a height keeps its layout. */
+.cds-full-page-error__swap {
+  block-size: 100%;
+
+  > .cds-swap-slot__face {
+    align-self: stretch;
+  }
+}
+
+.cds-full-page-error__grid {
+  display: grid;
+  block-size: 100%;
+  gap: $spacing-07;
+  grid-template-columns: 1fr;
+  padding-block: $spacing-07;
+}
+
+@container (min-width: 42rem) {
+  .cds-full-page-error__grid {
+    grid-template-columns: 3fr 5fr;
+  }
+}
+
+@container (min-width: 66rem) {
+  .cds-full-page-error__grid {
+    grid-template-columns: 6fr 10fr;
+  }
+
+  .cds-full-page-error__column {
+    padding-inline-end: $spacing-07;
+  }
+}
+
+.cds-full-page-error__column {
+  min-inline-size: 0;
+}
+
+.cds-full-page-error__title {
+  @include type-style('fluid-heading-05', true);
+
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 $spacing-09;
+}
+
+.cds-full-page-error__label {
+  color: theme.$text-error;
+}
+
+/* The label's arrow: a line and a head, drawn in (FullPageError.tsx). Butt
+   caps, so a line drawn to nothing shows nothing. */
+.cds-full-page-error__arrow {
+  overflow: visible;
+  block-size: 0.8em;
+  fill: none;
+  inline-size: 0.8em;
+  margin-inline-end: 0.2em;
+  stroke: currentColor;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+  stroke-width: 1.75;
+  vertical-align: -0.12em;
+}
+
+/* Right to left: the arrow mirrors, its line turning left and its head pointing
+   left. Two rules, so a browser without :dir() keeps the attribute form. */
+[dir='rtl'] .cds-full-page-error__arrow {
+  transform: scaleX(-1);
+}
+
+.cds-full-page-error__arrow:dir(rtl) {
+  transform: scaleX(-1);
+}
+
+.cds-full-page-error__arrow-line {
+  stroke-dasharray: 29;
+}
+
+.cds-full-page-error__description {
+  @include type-style('body-02');
+
+  margin: 0 0 $spacing-07;
+  color: theme.$text-primary;
+}
+
+.cds-full-page-error__body {
+  @include type-style('body-02');
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-05;
+}
+
+.cds-full-page-error__art {
+  display: flex;
+  align-items: flex-end;
+  min-inline-size: 0;
+}
+
+.cds-full-page-error__svg-container {
+  display: flex;
+  padding: $spacing-03 $spacing-03 $spacing-11;
+  inline-size: 100%;
+}
+
+.cds-fpe-art {
+  @include tile-art.tile-art;
+
+  block-size: auto;
+
+  inline-size: 100%;
+}
+
+.cds-fpe-art__missing {
+  stroke-dasharray: 4 4;
+}

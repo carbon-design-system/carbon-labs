@@ -1,0 +1,147 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use './loader-color';
+
+/* The spinner (Spinner.tsx): a quiet base ring and a loud arc, butt ends.
+ *
+ * Spinner.tsx writes the geometry on the svg, in box units: the base ring's
+ * circumference (`--cds-spinner-c`), the arc's (`--cds-spinner-ac`, the same
+ * unless inset) and the gap (`--cds-spinner-gap`). It animates two numbers on
+ * the svg: the arc's share of its circle (`--cds-spinner-share`, the swing)
+ * and how far it is drawn (`--cds-spinner-draw`, 0 to 1: the start and stop).
+ * The dashes below are drawn from them, so nothing here times anything.
+ *
+ * In the turning frame the arc is centred on 3 o'clock. Which end holds
+ * while it draws is `--cds-spinner-anchor` (Spinner.tsx sets it): 1 while it
+ * reveals, the tail held at −share/2 (12 o'clock: the turn waits there) and
+ * the head running clockwise to share/2; 0 otherwise, the head held at
+ * share/2 while the tail catches up as it stops (or draws back from a stop
+ * it hadn't finished). Whole (draw 1) the two are the same arc, so the
+ * anchor changes there without a jump. The swing moves head and tail apart
+ * and back about the middle. The base runs from the head + the gap round to
+ * the tail − the gap. Reduced motion is a class (`--reduced`), set from the
+ * feedback family's motion (a lab's pick reaches it), never a media query. */
+
+@property --cds-spinner-share {
+  inherits: true;
+  initial-value: 0.5;
+  syntax: '<number>';
+}
+
+@property --cds-spinner-draw {
+  inherits: true;
+  initial-value: 1;
+  syntax: '<number>';
+}
+
+@property --cds-spinner-anchor {
+  inherits: true;
+  initial-value: 0;
+  syntax: '<number>';
+}
+
+.cds-spinner {
+  --cds-spinner-draw: 1;
+  /* The loaders' neutral base (_loader-color.scss), under hero too. */
+  --cds-loader-base: var(--cds-loader-neutral-base);
+
+  display: block;
+  overflow: visible;
+  flex: none;
+  fill: none;
+  transform-origin: 50% 50%;
+}
+
+/* Hero: the arc in the kit's brand (styles/_brand.scss: IBM blue unless a
+   brand zone says otherwise) over the neutral base, the neutral gray under
+   every brand. It wins over a
+   host's colour (two classes). */
+.cds-spinner.cds-spinner--hero {
+  color: var(--cds-hero-loader);
+}
+
+/* Stopped: the arc is shut and the base gone (Spinner.tsx closes them); the turn holds. */
+.cds-spinner--stop {
+  --cds-spinner-draw: 0;
+}
+
+.cds-spinner__arc,
+.cds-spinner__base {
+  /* The arc's whole length at this share, and how much of it is drawn. */
+  --cds-spinner-whole: calc(var(--cds-spinner-share) * var(--cds-spinner-ac));
+  --cds-spinner-drawn: calc(var(--cds-spinner-draw) * var(--cds-spinner-whole));
+  /* Where the drawn arc starts: at the tail (anchor 1), or as far on as the head is held (anchor 0). */
+  --cds-spinner-tail: calc(
+    var(--cds-spinner-whole) / -2 + (1 - var(--cds-spinner-anchor)) *
+      (var(--cds-spinner-whole) - var(--cds-spinner-drawn))
+  );
+
+  fill: none;
+  stroke-linecap: butt;
+}
+
+.cds-spinner__arc {
+  stroke: currentColor;
+  stroke-dasharray: calc(var(--cds-spinner-drawn) * 1px)
+    calc((var(--cds-spinner-ac) - var(--cds-spinner-drawn)) * 1px);
+  stroke-dashoffset: calc(var(--cds-spinner-tail) * -1px);
+}
+
+/* The base: quiet, and there as much as the arc is drawn. The loaders'
+   neutral base, unless the host sets its own (a button's
+   faint currentColor, the overlay's). */
+.cds-spinner__base {
+  --cds-spinner-rest: max(
+    0,
+    calc(
+      var(--cds-spinner-c) - var(--cds-spinner-drawn) - 2 *
+        var(--cds-spinner-gap)
+    )
+  );
+
+  opacity: var(--cds-spinner-draw);
+  stroke: var(--cds-spinner-base, var(--cds-loader-base));
+}
+
+/* Break: the base runs from the arc's head + the gap to its tail − the gap. */
+.cds-spinner--break .cds-spinner__base {
+  stroke-dasharray: calc(var(--cds-spinner-rest) * 1px)
+    calc((var(--cds-spinner-c) - var(--cds-spinner-rest)) * 1px);
+  stroke-dashoffset: calc(
+    (
+        var(--cds-spinner-tail) + var(--cds-spinner-drawn) +
+          var(--cds-spinner-gap)
+      ) *
+      -1px
+  );
+}
+
+/* Inset: the arc has its own circle inside the gap, so the base is whole. */
+
+/* Reduced motion: nothing turns. Three still dots stand in for the arc and the base. */
+.cds-spinner--reduced :is(.cds-spinner__arc, .cds-spinner__base) {
+  visibility: hidden;
+}
+
+.cds-spinner__dots {
+  fill: currentColor;
+}
+
+.cds-spinner--stop .cds-spinner__dots {
+  visibility: hidden;
+}
+
+@media (forced-colors: active) {
+  .cds-spinner__base {
+    stroke: GrayText;
+  }
+
+  .cds-spinner__arc {
+    stroke: CanvasText;
+  }
+}

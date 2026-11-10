@@ -1,0 +1,185 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+
+/* The feedback family's shared pieces: the status colors and the status mark.
+ *
+ * Color carries the status, the icon's shape carries it too (principle 9) —
+ * the support colors, as v11, and their inverse on a high-contrast surface
+ * (`.fb--inverse` on any ancestor: `variant="inverse"`). */
+
+.fb-mark {
+  --fb-status: #{theme.$support-info};
+
+  position: relative;
+  display: inline-grid;
+  flex: none;
+  block-size: var(--fb-mark-size, 20px);
+  color: var(--fb-status);
+  inline-size: var(--fb-mark-size, 20px);
+  place-items: center;
+}
+
+.fb-mark--error {
+  --fb-status: #{theme.$support-error};
+}
+
+.fb-mark--success {
+  --fb-status: #{theme.$support-success};
+}
+
+.fb-mark--warning,
+.fb-mark--warning-alt {
+  --fb-status: #{theme.$support-warning};
+}
+
+/* The neutral kinds: no severity, so no hue; their shapes tell them apart. */
+.fb-mark--not-started,
+.fb-mark--paused,
+.fb-mark--unknown {
+  --fb-status: #{theme.$icon-secondary};
+}
+
+.fb--inverse {
+  .fb-mark {
+    --fb-status: #{theme.$support-info-inverse};
+  }
+
+  .fb-mark--error {
+    --fb-status: #{theme.$support-error-inverse};
+  }
+
+  .fb-mark--success {
+    --fb-status: #{theme.$support-success-inverse};
+  }
+
+  .fb-mark--warning,
+  .fb-mark--warning-alt {
+    --fb-status: #{theme.$support-warning-inverse};
+  }
+}
+
+.fb-mark__icon {
+  display: grid;
+  place-items: center;
+
+  svg {
+    display: block;
+    fill: currentColor;
+  }
+
+  /* The check's draw-in sits over the mark, in one cell. */
+  > * {
+    grid-area: 1 / 1;
+  }
+}
+
+/* Pending: the kit's one Spinner, neutral; hero is the kit's brand (v11's
+   loading blue by default), which the hero spinner draws itself. */
+.fb-mark--pending {
+  --fb-status: #{theme.$icon-primary};
+}
+
+.fb-mark--pending.fb-mark--hero {
+  --fb-status: var(--cds-hero-loader, #{theme.$interactive});
+}
+
+/* The success check's draw-in (StatusMark): the check's line covered in the
+   disc's colour, uncovered from its short arm; it goes once the check is in. */
+.fb-mark__draw path {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+}
+
+/* v11's two-tone warning marks: the glyph inside the triangle in black. */
+.fb-mark--warning,
+.fb-mark--warning-alt {
+  [data-icon-path='inner-path'] {
+    fill: #000000;
+    opacity: 1;
+  }
+}
+
+/* An action icon (Save, CloudUpload …): the icon in the text color, its
+   status mark in the status color (motion-icons' `tone`). */
+.fb-mark--action {
+  color: inherit;
+}
+
+/* The count pill (`CountPill`): a 16px pill the figures roll inside — every
+   layer of figures shares one cell, clipped to the pill. Relative, so its start can be
+   nudged onto a whole pixel (`left`, set by CountPill) without moving
+   anything else. */
+.fb-count {
+  @include type-style('label-01');
+
+  position: relative;
+  display: inline-grid;
+  overflow: clip;
+  border-radius: 999px;
+  block-size: 16px;
+  font-variant-numeric: tabular-nums;
+  line-height: 16px;
+  min-inline-size: 16px;
+  padding-inline: 5px;
+  place-items: center;
+}
+
+.fb-count__figure,
+.fb-count__still {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+}
+
+/* Figures that hold their place in a layer, drawn by another (the still
+   figures, or the ones that roll): every layer lines up figure by figure. */
+.fb-count__hold {
+  visibility: hidden;
+}
+
+/* The swap slot (SwapSlot.tsx): its faces share one cell, so a swap never
+   resizes it; the leaving face sits under the arriving one. */
+.cds-swap-slot {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+}
+
+.cds-swap-slot__face {
+  display: grid;
+  grid-area: 1 / 1;
+  place-items: center;
+}
+
+/* fit="fill": a block the container's width, its faces blocks that fill it
+   across (`justify-items` reset too: browsers align a block child by it,
+   and the centre above would shrink a table to its narrowest), each its own
+   height (so a swap can read the new content's, and the slot resize for
+   it). The faces still share the one cell, so the old leaves where the new
+   arrives. */
+.cds-swap-slot--fill {
+  display: grid;
+  inline-size: 100%;
+  place-items: start stretch;
+
+  > .cds-swap-slot__face {
+    display: block;
+    min-inline-size: 0;
+    place-items: normal;
+  }
+
+  /* Resizing for the new content (SwapSlot.tsx): the faces keep their own
+     heights, clipped to the slot's as it moves. */
+  &[data-resizing] {
+    align-content: start;
+    overflow-y: clip;
+  }
+}

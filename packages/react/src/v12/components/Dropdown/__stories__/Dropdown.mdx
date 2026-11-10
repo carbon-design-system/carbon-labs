@@ -1,0 +1,82 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as DropdownStories from './Dropdown.stories.tsx';
+
+<Meta of={DropdownStories} />
+
+# Dropdown
+
+A field that opens a floating list. `Dropdown` chooses one option, and
+`ComboBox` is a Dropdown you can type into, its list filtered as you type.
+`MultiSelect` chooses many, with a check column and a count tag in the field,
+and `FilterableMultiSelect` puts its list under the ComboBox's field. They take
+Carbon's props. The field is the text input's, with its label, status mark and
+one message line. The list is the Menu's surface, at the field's width, five and
+a half rows tall; it flips to stay on screen. `type="inline"` puts the label
+beside a quiet field. The skeletons are the forms while their values load.
+
+<Canvas of={DropdownStories.Default} />
+
+<Canvas of={DropdownStories.ComboBoxForm} />
+
+<Canvas of={DropdownStories.MultiSelectForm} />
+
+<Canvas of={DropdownStories.FilterableMultiSelectForm} />
+
+<Canvas of={DropdownStories.SelectionOrder} />
+
+<Canvas of={DropdownStories.StatusChange} />
+
+<Canvas of={DropdownStories.States} />
+
+<Canvas of={DropdownStories.Sizes} />
+
+<Canvas of={DropdownStories.Inline} />
+
+<Canvas of={DropdownStories.Corners} />
+
+<Canvas of={DropdownStories.Skeleton} />
+
+## Motion
+
+- **Snap:** the list snaps open from the press point, or from the field's center
+  when a key opens it, clamped to the list's near edge.
+- **Fold:** the list closes by folding its far edge back into where it came
+  from. It keeps what it shows while it leaves.
+- **Highlight:** the kit's highlight marker. Hover jumps it, keys glide it, and
+  a held key jumps it. The first arrival grows in; every later one is simply
+  there. It stays on the active option when the pointer leaves.
+- **Press:** a held option's marker insets 1px.
+- **Chevron:** the chevron turns while the list shows. On the Dropdown and the
+  MultiSelect, the field's hover plays it; on the combo boxes, its own button's
+  hover does.
+- **Filter:** in the combo boxes, a key after a pause changes the list out then
+  in. The options leaving fade where they are. Then the list's height and the
+  options that stay move as one. Then the new options fade in. The marker comes
+  back still on the active option.
+- **Typing burst:** keys less than 200ms apart land at once. The rows and the
+  height are simply there, and the marker stays still.
+- **Reorder:** with `selectionFeedback="top"`, a choice goes out, the list makes
+  room at the top, and it comes back in there. A key's choice moves at once; a
+  pointer's waits until the pointer leaves the row.
+- **Count tag:** the multi-selects' count snaps in with the first choice and out
+  with the last. Its number rolls up as items are added and down as they go.
+- **Check:** a multi-select's check column is the kit's Checkbox, which draws
+  its check.
+- **Soft edge:** the list scrolls on the kit's Scroller.
+- **Outline ladder, error border, message line and status mark:** the text
+  input's. A choice is one act, so a status shows at once.
+- **Late status:** the ComboBox's errors wait for a pause in typing or for blur,
+  as the text input's. `lateErrors={false}` shows them at once.
+
+## Reduced motion
+
+The list is there at once and gone at once. A filter or a reorder only fades,
+still out then in, on half the clock. The highlight does not travel: it fades in
+on the new option as it fades out of the old, on half the clock. The count tag
+and the check change at once. The outline and the error border change on half of
+fast-01; the message line and the status mark change at once. A rising status in
+the ComboBox still waits for the pause or blur.
+
+## Props
+
+<ArgTypes of={DropdownStories} />

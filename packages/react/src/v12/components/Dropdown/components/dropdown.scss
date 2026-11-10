@@ -1,0 +1,382 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/cast-shadow-floating';
+
+/* Dropdown and ComboBox — what the text input's field (text-input.scss) and
+ * the Menu's surface (menu.scss) don't already draw. */
+
+/* ── the Dropdown's field: a button in the text input's field ────────── */
+
+.cds-dropdown__field {
+  align-items: center;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  appearance: none;
+  color: theme.$text-primary;
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: inherit;
+  -webkit-tap-highlight-color: transparent;
+  text-align: start;
+
+  /* Focus is the field's own edge (`data-focus`), never the browser's ring. */
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.cds-dropdown__value {
+  overflow: hidden;
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  padding-inline-start: var(--tf-pad);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Nothing chosen: the prompt (`label`) in secondary text, so it doesn't read
+   as a value (v11's is primary; the placeholder's colour is too faint for
+   the only text in a control). */
+.cds-dropdown__value--empty {
+  color: theme.$text-secondary;
+}
+
+/* The chevron: motion-icons' ChevronDownToggle, turning while the list shows. */
+.cds-dropdown__chevron,
+.cds-combo-box__toggle {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  color: theme.$icon-primary;
+
+  svg {
+    display: block;
+    fill: currentColor;
+  }
+}
+
+.cds-dropdown__chevron {
+  margin-inline-start: var(--tf-gap);
+}
+
+.cds-dropdown.cds-text-input--readonly .cds-dropdown__field {
+  cursor: default;
+}
+
+.cds-dropdown.cds-text-input--disabled .cds-dropdown__field {
+  color: theme.$text-disabled;
+  cursor: not-allowed;
+}
+
+:is(.cds-dropdown, .cds-combo-box):is(
+    .cds-text-input--disabled,
+    .cds-text-input--readonly
+  )
+  :is(.cds-dropdown__chevron, .cds-combo-box__toggle) {
+  color: theme.$icon-disabled;
+}
+
+/* `type="inline"`: the label beside a quiet field — no fill and no hairline
+   at rest; the hover, press and focus steps as any field's. */
+.cds-dropdown--inline {
+  flex-direction: row;
+  align-items: center;
+
+  .cds-field-label-row {
+    margin: 0 8px 0 0;
+  }
+
+  .cds-text-input__outer {
+    flex: 0 1 auto;
+  }
+
+  .cds-text-input__field {
+    --tf-fill: transparent;
+    --tf-edge: transparent;
+
+    inline-size: auto;
+  }
+}
+
+/* The AI fill's revert, laid over the room the trigger keeps for it
+   (Dropdown.tsx places it): a button can't hold a button. */
+.cds-dropdown__revert {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+
+  .cds-field-ai-revert.cds-icon-btn {
+    margin-inline-start: 0;
+  }
+
+  /* A flex box, so the circle sits on the centre line (1px high at xs inline). */
+  .cds-icon-tooltip {
+    display: flex;
+  }
+}
+
+/* The pointer on the revert is still on the field: its hover step holds. */
+.cds-dropdown:not(.cds-text-input--disabled, [data-status='error']):has(
+    > .cds-text-input__outer > .cds-dropdown__revert:hover
+  )
+  .cds-text-input__field:not([data-focus]) {
+  --tf-ph: 25%;
+
+  &::after {
+    --tf-edge: color-mix(
+      in srgb,
+      #{theme.$border-subtle},
+      #{theme.$border-strong}
+    );
+  }
+}
+
+.cds-dropdown[data-status='error']:not(.cds-text-input--disabled):has(
+    > .cds-text-input__outer > .cds-dropdown__revert:hover
+  )
+  .cds-text-input__field:not([data-focus])::after {
+  --tf-edge: color-mix(
+    in srgb,
+    #{theme.$support-error},
+    #{theme.$text-primary} 15%
+  );
+  --tf-ring: color-mix(
+    in srgb,
+    #{theme.$support-error},
+    #{theme.$text-primary} 15%
+  );
+}
+
+/* Forced colors: the revert under the pointer keeps the field's Highlight hover. */
+@media (forced-colors: active) {
+  .cds-dropdown:not(.cds-text-input--disabled):has(
+      > .cds-text-input__outer > .cds-dropdown__revert:hover
+    )
+    .cds-text-input__field:not([data-focus])::after {
+    border-color: Highlight;
+  }
+}
+
+/* ── the ComboBox's field: an input, a clear button, the toggle ──────── */
+
+.cds-combo-box .cds-text-input__trail {
+  gap: 0;
+}
+
+/* The clear button (the password toggle's inset IconButton, a circle on
+   its glyph): its glyph the field's gap from the text, its box meeting the
+   toggle's hit area. */
+.cds-combo-box .cds-combo-box__clear.cds-icon-btn {
+  margin-inline-start: var(--tf-ctl-gap);
+}
+
+/* The chevron as a button: no tab stop (v11), its hit area out to the
+   field's edge, the chevron on the field's padding; no hover fill. */
+.cds-combo-box__toggle {
+  align-self: stretch;
+  padding: 0 var(--tf-pad) 0 var(--tf-gap);
+  border: 0;
+  margin: 0 calc(-1 * var(--tf-pad)) 0 0;
+  appearance: none;
+  background: none;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.cds-combo-box.cds-text-input--readonly .cds-combo-box__toggle {
+  cursor: default;
+}
+
+/* ── MultiSelect's field: the count tag, then the trigger or the input ─ */
+
+.cds-multi-select__field {
+  cursor: pointer;
+}
+
+.cds-combo-box .cds-multi-select__field {
+  cursor: text;
+}
+
+/* The MultiSelect's trigger fills the field after the tag; the field draws
+   every state, the button none. */
+.cds-multi-select__trigger {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  align-self: stretch;
+  border-radius: inherit;
+  background: none;
+  min-inline-size: 0;
+}
+
+/* The count: v11's high-contrast filter tag, at the field's padding, the
+   label (or the input's text) 8px after it. */
+.cds-multi-select__tag.cds-tag {
+  align-self: center;
+  font-variant-numeric: tabular-nums;
+  gap: 2px;
+  margin-inline-start: var(--tf-pad);
+  padding-inline-end: 2px;
+}
+
+/* Read-only: the count alone (no clear), in the tag's own padding. */
+.cds-multi-select__tag--read-only.cds-tag {
+  padding-inline-end: 0.625rem;
+
+  &.cds-tag--sm {
+    padding-inline-end: 0.5rem;
+  }
+}
+
+.cds-multi-select__field:has(> .cds-multi-select__tag)
+  :is(.cds-dropdown__value, .cds-text-input__input) {
+  padding-inline-start: var(--tf-gap);
+}
+
+.cds-multi-select__count {
+  display: inline-flex;
+}
+
+/* The clear: a round hit in the tag's end, a wash of its text color on
+   hover and press. Not a tab stop (v11): Delete and Escape clear from the
+   keyboard. */
+.cds-multi-select__clear {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  block-size: 16px;
+  cursor: pointer;
+  inline-size: 16px;
+  transition: background-color var(--cds-motion-duration-fast-01)
+    var(--cds-motion-easing-standard-productive);
+
+  svg {
+    display: block;
+    fill: currentColor;
+  }
+
+  &:hover {
+    background: color-mix(in srgb, currentColor 20%, transparent);
+  }
+
+  &:active {
+    background: color-mix(in srgb, currentColor 32%, transparent);
+  }
+
+  &[aria-disabled='true'] {
+    background: none;
+    cursor: default;
+  }
+}
+
+.cds-text-input--lg .cds-multi-select__clear {
+  block-size: 18px;
+  inline-size: 18px;
+}
+
+/* Disabled: the tag steps back with the field (v11's disabled tag). */
+.cds-multi-select__tag--disabled.cds-tag {
+  background: theme.$layer-02;
+  color: theme.$text-disabled;
+}
+
+.cds-multi-select.cds-text-input--disabled .cds-multi-select__field {
+  cursor: not-allowed;
+}
+
+.cds-multi-select.cds-text-input--readonly .cds-multi-select__field {
+  cursor: default;
+}
+
+/* ── the list ────────────────────────────────────────────────────────── */
+
+/* The field's width (the surface is sized by the component), not the menu's. */
+.cds-menu.cds-listbox {
+  max-inline-size: none;
+  min-inline-size: 0;
+}
+
+/* Five and a half rows show (v11's 13.75rem at md), so a cut row says the
+   list goes on; it scrolls inside the frame, on the kit's Scroller (its
+   viewport takes the bound). */
+.cds-listbox__scroller {
+  max-block-size: calc(5.5 * var(--cds-menu-h));
+}
+
+.cds-listbox__viewport {
+  overscroll-behavior: contain;
+}
+
+.cds-listbox .cds-menu__list .sel__text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Leaving (a filter's out): nothing in it answers the pointer. */
+.cds-listbox [data-out] {
+  pointer-events: none;
+}
+
+/* No options (a filter that matches nothing): one quiet line in a row's box. */
+.cds-listbox__empty {
+  @include type-style('body-compact-01');
+
+  display: flex;
+  flex: none;
+  align-items: center;
+  block-size: calc(var(--sel-h) - 2 * var(--sel-inset));
+  color: theme.$text-secondary;
+  padding-inline: var(--cds-menu-pad);
+  user-select: none;
+}
+
+/* ── many chosen (`multiple`): the check column ──────────────────────── */
+
+/* The kit's Checkbox, as the row's mark: the row is the control (the option
+   takes the press and carries `aria-selected`), so the box answers nothing
+   itself and is hidden from assistive tech. */
+.cds-listbox__check {
+  display: inline-flex;
+  flex: none;
+  pointer-events: none;
+
+  .cds-checkbox__row {
+    padding-block: 0;
+  }
+
+  .cds-checkbox__box {
+    margin-block-start: 0;
+  }
+}
+
+/* Where the marker covers it, the box takes the marker's colors, as the
+   label does: off, its stroke in the marker's text color; on, a fill in that
+   color with the mark in the marker's own. */
+.cds-listbox .sel__face--on .cds-listbox__check .cds-checkbox__box {
+  --rollover-stroke: var(--sel-on);
+
+  color: var(--sel-selector);
+}
+
+.cds-listbox
+  .sel__face--on
+  .cds-listbox__check
+  .cds-checkbox__box:has(> .cds-checkbox__input:is(:checked, :indeterminate)) {
+  --rollover-rest: var(--sel-on);
+  --rollover-stroke: transparent;
+}

@@ -1,0 +1,206 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/corners';
+
+/* PaginationNav (PaginationNav.tsx): the row is the selection kit's `.sel`
+ * with no track and no selector fill — like line tabs, the marker is an
+ * underline at the row's foot, and the current page's label takes the
+ * selected weight and primary text where the marker covers it. Items are
+ * square (the row's height), 2px apart, their hover the kit's rollover, full
+ * round: a circle (a pill for a long number), as every icon-only or number
+ * control's ("Hovers", docs/components/README.md). The nav is the list
+ * reflow's root: numbers leaving are copies placed in it. */
+
+.cds-pagination-nav {
+  @include type-style('body-compact-01');
+
+  position: relative;
+  display: inline-block;
+  color: theme.$text-primary;
+  max-inline-size: 100%;
+}
+
+.cds-pagination-nav .sel.cds-pagination-nav__list {
+  --sel-h: 48px;
+  --sel-inset: 0px;
+  --sel-gap: 2px;
+  --sel-pad: 4px;
+  /* Full round: a circle on a square number, a pill on a wider one. 999px,
+     not half the height: the press shrinks the item and a hover can grow it,
+     and a radius pinned to half the rest height flattens the sides of the
+     changed shape ("Hovers", docs/components/README.md). */
+  --sel-radius: #{corners.$full};
+  --sel-track: transparent;
+  --sel-selector: transparent;
+  --sel-on: #{theme.$text-primary};
+  --sel-ring-color: var(--sel-off-hover);
+  --sel-outline: transparent;
+  /* The underline: the inverse selector's color; hero's blue below. */
+  --cds-pnav-underline: #{theme.$layer-selected-inverse};
+
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.cds-pagination-nav--sm .sel.cds-pagination-nav__list {
+  --sel-h: 32px;
+}
+
+.cds-pagination-nav--md .sel.cds-pagination-nav__list {
+  --sel-h: 40px;
+}
+
+/* `variant="hero"`: the underline in the kit's brand (`--cds-hero`, by
+   default `$border-interactive`, v11's own); the label stays primary text. */
+.cds-pagination-nav .sel.sel--hero.cds-pagination-nav__list {
+  --sel-selector: transparent;
+  --sel-on: #{theme.$text-primary};
+  --sel-outline: transparent;
+  --sel-ring-color: var(--sel-off-hover);
+  --cds-pnav-underline: var(--cds-hero, #{theme.$border-interactive});
+}
+
+.cds-pagination-nav__item {
+  display: flex;
+  flex: none;
+  block-size: var(--sel-h);
+}
+
+/* The window: the numbers between the first page and the last, which
+   travel when the window shifts. Its strip reaches past them into its
+   neighbours (the "…", or the first and last page) by the soft edge, and
+   fades to nothing over that reach, so a number leaving or arriving is gone
+   under the edge before it meets the "…". Fully opaque
+   from the first number's edge to the last's, so the numbers at rest, their
+   hover and their focus are untouched. The edge is the family's soft edge
+   (`--cds-motion-soft-edge`, 16px), never wider than the room between the
+   window and the neighbour's 16px (20 at lg) icon box: half the row less
+   half the icon, plus the gap (sm 10, md 14, lg 16), so it ends before the
+   "…"'s dots and a neighbour number's figures. The strip takes no pointer
+   (its reach lies over the neighbours); its numbers do. Leaving numbers'
+   copies are placed in it (`data-reflow-clip`), so they fade under the edge
+   too. */
+.cds-pagination-nav__window {
+  --cds-pnav-edge: min(
+    var(--cds-motion-soft-edge, 16px),
+    calc(var(--sel-h) / 2 - var(--sel-icon) / 2 + var(--sel-gap))
+  );
+
+  display: flex;
+  flex: none;
+  block-size: var(--sel-h);
+  margin-inline: calc(-1 * var(--cds-pnav-edge));
+  pointer-events: none;
+}
+
+.cds-pagination-nav__strip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--cds-pnav-edge);
+  margin: 0;
+  gap: var(--sel-gap);
+  list-style: none;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000000 var(--cds-pnav-edge),
+    #000000 calc(100% - var(--cds-pnav-edge)),
+    transparent
+  );
+
+  > * {
+    pointer-events: auto;
+  }
+}
+
+/* The marker's layers sit in the list as a wrapper with no box of its own. */
+.cds-pagination-nav__marker {
+  display: contents;
+}
+
+.cds-pagination-nav__list :is(.sel__indicator, .sel__ghost) {
+  background: transparent;
+
+  &::after {
+    position: absolute;
+    border-radius: corners.$full;
+    background: var(--cds-pnav-underline);
+    block-size: 2px;
+    content: '';
+    inset-block-end: calc(-1 * var(--sel-press, 0px));
+    /* The press's 1px inset moves the box, not the underline. */
+    inset-inline: calc(-1 * var(--sel-press, 0px));
+  }
+}
+
+/* No selector hole in the hover: the selector draws nothing over a number
+   (the mark is the underline at the foot, which a circle's curve clears), so
+   a full-round hover stays whole while the marker reaches toward its number
+   or glides under it — only the press's 1px, evenly: the reach never
+   compresses the full round. */
+.cds-pagination-nav__list .sel__item::before {
+  mask: none;
+}
+
+/* A page and the "…": square at the row's height, wider for long numbers. */
+.cds-pagination-nav .sel__item {
+  block-size: var(--sel-h);
+  min-inline-size: var(--sel-h);
+}
+
+.cds-pagination-nav .sel__item--icon {
+  inline-size: var(--sel-h);
+}
+
+/* The label layer (both faces): the button's whole box, so the faces sit
+   where they would in the button itself; the window's shift moves it. */
+.cds-pagination-nav__label {
+  position: relative;
+  display: block;
+  block-size: 100%;
+}
+
+/* The page numbers in tabular figures, so a number's width never shifts. */
+.cds-pagination-nav__page .sel__face {
+  font-variant-numeric: tabular-nums;
+}
+
+.cds-pagination-nav__overflow {
+  color: var(--sel-off);
+
+  .sel__face {
+    padding-inline: 0;
+  }
+}
+
+.cds-pagination-nav__overflow[aria-expanded='true'] {
+  color: var(--sel-off-hover);
+}
+
+/* Hidden text for assistive tech: the page's label and the live count. */
+.cds-pagination-nav__a11y {
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+/* RTL: the carets point the other way (v11's). */
+[dir='rtl'] .cds-pagination-nav__direction svg {
+  transform: rotate(0.5turn);
+}

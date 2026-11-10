@@ -1,0 +1,63 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ToolbarStories from './Toolbar.stories.tsx';
+
+<Meta of={ToolbarStories} />
+
+# Toolbar
+
+A row or a column of controls with one tab stop. `ToolbarButton` is an action
+and `ToolbarToggle` a toggle: a ghost icon button whose label is its tooltip and
+its name, or a labelled button. `ToolbarToggleGroup` holds toggles that belong
+together: `single` is a selection track with one choice, `multiple` keeps each
+toggle's own pressed fill. `ToolbarGroup` keeps controls together, and
+`ToolbarDivider` draws a hairline between them. In a row, what does not fit
+moves into a More menu. The arrow keys move between controls, with Home and End;
+they do not wrap unless `wrap` is set. In a single group, the arrows move focus
+without choosing, and Enter or Space choose.
+
+<Canvas of={ToolbarStories.Default} />
+
+<Canvas of={ToolbarStories.Groups} />
+
+<Canvas of={ToolbarStories.Overflow} />
+
+<Canvas of={ToolbarStories.Vertical} />
+
+<Canvas of={ToolbarStories.Sizes} />
+
+<Canvas of={ToolbarStories.Variants} />
+
+<Canvas of={ToolbarStories.Surfaces} />
+
+## Motion
+
+- **Rollover:** every control takes the rollover's matched-lightness hover and
+  press. There is no hover growth, and a press insets 1px. A motion icon plays
+  on its control's hover.
+- **Selection glide:** a single group's selector glides to the new choice on a
+  clock set by its travel, as the content switcher's does. It reaches toward a
+  press before the release, and it can be dragged.
+- **Pressed fill:** a toggle's pressed fill is the variant's selector fill. It
+  fades in on fast-02 and out on fast-01, on standard-productive.
+- **Tooltip:** icon controls share one tooltip. It shows 100ms after the pointer
+  arrives. Moving to a neighbor puts it there at once, its text changing in
+  place. It leaves fast-02 after the pointer goes.
+- **Snap mark:** when controls first move into the menu, the More button arrives
+  as the snap's mark: from half size about its center, on fast-02,
+  entrance-productive. It leaves at once. A toolbar that is already narrow when
+  it mounts simply has one.
+- **Overflow:** trailing controls leave the row and come back with no motion. A
+  group moves as one, and no divider is left before the More button. Inside a
+  layout transaction, the cut is made once, when the layout settles. In the
+  menu, buttons are items, toggles are checkable items, a single group is radio
+  items and a multiple group is a group of checkable items.
+- **Tonal:** a tonal toolbar takes its hue from where it sits.
+
+## Reduced motion
+
+The selector does not glide, and there is no reach. The More button is there at
+once. Tooltips show and leave at once. The pressed fill still fades.
+
+## Props
+
+<ArgTypes of={ToolbarStories} />

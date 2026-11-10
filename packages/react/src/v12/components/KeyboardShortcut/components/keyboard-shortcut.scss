@@ -1,0 +1,87 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon foundations only: a labs v12 component consumes @carbon/styles and
+// never mirrors it.
+@use '@carbon/styles/scss/border-radius' as *;
+@use '@carbon/styles/scss/config' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/utilities/visually-hidden' as *;
+
+.#{$prefix}--keyboard-shortcut {
+  // `direction` and `unicode-bidi`: a combination reads in the platform's
+  // order in a right-to-left page too, left to right as on the keyboard.
+  // `font`: a <kbd> is monospace in every browser's own stylesheet; each kind
+  // sets its type below, and nothing here may leak the browser's default.
+  direction: ltr;
+  font: inherit;
+  unicode-bidi: isolate;
+  white-space: nowrap;
+}
+
+// The accessible name. Hidden visually, read by assistive technology, and kept
+// out of an ordinary text selection so copying "⌘K" does not paste the words.
+.#{$prefix}--keyboard-shortcut__label {
+  @include visually-hidden;
+
+  user-select: none;
+}
+
+.#{$prefix}--keyboard-shortcut__key {
+  font: inherit;
+}
+
+// Plain: exactly what Carbon's MenuItem does with its shortcut hint. Its
+// `__shortcut` div sets nothing but `display: flex`, and inherits the type
+// (body-compact-01) and colour ($text-secondary, $text-primary on hover) of
+// the menu item. Inheriting is how this matches it in every state.
+.#{$prefix}--keyboard-shortcut--plain {
+  color: inherit;
+}
+
+// Keycap: each key a small key on the surface it sits on.
+.#{$prefix}--keyboard-shortcut--keycap {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-02;
+  vertical-align: baseline;
+}
+
+.#{$prefix}--keyboard-shortcut--keycap .#{$prefix}--keyboard-shortcut__key {
+  @include type-style('label-01');
+
+  display: inline-block;
+  box-sizing: border-box;
+  border: 1px solid $border-subtle;
+  // v12 Carbon gives a small surface $border-radius-04 (MenuItem, Tooltip).
+  border-radius: $border-radius-04;
+  background-color: $layer;
+  color: $text-secondary;
+  // @carbon-proposal mixin: keycap-slashed-zero — Carbon's type styles have no slashed-zero option, and a keycap 0 must not read as the letter O. TBD
+  font-variant-numeric: slashed-zero;
+  min-inline-size: $spacing-05;
+  padding-inline: $spacing-02;
+  text-align: center;
+}
+
+// Inside Carbon's high-contrast popover (Tooltip, DefinitionTooltip, IconButton's
+// label), the ground is $background-inverse, not the page's layer. The keycap
+// takes Carbon's inverse family instead, by each token's own description:
+// $background-inverse-hover is the step Carbon itself puts on an inverse
+// surface (the skeleton in this same popover, an inverse notification's
+// action), $border-inverse is "for borders on dark backgrounds or inverse
+// components", and $text-inverse is the popover's own text colour. Plain needs
+// nothing: it inherits the popover's $text-inverse.
+.#{$prefix}--popover--high-contrast
+  .#{$prefix}--keyboard-shortcut--keycap
+  .#{$prefix}--keyboard-shortcut__key {
+  border-color: $border-inverse;
+  background-color: $background-inverse-hover;
+  color: $text-inverse;
+}

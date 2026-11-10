@@ -1,0 +1,62 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as FilterPanelStories from './FilterPanel.stories.tsx';
+
+<Meta of={FilterPanelStories} />
+
+# Filter panel
+
+Narrow a long list. Filters opens a side panel with one section per field
+(status, region, environment and so on). Each option shows how many items it
+would match. Apply filters the list; the filters in use show as tags above it,
+where each can be removed. `FilterPanel` is the panel, on the kit's SidePanel;
+`FilterSummary` is the row of tags.
+
+<Canvas of={FilterPanelStories.Default} />
+
+<Canvas of={FilterPanelStories.Instant} />
+
+<Canvas of={FilterPanelStories.Over} />
+
+<Canvas of={FilterPanelStories.Applied} />
+
+## Motion
+
+| Pattern                   | Where                                                   | Values                                                                                                                     |
+| ------------------------- | ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Disclosure                | A section opening or shutting                           | The accordion's: duration by travel, the content 8px back moving from the first frame; shutting a step faster              |
+| The panel's snap and push | Opening and closing                                     | SidePanel's own frames: inset by its edge; pushed beside the page where the shell has room, over it otherwise              |
+| Content movement in place | Each option's count, the results line                   | RollText: only the figures that change roll, on moderate-01; the label holds still                                         |
+| List presence             | A section's search narrowing its options                | Out on fast-02, one move by travel, in on moderate-01, staggered                                                           |
+| The tags' snap from below | A filter applied appears in the summary                 | The Tag's snap in: from a few px under its height, moderate-01, entrance-productive, once the tags after it have made room |
+| Removal                   | A tag dismissed, or a filter cleared in the panel       | It snaps out on the Tag's fast-02 while the rest close the gap by travel                                                   |
+| Room                      | The summary's row coming or going in the resource index | The recipe's filters room: opens on its travel, shuts a step faster                                                        |
+| Reduced motion            | Everywhere                                              | Sections open and shut at once; counts and tags change at once; the panel's reduced fade                                   |
+
+## Props beyond Carbon's
+
+FilterPanel takes SidePanel's props (`open`, `onRequestClose`,
+`launcherButtonRef`, `size`, `frame`, `scope`, `slideIn`) and:
+
+| Prop                                                          | What it does                                                                                                                                                    |
+| ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sections`                                                    | The sections, in order: `checkbox` (a search over more than `searchThreshold`, default 8), `radio`, `number` or `date`. Each has an `id`, a `title` and `open`. |
+| `values`                                                      | The filters applied, by section id: options checked, the option picked, or a range.                                                                             |
+| `onChange`                                                    | Called with new values: on Apply, or on each change when instant.                                                                                               |
+| `updateMethod`                                                | `batch` holds a draft until Apply; Cancel, Escape or the close drops it; `instant` applies each change. Default `batch`.                                        |
+| `counts`                                                      | Each option's count for the values shown (the draft, in batch).                                                                                                 |
+| `resultCount`, `resultLabel`                                  | How many items the values shown match, and its words. Announced politely as it changes.                                                                         |
+| `primaryActionLabel`, `secondaryActionLabel`, `clearAllLabel` | The buttons' words. Default Apply (Done when instant), Cancel, Clear all.                                                                                       |
+
+FilterSummary takes `sections`, `values`, `onChange`, `clearFiltersText`
+(default Clear filters) and `returnFocusRef`, where the focus goes once no
+filter is left.
+
+Keyboard and screen readers: the dialog is named once, by its title; focus goes
+to the first section's heading on open and back to the launcher on close
+(SidePanel's); arrows move between headings; a change of the result count is
+announced politely, the open is not; a dismissed tag hands the focus to the
+next, or to `returnFocusRef`.
+
+The model is exported for teams that filter their own rows: `filtersInUse`,
+`countFilters`, `applyFilters`, `facetCounts` (each option counted against every
+other section) and `passes`.

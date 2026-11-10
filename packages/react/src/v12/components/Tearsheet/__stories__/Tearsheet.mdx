@@ -1,0 +1,76 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TearsheetStories from './Tearsheet.stories.tsx';
+
+<Meta of={TearsheetStories} />
+
+# Tearsheet
+
+A large sheet that rises from the bottom of the page for a task that needs room.
+It has a header with a label, a title, a description and optional header
+actions, a navigation row, an influencer column beside a scrolling main area,
+and up to four footer actions. It follows `open`, and closes itself unless
+`onClose` returns `false`. A sheet with no actions is passive: it has a close
+button, and a press outside closes it. Escape closes the topmost sheet. Focus
+moves in on open, Tab wraps inside, and focus goes back to `launcherButtonRef`,
+else to what had it, as the sheet starts to leave. The page doesn't scroll while
+a sheet is open. `TearsheetNarrow` is centred and has no influencer, navigation
+or header actions. With `warm`, on by default, the sheet mounts hidden, with its
+content, while its launcher is hovered or focused.
+
+<Canvas of={TearsheetStories.Default} />
+
+<Canvas of={TearsheetStories.WithInfluencer} />
+
+<Canvas of={TearsheetStories.HeaderActions} />
+
+<Canvas of={TearsheetStories.Passive} />
+
+<Canvas of={TearsheetStories.Stacked} />
+
+<Canvas of={TearsheetStories.Narrow} />
+
+<Canvas of={TearsheetStories.Lower} />
+
+<Canvas of={TearsheetStories.LongContent} />
+
+<Canvas of={TearsheetStories.Backdrop} />
+
+## Motion
+
+- **Snap rise:** the sheet enters by its bottom edge, from the middle of it. Its
+  height starts at nothing and its width at 60%. Joined to the bottom, it takes
+  the sliver guard: it is opaque from 4px tall, so no sliver shows.
+- **Axial timing:** the height, the axis it enters along, takes the whole clock,
+  and the width leads, done first. The clock comes from the sheet's size on the
+  travel steps, one step shorter.
+- **Collapse exit:** leaving, the top edge comes back down to the bottom at full
+  width, two steps shorter than the entrance. The content holds still and the
+  clip passes over it. The bottom stays square on every frame.
+- **Content arrival:** the content rides up with the sheet along its height,
+  from the first frame, over a short travel. It lands just after the sheet's
+  longest axis clock.
+- **Dim and blur:** the overlay and one even blur over the page come in on the
+  sheet's clock, entrance-productive, and go out on its exit clock,
+  exit-productive.
+- **Page recede:** the page behind draws back on the sheet's clock,
+  standard-productive, and comes back on the exit clock. `backdrop` leaves the
+  scale or the blur out, or both with `false`.
+- **Stack depth:** a sheet opened over another makes the one below recede to 98%
+  per level about its top and lift 16px per level, so its top shows above the
+  new one. It dims and rounds its bottom corners, on the arriving sheet's clock,
+  standard-productive. It comes forward again on the leaving sheet's clock. A
+  stack has one dim and one page recede, owned by its bottom open sheet.
+- **Tooltip hold:** the tooltips inside wait until the sheet and its content
+  have landed.
+- `timeScale` slows the motion down.
+
+## Reduced motion
+
+The sheet only fades, at its final geometry, on the reduced clock. Its content
+doesn't move. The dim and the blur fade on the reduced clock, and the page
+doesn't scale. In a stack, the sheet below recedes, lifts and rounds its corners
+at once, and its dim fades on the reduced clock. Tooltips don't wait.
+
+## Props
+
+<ArgTypes of={TearsheetStories} />

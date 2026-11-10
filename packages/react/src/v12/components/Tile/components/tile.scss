@@ -1,0 +1,365 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/text-pairs';
+@use '@carbon-labs/v12-styles/scss/corners';
+
+/* Tile — `Tile.tsx` (the standard for cards and tiles; its header lists the
+   choices). Every tile sits on the kit's standard surface, `--cds-surface`
+   (styles/_surface.scss: the side nav's fill). */
+
+$_surface: var(--cds-surface, #{theme.$layer-01});
+
+.cds-kit-tile {
+  @include type-style('body-compact-01');
+  @include surface.fields-on-surface;
+
+  /* The surface any ghost selection inside the tile stands on. */
+  --sel-ghost-page: #{$_surface};
+
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  padding: 1rem;
+  border-radius: corners.$in;
+  color: theme.$text-primary;
+  min-inline-size: 0;
+  text-decoration: none;
+}
+
+.cds-kit-tile--static {
+  background: $_surface;
+}
+
+/* Clickable, selectable and expandable: the rollover, on its own layer under
+   the content — the hover never covers or lightens what's on the tile. */
+.cds-kit-tile--clickable,
+.cds-kit-tile--selectable,
+.cds-kit-tile--expandable {
+  @include rollover;
+  --rollover-rest: #{$_surface};
+  /* Fallbacks; the rollover solves matched-lightness steps of the rest, at
+     half the house steps (Tile.tsx, TILE_STEPS). */
+  --rollover-hover: color-mix(
+    in srgb,
+    var(--cds-text-primary, #161616) 4%,
+    #{$_surface}
+  );
+  --rollover-press: color-mix(
+    in srgb,
+    var(--cds-text-primary, #161616) 8%,
+    #{$_surface}
+  );
+
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid theme.$text-primary;
+    outline-offset: 2px;
+  }
+}
+
+/* ExpandableTile: the hover only, one quiet step (ExpandableTile.tsx: no
+   press on a surface that grows or shrinks as it's clicked). A press keeps
+   the surface as it is: grown under the pointer, at rest from a key. As
+   specific as the rollover's own `:active` rules, and after them. */
+.cds-kit-tile.cds-kit-tile--expandable:hover:active:not(
+    [data-rollover-slid]
+  )::before {
+  --_re: var(--rollover-expand, 1px);
+}
+
+.cds-kit-tile.cds-kit-tile--expandable:active:not(:hover):not(
+    [data-rollover-slid]
+  ):not([data-rollover-off])::before {
+  --_re: 0px;
+}
+
+.cds-kit-tile__content {
+  min-inline-size: 0;
+}
+
+/* ClickableTile: the content, and its motion icon at the end. */
+.cds-kit-tile--clickable {
+  .cds-kit-tile__icon {
+    display: inline-flex;
+    align-self: flex-end;
+    color: theme.$icon-secondary;
+    margin-block-start: auto;
+    padding-block-start: 0.5rem;
+  }
+
+  &:hover .cds-kit-tile__icon {
+    color: theme.$icon-primary;
+  }
+
+  /* `footer`: its content at the start of the icon's row, the icon at the
+     end; the row sits at the tile's foot. */
+  .cds-kit-tile__foot {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-block-start: auto;
+    padding-block-start: 0.5rem;
+
+    > .cds-kit-tile__icon {
+      align-self: center;
+      margin-block-start: 0;
+      margin-inline-start: auto;
+      padding-block-start: 0;
+    }
+  }
+}
+
+/* v11's `clicked`: a lasting state, the hairline of the selection color. */
+.cds-kit-tile--clicked::after {
+  position: absolute;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px theme.$layer-selected-inverse;
+  content: '';
+  inset: 0;
+  pointer-events: none;
+}
+
+/* SelectableTile: its checkbox at the top end, the content clear of it. */
+.cds-kit-tile--selectable {
+  .cds-kit-tile__check {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: 0.75rem;
+    inset-inline-end: 0.75rem;
+  }
+
+  > .cds-kit-tile__content {
+    padding-inline-end: 1.5rem;
+  }
+
+  /* The ring round the tile follows its checkbox's keyboard focus (the
+     checkbox is its tab stop), not the checkbox's own small ring. */
+  &:has(.cds-kit-tile__check .cds-checkbox__input:focus-visible) {
+    outline: 2px solid theme.$text-primary;
+    outline-offset: 2px;
+
+    .cds-kit-tile__check .cds-checkbox__box {
+      outline: none;
+    }
+  }
+}
+
+/* A tile you choose (radio, selectable): the surface's hairline, hovered the strong border, pressed
+   the text's secondary, at once; chosen, the 2px ring below over it. */
+.cds-kit-tile--radio,
+.cds-kit-tile--selectable {
+  --rollover-stroke: var(--cds-surface-rule, #{theme.$border-subtle-01});
+
+  &:hover {
+    // @carbon-explore hover-ring-by-content — A surface holding controls hovers with a 1px inset ring and keeps its fill; a text-only surface keeps the fill. TBD
+    --rollover-stroke: #{theme.$border-strong-01};
+  }
+
+  &:active,
+  &[data-rollover-held] {
+    --rollover-stroke: #{theme.$text-secondary};
+  }
+}
+
+/* Selected: a steady 2px ring in the selection color, on top of the surface
+   so the hover and press tint under it; it never moves or fades with them. */
+.cds-kit-tile--selected::after {
+  position: absolute;
+  z-index: 1;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 2px theme.$layer-selected-inverse;
+  content: '';
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Disabled: no hover (the rollover skips it), the content dimmed. */
+.cds-kit-tile--disabled {
+  color: theme.$text-disabled;
+  cursor: not-allowed;
+
+  &.cds-kit-tile--selected::after {
+    box-shadow: inset 0 0 0 2px theme.$border-disabled;
+  }
+}
+
+@media (forced-colors: active) {
+  .cds-kit-tile {
+    border: 1px solid CanvasText;
+  }
+
+  .cds-kit-tile--selected::after {
+    box-shadow: inset 0 0 0 2px Highlight;
+  }
+}
+
+/* ── TileGroup and RadioTile (RadioTile.tsx) ─────────────────────────── */
+
+.cds-kit-tile-group {
+  padding: 0;
+  border: 0;
+  margin: 0;
+  min-inline-size: 0;
+}
+
+/* Stacked, 8px apart, by default; a page lays them out with its own grid. */
+.cds-kit-tile-group__tiles {
+  display: grid;
+  gap: 0.5rem;
+}
+
+/* The kit's group label: 8px above the first tile (styles/_text-pairs.scss). */
+.cds-kit-tile-group__legend {
+  @include text-pairs.group-label;
+}
+
+.cds-kit-tile--radio {
+  @include rollover;
+  --rollover-rest: #{$_surface};
+  --rollover-hover: color-mix(
+    in srgb,
+    var(--cds-text-primary, #161616) 4%,
+    #{$_surface}
+  );
+  --rollover-press: color-mix(
+    in srgb,
+    var(--cds-text-primary, #161616) 8%,
+    #{$_surface}
+  );
+
+  cursor: pointer;
+
+  > .cds-kit-tile__content {
+    padding-inline-end: 1.5rem;
+  }
+
+  /* The kit's ring round the tile whose radio has keyboard focus. */
+  &:has(.cds-kit-tile__radio-input:focus-visible) {
+    outline: 2px solid theme.$text-primary;
+    outline-offset: 2px;
+  }
+
+  &.cds-kit-tile--selected {
+    cursor: default;
+  }
+}
+
+/* The mark is the RadioButton's (RadioMark, radio-button.scss); here, only
+   its place. Two classes, because the mark's own rule (`.cds-radio__circle`:
+   the rollover's `position: relative`, a 2px nudge for a label's line) loads
+   after this file and would otherwise win, dropping the mark over the name. */
+.cds-kit-tile--radio > .cds-kit-tile__radio {
+  position: absolute;
+  z-index: 1;
+  margin: 0;
+  inset-block-start: 0.75rem;
+  inset-inline-end: 0.75rem;
+}
+
+/* The radio itself: over the mark, invisible, the group's keyboard stop. */
+.cds-kit-tile__radio-input {
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  block-size: 24px;
+  cursor: inherit;
+  inline-size: 24px;
+  inset-block-start: 0.5rem;
+  inset-inline-end: 0.5rem;
+  opacity: 0;
+}
+
+/* ── ExpandableTile (ExpandableTile.tsx) ─────────────────────────────── */
+
+/* The second part: the kit's disclosure (disclosure/disclosure.scss): its
+   height through the grid row, clipped while shut and while it moves, under
+   the soft edge (`min(16px, h, H − h)`) as it moves, its content coming down
+   8px with the opening; open and at rest, nothing is cut. */
+.cds-kit-tile__fold > .cds-disclosure__clip > .cds-kit-tile__content {
+  padding-block-start: 1rem;
+}
+
+/* `toggleArea="above-the-fold"`: the opened part is the content's own, out
+   to the tile's edges (it reaches over the tile's side padding, the content
+   in its place), so only the part above it and the toggle's row toggle. */
+.cds-kit-tile--toggle-above > .cds-kit-tile__fold {
+  cursor: auto;
+  margin-inline: -1rem;
+
+  > .cds-disclosure__clip > .cds-kit-tile__content {
+    padding-inline: 1rem;
+  }
+}
+
+/* …and it shows no hover: a click there does nothing, so the tile's wash
+   goes back to rest while the pointer is over it, on the hover's way out,
+   and comes back over the part above or the toggle's row (v11's
+   interactive tile has no hover there either). The fold is
+   `data-rollover-nested`, so this is the rollover's own rule for a surface
+   with a control in it (styles/_rollover.scss, NESTED CONTROLS: "yields").
+   A shut or shutting fold is inert, so the pointer over it is on the tile. */
+
+/* The toggle: the chevron at the bottom end, its label beside it. The
+   tile's tab stop, and a text toggle: the rollover painted into its letters
+   (`@mixin rollover-text`, the kit's text rollover, as every text toggle).
+   Its own control, as Read more in a row: the
+   letters near the cursor glow on hover, a press dims them further, flat,
+   and the release circle brings the hover back through them; the chevron
+   dims with them, flatly. Matched colors from `text-secondary`, so the
+   steps are the grays' fitted fractions in every theme. Pressing it toggles
+   the tile and leaves the tile's own press alone (the rollover's nested
+   rule): the tile keeps its hover. */
+.cds-kit-tile__toggle {
+  @include type-style('body-compact-01');
+
+  /* The matched colors replace the hover (and press) as the rollover
+     attaches; text-helper is the hover until then. */
+  --rollover-rest: #{theme.$text-secondary};
+  --rollover-hover: #{theme.$text-helper};
+
+  align-items: center;
+  align-self: flex-end;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background-color: transparent;
+  font-family: inherit;
+  gap: 0.5rem;
+  margin-block-start: 0.5rem;
+
+  @include rollover-text(
+    $underline: none,
+    $display: inline-flex,
+    $colors: matched
+  );
+
+  svg {
+    flex: none;
+    color: inherit;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+/* The kit's ring round the tile while its toggle has keyboard focus. */
+.cds-kit-tile--expandable:has(> .cds-kit-tile__toggle:focus-visible) {
+  outline: 2px solid theme.$text-primary;
+  outline-offset: 2px;
+}

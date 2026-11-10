@@ -1,0 +1,50 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ContainedListStories from './ContainedList.stories.tsx';
+
+<Meta of={ContainedListStories} />
+
+# ContainedList
+
+A labelled list of items. Each `ContainedListItem` is a line of text, with an
+optional icon before it and an action at its end. An item with `onClick` is a
+button. `kind` sets the header: `on-page` over a hairline, or `disclosed` for a
+list inside a disclosure. A `Search` as the header's `action` is the list's
+search; a `Search` child sits above the items instead. The header stays at the
+top while the list scrolls. `ContainedListSkeleton` is the list while it loads.
+
+<Canvas of={ContainedListStories.Default} />
+
+<Canvas of={ContainedListStories.WithSearch} />
+
+<Canvas of={ContainedListStories.AddAndRemove} />
+
+<Canvas of={ContainedListStories.LongList} />
+
+## Motion
+
+- **Rollover:** a clickable item takes the rollover: an even wash across the
+  row, a flat press with no inset, and the release circle from the point of
+  release. A motion icon plays on its hover. A static item doesn't answer the
+  pointer.
+- **Out:** when the items change (a search narrowing them, one removed), the
+  leaving items fade where they are, on fast-01 with exit-productive. Nothing
+  else moves yet. An item wanted again while it leaves fades back from where it
+  is.
+- **Move:** then the list's height and the items that stay move as one layout
+  change, on one clock from the farthest travel. Inside another layout change,
+  it joins that change's clock and lands on its frame.
+- **In:** then the new items fade in where they land, on fast-02 with
+  entrance-productive, staggered first to last.
+- **Typing:** a change within 200ms of the one before lands at once. Whatever is
+  running is cut to its end. The sequence plays for the first key after a pause.
+- **Keyboard:** each clickable item is a button in the tab order. Its focus ring
+  is 2px `$text-primary`, inside the item's edge.
+
+## Reduced motion
+
+The rollover's hover and release are at once. The items still go out, then in,
+as fades on half the clock. Nothing travels: the height lands at once.
+
+## Props
+
+<ArgTypes of={ContainedListStories} />

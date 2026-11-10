@@ -9,6 +9,7 @@
 
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
+import { Region } from '@carbon-labs/react-app-shell';
 import { KitDefaults } from '@carbon-labs/react-kit-defaults';
 import {
   EmptyState,
@@ -29,6 +30,15 @@ describe('EmptyState context', () => {
     expect(alone).toContain('cds-empty-state--page');
     expect(alone).toContain('cds-empty-state--lg');
     expect(alone).toContain('<h2');
+
+    const quiet = renderToStaticMarkup(
+      <Region surface="quiet">
+        <EmptyState title="Nothing" />
+      </Region>
+    );
+    expect(quiet).toContain('cds-empty-state--panel');
+    expect(quiet).toContain('cds-empty-state--sm');
+    expect(quiet).toContain('<h3');
 
     const framed = renderToStaticMarkup(
       <KitDefaults frame="ghost">

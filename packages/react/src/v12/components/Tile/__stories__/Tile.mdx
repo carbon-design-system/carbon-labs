@@ -1,0 +1,86 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TileStories from './Tile.stories.tsx';
+
+<Meta of={TileStories} />
+
+# Tile
+
+A surface for content, with 8px corners and 16px in, on `--cds-surface`. `Tile`
+is plain and has no hover. `ClickableTile` is a link with `href`, else a button.
+`SelectableTile` holds a checkbox as its tab stop. `TileGroup` and `RadioTile`
+choose one of a set. `ExpandableTile` shows `TileAboveTheFoldContent` and opens
+to show `TileBelowTheFoldContent`. `TileSkeleton` is a tile while it loads. They
+take Carbon's props, plus `hoverSteps`, `timeScale`, `footer`, `toggleArea` and
+`onExpandedChange`. `decorator`, `slug`, `light`, `hasRoundedCorners`,
+`tileMaxHeight` and `tilePadding` are accepted and do nothing.
+
+<Canvas of={TileStories.Default} />
+
+<Canvas of={TileStories.Clickable} />
+
+<Canvas of={TileStories.WithArt} />
+
+<Canvas of={TileStories.Selectable} />
+
+<Canvas of={TileStories.RadioTiles} />
+
+<Canvas of={TileStories.ControlsInside} />
+
+<Canvas of={TileStories.Expandable} />
+
+<Canvas of={TileStories.ExpandableControlled} />
+
+<Canvas of={TileStories.AboveTheFold} />
+
+<Canvas of={TileStories.Disabled} />
+
+<Canvas of={TileStories.Skeleton} />
+
+## Motion
+
+- **Hover, text tile:** the rollover is painted behind the content, never over
+  it. It steps off the fill: quiet, half the house steps, by default, or
+  standard with `hoverSteps`. It fades in on fast-02 and out on fast-01, and the
+  surface grows 1px. A press shows the pressed color at once and insets the
+  surface 1px.
+- **Hover, tile with controls:** a tile holding a checkbox, a radio or another
+  control hovers with a 1px `$border-strong-01` inset ring and keeps its fill.
+  It has no press and no growth. Pressed, its hairline takes `$text-secondary`
+  at once.
+- **Controls inside:** the innermost control owns the hover and the press. Over
+  one, the tile goes to rest on fast-01, and fades back in on fast-02 when the
+  pointer is on the tile again. The tile's own checkbox, radio and toggle keep
+  the tile's hover. A click on a control inside never toggles, chooses or
+  follows the tile.
+- **Corner icon:** the clickable tile's motion arrow plays on hover and keyboard
+  focus. Motion icons in its content play with it.
+- **Selection:** a steady 2px ring in the selection color, with no transition.
+  The hover and press tint under it. The checkbox and the radio mark take their
+  own motion.
+- **Fold:** the shared disclosure. The fold opens on the step for its travel,
+  entrance-productive, and shuts one step faster, exit-productive. It is
+  clipped, never scaled, under a soft edge of `min(16px, h, H − h)`. It is one
+  layout change on the tile's container, so what is below is pushed once, and
+  tiles there that change together move as one motion. A toggle mid-move turns
+  from where the fold is.
+- **Fold content:** opening, it comes 8px down into place from the first frame
+  and settles just after the fold lands. Shutting, it holds still. On a turn it
+  resumes at once.
+- **Expandable tile hover:** one quiet hover step, with no press or release over
+  a surface that grows. The toggle has its own text rollover in its letters. Its
+  chevron points down when shut and up when open.
+- **Above the fold:** with `toggleArea="above-the-fold"`, the wash goes to rest
+  on fast-01 over the opened part, and comes back over the top part and the
+  toggle's row.
+- **First paint:** no motion.
+
+## Reduced motion
+
+The hover and the ring change at once. The press still shows; the release and
+the return to hover are at once. The icons hold still and change state at once.
+The checkbox and radio marks appear at once. The fold opens or shuts at once,
+with no soft edge, and its content fades in on the reduced clock.
+
+## Props
+
+<ArgTypes of={TileStories} />

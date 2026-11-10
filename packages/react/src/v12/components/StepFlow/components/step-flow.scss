@@ -1,0 +1,105 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/spacing' as *;
+
+/* StepFlow (StepFlow.tsx): the indicator above the steps or beside them,
+ * one step at a time, and Back and Next at the end of the row under it. */
+
+.cds-step-flow {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-07;
+}
+
+.cds-step-flow--vertical {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: $spacing-09;
+}
+
+.cds-step-flow__main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: $spacing-07;
+  min-inline-size: 0;
+}
+
+.cds-step-flow__body {
+  position: relative;
+
+  /* While it swaps: a window on y, so the height glides over the content.
+     At rest nothing is clipped. */
+  &[data-swapping] {
+    overflow-y: clip;
+  }
+}
+
+.cds-step-flow__step {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-06;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+/* The step leaving: out of the flow, over the new one, until it has gone. */
+.cds-step-flow__step--leaving {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  pointer-events: none;
+}
+
+.cds-step-flow__header {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+}
+
+.cds-step-flow__title {
+  @include type-style('heading-03');
+
+  margin: 0;
+  color: theme.$text-primary;
+
+  /* Focus lands here on each step change; the heading isn't a control. */
+  &:focus {
+    outline: none;
+  }
+}
+
+.cds-step-flow__description {
+  @include type-style('body-01');
+
+  margin: 0;
+  color: theme.$text-secondary;
+}
+
+.cds-step-flow__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: $spacing-05;
+}
+
+.cds-step-flow__live {
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  white-space: nowrap;
+}

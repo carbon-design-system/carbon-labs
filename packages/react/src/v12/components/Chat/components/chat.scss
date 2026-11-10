@@ -1,0 +1,537 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use 'sass:list';
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/corners';
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+
+/* The prompt, its attachments and notice, the shell and its panes. Every state of the prompt is on
+ * its outline, as the text field's. */
+
+$fast-01: var(--cds-motion-duration-fast-01);
+$standard: var(--cds-motion-easing-standard-productive);
+
+/* ── the prompt ──────────────────────────────────────────────────────── */
+
+/* The prompt is a Text input field (its classes, its ladder, its corners:
+   8px default, `--tf-radius`), grown to hold a textarea and a footer. */
+.cds-prompt {
+  min-inline-size: 0;
+}
+
+.cds-prompt .cds-prompt__shell {
+  flex-direction: column;
+  align-items: stretch;
+  padding: 12px 12px 8px 16px;
+  block-size: auto;
+  gap: 12px;
+  min-block-size: var(--tf-h);
+}
+
+.cds-prompt__field {
+  @include type-style('body-01');
+
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background: transparent;
+  caret-color: theme.$text-primary;
+  color: theme.$text-primary;
+  font: inherit;
+  font-size: 0.875rem;
+  inline-size: 100%;
+  line-height: 1.25rem;
+  min-block-size: 20px;
+  outline: 0;
+  overflow-y: hidden;
+  resize: none;
+
+  /* The placeholder rises with the field's ladder (Text input's `--tf-ph`). */
+  &::placeholder {
+    color: color-mix(
+      in srgb,
+      #{theme.$text-placeholder} calc(100% - var(--tf-ph, 0%)),
+      #{theme.$text-secondary} var(--tf-ph, 0%)
+    );
+    opacity: 1;
+    transition: color $fast-01 $standard;
+  }
+
+  &:disabled {
+    color: theme.$text-disabled;
+    cursor: not-allowed;
+  }
+}
+
+/* The parameters' wrapper in their popover: no box of its own (it marks the prompt's portal). */
+.cds-prompt__params {
+  display: contents;
+}
+
+.cds-prompt__footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Its 32px icon buttons overhang by 4px, so the icons and the prompt's height stay where 24px buttons put them. */
+  margin: -4px;
+  cursor: default;
+  gap: 8px;
+}
+
+.cds-prompt__tools,
+.cds-prompt__actions {
+  display: flex;
+  align-items: center;
+}
+
+/* The model picker reads as text, not a link, at the footer's 14px. */
+.cds-prompt .cds-prompt__model {
+  @include type-style('body-compact-01');
+
+  /* A ghost MenuButton (the button shell): its tone, so its hover and press are tints of the text too. */
+  --rollover-tone: #{theme.$text-primary};
+
+  color: theme.$text-primary;
+}
+
+/* Send: a ghost circle, filled in the chat's variant once there's something to send, as the
+   selection family's selectors; the rollover derives each one's hover and press. */
+
+/* Send's place: Stop's ring turns round it, outside the circle, so nothing moves. */
+.cds-prompt__send-place {
+  position: relative;
+  display: inline-flex;
+}
+
+/* The kit's Spinner as drawn, the arc in the icon color, over a box 8px wider than the button,
+   so the ring sits just outside its circle. */
+.cds-prompt__stop-ring {
+  position: absolute;
+  display: grid;
+  color: theme.$icon-primary;
+  inset: -0.25rem;
+  pointer-events: none;
+
+  > .cds-spinner {
+    block-size: 100%;
+    inline-size: 100%;
+  }
+}
+
+.cds-icon-btn.cds-prompt__send--ready {
+  --rollover-rest: #{theme.$layer-selected-inverse};
+  --rollover-hover: color-mix(
+    in srgb,
+    #{theme.$layer-selected-inverse} 88%,
+    #{theme.$text-inverse}
+  );
+
+  color: theme.$icon-inverse;
+}
+
+.cds-prompt--tonal .cds-prompt__send--ready {
+  --rollover-rest: oklch(
+    from #{theme.$layer-selected} l var(--tonal-c, c) var(--tonal-h, h)
+  );
+  --rollover-hover: oklch(
+    from #{theme.$layer-selected-hover} l var(--tonal-c, c) var(--tonal-h, h)
+  );
+  --rollover-shadow: inset 0 0 0 1px
+    oklch(from #{theme.$border-tile} l var(--tonal-c, c) var(--tonal-h, h));
+
+  color: theme.$icon-primary;
+}
+
+.cds-prompt--outlined .cds-prompt__send--ready {
+  --rollover-rest: #{theme.$layer};
+  --rollover-hover: #{theme.$layer-hover};
+  --rollover-stroke: #{theme.$border-subtle-01};
+
+  color: theme.$icon-primary;
+}
+
+/* The brand fill, where the chat acts for the person: Send once there's something to send (Stop
+   keeps the variant's fill). Every variant: the colour is the cue. */
+.cds-prompt .cds-icon-btn.cds-prompt__send--hero {
+  --rollover-rest: var(--cds-hero-fill, var(--cds-button-primary, #0f62fe));
+  // @carbon-proposal token: hero-color — The hero tokens: brand colour for a line, a fill, a hover, an ink on a page and on a fill. replaces: `$border-interactive` / `$interactive`, `$button-primary`, `-hover`, `-active`, `$link-primary`, `$link-inverse`. TBD
+  --rollover-hover: var(
+    --cds-hero-fill-hover,
+    var(--cds-button-primary-hover, #0050e6)
+  );
+  --rollover-shadow: initial;
+  --rollover-stroke: initial;
+
+  color: var(--cds-hero-on-fill, #{theme.$icon-on-color});
+}
+
+/* Dictation (DictationButton): the microphone, a circle like send (`corners="full"`). Listening,
+   it takes the variant's fill as Send ready does, with the glyph in the brand: one blue disc, Send's. */
+.cds-prompt .cds-icon-btn.cds-dictation--listening {
+  --rollover-rest: #{theme.$layer-selected-inverse};
+  --rollover-hover: color-mix(
+    in srgb,
+    #{theme.$layer-selected-inverse} 88%,
+    #{theme.$text-inverse}
+  );
+
+  color: var(--cds-hero-ink-inverse, #{theme.$link-inverse});
+}
+
+.cds-prompt--tonal .cds-icon-btn.cds-dictation--listening {
+  --rollover-rest: oklch(
+    from #{theme.$layer-selected} l var(--tonal-c, c) var(--tonal-h, h)
+  );
+  --rollover-hover: oklch(
+    from #{theme.$layer-selected-hover} l var(--tonal-c, c) var(--tonal-h, h)
+  );
+  --rollover-shadow: inset 0 0 0 1px
+    oklch(from #{theme.$border-tile} l var(--tonal-c, c) var(--tonal-h, h));
+
+  color: var(--cds-hero-ink-selected, #{theme.$link-primary});
+}
+
+.cds-prompt--outlined .cds-icon-btn.cds-dictation--listening {
+  --rollover-rest: #{theme.$layer};
+  --rollover-hover: #{theme.$layer-hover};
+  --rollover-stroke: #{theme.$border-subtle-01};
+
+  color: var(--cds-hero-ink-selected, #{theme.$link-primary});
+}
+
+/* ── attachments (FileChips) ─────────────────────────────────────────── */
+
+/* The row: the kit's TagSet owns the chips' look; this box is only what the row's opening and
+   closing move, its height and its tuck under the field. */
+.cds-file-chips {
+  position: relative;
+  z-index: 1;
+  cursor: default;
+}
+
+/* ── the docked notice (PromptNotice) ────────────────────────────────── */
+
+/* Its visible part; the band runs 22px further, under the field. */
+.cds-prompt__dock {
+  position: relative;
+  z-index: 0;
+  flex: none;
+}
+
+.cds-prompt .cds-prompt__shell {
+  z-index: 1;
+}
+
+.cds-prompt-notice {
+  --pn-status: #{theme.$support-info};
+  /* The quiet surface (styles/_surface.scss), as the notifications' `outlined` fill. */
+  --pn-bg: var(--cds-surface, #{theme.$layer});
+  --pn-fg: #{theme.$text-primary};
+
+  box-sizing: border-box;
+  padding: 10px 8px 32px 16px;
+  border-radius: var(--tf-radius) var(--tf-radius) 0 0;
+  background: var(--pn-bg);
+  box-shadow: inset 0 0 0 1px var(--pn-status);
+  color: var(--pn-fg);
+  margin-block-end: -22px;
+}
+
+/* The band's look is its notice's; a leaving notice keeps the band's look until it has gone.
+   Same specificity throughout, the leaving face's rules last, so they win. */
+$_pn-status: (
+  'info': (
+    theme.$support-info,
+    theme.$support-info-inverse,
+  ),
+  'info-square': (
+    theme.$support-info,
+    theme.$support-info-inverse,
+  ),
+  'error': (
+    theme.$support-error,
+    theme.$support-error-inverse,
+  ),
+  'success': (
+    theme.$support-success,
+    theme.$support-success-inverse,
+  ),
+  'warning': (
+    theme.$support-warning,
+    theme.$support-warning-inverse,
+  ),
+  'warning-alt': (
+    theme.$support-warning,
+    theme.$support-warning-inverse,
+  ),
+);
+
+@each $face in ('in', 'out') {
+  @each $kind, $colors in $_pn-status {
+    .cds-prompt-notice:has(
+      [data-swap-face='#{$face}']
+        > .cds-prompt-notice__content--#{$kind}:not(
+          .cds-prompt-notice__content--inverse
+        )
+    ) {
+      --pn-status: #{list.nth($colors, 1)};
+      --pn-bg: var(--cds-surface, #{theme.$layer});
+      --pn-fg: #{theme.$text-primary};
+    }
+
+    .cds-prompt-notice:has(
+      [data-swap-face='#{$face}']
+        > .cds-prompt-notice__content--#{$kind}.cds-prompt-notice__content--inverse
+    ) {
+      --pn-status: #{list.nth($colors, 2)};
+      --pn-bg: #{theme.$background-inverse};
+      --pn-fg: #{theme.$text-inverse};
+    }
+  }
+}
+
+.cds-prompt-notice__content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-block-size: 28px;
+}
+
+.cds-prompt-notice__mark {
+  flex: none;
+}
+
+.cds-prompt-notice__message {
+  @include type-style('body-compact-01');
+
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+/* The action: the notification family's (`.fb-action`, outlined, on the
+   rollover), at the band's 24px; a pill, as every v12 button is, or square
+   on a square field (the field's corner scaled up: 0 stays 0). */
+.cds-prompt-notice .cds-prompt-notice__action {
+  --fb-ctl-radius: min(#{corners.$full}, calc(var(--tf-radius) * 999));
+
+  block-size: 24px;
+  padding-inline: 8px;
+}
+
+.cds-prompt-notice__content--inverse .cds-prompt-notice__close {
+  color: theme.$icon-inverse;
+}
+
+/* Dictation's status (DictationStatus): the Popover's anchor, no size, on the prompt's top edge at
+   the microphone's end, so the status sits over the prompt, never over the text. */
+.cds-prompt {
+  position: relative;
+}
+
+.cds-prompt > .cds-dictation-anchor {
+  position: absolute;
+  display: block;
+  block-size: 0;
+  inline-size: 0;
+  inset-block-start: 0;
+  inset-inline-end: var(--dictation-end, 0px);
+}
+
+/* The status's words for a screen reader: the state only. */
+.cds-dictation-live {
+  position: absolute;
+  overflow: hidden;
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+/* The Popover's content, in the opposite theme, as a toggletip's; the time over the state. */
+.cds-dictation-status__body {
+  @include type-style('body-compact-01');
+
+  display: grid;
+  padding: 12px 16px;
+  min-inline-size: 9rem;
+  row-gap: 4px;
+}
+
+.cds-dictation-status__time {
+  font-variant-numeric: tabular-nums;
+}
+
+.cds-dictation-status__text {
+  display: grid;
+  color: theme.$text-secondary;
+
+  > span {
+    grid-area: 1 / 1;
+  }
+
+  > span:not([data-shown]) {
+    visibility: hidden;
+  }
+}
+
+/* ── the shell (ChatShell) ───────────────────────────────────────────── */
+
+/* Concentric: the shell's corner is the field's plus the padding. */
+.cds-chat-shell {
+  --chat-pad: 8px;
+  --chat-inner: #{corners.$in};
+
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  padding: var(--chat-pad);
+  border-radius: calc(var(--chat-inner) + var(--chat-pad));
+  background: theme.$layer;
+  color: theme.$text-primary;
+  min-block-size: 0;
+
+  /* The field's pill radius at md: half its 40px. */
+  &--full {
+    --chat-inner: 20px;
+  }
+
+  &--square {
+    --chat-inner: 0px;
+
+    border-radius: 0;
+  }
+}
+
+.cds-chat-shell__layer {
+  /* A contained SidePanel in `aside` is placed in it. */
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  min-block-size: 0;
+}
+
+/* The chat: the header on top, the column centred under it, the rail and
+   the overlay over its inline end. Panes (`aside`) sit beside it. */
+.cds-chat-shell__main {
+  position: relative;
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-block-size: 0;
+  min-inline-size: 0;
+}
+
+.cds-chat-shell__column {
+  display: flex;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--chat-pad);
+  inline-size: 100%;
+  margin-inline: auto;
+  max-inline-size: var(--chat-column, none);
+  min-block-size: 0;
+}
+
+/* With a rail, the column stays centred on the frame and keeps clear of the
+   rail (40px) only where the frame is too narrow for both. */
+.cds-chat-shell--rail .cds-chat-shell__column {
+  max-inline-size: min(var(--chat-column, 100%), calc(100% - 2 * 40px));
+}
+
+.cds-chat-shell__header {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-block-size: 32px;
+}
+
+/* The frame's tools, centred on its inline end. */
+.cds-chat-shell__rail {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: 0;
+  translate: 0 -50%;
+}
+
+/* The turns, centred on its inline start (mirroring the rail). */
+.cds-chat-shell__nav {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 0;
+  translate: 0 -50%;
+}
+
+.cds-chat-shell__overlay {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  inset-block-start: 40px;
+  inset-inline-end: 0;
+}
+
+/* The transcript scrolls itself (its Scroller); the body only gives it room. */
+.cds-chat-shell__body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-block-size: 0;
+}
+
+.cds-chat-shell__composer {
+  flex: none;
+}
+
+/* ── panes (ChatPane): a side panel, a second chat ───────────────────── */
+
+/* Its space is its width; its content holds its full width, anchored to the far edge, so it
+   never reflows. The shell's padding before it. */
+.cds-chat-pane {
+  display: flex;
+  overflow: clip;
+  box-sizing: border-box;
+  flex: none;
+  justify-content: flex-end;
+  inline-size: var(--chat-pane-size, 26rem);
+  min-block-size: 0;
+}
+
+.cds-chat-pane--fill {
+  flex: 1 1 0;
+  inline-size: auto;
+  min-inline-size: 0;
+}
+
+.cds-chat-pane__content {
+  display: flex;
+  box-sizing: border-box;
+  flex: 1 0 auto;
+  flex-direction: column;
+  inline-size: 100%;
+  min-block-size: 0;
+  padding-inline-start: var(--chat-pad);
+}
+
+/* ── the transcript in the shell ────────────────────────────────────── */
+
+/* The conversation's text on the prompt's: the field's 16px inset (the
+   scroller's bar stays at the shell's edge). */
+.cds-chat-shell .cds-chat-transcript__turns,
+.cds-chat-shell .cds-chat-transcript__empty {
+  padding-inline: 16px;
+}

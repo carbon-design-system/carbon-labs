@@ -1,0 +1,50 @@
+{
+  "name": "@carbon-labs/react-about-modal",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Carbon Labs - AboutModal for React (v12)",
+  "labs": {
+    "status": "draft",
+    "title": "V12 about modal"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "packages/react/src/v12/components/AboutModal"
+  },
+  "types": "./es/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./es/index.js",
+      "require": "./lib/index.js"
+    },
+    "./es/*": "./es/*",
+    "./lib/*": "./lib/*",
+    "./scss/*": "./scss/*"
+  },
+  "files": [
+    "es",
+    "lib",
+    "scss",
+    "telemetry.yml"
+  ],
+  "scripts": {
+    "build": "node ../../../../tasks/build.js",
+    "clean": "rimraf es lib scss"
+  },
+  "dependencies": {
+    "@carbon-labs/react-modal": "workspace:*",
+    "@carbon-labs/react-tabs": "workspace:*",
+    "@carbon-labs/v12-motion": "workspace:*",
+    "@carbon/react": "^1.118.0",
+    "@ibm/telemetry-js": "^1.10.2"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@carbon-labs/utilities": "0.28.0"
+  }
+}

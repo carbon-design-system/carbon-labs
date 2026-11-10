@@ -1,0 +1,1291 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/cast-shadow';
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/react-selection-kit/scss/selection-landing' as *;
+@use '@carbon-labs/v12-styles/scss/corners';
+
+/* Side nav — only what the selection kit lacks: lists of links (nested in
+ * groups), the group's header and its collapse, the tag, the external arrow,
+ * and a nav with no current page. The track, rows, selector, faces, hover,
+ * press, focus rings and sizes are the kit's `.sel .sel--vertical`; the
+ * current page is the kit's `[data-selected]` item (selection-kit.scss). */
+
+.sidenav {
+  display: block;
+  min-inline-size: 0;
+}
+
+/* ── the panel's colors: the kit's standard surface (styles/_surface.scss): a
+   fill 3.8 L* off the page in every theme, a hairline 12 L* off it. Re-read on
+   every theme scope, so the nearest theme wins. */
+:root,
+[data-carbon-theme],
+.cds--white,
+.cds--g100 {
+  // @carbon-proposal token: surface-quiet — The quiet surface fill: side nav panel, tiles, tables, jobs tray, tabs fade. replaces: `$layer-01`. TBD
+  --sidenav-panel: var(--cds-surface);
+  // @carbon-proposal token: surface-rule — The quiet surface's hairline. replaces: `$border-subtle`. TBD
+  --sidenav-rule: var(--cds-surface-rule);
+}
+
+.sel.sidenav__track {
+  --sel-track: var(--sidenav-panel);
+}
+
+/* ── floating: a rounded panel, a hairline just outside it (so the track's
+   inset round the selector and hovers stays whole) ─────────────────────── */
+
+.sidenav--floating .sidenav__track {
+  box-shadow: 0 0 0 1px var(--sidenav-rule);
+}
+
+/* ── container: the column itself — full height, square rows stacked edge to
+   edge with no inset or gap, a rule on its inline-end edge (v11's) ─────── */
+
+.sidenav--container {
+  block-size: 100%;
+}
+
+.sidenav--container > .sel.sel--vertical.sidenav__track {
+  --sel-inset: 0px;
+  --sel-gap: 0px;
+  --sel-track-radius: 0px;
+
+  border-radius: 0;
+  box-shadow: inset -1px 0 0 var(--sidenav-rule);
+
+  min-block-size: 100%;
+}
+
+.sidenav--container .sidenav__list:not(.sidenav__list--nested) {
+  padding-block: 8px;
+}
+
+/* A container's rows sit edge to edge, so a press doesn't shrink them (a
+   1px inset showed a sliver of the column round the row): the press is the
+   pressed color alone, and the selector holds its size when grabbed. */
+.sidenav--container > .sel.sidenav__track[data-grabbed] {
+  --sel-press: 0px;
+}
+
+/* The kit's press rule (selection-kit.scss), one class stronger. */
+.sidenav--container
+  .sel--pressable
+  .sel__item:not([aria-selected='true'], [data-selected]):not(:disabled):not(
+    [aria-disabled='true']
+  ):is(:active:not([data-rollover-slid]), [data-key-pressed]) {
+  --rollover-inset: 0px;
+}
+
+/* ── a shut group over the current page: the bar ──────────────────────
+   The header isn't the page, so it isn't selected; a 2px bar at the row's
+   start, as tall as the icon frame and centred on it, says the page is
+   inside. With an icon column it stands 2px before the icon, which never
+   moves, so the bar holds still as the nav folds and unfolds. Without one
+   it is centred in the row's leading padding. Its colour is the hero
+   line's (by default `$interactive`'s blue) in every variant.
+
+   At rest it is clipped to its middle 70% (`inset(15% 0)`), clear. In:
+   SideNav.tsx plays the clip from `inset(25% 0)`, half height, to whole,
+   opaque at once, entrance-productive over fast-02, as the group shuts over
+   the page. Out: back to 70% on exit-productive over fast-01, fading over
+   the last 30%. A clip, not a scale, so the pixel snap reads its real box. */
+.sel.sidenav__track {
+  --sidenav-mark-w: 2px;
+  --sidenav-mark-gap: 2px;
+}
+
+.sidenav__marker {
+  position: absolute;
+  z-index: 2;
+  // @carbon-proposal token: hero-color — The hero tokens: brand colour for a line, a fill, a hover, an ink on a page and on a fill. replaces: `$border-interactive` / `$interactive`, `$button-primary`, `-hover`, `-active`, `$link-primary`, `$link-inverse`. TBD
+  background: var(--cds-hero, #{theme.$interactive});
+  block-size: var(--sel-icon);
+  clip-path: inset(15% 0);
+  inline-size: var(--sidenav-mark-w);
+  inset-block-start: round(nearest, calc(50% - var(--sel-icon) / 2), 1px);
+  inset-inline-start: round(
+    down,
+    calc((var(--sel-pad) - var(--sidenav-mark-w)) / 2),
+    1px
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    clip-path var(--cds-motion-duration-fast-01)
+      var(--cds-exit-pullback, var(--cds-motion-easing-exit-productive)),
+    opacity calc(var(--cds-motion-duration-fast-01) * 0.3) linear
+      calc(var(--cds-motion-duration-fast-01) * 0.7);
+
+  &[data-on] {
+    clip-path: inset(0);
+    opacity: 1;
+    transition: none;
+  }
+}
+
+/* With an icon column: 2px before the icon frame, which sits at the same
+   place expanded and in the rail. */
+.sidenav--icons .sidenav__marker {
+  inset-inline-start: calc(
+    var(--sidenav-icon-x) - var(--sidenav-mark-gap) - var(--sidenav-mark-w)
+  );
+}
+
+/* First paint, a still nav, the width moving, reduced motion: at once. */
+.sidenav__track[data-still] .sidenav__marker,
+.sidenav[data-resizing] .sidenav__track .sidenav__marker {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidenav__marker {
+    transition: none;
+  }
+}
+
+/* A block-level column (the kit's track is inline), as wide as the nav. On
+   the track, where the kit's variables are. */
+.sel.sidenav__track {
+  /* A link inside a group starts one row padding further in (v11's
+     SideNavMenuItem indent: 32px against the header's 16 at md). */
+  --sidenav-indent: var(--sel-pad);
+
+  display: flex;
+}
+
+/* ── lists ────────────────────────────────────────────────────────────── */
+
+/* The rows sit in lists (a nav's list semantics), not as the track's own
+   children: the gap between rows is the lists', and the kit's direct-child
+   row sizing and hit areas are restated for every row here. */
+.sidenav__list {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  gap: var(--sel-gap);
+  list-style: none;
+}
+
+.sidenav__entry,
+.sidenav__group {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.sidenav .sel__item {
+  box-sizing: border-box;
+  flex: none;
+  block-size: calc(var(--sel-h) - 2 * var(--sel-inset));
+  inline-size: auto;
+  text-align: start;
+  text-decoration: none;
+}
+
+/* The hit area bridges the gap above and below, and the track's inset round. */
+.sel.sel--vertical.sidenav__track .sel__item::after {
+  inset: calc(-0.5 * var(--sel-gap)) calc(-1 * var(--sel-inset));
+}
+
+/* Rows read from the start: an icon, the label, a tag, then an accessory. */
+.sidenav .sel__face {
+  justify-content: flex-start;
+}
+
+.sidenav .sel__text {
+  flex: 0 1 auto;
+  min-inline-size: 0;
+}
+
+.sidenav__list--nested .sidenav__link .sel__face {
+  padding-inline-start: calc(var(--sel-pad) + var(--sidenav-indent));
+}
+
+/* ── groups ───────────────────────────────────────────────────────────── */
+
+/* The header: the links' size and weight (bold headers would take over the
+   nav), the chevron at its end. The current page's group
+   header takes the selected weight, as the current page does, held to its
+   regular width (SideNav.tsx), so the selection reads as page and group
+   together. */
+.sidenav__header .sel__text {
+  @include type-style('body-compact-01');
+}
+
+.sel--weighted .sidenav__header[data-parent-current] .sel__text {
+  font-weight: var(--sel-on-weight, 500);
+}
+
+.sidenav__chevron {
+  display: inline-flex;
+  flex: none;
+  padding-inline-start: var(--sel-icon-gap);
+}
+
+/* Shut, a group is its header. The body's height moves through the grid row
+   (0fr ⇄ 1fr): opening on entrance-productive, shutting on exit-productive.
+   The clocks here only start a move: the kit's disclosure (SideNav.tsx,
+   `useDisclosureBody`) gives each its travel's step as it starts, shutting
+   one step faster: duration follows travel. The rows inside never reflow;
+   the clip reveals them. The gap
+   above the first row is inside the clip, so a shut group leaves none. */
+.sidenav__body {
+  display: grid;
+  /* One column, as wide as the track: never the content's width, or a long
+     label pushes its row past the track and the rows' end icons move as
+     groups open. */
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--cds-motion-duration-fast-02)
+    var(--cds-motion-easing-exit-productive);
+}
+
+.sidenav__group[data-open] > .sidenav__body {
+  grid-template-rows: 1fr;
+  transition-duration: var(--cds-motion-duration-moderate-01);
+  transition-timing-function: var(--cds-motion-easing-entrance-productive);
+}
+
+/* The swap (`exclusive`: one group opening as it shuts another; SideNav.tsx
+   sets data-swap for it): one motion, not two, one fluid ease. Both bodies on
+   one clock and one curve, started in the same frame, so the rows between and
+   below them move once, together: the larger travel's step (the disclosure sets
+   it as the move starts), on standard-productive (one thing grows as another
+   shrinks, a move within the view: neither an entrance's curve nor an exit's).
+   Ghost's containers and shadows go with them (below). */
+.sidenav[data-swap] .sidenav__group > .sidenav__body {
+  transition-duration: var(--cds-motion-duration-moderate-01);
+  transition-timing-function: var(--cds-motion-easing-standard-productive);
+}
+
+/* The reveal's edge is soft, the disclosure's (disclosure.scss): the clip's
+   bottom fades over `min(16px, h, H − h)` for a clip h tall of the open H
+   (`--cds-disclosure-open`, written as the move starts), so rows arrive out
+   of a gradient rather than past a hard line, both ways: it grows over the
+   first 16px of travel and closes over the last, gone on the frame the body
+   lands. Then the clip lets go (`data-unclipped`, once the links have
+   landed too), so the rows' hover expansion and focus rings show whole. */
+.sidenav__clip {
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to bottom,
+    #000000
+      calc(
+        100% - min(
+            var(--cds-motion-soft-edge, 16px),
+            100%,
+            var(--cds-disclosure-open, 0px) - 100%
+          )
+      ),
+    transparent
+  );
+  min-block-size: 0;
+  min-inline-size: 0;
+}
+
+/* Open and done (or open from the first paint, or under reduced motion). */
+.sidenav__body[data-unclipped] > .sidenav__clip,
+.sidenav__track[data-still]
+  .sidenav__group[data-open]
+  > .sidenav__body
+  > .sidenav__clip {
+  overflow: visible;
+  mask-image: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidenav__group[data-open] > .sidenav__body > .sidenav__clip {
+    overflow: visible;
+    mask-image: none;
+  }
+}
+
+/* A group's links move with the opening (the disclosure's): shut, they
+   wait 8px above; opening, they hold there until the body is half open (the
+   disclosure sets the delay), then come down into place over fast-02. On
+   the way out they don't move: a delayed 0s transition puts them back once
+   the body has closed. A reopen mid-shut resumes at once. (A collapsible
+   nav's lists also fade with the rail: data-collapsible, below.) */
+$_links-wait: translate 0s linear var(--cds-motion-duration-fast-02);
+$_links-arrive: translate var(--cds-motion-duration-fast-02)
+  var(--cds-motion-easing-entrance-productive)
+  calc(var(--cds-motion-duration-moderate-01) / 2);
+
+.sidenav__list--nested {
+  padding-block-start: var(--sel-gap);
+  transition: $_links-wait;
+  translate: 0 calc(-1 * var(--cds-motion-distance-sm, 8px));
+}
+
+.sidenav__group[data-open]
+  > .sidenav__body
+  > .sidenav__clip
+  > .sidenav__list--nested {
+  transition: $_links-arrive;
+  translate: 0 0;
+}
+
+/* Reduced motion: no travel; the links fade in on the reduced clock
+   (fast-02, halved), and are gone at once. The fade is the clip's (the
+   list's own opacity is the rail's, data-tree below). */
+.sidenav__body[data-reduced] > .sidenav__clip > .sidenav__list--nested {
+  translate: none;
+}
+
+.sidenav__body[data-reduced] > .sidenav__clip {
+  opacity: 0;
+}
+
+.sidenav__group[data-open] > .sidenav__body[data-reduced] > .sidenav__clip {
+  opacity: 1;
+  transition: opacity
+    calc(
+      var(--cds-motion-duration-fast-02) * var(--cds-motion-reduced-clock, 0.5)
+    )
+    linear;
+}
+
+/* First paint (stillness), `still` and reduced motion: a group is open or
+   shut at once. (The list's selector as long as the open one's above, which
+   it has to beat: `still` opens groups that were shut.) */
+.sidenav__track[data-still] .sidenav__body,
+.sidenav__track[data-still] .sidenav__group > .sidenav__body > .sidenav__clip,
+.sidenav__track[data-still]
+  .sidenav__group
+  > .sidenav__body
+  > .sidenav__clip
+  > .sidenav__list--nested {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidenav__body {
+    transition: none;
+  }
+}
+
+/* ── the pass ───────────────────────────────────────────────────────────
+   Gliding past a group's header (from a page in one group to a page in
+   another), the selector isn't shown over the header's row — it
+   goes out as it reaches the row and comes back as it leaves, soft at both
+   edges. The mask (SideNav.tsx) is in the track's space, the indicator's
+   copy offset by its own top every frame; the header keeps its label
+   whole and unselected meanwhile (no hole, no selected face). */
+.sidenav__track[data-passing] .sel__indicator {
+  mask-image: var(--sidenav-pass-mask);
+  mask-position: 0
+    calc(-1 * (var(--cds-motion-selection-t, 0px) + var(--sel-press, 0px)));
+  mask-repeat: no-repeat;
+  mask-size: 100% var(--sidenav-pass-h, 100%);
+}
+
+.sidenav__track[data-passing] .sidenav__header {
+  > .sel__face:not(.sel__face--on),
+  &::before {
+    mask: none;
+  }
+
+  > .sel__face--on {
+    visibility: hidden;
+  }
+}
+
+/* ── the clicked row's hover, until the selector lands on it ─────────────
+   The selection kit's (selection-kit/_selection-landing.scss, jump.ts
+   `hold`): until the selector has landed on the new page's row
+   (`data-landing`), the row keeps an unselected row's hover round it, the
+   selector cut out of it, and the glow where the selector covers it. */
+.sidenav__track.sel {
+  @include selection-landing;
+}
+
+/* ── ghost: no panel; an open group is a container ────────────────────
+   (After the v12 motion studies' tool panel.) The track has no
+   fill or hairline. A group's container is its header's hover background:
+   the same wash (10% of the text color), on the group's box, under its
+   rows and the selector. Opening, it grows with the group from the header's
+   row down round the links, on the body's own clock (the group's box is
+   what's moving); shutting, it shrinks back to the row with it and only
+   then fades (fast-01). Rows inside step their hover over it as anywhere.
+
+   INSET, like other menus. Open, the container stands the
+   kit's inset (4px at md, 3 at sm: the Menu's frame round its list) off its
+   rows: it grows out past the header's row on the top and both sides, and
+   past the last link below by the same inset. The rows themselves never
+   move, so the selector, the hover and press washes and the focus rings
+   all sit inside it with that inset. Its corner is concentric: the row's
+   radius plus the inset, which is the kit's track radius (8px, md and sm;
+   half the control size with full corners; 0 square). Shut, it is the
+   header's box and radius, and its color the header's hover wash, so it
+   grows out of that wash and shrinks back into it. The outset and the
+   corner move on the body's clocks.
+
+   Its color is the header's own hover color. Ghost's rows always take the
+   rollover's matched lightness (never `preview`, whose hover steps from a track
+   ghost doesn't draw, so it is faint on the page — outlined on white 2.8 L* —
+   and none at all off the container), both themes' steps softened to read
+   alike (SideNav.tsx, `ghostSteps`). So the container's
+   color is solved the same way on the page (`--sidenav-ghost-wash`,
+   SideNav.tsx); else the text color's 10% mixed into the page
+   (`--sidenav-ghost-page`: the kit's `--sel-ghost-page`, `$background` unless
+   the nav sits on something else). The steps and the page are the selection
+   kit's ghost (`ghostSteps`, `.sel--ghost`); the geometry stays the side nav's
+   (the track's inset, which the container grows into). Opaque, so the cast
+   shadow can sit under it. It is the rows' frame (`data-snap-frame`), so their
+   matched hover steps off it, not off the page; shut, it has no color (it isn't
+   there for the header's hover to step off), dropped only once its fade is
+   over.
+
+   SHADOW (off by default, kept in the settings: `ghostShadow`). The open
+   container casts the kit's cast shadow (`@mixin cast-shadow`, motion-core's
+   `attachCastShadow`): the contact + ambient stack at `raised`, its color
+   solved against the page, lit from the pointer — the shadow falls away from
+   the cursor while it is over the container (instant, as every cast shadow
+   follows), and rests lit from straight above when the pointer leaves or the
+   group opens without one. It is the container's, so it has the container's
+   outset and corner on the same clocks, and it fades in as the container grows
+   (moderate-01) and out as it shrinks back (fast-02), so the shut state is the
+   header's hover wash alone. Arriving and resting, the light eases to where it
+   is going over moderate-01 (`data-cast-ease`) instead of jumping; under
+   reduced motion it is there at once. */
+.sidenav--ghost > .sel.sidenav__track {
+  /* The selection kit's ghost surface (`--sel-ghost-page`, selection-kit.scss),
+     under the side nav's name. */
+  --sidenav-ghost-page: var(--sel-ghost-page, #{theme.$background});
+
+  background: none;
+  box-shadow: none;
+}
+
+.sidenav__group-bg {
+  display: none;
+}
+
+/* The containers' edges start on these clocks; SideNav.tsx gives every edge
+   that starts with a group's move the move's own clock, its travel's step
+   (`retimeGhost`), and the shut fade and colour wait for it. */
+$_ghost-in: var(--cds-motion-duration-moderate-01)
+  var(--cds-motion-easing-entrance-productive);
+$_ghost-out: var(--cds-motion-duration-fast-02)
+  var(--cds-motion-easing-exit-productive);
+$_ghost-aim: var(--cds-motion-duration-moderate-01)
+  var(--cds-motion-easing-standard-productive);
+
+.sidenav--ghost .sidenav__group {
+  /* What the shadow falls on: the page. */
+  --cast-backdrop: var(--sidenav-ghost-page);
+  /* The container's top and bottom edges' clock opening (the gap between
+     groups, below). */
+  --sidenav-ghost-top: #{$_ghost-in};
+  --sidenav-ghost-bottom: #{$_ghost-in};
+
+  position: relative;
+
+  /* The layers are the li's (where the pointer is), at z-index −2 in the
+     track's stacking context: under the container (−1), the selector (0)
+     and the rows (1). */
+  @include cast-shadow.cast-shadow(
+    $layers: (
+      contact,
+      ambient,
+    ),
+    $lit: (
+      '[data-open]',
+    ),
+    $press: null,
+    $elevation: raised
+  );
+}
+
+.sidenav--ghost .sidenav__group > :is(.sidenav__group-bg, [data-cast-layer]) {
+  border-radius: var(--sel-radius);
+  inset: 0;
+}
+
+.sidenav--ghost
+  .sidenav__group[data-open]
+  > :is(.sidenav__group-bg, [data-cast-layer]) {
+  border-radius: var(--sel-track-radius);
+  inset: calc(-1 * var(--sel-inset));
+}
+
+.sidenav--ghost .sidenav__group-bg {
+  position: absolute;
+  z-index: -1;
+  display: block;
+  --sidenav-ghost-fill: var(
+    --sidenav-ghost-wash,
+    color-mix(in srgb, var(--sel-off-hover) 10%, var(--sidenav-ghost-page))
+  );
+
+  background-color: transparent;
+  opacity: 0;
+  pointer-events: none;
+  /* Shutting: back to the header's box with the group, then the fade, then
+     the color goes. */
+  transition:
+    inset $_ghost-out,
+    border-radius $_ghost-out,
+    opacity var(--cds-motion-duration-fast-01) linear
+      var(--cds-motion-duration-fast-02),
+    background-color 0s linear
+      calc(
+        var(--cds-motion-duration-fast-02) + var(--cds-motion-duration-fast-01)
+      );
+}
+
+.sidenav--ghost .sidenav__group[data-open] > .sidenav__group-bg {
+  background-color: var(--sidenav-ghost-fill);
+  opacity: 1;
+  transition:
+    top var(--sidenav-ghost-top),
+    bottom var(--sidenav-ghost-bottom),
+    inset-inline $_ghost-in,
+    border-radius $_ghost-in;
+}
+
+.sidenav--ghost .sidenav__group > [data-cast-layer] {
+  transition:
+    opacity $_ghost-out,
+    inset $_ghost-out,
+    border-radius $_ghost-out;
+}
+
+.sidenav--ghost .sidenav__group[data-open] > [data-cast-layer] {
+  transition:
+    opacity $_ghost-in,
+    top var(--sidenav-ghost-top),
+    bottom var(--sidenav-ghost-bottom),
+    inset-inline $_ghost-in,
+    border-radius $_ghost-in;
+}
+
+.sidenav--ghost .sidenav__group[data-open][data-cast-ease] > [data-cast-layer] {
+  transition:
+    opacity $_ghost-in,
+    top var(--sidenav-ghost-top),
+    bottom var(--sidenav-ghost-bottom),
+    inset-inline $_ghost-in,
+    border-radius $_ghost-in,
+    translate $_ghost-aim;
+}
+
+/* The swap: the container shutting and the one opening on the bodies' one
+   clock (above), every edge of both (the two that face each other across
+   the gap included) and the pair's margin too, so the gap between them is
+   the inset at every frame; the shut one's fade and color still wait for
+   its shrink. Without a swap the facing edges and the margin keep their
+   fast-02 (below). */
+$_ghost-swap: var(--cds-motion-duration-moderate-01)
+  var(--cds-motion-easing-standard-productive);
+
+/* (Through the track: stronger than the gap's own clocks, further down.) */
+.sidenav--ghost[data-swap] .sidenav__track .sidenav__group {
+  --sidenav-ghost-top: #{$_ghost-swap};
+  --sidenav-ghost-bottom: #{$_ghost-swap};
+
+  transition: margin-block-start $_ghost-swap;
+}
+
+.sidenav--ghost[data-swap] .sidenav__group > .sidenav__group-bg {
+  transition:
+    inset $_ghost-swap,
+    border-radius $_ghost-swap,
+    opacity var(--cds-motion-duration-fast-01) linear
+      var(--cds-motion-duration-moderate-01),
+    background-color 0s linear
+      calc(
+        var(--cds-motion-duration-moderate-01) +
+          var(--cds-motion-duration-fast-01)
+      );
+}
+
+.sidenav--ghost[data-swap] .sidenav__group[data-open] > .sidenav__group-bg {
+  transition:
+    inset $_ghost-swap,
+    border-radius $_ghost-swap;
+}
+
+.sidenav--ghost[data-swap] .sidenav__group > [data-cast-layer] {
+  transition:
+    opacity $_ghost-swap,
+    inset $_ghost-swap,
+    border-radius $_ghost-swap;
+}
+
+.sidenav--ghost[data-swap]
+  .sidenav__group[data-open][data-cast-ease]
+  > [data-cast-layer] {
+  transition:
+    opacity $_ghost-swap,
+    inset $_ghost-swap,
+    border-radius $_ghost-swap,
+    translate $_ghost-aim;
+}
+
+/* First paint (stillness) and reduced motion: the container and its shadow
+   are there, or not, at once. */
+.sidenav--ghost
+  .sidenav__track[data-still]
+  .sidenav__group
+  > :is(.sidenav__group-bg, [data-cast-layer]) {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidenav--ghost .sidenav__group > :is(.sidenav__group-bg, [data-cast-layer]),
+  .sidenav--ghost
+    .sidenav__group[data-open]
+    > :is(.sidenav__group-bg, [data-cast-layer]) {
+    transition: none;
+  }
+}
+
+/* Room round an open container, even on every side. Open, the container stands the
+   inset off its rows on every side: past its header's row above and past
+   its last link below, out into the gap, so the room under the last link
+   takes no layout. Top-level ghost rows are two insets apart (8px at md, 6
+   at sm), so an open container keeps an inset clear of the row above and
+   the row below it alike (4 / 4 at md, 3 / 3 at sm), a group's header next
+   to it too. One gap for every top-level row, open or shut (and in the
+   rail), so nothing moves as a group opens (but for two open groups side
+   by side, below). Their hit areas bridge it, as the kit's bridge its gap. */
+.sidenav--ghost > .sel.sidenav__track {
+  --sidenav-row-gap: calc(2 * var(--sel-inset));
+}
+
+.sidenav--ghost > .sel.sidenav__track > .sidenav__list {
+  gap: var(--sidenav-row-gap);
+}
+
+.sidenav--ghost
+  > .sel.sel--vertical.sidenav__track
+  > .sidenav__list
+  > li
+  > .sel__item::after {
+  inset-block: calc(-0.5 * var(--sidenav-row-gap));
+}
+
+/* The gap between two groups, kept. Two groups
+   next to each other share one gap, and an open container stands an inset
+   into it, so with both open (`exclusive={false}`) the two containers meet.
+   Both open, the lower group takes one more inset above it (a margin), so
+   the containers keep the inset clear between them that they keep from a
+   shut row: 4px at md, 3 at sm, each container's own room inside still the
+   inset. It is the only way to keep both the room and the gap, so the rows
+   below the second group move one inset as the pair forms or parts; it
+   rides the group's opening or shutting.
+
+   The two edges that face each other across that gap, and the margin, move
+   on one clock (fast-02, the shutting clock), opening or shutting, so their
+   sum never changes mid-move: the gap is the inset at every frame, whether
+   the pair forms (a margin growing as an edge grows), parts (shrinking
+   together), or swaps (`exclusive`: one edge in as the other goes out, the
+   margin never there). An edge with no group across from it opens on the
+   opening clock as before. */
+.sidenav--ghost .sidenav__group + .sidenav__group {
+  --sidenav-ghost-top: #{$_ghost-out};
+}
+
+.sidenav--ghost .sidenav__group:has(+ .sidenav__group) {
+  --sidenav-ghost-bottom: #{$_ghost-out};
+}
+
+.sidenav--ghost .sidenav__group {
+  transition: margin-block-start $_ghost-out;
+}
+
+.sidenav--ghost:not([data-rail], [data-folded])
+  .sidenav__group[data-open]
+  + .sidenav__group[data-open] {
+  margin-block-start: var(--sel-inset);
+}
+
+/* The header's hit area bridges the margin too. */
+.sidenav--ghost:not([data-rail], [data-folded])
+  > .sel.sel--vertical.sidenav__track
+  > .sidenav__list
+  > .sidenav__group[data-open]
+  + .sidenav__group[data-open]
+  > .sel__item::after {
+  inset-block-start: calc(-0.5 * var(--sidenav-row-gap) - var(--sel-inset));
+}
+
+.sidenav--ghost .sidenav__track[data-still] .sidenav__group {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidenav--ghost .sidenav__group {
+    transition: none;
+  }
+}
+
+/* In the rail, groups fold: no container, no shadow. */
+.sidenav--ghost[data-rail]
+  .sidenav__group
+  > :is(.sidenav__group-bg, [data-cast-layer]) {
+  opacity: 0;
+  transition: none;
+}
+
+/* ── the tag and the external arrow ───────────────────────────────────── */
+
+/* A tag after the label (Draft, TBD): the shell nav's, label-01 in helper
+   text inside a hairline mixed from it, as on the selector (its quiet text
+   and the same mix). Over what the row stands on, so a hover keeps it. The
+   surface rule fell under 1.5:1 on the panel. Regular weight on both faces. */
+.sidenav__tag {
+  @include type-style('label-01');
+
+  flex: none;
+  padding: 0 4px;
+  border: 1px solid color-mix(in srgb, var(--sel-quiet) 40%, transparent);
+  border-radius: corners.$small;
+  color: var(--sel-quiet);
+  font-weight: 400;
+  margin-inline-start: var(--sel-icon-gap);
+}
+
+.sidenav__tag-slot {
+  display: inline-flex;
+  flex: none;
+  margin-inline-start: var(--sel-icon-gap);
+}
+
+.sidenav__external {
+  display: inline-flex;
+  flex: none;
+  color: var(--sel-quiet);
+  padding-inline-start: var(--sel-icon-gap);
+}
+
+.sidenav .sel__face--on {
+  .sidenav__tag {
+    border-color: color-mix(
+      in srgb,
+      var(--sel-on-quiet) 40%,
+      var(--sel-selector)
+    );
+    color: var(--sel-on-quiet);
+    font-weight: 400;
+  }
+
+  .sidenav__external {
+    color: var(--sel-on-quiet);
+  }
+}
+
+.sidenav .sel__item[aria-disabled='true'] {
+  .sidenav__tag,
+  .sidenav__external {
+    color: theme.$text-disabled;
+  }
+}
+
+/* ── the current page's group shut ────────────────────────────────────
+   The selector goes with its row, at once: no exit played over the rows
+   moving under it (SideNav.tsx, data-sel-folded); the row folds away
+   unselected under the group's clip. */
+.sidenav__track[data-sel-folded] {
+  :is(.sel__indicator, .sel__ghost),
+  .sel__face--on {
+    visibility: hidden;
+  }
+
+  .sel__face,
+  .sel__item::before {
+    mask: none;
+  }
+}
+
+/* ── no current page ─────────────────────────────────────────────────── */
+
+/* A page that isn't in the nav: no selector, no selected face, nothing cut
+   out of a row (as the select list with no value). The engine's show / hide
+   set `data-selection-shown`. */
+.sidenav__track:not([data-selection-shown]) {
+  .sel__indicator {
+    opacity: 0;
+  }
+
+  .sel__face--on {
+    visibility: hidden;
+  }
+
+  .sel__face,
+  .sel__item::before {
+    mask: none;
+  }
+}
+
+/* ── icons: an icon column ───────────────────────────────────────────────
+   With an icon on any top-level row (or a nav that folds to a rail), the
+   top-level rows put theirs in a column: the icon centered in a row-height
+   square at the row's start (8px in at md, 5 at sm, 12 and 8 in a
+   container), so it sits exactly where the rail shows it and never moves
+   between the two. The label starts after it (the kit's icon gap). A
+   group's links start where its header's label starts — an icon of their
+   own sits there, its label after it. */
+.sel.sidenav__track {
+  --sidenav-icon-x: calc(
+    (var(--sel-h) - 2 * var(--sel-inset) - var(--sel-icon)) / 2
+  );
+  --sidenav-label-x: calc(
+    var(--sidenav-icon-x) + var(--sel-icon) + var(--sel-icon-gap)
+  );
+}
+
+.sidenav--icons .sidenav__track > .sidenav__list > li > .sel__item > .sel__face,
+.sidenav__foot > .sidenav__toggle > .sel__face {
+  padding-inline-start: var(--sidenav-icon-x);
+}
+
+.sidenav--icons .sidenav__list--nested .sidenav__link .sel__face {
+  padding-inline-start: var(--sidenav-label-x);
+}
+
+.sidenav__icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  block-size: var(--sel-icon);
+  inline-size: var(--sel-icon);
+}
+
+/* ── the rail ───────────────────────────────────────────────────────────
+   A collapsible nav (every top-level row has an icon) sets its widths from
+   the rail controller (SideNav.tsx): the nav's place in the layout, and the
+   panel's own width — wider than its place while it's expanded over the
+   page (hover), when it overflows its column above the page. Both are
+   written as the elements' own `inline-size` (not inherited: only layout
+   reacts), the auto and 100% here until the controller places them. */
+.sidenav {
+  --sidenav-dir: 1;
+}
+
+.sidenav:dir(rtl) {
+  --sidenav-dir: -1;
+}
+
+.sidenav[data-collapsible] {
+  position: relative;
+  flex: none;
+  inline-size: auto;
+  max-inline-size: none;
+}
+
+.sidenav[data-collapsible] > .sel.sidenav__track {
+  z-index: 2;
+  box-sizing: border-box;
+  flex-direction: column;
+  inline-size: 100%;
+}
+
+/* The foot: the toggle at the column's lower start, held at the bottom on the panel's
+   surface; the scroller drops its edge for it, so the foot draws one above itself. */
+.sidenav[data-foot] {
+  block-size: 100%;
+}
+
+.sidenav[data-foot] > .sel.sidenav__track {
+  min-block-size: 100%;
+}
+
+.sidenav__foot {
+  --_surface: var(--sel-track);
+
+  position: sticky;
+  z-index: 3;
+  display: flex;
+  justify-content: flex-start;
+  padding: 0 var(--sel-inset) var(--sel-inset);
+  /* Out to the track's edges (its inset), so nothing shows beside it. */
+  margin: auto calc(-1 * var(--sel-inset)) calc(-1 * var(--sel-inset));
+  background: var(--_surface);
+  border-end-end-radius: var(--sel-track-radius);
+  border-end-start-radius: var(--sel-track-radius);
+  container-type: scroll-state;
+  inset-block-end: 0;
+}
+
+.sidenav--ghost .sidenav__foot {
+  --_surface: var(
+    --sidenav-ghost-page,
+    var(--sel-ghost-page, #{theme.$background})
+  );
+}
+
+.sidenav--container .sidenav__foot {
+  padding-block-end: 8px;
+}
+
+/* The soft edge above the foot, only while rows pass under it. */
+.sidenav__foot-edge {
+  position: absolute;
+  display: none;
+  background: linear-gradient(to bottom, transparent, var(--_surface));
+  block-size: var(--cds-motion-soft-edge, 16px);
+  inset-block-end: 100%;
+  inset-inline: 0;
+  pointer-events: none;
+}
+
+@container scroll-state(stuck: block-end) {
+  .sidenav__foot-edge {
+    display: block;
+  }
+}
+
+/* The toggle: icon only (its name is its aria-label), a row-height square. */
+.sidenav .sidenav__toggle {
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  inline-size: calc(var(--sel-h) - 2 * var(--sel-inset));
+}
+
+/* While the width moves (data-resizing), one motion: the rows narrow with
+   the panel (the selector follows them), but what's in them holds the
+   expanded width and doesn't move — the panel's moving edge clips it away
+   (collapsing) or reveals it (expanding) through a soft edge: a mask at the
+   content's inline end, `--cds-motion-soft-edge` wide (16px), narrowing to 0
+   over the travel's last px (`--sidenav-edge-w`). Text never scales or
+   reflows. The edge's width is written on each of its readers (the list,
+   the toggle), not inherited: written on the nav, it restyled every row
+   each frame. */
+@property --sidenav-edge-w {
+  inherits: false;
+  initial-value: 0px;
+  syntax: '<length>';
+}
+
+.sidenav[data-resizing] .sidenav__track > .sidenav__list,
+.sidenav[data-resizing] .sidenav__track > .sidenav__foot > .sidenav__toggle {
+  mask-image: linear-gradient(
+    to left,
+    transparent,
+    #000000 var(--sidenav-edge-w)
+  );
+  overflow-x: clip;
+}
+
+.sidenav[data-resizing]:dir(rtl) .sidenav__track > .sidenav__list,
+.sidenav[data-resizing]:dir(rtl)
+  .sidenav__track
+  > .sidenav__foot
+  > .sidenav__toggle {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000000 var(--sidenav-edge-w)
+  );
+}
+
+/* Ghost: the edge is the track's, so the group's container, the selector and
+   the rows keep one layer and their order (a masked list covered the selector). */
+.sidenav--ghost[data-resizing] > .sidenav__track {
+  mask-image: linear-gradient(
+    to left,
+    transparent,
+    #000000 var(--sidenav-edge-w)
+  );
+  overflow-x: clip;
+}
+
+.sidenav--ghost[data-resizing]:dir(rtl) > .sidenav__track {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000000 var(--sidenav-edge-w)
+  );
+}
+
+.sidenav--ghost[data-resizing] > .sidenav__track > .sidenav__list {
+  mask-image: none;
+  overflow-x: visible;
+}
+
+.sidenav[data-resizing]
+  .sidenav__track
+  .sel__item
+  > .sel__face:not(.sel__face--on) {
+  min-inline-size: calc(var(--sidenav-expanded-w) - 2 * var(--sel-inset));
+}
+
+/* The selected face holds the same width, still clipped to the selector:
+   the kit's clip, its end inset measured from the wider face's end. */
+.sidenav[data-resizing] .sidenav__track .sel__item > .sel__face--on {
+  clip-path: inset(
+    max(
+        0px,
+        calc(
+          var(--cds-motion-selection-t, 0px) - var(
+              --cds-motion-selection-iy,
+              0px
+            )
+        )
+      )
+      calc(
+        100% - var(--cds-motion-selection-iw, 0px) +
+          max(
+            0px,
+            calc(
+              var(--cds-motion-selection-ix, 0px) +
+                var(--cds-motion-selection-iw, 0px) - var(
+                  --cds-motion-selection-r,
+                  0px
+                )
+            )
+          )
+      )
+      max(
+        0px,
+        calc(
+          var(--cds-motion-selection-iy, 0px) +
+            var(--cds-motion-selection-ih, 0px) - var(
+              --cds-motion-selection-b,
+              0px
+            )
+        )
+      )
+      max(
+        0px,
+        calc(
+          var(--cds-motion-selection-l, 0px) - var(
+              --cds-motion-selection-ix,
+              0px
+            )
+        )
+      )
+      round var(--sel-radius)
+  );
+  inline-size: max(
+    100%,
+    calc(var(--sidenav-expanded-w) - 2 * var(--sel-inset))
+  );
+  inset-inline-end: auto;
+}
+
+/* While the width moves, a group's links unfold (or fold) inside its clip,
+   never over the rows below it, through the disclosure's soft bottom edge,
+   `min(16px, h, H − h)` for a body h tall of its open H
+   (`--sidenav-fold-edge`, px, every frame; SideNav.tsx): it grows over the
+   first 16px of the fold and closes over the last, so nothing pops as the
+   mask goes; a group not folding has none. And the selector stays inside
+   the panel (a selector leaving as the rail starts fades in place). */
+.sidenav[data-resizing]
+  .sidenav__track.sel
+  .sidenav__group
+  > .sidenav__body
+  > .sidenav__clip {
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to bottom,
+    #000000 calc(100% - var(--sidenav-fold-edge, 0px)),
+    transparent
+  );
+}
+
+.sidenav[data-resizing] > .sel.sidenav__track {
+  overflow: clip;
+}
+
+/* Rows aren't interactive while the width moves: any
+   hover or press wash fades out over fast-01 as it starts and stays off until
+   it ends (the rollover's amount held at 0, whatever :hover or focus say). */
+.sidenav[data-resizing] .sidenav__track .sel__item::before {
+  --cds-motion-rollover-hover: 0;
+
+  transition: --cds-motion-rollover-hover var(--cds-motion-duration-fast-01)
+    linear;
+}
+
+.sidenav[data-resizing] .sidenav__track .sel__item {
+  pointer-events: none;
+}
+
+/* A current page in an open group, collapsing: its selector folds away
+   with the group, clipped at the group's soft bottom edge
+   (`--sidenav-sel-cut` on the selector itself, px from its top, and the
+   fold's edge, `--sidenav-fold-edge`, every frame), then is gone until it next arrives (data-sel-gone). */
+.sidenav[data-sel-cut] .sidenav__track .sel__indicator {
+  mask-image: linear-gradient(
+    to bottom,
+    #000000 calc(var(--sidenav-sel-cut, 0px) - var(--sidenav-fold-edge, 0px)),
+    transparent var(--sidenav-sel-cut, 0px)
+  );
+}
+
+.sidenav[data-sel-gone] .sidenav__track :is(.sel__indicator, .sel__ghost) {
+  visibility: hidden;
+}
+
+/* The rows that move up into its box as the group folds aren't under it:
+   no selected face and nothing cut out of them. */
+.sidenav[data-sel-cut] .sidenav__track .sel__item:not([data-selected]),
+.sidenav[data-sel-gone] .sidenav__track .sel__item {
+  > .sel__face--on {
+    visibility: hidden;
+  }
+
+  &::before,
+  > .sel__face {
+    mask: none;
+  }
+}
+
+/* Expanding, the labels slide in on x (from the icon gap toward the start,
+   on a clock one step longer than the width's): every part of a row but its
+   icon in the column. Never the rows themselves, whose boxes the selector
+   measures. The slide is an animation of `translate` (SideNav.tsx): one
+   keyframe pair on one clock, on the compositor; at rest it is 0. */
+.sidenav[data-collapsible] .sel__face > :not(.sidenav__icon) {
+  translate: 0px 0;
+}
+
+/* In the rail the labels are out of the layout but still each row's name
+   (visually hidden); the tag, the arrow and the chevron go. */
+.sidenav[data-rail] {
+  .sidenav__track > .sidenav__list > li > .sel__item,
+  .sidenav__foot > .sidenav__toggle {
+    .sel__text {
+      position: absolute;
+      overflow: hidden;
+      block-size: 1px;
+      clip-path: inset(50%);
+      inline-size: 1px;
+      white-space: nowrap;
+    }
+
+    :is(
+      .sidenav__tag,
+      .sidenav__tag-slot,
+      .sidenav__external,
+      .sidenav__chevron
+    ) {
+      display: none;
+    }
+  }
+}
+
+/* Folded: every group shuts in the rail (its flyout shows its links) and
+   unfolds as it grows, on the width's clock (data-folding, below). */
+.sidenav[data-folded] .sidenav__track.sel .sidenav__group > .sidenav__body {
+  grid-template-rows: 0fr;
+}
+
+.sidenav[data-folded]
+  .sidenav__track.sel
+  .sidenav__group
+  > .sidenav__body
+  > .sidenav__clip {
+  overflow: hidden;
+}
+
+/* A group folding or unfolding with the width: its height on the width's
+   own tween (`--sidenav-body-h`, px, every frame; SideNav.tsx). Not
+   inherited: a frame restyles the body, not its rows. */
+@property --sidenav-body-h {
+  inherits: false;
+  initial-value: 0px;
+  syntax: '<length>';
+}
+
+.sidenav[data-resizing]
+  .sidenav__track.sel
+  .sidenav__group
+  > .sidenav__body[data-folding] {
+  grid-template-rows: var(--sidenav-body-h, 0px);
+  transition: none;
+}
+
+/* Reduced motion (data-tree): no travel — the width changes at once and the
+   labels only fade, out before a collapse (half fast-02), in after an
+   expand (half moderate-01). SideNav.tsx writes both in its slow motion. */
+$_reduced-in: var(
+  --sidenav-in-ms,
+  calc(
+    var(--cds-motion-duration-moderate-01) *
+      var(--cds-motion-reduced-clock, 0.5)
+  )
+);
+$_reduced-out: var(
+  --sidenav-out-ms,
+  calc(
+    var(--cds-motion-duration-fast-02) * var(--cds-motion-reduced-clock, 0.5)
+  )
+);
+
+.sidenav[data-collapsible] {
+  .sidenav__track > .sidenav__list > li > .sel__item,
+  .sidenav__foot > .sidenav__toggle {
+    :is(
+      .sel__text,
+      .sidenav__tag,
+      .sidenav__tag-slot,
+      .sidenav__external,
+      .sidenav__chevron
+    ) {
+      transition: opacity $_reduced-in linear;
+    }
+  }
+
+  .sidenav__list--nested {
+    transition:
+      opacity $_reduced-in linear,
+      $_links-wait;
+  }
+
+  .sidenav__group[data-open]
+    > .sidenav__body
+    > .sidenav__clip
+    > .sidenav__list--nested {
+    transition:
+      opacity $_reduced-in linear,
+      $_links-arrive;
+  }
+}
+
+.sidenav[data-tree='hidden'] {
+  .sidenav__track > .sidenav__list > li > .sel__item,
+  .sidenav__foot > .sidenav__toggle {
+    :is(
+      .sel__text,
+      .sidenav__tag,
+      .sidenav__tag-slot,
+      .sidenav__external,
+      .sidenav__chevron
+    ) {
+      opacity: 0;
+      transition-duration: $_reduced-out;
+    }
+  }
+
+  .sidenav__list--nested,
+  .sidenav__group[data-open]
+    > .sidenav__body
+    > .sidenav__clip
+    > .sidenav__list--nested {
+    opacity: 0;
+    transition-duration: $_reduced-out;
+  }
+}
+
+/* ── the rail's group flyout (the Menu, portalled) ──────────────────────
+   The current page's row: its label semibold (the menu's rows have only
+   their highlight, no selection of their own). */
+.sidenav-flyout__current .sel__text {
+  font-weight: 600;
+}

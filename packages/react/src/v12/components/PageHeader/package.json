@@ -1,0 +1,62 @@
+{
+  "name": "@carbon-labs/react-page-header",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Carbon Labs - PageHeader for React (v12)",
+  "labs": {
+    "status": "draft",
+    "title": "V12 page header"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "packages/react/src/v12/components/PageHeader"
+  },
+  "types": "./es/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./es/index.js",
+      "require": "./lib/index.js"
+    },
+    "./es/*": "./es/*",
+    "./lib/*": "./lib/*",
+    "./scss/*": "./scss/*"
+  },
+  "files": [
+    "es",
+    "lib",
+    "scss",
+    "telemetry.yml"
+  ],
+  "scripts": {
+    "build": "node ../../../../tasks/build.js",
+    "clean": "rimraf es lib scss",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@carbon-labs/react-app-shell": "workspace:*",
+    "@carbon-labs/react-breadcrumb": "workspace:*",
+    "@carbon-labs/react-button": "workspace:*",
+    "@carbon-labs/react-kit-defaults": "workspace:*",
+    "@carbon-labs/react-menu": "workspace:*",
+    "@carbon-labs/react-motion-icons": "workspace:*",
+    "@carbon-labs/react-props": "workspace:*",
+    "@carbon-labs/react-selection-kit": "workspace:*",
+    "@carbon-labs/react-tag": "workspace:*",
+    "@carbon-labs/react-util": "workspace:*",
+    "@carbon-labs/v12-motion": "workspace:*",
+    "@carbon-labs/v12-styles": "workspace:*",
+    "@carbon/react": "^1.118.0",
+    "@ibm/telemetry-js": "^1.10.2"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0 || ^19.0.0",
+    "react-dom": "^18.2.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@carbon-labs/utilities": "0.28.0",
+    "vitest": "^4.0.0"
+  }
+}

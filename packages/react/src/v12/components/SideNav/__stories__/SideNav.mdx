@@ -1,0 +1,82 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SideNavStories from './SideNav.stories.tsx';
+
+<Meta of={SideNavStories} />
+
+# Side nav
+
+The app's page navigation, on the selection family's look and motion. It is a
+`<nav>` of real links, not a tablist: each `SideNavLink` is an `<a href>`, or a
+router link through `as`, and the current page is `aria-current="page"`.
+`SideNavGroup` is a collapsible group of links under a header. A group opens
+when you go to one of its pages and never shuts on its own. With `collapsed`,
+`defaultCollapsed` or `collapsible`, and an icon on every top-level row, the nav
+folds to a rail of icons. In an AppShell the shell draws the fold toggle;
+elsewhere it sits at the nav's foot. `filter` pins a field at the top that
+narrows the nav to the matching links. Every link and group header is a tab
+stop.
+
+<Canvas of={SideNavStories.Default} />
+
+<Canvas of={SideNavStories.Frames} />
+
+<Canvas of={SideNavStories.CrossGroup} />
+
+<Canvas of={SideNavStories.Rail} />
+
+<Canvas of={SideNavStories.Filter} />
+
+<Canvas of={SideNavStories.Sizes} />
+
+## Motion
+
+- **Glide:** within a group, the selector glides to the new page on the kit's
+  timing by travel, its leading edge ahead. A press reaches toward the pressed
+  link; slide to another link to retarget, or off to cancel. There is no drag.
+- **Jump:** between groups, by default, the old selector shrinks 2px on every
+  side, opaque, and is gone. Then the new one comes in at the new link from 2px
+  in on every side, growing to full. The whole jump runs on fast-01: a third for
+  the out, on exit-productive, and two thirds for the in, on entrance-snap. The
+  hover on the new row shrinks with the old selector.
+- **Landing:** a clicked row keeps its hover round the selector until the
+  selector lands on it.
+- **Pass:** with `crossGroup="glide"`, the selector glides between groups too.
+  It is clear over each group header it passes, soft at the edges.
+- **Group:** opening and shutting is the shared disclosure: the step for the
+  travel, a shut one step faster. The links wait 8px above and come down over
+  fast-02 once the body is half open. They hold still on the way out.
+- **Group bar:** when the group holding the current page is shut, the selector
+  leaves and a 2px bar marks the group's header. It comes in from half height,
+  opaque, on entrance-productive over fast-02. It goes back to 70% on
+  exit-productive over fast-01, fading as it ends.
+- **Arrival:** when the selector has nowhere to come from, as on a row that an
+  opening group reveals, it grows from 4px smaller, opaque, over fast-02 on
+  entrance-snap.
+- **Rail:** folding and unfolding is one motion. The width moves on
+  standard-productive, its duration from the distance, a fold one step faster.
+  The content holds still while the moving edge clips it under a soft edge.
+  Unfolding, the labels slide in from the icon gap on a clock one step longer
+  than the width's. Open groups fold on the same clock.
+- **Overlay:** with `expandOnHover`, the rail expands over the page after the
+  pointer rests on it for 250ms, and folds again when it leaves.
+- **Ghost container:** with `frame="ghost"`, an open group is a container that
+  grows out of its header's hover on the group's clock. Shutting, it shrinks
+  back to the row, then fades over fast-01. With `shadow`, it casts the cast
+  shadow, lit from the pointer. The shadow fades in as the container grows and
+  out as it shrinks.
+- **Still:** with `still`, or while there is a filter query, groups open and
+  shut at once, and the selector arrives and leaves at once. A move to a new
+  page still glides.
+- **First paint:** no motion. The groups that hold the current page mount open.
+
+## Reduced motion
+
+Within a group, the selector fades in at the new page while it fades out at the
+old one, at half the duration. A jump puts the selector at the new page at once.
+A group opens or shuts at once, and its links fade in on the reduced clock. The
+bar and the ghost container change at once. The rail's width changes at once and
+its labels only fade: out before a fold, in after an unfold.
+
+## Props
+
+<ArgTypes of={SideNavStories} />

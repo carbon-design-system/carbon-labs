@@ -1,0 +1,244 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/corners';
+
+/* Accordion — Accordion.tsx (its header lists the choices). The body, its
+   soft edge and the content's arrival are the disclosure's
+   (Disclosure/components/disclosure.scss). */
+
+.cds-accordion {
+  /* The row's height and its inline padding (v11's sizes; density normal). */
+  --cds-accordion-h: 40px;
+  --cds-accordion-pad: 1rem;
+
+  padding: 0;
+  margin: 0;
+  /* The content's end padding reads the accordion's width, not the page's. */
+  container-type: inline-size;
+
+  inline-size: 100%;
+  list-style: none;
+}
+
+.cds-accordion--sm {
+  --cds-accordion-h: 32px;
+}
+
+.cds-accordion--lg {
+  --cds-accordion-h: 48px;
+}
+
+/* ── rows: a hairline above each, and below the last (the kit's stroke) ── */
+
+.cds-accordion__item {
+  display: flex;
+  flex-direction: column;
+  border-block-start: 1px solid var(--cds-surface-rule);
+
+  &:last-child {
+    border-block-end: 1px solid var(--cds-surface-rule);
+  }
+}
+
+.cds-accordion__heading-level {
+  margin: 0;
+  font: inherit;
+}
+
+/* The heading's button: the title, then the chevron (align end). The kit
+   rollover, neutral: an even wash across the row (a glow at the cursor reads
+   as a spot in a long bar), and flush, so the row never grows past its
+   hairlines nor shrinks from them. */
+.cds-accordion__heading {
+  @include rollover($press-inset: 0);
+  @include type-style('body-01');
+
+  /* Fallbacks; the rollover solves matched-lightness steps off the page. */
+  --rollover-hover: #{theme.$layer-hover};
+  --rollover-flat: 1;
+
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  padding: 0 var(--cds-accordion-pad);
+  border: 0;
+  margin: 0;
+  background: none;
+  color: theme.$text-primary;
+  cursor: pointer;
+  inline-size: 100%;
+  min-block-size: var(--cds-accordion-h);
+  text-align: start;
+
+  &:focus {
+    outline: none;
+  }
+
+  /* Keyboard only (a click doesn't ring a button): the kit's ring, inside the row. */
+  &:focus-visible {
+    outline: 2px solid theme.$text-primary;
+    outline-offset: -2px;
+  }
+
+  &:disabled {
+    color: theme.$text-disabled;
+    cursor: not-allowed;
+  }
+}
+
+.cds-accordion__title {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  /* The row's padding; a title that wraps keeps it above and below. */
+  padding-block: calc((var(--cds-accordion-h) - 20px) / 2);
+}
+
+.cds-accordion__arrow {
+  display: inline-flex;
+  flex: none;
+  color: theme.$icon-primary;
+  margin-inline-start: var(--cds-accordion-pad);
+
+  .cds-accordion__heading:disabled & {
+    color: theme.$icon-disabled;
+  }
+}
+
+/* align start: the chevron first, the title one padding after it. */
+.cds-accordion--start .cds-accordion__arrow {
+  order: -1;
+  margin-inline: 0 var(--cds-accordion-pad);
+}
+
+/* ── content: under the title's text, a measure short of the row ───────── */
+
+.cds-accordion__content {
+  @include type-style('body-01');
+
+  box-sizing: border-box;
+  padding: 0.5rem var(--cds-accordion-pad) 1.5rem;
+  color: theme.$text-primary;
+
+  > p {
+    @include type-style('body-01');
+
+    margin: 0;
+  }
+
+  > p + p {
+    margin-block-start: 1rem;
+  }
+
+  @container (min-width: 480px) {
+    padding-inline-end: 3rem;
+  }
+
+  @container (min-width: 640px) {
+    padding-inline-end: 25%;
+  }
+}
+
+.cds-accordion--start .cds-accordion__content {
+  padding-inline-start: calc(2 * var(--cds-accordion-pad) + 1rem);
+}
+
+/* ── ghost (`frame="ghost"`): text 16px in, on the page's text; the wash and
+   hairlines one span, 8px outside it on 4px corners, 8px short of the box ── */
+
+.cds-accordion--ghost {
+  /* Where the wash and hairlines start: the padding less the inner 8px. */
+  --cds-accordion-ghost-in: 0.5rem;
+  --cds-accordion-ghost-edge: calc(
+    var(--cds-accordion-pad) - var(--cds-accordion-ghost-in)
+  );
+}
+
+.cds-accordion--ghost .cds-accordion__heading {
+  border-radius: corners.$row;
+  inline-size: calc(100% - 2 * var(--cds-accordion-ghost-edge));
+  margin-inline: var(--cds-accordion-ghost-edge);
+  padding-inline: var(--cds-accordion-ghost-in);
+}
+
+.cds-accordion--ghost .cds-accordion__item {
+  position: relative;
+  border-color: transparent;
+
+  &::before,
+  &:last-child::after {
+    position: absolute;
+    background: var(--cds-surface-rule);
+    block-size: 1px;
+    content: '';
+    inset-inline: var(--cds-accordion-ghost-edge);
+    pointer-events: none;
+  }
+
+  &::before {
+    inset-block-start: -1px;
+  }
+
+  &:last-child::after {
+    inset-block-end: -1px;
+  }
+}
+
+/* ── corners (`corners`, Accordion.tsx): square by default (v11). Rounded:
+   8px on the box, its hairlines a closed box (each item's sides too, so the
+   corners never end in a curl); the first heading's top and a shut
+   last heading's bottom sit 1px in, under them, so they take 8 − 1: their
+   wash and their focus ring follow the corner. Ghost rows already stand in
+   on their own 4px, so only the box changes there ─────────────────────── */
+
+.cds-accordion--rounded {
+  --cds-accordion-radius: #{corners.$in};
+  // @carbon-explore radius-concentric — An inner part's radius is the outer radius less its inset, never below 0. TBD
+  --cds-accordion-inner-radius: #{corners.inner(
+      var(--cds-accordion-radius),
+      1px
+    )};
+
+  border-radius: var(--cds-accordion-radius);
+}
+
+.cds-accordion--rounded:not(.cds-accordion--ghost) {
+  > .cds-accordion__item {
+    border-inline: 1px solid var(--cds-surface-rule);
+  }
+
+  > .cds-accordion__item:first-child {
+    border-start-end-radius: var(--cds-accordion-radius);
+    border-start-start-radius: var(--cds-accordion-radius);
+
+    > .cds-accordion__heading-level > .cds-accordion__heading {
+      border-start-end-radius: var(--cds-accordion-inner-radius);
+      border-start-start-radius: var(--cds-accordion-inner-radius);
+    }
+  }
+
+  > .cds-accordion__item:last-child {
+    border-end-end-radius: var(--cds-accordion-radius);
+    border-end-start-radius: var(--cds-accordion-radius);
+
+    > .cds-accordion__heading-level
+      > .cds-accordion__heading[aria-expanded='false'] {
+      border-end-end-radius: var(--cds-accordion-inner-radius);
+      border-end-start-radius: var(--cds-accordion-inner-radius);
+    }
+  }
+}
+
+@media (forced-colors: active) {
+  .cds-accordion__heading:focus-visible {
+    outline-color: Highlight;
+  }
+}

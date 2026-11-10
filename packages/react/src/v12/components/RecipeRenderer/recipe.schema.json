@@ -1,0 +1,254 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/carbon-design-system/carbon-labs/packages/react/src/v12/components/RecipeRenderer/recipe.schema.json",
+  "title": "Carbon recipe",
+  "description": "A layout, flow, widget or draft pattern written as data: a tree of real Carbon and labs components, placed on Carbon's grid and spaced with Carbon's spacing tokens, with no literal values. Rendered by @carbon-labs/react-recipe-renderer and checked by recipe-lint. Every field below says why it exists; a field that cannot say so does not belong here.",
+  "type": "object",
+  "required": ["$schema", "name", "kind", "status", "description", "meta"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "description": "Points at this file, so an editor validates and completes a recipe as it is written. Recipes in the renderer package use \"../recipe.schema.json\".",
+      "type": "string",
+      "pattern": "recipe\\.schema\\.json$"
+    },
+    "name": {
+      "description": "The recipe's identity for tooling: the file is <name>.recipe.json, the story is named from it, and the registry of recipes is keyed by it.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+    },
+    "kind": {
+      "description": "Which building-* recipe governs it, and therefore which rubric a review applies. A flow has steps; every other kind has a tree. pattern-draft is a pattern still evolving as data before it is built as a labs component (building-patterns).",
+      "enum": ["layout", "flow", "widget", "pattern-draft"]
+    },
+    "status": {
+      "description": "The labs lifecycle, as a component's package.json labs.status carries it. preview means a person has reviewed the recipe against the rubric; nothing self-promotes.",
+      "enum": ["draft", "preview"]
+    },
+    "description": {
+      "description": "One or two sentences a person reads in Storybook. What the screen is for, not what is on it.",
+      "type": "string",
+      "minLength": 1
+    },
+    "meta": {
+      "$ref": "#/$defs/meta"
+    },
+    "tree": {
+      "description": "The composition, for every kind but flow.",
+      "$ref": "#/$defs/node"
+    },
+    "steps": {
+      "description": "A flow's screens, one at a time. The first step is where the flow starts.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/step"
+      }
+    }
+  },
+  "if": {
+    "properties": {
+      "kind": {
+        "const": "flow"
+      }
+    }
+  },
+  "then": {
+    "required": ["steps"],
+    "not": {
+      "required": ["tree"]
+    }
+  },
+  "else": {
+    "required": ["tree"],
+    "not": {
+      "required": ["steps"]
+    }
+  },
+  "$defs": {
+    "meta": {
+      "description": "Borrowed from writing-metadata so a recipe is SELECTABLE: an agent or an MCP client chooses a recipe the way it chooses a component, by intent and useWhen, and is stopped by preferInstead. Only the three selection fields; the rest of the object metadata (checks, divergence, a11y) belongs to components.",
+      "type": "object",
+      "required": ["intent", "useWhen"],
+      "additionalProperties": false,
+      "properties": {
+        "intent": {
+          "description": "One sentence naming what the user gets, not what is drawn.",
+          "type": "string",
+          "minLength": 1
+        },
+        "useWhen": {
+          "description": "The conditions that select this recipe.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "preferInstead": {
+          "description": "The better answer and when it is better. The field that catches the plausible choice.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["when", "use", "because"],
+            "additionalProperties": false,
+            "properties": {
+              "when": {
+                "type": "string",
+                "minLength": 1
+              },
+              "use": {
+                "type": "string",
+                "minLength": 1
+              },
+              "because": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "node": {
+      "description": "One real component.",
+      "type": "object",
+      "required": ["component"],
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "description": "\"<package>:<Export>\" \u2014 the package a person would import from and the name it exports. A preview namespace member is written \"@carbon/react:preview__Dialog.Dialog\". recipe-lint resolves it against the installed package; the renderer looks it up in an explicit registry.",
+          "type": "string",
+          "pattern": "^(@[a-z0-9-]+/)?[a-z0-9-]+:[A-Za-z_$][A-Za-z0-9_$]*(\\.[A-Za-z_$][A-Za-z0-9_$]*)?$"
+        },
+        "props": {
+          "description": "The component's props, as JSON. Text content is props.children. A handler is { \"$event\": \"<name>\" }, which the renderer turns into a function that raises that event. style and className are refused: a recipe adds no styling of its own.",
+          "type": "object"
+        },
+        "slot": {
+          "description": "Render this node into the parent's prop of this name instead of its children \u2014 for the Carbon props that take a node (a Tile's title, a notification's actions).",
+          "type": "string",
+          "pattern": "^[a-z][A-Za-z0-9]*$"
+        },
+        "grid": {
+          "description": "Place this node in a Carbon Column of the parent Grid. Spans per breakpoint, in Carbon's column counts (sm 4, md 8, lg/xlg/max 16).",
+          "type": "object",
+          "required": ["span"],
+          "additionalProperties": false,
+          "properties": {
+            "span": {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": false,
+              "properties": {
+                "sm": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 4
+                },
+                "md": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 8
+                },
+                "lg": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 16
+                },
+                "xlg": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 16
+                },
+                "max": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 16
+                }
+              }
+            }
+          }
+        },
+        "gap": {
+          "description": "Space between this node's children, as a Carbon spacing token. Rendered by Carbon's own Stack (gap 5 is $spacing-05), so the recipe adds no CSS for it.",
+          "$ref": "#/$defs/spacingToken"
+        },
+        "padding": {
+          "description": "Space inside this node, as a Carbon spacing token. Rendered as a wrapper whose padding is that $spacing token.",
+          "$ref": "#/$defs/spacingToken"
+        },
+        "paddingBlock": {
+          "description": "Space above and below inside this node, as a Carbon spacing token, over `padding` on the block axis. A header is 8 above and below and 16 at the sides; one token for all four sides cannot say that.",
+          "$ref": "#/$defs/spacingToken"
+        },
+        "paddingInline": {
+          "description": "Space at the start and end inside this node, as a Carbon spacing token, over `padding` on the inline axis.",
+          "$ref": "#/$defs/spacingToken"
+        },
+        "radius": {
+          "description": "This node's corner radius, as a Carbon border-radius token. It goes on the component's own element, not a wrapper, because the radius must cut the surface the component paints. The design law assigns a rung per role (ibm-design-rules \u203a shape.md): containers 8, modals 16, fields 6, controls full \u2014 a container left square has left the ladder.",
+          "$ref": "#/$defs/radiusToken"
+        },
+        "fill": {
+          "description": "Make this node fill what it sits in, for the one case a recipe cannot express with spacing: a shell that must occupy the screen. \"viewport\" is the screen's height, \"parent\" is the height of the node above, and \"scroll\" is the node that absorbs the overflow \u2014 it takes the space its siblings leave and scrolls its own content, so a long transcript scrolls inside the shell instead of pushing the composer off the screen. A filling shell needs exactly one scroller on each branch that can overflow. Height only \u2014 width already fills, and a recipe never sets a width.",
+          "enum": ["viewport", "parent", "scroll"]
+        },
+        "measure": {
+          "description": "Cap this node at a named reading measure and centre it. A recipe names the role, never a number, so the column a person reads is one decision in one place: the transcript, the composer, the traces and the notices all take the same measure instead of each carrying a width. \"reading\" is the chat reading column. Inline only \u2014 a recipe never sets a height, and `fill` is what answers that question.",
+          "enum": ["reading"]
+        },
+        "theme": {
+          "description": "Put this node, and everything in it, in a polarity named by ROLE rather than by name, so one recipe is both the light screen and the dark one. \"chrome\" is the shell \u2014 the rail, the top band, the docked toolbar \u2014 which is dark in both polarities, as Carbon's own UI Shell is: chrome does not follow the theme, it frames whatever does. \"page\" is the work surface, which does follow it: a light card inside the chrome on a light page, and a dark one on a dark page. Use this instead of naming @carbon/react:Theme with an absolute theme: that pins the screen to one polarity and the other one stops existing.",
+          "enum": ["page", "chrome"]
+        },
+        "surface": {
+          "description": "Which elevation this node rests on, inside whatever polarity it is in \u2014 the rung, where `theme` is the polarity. \"base\" is the content canvas and \"raised\" is a card or panel one step up, painted with Carbon's own layer token so the step is Carbon's and not a value written here. A rung is static: a component knows it when it is written, so this is never resolved from runtime context. Pair it with `radius`, which cuts the surface this paints.",
+          "enum": ["base", "raised"]
+        },
+        "children": {
+          "description": "Nodes rendered inside this one, in order.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/node"
+          }
+        }
+      }
+    },
+    "step": {
+      "description": "One screen of a flow, and where each of its events goes.",
+      "type": "object",
+      "required": ["id", "screen"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "The step's name, which on targets point at.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+        },
+        "screen": {
+          "$ref": "#/$defs/node"
+        },
+        "on": {
+          "description": "event name -> the id of the step it moves to. A step with no on is terminal.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+          }
+        }
+      }
+    },
+    "spacingToken": {
+      "description": "A Carbon spacing token name, exactly as @carbon/layout names it (spacing-01 \u2026 spacing-13). recipe-lint checks it exists in the installed @carbon/layout.",
+      "type": "string",
+      "pattern": "^spacing-[0-9]{2}$"
+    },
+    "radiusToken": {
+      "description": "A Carbon border-radius token name, exactly as @carbon/layout names it (border-radius-00 \u2026 border-radius-24, border-radius-max). recipe-lint checks it exists in the installed @carbon/layout, so the ladder is Carbon's and no radius is written here.",
+      "type": "string",
+      "pattern": "^border-radius-([0-9]{2}|max)$"
+    }
+  }
+}

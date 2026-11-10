@@ -1,0 +1,389 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/themes';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/cast-shadow-floating';
+
+/* ContextualBar — `ContextualBar.tsx`. The dock: sticky under the header,
+   8px clear of it and of its container's edge, the bar floating on the
+   floating surfaces' cast shadow: content scrolling behind goes under the
+   bar, not into a page-colored fill and soft edge, which would hide its
+   container's line above it). Its room is its own: 8px above and below
+   the bar, no negative margins. Only the bar takes the pointer. */
+.cds-contextual-bar {
+  position: sticky;
+  z-index: 10;
+  /* Never wider than its column, so it never breaks the layout: its content
+     wraps instead. */
+  box-sizing: border-box;
+  inset-block-start: calc(var(--cds-contextual-bar-top, 3rem) + #{$spacing-03});
+  margin-block: $spacing-03;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  pointer-events: none;
+}
+
+/* The soft edge round a bar over content, what's around it going to 0%
+   opacity like the soft edge: its
+   container's mask, written by ContextualBar.tsx — the container's top edge
+   (`-keep`, its border) as it is; above the bar, nothing (what has passed
+   behind it); the bar; below it, the soft edge (`--cds-motion-soft-edge`,
+   16px) from nothing to all. A mask, not a fill: nothing is painted over the
+   container's lines. Each side's strength is the room's
+   (`--cds-contextual-bar-fade`, moved as it opens and leaves) times its own
+   (`-above`, `-below`: inline, how far it has been carried, up to the soft
+   edge's width; an overlay's below, always all).
+
+   Three layers (under the scroll's edges, below): the band; the bar's box taken out of it, whatever the
+   strength, between its surface's top and bottom edges (followed while it
+   unfolds and folds away, so what's past the moving edge shows and nothing
+   shows beside it; a bar rising from its bottom edge has the soft edge
+   above its top edge too, `-rise`, min(16px, h, H − h), 0 at rest and
+   unfolding down); and the bar added back to its rounded outline as it is now
+   (`-shape`, its surface), so nothing ever shows beside its corners.
+
+   Between its box's top (`-box`) and its surface's top edge, rising or
+   folding down, what it is coming over or has uncovered shows as it is, up
+   to the soft edge riding that edge; an overlay's band and soft edge below
+   hold full strength (`-held`), the soft edge no deeper than the surface is
+   tall (`-soft`), so the rows it covers come back in step with the fold,
+   never at mixed opacity round its last sliver. */
+@property --cds-contextual-bar-fade {
+  inherits: false;
+  initial-value: 0;
+  syntax: '<number>';
+}
+
+[data-cds-contextual-bar-fade] {
+  --cds-contextual-bar-gone-above: rgb(
+    0 0 0 /
+      calc(
+        1 - var(--cds-contextual-bar-fade) *
+          var(--cds-contextual-bar-fade-above, 1)
+      )
+  );
+  --cds-contextual-bar-gone-below: rgb(
+    0 0 0 /
+      calc(
+        1 - var(
+            --cds-contextual-bar-fade-held,
+            var(--cds-contextual-bar-fade)
+          ) *
+          var(--cds-contextual-bar-fade-below, 1)
+      )
+  );
+
+  mask-composite: intersect, intersect, add, subtract, add;
+
+  /* Over all of it, the scroll's soft edges when its container is a
+     Scroller's viewport (scroller.scss's `--cds-scroll-edge-mask`, two layers,
+     intersected; all shown elsewhere): this mask replaces the viewport's own,
+     so the edges are kept in it: a list's bottom soft edge stays when
+     a checkbox is selected. A
+     side the bar is stuck to has none (softEdge.ts), so the bar is never cut. */
+  mask-image:
+    var(
+      --cds-scroll-edge-mask,
+      linear-gradient(#000000, #000000),
+      linear-gradient(#000000, #000000)
+    ),
+    var(--cds-contextual-bar-fade-shape, none),
+    linear-gradient(
+      to bottom,
+      #000000 var(--cds-contextual-bar-fade-keep, 0px),
+      var(--cds-contextual-bar-gone-above)
+        var(--cds-contextual-bar-fade-keep, 0px),
+      var(--cds-contextual-bar-gone-above)
+        var(--cds-contextual-bar-fade-box, var(--cds-contextual-bar-fade-top)),
+      #000000
+        var(--cds-contextual-bar-fade-box, var(--cds-contextual-bar-fade-top)),
+      #000000
+        calc(
+          var(--cds-contextual-bar-fade-top) - var(
+              --cds-contextual-bar-fade-rise,
+              0px
+            )
+        ),
+      var(--cds-contextual-bar-gone-below) var(--cds-contextual-bar-fade-top),
+      var(--cds-contextual-bar-gone-below) var(--cds-contextual-bar-fade-bottom),
+      #000000
+        calc(
+          var(--cds-contextual-bar-fade-bottom) +
+            var(
+              --cds-contextual-bar-fade-soft,
+              var(--cds-motion-soft-edge, 16px)
+            )
+        )
+    ),
+    linear-gradient(#000000, #000000);
+  mask-position:
+    0 0,
+    0 0,
+    var(--cds-contextual-bar-fade-sx, 0) var(--cds-contextual-bar-fade-sy, 0),
+    0 0,
+    var(--cds-contextual-bar-fade-x, 0) var(--cds-contextual-bar-fade-y, 0);
+  mask-repeat: no-repeat;
+  mask-size:
+    100% 100%,
+    100% 100%,
+    var(--cds-contextual-bar-fade-sw, 0) var(--cds-contextual-bar-fade-sh, 0),
+    100% 100%,
+    var(--cds-contextual-bar-fade-w, 0) var(--cds-contextual-bar-fade-h, 0);
+}
+
+/* The cast shadow's host (`shadow`, off by default; the floating surfaces'
+   shadow, drawn just before the bar): in the dock where the bar is. Its own rule fixes it to the
+   window, for a menu placed there; the bar is in the flow (or hangs from
+   the dock's line), sticky with the dock. */
+.cds-contextual-bar > .cast-floating {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+}
+
+/* In a toolbar row's place (`placement="toolbar"`, a table's batch
+   actions): the dock lies over its positioned container's first line,
+   centred on it (`--cds-contextual-bar-line`, the row's line height; default
+   the bar's own 48px, a 48px row), not sticky, no margins, taking no room,
+   so neither the row nor what's below it ever moves with the bar. It takes
+   the row's place: while the bar is there (open, and while it folds away)
+   what else is in the row is hidden — out of sight, out of the tab order —
+   so only the bar's one surface shows as it grows, never the row's fields
+   round the part of the bar not drawn yet. */
+.cds-contextual-bar--toolbar {
+  position: absolute;
+  margin: 0;
+  inset-block-start: calc(var(--cds-contextual-bar-line, 3rem) / 2);
+  inset-inline: 0;
+  translate: 0 -50%;
+}
+
+/* The row is marked by ContextualBar (`data-cds-contextual-bar-toolbar` on the
+   dock's parent while the dock is in it), never found with a bare
+   `:has(> .cds-contextual-bar--toolbar)`: a `:has()` with nothing of its own
+   is tested on every element of the page, and then every change any `:has()`
+   reads (each hover, focus and selection write) restyled the whole page. */
+[data-cds-contextual-bar-toolbar] > :not(.cds-contextual-bar) {
+  visibility: hidden;
+}
+
+/* Overlay: over the content at the same place, taking no room — the dock
+   is a line (no height, no margins), and the bar hangs from it where it
+   would sit in the flow. A floating surface: no page fill under it. */
+.cds-contextual-bar--overlay {
+  block-size: 0;
+  margin-block: 0;
+
+  > .cds-contextual-bar__bar {
+    /* A pill: a floating thing, not a band of the page. Its controls step
+       down from it too: pills. */
+    --cds-contextual-bar-radius: 999px;
+    --cds-contextual-bar-pad: #{$spacing-06};
+
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+  }
+}
+
+.cds-contextual-bar__bar {
+  /* The bar's corner, the inset its controls sit at, and their corners
+     stepped down from it, concentric, as elsewhere: the bar's less the
+     inset, never under the kit's 2px, whatever corners a control has. */
+  --cds-contextual-bar-radius: 8px;
+  --cds-contextual-bar-inset: #{$spacing-03};
+  --cds-contextual-bar-pad: #{$spacing-05};
+  --cds-contextual-bar-inner-radius: max(
+    2px,
+    calc(var(--cds-contextual-bar-radius) - var(--cds-contextual-bar-inset))
+  );
+
+  position: relative;
+  isolation: isolate;
+  pointer-events: auto;
+
+  /* A control with a surface of its own (filled, outlined) steps down from
+     the bar, concentric. A ghost control has none: its hover is its shape,
+     and it is full round, as every ghost hover is, never the bar's 2px
+     step (its 8px less its 8px inset). */
+  .cds-btn {
+    --btn-radius: var(--cds-contextual-bar-inner-radius);
+  }
+
+  .cds-icon-btn {
+    --icon-btn-radius: var(--cds-contextual-bar-inner-radius);
+  }
+
+  .cds-btn--ghost,
+  .cds-btn--danger--ghost {
+    --btn-radius: 999px;
+  }
+
+  .cds-icon-btn--ghost,
+  .cds-icon-btn--danger--ghost {
+    --icon-btn-radius: 999px;
+  }
+
+  /* A selector's track takes the step; its selector steps down again inside it. A pill track
+     (`corners="full"`) stays a pill, as the ghost controls' hovers stay round. */
+  .sel:not(.sel--full, .sel--round) {
+    --sel-track-radius: var(--cds-contextual-bar-inner-radius);
+    --sel-radius: max(2px, calc(var(--sel-track-radius) - var(--sel-inset)));
+  }
+}
+
+/* Its content, two layers (ContextualBar.tsx): the snap's content layer,
+   held still while the bar unfolds and folds away, its soft edge's mask on
+   it, the bar's inset inside it (so the row moves within it, never past its
+   box); and the row in it, which moves with the opening ("Expanding content
+   moves with the opening": it waits 8px up and comes down from half the
+   bar's clock) and lays the content out. */
+.cds-contextual-bar__content {
+  padding: var(--cds-contextual-bar-inset) var(--cds-contextual-bar-pad);
+}
+
+.cds-contextual-bar__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $spacing-03 $spacing-05;
+
+  > * {
+    max-inline-size: 100%;
+    min-inline-size: 0;
+  }
+}
+
+/* The bar's surface, what the snap's container clips. Tonal: one step off its
+   backdrop (`tonalFill`; the quiet fill until read) and the status hairline. */
+.cds-contextual-bar__frame {
+  position: absolute;
+  z-index: -1;
+  border-radius: var(--cds-contextual-bar-radius);
+  background: var(
+    --cds-contextual-bar-fill,
+    var(--cds-surface, #{theme.$layer-01})
+  );
+  box-shadow: inset 0 0 0 var(--cds-contextual-bar-edge-w, 1px)
+    var(
+      --cds-contextual-bar-edge,
+      var(--cds-surface-divider, #{theme.$border-subtle-01})
+    );
+  inset: 0;
+}
+
+/* Inverse: the page's opposite theme on the bar and everything in it
+   (ContextualBar.tsx reads the page's), its background the fill. */
+/* What a surface round it solved (a workspace's fields and tracks) doesn't reach in. */
+.cds-contextual-bar__bar[data-inverse] {
+  --cds-field-fill: initial;
+  --cds-surface-track: initial;
+}
+
+@each $name, $t,
+  $base in ('dark' themes.$g100 #0b0b0b, 'light' themes.$white #fafafa)
+{
+  /* Over the theme class the bar also carries (`invert`): one rule, whatever order the chunks load in;
+     its base the page bases' (styles/_surface.scss). */
+  .cds-contextual-bar__bar[data-inverse='#{$name}'][class] {
+    @include theme.theme($t);
+    --cds-background: #{$base};
+
+    /* Light: the field and its hairline as the page's, re-solved for its base (styles/_surface.scss). */
+    @if $name == 'light' {
+      --cds-field: #efefef;
+      --cds-field-01: #efefef;
+      --cds-border-subtle: #dadada;
+      --cds-border-subtle-01: #dadada;
+    }
+
+    color: theme.$text-primary;
+
+    > .cds-contextual-bar__frame {
+      /* With a status, the fill takes it, solved so the text holds AA on
+         it (ContextualBar.tsx, `tone`). */
+      background: var(--cds-contextual-bar-fill, #{theme.$background});
+      box-shadow: inset
+        0
+        0
+        0
+        var(--cds-contextual-bar-edge-w, 1px)
+        var(--cds-contextual-bar-edge, #{theme.$border-subtle-01});
+    }
+  }
+}
+
+/* A status: the outline in its color, as a notification's (in the bar's own
+   theme, so an inverse bar takes the color made for its fill). These are the
+   first paint's; ContextualBar.tsx solves them for the surface (`tone`): on
+   tonal the outline at 3:1 against the fill, on inverse the fill itself. */
+$kinds: (
+  error: theme.$support-error,
+  success: theme.$support-success,
+  warning: theme.$support-warning,
+  warning-alt: theme.$support-warning,
+  info: theme.$support-info,
+  info-square: theme.$support-info,
+);
+
+@each $kind, $color in $kinds {
+  .cds-contextual-bar__bar[data-kind='#{$kind}'] {
+    --cds-contextual-bar-edge: #{$color};
+  }
+}
+
+/* ── parts ─────────────────────────────────────────────────────────────── */
+
+/* Count: the number (and its label), each a RollText. */
+.cds-contextual-bar__count {
+  @include type-style('heading-compact-01');
+
+  white-space: nowrap;
+}
+
+/* Swap: the content now in the flow, the content leaving laid over it at its
+   start until it has gone; the box's width glides between theirs. */
+.cds-contextual-bar__swap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+
+  /* While it swaps (ContextualBar.tsx): a window, sideways only — at rest
+     nothing in it (a tooltip, a focus ring) is clipped. */
+  &[data-swapping] {
+    overflow-clip-margin: 2px;
+    overflow-x: clip;
+  }
+}
+
+/* In a toolbar, only the actions that change in it move: its controls keep the toolbar's gap. */
+[role='toolbar'] .cds-contextual-bar__swap {
+  gap: var(--cds-tb-gap, 4px);
+}
+
+.cds-contextual-bar__layer {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: inherit;
+}
+
+.cds-contextual-bar__layer--out {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 0;
+  pointer-events: none;
+  translate: 0 -50%;
+}
+
+/* A status's outline is 2px, twice the neutral hairline. */
+.cds-contextual-bar__bar[data-kind] {
+  --cds-contextual-bar-edge-w: 2px;
+}

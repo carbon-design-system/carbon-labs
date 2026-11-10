@@ -1,0 +1,251 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/cast-shadow';
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/text-pairs';
+
+/* Card — Card.tsx (its header lists the choices). On the kit's tile: its
+   surface, corners and padding (tile/tile.scss), its quiet rollover, and the
+   kit's cast shadow (styles/_cast-shadow.scss) on a card that's a control. */
+
+$_surface: var(--cds-surface, #{theme.$layer-01});
+$_radius: 8px;
+$_pad: 1rem;
+
+.cds-kit-card {
+  @include type-style('body-compact-01');
+  @include surface.fields-on-surface;
+
+  /* The surface the card body's ghost selection stands on. */
+  --sel-ghost-page: #{$_surface};
+
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  border-radius: $_radius;
+  color: theme.$text-primary;
+  min-inline-size: 0;
+  text-align: start;
+}
+
+.cds-kit-card--static {
+  background: $_surface;
+}
+
+/* A control: the rollover behind the content (its own layer, opaque, so
+   the cast shadow sits under it), and the cast shadow, lit from the
+   pointer, drawn in on press. */
+.cds-kit-card--clickable {
+  @include rollover;
+  @include cast-shadow.cast-shadow;
+  --rollover-rest: #{$_surface};
+  /* Fallbacks; the rollover solves the tiles' quiet steps off the surface. */
+  // @carbon-explore hover-tint — Hover and press as a share of the text colour mixed into the fill. TBD
+  --rollover-hover: color-mix(
+    in srgb,
+    var(--cds-text-primary, #161616) 4%,
+    #{$_surface}
+  );
+  --rollover-press: color-mix(
+    in srgb,
+    var(--cds-text-primary, #161616) 8%,
+    #{$_surface}
+  );
+
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid theme.$text-primary;
+    outline-offset: 2px;
+  }
+
+  /* A control in it hovered or pressed: the card yields (the rollover's
+     rule for a surface with controls in it, styles/_rollover.scss NESTED
+     CONTROLS), and its cast shadow steps back with its hover. Its controls
+     never take the card's colours (the rollover's tokens are contained). */
+  &:has(#{$rollover-nested-engaged}) > [data-cast-layer] {
+    opacity: 0;
+  }
+}
+
+/* Click zones two and three: outside the zone a click does nothing, so the
+   hover goes back to rest while the pointer is there (the zone's outside is
+   `data-rollover-nested`: the same rule, as the ExpandableTile's opened
+   part), and the cursor is the page's. */
+.cds-kit-card--zone-two,
+.cds-kit-card--zone-three {
+  [data-rollover-nested] {
+    cursor: auto;
+  }
+}
+
+/* ── media (ExpressiveCard) ───────────────────────────────────────────── */
+
+.cds-kit-card__media {
+  overflow: hidden;
+  flex: none;
+  border-start-end-radius: $_radius;
+  /* The card's corners on its outer side; square against the content. */
+  border-start-start-radius: $_radius;
+
+  > * {
+    display: block;
+    inline-size: 100%;
+  }
+}
+
+.cds-kit-card--media-start {
+  flex-direction: row;
+
+  > .cds-kit-card__media {
+    border-end-start-radius: $_radius;
+    border-start-end-radius: 0;
+    inline-size: 40%;
+
+    > * {
+      block-size: 100%;
+    }
+  }
+}
+
+/* ── content ──────────────────────────────────────────────────────────── */
+
+.cds-kit-card__main {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: $_pad;
+  gap: 1rem;
+  min-inline-size: 0;
+}
+
+.cds-kit-card__header-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.cds-kit-card__header {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.cds-kit-card__header-actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 0.5rem;
+  /* The icon buttons' 32px on the title's line. */
+  margin-block: -0.4375rem 0;
+  margin-inline-end: -0.5rem;
+}
+
+.cds-kit-card__pictogram {
+  display: inline-flex;
+  color: theme.$icon-primary;
+  margin-block-end: 1rem;
+
+  svg {
+    block-size: 48px;
+    inline-size: 48px;
+  }
+}
+
+.cds-kit-card__label {
+  @include type-style('label-01');
+
+  margin: 0 0 0.25rem;
+  color: theme.$text-secondary;
+}
+
+.cds-kit-card__title {
+  @include type-style('heading-compact-02');
+
+  margin: 0;
+  color: theme.$text-primary;
+}
+
+.cds-kit-card--expressive .cds-kit-card__title {
+  @include type-style('heading-03');
+}
+
+.cds-kit-card--title-large .cds-kit-card__title {
+  @include type-style('heading-03');
+}
+
+.cds-kit-card__description {
+  /* The kit's title → summary pair (styles/_text-pairs.scss). */
+  @include text-pairs.summary;
+
+  margin: text-pairs.$title-to-summary 0 0;
+}
+
+.cds-kit-card__body {
+  @include type-style('body-01');
+
+  flex: 1 1 auto;
+  color: theme.$text-primary;
+  min-inline-size: 0;
+
+  > p {
+    margin: 0;
+  }
+}
+
+.cds-kit-card__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
+}
+
+.cds-kit-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-block-start: auto;
+
+  > .cds-kit-card__actions {
+    margin-inline-start: -0.5rem;
+  }
+}
+
+.cds-kit-card__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-inline-start: auto;
+}
+
+/* A ghost button at the footer's end lines its label up with the content's. */
+.cds-kit-card--productive .cds-kit-card__buttons {
+  margin-inline-end: -0.5rem;
+}
+
+/* Reduced motion: the shadow's strength at once (the rollover has its own). */
+@media (prefers-reduced-motion: reduce) {
+  .cds-kit-card--clickable > [data-cast-layer] {
+    transition-duration: var(--cds-motion-duration-floor);
+  }
+}
+
+@media (forced-colors: active) {
+  .cds-kit-card {
+    border: 1px solid CanvasText;
+  }
+}

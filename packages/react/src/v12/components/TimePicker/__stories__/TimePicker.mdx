@@ -1,0 +1,53 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TimePickerStories from './TimePicker.stories.tsx';
+
+<Meta of={TimePickerStories} />
+
+# TimePicker
+
+Carbon's TimePicker on the kit's text field: a short field for the time
+(`hh:mm`) and its selects beside it, under one label, over one message line.
+`TimePicker` takes Carbon's props, including `warning` and `warningText`. Its
+children are `TimePickerSelect`s, native `<select>`s for AM / PM or a time zone.
+They take the picker's size, its `disabled` unless they set their own, and its
+`readOnly`, which holds their value.
+
+<Canvas of={TimePickerStories.Default} />
+
+<Canvas of={TimePickerStories.Validation} />
+
+<Canvas of={TimePickerStories.StatusChange} />
+
+<Canvas of={TimePickerStories.States} />
+
+<Canvas of={TimePickerStories.Sizes} />
+
+<Canvas of={TimePickerStories.Corners} />
+
+## Motion
+
+- **Outline ladder:** the text input's, on the field and on each select. Hover
+  moves the hairline halfway to `$border-strong` on fast-02, a press steps it to
+  `$border-strong` at once, and focus is the accent at 2px. Leaving takes
+  fast-01.
+- **Error border:** the text input's: an error settles in once.
+- **Message line:** warning and error share one line and swap in place, out then
+  in.
+- **Status mark:** the text input's. A change is the content swap: the old mark
+  leaves, then the new one arrives. A status shows at once, with no wait for a
+  pause in typing.
+- **Field width:** the field widens for the status mark at once as a status
+  shows. When it goes, the field keeps its width for fast-01, then narrows.
+- **Icon hover:** each select is its chevron's icon frame, so the chevron's
+  motion plays on the select's hover.
+
+The selects' lists are the platform's own, with no motion of ours.
+
+## Reduced motion
+
+The outline and the error border change on half of fast-01. The message line and
+the status mark change at once.
+
+## Props
+
+<ArgTypes of={TimePickerStories} />

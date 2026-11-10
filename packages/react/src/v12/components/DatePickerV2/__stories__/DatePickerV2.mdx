@@ -1,0 +1,76 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as DatePickerStories from './DatePickerV2.stories.tsx';
+
+<Meta of={DatePickerStories} />
+
+# Date picker and time picker
+
+A date field that opens the kit's own calendar, simple, single or range, and a time field with native selects. Parts: `DatePicker`, `DatePickerInput`, `Calendar`, `DatePickerSkeleton`, `TimePicker`, `TimePickerSelect`.
+
+<Canvas of={DatePickerStories.Default} />
+
+## Motion
+
+| Pattern | Where | Values |
+| --- | --- | --- |
+| Snap, floating profile | The calendar's surface | `snapProfileFor('popover')`: from the press on the field, or its centre from the keyboard; folds back into it on close. |
+| Selection, hero | The picked day | Each month page is a selection root. A first pick grows in, 4px smaller to full over fast-02; later single picks glide by travel, 40–160ms. |
+| Range ends | A range | Nothing glides: each end arrives where it is picked; the other end is painted still in the marker's colours. |
+| Band | Between a range's ends | A tint of the blue into the gaps, rounded at a week's ends. The preview follows at half strength; picking the end firms it on fast-02. |
+| Rollover | Days, month arrows | Press shrink, no hover expand. In-range days: a blue-contrast tint, hover only. Today: a 1px stroke that grows and presses with the hover. |
+| Today picked | The selector on today | A 2px `$border-inverse` ring just outside it, 6px corner; in on fast-02, out on fast-01. |
+| Tooltip | A marked day | The kit's Tooltip: the first snaps in, the next blink. Hidden during a range drag. |
+| Content swap | A month change | Old days leave 8px and fade, fast-01; new ones come from 8px on the side of travel, fast-02. |
+| Roll | The month's name | `RollText`, horizontal, as the days move; the year stays. |
+| Reduced motion | All | The snap there or gone; the swap a snap; ends fade in place; band and ring on the half clock; tooltips blink. |
+
+`timeScale` reaches the snap, the marker, the swap and RollText.
+
+## Props beyond Carbon's
+
+| Prop | What it does |
+| --- | --- |
+| `markedDates` | Events, `{ date, kind, label }[]`: up to three status pips under a day, most severe first. |
+| `shadow` | The calendar's cast shadow: true, an elevation, or the kit's. Default none. |
+| `timeScale` | Slow motion. Default 1. |
+| `corners` | On DatePickerInput and TimePicker: rounded, full or square. Default rounded. |
+| `size` | On the inputs, TimePicker and its selects: xs, the kit's 24px field, besides Carbon's. |
+
+Names, defaults, formats and keys are `@carbon/react`'s.
+
+### Keyboard and ARIA
+
+- An input has `aria-haspopup="dialog"`, `aria-expanded` and, while open,
+  `aria-controls`. Focus or a click opens; read-only never opens.
+- Typing a date and Enter, or leaving, sets it. An empty field clears;
+  text that isn't a date stays as typed and changes nothing.
+- Tab moves into the calendar: the picked day, else today, else the first
+  pickable day. From a range's start with no end, Tab goes to the end input.
+- The calendar is a `dialog` with a `grid` of roving `gridcell` days, each
+  with `aria-selected`, `aria-disabled`, `aria-current` and its full date.
+- Arrows a day or a week; Ctrl+arrows a month or a year; Page Up and Down a
+  month, with Shift a year; Home and End the week's ends. Disabled days are
+  skipped. Enter or Space picks; Escape closes.
+- A marked day's name adds its events; the pips are `aria-hidden`.
+
+### Range by the pointer
+
+- Click a start, then an end; or press, drag and release. A drag on a
+  finished range's end moves it.
+- Held for slow-02 on the arrows, past the grid's side or on an outside day,
+  a drag turns the month. Escape mid-drag restores the dates. Touch waits
+  200ms still.
+- A press in the calendar keeps focus in the field.
+
+### Look
+
+- The inputs and time field are the text input's field; a TimePickerSelect
+  has the ladder on its own box.
+- The month is always six weeks: 36px days on a 4px gap.
+- Selection is hero: `$button-primary` under white, the
+  `$border-interactive` rim. Hover stays neutral.
+- The band is 22% of the blue on white, 28% on g100.
+- Today is neutral: a 1px `$border-strong-01` stroke and semibold.
+- Pips are 6px, 2px apart, each with a 1px rim; on a picked day each is
+  ringed in the label's white.
+- Widths: simple 120px, short 5.7rem, single 288px; range inputs 144px.

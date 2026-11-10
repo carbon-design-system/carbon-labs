@@ -1,0 +1,130 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon foundations only: a labs v12 component consumes @carbon/styles and
+// never mirrors it. Every value here is a Carbon token; nothing is proposed.
+@use '@carbon/styles/scss/config' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/motion' as *;
+@use '@carbon/styles/scss/border-radius' as *;
+
+$block: '#{$prefix}--chat-thread';
+$message: '#{$prefix}--chat-message';
+
+// ---- the thread --------------------------------------------------------------
+
+// It paints nothing and sets rhythm only. The height is the pane's: the thread
+// fills whatever it is given, and a short conversation sits against the
+// composer because the first turn carries an auto margin — not
+// justify-content: flex-end, which would push a long conversation above the
+// scroll origin. An auto margin collapses to zero and lets it scroll.
+.#{$block} {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  inline-size: 100%;
+  list-style: none;
+  min-block-size: 100%;
+}
+
+.#{$block}--bottom > :first-child {
+  margin-block-start: auto;
+}
+
+// The gap is the thread's, never the turn's, so a turn used alone carries no
+// orphan margin. The same gap repeats at the foot, where the last turn's
+// actions sit.
+.#{$block}--balanced {
+  gap: $spacing-08;
+  padding-block-end: $spacing-08;
+}
+
+.#{$block}--compact {
+  gap: $spacing-07;
+  padding-block-end: $spacing-07;
+}
+
+// ---- a turn ------------------------------------------------------------------
+
+.#{$message} {
+  @include type-style('body-01');
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  color: $text-primary;
+}
+
+.#{$message}--user {
+  align-items: flex-end;
+}
+
+// The user's words sit in a bubble, at most three quarters of the measure so a
+// long question still reads as one side of an exchange. The corner nearest the
+// speaker is square. The layer is the contextual one, so on a raised card the
+// bubble is one rung above it: white with a rule on the light card.
+.#{$message}--user .#{$message}__content {
+  padding: $spacing-04 $spacing-05;
+  border: 1px solid $border-subtle;
+  border-radius: $border-radius-08;
+  background-color: $layer;
+  border-end-end-radius: 0;
+  max-inline-size: 75%;
+  overflow-wrap: anywhere;
+}
+
+// A reply is the page's content, not an aside: full measure, no container.
+.#{$message}--assistant .#{$message}__content {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-05;
+  inline-size: 100%;
+}
+
+// The footer sits in the thread's gap, spacing-02 below the words, so showing
+// it moves nothing: an absolutely placed row cannot add height.
+.#{$message}__footer {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+  inset-block-start: 100%;
+  margin-block-start: $spacing-02;
+  opacity: 0;
+  transition: opacity $duration-fast-02 motion(standard, productive);
+}
+
+.#{$message}--user .#{$message}__footer {
+  inset-inline-end: 0;
+}
+
+.#{$message}--assistant .#{$message}__footer {
+  inset-inline-start: 0;
+}
+
+// Hover shows the row; focus-within shows it for the keyboard, which never
+// hovers. The controls stay in the tab order while hidden — visibility or
+// display would take them out of it, and then focus could never reveal them.
+.#{$message}:hover .#{$message}__footer,
+.#{$message}__footer:focus-within {
+  opacity: 1;
+}
+
+.#{$message}__timestamp {
+  @include type-style('label-01');
+
+  color: $text-secondary;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .#{$message}__footer {
+    transition: none;
+  }
+}

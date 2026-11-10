@@ -1,0 +1,425 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/react-selection-kit/scss/selector-glow' as *;
+
+/* The toolbar: what the selection kit (a track) and the ghost icon button don't
+   cover. */
+
+/* A toggle's pressed state, 0..1, eased on the rollover's clock. Registered
+   so it transitions; inherited, so the painting pseudo-element follows. */
+@property --cds-toolbar-pressed {
+  inherits: true;
+  initial-value: 0;
+  syntax: '<number>';
+}
+
+.cds-toolbar {
+  /* The controls' size, and the gap between them: the kit's inset, so a hover is
+     never flush with a pressed or selected neighbor. */
+  --cds-tb-h: 40px;
+  --cds-tb-gap: 4px;
+  /* A pressed toggle reads as selected: the kit's selector for the variant
+     (`--sel-selector`, `--sel-on`, `--sel-outline`), set per variant below. */
+  --cds-tb-on-fill: #{theme.$layer-selected};
+  --cds-tb-on: #{theme.$text-primary};
+  --cds-tb-on-outline: transparent;
+
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  gap: var(--cds-tb-gap);
+  min-inline-size: 0;
+}
+
+/* A row that overflows fills its container, and its content never widens it:
+   that width is what the overflow measures, so it can't chase itself. Its
+   width is asked for: a parent that sizes it to its content (a grid's
+   `justify-items: start`) would otherwise give it none. */
+.cds-toolbar--overflow {
+  contain: inline-size;
+  inline-size: 100%;
+}
+
+.cds-toolbar--xs {
+  --cds-tb-h: 24px;
+  --cds-tb-gap: 2px;
+}
+
+.cds-toolbar--sm {
+  --cds-tb-h: 32px;
+  --cds-tb-gap: 3px;
+}
+
+.cds-toolbar--lg {
+  --cds-tb-h: 48px;
+}
+
+/* The variants' pressed fills, as the kit paints its selectors. */
+.cds-toolbar--inverse {
+  --cds-tb-on-fill: #{theme.$layer-selected-inverse};
+  --cds-tb-on: #{theme.$text-inverse};
+}
+
+/* Hero: the kit's hero selector (`.sel--hero`) on pressed toggles: primary blue
+   under text-on-color, its rim `$border-interactive`. */
+.cds-toolbar--hero {
+  --cds-tb-on-fill: var(--cds-button-primary, #0f62fe);
+  --cds-tb-on: #{theme.$text-on-color};
+  --cds-tb-on-outline: #{theme.$border-interactive};
+}
+
+/* Tonal: re-hued to its context, as every tonal look (the core's tonal watcher). */
+.cds-toolbar--tonal {
+  --cds-tb-on-fill: oklch(
+    from #{theme.$layer-selected} l var(--tonal-c, c) var(--tonal-h, h)
+  );
+}
+
+.cds-toolbar--tonal.cds-toolbar--contour {
+  --cds-tb-on-outline: oklch(
+    from #{theme.$border-tile-01} l var(--tonal-c, c) var(--tonal-h, h)
+  );
+}
+
+.cds-toolbar--outlined {
+  --cds-tb-raised: #{theme.$layer-02};
+  --cds-tb-on-fill: var(--cds-tb-raised);
+  --cds-tb-on-outline: #{theme.$border-subtle-01};
+}
+
+/* Outline-led (the kit's default): the fill halfway from the track's layer up. */
+.cds-toolbar--outlined.cds-toolbar--outline-led {
+  --cds-tb-on-fill: color-mix(
+    in srgb,
+    #{theme.$layer} 50%,
+    var(--cds-tb-raised)
+  );
+}
+
+.cds--layer-two .cds-toolbar--outlined {
+  --cds-tb-raised: #{theme.$layer-03};
+}
+
+.cds--layer-three .cds-toolbar--outlined {
+  --cds-tb-raised: #{theme.$layer-02};
+}
+
+/* ── the surface (`surface="filled"` / `"outlined"`) ─────────────────── */
+
+/* A surface of its own: the quiet surface (`--cds-surface`), 8px corners, the gap
+   as its inset, the hairline when outlined. Inside it is concentric: 8px less the inset. */
+.cds-toolbar--surface {
+  --cds-tb-surface: var(--cds-surface, #{theme.$layer-01});
+  --cds-tb-surface-edge: var(--cds-surface-rule, #{theme.$border-subtle-01});
+  /* The inset controls' corner: 8px less the inset (5px at sm, 4px at md). */
+  --cds-tb-inner-radius: max(2px, calc(8px - var(--cds-tb-gap)));
+
+  padding: var(--cds-tb-gap);
+  border-radius: 8px;
+  background: var(--cds-tb-surface);
+
+  /* Each control sets its own radius, so it is overridden on the control. */
+  &:not(.cds-toolbar--square) .cds-toolbar__ctl {
+    --icon-btn-radius: var(--cds-tb-inner-radius);
+  }
+
+  .cds-toolbar__track:not(.sel--square) {
+    --sel-track-radius: var(--cds-tb-inner-radius);
+  }
+}
+
+.cds-toolbar--surface-l1 {
+  --cds-tb-surface: #{theme.$layer-02};
+  --cds-tb-surface-edge: #{theme.$border-subtle-02};
+}
+
+.cds-toolbar--surface-l2 {
+  --cds-tb-surface: #{theme.$layer-03};
+  --cds-tb-surface-edge: #{theme.$border-subtle-03};
+}
+
+.cds-toolbar--surface-outlined {
+  box-shadow: inset 0 0 0 1px var(--cds-tb-surface-edge);
+}
+
+.cds-toolbar--surface.cds-toolbar--square {
+  border-radius: 0;
+}
+
+.cds-toolbar--vertical.cds-toolbar--surface {
+  align-self: flex-start;
+}
+
+/* ── units: each top-level child, the overflow's step ────────────────── */
+
+.cds-toolbar__unit {
+  display: flex;
+  flex: none;
+  align-items: center;
+}
+
+/* Moved into the overflow menu: out of the row with no motion, still laid
+   out (hidden), so the toolbar always knows its width. */
+.cds-toolbar__unit[data-overflowed] {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.cds-toolbar__group {
+  display: flex;
+  align-items: center;
+  gap: var(--cds-tb-gap);
+}
+
+/* The family's hairline (contextual, so it steps inside <Layer>), half the
+   control's height. */
+.cds-toolbar__divider {
+  flex: none;
+  background: theme.$border-subtle;
+  block-size: calc(var(--cds-tb-h) / 2);
+  inline-size: 1px;
+}
+
+/* ── controls ─────────────────────────────────────────────────────────── */
+
+.cds-toolbar__ctl {
+  /* No hover growth: it would close the gap beside a pressed fill or a track,
+     and a swept row would swell control by control. A press insets 1px. */
+  --rollover-expand: 0px;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cds-toolbar--square .cds-toolbar__ctl {
+  --icon-btn-radius: 0px;
+}
+
+/* `corners="full"`: pill controls (999px, so press keeps a pill on every frame);
+   a surface round them concentric. */
+.cds-toolbar--full .cds-toolbar__ctl {
+  --icon-btn-radius: 999px;
+}
+
+.cds-toolbar--surface.cds-toolbar--full {
+  --cds-tb-inner-radius: 999px;
+
+  border-radius: calc(var(--cds-tb-h) / 2 + var(--cds-tb-gap));
+}
+
+/* A labelled control: the same ghost button, sized by its text (the kit's
+   switch padding and icon gap). */
+.cds-toolbar__ctl--text {
+  @include type-style('body-compact-01');
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: theme.$text-primary;
+  font-family: inherit;
+  gap: 8px;
+  inline-size: auto;
+  padding-inline: 16px;
+  white-space: nowrap;
+
+  .cds-toolbar--xs & {
+    @include type-style('label-01');
+
+    gap: 4px;
+    padding-inline: 8px;
+  }
+
+  .cds-toolbar--sm & {
+    gap: 6px;
+    padding-inline: 12px;
+  }
+
+  &:disabled {
+    color: theme.$text-disabled;
+  }
+}
+
+/* The open "more" button holds its hover tint, as the menu's triggers do. */
+.cds-toolbar__ctl[aria-expanded='true'] {
+  --rollover-rest: var(
+    --cds-motion-rollover-hover-color,
+    var(--rollover-hover)
+  );
+}
+
+/* ── a toggle's pressed fill ──────────────────────────────────────────── */
+
+/* Pressed reads as selected: the variant's selector fill. The control holds the final
+   rest at once (for the matched-lightness hover); the paint fades, in fast-02, out fast-01. */
+.cds-toolbar .cds-toolbar__ctl--toggle {
+  --cds-toolbar-pressed: 0;
+
+  transition:
+    --cds-toolbar-pressed var(--cds-motion-duration-fast-01)
+      var(--cds-motion-easing-standard-productive),
+    color var(--cds-motion-duration-fast-01)
+      var(--cds-motion-easing-standard-productive);
+
+  &::before {
+    --rollover-rest: color-mix(
+      in srgb,
+      var(--cds-tb-on-fill) calc(var(--cds-toolbar-pressed) * 100%),
+      transparent
+    );
+    --rollover-stroke: color-mix(
+      in srgb,
+      var(--cds-tb-on-outline) calc(var(--cds-toolbar-pressed) * 100%),
+      transparent
+    );
+  }
+
+  &[aria-pressed='true'] {
+    --cds-toolbar-pressed: 1;
+    --rollover-rest: var(--cds-tb-on-fill);
+
+    color: var(--cds-tb-on);
+    transition-duration: var(--cds-motion-duration-fast-02);
+  }
+
+  &[aria-pressed='true']:disabled {
+    --cds-tb-on-fill: #{theme.$layer-selected-disabled};
+    --cds-tb-on-outline: transparent;
+
+    color: theme.$icon-disabled;
+  }
+}
+
+/* A pressed toggle's focus: its ring (the button's, in its label color) 2px
+   inside the fill's edge, a rim of the fill round it — as the selector's. */
+.cds-toolbar .cds-toolbar__ctl--toggle[aria-pressed='true']:focus-visible {
+  outline-offset: -4px;
+}
+
+/* ── an exclusive group: the kit's track ──────────────────────────────── */
+
+.cds-toolbar__track {
+  flex: none;
+}
+
+/* The chosen radio is the selector's, as the kit's `aria-selected` switch is: no hover
+   of its own, the drag's cursor, and the selector's glow. */
+.cds-toolbar__track .sel__item[aria-checked='true'] {
+  cursor: default;
+
+  &::before {
+    --_rhc: transparent;
+  }
+}
+
+.cds-toolbar__track.sel--selector-glow:not([data-dragging])
+  .sel__item[aria-checked='true']::before {
+  @include selector-glow;
+}
+
+.cds-toolbar__track.sel--draggable .sel__item[aria-checked='true'] {
+  cursor: grab;
+}
+
+.cds-toolbar__track[data-dragging] .sel__item {
+  cursor: grabbing;
+}
+
+/* The chosen toggle's keyboard focus is the selector's 2px ring (the kit's). */
+
+/* `frame="ghost"`: no track paint; full-size toggles the toolbar's gap apart. Not the
+   kit's `.sel--ghost`, a list's rows: a toolbar's toggles are its controls. */
+.cds-toolbar__track--ghost.sel {
+  --sel-inset: 0px;
+  --sel-gap: var(--cds-tb-gap);
+
+  background: transparent;
+  /* No track, so no track hairline (`outline`). */
+  box-shadow: none;
+}
+
+/* ── an exclusive group's layer ──────────────────────────────────────── */
+
+/* An inset group is a layer wherever it sits: a rounded box on the corners ladder
+   (8px, its toggles concentric; on a surface, its inner radius). Square squares it. */
+.cds-toolbar:not(.cds-toolbar--square)
+  .cds-toolbar__track:not(.cds-toolbar__track--ghost) {
+  --sel-track-radius: 8px;
+  --sel-radius: max(2px, calc(var(--sel-track-radius) - var(--sel-inset)));
+}
+
+.cds-toolbar--surface:not(.cds-toolbar--square)
+  .cds-toolbar__track:not(.cds-toolbar__track--ghost) {
+  --sel-track-radius: max(2px, calc(8px - var(--cds-tb-gap)));
+}
+
+/* A layer is the break beside it, so a divider next to one isn't painted (its place
+   is kept); dividers show only between groups with no layer to separate them. */
+.cds-toolbar__unit:has(.cds-toolbar__track:not(.cds-toolbar__track--ghost))
+  + .cds-toolbar__unit[data-toolbar-divider]
+  .cds-toolbar__divider,
+.cds-toolbar__unit[data-toolbar-divider]:has(
+    + .cds-toolbar__unit .cds-toolbar__track:not(.cds-toolbar__track--ghost)
+  )
+  .cds-toolbar__divider {
+  background: transparent;
+}
+
+/* Every tooltip on one level: a track's toggles take their tooltip's gap from the
+   track's edge, the line the other controls end on. */
+.cds-toolbar__track .sel__item {
+  --cds-anchor-inset: calc(-1 * var(--sel-inset, 0px));
+}
+
+/* ── the column ──────────────────────────────────────────────────────── */
+
+.cds-toolbar--vertical {
+  display: inline-flex;
+  flex-direction: column;
+
+  .cds-toolbar__unit,
+  .cds-toolbar__group {
+    flex-direction: column;
+  }
+
+  .cds-toolbar__divider {
+    block-size: 1px;
+    inline-size: calc(var(--cds-tb-h) / 2);
+  }
+
+  /* The kit's vertical rows stretch to the list's width; in a column of icon
+     controls they stay square, their icon centered. */
+  .sel--vertical > .sel__item--icon {
+    inline-size: calc(var(--sel-h) - 2 * var(--sel-inset));
+  }
+
+  .sel--vertical .sel__item--icon .sel__face {
+    justify-content: center;
+  }
+}
+
+/* ── the more button ──────────────────────────────────────────────────── */
+
+.cds-toolbar__more {
+  flex: none;
+}
+
+@media (forced-colors: active) {
+  .cds-toolbar .cds-toolbar__ctl--toggle[aria-pressed='true'] {
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  .cds-toolbar__divider {
+    background: CanvasText;
+  }
+}

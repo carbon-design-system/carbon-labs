@@ -1,0 +1,41 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Story-only layout, on Carbon's tokens.
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+
+// The surface the chips sit on: the chat input. White in light; in dark it is
+// the shell, which carbon#23376's v12 dark theme names $layer-03 (#0c0d0f).
+.file-chip-story__surface {
+  padding: $spacing-05;
+  background-color: $chat-prompt-background;
+}
+
+[data-carbon-theme='v12-dark'] .file-chip-story__surface {
+  background-color: $layer-03;
+}
+
+.file-chip-story__matrix {
+  display: grid;
+  align-items: center;
+  gap: $spacing-05 $spacing-07;
+  grid-template-columns: repeat(4, max-content);
+}
+
+.file-chip-story__bar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $spacing-05;
+}
+
+.file-chip-story__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-03;
+}

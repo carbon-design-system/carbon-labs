@@ -1,0 +1,108 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as CodeSnippetStories from './CodeSnippet.stories';
+
+<Meta isTemplate />
+
+# CodeSnippetAlt
+
+An alternative to [CodeSnippet](?path=/docs/v12-codesnippet--overview), kept
+side by side for comparison: syntax colours, inline code and a MegaButton copy
+action. Its exports keep the names `CodeSnippet` and `InlineCode`.
+
+- **Initiative owner(s):** Ryan Mellody (@ryanmellody)
+- **Status:** Draft
+- **Target library:** @carbon/react
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Behaviour](#behaviour)
+- [Proposals](#proposals)
+- [InlineCode](#inlinecode)
+- [Component API](#component-api)
+- [Getting started](#getting-started)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+> **Problem statement:** an agent writes and runs code inside a conversation,
+> and a person needs to read it there: what language it is, how long it is,
+> enough of it to judge, all of it on request, and a copy that never picks up
+> the line numbers. Carbon's `CodeSnippet` (multi-line) is the nearest. It has
+> no syntax colour, its show-more is a flush bar, and its copy sits on the code.
+> This CodeSnippet is the v12 one for conversation first: a card, a round inset
+> Copy, numbered and coloured lines, and a round Show more / Show less.
+
+<Canvas of={CodeSnippetStories.Default} />
+
+## Behaviour
+
+- **Collapsed** to `collapsedLines` (9) with Show more; code no longer than that
+  shows whole and has no toggle. Show more opens on Carbon's disclosure motion
+  (`moderate-01`, entrance easing) and becomes Show less.
+- **Copy** is a round, inset ghost MegaButton. It copies `code` exactly, never
+  the line numbers, which are a separate, hidden column. Its name becomes
+  "Copied" for two seconds, and a status region says so.
+- **Long lines scroll** sideways rather than wrapping, so numbers stay on their
+  lines; the code region is in the tab order so the keyboard can scroll it.
+- **Highlighting** is a small built-in lexer for the C-family and Python. Pass
+  `highlight` to use a grammar (Prism, Shiki), or `false` for plain text.
+
+## Proposals
+
+Carbon ships no syntax colours. Each role is a `@carbon-proposal` token that
+resolves to a Carbon tag text colour for now:
+keyword and variable → `$tag-color-blue`, function → `$tag-color-green`, number
+→ `$tag-color-purple`. Carbon has no orange tag, so string is proposed at orange
+70 / 20 and falls back to `$tag-color-red`. Comments and punctuation are
+`$text-secondary` and `$text-primary`.
+
+<Canvas of={CodeSnippetStories.Expanded} />
+
+## InlineCode
+
+A file, command or tool named in running text. It is a `<code>` element on
+Carbon's `$highlight` with `$link-primary` text, and does nothing on its own;
+Carbon's inline `CodeSnippet` is a copy button, which is a different job.
+
+<Canvas of={CodeSnippetStories.Inline} />
+
+## Component API
+
+<ArgTypes of={CodeSnippetStories.Default} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-code-snippet-alt
+```
+
+### JS (via import)
+
+```javascript
+import { CodeSnippet } from '@carbon-labs/react-code-snippet-alt/es/index';
+
+function App() {
+  return <CodeSnippet language="JavaScript" code={source} />;
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-code-snippet-alt/scss/code-snippet';
+```

@@ -1,0 +1,55 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as StepFlowStories from './StepFlow.stories.tsx';
+
+<Meta of={StepFlowStories} />
+
+# Step flow
+
+A create flow in steps: a progress indicator, one step's heading and fields at a
+time, and Back and Next, with Submit on the last step. `StepFlow` draws it all
+in place. `useStepFlow` returns the flow, so its parts can go anywhere:
+`StepFlowProgress` for the indicator, `StepFlowBody` for the steps, and
+`StepFlowActions` for the buttons, or `stepFlowActions(flow)` for a tearsheet's
+`actions`. Back always moves. Next and Submit move only past valid steps; a
+step's `invalid` holds Next on it, and its `disableSubmit` disables Next or
+Submit. `onCancel` adds Cancel before Back. Each step is a region named by its
+heading. Steps stay mounted while hidden, so Back keeps what was entered. Once
+the old step has gone, focus moves to the new heading and the step is announced,
+"Step 2 of 3: Access" by default.
+
+<Canvas of={StepFlowStories.Default} />
+
+<Canvas of={StepFlowStories.Validation} />
+
+<Canvas of={StepFlowStories.Vertical} />
+
+<Canvas of={StepFlowStories.Submitting} />
+
+<Canvas of={StepFlowStories.Parts} />
+
+<Canvas of={StepFlowStories.InTearsheet} />
+
+## Motion
+
+- **Content movement in place:** a step change is the content swap along x, out
+  then in, the way the flow goes. The old step leaves 8px, fading, on fast-01
+  (exit-productive). Then the new one comes 8px from the end side on fast-02
+  (entrance-productive). Back runs the other way, and right to left mirrors it.
+- **Height:** the body's height holds through the out, then glides to the new
+  step's height with the in, standard-productive.
+- **The marker's glide and reach:** the progress indicator's own. Back and Next
+  reach the marker toward their step as they are pressed.
+- **An invalid step:** Next pressed on it moves nothing. The step shows its
+  errors, its indicator step turns invalid, and focus goes to its first field in
+  error.
+- `timeScale` slows the swap and the buttons down.
+
+## Reduced motion
+
+A step change is a snap: the new step is there on the frame the old one goes,
+with no travel or fade, and the height changes at once. The indicator takes its
+own reduced motion.
+
+## Props
+
+<ArgTypes of={StepFlowStories} />

@@ -33,7 +33,6 @@
   "scripts": {
     "build": "node ../../../../tasks/build.js",
     "clean": "rimraf es lib scss",
-    "postinstall": "ibmtelemetry --config=telemetry.yml",
     "test": "vitest run"
   },
   "dependencies": {

@@ -1,0 +1,194 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon foundations only: a labs v12 component consumes @carbon/styles and
+// never mirrors it. The geometry is the chats panel's, mirrored to the inline
+// end, so the two side panels of one surface open the same way.
+@use '@carbon/styles/scss/config' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/motion' as *;
+@use '@carbon/styles/scss/border-radius' as *;
+@use '@carbon/styles/scss/utilities/box-shadow' as *;
+@use '@carbon/styles/scss/utilities/convert';
+@use '@carbon/styles/scss/utilities/z-index' as *;
+
+$toggles: '#{$prefix}--chat-panel-toggles';
+$area: '#{$prefix}--chat-panel-area';
+$mega: '#{$prefix}--mega-button';
+
+// ---- the toggles ---------------------------------------------------------------
+
+// Five 40 controls edge to edge, as the frames draw them: the group is one
+// row of a header, and the tooltips carry the names.
+.#{$toggles} {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  margin-inline-start: auto;
+}
+
+// The open toggle wears MegaButton's own selected tint and label, read from
+// aria-expanded rather than aria-pressed: it discloses a panel, it is not a
+// switch. Specific enough to hold under the pointer, as a selected menu row
+// keeps its tint.
+.#{$toggles} .#{$toggles}__toggle[aria-expanded='true'] {
+  --#{$mega}-border: var(--#{$mega}-border-selected, transparent);
+
+  background-color: var(--#{$mega}-bg-selected);
+  color: var(--#{$mega}-fg-selected);
+}
+
+// ---- the area ----------------------------------------------------------------
+
+.#{$area} {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-block-size: 0;
+}
+
+.#{$area}__body {
+  // The overlay is positioned against this, not the viewport: the panel
+  // belongs to the surface it was opened from.
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  min-block-size: 0;
+}
+
+// A reset that gives section a display would show every panel at once.
+.#{$area}__section[hidden] {
+  display: none;
+}
+
+.#{$area}__content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-block-size: 0;
+  min-inline-size: 0;
+}
+
+.#{$area}__panel {
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+// The padding and the width live here so the panel itself can animate to a
+// real zero, and the content keeps its measure while the column opens.
+.#{$area}__panel-inner {
+  box-sizing: border-box;
+  padding: $spacing-05;
+}
+
+.#{$area}--push .#{$area}__panel-inner {
+  inline-size: convert.to-rem(310px);
+}
+
+.#{$area}--overlay .#{$area}__panel-inner {
+  inline-size: convert.to-rem(320px);
+}
+
+.#{$area}__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-03;
+  margin-block-end: $spacing-05;
+}
+
+.#{$area}__title {
+  @include type-style('heading-compact-01');
+
+  color: $text-primary;
+}
+
+.#{$area}__placeholder {
+  @include type-style('body-compact-01');
+
+  color: $text-secondary;
+}
+
+// ---- push: the panel takes a column at the inline end -------------------------
+
+.#{$area}--push .#{$area}__panel {
+  // The chats panel's disclosure, on the same axis: moderate-01, productive,
+  // and visibility in the maps so a closed panel leaves the tab order when
+  // the movement ends.
+  @include surface(
+    (
+      kind: reveal,
+      duration: moderate-01,
+      enter: (
+        inline-size: convert.to-rem(310px),
+        opacity: 1,
+        visibility: visible,
+      ),
+      exit: (
+        inline-size: 0,
+        opacity: 0,
+        visibility: hidden,
+      ),
+      enter-easing: (
+        name: entrance,
+        mode: productive,
+      ),
+      exit-easing: (
+        name: exit,
+        mode: productive,
+      ),
+    )
+  );
+
+  flex: 0 0 auto;
+  min-inline-size: 0;
+}
+
+// ---- overlay: the panel lies over the content ---------------------------------
+
+.#{$area}--overlay .#{$area}__panel {
+  @include box-shadow;
+
+  position: absolute;
+  z-index: calc(#{z('overlay')} + 1);
+  border: 1px solid $border-subtle;
+  border-radius: $border-radius-08;
+  background-color: $layer;
+  inline-size: convert.to-rem(320px);
+  inset-block: 0;
+  inset-inline-end: 0;
+
+  // It slides in from the edge it is anchored to, as the chats panel does
+  // from the other one: moderate-02 and the expressive easings.
+  @include surface(
+    (
+      kind: reveal,
+      duration: moderate-02,
+      enter: (
+        opacity: 1,
+        transform: translateX(0),
+        visibility: visible,
+      ),
+      exit: (
+        opacity: 0,
+        transform: translateX(100%),
+        visibility: hidden,
+      ),
+      enter-easing: (
+        name: entrance,
+        mode: expressive,
+      ),
+      exit-easing: (
+        name: exit,
+        mode: expressive,
+      ),
+    )
+  );
+}

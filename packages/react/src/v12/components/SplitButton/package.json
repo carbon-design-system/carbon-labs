@@ -1,0 +1,53 @@
+{
+  "name": "@carbon-labs/react-split-button",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Carbon Labs - SplitButton for React (v12)",
+  "labs": {
+    "status": "draft",
+    "title": "V12 split button"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "packages/react/src/v12/components/SplitButton"
+  },
+  "types": "./es/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./es/index.js",
+      "require": "./lib/index.js"
+    },
+    "./es/*": "./es/*",
+    "./lib/*": "./lib/*",
+    "./scss/*": "./scss/*"
+  },
+  "files": [
+    "es",
+    "lib",
+    "scss",
+    "telemetry.yml"
+  ],
+  "scripts": {
+    "build": "node ../../../../tasks/build.js",
+    "clean": "rimraf es lib scss"
+  },
+  "dependencies": {
+    "@carbon-labs/react-button": "workspace:*",
+    "@carbon-labs/react-feedback": "workspace:*",
+    "@carbon-labs/react-loading": "workspace:*",
+    "@carbon-labs/react-menu": "workspace:*",
+    "@carbon-labs/react-motion-icons": "workspace:*",
+    "@carbon-labs/react-props": "workspace:*",
+    "@carbon-labs/v12-motion": "workspace:*",
+    "@ibm/telemetry-js": "^1.10.2"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@carbon-labs/utilities": "0.28.0"
+  }
+}

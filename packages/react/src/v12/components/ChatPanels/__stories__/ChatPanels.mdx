@@ -1,0 +1,52 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ChatPanelsStories from './ChatPanels.stories';
+
+<Meta isTemplate />
+
+# ChatPanels
+
+- **Initiative owner(s):** FILL THIS LINE
+- **Status:** Draft
+- **Target library:** @carbon/react
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Component API](#component-api)
+- [Getting started](#getting-started)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+{/* carbon-labs-create:problem-statement */}
+
+> **Problem statement:** A conversation needs its working material beside it
+> (what it knows, the code it wrote, the files it was given, its settings and a
+> canvas to arrange results on) without leaving the conversation to reach any of
+> it.
+
+`ChatPanels` holds which side panel is open. `ChatPanelToggles` is the row of
+icon-only toggles in the surface's header, each naming its panel in a tooltip
+and saying `aria-expanded`. `ChatPanelArea` is the content with the panel
+opening along its inline end: pushed in a standalone chat, over the card when
+embedded, and over the content below `md`.
+
+Icon-only is a proposal: panel toggles are not on Carbon's icon-only allow-list.
+
+<Canvas of={ChatPanelsStories.Default} />
+
+## Component API
+
+<ArgTypes of={ChatPanelsStories.Default} />
+
+## Getting started
+
+```bash
+yarn add @carbon-labs/react-chat-panels
+```

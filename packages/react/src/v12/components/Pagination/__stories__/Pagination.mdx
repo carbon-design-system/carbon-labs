@@ -1,0 +1,53 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as PaginationStories from './Pagination.stories.tsx';
+
+<Meta of={PaginationStories} />
+
+# Pagination
+
+The footer of a long list or a data table. On the start side are the page size
+select and the item range. On the end side are the page select, the page count,
+and back and forward buttons. It takes Carbon's props: `page` (from 1),
+`pageSize`, `pageSizes`, `totalItems`, `pagesUnknown`, `isLastPage`, the text
+props, `disabled`, `size` and `onChange`. The selects are the kit's inline
+Dropdown, one size down from the bar. The buttons are the kit's ghost
+IconButtons. A new page size goes back to page 1. Reaching the last page moves
+focus to the back button; reaching the first moves it to the forward button. A
+bar narrower than its controls scrolls sideways in the kit's Scroller.
+
+<Canvas of={PaginationStories.Default} />
+
+<Canvas of={PaginationStories.Controlled} />
+
+<Canvas of={PaginationStories.PagesUnknown} />
+
+## Motion
+
+- **Content swap:** only what changes with the page swaps, out then in. The
+  range's "11–20" swaps along x, in the page's direction. The page number swaps
+  along y: forward, the old number leaves upward and the new one comes up from
+  below; back, the other way. The old text moves 8px and fades on fast-01,
+  exit-productive. Then the new one comes in from the other side on fast-02,
+  entrance-productive. A change with the page unmoved, such as a new page size,
+  comes from the end side. The first text is simply there.
+- **Glide:** the rest of the range text, "of 103 items", is not swapped. It
+  moves from its old place to its new one on the swap's clock, on
+  standard-productive. In right to left it moves the other way.
+- **Page count:** "of 11 pages" changes at once. It follows the page size, not
+  the page.
+- **Lists:** the page size and page lists are the Dropdown's, on the Menu's
+  surface.
+- **Rollover:** the selects and the buttons are full round. An icon-only
+  button's hover is a circle.
+- **Tooltips:** the back and forward buttons share one `TooltipGroup`.
+- **Slow motion:** `timeScale` slows the lists, the swap and the scroller.
+
+## Reduced motion
+
+The swap is a snap: the new text is there on one frame, with no fade, and the
+rest of the text is there at once. The lists and the rollover change at once.
+Tooltips show and leave at once.
+
+## Props
+
+<ArgTypes of={PaginationStories} />

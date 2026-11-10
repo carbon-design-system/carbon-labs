@@ -1,0 +1,62 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as InlineEditStories from './InlineEdit.stories.tsx';
+
+<Meta of={InlineEditStories} />
+
+# InlineEdit
+
+A value shown as text that turns into its field in place. The view is the text,
+a slot for a status mark and an edit button. The field is a text input, a text
+area or a select, with save and cancel buttons. Press the view or the edit
+button to open the field. Enter saves; in a text area, Shift+Enter breaks a
+line. Escape cancels. Focus goes to the field, its text selected, and back to
+the edit button on save or cancel. `validate` checks the draft on save. A save
+that returns a promise shows saving, and a rejection reopens the field with its
+message. Read-only and disabled values show a lock or a crossed pencil, with
+`reason` in its tooltip.
+
+<Canvas of={InlineEditStories.Default} />
+
+<Canvas of={InlineEditStories.Saving} />
+
+<Canvas of={InlineEditStories.Validation} />
+
+<Canvas of={InlineEditStories.Types} />
+
+<Canvas of={InlineEditStories.Fit} />
+
+<Canvas of={InlineEditStories.Sizes} />
+
+<Canvas of={InlineEditStories.States} />
+
+## Motion
+
+- **Content swap in place:** the text and the field swap in place, out then in,
+  by fade only. The old face fades out on fast-01, then the new one fades in on
+  fast-02.
+- **Layout move:** when the faces differ in size, the box holds its old size,
+  then moves to the new one on the step for its travel, on standard-productive.
+  The new face arrives once it lands.
+- **Mark snap:** save and cancel snap in as the field arrives. Each is opaque at
+  half size, then grows to full on fast-02, entrance-productive.
+- **Status hand-off:** a save that returns a promise closes the field at once,
+  with a spinner beside the new value. When it resolves, the spinner hands off
+  to a check: it shrinks, the disc grows and the check draws on. A save that
+  returns nothing shows the check alone. The check holds for `savedHold` (1500ms
+  by default), then fades on fast-02.
+- **Validation:** an error keeps the field open and shows on the field's message
+  line without waiting for a pause. While it shows, each change checks the draft
+  again.
+- **Quiet hover:** the view takes the rollover's even wash, flat on press. The
+  edit button fades in on hover or focus, on fast-01. Where there is no hover,
+  it always shows.
+
+## Reduced motion
+
+The faces swap at once, and the box takes its new size at once. Save and cancel
+are there at once. The status mark is simply there, and the check goes at once
+after its hold. `reduced` overrides the preference.
+
+## Props
+
+<ArgTypes of={InlineEditStories} />

@@ -1,0 +1,72 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as DataTableStories from './DataTable.stories.tsx';
+
+<Meta of={DataTableStories} />
+
+# DataTable
+
+Rows of resources in columns, with Carbon's DataTable API: its render props, its
+parts and its props. `DataTable` adds `corners`: `square`, the default, or
+`rounded`, 8px on the outer box. `Table` sits in the kit's Scroller, so a table
+wider than its container scrolls in place. Before it scrolls, cells kept on one
+line may wrap so the table fits. `TableSelectRow` and `TableSelectAll` use the
+kit's Checkbox. Select-all is checked when every selectable row in view is
+selected, and mixed when some are. A sortable `TableHeader` draws one motion
+icon for its sort. `TableExpandRow` and `TableExpandedRow` open a row's details.
+The toolbar, its search and the batch actions bar are Carbon's.
+`DataTableSkeleton` is the table while it loads. `DataTableReveal` is a table
+whose body loads.
+
+<Canvas of={DataTableStories.Default} />
+
+<Canvas of={DataTableStories.Selectable} />
+
+<Canvas of={DataTableStories.ExpandableRows} />
+
+<Canvas of={DataTableStories.Reveal} />
+
+## Motion
+
+- **Fills:** a row's hover, a selected row and a sort button change fill on the
+  rollover's clocks: in on fast-02, back on fast-01, standard-productive. A
+  selected row takes a 10% wash of the text color. Hover steps off the row's
+  fill, over a selection or a stripe too. The toolbar search has no fill at
+  rest; it takes a 5% wash on hover, on focus and once typed in, on the same
+  clocks.
+- **Sort icon:** a sortable header's icon is `SortDirection`, one icon for none,
+  ascending and descending. A click plays its change: it shrinks to a line, then
+  regrows. The unsorted icon shows only while the button is hovered or focused;
+  a sorted column's always shows.
+- **Expanding row:** the details push the rows below open, as one layout change.
+  The height opens through a soft edge of up to 16px, on moderate-01 (160ms) for
+  a 24 to 120px row, entrance-productive. The content moves 8px down into place
+  over fast-02, starting once the height is half open. Shutting is one step
+  faster, fast-02 (120ms), exit-productive, and the content holds still. A
+  toggle mid-move turns round from where it is. The content is clipped, never
+  scaled.
+- **Chevron:** `ChevronDownUpToggle`, down shut and up open, on the rollover: a
+  wash of the text color, 8% on hover and 16% on press.
+- **Expand all:** rows that open or shut together are one motion, on one clock
+  from the total travel, capped at moderate-02 (220ms) opening and 160ms
+  shutting.
+- **Reveal:** `DataTableReveal`'s header, column widths and selection column are
+  the real table from the first frame and never move. While loading, a skeleton
+  body lies over the rows' space. When the rows land, they fade in place, 30ms
+  apart, as the skeleton dissolves over them. Until then the sort buttons are
+  disabled and select-all is off.
+- **Reflow:** in `DataTableReveal`, rows with ids reflow when they change: a
+  filter, a search or a sort. Leaving rows fade where they are, on fast-01. Then
+  the rows that stay and the body's height move as one layout change, on the
+  farthest travel's clock. Then arriving rows fade in, staggered. Selection
+  follows each row's id. A new `pageKey` is not a reflow: another page's rows
+  are simply there.
+
+## Reduced motion
+
+Fills change at once. The sort icon changes at once. Rows open and shut at once,
+with no soft edge; the content fades in on a shorter clock. A reflow keeps only
+its fades, on a shorter clock.
+
+## Props
+
+<ArgTypes of={DataTableStories} />

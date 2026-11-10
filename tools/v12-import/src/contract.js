@@ -6,8 +6,9 @@
  */
 
 // The motion contract, docs/v12/motion-contract.md: every export of the seam
-// (@carbon-labs/v12-motion), where it comes from and which v12 folders use
-// it, with the token statuses carbon-motion's package ships.
+// (@carbon-labs/v12-motion), where it comes from and which v12 folders and
+// tools use it, directly or through a lane package that re-exports it, with
+// the token statuses carbon-motion's package ships.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -16,6 +17,7 @@ import { pathToFileURL } from 'node:url';
 const SEAM = 'packages/v12-motion';
 const SEAM_NAME = '@carbon-labs/v12-motion';
 const COMPONENTS = 'packages/react/src/v12/components';
+const TOOLS = 'tools';
 const TOKENS = 'node_modules/@carbon-labs/motion-core/generated/tokens.js';
 export const CONTRACT = 'docs/v12/motion-contract.md';
 
@@ -80,56 +82,133 @@ export function seamExports(text, entry) {
 }
 
 /**
- * The v12 folders that import each seam name, and those that use its Sass.
+ * Where the scan reads: every v12 component folder, as its folder name, and
+ * every tool, as `tools/<name>`; each with its package name.
+ *
+ * @param {string} labs The carbon-labs checkout.
+ * @returns {{ user: string, dir: string, pkg: string | null }[]} The places.
+ */
+function placesOf(labs) {
+  const places = [];
+  for (const [base, label] of [
+    [COMPONENTS, (d) => d],
+    [TOOLS, (d) => `${TOOLS}/${d}`],
+  ]) {
+    const root = path.join(labs, base);
+    for (const d of fs.existsSync(root) ? fs.readdirSync(root).sort() : []) {
+      const dir = path.join(root, d);
+      if (!fs.statSync(dir).isDirectory()) {
+        continue;
+      }
+      const pkg = path.join(dir, 'package.json');
+      places.push({
+        user: label(d),
+        dir,
+        pkg: fs.existsSync(pkg)
+          ? JSON.parse(fs.readFileSync(pkg, 'utf8')).name
+          : null,
+      });
+    }
+  }
+  return places;
+}
+
+/**
+ * The names in an import or export list, as `[imported, local]` pairs.
+ *
+ * @param {string} list The text between the braces.
+ * @returns {[string, string][]} The pairs.
+ */
+const namesIn = (list) =>
+  list
+    .split(',')
+    .map((part) =>
+      part
+        .replace(/\/\/.*$/gm, '')
+        .trim()
+        .replace(/^type\s+/, '')
+        .split(/\s+as\s+/)
+    )
+    .filter(([name]) => name)
+    .map(([name, local]) => [name, local ?? name]);
+
+/**
+ * The v12 folders and tools that use each seam name, and those that use its
+ * Sass. A folder that re-exports a seam name uses it, and so does every
+ * folder or tool that imports that name from the folder's package.
  *
  * @param {string} labs The carbon-labs checkout.
  * @returns {{ names: Map<string, Set<string>>, sass: Set<string>, entries: Map<string, Set<string>> }} The users.
  */
-function usersOf(labs) {
+export function usersOf(labs) {
   const names = new Map();
   const entries = new Map();
   const sass = new Set();
-  const root = path.join(labs, COMPONENTS);
-  for (const folder of fs.readdirSync(root)) {
-    const dir = path.join(root, folder);
-    if (!fs.statSync(dir).isDirectory()) {
-      continue;
-    }
+  /**
+   * Adds a user to a name's set.
+   *
+   * @param {Map<string, Set<string>>} map The names.
+   * @param {string} key The name.
+   * @param {string} user The folder or tool.
+   * @returns {Map<string, Set<string>>} The names.
+   */
+  const add = (map, key, user) =>
+    map.set(key, (map.get(key) ?? new Set()).add(user));
+  // Seam names a lane package passes on, by package: exported name to seam name.
+  const passed = new Map();
+  // Names each place takes from a lane package.
+  const taken = [];
+  const lists =
+    /\b(import|export)\s+(?:type\s+)?\{([^}]*)\}\s*from\s*'([^']+)'/g;
+  const whole = /\bexport\s+\*\s+from\s*'(@carbon-labs\/v12-motion\/[\w-]+)'/g;
+  for (const { user, dir, pkg } of placesOf(labs)) {
     for (const e of fs.readdirSync(dir, {
       recursive: true,
       withFileTypes: true,
     })) {
-      if (!e.isFile() || e.parentPath.includes('node_modules')) {
+      if (
+        !e.isFile() ||
+        !/\.(tsx?|scss)$/.test(e.name) ||
+        /(^|[\\/])(node_modules|es|lib)([\\/]|$)/.test(
+          path.relative(dir, e.parentPath)
+        )
+      ) {
         continue;
       }
-      const file = path.join(e.parentPath, e.name);
-      const text = /\.(tsx?|scss)$/.test(e.name)
-        ? fs.readFileSync(file, 'utf8')
-        : '';
+      const text = fs.readFileSync(path.join(e.parentPath, e.name), 'utf8');
       if (e.name.endsWith('.scss')) {
         if (text.includes(`'${SEAM_NAME}/scss`)) {
-          sass.add(folder);
+          sass.add(user);
         }
         continue;
       }
-      const imports =
-        /import\s+(type\s+)?\{([^}]*)\}\s*from\s*'(@carbon-labs\/v12-motion(?:\/[\w-]+)?)'/g;
-      for (const m of text.matchAll(imports)) {
-        if (m[3] !== SEAM_NAME) {
-          const at = entries.get(m[3]) ?? new Set();
-          entries.set(m[3], at.add(folder));
-          continue;
-        }
-        for (const part of m[2].split(',')) {
-          const name = part
-            .trim()
-            .replace(/^type\s+/, '')
-            .split(/\s+as\s+/)[0];
-          if (name) {
-            const at = names.get(name) ?? new Set();
-            names.set(name, at.add(folder));
+      for (const [, verb, list, spec] of text.matchAll(lists)) {
+        if (spec === SEAM_NAME) {
+          for (const [name, local] of namesIn(list)) {
+            add(names, name, user);
+            if (verb === 'export' && pkg) {
+              (passed.get(pkg) ?? passed.set(pkg, new Map()).get(pkg)).set(
+                local,
+                name
+              );
+            }
           }
+        } else if (spec.startsWith(`${SEAM_NAME}/`)) {
+          add(entries, spec, user);
+        } else if (!spec.startsWith('.')) {
+          taken.push({ user, from: spec, names: namesIn(list) });
         }
+      }
+      for (const [, spec] of text.matchAll(whole)) {
+        add(entries, spec, user);
+      }
+    }
+  }
+  for (const { user, from, names: list } of taken) {
+    for (const [name] of list) {
+      const seamName = passed.get(from)?.get(name);
+      if (seamName) {
+        add(names, seamName, user);
       }
     }
   }

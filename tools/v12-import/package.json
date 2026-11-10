@@ -21,6 +21,7 @@
     "check": "node ./bin/check.js"
   },
   "devDependencies": {
+    "typescript": "^5.2.2",
     "vitest": "^4.0.0"
   }
 }

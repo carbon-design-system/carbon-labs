@@ -9,7 +9,8 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { afterAll, describe, expect, it } from 'vitest';
-import { checkLane } from '../src/check.js';
+import { checkLane, scriptMotion, styleMotion } from '../src/check.js';
+import { vocabFindings } from '../src/vocab.js';
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'v12-check-'));
 /**
@@ -128,6 +129,100 @@ describe('the lane check', () => {
       'error motion not through the seam packages/react/src/v12/components/Widget/components/Widget.tsx:2',
       'error stale allowance packages/react/src/v12/components/Widget/components/gone.scss',
       'warning motion not through the seam packages/react/src/v12/components/Widget/components/old.scss:1',
+    ]);
+  });
+});
+
+describe('the motion rules', () => {
+  it('finds reduced motion past the seam, hand-built curves, timers, token arithmetic and shadowing helpers', () => {
+    const text = [
+      'const HOLD = 400;',
+      'const DECK = { closeDelay: 300 };',
+      "const reduce = matchMedia('(prefers-reduced-motion: reduce)');",
+      "const ease = `cubic-bezier(${curve.join(', ')})`;",
+      '// v12-allow easing: a curve the bar solves from its live velocity',
+      'const solved = `cubic-bezier(${x1}, ${y1}, ${x2}, ${y2})`;',
+      'setTimeout(done, HOLD);',
+      'setTimeout(done, DECK.closeDelay);',
+      'setTimeout(done, ms + 50);',
+      "setTimeout(done, motionTokens.duration['fast-01'] * 2);",
+      'setTimeout(done, ms * timeScale);',
+      '// v12-allow timer: a11y a screen reader reads the field first',
+      'setTimeout(announce, 1000);',
+      'const clamp = (v) => Math.min(1, v);',
+      '',
+    ].join('\n');
+    const found = scriptMotion(text, 'Widget.ts').map(
+      (f) => `${f.line} ${f.level} ${f.kind}`
+    );
+    expect(found).toEqual([
+      '3 warning reduced: direct media query',
+      '4 warning easing: hand-built',
+      '6 allowed easing: hand-built',
+      '7 warning timer: literal delay',
+      '8 warning timer: literal delay',
+      '9 warning timer: padded fallback',
+      '9 warning timer: literal delay',
+      '10 warning duration: token arithmetic',
+      '13 allowed timer: literal delay',
+      '14 warning helper: shadows seam',
+    ]);
+  });
+
+  it('finds spatial stylesheet motion without the clock function, and token arithmetic', () => {
+    const text = [
+      '.a { transition: opacity $fast-01 $standard; }',
+      '.b { transition: opacity $fast-01, transform $fast-02 $standard; }',
+      '.c { transition: transform motion.clock(fast-02) $standard; }',
+      '.d { animation: slide $fast-02 $standard; }',
+      '.e { animation: fade $fast-02 $standard; }',
+      '.f { transition: opacity calc(var(--cds-motion-duration-fast-01) / 2); }',
+      '@media (prefers-reduced-motion: reduce) {',
+      '  .b { transition: transform $fast-01; }',
+      '}',
+      '@keyframes slide { from { translate: 0 4px; } }',
+      '@keyframes fade { from { opacity: 0; } }',
+      '',
+    ].join('\n');
+    expect(styleMotion(text).map((f) => `${f.line} ${f.kind}`)).toEqual([
+      '6 duration: token arithmetic',
+      '2 stylesheet: unreduced motion',
+      '4 stylesheet: unreduced motion',
+    ]);
+  });
+});
+
+describe('the vocabulary rule', () => {
+  it('finds a value off an axis, a banned name and a v11-deprecated prop', () => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'v12-vocab-'));
+    const folder = path.join(root, 'packages/react/src/v12/components/Widget');
+    fs.mkdirSync(folder, { recursive: true });
+    fs.writeFileSync(
+      path.join(folder, 'package.json'),
+      JSON.stringify({ name: '@x/react-widget' })
+    );
+    fs.writeFileSync(
+      path.join(folder, 'index.ts'),
+      [
+        'export interface WidgetProps {',
+        "  frame?: 'ghost' | 'boxed';",
+        "  size?: 'sm' | 'md';",
+        "  density?: 'compact';",
+        '  light?: boolean;',
+        '}',
+        'export function Widget(props: WidgetProps) {',
+        '  return null;',
+        '}',
+        '',
+      ].join('\n')
+    );
+    fs.mkdirSync(path.join(root, 'packages'), { recursive: true });
+    const found = vocabFindings(root).map((f) => `${f.kind}: ${f.match}`);
+    fs.rmSync(root, { recursive: true, force: true });
+    expect(found.sort()).toEqual([
+      'vocabulary: banned name: density on Widget: density is a context value: KitDefaults carries it, a component takes it from there',
+      "vocabulary: frame: frame on Widget: 'boxed'",
+      'vocabulary: v11 deprecated: light on Widget',
     ]);
   });
 });

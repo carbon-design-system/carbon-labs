@@ -52,6 +52,11 @@ import {
   Video,
 } from '@carbon-labs/mdx-components';
 import './styles.scss';
+// The proposed tokens, generated from each v12 component's
+// proposals/tokens.json. Without it every @carbon-proposal falls through to its
+// Carbon fallback and the proposed colour is not on screen. Preview only: a
+// consumer still gets the fallback until Carbon takes the token.
+import './proposals.scss';
 
 // The v12 Storybook (STORYBOOK_INCLUDE_V12) previews Carbon's v12 light and dark
 // themes from carbon#23376 until @carbon/themes ships them. Storybook inlines

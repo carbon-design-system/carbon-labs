@@ -118,6 +118,24 @@ export function checkLane(labs) {
       });
     }
   }
+  // A lane package the manifest doesn't record (a draft brought as its own
+  // branch) is private too: the release publishes every package that isn't.
+  const components = path.join(labs, 'packages/react/src/v12/components');
+  for (const d of fs.existsSync(components) ? fs.readdirSync(components) : []) {
+    const dir = `packages/react/src/v12/components/${d}`;
+    const file = path.join(labs, dir, 'package.json');
+    if (unique.some((r) => r.dir === dir) || !fs.existsSync(file)) {
+      continue;
+    }
+    const pkg = JSON.parse(fs.readFileSync(file, 'utf8'));
+    if (pkg.labs?.status === 'draft' && pkg.private !== true) {
+      findings.push({
+        kind: 'not private',
+        at: `${dir}/package.json`,
+        match: pkg.name,
+      });
+    }
+  }
   for (const { id, kind, dir } of unique) {
     const isSeam = dir === SEAM_DIR;
     // A package brought whole keeps its own allowances and its own

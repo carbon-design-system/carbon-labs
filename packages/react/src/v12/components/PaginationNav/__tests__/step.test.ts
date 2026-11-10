@@ -24,16 +24,16 @@ describe('stepTarget', () => {
 });
 
 describe('reachPx', () => {
-  // Page centres 48px apart, as the lg row draws them.
-  const centres = [24, 72, 120, 168];
+  // Page centers 48px apart, as the lg row draws them.
+  const centers = [24, 72, 120, 168];
 
   it("reaches as a press on the page does: by the pitch when 'auto'", () => {
-    expect(reachPx('auto', centres, 1)).toBe(3);
+    expect(reachPx('auto', centers, 1)).toBe(3);
     expect(reachPx('auto', [16, 40, 64], 2)).toBe(2);
     expect(reachPx('auto', [0, 80], 1)).toBe(4);
   });
 
   it('keeps a reach given in px', () => {
-    expect(reachPx(6, centres, 2)).toBe(6);
+    expect(reachPx(6, centers, 2)).toBe(6);
   });
 });

@@ -476,11 +476,11 @@ export const PaginationNav = forwardRef<HTMLElement, PaginationNavProps>(
       const el = index >= 0 ? pageEls.current.get(index) : undefined;
       if (!sel || !el || index === pageRef.current) return;
       const row = pagesInRow();
-      const centres = row.map((it) => {
+      const centers = row.map((it) => {
         const r = sel.rectOf(it);
         return (r.l + r.r) / 2;
       });
-      sel.reach(el, reachPx(mRef.current.reach, centres, row.indexOf(el)));
+      sel.reach(el, reachPx(mRef.current.reach, centers, row.indexOf(el)));
       reaching.current = dir;
     };
     const reachBack = (dir: 1 | -1) => () => {

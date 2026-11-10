@@ -29,13 +29,13 @@ export function stepTarget(
 
 /**
  * How far the marker reaches toward the page at `at` among the row's page
- * centres: the motion's `reach`, or by the pitch at that page when `auto`,
+ * centers: the motion's `reach`, or by the pitch at that page when `auto`,
  * as a press on the page itself reaches.
  */
 export function reachPx(
   reach: number | 'auto',
-  centres: number[],
+  centers: number[],
   at: number
 ): number {
-  return reach === 'auto' ? reachForLength(pitchAt(centres, at)) : reach;
+  return reach === 'auto' ? reachForLength(pitchAt(centers, at)) : reach;
 }

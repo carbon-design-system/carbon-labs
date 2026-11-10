@@ -1,0 +1,110 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon-labs/v12-styles/scss/corners';
+
+/* The recipes' regions. A recipe lays its regions
+   out; each region's surface, corners and padding are the Region's. */
+
+/* The screen: the page header full width, then the body inset from the
+   screen's edges (32px; 16px at compact), its regions a gap apart by density. */
+.cds-recipe {
+  --cds-recipe-inset: 2rem;
+  --cds-recipe-gap: 1.5rem;
+
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+[data-density='compact'].cds-recipe {
+  --cds-recipe-gap: 1rem;
+}
+
+[data-density='spacious'].cds-recipe {
+  --cds-recipe-gap: 2rem;
+}
+
+[data-size-class='compact'] .cds-recipe {
+  --cds-recipe-inset: 1rem;
+  --cds-recipe-gap: 1rem;
+}
+
+/* The page header's title lines up with the body below. Its region sticks
+   to the top of the page's scroll (the header's own sticky has no room in a
+   region only as tall as it), so the header stays in view and collapses as
+   the page scrolls under it, as IBM Products' does. */
+.cds-recipe__page-header {
+  --cds-page-header-inset: var(--cds-recipe-inset);
+
+  position: sticky;
+  z-index: 2;
+  inset-block-start: 0;
+}
+
+.cds-recipe__body {
+  display: flex;
+  flex-direction: column;
+  padding: var(--cds-recipe-gap) var(--cds-recipe-inset) 4rem;
+  gap: var(--cds-recipe-gap);
+  min-inline-size: 0;
+}
+
+/* The toolbar row: the tools, and the batch bar in their place while rows
+   are selected (the ContextualBar's `placement="toolbar"`, ResourceIndex's
+   RecipeBatch): over the tools' first line (2rem, the compact controls'),
+   taking no room, so the row's height never changes with it and neither
+   does main; the tools are hidden while it's there (the bar's own rule). */
+.cds-recipe__toolbar-row {
+  --cds-contextual-bar-line: 2rem;
+
+  position: relative;
+  min-block-size: 2rem;
+
+  /* Its height moves when the tools wrap or unwrap (ResourceIndex's
+     useRowMove); meanwhile the tools clip to it, so a tool on a new line is
+     revealed as the row opens rather than drawn over what's below. */
+  &[data-moving] {
+    overflow-y: clip;
+  }
+}
+
+.cds-recipe__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  min-inline-size: 0;
+}
+
+/* The batch bar sits above the tools' row (its own stacking). */
+.cds-recipe__batch {
+  z-index: 1;
+}
+
+/* Main: the quiet surface clips what it holds to its corners. */
+.cds-recipe__main {
+  overflow: clip;
+  border-radius: var(--cds-region-radius, #{corners.$in});
+}
+
+.cds-recipe__footer {
+  display: block;
+}
+
+/* The rooms of the regions that come and go, disclosure bodies (the filters
+   in use, ResourceIndex's FiltersRoom; the footer, its FooterRoom): the
+   column's gap above each is inside it, so shut it takes no room, and
+   opening it opens the gap with it. */
+.cds-recipe__room,
+.cds-recipe__footer-room {
+  margin-block-start: calc(-1 * var(--cds-recipe-gap));
+
+  > .cds-disclosure__clip > .cds-disclosure__content {
+    padding-block-start: var(--cds-recipe-gap);
+  }
+}

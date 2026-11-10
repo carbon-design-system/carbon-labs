@@ -1,0 +1,68 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as RecipesStories from './Recipes.stories.tsx';
+
+<Meta of={RecipesStories} />
+
+# Recipes
+
+Screens put together from the parts, each for one job. A recipe fills its
+regions with the parts a team passes it and owns the rest: the frame, the
+states and the motion between them.
+
+## Assistant
+
+An assistant beside the page: ask in words, see the reply's work as it
+happens, and keep the page in view. `Assistant` is a `ChatPane` beside the
+page holding a `ChatShell`: the header with the questions' navigator and
+Close, the conversation, the prompt with its file chips and add menu, and
+suggestions under the prompt until the conversation starts. Avoid it for a
+single action with fixed inputs (use a form or a modal) or for help text (use
+a toggletip).
+
+<Canvas of={RecipesStories.AssistantEmpty} />
+
+<Canvas of={RecipesStories.AssistantConversation} />
+
+The pane opens its own space, the page narrowing on every frame of it. Send
+swaps to Stop; the reply's status row arrives, its steps joining under it,
+then its words. Closed from inside the pane, focus goes back to where it was
+when the pane opened, or to the page's launcher (`launcherButtonRef`).
+
+## Resource index
+
+Find, filter and act on many items of one kind. `ResourceIndex` puts the app
+shell round the screen: `header`, `nav`, and in the workspace the
+`pageHeader`, the `toolbar` row, the `filters` in use, `main`, the `batch` bar
+while rows are selected, the `footer`, and the `panel` of filters. `state`
+sets what the regions show: `loading`, `first-use`, `loaded`,
+`filtered-empty`, `batch`, `panel-open` or `error`. Use it for roughly 10 or
+more items that people search, filter and act on together; avoid it for a
+handful (use a list) or for one item (use a details page).
+
+<Canvas of={RecipesStories.ResourceIndexStates} />
+
+A change of what main shows is a content swap, out then in. Loading to loaded
+is the table's own reveal, and the footer arrives with the table's last row.
+An empty state replaces the table whole, footer included.
+`ResourceIndexScreen` is the screen without the shell, for a shell of your
+own.
+
+## Create flow
+
+Create one item that needs a few groups of settings, in order, with a review
+before it is made. `CreateFlow` is a tearsheet holding a step flow: the steps
+in a column beside the form, the current step in the main area, and Cancel,
+Back and Next (the submit words on the last step) in the footer. Each open
+starts on the first step; the values are the caller's. Avoid it for a handful
+of fields (use a modal).
+
+<Canvas of={RecipesStories.CreateFlowSheet} />
+
+## Reduced motion
+
+Each recipe's parts keep their own reduced forms. The assistant's pane fades
+in and out. A create flow's steps snap, and its tearsheet fades.
+
+## Props
+
+<ArgTypes of={RecipesStories} />

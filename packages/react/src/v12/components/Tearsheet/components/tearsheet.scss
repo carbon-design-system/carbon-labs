@@ -1,0 +1,294 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/text-pairs';
+@use '@carbon-labs/v12-styles/scss/cast-shadow-floating';
+
+/* Tearsheet and TearsheetNarrow — Tearsheet.tsx.
+ *
+ *   overlay   Carbon's $overlay over the page, faded by the component (the
+ *             stack's first sheet only)
+ *   surface   the modal's fill and hairline (--cds-modal-fill and
+ *             --cds-modal-rule: the quiet standard, one step up on the dark
+ *             themes, over the dimmed page), 16px top corners (the modal's),
+ *             flush with the bottom of the viewport: joined there, so square
+ *             and with no hairline along it. Its frame (`data-snap-frame`)
+ *             draws them, so the snap moves them as true geometry
+ *   place     from `--cds-tearsheet-top` (3rem; `lower` 6rem) to the bottom.
+ *             Wide: 4rem from each side (1rem under 66rem). Narrow: 40rem,
+ *             centred (the viewport less 1rem a side under 42rem)
+ *   layout    header (label, title, description; header actions; close),
+ *             navigation, then the main area: the influencer column and the
+ *             main column (the kit's Scroller, then the actions)
+ *   stacked   the scrim over a sheet with sheets above it: the overlay's
+ *             colour, faded by the component
+ */
+
+$_surface: var(--cds-modal-fill, var(--cds-surface, #{theme.$layer-01}));
+$_rule: var(
+  --cds-modal-rule,
+  var(--cds-surface-rule, #{theme.$border-subtle-01})
+);
+$_divider: var(--cds-surface-divider, #{theme.$border-subtle-01});
+
+.cds-tearsheet-portal {
+  display: contents;
+}
+
+/* The page-wide layer, as the modal's: above the page's chrome, under menus
+   opened from inside it. */
+.cds-tearsheet {
+  position: fixed;
+  z-index: 8100;
+  inset: 0;
+}
+
+/* Mounted ahead of an open, or left: hidden, and the page under it takes the presses. */
+.cds-tearsheet[data-resting] {
+  pointer-events: none;
+}
+
+.cds-tearsheet__overlay {
+  position: absolute;
+  background: theme.$overlay;
+  inset: 0;
+  opacity: 0;
+}
+
+.cds-tearsheet__container {
+  --cds-tearsheet-radius: 16px;
+
+  position: fixed;
+  z-index: 9000;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  color: theme.$text-primary;
+  inset-block: var(--cds-tearsheet-top, 3rem) 0;
+  inset-inline: 4rem;
+  isolation: isolate;
+  outline: none;
+  transform-origin: 50% 0;
+  /* What's inside steps off this fill. */
+  --cds-surface: #{$_surface};
+
+  &[data-leaving] {
+    pointer-events: none;
+  }
+
+  @media (width <= 65.98rem) {
+    inset-inline: 1rem;
+  }
+}
+
+.cds-tearsheet__container--lower {
+  --cds-tearsheet-top: 6rem;
+}
+
+.cds-tearsheet__container--narrow {
+  inset-inline: max(1rem, calc((100% - 40rem) / 2));
+}
+
+.cds-tearsheet__frame {
+  position: absolute;
+  z-index: -1;
+  border-radius: var(--cds-tearsheet-radius) var(--cds-tearsheet-radius) 0 0;
+  background: $_surface;
+  /* Top and sides only: a joined edge has no hairline (the flush side panel's rule). */
+  box-shadow:
+    inset 0 1px 0 $_rule,
+    inset 1px 0 0 $_rule,
+    inset -1px 0 0 $_rule;
+  inset: 0;
+}
+
+.cds-tearsheet__content {
+  /* The surface the body's ghost selection stands on: what its scroll fades paint to. */
+  --sel-ghost-page: #{$_surface};
+
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-block-size: 0;
+}
+
+/* Over everything in a sheet with sheets above it. */
+.cds-tearsheet__scrim {
+  position: absolute;
+  z-index: 3;
+  border-radius: var(--cds-tearsheet-radius) var(--cds-tearsheet-radius) 0 0;
+  background: theme.$overlay;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Receded in a stack, it floats above the viewport's bottom: all four corners round. */
+.cds-tearsheet__container[data-receded]
+  > :is(.cds-tearsheet__frame, .cds-tearsheet__scrim) {
+  border-radius: var(--cds-tearsheet-radius);
+}
+
+/* ── header ─────────────────────────────────────────────────────────────── */
+
+.cds-tearsheet__header {
+  display: flex;
+  flex: none;
+  align-items: flex-start;
+  padding: 24px 8px 16px 24px;
+  box-shadow: inset 0 -1px 0 $_divider;
+  gap: 16px;
+}
+
+.cds-tearsheet__heading {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+.cds-tearsheet__label {
+  @include type-style('label-01');
+
+  margin: 0 0 4px;
+  color: theme.$text-secondary;
+}
+
+.cds-tearsheet__title {
+  @include type-style('heading-04');
+
+  margin: 0;
+  color: theme.$text-primary;
+}
+
+.cds-tearsheet__container--narrow .cds-tearsheet__title {
+  @include type-style('heading-03');
+}
+
+.cds-tearsheet__description {
+  /* The kit's title → description pair (styles/_text-pairs.scss). */
+  @include text-pairs.description;
+
+  margin-block-start: text-pairs.$title-to-summary;
+
+  max-inline-size: 40rem;
+}
+
+.cds-tearsheet__header-actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  padding-block-start: 4px;
+}
+
+.cds-tearsheet__close {
+  flex: none;
+  margin-block-start: -8px;
+}
+
+/* Tabs under the header, across its width. */
+.cds-tearsheet__navigation {
+  flex: none;
+  box-shadow: inset 0 -1px 0 $_divider;
+  padding-inline: 16px;
+}
+
+/* ── main ───────────────────────────────────────────────────────────────── */
+
+.cds-tearsheet__main {
+  display: flex;
+  flex: 1 1 auto;
+  min-block-size: 0;
+}
+
+.cds-tearsheet__main--influencer-end {
+  flex-direction: row-reverse;
+}
+
+/* The influencer: the kit's Scroller (its pill); the viewport holds the padding. */
+.cds-tearsheet__influencer {
+  @include type-style('body-01');
+
+  box-sizing: border-box;
+
+  flex: none;
+  // @carbon-proposal token: surface-raised — One contrast step up from the fill: data table header and zebra. replaces: `$layer-accent-01`. TBD
+  background: var(--cds-surface-raised, #{theme.$layer-02});
+  inline-size: 16rem;
+}
+
+.cds-tearsheet__influencer-viewport {
+  box-sizing: border-box;
+  padding: 16px;
+}
+
+.cds-tearsheet__influencer--wide {
+  inline-size: 20rem;
+}
+
+/* The divider on the influencer's inner edge: its end at the start, its start at the end (mirrored right to left). */
+.cds-tearsheet__main--influencer-start .cds-tearsheet__influencer {
+  box-shadow: inset -1px 0 0 $_divider;
+
+  &:dir(rtl) {
+    box-shadow: inset 1px 0 0 $_divider;
+  }
+}
+
+.cds-tearsheet__main--influencer-end .cds-tearsheet__influencer {
+  box-shadow: inset 1px 0 0 $_divider;
+
+  &:dir(rtl) {
+    box-shadow: inset -1px 0 0 $_divider;
+  }
+}
+
+.cds-tearsheet__main-column {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.cds-tearsheet__body {
+  @include type-style('body-01');
+
+  flex: 1 1 auto;
+  color: theme.$text-primary;
+  min-block-size: 0;
+}
+
+.cds-tearsheet__viewport {
+  box-sizing: border-box;
+  padding: 24px;
+}
+
+/* The kit's buttons at their natural width, at the end, over a divider. */
+.cds-tearsheet__actions {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  padding: 16px 24px;
+  box-shadow: inset 0 1px 0 $_divider;
+  gap: 8px;
+
+  > .cds-btn {
+    flex: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .cds-tearsheet__frame {
+    border: 1px solid CanvasText;
+    background: Canvas;
+    border-block-end: 0;
+  }
+}

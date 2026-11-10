@@ -1,0 +1,49 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+
+/* DurationBar — `DurationBar.tsx`: one row of a scale. Editable, the kit's
+   Slider with its number field; read only, the Slider's fixed bar with the
+   number in the field's column. Then the unit. */
+
+.cds-duration-bar {
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+  min-inline-size: 0;
+}
+
+.cds-duration-bar__slider {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+
+  /* One row of a scale: no min / max labels (the column shares them), and the
+     bar takes the row. */
+  .cds-slider__range-label {
+    display: none;
+  }
+
+  .cds-slider__bar {
+    max-inline-size: none;
+    min-inline-size: 0;
+  }
+}
+
+.cds-duration-bar__unit {
+  @include type-style('code-01');
+
+  flex: none;
+  color: theme.$text-secondary;
+}
+
+/* The number, read only (the Slider's value text), in the field's mono type. */
+.cds-duration-bar__slider .cds-slider__value {
+  @include type-style('code-01');
+}

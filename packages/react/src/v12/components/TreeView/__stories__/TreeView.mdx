@@ -1,0 +1,69 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TreeViewStories from './TreeView.stories.tsx';
+
+<Meta of={TreeViewStories} />
+
+# TreeView
+
+A hierarchy of nodes to open, shut and select. `TreeView` holds `TreeNode`s; a
+node with child nodes is a parent, and its caret opens and shuts it. One node is
+selected, under the selection kit's selector. With `multiselect`, every row has
+a checkbox and there is no selector. `variant` sets the selector's style and
+`size` the row height. `TreeViewSkeleton` is the tree while it loads.
+
+<Canvas of={TreeViewStories.Default} />
+
+<Canvas of={TreeViewStories.WithIcons} />
+
+<Canvas of={TreeViewStories.Multiselect} />
+
+<Canvas of={TreeViewStories.ControlledExpansion} />
+
+<Canvas of={TreeViewStories.DisabledNodes} />
+
+## Motion
+
+- **Glide:** between two leaves of one group, the selector glides. All four
+  edges share one clock from the longest travel, the leading edge ahead. Labels
+  take the selected face where it covers them.
+- **Jump:** every other move jumps: to another parent or depth, and to or from a
+  parent's row. The old selector shrinks 4px and is gone, then the new one grows
+  in from 4px small, on fast-01, a third out and two thirds in. The pointer, the
+  keyboard and a change to `selected` or `active` take the same rule.
+- **Landing hover:** the new row keeps its hover around the selector until the
+  selector lands. On a jump, that hover shrinks with the old selector.
+- **Press:** the selector reaches toward the pressed row. Slide to another row
+  to retarget, or off to cancel. There is no drag.
+- **Arrival and fold:** shutting a parent over the selected node takes the
+  selector with the row, at once. Opening it again, the selector arrives on the
+  row once the children have landed.
+- **Disclosure:** a parent's children open and shut on the disclosure module, on
+  the travel's step; shutting is one step faster. The children come down 8px
+  with the opening, and the soft edge closes over them on the way out. Every
+  node that changes in one commit is one motion on the tree.
+- **Caret:** the caret turns on the same clock and curve as the children's
+  opening.
+- **Rollover:** every row takes the kit's rollover. The caret and icon step up
+  on hover, in on fast-02 and out on fast-01. A motion icon plays on its row's
+  hover.
+- **Checkboxes:** with `multiselect`, a parent's box follows its enabled
+  children: all checked, checked; some, mixed; none, unchecked. Toggling a
+  parent sets every enabled node under it. Disabled nodes aren't counted.
+- **Keyboard:** ↑ and ↓ move between visible nodes, with Home and End. → opens a
+  parent or goes to its first child; ← shuts it or goes to the parent. Enter and
+  Space select, and Enter also toggles a parent. Type-ahead finds a node. With
+  `multiselect`, Space toggles a node, Enter selects it alone, Ctrl + A selects
+  every visible node, and Ctrl + Shift + Home or End selects to the end. The
+  tree is one tab stop.
+- **Double-click:** on a parent's row, it opens or shuts the parent. Not on the
+  caret or the checkbox.
+
+## Reduced motion
+
+No travel. A parent opens or shuts at once, its children fading in. A glide
+becomes a fade: the selector fades in at the new node while a ghost fades at the
+old. A jump puts it on the new row at once. The caret turns at once.
+
+## Props
+
+<ArgTypes of={TreeViewStories} />

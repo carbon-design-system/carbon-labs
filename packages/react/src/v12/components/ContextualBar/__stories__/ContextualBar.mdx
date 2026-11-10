@@ -1,0 +1,89 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ContextualBarStories from './ContextualBar.stories.tsx';
+
+<Meta of={ContextualBarStories} />
+
+# Contextual bar
+
+A bar that appears while something is true, such as a selection or unsaved
+changes, and goes when it isn't. It follows `open`, and `label` names its
+region. `placement="inline"`, the default, sits in the flow and opens room for
+itself, so the content below glides. `overlay` floats over the content as a pill
+and never takes room. `toolbar` lies over the first line of its positioned
+container, in a toolbar row's place. It isn't sticky, takes no room, and hides
+the row's other children while it is there. Inline and overlay bars are sticky,
+8px below `--cds-contextual-bar-top`, 3rem by default. `variant="tonal"`, the
+default on the page, is a fill one lightness step off its backdrop, with a
+hairline. `inverse`, the default in an inset workspace, takes the page's
+opposite theme. `kind` is a status. On tonal it colors the outline, solved to
+3:1 against the fill. On inverse it fills the bar, stepped in lightness until
+the text holds 4.5:1. A tonal bar is info unless `kind` says otherwise, and
+`null` gives none. What's in it steps up one layer. Filled and outlined controls
+in it step their corners down from the bar's, and ghost controls hover full
+round. `ContextualBar.Count` is a number that rolls, and `ContextualBar.Swap`
+swaps its content out, then in, by `swapKey`.
+
+<Canvas of={ContextualBarStories.Default} />
+
+<Canvas of={ContextualBarStories.Inline} />
+
+<Canvas of={ContextualBarStories.Overlay} />
+
+<Canvas of={ContextualBarStories.Toolbar} />
+
+<Canvas of={ContextualBarStories.Variants} />
+
+<Canvas of={ContextualBarStories.UnsavedChanges} />
+
+## Motion
+
+- **One ease:** the bar's edges, its room and the mask round it move on one
+  clock and one curve, standard-productive, and land on the same frame. The
+  clock is the step for the farthest travel, its side edges' or its height (its
+  room's, inline). Out is one step shorter. The bar doesn't fade: it travels and
+  clips.
+- **Snap in:** it grows from its long edge nearer the press. That edge holds
+  still and the other travels away from it. It widens from 75% about the point
+  across from the press, no further from the middle than `originBand` of its
+  width. From a key, the key's target stands in for the press; with neither, the
+  middle of its top edge. Inline and at rest, its room pushes the rows down, so
+  it grows from its top edge. In a toolbar row, it grows from its bottom edge,
+  at the end on the side of the press.
+- **Fold out:** the far edge pulls back into the edge it grew from, with the
+  width held. It shows what it last showed, not the change that closed it.
+- **Content:** the row starts 8px back, against the way the bar grows, and moves
+  into place over just past the bar's clock, on entrance-productive. The soft
+  edge at the moving edge, `min(16px, h, H − h)`, reveals it. Out, it holds
+  still while the soft edge closes over it. Reopened as it folds, it goes on
+  from where it stopped.
+- **Sliver guard:** the surface's opacity is `min(1, height / 4px)` in every
+  placement, so it is opaque on every frame from 4px tall.
+- **Content fade:** its contents wait, unseen, until the bar's start edge has
+  passed them, so nothing is drawn cut. Over content, or when they wait, they
+  fade up over 40ms on a clock of 220ms or less, else 80ms. Over content they
+  fade out over the end of the fold.
+- **Room:** inline, its room opens and closes on the bar's clock and curve in
+  one layout transaction, so the content below glides. A change in its height,
+  its content wrapping onto another line or back, glides too. In a container out
+  of the flow it opens no room.
+- **Dock mask:** carried over content, what's around it fades out like a soft
+  edge: nothing shows above the bar, and the soft edge runs below it. The mask's
+  strength moves on the bar's clock, and the mask follows the moving edge.
+- **Count:** `ContextualBar.Count` rolls up as the number rises and down as it
+  falls. Its label rolls with it.
+- **Swap:** a new `swapKey` swaps the content out, then in, never overlapping.
+  Its width glides from the old content's to the new, so what follows glides
+  too. `axis` and `direction` set where the new content comes from.
+- **Stillness:** under a still pointer, nothing it comes over or uncovers lights
+  its hover until the pointer moves.
+- `timeScale` slows the snap, the room, the count and the swap together.
+
+## Reduced motion
+
+The bar, its room and its content are there or gone at once, and the mask with
+them. Inline, the scroll takes up the room, so the content below holds still on
+screen. Counts change in place, and swaps snap.
+
+## Props
+
+<ArgTypes of={ContextualBarStories} />

@@ -1,0 +1,67 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TagSetStories from './TagSet.stories.tsx';
+
+<Meta of={TagSetStories} />
+
+# TagSet
+
+A row of tags that fits its container. As many tags show as fit; the rest go
+into a "+N" that opens them in a popover. With more than
+`allTagsModalSearchThreshold` (10) in the overflow, the popover shows that many
+and a "View all tags" button, which opens a modal of every tag with a search.
+Each tag is a `label` and the kit Tag's props; one with `onClose` is a
+DismissibleTag. `maxVisible` caps the row, and `multiline` wraps it instead.
+`overflowType="tag"` lists the overflow as tags, `default` as text.
+`TagSetSkeleton` is the set while it loads.
+
+<Canvas of={TagSetStories.Default} />
+
+<Canvas of={TagSetStories.Reflow} />
+
+<Canvas of={TagSetStories.AddAndRemove} />
+
+<Canvas of={TagSetStories.Overflow} />
+
+<Canvas of={TagSetStories.ViewAll} />
+
+<Canvas of={TagSetStories.Multiline} />
+
+<Canvas of={TagSetStories.Sizes} />
+
+<Canvas of={TagSetStories.Skeleton} />
+
+## Motion
+
+- **Reflow, out then in:** when the width moves tags into or out of the
+  overflow, the tags leaving snap out where they are, as the Tag's out. Then the
+  "+N" moves. Then the tags coming back snap in, staggered, as the Tag's in.
+- **"+N" slide:** the "+N" slides from its old place to its new one, its clock
+  from its travel over the tags between the two counts.
+- **"+N" count:** the number rolls on the slide's clock. On a dismissal it
+  waits, then rolls as the gap closes.
+- **"+N" arriving or leaving:** when nothing overflowed before, it snaps in
+  after the tags have left. When nothing overflows now, it snaps out first,
+  before the tags come back.
+- **Dismissal:** a tag taken out of `tags` snaps out where it was. Several leave
+  20ms apart. Once the last has started, the gap closes in one move, its clock
+  from its travel.
+- **Arrival:** a tag added, or back from the overflow, snaps in once the gap has
+  closed. The tags already there hold still.
+- **Popover:** the kit's anchored Popover. It grows from the press point and
+  leaves by folding back into it. It flips to stay on screen.
+- **Modal:** the kit's Modal. Its search filters the tags out, then one reflow,
+  then in, staggered.
+- **Bursts:** changes less than 200ms apart land at once.
+
+The set's tags never snap in on their own: the set plays their snap, once, on
+its clock. The first fit is the set as it is, with no motion.
+
+## Reduced motion
+
+No slide, roll or snap: the tags and the "+N" change at once. A dismissed tag is
+gone at once, and a tag added is simply there. The popover is there at once and
+gone at once. The modal takes its own reduced motion.
+
+## Props
+
+<ArgTypes of={TagSetStories} />

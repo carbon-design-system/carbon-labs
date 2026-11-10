@@ -47,6 +47,16 @@ write(
   'export const Notes = () => <p>It runs over 120ms.</p>;\n'
 );
 write('packages/v12-thing/package.json', JSON.stringify({ name: 'thing' }));
+// A draft the manifest doesn't record must be private too; a published
+// component of carbon-labs' own (no draft status) is left alone.
+write(
+  'packages/react/src/v12/components/Loose/package.json',
+  JSON.stringify({ name: 'loose', labs: { status: 'draft' } })
+);
+write(
+  'packages/react/src/v12/components/Own/package.json',
+  JSON.stringify({ name: 'own' })
+);
 // The release's changelog carries dates; the check leaves it alone.
 write('packages/v12-thing/CHANGELOG.md', '## 0.1.0 (2026-11-09)\n');
 write(
@@ -71,6 +81,7 @@ describe('the lane check', () => {
       'leak (id) TASK-123',
       'motion literal 120ms',
       'motion not through the seam @carbon-labs/motion-core',
+      'not private loose',
       'not private thing',
     ]);
   });

@@ -1,0 +1,109 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+
+/* SideNav's filter (`filter`, filter.tsx): the field is the top of the nav's
+ * panel, the track's first child, and it sticks to the top of whatever
+ * scrolls the nav, so the rows scroll under it and it doesn't scroll away.
+ *
+ *   inset   the panel's top: its fill, its rounded top corners and its
+ *           hairline on three sides; the field at the track's inset, so its
+ *           edges line up with the rows', and the rows' own gap under it
+ *   flush   the column's fill, the field 8px in, the column's rule beside it
+ *   ghost   no panel: the field on what the nav stands on
+ *
+ * Its corners are the rows' (filter.tsx passes the nav's `corners`): the
+ * inner corner, the track's less its inset (`--sel-radius`), on rounded
+ * rows; Search's own pill on full rows, square on square ones.
+ *
+ * It sticks at the top of the scroller's content box, below its padding. A
+ * scroller with padding sets it as `--sidenav-filter-band` (default 0): the
+ * band above the field, painted the page's colour (`--sel-ghost-page`, else
+ * `$background`), so the rows don't show through it as they scroll up. */
+
+.sidenav__filter {
+  --_band: var(--sidenav-filter-band, 0px);
+  --_page: var(--sel-ghost-page, #{theme.$background});
+
+  position: sticky;
+  z-index: 3;
+  padding: var(--sel-inset) var(--sel-inset) var(--sel-gap);
+  /* Out to the track's edges (its inset), so nothing shows beside it. */
+  margin: calc(-1 * var(--sel-inset)) calc(-1 * var(--sel-inset))
+    calc(-1 * var(--sel-gap));
+  background: var(--sel-track);
+  border-start-end-radius: var(--sel-track-radius);
+  border-start-start-radius: var(--sel-track-radius);
+  inset-block-start: 0;
+  user-select: text;
+  /* On the panel: the surface's field (styles/_surface.scss, `fields-on-surface`). */
+  --cds-field-fill: var(--cds-surface-field);
+
+  /* The band above it: the scroller's padding. */
+  &::before {
+    position: absolute;
+    background: var(--_page);
+    block-size: var(--_band);
+    content: '';
+    inset-block-end: calc(100% + 1px);
+    inset-inline: -1px;
+  }
+}
+
+.sidenav--floating .sidenav__filter {
+  /* The panel's hairline round its top (the track's own scrolls away under it). */
+  box-shadow: 0 0 0 1px var(--sidenav-rule);
+  clip-path: inset(calc(-1px - var(--_band)) -1px 0 -1px);
+}
+
+.sidenav--container .sidenav__filter {
+  padding: $spacing-03 $spacing-03 0;
+  box-shadow: inset -1px 0 0 var(--sidenav-rule);
+}
+
+.sidenav--ghost .sidenav__filter {
+  background: var(--sidenav-ghost-page, var(--_page));
+  margin-block-end: calc(-1 * var(--sel-gap));
+  padding-block-end: $spacing-03;
+  /* On the page: the page's field. */
+  --cds-field-fill: #{theme.$field};
+}
+
+/* The field's corner is the rows' inner corner (the track's less its inset),
+   not Search's own 8px; full and square are Search's own. */
+.sidenav__filter
+  .cds-text-input:not(.cds-text-input--full, .cds-text-input--square) {
+  --tf-radius: var(--sel-radius);
+}
+
+/* The rail has no room for it (a nav folds to a rail only with icons). */
+.sidenav:is([data-rail], [data-resizing]) .sidenav__filter {
+  display: none;
+}
+
+/* The live count: read, not shown. */
+.sidenav__filter-status {
+  position: absolute;
+  overflow: hidden;
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+/* Nothing matches: a quiet line where the list would be, its text where a
+   row's label starts (the row's own inset, `--sel-pad`, at every size). */
+.sidenav__empty {
+  @include type-style('helper-text-01');
+
+  padding: $spacing-03 var(--sel-pad) $spacing-04;
+  color: theme.$text-helper;
+  list-style: none;
+}

@@ -1,0 +1,523 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon-labs/v12-styles/scss/corners';
+@use '@carbon-labs/v12-styles/scss/surface';
+
+/* PageHeader — PageHeader.tsx (its header lists the choices). One grid for
+   both forms: the parts change places by grid area, so each is the same
+   element in both and moves (PageHeader.tsx's FLIP) rather than swapping.
+   The title is the exception: it swaps in place, two copies rolling in their
+   own lines (`[data-ph-roll]`, below). */
+
+$_surface: var(--cds-surface, #{theme.$layer-01});
+/* The content's inset from the edges; a layout (a recipe) sets
+   `--cds-page-header-inset` to line the title up with the page below. */
+$_x: 1rem;
+/* The grid's column gap in each form, and the gaps in the page actions' and
+   the bar's rows. The fit (fit.ts) reads them from the copy (`__sizer`). */
+$_gap-expanded: $spacing-05;
+$_gap-collapsed: $spacing-03;
+$_actions-gap: $spacing-03;
+$_bar-gap: $spacing-01;
+/* The ghost icon buttons' 8px round their 16px icon (sm, 32px: the header's
+   size), so the last icon is flush with the edge's text. */
+$_bar-end: -$spacing-03;
+/* IBM Products' split of each row (its `$left-section-std-width` and
+   `-alt-width`): the breadcrumb or title 60% and the action bar or page
+   actions 40% from md up; 75% and 25% below. fit.ts works to the same. */
+$_split-wide: minmax(0, 3fr) minmax(0, 2fr);
+$_split-narrow: minmax(0, 3fr) minmax(0, 1fr);
+
+/* How far content has gone under its bottom edge, px, clamped to the
+   soft-edge token (PageHeader.tsx, `underEdge`). Not inherited: a scroll
+   writes it on the header alone, and only its `::after` reads it. */
+@property --cds-ph-under {
+  inherits: false;
+  initial-value: 0px;
+  syntax: '<length>';
+}
+
+/* What it paints: its own surface (`flush`), or the ground (`ghost`). The
+   soft edge under it fades from the same. */
+.cds-page-header {
+  --_ph-fill: #{$_surface};
+
+  position: sticky;
+  z-index: 2;
+  box-sizing: border-box;
+  background: var(--_ph-fill);
+  /* The kit's hairline under the surface (inside it, so it's in the height). */
+  box-shadow: inset 0 -1px 0 var(--cds-surface-rule, #{theme.$border-subtle-01});
+  color: theme.$text-primary;
+  inline-size: 100%;
+  inset-block-start: var(--cds-page-header-offset, 0px);
+
+  /* The soft edge at its bottom: content scrolling under it leaves into its fill over the soft-edge
+     token, as a Scroller's content does at its edge (scroller/softEdge.ts,
+     which leaves a side with a sticky header on it to the header). It grows
+     over the first 16px under it (`--cds-ph-under`), so nothing pops, and
+     it's below the box: the header's height doesn't change. Painted, not a
+     mask: the header can't mask what's beside it in the scroll, and on its
+     own fill the two read the same. */
+  &::after {
+    --cds-ph-under: inherit;
+
+    position: absolute;
+    background: linear-gradient(to bottom, var(--_ph-fill), transparent);
+    block-size: var(--cds-ph-under);
+
+    content: '';
+    inset-block-start: 100%;
+    inset-inline: 0;
+    pointer-events: none;
+  }
+}
+
+/* `frame="ghost"` (the Resource index's): no surface, no hairline. It paints the ground it
+   sits on, so the content it sticks over still goes under it: the page's background, or the
+   fill of the framing surface round it (an inset workspace, a quiet or raised Region), which
+   sets `--cds-page-header-ground`. */
+.cds-page-header--ghost {
+  --_ph-fill: var(--cds-page-header-ground, #{theme.$background});
+
+  box-shadow: none;
+
+  /* Collapsed, a hairline across its whole width, where the page goes under the compact row:
+     the ground's line. Faded on the move (PageHeader.tsx); at rest, a state. */
+  &::before {
+    position: absolute;
+    z-index: 1;
+    background: var(
+      --cds-page-header-line,
+      var(--cds-surface-rule, #{theme.$border-subtle-01})
+    );
+    block-size: 1px;
+    content: '';
+    inset-block-end: 0;
+    inset-inline: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &.cds-page-header--collapsed::before {
+    opacity: 1;
+  }
+}
+
+:where(
+  .cds-app-shell__workspace[data-frame='inset'],
+  .cds-region--quiet,
+  .cds-region--raised
+) {
+  --cds-page-header-ground: #{$_surface};
+  /* The ghost hairline follows the ground: the page's rule, or the divider inside a surface. */
+  --cds-page-header-line: var(--cds-surface-divider);
+}
+
+/* A page region in a theme of its own is that theme's page. */
+:where(.cds-region--page[data-theme-zone]) {
+  --cds-page-header-ground: #{theme.$background};
+  --cds-page-header-line: var(--cds-surface-rule);
+}
+
+/* `corners="rounded"`: in the page or a card, by the kit's ladder (Region,
+   docs/components/README.md): 8 in the page; in a quiet or raised Region,
+   its inner radius (outer − inset: square once the inset takes it all);
+   `--cds-page-header-radius` sets it in a card of your own. Square, the
+   default, is v11's: attached to the shell's edge. It doesn't clip (the
+   action bar's tooltips hang below it); the hairline follows the curve. */
+:where(.cds-region--quiet, .cds-region--raised) {
+  --cds-page-header-radius: var(--cds-region-inner-radius, 0px);
+}
+
+.cds-page-header--rounded {
+  border-radius: var(--cds-page-header-radius, #{corners.$in});
+}
+
+/* `withoutBackground`: the page's own while expanded; the compact row is on
+   the surface, so the page scrolling under it doesn't show through. */
+.cds-page-header--clear.cds-page-header--expanded {
+  --_ph-fill: transparent;
+}
+
+/* Moving: clipped to its animating height (the lead). Nothing visible
+   reaches it: the tabs ride the moving bottom, and the details are cut at
+   their top under a soft edge (`[data-ph-edge]`, below). The clip reaches
+   the soft edge's 16px past the box, so the edge under it stays drawn. */
+.cds-page-header[data-moving],
+.cds-page-header[data-ph-resizing] {
+  overflow: clip;
+  overflow-clip-margin: var(--cds-motion-soft-edge, 16px);
+}
+
+.cds-page-header__grid {
+  display: grid;
+  align-items: center;
+  column-gap: $_gap-expanded;
+  grid-template-areas:
+    'crumbs bar'
+    'title actions'
+    'details details'
+    'nav nav';
+  grid-template-columns: $_split-wide;
+  padding-inline: var(--cds-page-header-inset, #{$_x});
+}
+
+/* Compact (the header's own size class, < 672px): the page actions under
+   the title, at its start, so the title has the row (IBM Products'
+   PageHeader below md, where the breadcrumb row splits 75 / 25). The
+   title's 12px under it and the actions' 4px make the 16px IBM Products
+   puts between them; the actions keep 12px under them, as the title does at
+   the wider sizes. */
+.cds-page-header--expanded[data-size-class='compact'] {
+  .cds-page-header__grid {
+    grid-template-areas:
+      'crumbs bar'
+      'title title'
+      'actions actions'
+      'details details'
+      'nav nav';
+    grid-template-columns: $_split-narrow;
+  }
+
+  .cds-page-header__actions {
+    justify-content: flex-start;
+    padding-block-end: 0.75rem;
+  }
+}
+
+.cds-page-header--collapsed .cds-page-header__grid {
+  column-gap: $_gap-collapsed;
+  grid-template-areas:
+    'crumbs title actions bar'
+    'nav nav nav nav';
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+}
+
+/* Compact and collapsed: the row is the title's and the actions'; the
+   breadcrumb waits in the expanded form (beside them it wrapped over them,
+   and the title had no room). A title longer than its room truncates, its
+   full text in its tooltip. */
+.cds-page-header--collapsed[data-size-class='compact'] {
+  .cds-page-header__grid {
+    grid-template-areas:
+      'title actions bar'
+      'nav nav nav';
+    grid-template-columns: minmax(0, 1fr) auto auto;
+  }
+
+  .cds-page-header__crumbs {
+    display: none;
+  }
+
+  /* The row's 48px, which the breadcrumb gave it. */
+  .cds-page-header__title-cell {
+    align-items: center;
+    min-block-size: 3rem;
+  }
+}
+
+/* Collapsed with no breadcrumb: the row is the title's and the actions', as
+   at compact. The empty crumbs cell took a column and its 8px gap, so the
+   title sat 8px in from the page's inset (the toolbar's and the table's
+   edge, in the Resource index). */
+.cds-page-header--collapsed.cds-page-header--no-crumbs {
+  .cds-page-header__grid {
+    grid-template-areas:
+      'title actions bar'
+      'nav nav nav';
+    grid-template-columns: minmax(0, 1fr) auto auto;
+  }
+
+  .cds-page-header__crumbs {
+    display: none;
+  }
+
+  .cds-page-header__title-cell {
+    align-items: center;
+    min-block-size: 3rem;
+  }
+}
+
+/* ── the breadcrumb row ───────────────────────────────────────────────── */
+
+.cds-page-header__crumbs {
+  display: flex;
+  align-items: center;
+  grid-area: crumbs;
+  min-block-size: 3rem;
+  min-inline-size: 0;
+}
+
+.cds-page-header__bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $_bar-gap;
+  grid-area: bar;
+  margin-inline-end: $_bar-end;
+}
+
+/* ── the title row ────────────────────────────────────────────────────── */
+
+.cds-page-header__title-cell {
+  display: flex;
+  grid-area: title;
+  min-inline-size: 0;
+}
+
+.cds-page-header__title {
+  @include type-style('heading-04');
+
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  color: theme.$text-primary;
+  gap: 0.5rem;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  padding-block: 0.5rem 0.75rem;
+  /* One line in both forms, truncated where its room ends (IBM Products'
+     title), its full text in its tooltip then. */
+  white-space: nowrap;
+}
+
+.cds-page-header__title-text {
+  overflow: hidden;
+  min-inline-size: 0;
+  text-overflow: ellipsis;
+}
+
+.cds-page-header__title-icon {
+  display: inline-flex;
+  flex: none;
+  color: theme.$icon-primary;
+
+  svg {
+    block-size: 1em;
+    inline-size: 1em;
+  }
+}
+
+.cds-page-header__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $_actions-gap;
+  grid-area: actions;
+  padding-block: 0.25rem;
+
+  /* Descriptions: one row; what doesn't fit moves into the overflow menu
+     rather than wrapping. A node of your own still wraps. */
+  &:not([data-ph-fixed]) {
+    flex-wrap: nowrap;
+  }
+}
+
+/* Compact: the title after the breadcrumb, one line, the row's type. */
+.cds-page-header--collapsed {
+  .cds-page-header__title {
+    @include type-style('heading-compact-01');
+
+    padding-block: 0;
+    white-space: nowrap;
+  }
+
+  /* The slash before the title is the breadcrumb's own last one (shown while
+     collapsed, PageHeader.tsx), so the title sits the breadcrumb's 8px after
+     it, as each crumb does: a slash of the header's own, after the
+     breadcrumb's hidden one, put 21px between the last crumb and the slash. */
+
+  .cds-page-header__actions {
+    flex-wrap: nowrap;
+  }
+}
+
+/* ── the details: subtitle, children, tags ───────────────────────────── */
+
+.cds-page-header__details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  grid-area: details;
+  min-inline-size: 0;
+  padding-block-end: 1rem;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.cds-page-header__subtitle {
+  @include type-style('body-01');
+
+  margin: 0;
+  color: theme.$text-secondary;
+
+  max-inline-size: 48rem;
+}
+
+.cds-page-header__available {
+  @include type-style('body-compact-01');
+
+  min-inline-size: 0;
+}
+
+.cds-page-header__tags {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+/* Collapsing: the details' copy, where they were, holding still while the
+   edge closes over it. */
+.cds-page-header__ghost {
+  position: absolute;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* The title's swap (PageHeader.tsx, `roll`): a title rolls in its own line,
+   its content box, which is the window. `--cds-ph-roll` is how far its
+   content is from home (px, negative up), animated; `--cds-ph-roll-h` is the
+   line's height H. Where the content is cut (the window's top when it's
+   up, its bottom when it's down) it fades over the disclosure's soft edge,
+   `min(16px, h, H − h)` for the h of H in view: nothing at rest, nothing
+   once gone, so neither end pops. Registered, so the text and its edge are
+   one animation on one clock, with no script per frame. */
+@property --cds-ph-roll {
+  inherits: true;
+  initial-value: 0px;
+  syntax: '<length>';
+}
+
+.cds-page-header [data-ph-roll] {
+  --_soft: var(--cds-motion-soft-edge, 16px);
+  --_h: var(--cds-ph-roll-h, 0px);
+  --_top: max(
+    0px,
+    min(var(--_soft), -1 * var(--cds-ph-roll), var(--_h) + var(--cds-ph-roll))
+  );
+  --_bottom: max(
+    0px,
+    min(var(--_soft), var(--cds-ph-roll), var(--_h) - var(--cds-ph-roll))
+  );
+
+  mask-clip: content-box;
+
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000000 var(--_top),
+    #000000 calc(100% - var(--_bottom)),
+    transparent 100%
+  );
+  mask-origin: content-box;
+  mask-repeat: no-repeat;
+
+  > * {
+    translate: 0 var(--cds-ph-roll);
+  }
+}
+
+/* Without the fade (`motion={{ fade: false }}`, PageHeaderMotion): the
+   jump's way, opaque to the last frame. The titles roll through a hard edge
+   at their line (no soft edge); the edge over the details is hard too
+   (PageHeader.tsx writes `--cds-ph-edge` 0), and the slash steps on its
+   beats instead of fading. */
+.cds-page-header[data-ph-fade='none'] [data-ph-roll] {
+  --_soft: 0px;
+}
+
+/* Moving: the details (expanding) or their copy (collapsing) end at the edge
+   that opens or closes over them (`--cds-ph-cut`, px from their top: the top
+   of the tabs, else the header's bottom), through the disclosure's soft
+   edge (`--cds-ph-edge`, `min(16px, h, H − h)` for the h of their H that's
+   open; it grows over the first 16px and closes over the last, so nothing
+   pops when the mask goes). PageHeader.tsx writes both every frame. */
+.cds-page-header [data-ph-edge] {
+  mask-image: linear-gradient(
+    to bottom,
+    #000000 calc(var(--cds-ph-cut, 0px) - var(--cds-ph-edge, 0px)),
+    transparent var(--cds-ph-cut, 0px)
+  );
+}
+
+/* ── the navigation (tabs) ───────────────────────────────────────────── */
+
+.cds-page-header__nav {
+  grid-area: nav;
+  /* The tabs start on the title's text. */
+  margin-inline: calc(-1 * #{$_x});
+  min-inline-size: 0;
+  padding-inline: var(--cds-page-header-inset, #{$_x});
+}
+
+/* ── the fit's copy ──────────────────────────────────────────────────── */
+
+/* Each part at its own width, whatever the form and whatever has moved
+   (PageHeader.tsx's `measure`): out of flow, unseen, clipped to nothing so
+   it never widens the page. Its rows lay out at their max-content. */
+.cds-page-header__sizer {
+  position: absolute;
+  overflow: hidden;
+  block-size: 0;
+  inline-size: 0;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  pointer-events: none;
+  visibility: hidden;
+
+  > * {
+    position: absolute;
+    inline-size: max-content;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+  }
+}
+
+.cds-page-header__sizer-gap {
+  display: block;
+  block-size: 1px;
+}
+
+.cds-page-header__sizer > .cds-page-header__sizer-gap--expanded {
+  inline-size: $_gap-expanded;
+}
+
+.cds-page-header__sizer > .cds-page-header__sizer-gap--collapsed {
+  inline-size: $_gap-collapsed;
+}
+
+.cds-page-header__sizer-row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.cds-page-header__sizer-actions {
+  gap: $_actions-gap;
+}
+
+.cds-page-header__sizer-bar {
+  gap: $_bar-gap;
+  margin-inline-end: $_bar-end;
+}
+
+@media (forced-colors: active) {
+  .cds-page-header {
+    border-block-end: 1px solid CanvasText;
+  }
+}

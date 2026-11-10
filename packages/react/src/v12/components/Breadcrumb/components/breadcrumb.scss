@@ -1,0 +1,115 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/corners';
+
+/* Breadcrumb (Breadcrumb.tsx): v11's layout — crumbs in a row, each followed
+ * by its slash, 8px either side (4px at sm) — with the kit's link rollover.
+ * The nav is the reflow's root: a crumb leaving is a copy placed in it, so
+ * the type, size and slash rules are on the nav, where the copies read them
+ * too. */
+
+.cds-breadcrumb {
+  @include type-style('body-compact-01');
+  --cds-crumb-gap: 8px;
+
+  position: relative;
+  display: block;
+  color: theme.$text-primary;
+}
+
+.cds-breadcrumb--sm {
+  @include type-style('label-01');
+  --cds-crumb-gap: 4px;
+}
+
+.cds-breadcrumb__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.cds-breadcrumb__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-inline-end: var(--cds-crumb-gap);
+  white-space: nowrap;
+
+  &[data-last] {
+    margin-inline-end: 0;
+  }
+}
+
+/* The slash: its own glyph (hidden from assistive tech: the list says it). */
+.cds-breadcrumb__sep {
+  color: theme.$text-primary;
+  margin-inline-start: var(--cds-crumb-gap);
+  transition: opacity var(--cds-motion-duration-moderate-01)
+    var(--cds-motion-easing-entrance-productive);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: calc(
+      var(--cds-motion-duration-moderate-01) *
+        var(--cds-motion-reduced-clock, 0.5)
+    );
+  }
+}
+
+/* `noTrailingSlash`: the last crumb's slash fades out (and a crumb that
+   stops being last fades it in), keeping its place so nothing jumps. */
+.cds-breadcrumb--no-trailing-slash
+  .cds-breadcrumb__item[data-last]
+  .cds-breadcrumb__sep {
+  opacity: 0;
+  transition-duration: var(--cds-motion-duration-fast-02);
+  transition-timing-function: var(--cds-motion-easing-exit-productive);
+}
+
+/* A link crumb: the kit's link rollover, the underline on hover (v11's). */
+.cds-breadcrumb__link {
+  @include rollover-link($underline: hover);
+
+  & {
+    font: inherit;
+    text-decoration: none;
+  }
+}
+
+/* The current page, and a crumb with no link: primary text, still. */
+.cds-breadcrumb__current {
+  color: theme.$text-primary;
+  cursor: auto;
+  text-decoration: none;
+}
+
+.cds-breadcrumb__text {
+  color: theme.$link-primary;
+}
+
+a.cds-breadcrumb__current:focus-visible {
+  border-radius: corners.$mark;
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* The overflow crumb: the kit's OverflowMenu trigger, in the link's color,
+   sitting in the line (its 24px box overlaps the line's leading). */
+.cds-breadcrumb__overflow.cds-menu-trigger {
+  color: theme.$link-primary;
+  margin-block: -4px;
+}
+
+.cds-breadcrumb--sm .cds-breadcrumb__overflow.cds-menu-trigger {
+  margin-block: -5px;
+}

@@ -1,0 +1,219 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon foundations only: a labs v12 component consumes @carbon/styles and
+// never mirrors it. The one style being tried (the 6dp field radius) comes
+// from the shared explorations reference and is marked where it is used. The
+// one value Carbon lacks (a 12px icon) is read through get-var under a
+// carbon-proposal callout, with Carbon's own 16 as the fallback.
+@use '@carbon/styles/scss/config' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/motion' as *;
+@use '@carbon/styles/scss/border-radius' as *;
+@use '@carbon/styles/scss/utilities/custom-property';
+@use '../../../explorations' as explore;
+
+$block: '#{$prefix}--file-chip';
+
+// The chip is a md field tall; a thumbnail sits inside it with a
+// $spacing-01 inset on every side.
+$-height: $spacing-08;
+$-inset: $spacing-01;
+
+@keyframes #{$prefix}--file-chip-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+@keyframes #{$prefix}--file-chip-exit {
+  to {
+    opacity: 0;
+  }
+}
+
+.#{$block} {
+  display: inline-flex;
+  box-sizing: border-box;
+  align-items: center;
+  // @carbon-explore radius-field — FileChip only: the chip reads as a small surface you can touch, not a label. Tags stay undecided. TBD
+  border-radius: explore.$explore-radius-field;
+  animation: #{$prefix}--file-chip-enter $duration-moderate-02
+    motion(entrance, productive);
+  // The chip sits in the chat input: white in light, the shell ($layer-03 in
+  // v12) in dark. One lighter step above it is $layer-01 in light and $layer-02
+  // in dark, and no single Carbon token is both.
+  // @carbon-proposal token: file-chip-background — no Carbon token is one step lighter than the chat input in both themes ($layer-01 vanishes on the v12 dark shell). TBD
+  background-color: custom-property.get-var('file-chip-background', $layer-01);
+  block-size: $-height;
+  color: $text-primary;
+  // The chip is not editable text: no I-beam over the name. Remove keeps
+  // Carbon's button cursor.
+  cursor: default;
+  gap: $spacing-03;
+  max-inline-size: 100%;
+  padding-inline: $spacing-05 $spacing-03;
+  vertical-align: middle;
+}
+
+.#{$block}--image,
+.#{$block}--video {
+  padding-inline-start: $-inset;
+}
+
+.#{$block}--leaving {
+  animation: #{$prefix}--file-chip-exit $duration-fast-02
+    motion(exit, productive) forwards;
+}
+
+.#{$block}__file-icon {
+  flex: none;
+  fill: $icon-primary;
+}
+
+.#{$block}__thumbnail {
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  // @carbon-explore radius-field — concentric with the chip: its radius less the inset. TBD
+  border-radius: calc(#{explore.$explore-radius-field} - #{$-inset});
+  // A thumbnail still loading is one layer above the chip.
+  background-color: $layer-02;
+  block-size: calc(#{$-height} - 2 * #{$-inset});
+  inline-size: calc(#{$-height} - 2 * #{$-inset});
+}
+
+.#{$block}__thumbnail-image {
+  block-size: 100%;
+  inline-size: 100%;
+  object-fit: cover;
+}
+
+.#{$block}__thumbnail-placeholder {
+  fill: $icon-secondary;
+}
+
+.#{$block}__video-badge {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $border-radius-max;
+  background-color: $overlay;
+  block-size: $spacing-05;
+  inline-size: $spacing-05;
+  inset-block-end: $spacing-01;
+  inset-inline-start: $spacing-01;
+}
+
+// Carbon's type glyph for video: a play triangle would promise an action the
+// chip does not have. It sits on a round $overlay backing so it stays legible
+// on any thumbnail.
+// @carbon-proposal token: file-chip-video-icon-size — Carbon's smallest icon, 16, fills the 16px backing and reads too large on a 36px thumbnail; 12 is the spacing-04 rung. TBD
+$-video-icon-size: custom-property.get-var(
+  'file-chip-video-icon-size',
+  $spacing-05
+);
+
+.#{$block}__video-badge-icon {
+  block-size: $-video-icon-size;
+  fill: $icon-on-color;
+  inline-size: $-video-icon-size;
+}
+
+.#{$block}__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-inline-size: 0;
+}
+
+.#{$block}--image .#{$block}__text,
+.#{$block}--video .#{$block}__text {
+  padding-inline-start: $spacing-03;
+}
+
+// The name is cut in the middle: the start shrinks with an ellipsis and the
+// end (the last few characters and the extension) never does.
+.#{$block}__name {
+  @include type-style('body-compact-01');
+
+  display: flex;
+  max-inline-size: $spacing-13;
+  min-inline-size: 0;
+  white-space: nowrap;
+}
+
+// Carbon's Tooltip wraps the name in an inline-block popover container; let
+// it shrink like the name does, so the ellipsis still happens inside it.
+.#{$block}__name-tooltip {
+  display: flex;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+}
+
+.#{$block}__name-start {
+  overflow: hidden;
+  min-inline-size: 0;
+  text-overflow: ellipsis;
+}
+
+.#{$block}__name-end {
+  flex: none;
+}
+
+.#{$block}__secondary {
+  @include type-style('label-01');
+
+  overflow: hidden;
+  color: $text-secondary;
+  max-inline-size: $spacing-13;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.#{$block}__secondary--error {
+  color: $text-error;
+}
+
+.#{$block}__trailing {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: $spacing-02;
+}
+
+.#{$block}__status {
+  flex: none;
+}
+
+.#{$block}__status--error {
+  fill: $support-error;
+}
+
+.#{$block}__status--complete {
+  fill: $support-success;
+}
+
+.#{$block}__status--fading {
+  animation: #{$prefix}--file-chip-exit $duration-fast-02
+    motion(exit, productive) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .#{$block},
+  .#{$block}--leaving,
+  .#{$block}__status--fading {
+    animation: none;
+  }
+}

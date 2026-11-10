@@ -1,0 +1,179 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon-labs/v12-styles/scss/field-fill' as *;
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/corners';
+
+/* TimePicker — what the text input's field (text-input.scss) doesn't
+ * already draw: the row, the time field's
+ * width, and the selects on the field's hairline ladder.
+ *
+ *   field    v11's 4.875rem (the text's 2.875rem and the 16px inset at each
+ *            end; on a pill, the pill's inset), widening by the status
+ *            mark's slot when a status shows
+ *   select   the field's fill and hairline; the ladder's steps (hover
+ *            halfway to `$border-strong` on fast-02, press `$border-strong`
+ *            at the same 1px at once (a step in contrast, not weight), focus the field's accent at 2px, leaving on
+ *            fast-01); motion-icons' chevron, hovering with it */
+
+$fast-01: var(--cds-motion-duration-fast-01);
+$fast-02: var(--cds-motion-duration-fast-02);
+$standard: var(--cds-motion-easing-standard-productive);
+
+.cds-time-picker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.cds-time-picker .cds-time-picker__field {
+  inline-size: calc(2.875rem + 2 * var(--tf-pad, 14px));
+  transition: inline-size 0s linear $fast-01;
+
+  .cds-text-input:is([data-status='warn'], [data-status='error']) & {
+    inline-size: calc(
+      2.875rem + 2 * var(--tf-pad, 14px) + var(--tf-gap, 8px) +
+        var(--tf-mark, 16px)
+    );
+    transition: none;
+  }
+}
+
+.cds-time-picker-select {
+  --ts-edge: #{theme.$border-subtle};
+  --ts-ring: transparent;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--tf-radius, #{corners.$in});
+  background: $field-fill;
+  block-size: var(--tf-h, 40px);
+  color: theme.$text-primary;
+
+  &::after {
+    position: absolute;
+    box-sizing: border-box;
+    border: 1px solid var(--ts-edge);
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px var(--ts-ring);
+    content: '';
+    inset: 0;
+    pointer-events: none;
+    transition:
+      border-color $fast-01 $standard,
+      box-shadow $fast-01 $standard;
+  }
+
+  /* Not over focus: a focused select keeps its edge under the pointer, as a field does. */
+  &:not(
+      .cds-time-picker-select--disabled,
+      .cds-time-picker-select--readonly
+    ):not(:focus-within):hover::after {
+    --ts-edge: color-mix(
+      in srgb,
+      #{theme.$border-subtle},
+      #{theme.$border-strong}
+    );
+
+    transition-duration: $fast-02;
+  }
+
+  &:not(
+      .cds-time-picker-select--disabled,
+      .cds-time-picker-select--readonly
+    ):active::after {
+    --ts-edge: #{theme.$border-strong};
+    --ts-ring: transparent;
+
+    transition: none;
+  }
+
+  &:focus-within::after {
+    --ts-edge: var(--tf-accent, #{theme.$border-inverse});
+    --ts-ring: var(--tf-accent, #{theme.$border-inverse});
+  }
+}
+
+.cds-time-picker-select__input {
+  /* The field's inset at both ends, the chevron (20px at lg) and the gap before it. */
+  padding: 0
+    calc(var(--tf-pad, 14px) + var(--tf-icon, 16px) + var(--tf-gap, 8px)) 0
+    var(--tf-pad, 14px);
+  border: 0;
+  border-radius: inherit;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+  block-size: 100%;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: inherit;
+  outline: 0;
+
+  option {
+    background: var(--cds-surface, #{theme.$layer});
+    color: theme.$text-primary;
+  }
+}
+
+.cds-time-picker-select__chevron {
+  position: absolute;
+  display: inline-flex;
+  color: theme.$icon-primary;
+  inset-inline-end: var(--tf-pad, 14px);
+  pointer-events: none;
+
+  svg {
+    display: block;
+    fill: currentColor;
+  }
+}
+
+.cds-time-picker-select--readonly {
+  background: transparent;
+
+  .cds-time-picker-select__input {
+    cursor: default;
+  }
+}
+
+.cds-time-picker-select--disabled {
+  &::after {
+    --ts-edge: transparent;
+  }
+
+  .cds-time-picker-select__input {
+    color: theme.$text-disabled;
+    cursor: not-allowed;
+  }
+
+  .cds-time-picker-select__chevron {
+    color: theme.$icon-disabled;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cds-time-picker-select::after {
+    transition-duration: calc(#{$fast-01} / 2);
+  }
+}
+
+@media (forced-colors: active) {
+  .cds-time-picker-select::after {
+    border-color: ButtonText;
+    box-shadow: none;
+  }
+
+  .cds-time-picker-select:focus-within::after {
+    border: 2px solid Highlight;
+  }
+}

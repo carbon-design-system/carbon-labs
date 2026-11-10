@@ -1,0 +1,65 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ActivityFeedStories from './ActivityFeed.stories.tsx';
+
+<Meta of={ActivityFeedStories} />
+
+# ActivityFeed
+
+Events in time order, newest first, grouped by day. Each day has a sticky header
+that never folds. An event is an avatar with initials, who did what, a status,
+its time and an optional detail behind Show details. An event that asks for an
+answer can have up to two actions, drawn as small ghost buttons. Today's times
+are relative; an earlier day shows the clock time. `categories` adds filter tags
+over the list. While `loading`, skeleton rows stand in for the events. With
+none, the feed shows an empty state. Give the feed a height: it scrolls inside
+it.
+
+<Canvas of={ActivityFeedStories.Default} />
+
+<Canvas of={ActivityFeedStories.Arrivals} />
+
+<Canvas of={ActivityFeedStories.Filters} />
+
+<Canvas of={ActivityFeedStories.Actions} />
+
+<Canvas of={ActivityFeedStories.Loading} />
+
+<Canvas of={ActivityFeedStories.Empty} />
+
+<Canvas of={ActivityFeedStories.LongFeed} />
+
+## Motion
+
+- **List arrival:** with the reader at the top, a new event's place opens from
+  nothing on the step for its height, on entrance-productive. What is below
+  follows. Its content comes down 8px into the place. A new day's place opens
+  with its header.
+- **Place hold:** with the reader further down, nothing in view moves. The row
+  being read holds its place as events arrive above it, and Jump to latest shows
+  with a count of the new events.
+- **Floating snap:** Jump to latest is the kit's JumpTo, set to the top. The
+  pill arrives and leaves on its own clock. A jump glides to the top on a clock
+  set by the distance.
+- **Disclosure:** Show details opens an event's detail with the kit's
+  disclosure. The body opens on the step for its travel, and the content moves
+  with the opening.
+- **Content swap:** a filter change swaps the list out, then in. The events and
+  day titles leave 8px up on fast-01, exit-productive. The new ones come in from
+  8px below on fast-02, entrance-productive. The top day title holds still when
+  its day leads both lists. The view goes back to the top.
+- **Soft edge:** under a stuck day title, a divider and a soft edge grow over
+  the first 16px of scroll under it, so neither pops.
+- **Skeleton reveal:** when the events land, the skeleton dissolves in place as
+  they fade in.
+- **Stillness:** as a minute passes, a time's words change in place. Only the
+  times whose words change render again, never a row or the feed.
+
+## Reduced motion
+
+A new event's place is there at once, and its content fades in on the reduced
+clock. A filter change swaps the list at once. A detail opens at once, its
+content fading in. Jump to latest lands at once, with no glide.
+
+## Props
+
+<ArgTypes of={ActivityFeedStories} />

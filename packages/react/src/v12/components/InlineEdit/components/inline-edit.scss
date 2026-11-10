@@ -1,0 +1,228 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+
+/* InlineEdit (`InlineEdit.tsx`): the view is the field's box without its
+   hairline, so the swap moves nothing but the box. Faces share one cell. */
+
+$_step: var(--cds-text-primary, #161616);
+$fast-01: var(--cds-motion-duration-fast-01);
+
+.cds-inline-edit {
+  /* The field's sizes (text-input.scss): height, edge inset, track inset. */
+  --ie-h: 40px;
+  --ie-pad: 14px;
+  --ie-inset: 4px;
+  --ie-radius: 8px;
+  --ie-lh: 18px;
+
+  @include type-style('body-compact-01');
+
+  position: relative;
+  color: theme.$text-primary;
+  min-inline-size: 0;
+}
+
+.cds-inline-edit--xs {
+  --ie-h: 24px;
+  --ie-pad: 8px;
+  --ie-inset: 0px;
+}
+
+.cds-inline-edit--sm {
+  --ie-h: 32px;
+  --ie-pad: 12px;
+  --ie-inset: 4px;
+}
+
+.cds-inline-edit--lg {
+  --ie-h: 48px;
+  --ie-pad: 16px;
+}
+
+.cds-inline-edit--square {
+  --ie-radius: 0px;
+}
+
+.cds-inline-edit--full {
+  --ie-radius: calc(var(--ie-h) / 2);
+  --ie-pad: calc(var(--ie-h) / 2);
+}
+
+.cds-inline-edit__box {
+  position: relative;
+  display: grid;
+  min-inline-size: 0;
+}
+
+.cds-inline-edit--content {
+  display: inline-block;
+  max-inline-size: 100%;
+}
+
+.cds-inline-edit--content > .cds-inline-edit__box {
+  display: inline-grid;
+  max-inline-size: 100%;
+}
+
+.cds-inline-edit__face {
+  grid-area: 1 / 1;
+  min-inline-size: 0;
+}
+
+/* The leaving face, at the box's old size until it has faded. */
+.cds-inline-edit__face[data-leaving] {
+  position: absolute;
+  z-index: 0;
+  overflow: hidden;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  pointer-events: none;
+}
+
+/* ── the view ─────────────────────────────────────────────────────────── */
+
+.cds-inline-edit__view {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  border-radius: var(--ie-radius);
+  gap: 8px;
+  min-block-size: var(--ie-h);
+  padding-inline: var(--ie-pad) var(--ie-inset);
+}
+
+.cds-inline-edit--xs .cds-inline-edit__view {
+  padding-inline-end: 0;
+}
+
+/* The quiet hover: an even wash, flat on press. */
+.cds-inline-edit__view--editable {
+  @include rollover($press-inset: 0);
+  --rollover-rest: transparent;
+  --rollover-flat: 1;
+  --rollover-hover: color-mix(in srgb, #{$_step} 8%, transparent);
+  --rollover-press: color-mix(in srgb, #{$_step} 12%, transparent);
+
+  cursor: text;
+}
+
+.cds-inline-edit__value {
+  overflow: hidden;
+  flex: 1 1 auto;
+  line-height: var(--ie-lh);
+  min-inline-size: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cds-inline-edit--content .cds-inline-edit__value {
+  flex: 0 1 auto;
+}
+
+.cds-inline-edit__value--empty {
+  color: theme.$text-placeholder;
+}
+
+.cds-inline-edit--disabled .cds-inline-edit__value {
+  color: theme.$text-disabled;
+}
+
+/* A textarea's view: its lines at the field's inset, as the textarea draws them. */
+.cds-inline-edit--textarea .cds-inline-edit__view {
+  align-items: flex-start;
+  padding-block: calc((var(--ie-h) - var(--ie-lh)) / 2);
+}
+
+.cds-inline-edit--textarea .cds-inline-edit__value {
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.cds-inline-edit--textarea .cds-inline-edit__mark,
+.cds-inline-edit--textarea .cds-inline-edit__trigger {
+  margin-block: calc((var(--ie-lh) - var(--ie-h)) / 2 + var(--ie-inset));
+}
+
+/* The status mark's slot: kept, so a status arriving moves nothing. */
+.cds-inline-edit__mark {
+  display: inline-grid;
+  flex: none;
+  block-size: var(--ie-lh);
+  inline-size: 16px;
+  place-items: center;
+}
+
+.cds-inline-edit__mark-face {
+  display: inline-flex;
+}
+
+/* The edit button: on hover or focus, always where there's no hover. */
+.cds-inline-edit__trigger {
+  display: inline-flex;
+  flex: none;
+  opacity: 0;
+  transition: opacity $fast-01 linear;
+}
+
+.cds-inline-edit__view:hover .cds-inline-edit__trigger,
+.cds-inline-edit__trigger:focus-within {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .cds-inline-edit__trigger {
+    opacity: 1;
+  }
+}
+
+.cds-inline-edit__live {
+  position: absolute;
+  overflow: hidden;
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+/* ── editing ──────────────────────────────────────────────────────────── */
+
+.cds-inline-edit__edit {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.cds-inline-edit__field {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+/* Hugging its value: the text's width and the field's insets, at least 12rem. */
+.cds-inline-edit--content .cds-inline-edit__field {
+  flex: none;
+  inline-size: min(
+    100%,
+    max(12rem, calc(var(--ie-text-w, 0px) + 2 * var(--ie-pad) + 24px))
+  );
+}
+
+.cds-inline-edit--textarea .cds-inline-edit__field textarea {
+  resize: none;
+}
+
+.cds-inline-edit__actions {
+  display: inline-flex;
+  flex: none;
+}
+
+.cds-inline-edit__action {
+  display: inline-flex;
+}

@@ -1,0 +1,403 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/corners';
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/text-pairs';
+@use '@carbon-labs/v12-styles/scss/cast-shadow-floating';
+
+/* SidePanel — SidePanel.tsx.
+ *
+ *   surface   the kit's quiet surface (--cds-surface) and its hairline
+ *             (--cds-surface-rule). Its frame (`data-snap-frame`) draws them, so
+ *             the snap moves them as true geometry
+ *   frames    flush (default): against the viewport's (or its container's)
+ *             edge, square (the corners ladder's attached step), the hairline
+ *             on the page-facing edge only, as the side nav's column. inset:
+ *             8px in from the edges (the side nav's panel), 8px corners (in
+ *             the page), the hairline round it. floating: the same 8px in,
+ *             16px corners (over the page), the hairline round it, and, with
+ *             `shadow`, the floating cast shadow (Snap's surface lifecycle
+ *             draws it as the panel's sibling; placed here, under the panel)
+ *   place     under the shell's header (`--cds-side-panel-top`, 3rem) to the
+ *             bottom, at its side; `contained`: its positioned container's
+ *             full height; less the frame's gap all round
+ *   size      xs 16rem, sm 20rem, md 30rem, lg 40rem, xl 75%, 2xl 90% (never
+ *             wider than what it sits in)
+ *   layout    the top bar (back, the small title, close) over the body (the
+ *             kit's Scroller: the title block, then the content), then the
+ *             actions
+ */
+
+$_surface: var(--cds-surface, #{theme.$layer-01});
+$_rule: var(--cds-surface-rule, #{theme.$border-subtle-01});
+$_divider: var(--cds-surface-divider, #{theme.$border-subtle-01});
+
+.cds-side-panel__overlay {
+  position: fixed;
+  z-index: 7990;
+  background: theme.$overlay;
+  inset: 0;
+  opacity: 0;
+}
+
+.cds-side-panel__overlay--contained {
+  position: absolute;
+  z-index: 10;
+}
+
+.cds-side-panel {
+  --cds-side-panel-w: 30rem;
+  /* The frame: its distance from the edges it sits by, and its corners. */
+  --cds-side-panel-gap: 0px;
+  --cds-side-panel-radius: #{corners.$attached};
+
+  position: fixed;
+  z-index: 8000;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  color: theme.$text-primary;
+  inline-size: var(--cds-side-panel-w);
+  inset-block: calc(var(--cds-side-panel-top, 3rem) + var(--cds-side-panel-gap))
+    var(--cds-side-panel-gap);
+  isolation: isolate;
+  max-inline-size: calc(100% - 2 * var(--cds-side-panel-gap));
+  outline: none;
+
+  &[data-leaving] {
+    pointer-events: none;
+  }
+}
+
+.cds-side-panel--contained {
+  position: absolute;
+  z-index: 11;
+  inset-block: var(--cds-side-panel-gap);
+}
+
+.cds-side-panel--end {
+  inset-inline-end: var(--cds-side-panel-gap);
+}
+
+.cds-side-panel--start {
+  inset-inline-start: var(--cds-side-panel-gap);
+}
+
+.cds-side-panel--inset {
+  --cds-side-panel-gap: #{$spacing-03};
+  --cds-side-panel-radius: #{corners.$in};
+}
+
+.cds-side-panel--floating {
+  --cds-side-panel-gap: #{$spacing-03};
+  --cds-side-panel-radius: #{corners.$over};
+}
+
+/* The floating frame's cast shadow: motion-core's floating shadow host, the
+   panel's sibling just before it (it copies the panel's size, follows its
+   snap and solves its colour). Its default place is a fixed box at the
+   window's top left over everything; here it takes the panel's place and
+   stacking instead, drawn first, so it lies under the panel. */
+.cast-floating:has(+ .cds-side-panel--floating) {
+  z-index: 8000;
+  inset-block-start: calc(var(--cds-side-panel-top, 3rem) + #{$spacing-03});
+  inset-inline-start: auto;
+}
+
+.cast-floating:has(+ .cds-side-panel--floating.cds-side-panel--end) {
+  inset-inline-end: $spacing-03;
+}
+
+.cast-floating:has(+ .cds-side-panel--floating.cds-side-panel--start) {
+  inset-inline-start: $spacing-03;
+}
+
+.cast-floating:has(+ .cds-side-panel--floating.cds-side-panel--contained) {
+  position: absolute;
+  z-index: 11;
+  inset-block-start: $spacing-03;
+}
+
+.cds-side-panel--xs {
+  --cds-side-panel-w: 16rem;
+}
+
+.cds-side-panel--sm {
+  --cds-side-panel-w: 20rem;
+}
+
+.cds-side-panel--lg {
+  --cds-side-panel-w: 40rem;
+}
+
+.cds-side-panel--xl {
+  --cds-side-panel-w: 75%;
+}
+
+.cds-side-panel--2xl {
+  --cds-side-panel-w: 90%;
+}
+
+/* The container: the fill, and the hairline (flush: on the page's side; inset
+   and floating: round it). */
+.cds-side-panel__frame {
+  position: absolute;
+  z-index: -1;
+  border-radius: var(--cds-side-panel-radius);
+  background: $_surface;
+  box-shadow: inset 0 0 0 1px $_rule;
+  inset: 0;
+}
+
+/* The hairline on its inner edge: the start of an end panel, the end of a start one (mirrored right to left). */
+.cds-side-panel--flush.cds-side-panel--end .cds-side-panel__frame {
+  box-shadow: inset 1px 0 0 $_rule;
+
+  &:dir(rtl) {
+    box-shadow: inset -1px 0 0 $_rule;
+  }
+}
+
+.cds-side-panel--flush.cds-side-panel--start .cds-side-panel__frame {
+  box-shadow: inset -1px 0 0 $_rule;
+
+  &:dir(rtl) {
+    box-shadow: inset 1px 0 0 $_rule;
+  }
+}
+
+.cds-side-panel__content {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-block-size: 0;
+}
+
+/* What moves with the opening (SidePanel.tsx, `arrive`), inside the snap's
+   content layer, which holds still under the clip and its soft edge. It
+   moves by its relative offset (`left` / `top`), on the main thread with the
+   clip, never by a compositor `translate`. */
+.cds-side-panel__arrive {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-block-size: 0;
+}
+
+/* ── the top bar ────────────────────────────────────────────────────────── */
+
+/* Over the body's top: the back and close buttons at its ends; the small
+   title between them, shown once the title has scrolled under it. Its fill
+   and divider come with the small title, so at rest the title block reads as
+   the top of the panel. */
+.cds-side-panel__bar {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  block-size: 56px;
+  gap: 8px;
+  inset-block-start: 0;
+  inset-inline: 1px;
+  padding-inline: 8px;
+  pointer-events: none;
+
+  > * {
+    pointer-events: auto;
+  }
+
+  &::before {
+    position: absolute;
+    z-index: -1;
+    background: $_surface;
+    box-shadow: inset 0 -1px 0 $_divider;
+    content: '';
+    inset: 0;
+    opacity: 0;
+    transition: opacity var(--cds-motion-duration-fast-02)
+      var(--cds-motion-easing-standard-productive);
+  }
+}
+
+.cds-side-panel--flush.cds-side-panel--start .cds-side-panel__bar {
+  inset-inline: 0 1px;
+}
+
+/* Inset and floating: inside the hairline round it, the fill's top corners
+   concentric with the panel's. */
+.cds-side-panel:not(.cds-side-panel--flush) .cds-side-panel__bar {
+  inset-block-start: 1px;
+
+  &::before {
+    border-start-end-radius: corners.inner(var(--cds-side-panel-radius), 1px);
+    // @carbon-explore radius-concentric — An inner part's radius is the outer radius less its inset, never below 0. TBD
+    border-start-start-radius: corners.inner(var(--cds-side-panel-radius), 1px);
+  }
+}
+
+.cds-side-panel__close {
+  margin-inline-start: auto;
+}
+
+.cds-side-panel__bar-title {
+  @include type-style('heading-compact-01');
+
+  overflow: hidden;
+  margin: 0;
+  color: theme.$text-primary;
+  min-inline-size: 0;
+  opacity: 0;
+  padding-inline-start: 8px;
+  pointer-events: none;
+  text-overflow: ellipsis;
+  transition:
+    opacity var(--cds-motion-duration-fast-02)
+      var(--cds-motion-easing-entrance-productive),
+    translate var(--cds-motion-duration-fast-02)
+      var(--cds-motion-easing-entrance-productive);
+  translate: 0 4px;
+  white-space: nowrap;
+}
+
+.cds-side-panel--stepped .cds-side-panel__bar-title {
+  padding-inline-start: 0;
+}
+
+.cds-side-panel[data-condensed] {
+  .cds-side-panel__bar::before {
+    opacity: 1;
+  }
+
+  .cds-side-panel__bar-title {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* ── the title block ────────────────────────────────────────────────────── */
+
+/* 16px in, clear of the close button at the end (and the back button at the
+   start, on a later step). */
+.cds-side-panel__title-block {
+  flex: none;
+  padding-block: 16px 8px;
+  padding-inline: 16px 56px;
+}
+
+.cds-side-panel--stepped .cds-side-panel__title-block {
+  padding-inline-start: 56px;
+}
+
+/* Without the scrolling title: the block sits under the bar's buttons, in
+   the panel's head, and doesn't scroll. */
+.cds-side-panel:not(.cds-side-panel--animate-title)
+  .cds-side-panel__title-block {
+  box-sizing: border-box;
+  min-block-size: 56px;
+}
+
+.cds-side-panel__label {
+  @include type-style('label-01');
+
+  margin: 0 0 4px;
+  color: theme.$text-secondary;
+}
+
+.cds-side-panel__title {
+  @include type-style('heading-03');
+
+  margin: 0;
+  color: theme.$text-primary;
+}
+
+.cds-side-panel__subtitle {
+  /* The kit's title → description pair (styles/_text-pairs.scss). */
+  @include text-pairs.description;
+
+  margin: text-pairs.$title-to-summary 0 0;
+}
+
+.cds-side-panel__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  margin-block-start: 16px;
+  margin-inline-start: -8px;
+}
+
+/* ── body ───────────────────────────────────────────────────────────────── */
+
+.cds-side-panel__body {
+  @include type-style('body-01');
+
+  flex: 1 1 auto;
+  color: theme.$text-primary;
+  min-block-size: 0;
+}
+
+.cds-side-panel__viewport {
+  box-sizing: border-box;
+  padding-block-end: 24px;
+}
+
+/* With the scrolling title the bar overlays the body's top; without it, the
+   title block clears it. */
+.cds-side-panel:not(.cds-side-panel--animate-title) .cds-side-panel__body {
+  padding-block-start: 0;
+}
+
+.cds-side-panel__inner {
+  padding-block-start: 8px;
+  padding-inline: 16px;
+}
+
+/* ── actions ────────────────────────────────────────────────────────────── */
+
+/* The kit's buttons at their natural width, at the end, 8px apart, over a
+   divider, as the modal's footer. */
+.cds-side-panel__actions {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  padding: 16px;
+  box-shadow: inset 0 1px 0 $_divider;
+  gap: 8px;
+
+  > .cds-btn {
+    flex: none;
+  }
+}
+
+.cds-side-panel__actions--condensed {
+  padding-block: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cds-side-panel__bar-title {
+    translate: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .cds-side-panel__frame {
+    border: 1px solid CanvasText;
+    background: Canvas;
+  }
+
+  .cds-side-panel--flush .cds-side-panel__frame {
+    border-block: 0;
+  }
+}

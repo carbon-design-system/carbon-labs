@@ -1,0 +1,53 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/type' as *;
+
+/* The page and the pane in one row: the pane's move narrows the page beside it. */
+.cds-assistant {
+  display: flex;
+  block-size: 100%;
+  min-block-size: 0;
+}
+
+.cds-assistant__page {
+  flex: 1 1 0;
+  min-block-size: 0;
+  min-inline-size: 0;
+}
+
+.cds-assistant__shell {
+  flex: 1 1 auto;
+  min-block-size: 0;
+}
+
+.cds-assistant__title {
+  @include type-style('heading-compact-01');
+
+  margin: 0;
+  padding-inline-start: 8px;
+}
+
+/* The header's tools at its end: the turn navigator, then close. */
+.cds-assistant__tools {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* The finished reply's announcement: read, not seen. */
+.cds-assistant__announce {
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip: rect(0, 0, 0, 0);
+  inline-size: 1px;
+  white-space: nowrap;
+}

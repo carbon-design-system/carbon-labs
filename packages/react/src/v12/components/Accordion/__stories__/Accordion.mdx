@@ -1,0 +1,68 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as AccordionStories from './Accordion.stories.tsx';
+
+<Meta of={AccordionStories} />
+
+# Accordion
+
+Headings that open and shut the content under them. `Accordion` holds the items.
+`AccordionItem` is a heading button with a chevron, over the body it opens.
+`AccordionSkeleton` is the accordion while it loads. They take Carbon's props,
+plus `exclusive`, `headingLevel`, `corners`, `frame` and `timeScale`. An item's
+`open` is its initial state, and it is followed whenever it changes; a click
+toggles it in between. Enter or Space toggles an item; ↑, ↓, Home and End move
+between the headings.
+
+<Canvas of={AccordionStories.Default} />
+
+<Canvas of={AccordionStories.ExpandAll} />
+
+<Canvas of={AccordionStories.Uncontrolled} />
+
+<Canvas of={AccordionStories.Exclusive} />
+
+<Canvas of={AccordionStories.Sizes} />
+
+<Canvas of={AccordionStories.Frames} />
+
+<Canvas of={AccordionStories.AlignStart} />
+
+<Canvas of={AccordionStories.Disabled} />
+
+<Canvas of={AccordionStories.Skeleton} />
+
+## Motion
+
+The body is the shared disclosure.
+
+- **Body:** the height travels on the step for its travel: under 24px fast-02,
+  under 120px moderate-01, under 480px moderate-02, under 900px moderate-03,
+  else slow-01. Opening is on entrance-productive. Shutting is one step faster,
+  on exit-productive.
+- **One motion:** every body that changes in one commit moves on one clock, the
+  step of the farthest travel. Expand all and collapse all are one motion. With
+  more than one body, the step is never slower than moderate-02, before a shut's
+  step down. With `exclusive`, opening one item shuts the other, as one swap on
+  standard-productive.
+- **Soft edge:** while it moves, the clip's bottom fades over
+  `min(16px, h, H − h)`, so it is gone on the frame the body lands.
+- **Content in:** the content waits 8px above and comes down into place from the
+  opening's first frame, over one duration token longer than the body. It
+  settles last.
+- **Content out:** the content holds still while the edge closes over it.
+- **Turn:** a change mid-move starts from the body's live height and takes the
+  step of what is left.
+- **Chevron:** down when shut, up when open. The heading is its motion icon
+  frame.
+- **Rollover:** the kit's rollover on the heading, an even wash across the row.
+  It is flush: the row never grows past its hairlines or shrinks from them.
+- **First paint:** no motion. Under `exclusive`, the last open item stays open.
+
+## Reduced motion
+
+A body opens or shuts at once, with no soft edge. The content fades in on the
+reduced clock. The chevron and the hover change at once.
+
+## Props
+
+<ArgTypes of={AccordionStories} />

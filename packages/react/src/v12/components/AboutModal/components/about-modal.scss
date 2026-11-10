@@ -1,0 +1,85 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+
+/* AboutModal — AboutModal.tsx, on the kit's modal (modal.scss).
+ *
+ *   header    the logo over the title (heading-04), the close button at the
+ *             end, as the modal's
+ *   body      the content (body-01), then a row of links, then the foot: a
+ *             divider (the quiet surface's), the additional information (one
+ *             item, or tabs), the copyright (label-01, secondary)
+ */
+
+$_divider: var(--cds-surface-divider, #{theme.$border-subtle-01});
+
+/* The logo first, whatever order the header renders it in. */
+.cds-about-modal__header {
+  display: flex;
+  flex-direction: column;
+}
+
+.cds-about-modal__logo {
+  order: -1;
+  line-height: 0;
+  margin-block-end: 24px;
+}
+
+.cds-about-modal__header .cds-modal__heading {
+  @include type-style('heading-04');
+}
+
+.cds-about-modal__content {
+  @include type-style('body-01');
+
+  color: theme.$text-primary;
+
+  > p {
+    margin: 0 0 8px;
+  }
+}
+
+.cds-about-modal__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin-block-start: 16px;
+}
+
+.cds-about-modal__foot {
+  padding: 16px 16px 0;
+  box-shadow: inset 0 1px 0 $_divider;
+  margin-block-start: 24px;
+  margin-inline: -16px;
+}
+
+.cds-about-modal__info-label {
+  @include type-style('heading-compact-01');
+
+  margin: 0 0 4px;
+  color: theme.$text-primary;
+}
+
+.cds-about-modal__info-content,
+.cds-about-modal__panel {
+  @include type-style('body-compact-01');
+
+  color: theme.$text-secondary;
+}
+
+.cds-about-modal__panel {
+  padding-block: 16px 0;
+}
+
+.cds-about-modal__copyright {
+  @include type-style('label-01');
+
+  margin: 16px 0 0;
+  color: theme.$text-secondary;
+}

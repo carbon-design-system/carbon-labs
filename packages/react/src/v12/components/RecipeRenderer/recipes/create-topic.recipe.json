@@ -1,0 +1,522 @@
+{
+  "$schema": "../recipe.schema.json",
+  "name": "create-topic",
+  "kind": "flow",
+  "status": "draft",
+  "description": "Create a resource in three short steps, each one undoable, ending on what was made. The shape of Carbon’s CreateFullPage example (carbon#23309).",
+  "meta": {
+    "intent": "Walks a person through creating a topic in three steps they can go back through, and confirms what was created.",
+    "useWhen": [
+      "creating one resource needs more than one screen of decisions",
+      "later steps depend on earlier ones"
+    ],
+    "preferInstead": [
+      {
+        "when": "the resource needs three fields or fewer",
+        "use": "a CreateModal (Carbon example, packages/react/src/examples/CreateModal)",
+        "because": "a full-page flow for a short form takes the person away from where they were"
+      },
+      {
+        "when": "the steps are independent of each other",
+        "use": "one settings-page layout",
+        "because": "forced order for unordered choices is friction"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "id": "partition",
+      "screen": {
+        "component": "@carbon/react:Grid",
+        "children": [
+          {
+            "component": "@carbon/react:Stack",
+            "grid": {
+              "span": {
+                "sm": 4,
+                "md": 8,
+                "lg": 16
+              }
+            },
+            "gap": "spacing-06",
+            "children": [
+              {
+                "component": "@carbon/react:ProgressIndicator",
+                "props": {
+                  "currentIndex": 0,
+                  "spaceEqually": true
+                },
+                "children": [
+                  {
+                    "component": "@carbon/react:ProgressStep",
+                    "props": {
+                      "label": "Partition"
+                    }
+                  },
+                  {
+                    "component": "@carbon/react:ProgressStep",
+                    "props": {
+                      "label": "Core configuration"
+                    }
+                  },
+                  {
+                    "component": "@carbon/react:ProgressStep",
+                    "props": {
+                      "label": "Message retention"
+                    }
+                  }
+                ]
+              },
+              {
+                "component": "@carbon/react:Heading",
+                "props": {
+                  "children": "Create topic"
+                }
+              },
+              {
+                "component": "@carbon/react:Section",
+                "children": [
+                  {
+                    "component": "@carbon/react:Heading",
+                    "props": {
+                      "children": "Partition"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "component": "@carbon/react:Form",
+            "props": {
+              "aria-label": "Create topic"
+            },
+            "grid": {
+              "span": {
+                "sm": 4,
+                "md": 6,
+                "lg": 8
+              }
+            },
+            "gap": "spacing-06",
+            "children": [
+              {
+                "component": "@carbon/react:TextInput",
+                "props": {
+                  "id": "topic-name",
+                  "labelText": "Topic name",
+                  "placeholder": "Enter topic name"
+                }
+              },
+              {
+                "component": "@carbon/react:ButtonSet",
+                "children": [
+                  {
+                    "component": "@carbon/react:Button",
+                    "props": {
+                      "kind": "secondary",
+                      "children": "Cancel",
+                      "onClick": {
+                        "$event": "cancel"
+                      }
+                    }
+                  },
+                  {
+                    "component": "@carbon/react:Button",
+                    "props": {
+                      "kind": "primary",
+                      "children": "Next",
+                      "onClick": {
+                        "$event": "next"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "on": {
+        "next": "core-configuration",
+        "cancel": "cancelled"
+      }
+    },
+    {
+      "id": "core-configuration",
+      "screen": {
+        "component": "@carbon/react:Grid",
+        "children": [
+          {
+            "component": "@carbon/react:Stack",
+            "grid": {
+              "span": {
+                "sm": 4,
+                "md": 8,
+                "lg": 16
+              }
+            },
+            "gap": "spacing-06",
+            "children": [
+              {
+                "component": "@carbon/react:ProgressIndicator",
+                "props": {
+                  "currentIndex": 1,
+                  "spaceEqually": true
+                },
+                "children": [
+                  {
+                    "component": "@carbon/react:ProgressStep",
+                    "props": {
+                      "label": "Partition"
+                    }
+                  },
+                  {
+                    "component": "@carbon/react:ProgressStep",
+                    "props": {
+                      "label": "Core configuration"
+                    }
+                  },
+                  {
+                    "component": "@carbon/react:ProgressStep",
+                    "props": {
+                      "label": "Message retention"
+                    }
+                  }
+                ]
+              },
+              {
+                "component": "@carbon/react:Heading",
+                "props": {
+                  "children": "Create topic"
+                }
+              },
+              {
+                "component": "@carbon/react:Section",
+                "children": [
+                  {
+                    "component": "@carbon/react:Heading",
+                    "props": {
+                      "children": "Core configuration"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "component": "@carbon/react:Form",
+            "props": {
+              "aria-label": "Create topic"
+            },
+            "grid": {
+              "span": {
+                "sm": 4,
+                "md": 6,
+                "lg": 8
+              }
+            },
+            "gap": "spacing-06",
+            "children": [
+              {
+                "component": "@carbon/react:NumberInput",
+                "props": {
+                  "id": "topic-partitions",
+                  "label": "Partitions",
+                  "min": 1,
+                  "max": 100,
+                  "defaultValue": 1
+                }
+              },
+              {
+                "component": "@carbon/react:NumberInput",
+                "props": {
+                  "id": "topic-replicas",
+                  "label": "Replicas",
+                  "min": 1,
+                  "max": 5,
+                  "defaultValue": 3
+                }
+              },
+              {
+                "component": "@carbon/react:ButtonSet",
+                "children": [
+                  {
+                    "component": "@carbon/react:Button",
+                    "props": {
+                      "kind": "secondary",
+                      "children": "Back",
+                      "onClick": {
+                        "$event": "back"
+                      }
+                    }
+                  },
+                  {
+                    "component": "@carbon/react:Button",
+                    "props": {
+                      "kind": "primary",
+                      "children": "Next",
+                      "onClick": {
+                        "$event": "next"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "on": {
+        "back": "partition",
+        "next": "message-retention"
+      }
+    },
+    {
+      "id": "message-retention",
+      "screen": {
+        "component": "@carbon/react:Grid",
+        "children": [
+          {
+            "component": "@carbon/react:Stack",
+            "grid": {
+              "span": {
+                "sm": 4,
+                "md": 8,
+                "lg": 16
+              }
+            },
+            "gap": "spacing-06",
+            "children": [
+              {
+                "component": "@carbon/react:ProgressIndicator",
+                "props": {
+                  "currentIndex": 2,
+                  "spaceEqually": true
+                },
+                "children": [
+                  {
+                    "component": "@carbon/react:ProgressStep",
+                    "props": {
+                      "label": "Partition"
+                    }
+                  },
+                  {
+                    "component": "@carbon/react:ProgressStep",
+                    "props": {
+                      "label": "Core configuration"
+                    }
+                  },
+                  {
+                    "component": "@carbon/react:ProgressStep",
+                    "props": {
+                      "label": "Message retention"
+                    }
+                  }
+                ]
+              },
+              {
+                "component": "@carbon/react:Heading",
+                "props": {
+                  "children": "Create topic"
+                }
+              },
+              {
+                "component": "@carbon/react:Section",
+                "children": [
+                  {
+                    "component": "@carbon/react:Heading",
+                    "props": {
+                      "children": "Message retention"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "component": "@carbon/react:Form",
+            "props": {
+              "aria-label": "Create topic"
+            },
+            "grid": {
+              "span": {
+                "sm": 4,
+                "md": 6,
+                "lg": 8
+              }
+            },
+            "gap": "spacing-06",
+            "children": [
+              {
+                "component": "@carbon/react:RadioButtonGroup",
+                "props": {
+                  "legendText": "Keep messages for",
+                  "name": "topic-retention",
+                  "defaultSelected": "week",
+                  "orientation": "vertical"
+                },
+                "children": [
+                  {
+                    "component": "@carbon/react:RadioButton",
+                    "props": {
+                      "id": "retention-day",
+                      "labelText": "A day",
+                      "value": "day"
+                    }
+                  },
+                  {
+                    "component": "@carbon/react:RadioButton",
+                    "props": {
+                      "id": "retention-week",
+                      "labelText": "A week",
+                      "value": "week"
+                    }
+                  },
+                  {
+                    "component": "@carbon/react:RadioButton",
+                    "props": {
+                      "id": "retention-month",
+                      "labelText": "A month",
+                      "value": "month"
+                    }
+                  }
+                ]
+              },
+              {
+                "component": "@carbon/react:ButtonSet",
+                "children": [
+                  {
+                    "component": "@carbon/react:Button",
+                    "props": {
+                      "kind": "secondary",
+                      "children": "Back",
+                      "onClick": {
+                        "$event": "back"
+                      }
+                    }
+                  },
+                  {
+                    "component": "@carbon/react:Button",
+                    "props": {
+                      "kind": "primary",
+                      "children": "Create topic",
+                      "onClick": {
+                        "$event": "create"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "on": {
+        "back": "core-configuration",
+        "create": "created"
+      }
+    },
+    {
+      "id": "created",
+      "screen": {
+        "component": "@carbon/react:Grid",
+        "children": [
+          {
+            "component": "@carbon/react:Stack",
+            "grid": {
+              "span": {
+                "sm": 4,
+                "md": 6,
+                "lg": 8
+              }
+            },
+            "gap": "spacing-06",
+            "children": [
+              {
+                "component": "@carbon/react:InlineNotification",
+                "props": {
+                  "kind": "success",
+                  "title": "Topic created",
+                  "subtitle": "It is ready for producers and consumers.",
+                  "hideCloseButton": true,
+                  "lowContrast": true
+                }
+              },
+              {
+                "component": "@carbon/react:ButtonSet",
+                "children": [
+                  {
+                    "component": "@carbon/react:Button",
+                    "props": {
+                      "kind": "secondary",
+                      "children": "Create another",
+                      "onClick": {
+                        "$event": "again"
+                      }
+                    }
+                  },
+                  {
+                    "component": "@carbon/react:Button",
+                    "props": {
+                      "kind": "primary",
+                      "href": "#",
+                      "children": "View topic"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "on": {
+        "again": "partition"
+      }
+    },
+    {
+      "id": "cancelled",
+      "screen": {
+        "component": "@carbon/react:Grid",
+        "children": [
+          {
+            "component": "@carbon/react:Stack",
+            "grid": {
+              "span": {
+                "sm": 4,
+                "md": 6,
+                "lg": 8
+              }
+            },
+            "gap": "spacing-06",
+            "children": [
+              {
+                "component": "@carbon/react:InlineNotification",
+                "props": {
+                  "kind": "info",
+                  "title": "Nothing was created",
+                  "subtitle": "What you entered was not saved.",
+                  "hideCloseButton": true,
+                  "lowContrast": true
+                }
+              },
+              {
+                "component": "@carbon/react:Button",
+                "props": {
+                  "kind": "primary",
+                  "children": "Start again",
+                  "onClick": {
+                    "$event": "again"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "on": {
+        "again": "partition"
+      }
+    }
+  ]
+}

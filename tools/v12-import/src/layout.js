@@ -228,7 +228,9 @@ export function packageJson({
     scripts: {
       build: 'node ../../../../tasks/build.js',
       clean: 'rimraf es lib scss',
-      postinstall: 'ibmtelemetry --config=telemetry.yml',
+      // No telemetry postinstall while private: nothing installs the package,
+      // and many postinstalls racing for one binary break installs. The
+      // publishable pull request adds it, with telemetry.yml already here.
       ...(tests ? { test: 'vitest run' } : {}),
     },
     dependencies: sorted(dependencies),

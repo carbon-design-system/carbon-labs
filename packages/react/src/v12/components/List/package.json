@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-list",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - List for React (v12)",
@@ -32,8 +32,7 @@
   ],
   "scripts": {
     "build": "node ../../../../tasks/build.js",
-    "clean": "rimraf es lib scss",
-    "postinstall": "ibmtelemetry --config=telemetry.yml"
+    "clean": "rimraf es lib scss"
   },
   "dependencies": {
     "@carbon-labs/react-util": "workspace:*",

@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-popover",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - Popover for React (v12)",
@@ -33,7 +33,6 @@
   "scripts": {
     "build": "node ../../../../tasks/build.js",
     "clean": "rimraf es lib scss",
-    "postinstall": "ibmtelemetry --config=telemetry.yml",
     "test": "vitest run"
   },
   "dependencies": {

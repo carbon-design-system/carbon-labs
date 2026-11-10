@@ -1,0 +1,49 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as BreadcrumbStories from './Breadcrumb.stories.tsx';
+
+<Meta of={BreadcrumbStories} />
+
+# Breadcrumb
+
+A trail of links to the levels above the current page. A `nav` holds an ordered
+list of `BreadcrumbItem`s. Each one is a link, plain text, an app's own link
+element, or an `OverflowMenu` for collapsed levels. The current page is primary
+text, marked `aria-current`. In a narrow container the crumbs wrap; each crumb
+stays on one line.
+
+<Canvas of={BreadcrumbStories.Default} />
+
+<Canvas of={BreadcrumbStories.WithOverflowMenu} />
+
+<Canvas of={BreadcrumbStories.ChangingTrail} />
+
+## Motion
+
+- **Rollover:** each link crumb takes the link rollover: a glow in the letters,
+  the press and the release circle. The underline fades in on hover. The current
+  page and plain text take no rollover.
+- **Overflow menu:** a crumb holding an `OverflowMenu` shows the horizontal
+  overflow icon at the breadcrumb's size. Its menu opens on the Menu's snap,
+  floating: md, or sm in an sm breadcrumb.
+- **Trail:** a change to the trail reflows as one change. A crumb that leaves
+  fades out first, over fast-01. Then the crumbs that stay slide to their new
+  places, timed by travel. Then a new crumb snaps in, with no fade, sliding from
+  the trail's side. Keyed children reflow by key.
+- **Removal:** a trail that only loses crumbs plays together: the crumb fades
+  out as the others close the gap.
+- **Slash:** with `noTrailingSlash`, the last crumb's slash fades out and keeps
+  its place, so nothing jumps. A crumb that stops being last fades its slash in.
+- **Interruption:** a new change mid-reflow turns round from where the crumbs
+  are on screen.
+- **Slow motion:** `timeScale` multiplies the reflow's durations. An overflow
+  menu takes it too.
+
+## Reduced motion
+
+Nothing slides. A crumb that leaves fades out on the reduced clock, then the new
+places and the new crumbs appear at once. A slash fades in on the reduced clock.
+The overflow menu opens and closes at once.
+
+## Props
+
+<ArgTypes of={BreadcrumbStories} />

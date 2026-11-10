@@ -1,0 +1,225 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+
+/* ActivityFeed — ActivityFeed.tsx. Each day's header sticks while its events
+   pass under it, drawn in `--cds-afeed-bg`, what the feed sits on. */
+
+.cds-afeed {
+  --cds-afeed-bg: #{theme.$background};
+  --cds-afeed-pad: #{$spacing-05};
+
+  display: flex;
+  flex-direction: column;
+  background: var(--cds-afeed-bg);
+  color: theme.$text-primary;
+  min-block-size: 0;
+}
+
+:where(
+    .cds-app-shell__workspace[data-frame='inset'],
+    .cds-region--quiet,
+    .cds-region--raised
+  )
+  .cds-afeed {
+  /* On a surface, the break's line is the divider inside it; on the page, the rule. */
+  --cds-afeed-line: var(--cds-surface-divider);
+}
+
+.cds-afeed__label {
+  position: absolute;
+  overflow: hidden;
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+.cds-afeed__filters {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  padding: 0 var(--cds-afeed-pad) $spacing-04;
+  gap: $spacing-03;
+}
+
+.cds-afeed__scroller {
+  flex: 1 1 auto;
+  min-block-size: 0;
+}
+
+/* The feed holds a reader's place itself (ActivityFeed.tsx): the browser's
+   own anchoring would hold it twice. */
+.cds-afeed__viewport {
+  position: relative;
+  block-size: 100%;
+  overflow-anchor: none;
+}
+
+.cds-afeed__sentinel {
+  position: absolute;
+  block-size: 2px;
+  inset-block-start: 0;
+  inset-inline: 0;
+  pointer-events: none;
+}
+
+.cds-afeed__list {
+  position: relative;
+}
+
+.cds-afeed__day {
+  position: relative;
+}
+
+.cds-afeed__day-title {
+  @include type-style('label-01');
+
+  position: sticky;
+  z-index: 1;
+  padding: $spacing-03 var(--cds-afeed-pad);
+  margin: 0;
+  background: var(--cds-afeed-bg);
+  color: theme.$text-secondary;
+  inset-block-start: 0;
+
+  /* The break while events pass under it (ActivityFeed.tsx grows both over the first 16px):
+     the ground's line at its bottom and the soft edge below it, in what the feed sits on. */
+  &::before,
+  &::after {
+    position: absolute;
+    content: '';
+    inset-inline: 0;
+    pointer-events: none;
+  }
+
+  &::before {
+    z-index: 1;
+    background: var(
+      --cds-afeed-line,
+      var(--cds-surface-rule, #{theme.$border-subtle-01})
+    );
+    block-size: 1px;
+    inset-block-end: 0;
+    opacity: var(--cds-afeed-rule, 0);
+  }
+
+  &::after {
+    background: linear-gradient(to bottom, var(--cds-afeed-bg), transparent);
+    block-size: var(--cds-afeed-under, 0px);
+    inset-block-start: 100%;
+  }
+}
+
+.cds-afeed__block {
+  contain: layout style;
+}
+
+.cds-afeed__event {
+  outline: none;
+
+  &:focus-visible {
+    box-shadow: inset 0 0 0 2px theme.$focus;
+  }
+}
+
+.cds-afeed__event-content {
+  display: flex;
+  align-items: flex-start;
+  padding: $spacing-04 var(--cds-afeed-pad);
+  gap: $spacing-04;
+}
+
+.cds-afeed__avatar {
+  flex: none;
+}
+
+.cds-afeed__main {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: $spacing-02;
+  min-inline-size: 0;
+}
+
+.cds-afeed__what {
+  @include type-style('body-compact-01');
+
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.cds-afeed__actor,
+.cds-afeed__object {
+  font-weight: 600;
+}
+
+.cds-afeed__meta {
+  @include type-style('label-01');
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  color: theme.$text-secondary;
+  gap: $spacing-04;
+}
+
+.cds-afeed__time {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.cds-afeed__toggle {
+  align-self: flex-start;
+}
+
+/* An event's actions: ghost buttons in a row, 8px apart. */
+.cds-afeed__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-03;
+}
+
+.cds-afeed__detail-inner {
+  @include type-style('body-compact-01');
+
+  padding: $spacing-04;
+  border-radius: 8px;
+  background: theme.$layer-01;
+  color: theme.$text-secondary;
+
+  margin-block-start: $spacing-02;
+}
+
+.cds-afeed__empty {
+  padding: $spacing-07 var(--cds-afeed-pad);
+}
+
+/* The skeleton rows: an event's shape. */
+.cds-afeed__skeleton-row {
+  display: flex;
+  align-items: flex-start;
+  padding: $spacing-04 var(--cds-afeed-pad);
+  gap: $spacing-04;
+}
+
+.cds-afeed__skeleton-avatar {
+  flex: none;
+  border-radius: 50%;
+  block-size: 24px;
+  inline-size: 24px;
+}
+
+.cds-afeed__skeleton-lines {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: $spacing-03;
+}

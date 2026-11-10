@@ -1,0 +1,383 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/colors' as c;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/text-pairs';
+
+/* OptionsTile — OptionsTile.tsx (its header lists the choices). The body and
+   the summary's line are the disclosure's (disclosure/disclosure.scss). */
+
+$_surface: var(--cds-surface, #{theme.$layer-01});
+$_radius: 8px;
+
+.cds-options-tile {
+  @include surface.fields-on-surface;
+
+  /* The surface the body's ghost selection stands on. */
+  --sel-ghost-page: #{$_surface};
+  /* The heading's height (lg 48px, xl 64px) as its padding round one line. */
+  --cds-options-tile-pad: 15px;
+  --cds-options-tile-x: 1rem;
+
+  position: relative;
+  box-sizing: border-box;
+  border-radius: $_radius;
+  background: $_surface;
+  color: theme.$text-primary;
+  min-inline-size: 0;
+}
+
+.cds-options-tile--xl {
+  --cds-options-tile-pad: 23px;
+}
+
+.cds-options-tile__header {
+  position: relative;
+}
+
+/* The heading: the chevron, the title and the summary. The tiles' quiet
+   rollover behind it, flush with the tile (no growth, no press shrink). */
+.cds-options-tile__heading {
+  @include type-style('body-compact-01');
+
+  display: flex;
+  box-sizing: border-box;
+  align-items: flex-start;
+  padding: var(--cds-options-tile-pad) var(--cds-options-tile-x);
+  border: 0;
+  border-radius: $_radius;
+  margin: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  gap: 0.75rem;
+  inline-size: 100%;
+  text-align: start;
+}
+
+.cds-options-tile--expandable .cds-options-tile__heading {
+  @include rollover($press-inset: 0);
+  --rollover-rest: #{$_surface};
+  /* Fallbacks; the rollover solves the quiet steps off the surface. */
+  --rollover-hover: color-mix(
+    in srgb,
+    var(--cds-text-primary, #161616) 4%,
+    #{$_surface}
+  );
+  --rollover-press: color-mix(
+    in srgb,
+    var(--cds-text-primary, #161616) 8%,
+    #{$_surface}
+  );
+
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+
+  /* The kit's focus ring, inside the tile: a border, so forced colors keep
+     it; its bottom edge at the divider in the motion is the header's (below). */
+  &:focus-visible::after {
+    border: 2px solid theme.$text-primary;
+  }
+}
+
+/* The sheet's presence, 0 to 1, on the tile: the sheet's opacity and the rings'
+   edge at the divider read this one value, so they never part (OptionsTile.tsx). */
+@property --cds-options-tile-sheet {
+  inherits: false;
+  initial-value: 0;
+  syntax: '<number>';
+}
+
+/* 1 while the heading reaches under the divider (the hold, copied onto the header). */
+@property --cds-options-tile-under {
+  inherits: false;
+  initial-value: 0;
+  syntax: '<number>';
+}
+
+.cds-options-tile--sheet {
+  --cds-options-tile-sheet: 1;
+}
+
+.cds-options-tile--expandable > .cds-options-tile__header,
+.cds-options-tile--expandable > .cds-options-tile__body,
+.cds-options-tile__body::before {
+  --cds-options-tile-sheet: inherit;
+}
+
+@mixin _edge {
+  --cds-disclosure-hold: inherit;
+  --cds-options-tile-sheet: inherit;
+  --cds-options-tile-under: inherit;
+}
+
+.cds-options-tile--expandable .cds-options-tile__heading {
+  @include _edge;
+}
+
+/* The rings' bottom edge at the divider, at the sheet's opacity, while the heading
+   reaches under it; their own edge under the sheet crossfades. */
+
+/* The ring's edge: a 1px line in its layer, at the ring's own strength. A
+   layer under the rest fill; forced colors drop it with the ring. */
+.cds-options-tile--expandable
+  .cds-options-tile__heading[data-rollover-surface='ring']::before {
+  @include _edge;
+
+  $_edge: color-mix(
+    in srgb,
+    var(--cds-border-strong-01, #8d8d8d)
+      calc(
+        var(--cds-motion-rollover-hover) * var(--cds-options-tile-sheet) *
+          var(--cds-options-tile-under) * 100%
+      ),
+    transparent
+  );
+
+  background-clip: border-box;
+
+  background-image:
+    linear-gradient(#{$_edge}, #{$_edge}),
+    linear-gradient(
+      var(--rollover-rest, transparent),
+      var(--rollover-rest, transparent)
+    );
+  background-origin: border-box;
+  background-position:
+    0 calc(100% + var(--cds-disclosure-hold)),
+    0 0;
+  background-repeat: no-repeat;
+  background-size:
+    100% 1px,
+    100% 100%;
+}
+
+/* The focus ring's edge: a 2px border, so forced colors keep it. */
+.cds-options-tile--expandable
+  > .cds-options-tile__header:has(
+    > .cds-options-tile__heading:focus-visible
+  )::after {
+  @include _edge;
+
+  position: absolute;
+  border-block-end: 2px solid theme.$text-primary;
+
+  content: '';
+  inset-block-end: calc(-1 * var(--cds-disclosure-hold));
+  inset-inline: 0;
+  opacity: calc(var(--cds-options-tile-sheet) * var(--cds-options-tile-under));
+  pointer-events: none;
+}
+
+.cds-options-tile--expandable .cds-options-tile__heading::after {
+  position: absolute;
+  box-sizing: border-box;
+  border-radius: inherit;
+  content: '';
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Square against the body's sheet; in the motion OptionsTile.tsx rounds them
+   as far as they're the tile's corners (8px less the body under them). */
+/* Corners change at once, never on a page's reduced-motion 1ms transition. */
+.cds-options-tile__heading {
+  transition: none;
+}
+
+.cds-options-tile--sheet
+  > .cds-options-tile__header
+  > .cds-options-tile__heading {
+  border-end-end-radius: 0;
+  border-end-start-radius: 0;
+}
+
+/* Room for the switch, which sits over the heading's end. */
+.cds-options-tile:has(> .cds-options-tile__header > .cds-options-tile__switch)
+  .cds-options-tile__heading {
+  padding-inline-end: calc(var(--cds-options-tile-x) + 2rem + 0.5rem);
+}
+
+.cds-options-tile__chevron {
+  display: inline-flex;
+  flex: none;
+  color: theme.$icon-primary;
+  /* On the title's line (18px). */
+  margin-block-start: 1px;
+}
+
+.cds-options-tile__titles {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.cds-options-tile__title {
+  @include type-style('heading-compact-01');
+
+  color: theme.$text-primary;
+}
+
+/* The summary's line: a disclosure body. Its words only fade, in place: gone
+   before anything moves, back once it lands (`data-shown`), each over fast-01,
+   linear (README "Fades"). No soft edge or clip on the line. */
+.cds-options-tile__line > .cds-disclosure__clip > .cds-disclosure__content {
+  /* The kit's title → summary spacing (styles/_text-pairs.scss), inside the
+     line, so it shuts with it: open, the title is alone in the heading. A
+     block, so the padding takes room (an inline span's padding doesn't). */
+  display: block;
+  padding-block-start: text-pairs.$title-to-summary;
+}
+
+/* No travel: the disclosure's arrival distance is 0 on the line. */
+.cds-options-tile__line {
+  --cds-disclosure-arrive: 0px;
+}
+
+.cds-options-tile .cds-options-tile__line > .cds-disclosure__clip {
+  overflow: visible;
+  mask-image: none;
+}
+
+.cds-options-tile
+  .cds-options-tile__line
+  > .cds-disclosure__clip
+  > .cds-disclosure__content {
+  opacity: 0;
+  /* `--cds-options-tile-fade`: fast-01 times `timeScale`, set only when it's passed. */
+  transition: opacity
+    var(--cds-options-tile-fade, var(--cds-motion-duration-fast-01)) linear;
+}
+
+.cds-options-tile
+  .cds-options-tile__line[data-shown]
+  > .cds-disclosure__clip
+  > .cds-disclosure__content {
+  opacity: 1;
+}
+
+/* Reduced: there or gone at once. */
+.cds-options-tile
+  .cds-options-tile__line[data-reduced]
+  > .cds-disclosure__clip
+  > .cds-disclosure__content,
+.cds-options-tile
+  .cds-options-tile__line[data-reduced][data-shown]
+  > .cds-disclosure__clip
+  > .cds-disclosure__content {
+  transition: none;
+}
+
+.cds-options-tile__swap {
+  display: grid;
+}
+
+/* Out and in share one cell: the leaving words over the new. */
+.cds-options-tile__swap-item {
+  display: block;
+  grid-area: 1 / 1;
+  min-inline-size: 0;
+}
+
+.cds-options-tile__summary {
+  /* The kit's one-line summary (styles/_text-pairs.scss). */
+  @include text-pairs.summary;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 0.375rem;
+}
+
+.cds-options-tile__summary-text {
+  min-inline-size: 0;
+}
+
+.cds-options-tile__status-icon {
+  flex: none;
+  fill: currentColor;
+  /* On the summary's line (18px). */
+  margin-block-start: 1px;
+}
+
+/* Statuses: IBM Products' icons and colors (v11's form statuses). */
+.cds-options-tile__summary--invalid {
+  color: theme.$text-error;
+
+  .cds-options-tile__status-icon {
+    color: theme.$support-error;
+  }
+}
+
+.cds-options-tile__summary--warn {
+  color: theme.$text-primary;
+
+  .cds-options-tile__status-icon {
+    color: theme.$support-warning;
+
+    [data-icon-path='inner-path'] {
+      fill: c.$black-100;
+      opacity: 1;
+    }
+  }
+}
+
+.cds-options-tile__summary--locked .cds-options-tile__status-icon {
+  color: theme.$icon-secondary;
+}
+
+/* The switch: at the heading's end, on the title's line. */
+.cds-options-tile__switch {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  inset-block-start: calc(var(--cds-options-tile-pad) + 1px);
+  inset-inline-end: var(--cds-options-tile-x);
+}
+
+/* The body's sheet: one shape from the held divider to the tile's bottom, over
+   the heading's lower part; up while open or moving (`--sheet`). */
+.cds-options-tile__body {
+  z-index: 0;
+}
+
+.cds-options-tile__body::before {
+  --cds-disclosure-hold: inherit;
+
+  position: absolute;
+  z-index: -1;
+  background: $_surface;
+  border-end-end-radius: $_radius;
+  border-end-start-radius: $_radius;
+  box-shadow: inset 0 1px 0
+    var(--cds-surface-divider, #{theme.$border-subtle-01});
+
+  content: '';
+  inset: 0 0 var(--cds-disclosure-hold);
+  opacity: var(--cds-options-tile-sheet);
+  pointer-events: none;
+  transition: none;
+}
+
+.cds-options-tile__content {
+  box-sizing: border-box;
+  padding: 1rem 0 1.5rem;
+  margin-inline: var(--cds-options-tile-x);
+}
+
+@media (forced-colors: active) {
+  .cds-options-tile {
+    border: 1px solid CanvasText;
+  }
+}

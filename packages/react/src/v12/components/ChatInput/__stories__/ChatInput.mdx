@@ -1,0 +1,128 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ChatInputStories from './ChatInput.stories';
+
+<Meta isTemplate />
+
+# ChatInput
+
+- **Initiative owner(s):** Ryan Mellody (@ryanmellody)
+- **Status:** Draft
+- **Target library:** @carbon/react
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Behaviour](#behaviour)
+- [Menus](#menus)
+- [Explorations](#explorations)
+- [Proposals](#proposals)
+- [Component API](#component-api)
+- [Getting started](#getting-started)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+> **Problem statement:** a conversation needs one place to write the next turn:
+> a prompt that grows as it is written, the files attached to it, what the model
+> may read, which model and mode answer, and a send that becomes Stop while a
+> reply is generating. Carbon's `TextArea` is a form field, with a label above
+> and no actions. `@carbon/ai-chat` has an input, but it is part of a whole chat
+> application and cannot be used on its own. ChatInput is the composer alone,
+> standalone React built from Carbon's `Menu`, `Theme` and icons, labs
+> `MegaButton` for every control and labs `FileChip` for each attachment.
+
+Its nearest Carbon neighbours are `TextArea` and the input in `@carbon/ai-chat`.
+Use `TextArea` for a form field; use `@carbon/ai-chat` for a whole chat
+application.
+
+<Canvas of={ChatInputStories.Default} />
+
+## Behaviour
+
+- **Two layouts.** `below` (the default) is a 48px pill with its actions in a
+  row under it. `inside` puts every control in the box.
+- **The box grows.** Past one row, or holding files, the pill becomes a box at
+  `$border-radius-16`, with the send corner at 20 (an exploration, below). It
+  grows a row at a time on Carbon's `disclosure` motion surface, to `maxRows`,
+  then scrolls.
+- **Send.** Always 32 (`sm`). Ghost and disabled while there is nothing to send,
+  primary once there is; while `busy`, it is Stop. Enter sends and Shift+Enter
+  breaks a line, or Mod+Enter sends when `submitOn` is `mod-enter`. An IME
+  composition is never sent.
+- **Edges, not fills.** A text-entry control never fills on hover. Its hairline
+  steps from `$border-subtle` to `$border-strong` on hover, on a pointer press
+  and while typing. Carbon's `$focus` ring appears only when focus arrives from
+  the keyboard. A text field matches `:focus-visible` on every focus, so this is
+  tracked in script.
+- **Files.** `attachments` holds FileChips. Dropping or pasting files calls
+  `onFilesAdded`; the composer never uploads anything itself.
+- **`/` commands.** A prompt that is a single `/token` opens a listbox of the
+  matching `commands`. Focus stays in the prompt (`aria-activedescendant`);
+  arrows, Home and End move, Enter or Tab chooses, Escape closes and clears.
+  Nothing is active when it opens, so Enter never fires a command nobody chose.
+
+<Canvas of={ChatInputStories.WithFiles} />
+
+<Canvas of={ChatInputStories.ActionsInside} />
+
+## Menus
+
+`+` (add to context) and Settings open Carbon's `Menu`, upward, because the
+composer sits at the foot of a view. They render **inverse**: dark on a light
+page, light on a dark one, through a nested `<Theme>`, read from where the
+composer sits. `menuTheme` sets it instead. Rows hover on Carbon's
+`$layer-hover`. A selected row keeps Carbon's checkmark and adds the blue-gray
+selected tint (a proposal, below). Model and agent mode are radio groups, with
+their group names shown.
+
+The `/` command list is drawn like these menus, in the same inverse zone.
+
+## Explorations
+
+| Exploration       | Where                           | Why                                                            |
+| ----------------- | ------------------------------- | -------------------------------------------------------------- |
+| `composer-corner` | the grown box's send corner, 20 | concentric with the 32px send control inside the 16-radius box |
+
+## Proposals
+
+| Token                           | Falls back to             | Why                                                                                        |
+| ------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------ |
+| `chat-input-background`         | `$chat-prompt-background` | in dark the composer is the shell, one step below the page, so a FileChip steps up from it |
+| `chat-input-menu-selected`      | `$layer-selected`         | Carbon's Menu marks selection with a checkmark only                                        |
+| `chat-input-menu-selected-text` | `$text-primary`           | the brand label, solved on the tint                                                        |
+
+## Component API
+
+<ArgTypes of={ChatInputStories.Default} />
+
+## Getting started
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-chat-input
+```
+
+### JS (via import)
+
+```javascript
+import { ChatInput } from '@carbon-labs/react-chat-input/es/index';
+
+function App() {
+  return <ChatInput onSubmit={(prompt) => send(prompt)} />;
+}
+```
+
+### SCSS
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-mega-button/scss/mega-button';
+@use '@carbon-labs/react-file-chip/scss/file-chip';
+@use '@carbon-labs/react-chat-input/scss/chat-input';
+```

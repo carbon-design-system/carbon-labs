@@ -1,0 +1,90 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/cast-shadow-floating';
+
+/* Sticky at the bottom of its scroll, square and on the standard surface;
+   in a flex column the auto margin keeps a short form's bar at the bottom. */
+
+.cds-unsaved-bar-dock {
+  position: sticky;
+  z-index: 10;
+  box-sizing: border-box;
+  inline-size: 100%;
+  inset-block-end: 0;
+  margin-block-start: auto;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.cds-unsaved-bar {
+  position: relative;
+  box-sizing: border-box;
+  inline-size: 100%;
+  isolation: isolate;
+}
+
+.cds-unsaved-bar__frame {
+  position: absolute;
+  z-index: -1;
+  border-radius: 0;
+  background: var(--cds-surface, #{theme.$layer-01});
+  /* The hairline as a shadow: a border keeps 1px of box when the frame folds to nothing. */
+  box-shadow: inset 0 1px 0 var(--cds-surface-rule, #{theme.$border-subtle-01});
+  inset: 0;
+}
+
+.cds-unsaved-bar__content {
+  display: flex;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-03 $spacing-05;
+  gap: $spacing-03 $spacing-05;
+  min-block-size: 3.5rem;
+}
+
+.cds-unsaved-bar__message {
+  @include type-style('body-compact-01');
+
+  color: theme.$text-primary;
+}
+
+.cds-unsaved-bar__error {
+  display: inline-flex;
+  align-items: center;
+  color: theme.$text-error;
+  gap: $spacing-03;
+}
+
+.cds-unsaved-bar__buttons {
+  display: inline-flex;
+  gap: $spacing-03;
+}
+
+/* A face on its way out is still drawn: it takes no presses. */
+.cds-unsaved-bar [data-swap-face='out'] {
+  pointer-events: none;
+}
+
+.cds-unsaved-bar__live {
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  white-space: nowrap;
+}

@@ -1,0 +1,87 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as AppShellStories from './AppShell.stories.tsx';
+
+<Meta of={AppShellStories} />
+
+# App shell
+
+The frame an app sits in: a header, a nav, the page, and an optional side panel.
+`AppShell` takes the header, the nav (a SideNav) and a `panel`; the page is its
+children.
+
+The shell sizes itself from its own width, not the window's:
+
+| Size class | Width          | Nav                           | Panel            |
+| ---------- | -------------- | ----------------------------- | ---------------- |
+| Compact    | under 672px    | overlay, from the menu button | full-width sheet |
+| Medium     | 672 to 1055px  | rail of icons                 | covers the page  |
+| Expanded   | 1056 to 1311px | column                        | pushes the page  |
+| Large      | 1312px and up  | column                        | pushes the page  |
+
+- `scope="page"` fixes the header and scrolls the page with the window;
+  `scope="container"` fills its container.
+- `frame="inset"` puts the page on a rounded workspace, and
+  `headerPlacement="nav"` puts the header at the top of the nav column.
+- The header and nav are ghost by default, on chrome that is dark in every theme
+  (`chromeTheme`). The page follows the theme; `mainTheme` gives it one of its
+  own, and `inverse` is the opposite of the theme's.
+- `Header` is the 48px global header, `NavOverlay` the overlay nav alone, and
+  `Region` one area of a screen, with its surface, corners and scroll.
+
+<Canvas of={AppShellStories.TryIt} />
+
+<Canvas of={AppShellStories.Default} />
+
+<Canvas of={AppShellStories.Workspace} />
+
+<Canvas of={AppShellStories.InverseWorkspace} />
+
+<Canvas of={AppShellStories.Panel} />
+
+<Canvas of={AppShellStories.SizeClasses} />
+
+<Canvas of={AppShellStories.OverlayNav} />
+
+<Canvas of={AppShellStories.Fold} />
+
+<Canvas of={AppShellStories.SizeClassReadout} />
+
+<Canvas of={AppShellStories.HeaderFrames} />
+
+<Canvas of={AppShellStories.Regions} />
+
+## Motion
+
+Most of the motion is the parts' own: the rail's fold is the SideNav's, and the
+overlay nav and the panel move as side panels.
+
+- **Fold:** with `foldTo="hide"`, the column's width moves to a 56px strip and
+  back in one motion, and main follows its edge. The content holds its open
+  width while the edge passes over it, and the strip swaps in when it lands. The
+  clock is the step for the width's travel, on entrance-productive; shrinking,
+  one step faster, on exit-productive. Pressed mid-fold, it turns round from the
+  width drawn. `foldTo="overlay"` folds the column away and opens the nav from
+  the menu button.
+- **Overlay nav:** at compact, the nav is a SidePanel at the start, under the
+  header. It snaps in timed by its width, leaves a step shorter, and its content
+  rides the opening. The dim fades on the side panel's overlay clocks.
+- **Panel push:** at expanded and large, the panel is SidePanel's `slideIn`:
+  main makes room on the panel's clock.
+- **Class edge:** crossing a size class edge while the panel is open re-places
+  it at once. It is the same panel, with no second entrance, its content and
+  focus kept. Main's room is given or taken at once.
+- **Menu button:** while the overlay is open, the header's menu button is its
+  Close. The Menu icon match-cuts to Close, and the button's name changes with
+  it.
+- **Home link:** the product name has the family's rollover, a glow inset 4px
+  from the bar.
+
+## Reduced motion
+
+The hide fold moves at once. The overlay nav and its dim fade on the reduced
+clock. Main makes room for the panel at once. The menu icon changes at once. A
+class edge is at once either way.
+
+## Props
+
+<ArgTypes of={AppShellStories} />

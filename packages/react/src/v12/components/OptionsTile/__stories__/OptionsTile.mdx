@@ -1,0 +1,67 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as OptionsTileStories from './OptionsTile.stories.tsx';
+
+<Meta of={OptionsTileStories} />
+
+# Options tile
+
+A tile for one group of settings. The heading is a button that holds the
+chevron, the title and a one-line `summary` of what the settings are set to.
+`enabled` adds a switch over the heading's end that turns the group on or off;
+`onChange` hears it. The body opens to show the settings, its children. Without
+children the tile doesn't open, and the heading is plain text. `invalid`, `warn`
+and `locked` put a status, with its text, in the summary's place, in that order.
+Open, the summary goes, but a status stays. Locked makes the switch read-only.
+`open` is the initial state, followed whenever it changes, and `onToggle` hears
+each toggle. `size` sets the heading: lg 48px (default) or xl 64px.
+
+<Canvas of={OptionsTileStories.Default} />
+
+<Canvas of={OptionsTileStories.WithSwitch} />
+
+<Canvas of={OptionsTileStories.Group} />
+
+<Canvas of={OptionsTileStories.Statuses} />
+
+<Canvas of={OptionsTileStories.Sizes} />
+
+<Canvas of={OptionsTileStories.Static} />
+
+## Motion
+
+The body is the shared disclosure.
+
+- **Open and shut:** the body opens as the summary's line shuts, as one swap on
+  one clock: the step of the longer travel, on standard-productive. Shutting,
+  the line opens as the body shuts. Tiles that change in one commit move as one
+  motion.
+- **Settings in:** opening, the settings come down 8px from the opening's first
+  frame, over one duration token longer than the opening.
+- **Sheet:** open, a hairline sits atop the body and holds still. The body's
+  sheet runs to the tile's bottom over the heading's lower part. It fades in and
+  out at the motion's ends. The heading's lower corners follow the body on its
+  clock and curve, so they never snap.
+- **Summary fade:** the summary only fades, in place, over fast-01. Opening, it
+  is gone before anything moves over it. Shutting, it comes back once the
+  heading has landed.
+- **Summary words:** new words swap out, then in. They swap in place, or, when
+  the switch changed them, 8px the way the knob went.
+- **Rollover:** the tiles' quiet rollover on the heading, flush, with no growth
+  past the tile and no press shrink. With a switch, the heading shows a ring
+  instead of a fill.
+- **Switch:** the kit's Toggle, with its own glide.
+- **Chevron:** down when shut, up when open. The heading is its motion icon
+  frame.
+
+`timeScale` multiplies the disclosure, the rollover, the summary swap and the
+switch.
+
+## Reduced motion
+
+The disclosure opens and shuts at once, and the settings fade in on the reduced
+clock. The summary changes at once, and its swap is a snap. The switch fades
+rather than glides.
+
+## Props
+
+<ArgTypes of={OptionsTileStories} />

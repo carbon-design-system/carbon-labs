@@ -1,4 +1,26 @@
 {
+  "V12/Accordion": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Accordion/components/accordion.scss",
+      "line": 204,
+      "text": "radius-concentric — An inner part's radius is the outer radius less its inset, never below 0. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Accordion/proposals/README.md",
+      "line": 3,
+      "text": "api: frame-prop — What a component stands on is `frame`. TBD"
+    }
+  ],
+  "V12/AppShell": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/AppShell/components/app-shell.scss",
+      "line": 487,
+      "text": "surface-step — Surfaces stepped up in elevation: the outlined selector's lift, a workspace's content, a field on it. TBD"
+    }
+  ],
   "V12/Button": [
     {
       "kind": "explore",
@@ -31,12 +53,198 @@
       "text": "api: button-axes — Button splits v11's kinds into `kind` (role), `variant` (`outlined`, `tonal`) and `frame` (`ghost`, `none`). TBD"
     }
   ],
+  "V12/Card": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Card/components/card.scss",
+      "line": 52,
+      "text": "hover-tint — Hover and press as a share of the text colour mixed into the fill. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Card/proposals/README.md",
+      "line": 3,
+      "text": "api: logical-positions — Placement values are logical. TBD"
+    }
+  ],
+  "V12/ChatInput": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
+      "line": 44,
+      "text": "token: chat-input-background — in dark, the card's own fill with its rule until the v12 themes land (carbon-labs#1417); then the shell, so FileChip steps up from it. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
+      "line": 82,
+      "text": "composer-corner — the send corner of the grown box reads concentric with the 32px send control. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
+      "line": 254,
+      "text": "token: chat-input-menu-hover — Carbon's menu hover is a neutral, not a step on the selected ladder. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
+      "line": 264,
+      "text": "token: chat-input-menu-selected — Carbon's Menu has no selected tint; the checkmark stays. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
+      "line": 269,
+      "text": "token: chat-input-menu-selected-text — the brand label solved on the selected tint. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
+      "line": 280,
+      "text": "token: chat-input-menu-active — Carbon's menu press is a neutral, not a step on the selected ladder. replaces: layer-active-01. TBD"
+    }
+  ],
+  "V12/ChatPanels": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/ChatPanels/components/ChatPanels.tsx",
+      "line": 258,
+      "text": "api: chat-panel-toggle-icon-only — a panel toggle is icon-only with a tooltip; Carbon's icon-only allow-list does not name panel toggles. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/ChatPanels/proposals/README.md",
+      "line": 6,
+      "text": "`api: chat-panel-toggle-icon-only` — the panel toggles in a surface's header are icon-only with a tooltip, each saying `aria-expanded` and naming its panel with `aria-controls`. Carbon's icon-only allow-list does not name panel toggles, so this proposes adding them to it, as feedback and Regenerate on a reply are proposed."
+    }
+  ],
+  "V12/ChatShell": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/chat-surface.scss",
+      "line": 95,
+      "text": "radius-over — A surface over the page: popover, toggletip, notifications panel, chat shell. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/chat-surface.scss",
+      "line": 109,
+      "text": "radius-over — A surface over the page: popover, toggletip, notifications panel, chat shell. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/chat-surface.scss",
+      "line": 111,
+      "text": "selected-wash — A row that is one of many chosen: a wash of the text colour. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/chat-surface.scss",
+      "line": 156,
+      "text": "radius-over — A surface over the page: popover, toggletip, notifications panel, chat shell. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/chat-surface.scss",
+      "line": 255,
+      "text": "radius-concentric — An inner part's radius is the outer radius less its inset, never below 0. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/chat-surface.scss",
+      "line": 325,
+      "text": "radius-concentric — An inner part's radius is the outer radius less its inset, never below 0. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Chat/components/chat.scss",
+      "line": 168,
+      "text": "token: hero-color — The hero tokens: brand colour for a line, a fill, a hover, an ink on a page and on a fill. replaces: `$border-interactive` / `$interactive`, `$button-primary`, `-hover`, `-active`, `$link-primary`, `$link-inverse`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Chat/components/step-list.scss",
+      "line": 189,
+      "text": "token: surface-code — The fill of code: snippet well, inline code. replaces: `$layer-01`. TBD"
+    }
+  ],
+  "V12/ChatsPanel": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/ChatsPanel/components/chats-panel.scss",
+      "line": 135,
+      "text": "token: chats-panel-shell-chat-hover — Carbon's hover is a neutral, not a step on the selected ladder. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/ChatsPanel/components/chats-panel.scss",
+      "line": 146,
+      "text": "token: chats-panel-chat-hover — a row on the panel's surface is one rung further than one on the page. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/ChatsPanel/components/chats-panel.scss",
+      "line": 158,
+      "text": "token: chats-panel-shell-chat-current — Carbon has no selected fill; two steps from the page. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/ChatsPanel/components/chats-panel.scss",
+      "line": 164,
+      "text": "token: chats-panel-shell-chat-current-text — the brand blue solved on the current fill. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/ChatsPanel/components/chats-panel.scss",
+      "line": 173,
+      "text": "token: chats-panel-chat-current — two steps from the panel's own surface. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/ChatsPanel/components/chats-panel.scss",
+      "line": 178,
+      "text": "token: chats-panel-chat-current-text — the brand blue solved on the overlay's current fill. TBD"
+    }
+  ],
   "V12/Checkbox": [
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Checkbox/components/checkbox.scss",
       "line": 65,
       "text": "hover-tint — Hover and press as a share of the text colour mixed into the fill. TBD"
+    }
+  ],
+  "V12/CodeSnippetAlt": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/CodeSnippetAlt/components/code-snippet.scss",
+      "line": 107,
+      "text": "token: code-snippet-syntax-keyword — Carbon ships no syntax colours; resolves to the blue tag text for now. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/CodeSnippetAlt/components/code-snippet.scss",
+      "line": 115,
+      "text": "token: code-snippet-syntax-variable — Carbon ships no syntax colours; resolves to the blue tag text for now. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/CodeSnippetAlt/components/code-snippet.scss",
+      "line": 123,
+      "text": "token: code-snippet-syntax-function — Carbon ships no syntax colours; resolves to the green tag text for now. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/CodeSnippetAlt/components/code-snippet.scss",
+      "line": 131,
+      "text": "token: code-snippet-syntax-string — Carbon ships no syntax colours and no orange tag; proposed at orange 70 / 20, falling back to the red tag text. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/CodeSnippetAlt/components/code-snippet.scss",
+      "line": 139,
+      "text": "token: code-snippet-syntax-number — Carbon ships no syntax colours; resolves to the purple tag text for now. TBD"
     }
   ],
   "V12/ContentSwitcher": [
@@ -53,6 +261,32 @@
       "file": "packages/react/src/v12/components/EmptyState/proposals/README.md",
       "line": 3,
       "text": "api: logical-positions — Placement values are logical. TBD"
+    }
+  ],
+  "V12/FileChip": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/FileChip/components/file-chip.scss",
+      "line": 46,
+      "text": "radius-field — FileChip only: the chip reads as a small surface you can touch, not a label. Tags stay undecided. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/FileChip/components/file-chip.scss",
+      "line": 53,
+      "text": "token: file-chip-background — no Carbon token is one step lighter than the chat input in both themes ($layer-01 vanishes on the v12 dark shell). TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/FileChip/components/file-chip.scss",
+      "line": 88,
+      "text": "radius-field — concentric with the chip: its radius less the inset. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/FileChip/components/file-chip.scss",
+      "line": 122,
+      "text": "token: file-chip-video-icon-size — Carbon's smallest icon, 16, fills the 16px backing and reads too large on a 36px thumbnail; 12 is the spacing-04 rung. TBD"
     }
   ],
   "V12/JobsTray": [
@@ -75,6 +309,250 @@
       "text": "token: surface-divider — A line inside the surface (table rows, header underline). replaces: `$border-subtle`. TBD"
     }
   ],
+  "V12/KeyboardShortcut": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/KeyboardShortcut/components/keyboard-shortcut.scss",
+      "line": 66,
+      "text": "mixin: keycap-slashed-zero — Carbon's type styles have no slashed-zero option, and a keycap 0 must not read as the letter O. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/KeyboardShortcut/proposals/README.md",
+      "line": 6,
+      "text": "api: menu-item-shortcut-node — widen `MenuItem`'s `shortcut?: string` to `string | ReactElement` (propTypes `oneOfType([string, element])`) so `KeyboardShortcut` can be its hint and the menu item is named \"Copy Command C\". `MenuItem` already renders `{shortcut}` in its `__shortcut` div, so nothing else changes. A separate core change at graduation. Callout: `__stories__/KeyboardShortcut.stories.tsx`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/KeyboardShortcut/proposals/README.md",
+      "line": 13,
+      "text": "mixin: keycap-slashed-zero — Carbon's type styles have no slashed-zero option; a keycap's `0` must not read as the letter `O`. The keycap sets `font-variant-numeric: slashed-zero` on top of `label-01`; where the font has no slashed zero the browser draws a plain zero, which is the fallback. At graduation: a `type-style` option or a `$slashed-zero` mixin in `@carbon/styles`, or removal. Callout: `components/keyboard-shortcut.scss`. TBD"
+    }
+  ],
+  "V12/MegaButton": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/MegaButton.tsx",
+      "line": 21,
+      "text": "api: mega-button-kinds — Carbon's secondary is the fill and its tertiary the outline; MegaButton swaps them on purpose (the outline reads better beside a neutral primary), and keeps two red kinds. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/MegaButton.tsx",
+      "line": 197,
+      "text": "api: mega-button-key-command — a visible key command on a button, announced by aria-keyshortcuts; Carbon's Button has none. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/MegaButton.tsx",
+      "line": 211,
+      "text": "api: mega-button-icon-position — Carbon's Button only trails its icon. TBD */}"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/MegaButton.tsx",
+      "line": 235,
+      "text": "api: mega-button-hide-tooltip — an icon-only button inside a group that shares one tooltip; Carbon's IconButton always draws its own. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/MegaButton.tsx",
+      "line": 246,
+      "text": "api: mega-button-danger-icon-only — the danger kinds may be icon-only; Carbon's IconButton has no danger kinds. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 241,
+      "text": "token: mega-button-padding-inline-md — padding grows with size, and md's 20px is the one step Carbon's spacing scale lacks. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 274,
+      "text": "token: mega-button-primary-hover — blue responds: hover is a step on the brand curve, the reveal of a neutral resting primary. replaces: button-primary-hover. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 279,
+      "text": "token: mega-button-primary-active — one step darker than hover on the brand curve, so the white label holds through the press. replaces: button-primary-active. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 284,
+      "text": "token: mega-button-primary-selected — a selected primary stays blue. replaces: background-selected. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 289,
+      "text": "token: mega-button-key-command-rest — Carbon has no muted text token that clears 4.5:1 on an inverse fill. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 294,
+      "text": "token: mega-button-key-command-hover — a muted hint on the blue fill, solved to 4.6:1. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 300,
+      "text": "token: mega-button-key-command-active — a muted hint on the pressed fill, solved to 4.6:1. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 306,
+      "text": "primary-rest — primary rests at the ink colour and turns blue only when the person acts. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 332,
+      "text": "token: mega-button-interactive-text — the blue a neutral button turns when acted on, solved per theme on the tint under it. replaces: link-primary. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 338,
+      "text": "token: mega-button-selected-fill — Carbon has no button selected tint; the v12 blue-gray at the surface's selected step. replaces: background-selected. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 343,
+      "text": "token: mega-button-selected-text — the foreground solved to 4.6:1 on the selected tint, the only ground it sits on; Carbon has no foreground for a selected tint. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 348,
+      "text": "token: mega-button-key-command-neutral — a muted hint for transparent and tinted kinds, solved on the darkest tint it meets. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 359,
+      "text": "token: mega-button-outline-border — the resting outline is ink, not blue; blue is kept for the person acting. replaces: button-tertiary. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 366,
+      "text": "token: mega-button-tonal-rest — the blue-gray tint; the outline presses into it. replaces: button-secondary. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 375,
+      "text": "token: mega-button-tonal-rest — the blue-gray tint at rest. replaces: button-secondary. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 380,
+      "text": "token: mega-button-tonal-hover — one lightness step from rest. replaces: button-secondary-hover. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 385,
+      "text": "token: mega-button-tonal-active — one lightness step from hover. replaces: button-secondary-active. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 394,
+      "text": "token: mega-button-tonal-rest — a ghost surfaces the tint on hover. replaces: button-secondary. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 399,
+      "text": "token: mega-button-tonal-hover — and presses one step deeper. replaces: button-secondary-hover. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 415,
+      "text": "token: mega-button-danger-key-command-hover — a muted hint on the danger hover fill, solved to 4.6:1. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 421,
+      "text": "token: mega-button-danger-key-command-active — a muted hint on the danger active fill, solved to 4.6:1. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 438,
+      "text": "token: mega-button-danger-text — Carbon's red reads 3.98:1 on a light layer; solved on the danger curve to clear 4.5:1 on every surface. replaces: button-danger-secondary. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 443,
+      "text": "token: mega-button-key-command-neutral — on the surface at rest, the neutral hint. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 454,
+      "text": "token: mega-button-disabled-fill — the darker disabled fill, shared by primary and danger. replaces: button-disabled. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 459,
+      "text": "token: mega-button-disabled-text — its label. replaces: text-on-color-disabled. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 480,
+      "text": "token: mega-button-tonal-rest — a disabled tonal keeps its resting tint. replaces: button-secondary. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
+      "line": 485,
+      "text": "token: mega-button-tonal-text-disabled — its label, on that tint. replaces: text-disabled. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/proposals/README.md",
+      "line": 6,
+      "text": "`api: mega-button-kinds` — Carbon's `secondary` is the fill and its `tertiary` the outline; MegaButton swaps them on purpose (the outline reads better beside a neutral primary) and has two red kinds, `danger` and `danger--secondary`."
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/proposals/README.md",
+      "line": 9,
+      "text": "`api: mega-button-key-command` — a visible key command on a button, shown with KeyboardShortcut and announced through `aria-keyshortcuts`. Carbon's Button has none."
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/proposals/README.md",
+      "line": 12,
+      "text": "`api: mega-button-icon-position` — the one icon may lead or trail the label. Carbon's Button only trails it."
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/proposals/README.md",
+      "line": 14,
+      "text": "`api: mega-button-danger-icon-only` — the two danger kinds are allowed icon-only. Carbon's IconButton has no danger kinds."
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/proposals/README.md",
+      "line": 16,
+      "text": "`api: mega-button-hide-tooltip` — an icon-only button can leave out its own tooltip when its group draws one shared tooltip (ChatInput's actions), so neighbours never show two at once. The label still names it, through `aria-label`. Carbon's IconButton always draws its own."
+    }
+  ],
   "V12/Notification": [
     {
       "kind": "explore",
@@ -93,6 +571,20 @@
       "file": "packages/react/src/v12/components/Notification/proposals/README.md",
       "line": 3,
       "text": "api: variant-prop — The colour treatment is `variant`. TBD"
+    }
+  ],
+  "V12/Pagination": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Pagination/components/pagination.scss",
+      "line": 24,
+      "text": "token: surface-quiet — The quiet surface fill: side nav panel, tiles, tables, jobs tray, tabs fade. replaces: `$layer-01`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Pagination/components/pagination.scss",
+      "line": 26,
+      "text": "token: surface-divider — A line inside the surface (table rows, header underline). replaces: `$border-subtle`. TBD"
     }
   ],
   "V12/Popover": [
@@ -159,6 +651,94 @@
       "text": "api: variant-prop — The colour treatment is `variant`. TBD"
     }
   ],
+  "V12/SessionSwitcher": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/SessionSwitcher/components/session-switcher.scss",
+      "line": 62,
+      "text": "token: session-switcher-menu-hover — Carbon's menu hover is a neutral, not a step on the selected ladder. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/SessionSwitcher/components/session-switcher.scss",
+      "line": 74,
+      "text": "token: session-switcher-menu-selected — Carbon's Menu has no selected fill; the checkmark is the whole mark. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/SessionSwitcher/components/session-switcher.scss",
+      "line": 79,
+      "text": "token: session-switcher-menu-selected-text — the brand label solved on the selected tint. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/SessionSwitcher/components/session-switcher.scss",
+      "line": 99,
+      "text": "token: session-switcher-menu-active — Carbon's menu press is a neutral, not a step on the selected ladder. replaces: layer-active-01. TBD"
+    }
+  ],
+  "V12/SideNav": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/SideNav/components/side-nav.scss",
+      "line": 33,
+      "text": "token: surface-quiet — The quiet surface fill: side nav panel, tiles, tables, jobs tray, tabs fade. replaces: `$layer-01`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/SideNav/components/side-nav.scss",
+      "line": 35,
+      "text": "token: surface-rule — The quiet surface's hairline. replaces: `$border-subtle`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/SideNav/components/side-nav.scss",
+      "line": 109,
+      "text": "token: hero-color — The hero tokens: brand colour for a line, a fill, a hover, an ink on a page and on a fill. replaces: `$border-interactive` / `$interactive`, `$button-primary`, `-hover`, `-active`, `$link-primary`, `$link-inverse`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/SideNav/proposals/README.md",
+      "line": 3,
+      "text": "api: frame-prop — What a component stands on is `frame`. TBD"
+    }
+  ],
+  "V12/SidePanel": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/SidePanel/components/side-panel.scss",
+      "line": 244,
+      "text": "radius-concentric — An inner part's radius is the outer radius less its inset, never below 0. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/SidePanel/proposals/README.md",
+      "line": 3,
+      "text": "api: frame-prop — What a component stands on is `frame`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/SidePanel/proposals/README.md",
+      "line": 4,
+      "text": "api: logical-positions — Placement values are logical. TBD"
+    }
+  ],
+  "V12/StructuredList": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/StructuredList/components/structured-list.scss",
+      "line": 293,
+      "text": "selected-wash — A row that is one of many chosen: a wash of the text colour. TBD"
+    }
+  ],
+  "V12/SystemMessage": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/SystemMessage/components/system-message.scss",
+      "line": 55,
+      "text": "token: system-message-icon-alert — $support-warning (#f1c21b) is about 1.7:1 on white, so Carbon's own warning ink cannot carry a glyph at the 3:1 non-text floor. TBD"
+    }
+  ],
   "V12/Tabs": [
     {
       "kind": "proposal",
@@ -205,6 +785,20 @@
       "text": "radius-tag-rounded — A tag's rounded corner at every size. TBD"
     }
   ],
+  "V12/Tearsheet": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Tearsheet/components/tearsheet.scss",
+      "line": 222,
+      "text": "token: surface-raised — One contrast step up from the fill: data table header and zebra. replaces: `$layer-accent-01`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Tearsheet/proposals/README.md",
+      "line": 3,
+      "text": "api: logical-positions — Placement values are logical. TBD"
+    }
+  ],
   "V12/TextArea": [
     {
       "kind": "proposal",
@@ -229,6 +823,22 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/TextInput/proposals/README.md",
+      "line": 3,
+      "text": "api: variant-prop — The colour treatment is `variant`. TBD"
+    }
+  ],
+  "V12/Tile": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Tile/components/tile.scss",
+      "line": 169,
+      "text": "hover-ring-by-content — A surface holding controls hovers with a 1px inset ring and keeps its fill; a text-only surface keeps the fill. TBD"
+    }
+  ],
+  "V12/Toggle": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Toggle/proposals/README.md",
       "line": 3,
       "text": "api: variant-prop — The colour treatment is `variant`. TBD"
     }

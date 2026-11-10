@@ -1,0 +1,85 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SidePanelStories from './SidePanel.stories.tsx';
+
+<Meta of={SidePanelStories} />
+
+# Side panel
+
+A panel at the side of the page, for a task beside it. It has a top bar with the
+close button, a title block, an optional toolbar, a scrolling body and up to
+three footer actions. It is controlled: every way of closing calls
+`onRequestClose`, and only `open` closes it. `frame` sets what it stands on:
+flush against the edge, inset 8px from the edges, or floating over the page.
+With `includeOverlay` the page dims and focus stays in the panel. With `slideIn`
+the page makes room instead of being covered.
+
+<Canvas of={SidePanelStories.Default} />
+
+<Canvas of={SidePanelStories.Placement} />
+
+<Canvas of={SidePanelStories.Sizes} />
+
+<Canvas of={SidePanelStories.Frames} />
+
+<Canvas of={SidePanelStories.Overlay} />
+
+<Canvas of={SidePanelStories.SlideIn} />
+
+<Canvas of={SidePanelStories.WithActions} />
+
+<Canvas of={SidePanelStories.MultiStep} />
+
+<Canvas of={SidePanelStories.LongContent} />
+
+<Canvas of={SidePanelStories.Exits} />
+
+<Canvas of={SidePanelStories.InContainer} />
+
+## Motion
+
+- **Snap by its edge:** a flush or inset panel grows from the middle of the edge
+  it is attached to. Its width starts at nothing and its height at 60%. Under
+  4px wide it fades with its width, so no sliver shows.
+- **Axial timing:** by its edge, the width takes the whole clock, set by the
+  larger axis's travel. An md panel takes moderate-03, 300ms. The height is done
+  at 0.55 of that, 165ms.
+- **Snap, floating:** a floating panel grows from the press that opened it, or
+  from its launcher's center when a key opened it, clamped into its box. Its
+  height starts at 75% and its width at 25%. Over 320px it takes the larger
+  surface's timing.
+- **Content arrival:** from the first frame, the content moves 8px into place
+  from where the panel grows: along x by its edge, along y floating. It runs on
+  entrance-productive, one step or 60ms longer than the longest axis clock,
+  whichever is sooner. A 300ms width gives 360ms.
+- **Collapse exit:** leaving, the far edge pulls back to the near one, the other
+  axis held and the content still. By its edge, that is the edge it is attached
+  to. Floating, it pulls back toward the edge nearest its cause, to 70%, fading
+  over its last 40ms or 80ms by its clock, and is gone on its last frame.
+  `exit="reversed"` plays the entrance back instead.
+- **Push:** with `slideIn`, the page's margin on that side moves on the panel's
+  width clock and curve, in and out, so the gap holds. The room is the panel's
+  width plus an inset panel's distance from the edge. A floating panel never
+  pushes.
+- **Overlay:** with `includeOverlay`, the dim fades in over moderate-01
+  (entrance-productive) and out over fast-02 (exit-productive), from wherever it
+  is.
+- **Step swap:** a new `currentStep` swaps the body out, then in. Past the first
+  step a back button shows.
+- **Condensed title:** with `animateTitle`, the title scrolls with the body.
+  Once it is under the top bar, the bar takes its fill and divider, and the
+  small title fades in and rises 4px over fast-02.
+- **Tooltip hold:** the tooltips of its icon buttons wait until the panel and
+  its content have landed, then open against their final box.
+- **Turning round:** reopened while it leaves, the content goes on from where it
+  is.
+
+## Reduced motion
+
+By its edge, the panel only fades, at its final geometry, on half the clock. A
+floating panel is there or gone at once. The content has no lead. The page makes
+room at once. The overlay fades on half the clock. A new step shows at once. The
+condensed title fades without rising.
+
+## Props
+
+<ArgTypes of={SidePanelStories} />

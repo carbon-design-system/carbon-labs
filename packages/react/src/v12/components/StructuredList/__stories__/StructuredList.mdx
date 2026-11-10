@@ -1,0 +1,53 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as StructuredListStories from './StructuredList.stories.tsx';
+
+<Meta of={StructuredListStories} />
+
+# StructuredList
+
+Rows of related details in columns, read across. `StructuredListWrapper` holds a
+`StructuredListHead` and a `StructuredListBody` of `StructuredListRow`s and
+`StructuredListCell`s, with the roles of a table. Columns size to their content,
+with a hairline between rows. With `selection`, each row is a choice: a radio
+mark in its leading cell, and a marker on the selected row. `isCondensed` gives
+8px cells; `isFlush` removes the start padding, but not with `selection`.
+
+<Canvas of={StructuredListStories.Default} />
+
+<Canvas of={StructuredListStories.Selectable} />
+
+<Canvas of={StructuredListStories.Frames} />
+
+## Motion
+
+- **Static:** without `selection`, the list has no hover and no motion.
+- **Hover:** with `selection`, a body row takes the rollover: the quiet card
+  hover, as an even wash. Rows press flat. The cells' text steps up to primary
+  on the hover's clock. The selected row takes no hover and no release circle.
+- **Selection glide:** the marker travels from the row it is on to the new one,
+  timed by travel (40, 80, 120 or 160ms), its leading edge ahead. The first pick
+  grows it in from its row's center. A row selected at first is placed at once.
+- **Reach:** a press on another row reaches the marker toward it. Sliding to
+  another row retargets; sliding off the list cancels. There is no drag.
+- **Line frame:** with `frame="line"`, the default, the marker is the two row
+  lines it lands on, 2px, with no fill and no sides. It is drawn the whole time
+  it shows, so nothing switches on or off as it travels.
+- **Ghost frame:** with `frame="ghost"`, the marker is a wash over the row.
+  While it reaches or stretches across rows, the lines inside it hide and it
+  carries a line on each edge.
+- **Radio mark:** the dot grows from its center when chosen, over fast-02, and
+  shrinks and fades when unchosen, over fast-01.
+- **Keyboard:** each row's `StructuredListInput` is a hidden radio. They form
+  one group with one tab stop; the arrow keys move and select. The row takes a
+  2px ring for the keyboard only.
+- **Slow motion:** `timeScale` slows the marker and the hover.
+
+## Reduced motion
+
+The marker does not travel: it fades in at the new row while a ghost fades out
+at the old, on half the clock. The hover changes at once. The radio's dot
+changes at once.
+
+## Props
+
+<ArgTypes of={StructuredListStories} />

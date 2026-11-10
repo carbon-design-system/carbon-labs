@@ -1,0 +1,40 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as AboutModalStories from './AboutModal.stories.tsx';
+
+<Meta of={AboutModalStories} />
+
+# About modal
+
+A small passive modal that says what a product is and which version runs. It
+shows a logo over the title, the content, a row of links, additional information
+and a copyright line. One additional information item shows as a block; several
+show as tabs. It follows `open` and closes itself unless `onClose` returns
+`false`. The close button, Escape or a press outside closes it, and focus goes
+back to the launcher.
+
+<Canvas of={AboutModalStories.Default} />
+
+<Canvas of={AboutModalStories.WithLinks} />
+
+<Canvas of={AboutModalStories.LegalText} />
+
+<Canvas of={AboutModalStories.WithTabs} />
+
+## Motion
+
+- **The modal's snap:** the overlay fades in, and the surface arrives centred
+  from 92% of its box, leaning toward what opened it. Leaving, it pulls back.
+  `backdrop` and `shadow` are the modal's.
+- **Content:** the body moves in with the frame, as in the modal.
+- **Tabs:** with several additional information items, the marker glides between
+  tabs, and the panels swap out, then in. `timeScale` reaches the tabs too.
+
+## Reduced motion
+
+The modal's: the overlay and the surface only fade, at their final geometry, on
+half the clock. The tabs' selector fades on the new tab on half the clock, and
+the panels swap at once.
+
+## Props
+
+<ArgTypes of={AboutModalStories} />

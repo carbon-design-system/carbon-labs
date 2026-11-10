@@ -1,0 +1,175 @@
+{
+  "$schema": "../recipe.schema.json",
+  "name": "settings-page",
+  "kind": "layout",
+  "status": "draft",
+  "description": "Where a person decides how and how often the product reaches them. One form, the lead, on the grid, with a plain save.",
+  "meta": {
+    "intent": "Lets a person choose which notifications they get and how often, and save that choice.",
+    "useWhen": [
+      "a single area of preferences that fits one form",
+      "every choice is independent and saved together"
+    ],
+    "preferInstead": [
+      {
+        "when": "the settings span several unrelated areas",
+        "use": "a Tabs layout with one form per tab",
+        "because": "one long form hides the area a person came for"
+      },
+      {
+        "when": "a change takes effect immediately and needs no save",
+        "use": "Toggle rows without a ButtonSet",
+        "because": "a save button for an instant change is a promise the screen does not keep"
+      }
+    ]
+  },
+  "tree": {
+    "component": "@carbon/react:Grid",
+    "children": [
+      {
+        "component": "@carbon/react:Heading",
+        "props": {
+          "children": "Notification settings"
+        },
+        "grid": {
+          "span": {
+            "sm": 4,
+            "md": 8,
+            "lg": 16
+          }
+        }
+      },
+      {
+        "component": "@carbon/react:Form",
+        "props": {
+          "aria-label": "Notification settings"
+        },
+        "grid": {
+          "span": {
+            "sm": 4,
+            "md": 6,
+            "lg": 10
+          }
+        },
+        "gap": "spacing-07",
+        "children": [
+          {
+            "component": "@carbon/react:FormGroup",
+            "props": {
+              "legendText": "Channels"
+            },
+            "gap": "spacing-05",
+            "children": [
+              {
+                "component": "@carbon/react:Toggle",
+                "props": {
+                  "id": "notify-email",
+                  "labelText": "Email",
+                  "defaultToggled": true
+                }
+              },
+              {
+                "component": "@carbon/react:Toggle",
+                "props": {
+                  "id": "notify-in-app",
+                  "labelText": "In the product",
+                  "defaultToggled": true
+                }
+              }
+            ]
+          },
+          {
+            "component": "@carbon/react:RadioButtonGroup",
+            "props": {
+              "legendText": "How often",
+              "name": "notify-frequency",
+              "defaultSelected": "daily",
+              "orientation": "vertical"
+            },
+            "children": [
+              {
+                "component": "@carbon/react:RadioButton",
+                "props": {
+                  "id": "notify-instant",
+                  "labelText": "As it happens",
+                  "value": "instant"
+                }
+              },
+              {
+                "component": "@carbon/react:RadioButton",
+                "props": {
+                  "id": "notify-daily",
+                  "labelText": "A daily summary",
+                  "value": "daily"
+                }
+              },
+              {
+                "component": "@carbon/react:RadioButton",
+                "props": {
+                  "id": "notify-weekly",
+                  "labelText": "A weekly summary",
+                  "value": "weekly"
+                }
+              }
+            ]
+          },
+          {
+            "component": "@carbon/react:Select",
+            "props": {
+              "id": "notify-language",
+              "labelText": "Language"
+            },
+            "children": [
+              {
+                "component": "@carbon/react:SelectItem",
+                "props": {
+                  "value": "en",
+                  "text": "English"
+                }
+              },
+              {
+                "component": "@carbon/react:SelectItem",
+                "props": {
+                  "value": "fr",
+                  "text": "French"
+                }
+              },
+              {
+                "component": "@carbon/react:SelectItem",
+                "props": {
+                  "value": "ja",
+                  "text": "Japanese"
+                }
+              }
+            ]
+          },
+          {
+            "component": "@carbon/react:ButtonSet",
+            "children": [
+              {
+                "component": "@carbon/react:Button",
+                "props": {
+                  "kind": "secondary",
+                  "children": "Cancel",
+                  "onClick": {
+                    "$event": "cancel"
+                  }
+                }
+              },
+              {
+                "component": "@carbon/react:Button",
+                "props": {
+                  "kind": "primary",
+                  "children": "Save",
+                  "onClick": {
+                    "$event": "save"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

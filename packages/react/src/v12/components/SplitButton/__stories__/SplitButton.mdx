@@ -1,0 +1,45 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SplitButtonStories from './SplitButton.stories.tsx';
+
+<Meta of={SplitButtonStories} />
+
+# SplitButton
+
+A primary action, and beside it a chevron that opens a menu of related actions,
+with Carbon's ComboButton props. Not for two equal actions: use two Buttons. One
+shell in two cells, on the Button's look: `kind` primary or secondary, `variant`
+filled, outlined or tonal, sizes xs to lg. `busy` shows a spinner in the
+action's place while it runs.
+
+<Canvas of={SplitButtonStories.Default} />
+
+<Canvas of={SplitButtonStories.Looks} />
+
+<Canvas of={SplitButtonStories.Sizes} />
+
+<Canvas of={SplitButtonStories.Busy} />
+
+## Motion
+
+- **Hover:** the Button's glow in each cell, clipped to the cell, with no
+  growth.
+- **Press and release:** the Button's pressed color and release circle, clipped
+  to the cell, with no press-in.
+- **Chevron:** it turns while the menu shows.
+- **Menu:** the Menu's open and close, from the press point or, with
+  `openFrom="trigger"`, the chevron's center. The menu is at least as wide as
+  the shell.
+- **Busy:** out, then in. The label fades out, then the spinner draws on; the
+  reverse as busy ends.
+- **Focus:** keyboard only. Each cell has its own ring, round outside and square
+  at the seam.
+
+## Reduced motion
+
+The glow and the press show at once, and the release circle lands at once. The
+chevron changes at once. The menu is the Menu's: there at once and gone at once.
+Busy swaps at once.
+
+## Props
+
+<ArgTypes of={SplitButtonStories} />

@@ -1,0 +1,92 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/text-pairs';
+
+/* Carbon's scale: sections 48px apart, header to fields 24px, fields 32px
+   (their message line's room), a row's fields 16px. */
+
+/// The form's width at which a row's fields go side by side.
+$row-from: 30rem;
+
+.cds-form-layout {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  margin: 0;
+  container: cds-form / inline-size;
+  gap: $spacing-09;
+  inline-size: 100%;
+}
+
+.cds-form-layout--narrow {
+  max-inline-size: 20rem;
+}
+
+.cds-form-layout--medium {
+  max-inline-size: 40rem;
+}
+
+.cds-form-layout--wide {
+  max-inline-size: 60rem;
+}
+
+.cds-form-section {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-06;
+  min-inline-size: 0;
+}
+
+.cds-form-section__header {
+  display: flex;
+  flex-direction: column;
+  gap: text-pairs.$title-to-summary;
+}
+
+.cds-form-section__title {
+  @include type-style('heading-compact-02');
+
+  margin: 0;
+  color: theme.$text-primary;
+}
+
+.cds-form-section__description {
+  /* The kit's title → description pair: it may wrap. */
+  @include text-pairs.description;
+
+  margin: 0;
+}
+
+.cds-form-section__fields {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  gap: $spacing-07;
+  min-inline-size: 0;
+}
+
+.cds-form-row {
+  display: grid;
+  align-items: start;
+  gap: $spacing-07 $spacing-05;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@container cds-form (min-width: #{$row-from}) {
+  .cds-form-row {
+    grid-template-columns: repeat(
+      var(--cds-form-row-columns, 2),
+      minmax(0, 1fr)
+    );
+  }
+}

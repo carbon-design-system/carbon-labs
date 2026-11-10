@@ -11632,6 +11632,14 @@
               "$ref": "#/$defs/node",
               "description": "MenuItem, MenuItemSelectable, MenuItemRadioGroup, MenuItemGroup, MenuItemDivider."
             },
+            "corners": {
+              "enum": [
+                "full",
+                "rounded",
+                "square"
+              ],
+              "description": "`rounded` (default): 8px corners and rows at a field's inset. `full`: a"
+            },
             "exitFade": {
               "type": "boolean",
               "description": "The snap exit's fade on the menu and its submenus (40ms on a short exit, else 80ms). Default true. `false`: it folds back opaque, for a menu that must not show "
@@ -11798,6 +11806,14 @@
             "children": {
               "$ref": "#/$defs/node",
               "description": "MenuItems."
+            },
+            "corners": {
+              "enum": [
+                "full",
+                "rounded",
+                "square"
+              ],
+              "description": "`rounded` (default): 8px corners and rows at a field's inset. `full`: a"
             },
             "disabled": {
               "type": "boolean"
@@ -12124,6 +12140,14 @@
             "children": {
               "$ref": "#/$defs/node",
               "description": "MenuItems."
+            },
+            "corners": {
+              "enum": [
+                "full",
+                "rounded",
+                "square"
+              ],
+              "description": "`rounded` (default): 8px corners and rows at a field's inset. `full`: a"
             },
             "disabled": {
               "type": "boolean"
@@ -21394,6 +21418,10 @@
               "type": "string",
               "description": "Default \"Items per page:\"."
             },
+            "numberSwap": {
+              "type": "boolean",
+              "description": "The content swap of the range's \"11–20\" and the page number, out then"
+            },
             "onBlur": {
               "$ref": "#/$defs/event"
             },
@@ -25454,6 +25482,14 @@
             "children": {
               "$ref": "#/$defs/node",
               "description": "MenuItems: the related actions (v11)."
+            },
+            "corners": {
+              "enum": [
+                "full",
+                "rounded",
+                "square"
+              ],
+              "description": "`rounded` (default): 8px corners and rows at a field's inset. `full`: a"
             },
             "disabled": {
               "type": "boolean",

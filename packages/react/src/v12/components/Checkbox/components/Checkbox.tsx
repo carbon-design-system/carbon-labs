@@ -161,10 +161,11 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           : warn
             ? 'warn'
             : 'none';
+    // The message shown: a status's text, else the helper (FieldMessage's rule).
     const described =
-      status === 'error'
+      status === 'error' && invalidText
         ? ids.invalid
-        : status === 'warn'
+        : status === 'warn' && warnText
           ? ids.warn
           : helperText
             ? ids.helper

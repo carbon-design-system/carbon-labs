@@ -237,7 +237,7 @@
   },
   "V12/Checkbox": {
     "title": "Checkbox",
-    "summary": "A box that turns one option on or off. A parent of partly checked children shows\nmixed, a dash. `Checkbox` takes Carbon's props, plus `disabledReason` and\n`timeScale`. `CheckboxGroup` sets several checkboxes under one legend, stacked\nor in a row. `CheckboxSkeleton` is the checkbox while it loads.",
+    "summary": "A box that turns one option on or off. A parent of partly checked children shows\nmixed, a dash. `Checkbox` takes Carbon's props, plus `disabledReason` and\n`timeScale`. `CheckboxGroup` sets several checkboxes under one legend, stacked\nor in a row; its `invalid` or `warn` reaches each checkbox in it, with one\nmessage under the group. `CheckboxSkeleton` is the checkbox while it loads.",
     "sections": [
       {
         "title": "Motion",

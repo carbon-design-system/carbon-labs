@@ -1,0 +1,47 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as UserAvatarStories from './UserAvatar.stories.tsx';
+
+<Meta of={UserAvatarStories} />
+
+# UserAvatar
+
+A person as their initials, their picture or an icon in a coloured circle, with
+the props of Carbon for IBM Products' `UserAvatar`. The initials are the first
+and last name's first letters, or a single name's first two; with no name it
+shows the User icon, or `renderIcon`. Sizes are sm 24, md 32 (the default), lg
+40 and xl 48px. The twelve colours follow the Carbon theme it sits in; `theme`
+names one outright. `UserAvatarSkeleton` is its loading state.
+
+<Canvas of={UserAvatarStories.Default} />
+
+<Canvas of={UserAvatarStories.Sizes} />
+
+<Canvas of={UserAvatarStories.Colors} />
+
+## Motion
+
+- **At rest:** nothing moves on its own: no hover, no press. It isn't a control.
+- **Image:** the initials or the icon show until the image loads, then swap to
+  it, out then in, never overlapping. The initials leave up 8px, fading, over
+  `fast-01`; then the image comes up from 8px below over `fast-02`, clipped by
+  the circle. `timeScale` slows the swap.
+- **Already loaded:** an image loaded when the avatar first paints is simply
+  there, with no swap.
+- **New image:** the initials come back until it loads, then it swaps in. A
+  broken image keeps the initials.
+- **Tooltip:** with `tooltipText` the avatar is a button and the kit's Tooltip
+  names it. It snaps in from the pointer. Along a run of avatars only the first
+  tooltip snaps; the next ones appear in place.
+
+<Canvas of={UserAvatarStories.ImageSwap} />
+
+<Canvas of={UserAvatarStories.WithTooltips} />
+
+## Reduced motion
+
+The swap is a snap: the image is there on the frame the initials go. The tooltip
+is there at once.
+
+## Props
+
+<ArgTypes of={UserAvatarStories} />

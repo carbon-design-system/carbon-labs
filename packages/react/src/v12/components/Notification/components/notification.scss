@@ -1,0 +1,597 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use 'sass:map';
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/corners';
+@use '@carbon-labs/v12-styles/scss/cast-shadow-floating';
+
+/* Notifications — Carbon v11's function on a v12 surface.
+ *
+ * The surface is the snap's container model: the frame (`data-snap-frame`,
+ * the first child) paints the background and the outline; the body is the
+ * content the snap offsets. The OUTLINE says the kind — its status color —
+ * on a plain surface: no tinted fill, no shadow.
+ * `outlined` (v11's low contrast, the default) is the quiet surface;
+ * `inverse` (v11's high contrast) the inverse one (errors and actionable
+ * notifications by default). */
+
+$statuses: (
+  error: (
+    low: theme.$support-error,
+    inverse: theme.$support-error-inverse,
+  ),
+  success: (
+    low: theme.$support-success,
+    inverse: theme.$support-success-inverse,
+  ),
+  warning: (
+    low: theme.$support-warning,
+    inverse: theme.$support-warning-inverse,
+  ),
+  warning-alt: (
+    low: theme.$support-warning,
+    inverse: theme.$support-warning-inverse,
+  ),
+  info: (
+    low: theme.$support-info,
+    inverse: theme.$support-info-inverse,
+  ),
+  info-square: (
+    low: theme.$support-info,
+    inverse: theme.$support-info-inverse,
+  ),
+);
+
+$ease: var(--cds-motion-easing-standard-productive);
+$move: var(--cds-motion-duration-moderate-01);
+$fade: var(--cds-motion-duration-fast-02);
+
+/* ── hosts ───────────────────────────────────────────────────────────── */
+
+.fb-solo {
+  position: relative;
+}
+
+/* An inline notification opens its place in the page (StackHost `flow`). */
+.fb-solo--flow {
+  overflow: clip;
+}
+
+.fb-stack {
+  position: relative;
+  inline-size: 288px;
+  pointer-events: none;
+
+  > * {
+    pointer-events: auto;
+  }
+}
+
+/* The stack's live regions (ToastStack): read, never seen. */
+.fb-stack__live {
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+/* ── the surface ─────────────────────────────────────────────────────── */
+
+.fb-n {
+  /* The frame's corner and its controls' (close, action), by `corners`
+     (below): an 8px frame by default, its action a pill as every v12
+     button is. */
+  // @carbon-explore radius-notification — Inline notification corner. TBD
+  --fb-radius: #{corners.$in};
+  --fb-ctl-radius: #{corners.$full};
+  /* The close button (and its ring) is a circle: 999px,
+     not its half height, so the hover's 1px grow stays round. */
+  --fb-close-radius: #{corners.$full};
+
+  position: relative;
+  color: var(--fb-fg);
+  isolation: isolate;
+
+  @each $kind, $s in $statuses {
+    &.fb-n--#{$kind} {
+      --fb-status-low: #{map.get($s, low)};
+      --fb-status-inverse: #{map.get($s, inverse)};
+    }
+  }
+
+  /* `outlined` (and v11's low contrast): the quiet surface's fill
+     (`--cds-surface`, the side nav's panel: one surface standard) with the status hairline
+     for its edge, not the surface's. A notification is a message in the
+     page (inline) or over it (a toast); the quiet and the floating
+     standards share this fill and differ only in the edge, which here is
+     the status's. In a Carbon <Layer>, the contextual layer (below), as the
+     selection family's tracks. */
+  &.fb--low {
+    --fb-bg: var(--cds-surface, #{theme.$layer});
+    --fb-fg: #{theme.$text-primary};
+    --fb-fg-2: #{theme.$text-secondary};
+    --fb-status: var(--fb-status-low);
+  }
+
+  /* `tonal`: a step up the layers, the kit's tonal fill. */
+  /* Re-hued to its context, as every tonal look (the core's tonal watcher). */
+  &.fb-n--style-tonal {
+    --fb-bg: oklch(
+      from #{theme.$layer-selected} l var(--tonal-c, c) var(--tonal-h, h)
+    );
+  }
+
+  :is(.cds--layer-two, .cds--layer-three) &.fb--low:not(.fb-n--style-tonal) {
+    --fb-bg: #{theme.$layer};
+  }
+
+  /* `inverse` (v11's high contrast). */
+  &.fb--inverse {
+    --fb-bg: #{theme.$background-inverse};
+    --fb-fg: #{theme.$text-inverse};
+    --fb-fg-2: color-mix(in srgb, #{theme.$text-inverse} 72%, transparent);
+    --fb-status: var(--fb-status-inverse);
+  }
+}
+
+.fb-n__frame {
+  position: absolute;
+  z-index: -1;
+  // @carbon-explore radius-notification — Inline notification corner. TBD
+  border-radius: var(--fb-radius);
+  background: var(--fb-bg);
+  box-shadow: inset 0 0 0 1px var(--fb-status);
+  inset: 0;
+  pointer-events: none;
+  /* An update's status turns on the empty card on the deck's color clock
+     (fast-01), in a deck or not. */
+  transition:
+    background-color var(--cds-motion-duration-fast-01) $ease,
+    box-shadow var(--cds-motion-duration-fast-01) $ease;
+}
+
+.fb-n__body {
+  /* The out copy's grid area is its containing block (below). */
+  position: relative;
+  display: grid;
+  /* An update holds the body's height while its old words leave: the rows
+     keep their own heights (a timer bar or an action stays under the text). */
+  align-content: start;
+  align-items: start;
+  column-gap: 12px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.fb-n__mark {
+  display: grid;
+  /* Optical, off the spacing scale: the 20px mark centres on the title's 18px line. */
+  margin-block-start: -1px;
+}
+
+/* The text column's one cell: an update's old words (`--out`) leave in the
+   same place the new ones come in (the content swap, out then in). */
+.fb-n__text {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.fb-n__text--out {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  pointer-events: none;
+}
+
+/* Out of the flow: the card's height is the new
+   words' from the start, so it can move to it in one step, between the out
+   and the in, instead of jumping as each copy comes and goes. */
+
+.fb-n__title {
+  @include type-style('heading-compact-01');
+}
+
+/* A group's count (`CountPill`): in the status color, after the title. Its
+   figure is white on the darker status colors and near-black on the lighter
+   ones (OKLCH L from 0.6, where the two cross), so it holds 4.5:1 on every
+   status in every theme; the surface's own color fell to 1.3:1 on yellow. */
+.fb-n__count {
+  background: var(--fb-status);
+  color: oklch(
+    from var(--fb-status) clamp(0.2, calc((0.6 - l) * 1000), 1) 0 0deg
+  );
+  /* Optical offsets, off the spacing scale: set by eye so the pill sits on the title's line. */
+  margin-inline-start: 6px;
+  vertical-align: 1px;
+}
+
+.fb-n__subtitle {
+  @include type-style('body-compact-01');
+}
+
+.fb-n__caption {
+  @include type-style('label-01');
+
+  color: var(--fb-fg-2);
+
+  margin-block-start: 12px;
+}
+
+/* ── corners (the family's three modes) ────────────── */
+
+/* `full`: pill controls in a frame concentric with them, as the kit's
+   `.sel--full` and the Menu's `.cds-menu--full`, not a capsule round the
+   whole notification. A 32px control's half (16px) plus the 8px it sits
+   from the frame's edge: 24px, half a single-line notification's 48px. A
+   one-line inline notification is a capsule; a taller toast keeps 24px
+   ends. */
+.fb-n--corners-full {
+  --fb-radius: 24px;
+  /* A pill at any size: 999px, so the hover's 1px grow doesn't flatten it. */
+  --fb-ctl-radius: #{corners.$full};
+}
+
+/* `square`: no rounded corners — frame, buttons, ring, count, timer bar. */
+.fb-n--corners-square {
+  --fb-radius: 0px;
+  --fb-ctl-radius: 0px;
+  --fb-close-radius: 0px;
+
+  .fb-n__count,
+  .fb-n__track {
+    border-radius: 0;
+  }
+}
+
+/* ── toast ───────────────────────────────────────────────────────────── */
+
+.fb-n--toast,
+.fb-n--actionable-toast {
+  inline-size: 288px;
+  max-inline-size: 100%;
+
+  .fb-n__body {
+    /* Optical, off the spacing scale: 14px, with the close's -7px margin, centres the 32px
+       close on the title's 18px line. */
+    padding-block: 14px 16px;
+    padding-inline: 16px 8px;
+  }
+
+  .fb-n__close {
+    margin-block: -7px;
+  }
+}
+
+.fb-n--actionable-toast .fb-action {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: start;
+  margin-block-start: 12px;
+}
+
+/* The timeout, nested in the content rather than along the rounded edge.
+   The bar: a track under the text, the width of the
+   text column, draining toward its start (motion-core `attachStack`'s timer
+   is its own animation). Held, it dims — the clock has visibly stopped. */
+.fb-n__track {
+  overflow: hidden;
+  border-radius: corners.$full;
+  background: color-mix(in srgb, var(--fb-status) 20%, transparent);
+  block-size: 2px;
+  grid-column: 2;
+  grid-row: 2;
+  margin-block-start: 12px;
+}
+
+.fb-n__timer {
+  display: block;
+  border-radius: inherit;
+  background: var(--fb-status);
+  block-size: 100%;
+  transform-origin: left center;
+
+  [dir='rtl'] & {
+    transform-origin: right center;
+  }
+}
+
+/* The ring: round the close button's box in its corner mode — the toast
+   closes when it runs out. The button's ghost fill sits the kit's inset
+   (3px at sm) inside that box with a concentric corner, so the ring stays
+   round the visible fill: 8 / 5px, a circle round a circle, square round
+   square. */
+.fb-n__close {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+}
+
+/* On the surface, over the close button's box: a toast's padding (14px) less
+   the close's -7px margin from the top, the 8px end padding from the side. */
+.fb-n__ring {
+  position: absolute;
+  block-size: 32px;
+  inline-size: 32px;
+  inset-block-start: 7px;
+  inset-inline-end: 8px;
+  pointer-events: none;
+
+  path {
+    fill: none;
+    stroke: var(--fb-status);
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    stroke-width: 2;
+  }
+}
+
+/* Pressing the close button insets its fill 1px (the rollover's press, back from its hover expand); the ring
+   goes in with it, so no gap opens between them. */
+.fb-n__ring {
+  transform-origin: center;
+  transition:
+    opacity $fade $ease,
+    transform var(--cds-motion-duration-fast-01) $ease;
+}
+
+/* Slid off while pressed (the rollover's cancel), the fill is back at rest, and so is the ring. */
+.fb-n:has(
+    .fb-n__close .cds-icon-btn:active:not(:disabled, [data-rollover-slid])
+  )
+  .fb-n__ring {
+  transform: scale(calc(30 / 32));
+}
+
+.fb-n__track {
+  transition: opacity $fade $ease;
+}
+
+.fb-n__track,
+.fb-n__ring {
+  [data-stack-paused] & {
+    opacity: 0.4;
+  }
+}
+
+/* ── the deck (ToastStack) ───────────────────────────────────────────── */
+
+/* Every card is placed by the deck (top, height); attachStack moves each
+   from where it was. Behind the front card, a card's frame insets — the
+   outline stays 1px — its content fades out, and it dims toward the page,
+   further each card back (`--deck-dim`). Every part runs on the deck's one
+   clock and curve (`--deck-ms`, `--deck-ease`, set per move), so a change is
+   one move. */
+/* Before the deck's first move writes its curve: the entrance's. */
+$_deck-ease: var(--cds-motion-easing-entrance-productive);
+
+.fb-deck {
+  --_deck: var(--deck-ms, var(--cds-motion-duration-fast-02))
+    var(--deck-ease, #{$_deck-ease});
+}
+
+/* A card's own size changes (height, inset, dimming, content): on the move's
+   clock — or, in a deal, its own short clock starting as it lands in its
+   slot (`--deck-delay`), so it sizes up as the stack passes it. */
+.fb-deck > .fb-n {
+  --_size: var(
+      --deck-size-ms,
+      var(--deck-ms, var(--cds-motion-duration-fast-02))
+    )
+    var(--deck-ease, #{$_deck-ease}) var(--deck-delay, 0ms);
+  --_color: var(--deck-color-ms, var(--cds-motion-duration-fast-01))
+    var(--cds-motion-easing-entrance-productive);
+}
+
+.fb-deck > .fb-n {
+  position: absolute;
+  overflow: clip;
+  inset-inline: 0;
+  transition:
+    height var(--_size),
+    opacity var(--_size);
+
+  .fb-n__frame {
+    background: color-mix(
+      in srgb,
+      var(--fb-bg),
+      #{theme.$background} calc(var(--deck-dim, 0%) * 0.6)
+    );
+    box-shadow: inset 0 0 0 1px
+      color-mix(in srgb, var(--fb-status), var(--fb-bg) var(--deck-dim, 0%));
+    inset-inline: var(--deck-inset, 0px);
+    /* The colors (dimming toward the page, the outline) turn at once and
+       fast, on their own short clock, never waiting for the card's slot:
+       a shift that late, or that slow, reads as unintended. The geometry keeps the move's. */
+    transition:
+      inset var(--_size),
+      background-color var(--_color),
+      box-shadow var(--_color);
+  }
+
+  /* The content comes in (or goes out) on its own short clock, starting just
+     before its card lands so it is fully there on landing — a fade that
+     waits for the landing, then takes its time, is noticed. */
+  .fb-n__body {
+    transition: opacity
+      var(
+        --deck-body-ms,
+        var(--deck-size-ms, var(--deck-ms, var(--cds-motion-duration-fast-02)))
+      )
+      var(--deck-ease, $_deck-ease) var(--deck-body-delay, 0ms);
+  }
+
+  &[data-deck='peek'] .fb-n__body,
+  &[data-deck='hidden'] .fb-n__body {
+    opacity: 0;
+  }
+
+  &[data-deck='hidden'] {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* The ring is the front surface's: behind it, it goes (the body's fade,
+     for a part that isn't in the body). */
+  .fb-n__ring {
+    transition:
+      opacity var(--_color),
+      transform var(--cds-motion-duration-fast-01) $ease;
+  }
+
+  &[data-deck='peek'] .fb-n__ring,
+  &[data-deck='hidden'] .fb-n__ring {
+    opacity: 0;
+  }
+}
+
+/* A card's cast shadow (ToastStack's `useDeckShadows`; the floating
+   surfaces' `.cast-floating`): beside its card in the deck, placed in the
+   deck's own box every frame (so a scrolled page carries it too) — not the
+   viewport-fixed box a portalled menu's takes, and never a target. Behind a
+   closed deck's front a card casts nothing (the peeks' shadows would pile up
+   under the front); it fades on the deck's move clock as the deck opens or
+   gathers. */
+.fb-deck > .fb-deck__shadow {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  pointer-events: none;
+
+  > .cast-floating__frame {
+    transition: opacity var(--_deck);
+  }
+
+  &[data-shadow-covered] > .cast-floating__frame {
+    transition: none;
+  }
+
+  &[data-shadow-deck='peek'] > .cast-floating__frame,
+  &[data-shadow-deck='hidden'] > .cast-floating__frame,
+  &[data-shadow-deck='leaving'] > .cast-floating__frame {
+    opacity: 0;
+  }
+}
+
+/* Swipe: the toast follows the pointer horizontally; vertical drags scroll. */
+.fb-stack .fb-n {
+  touch-action: pan-y;
+}
+
+.fb-n[data-stack-swiping] {
+  cursor: grabbing;
+  user-select: none;
+}
+
+/* ── inline, actionable inline, callout ──────────────────────────────── */
+
+.fb-n--flat {
+  inline-size: 100%;
+
+  /* Centered on its row: no -1px nudge (a toast's, top-aligned to its title),
+     or its 19px box centers on a half pixel, 0.5px off the
+     pixel grid at rest. 20px in a 48px row is 14px
+     down, centered on the title's line. */
+  .fb-n__mark {
+    margin-block-start: 0;
+  }
+
+  .fb-n__body {
+    align-items: center;
+    min-block-size: 48px;
+    padding-inline: 16px 8px;
+  }
+
+  .fb-n__text {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 4px;
+    /* Off the spacing scale: an 18px line centred in the 48px row. */
+    padding-block: 15px;
+  }
+
+  .fb-n__caption {
+    flex-basis: 100%;
+    margin-block-start: 4px;
+  }
+}
+
+.fb-n--actionable-inline .fb-n__body,
+.fb-n--callout .fb-n__body {
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+}
+
+.fb-n--no-close .fb-n__body {
+  padding-inline-end: 16px;
+}
+
+.fb-n--callout.fb-n--no-close .fb-n__body {
+  padding-inline-end: 8px;
+}
+
+/* ── buttons ─────────────────────────────────────────────────────────── */
+
+/* The close button is the selection family's IconButton (ghost, sm 32px,
+   its fill inset 3px, the rollover on matched lightness read off the
+   frame). On a notification it takes the notification's own text color and
+   its corner mode. */
+.fb-n .cds-icon-btn--ghost {
+  --icon-btn-radius: var(--fb-close-radius);
+
+  color: var(--fb-fg);
+}
+
+/* The action button: the IconButton's shape and press — a pill, or square
+   in the square corner mode, sm 32px — ghost inline, outlined on a
+   toast (v11: ghost / tertiary). */
+.fb-action {
+  @include rollover;
+  @include type-style('body-compact-01');
+  --rollover-hover: color-mix(in srgb, currentColor 10%, transparent);
+
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  border: 0;
+  border-radius: var(--fb-ctl-radius, #{corners.$in});
+
+  appearance: none;
+  background: transparent;
+  block-size: 32px;
+  color: inherit;
+  cursor: pointer;
+  padding-inline: 12px;
+  white-space: nowrap;
+}
+
+.fb-action--outline {
+  --rollover-stroke: color-mix(in srgb, currentColor 40%, transparent);
+}
+
+/* Keyboard focus, the selection family's: a 2px ring in the control's own text color, just inside its edge, with no blue and no second ring, as
+   that color contrasts with its surface, the inverse one too. The close is the family's ghost IconButton, its ring on its inset fill's edge (tooltip.scss). */
+.fb-action:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
+}
+
+@media (forced-colors: active) {
+  .fb-n__frame {
+    border: 1px solid CanvasText;
+  }
+
+  .fb-n__timer {
+    background: CanvasText;
+  }
+}

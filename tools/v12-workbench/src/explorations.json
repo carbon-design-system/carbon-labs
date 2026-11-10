@@ -1,4 +1,64 @@
 {
+  "V12/Button": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Button/components/button.scss",
+      "line": 254,
+      "text": "button-secondary-quiet — The secondary Button as a quiet fill one step off what it sits on, re-solved on raised surfaces. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Button/components/button.scss",
+      "line": 282,
+      "text": "tertiary-neutral — The outlined Button in a neutral ink on light themes. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Button/proposals/README.md",
+      "line": 3,
+      "text": "api: frame-prop — What a component stands on is `frame`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Button/proposals/README.md",
+      "line": 4,
+      "text": "api: variant-prop — The colour treatment is `variant`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Button/proposals/README.md",
+      "line": 5,
+      "text": "api: button-axes — Button splits v11's kinds into `kind` (role), `variant` (`outlined`, `tonal`) and `frame` (`ghost`, `none`). TBD"
+    }
+  ],
+  "V12/ContentSwitcher": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/ContentSwitcher/proposals/README.md",
+      "line": 3,
+      "text": "api: activation-prop — One keyboard word for selection lists. TBD"
+    }
+  ],
+  "V12/Notification": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Notification/components/notification.scss",
+      "line": 97,
+      "text": "radius-notification — Inline notification corner. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Notification/components/notification.scss",
+      "line": 153,
+      "text": "radius-notification — Inline notification corner. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Notification/proposals/README.md",
+      "line": 3,
+      "text": "api: variant-prop — The colour treatment is `variant`. TBD"
+    }
+  ],
   "V12/Popover": [
     {
       "kind": "explore",
@@ -45,6 +105,72 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/SelectionKit/proposals/README.md",
+      "line": 3,
+      "text": "api: variant-prop — The colour treatment is `variant`. TBD"
+    }
+  ],
+  "V12/Tabs": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Tabs/components/tabs.scss",
+      "line": 184,
+      "text": "token: surface-rule — The quiet surface's hairline. replaces: `$border-subtle`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Tabs/components/tabs.scss",
+      "line": 209,
+      "text": "token: hero-color — The hero tokens: brand colour for a line, a fill, a hover, an ink on a page and on a fill. replaces: `$border-interactive` / `$interactive`, `$button-primary`, `-hover`, `-active`, `$link-primary`, `$link-inverse`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Tabs/components/vertical-tabs.scss",
+      "line": 49,
+      "text": "token: surface-quiet — The quiet surface fill: side nav panel, tiles, tables, jobs tray, tabs fade. replaces: `$layer-01`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Tabs/components/vertical-tabs.scss",
+      "line": 127,
+      "text": "token: hero-color — The hero tokens: brand colour for a line, a fill, a hover, an ink on a page and on a fill. replaces: `$border-interactive` / `$interactive`, `$button-primary`, `-hover`, `-active`, `$link-primary`, `$link-inverse`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Tabs/proposals/README.md",
+      "line": 3,
+      "text": "api: frame-prop — What a component stands on is `frame`. TBD"
+    }
+  ],
+  "V12/Tag": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Tag/components/tag.scss",
+      "line": 31,
+      "text": "radius-tag-rounded — A tag's rounded corner at every size. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Tag/components/tag.scss",
+      "line": 75,
+      "text": "radius-tag-rounded — A tag's rounded corner at every size. TBD"
+    }
+  ],
+  "V12/TextInput": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/TextInput/components/text-input.scss",
+      "line": 57,
+      "text": "radius-field — A field's corner. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/TextInput/components/text-input.scss",
+      "line": 61,
+      "text": "field-inset — A field's edge inset by size. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/TextInput/proposals/README.md",
       "line": 3,
       "text": "api: variant-prop — The colour treatment is `variant`. TBD"
     }

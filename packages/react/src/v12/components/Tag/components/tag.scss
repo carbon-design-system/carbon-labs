@@ -1,0 +1,402 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use 'sass:map';
+@use '@carbon/react/scss/colors' as c;
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/themes';
+@use '@carbon/react/scss/components/tag/tokens' as tag-tokens;
+@use '@carbon/react/scss/utilities/component-tokens';
+@use '@carbon/react/scss/utilities/custom-property';
+@use '@carbon-labs/v12-styles/scss/corners';
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+
+/* Tag — `Tag.tsx`. The app's status pill, as a component: the same pill, the
+ * same colors, and v11's colors and sizes beside them. */
+
+.cds-tag {
+  @include type-style('label-01');
+
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+
+  padding: 0 var(--_tag-pad);
+  // @carbon-explore radius-tag-rounded — A tag's rounded corner at every size. TBD
+  border-radius: 999px;
+  /* Gray: the secondary's step off what it sits on (the page, or a surface that re-solves it:
+     a card, a tile, the workspace's content), never the fixed layer-02, which matched some. */
+  background: var(--cds-surface-secondary, #{theme.$layer-02});
+  color: theme.$text-secondary;
+  white-space: nowrap;
+  /* The text sits clear of the pill's curve: 10px in at md, 8px at sm, 16px at lg. `--_tag-pad`
+     is that edge inset; a trailing control's glyph sits on it too (DismissibleTag, below). */
+  --_tag-pad: 0.625rem;
+
+  /* When an icon is present, optically balance start padding with the curve */
+  &:has(.cds-tag__icon, .cds-dismissible-tag__icon),
+  &.cds-tag--icon,
+  &.cds-dismissible-tag--icon {
+    padding-inline-start: max(0.25rem, calc(var(--_tag-pad) - 0.25rem));
+
+    &.cds-tag--sm {
+      padding-inline-start: 0.25rem;
+    }
+  }
+}
+
+.cds-tag--md {
+  block-size: 1.25rem;
+}
+
+.cds-tag--sm {
+  --_tag-pad: 0.5rem;
+
+  block-size: 1.125rem;
+}
+
+/* lg: 32px. The pill rule (half height) gives 16px, where v11 keeps 12px. */
+.cds-tag--lg {
+  --_tag-pad: 1rem;
+
+  block-size: 2rem;
+}
+
+/* Corners: 2px and square, each with its own
+   inset. With no curve to clear the text sits closer than in the pill:
+   6px in at sm and md, 8px at lg (the pill's: 8 / 10 / 12). */
+.cds-tag--rounded {
+  // @carbon-explore radius-tag-rounded — A tag's rounded corner at every size. TBD
+  border-radius: corners.$mark;
+}
+
+.cds-tag--square {
+  border-radius: 0;
+}
+
+.cds-tag--rounded,
+.cds-tag--square {
+  &.cds-tag--sm,
+  &.cds-tag--md {
+    --_tag-pad: 0.375rem;
+  }
+
+  &.cds-tag--lg {
+    --_tag-pad: 0.5rem;
+  }
+}
+
+/* The status fills are bright in every theme, so their text and icon are a
+   fixed dark ink: 5.4:1 or more on green, 10.7:1 on yellow. */
+.cds-tag--success,
+.cds-tag--warning {
+  color: c.$gray-100;
+}
+
+.cds-tag--success {
+  background: theme.$support-success;
+}
+
+.cds-tag--warning {
+  background: theme.$support-warning;
+}
+
+.cds-tag--outline {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px theme.$border-strong-01;
+  color: theme.$text-secondary;
+}
+
+/* v11's colors: its tag tokens (`--cds-tag-*`), white's values as the
+   fallback. Carbon's zones (`<Theme>`) emit them per theme; the app's dark
+   mode (`[data-carbon-theme='g100']`, styles/index.scss) gets them here. */
+/* The keys quoted: bare, `red` and the rest are Sass colours, not names. */
+@each $color
+  in (
+    'red',
+    'magenta',
+    'purple',
+    'blue',
+    'cyan',
+    'teal',
+    'green',
+    'cool-gray',
+    'warm-gray'
+  )
+{
+  .cds-tag--#{$color} {
+    background: component-tokens.get-var(
+      map.get(tag-tokens.$tag-tokens, 'tag-background-#{$color}'),
+      'tag-background-#{$color}'
+    );
+    color: component-tokens.get-var(
+      map.get(tag-tokens.$tag-tokens, 'tag-color-#{$color}'),
+      'tag-color-#{$color}'
+    );
+  }
+}
+
+.cds-tag--high-contrast {
+  background: theme.$background-inverse;
+  color: theme.$text-inverse;
+}
+
+[data-carbon-theme='g100'] {
+  @each $key,
+    $value in component-tokens.get-tokens(tag-tokens.$tag-tokens, themes.$g100)
+  {
+    @include custom-property.declaration($key, $value);
+  }
+}
+
+/* ── SelectableTag — `SelectableTag.tsx` ───────────────────────────────── */
+
+.cds-tag--selectable {
+  @include rollover;
+
+  /* Rest: an outline on the quiet hairline; hover and press, toned washes. */
+  --rollover-rest: transparent;
+  --rollover-hover: color-mix(
+    in srgb,
+    var(--cds-text-primary, #161616) 8%,
+    transparent
+  );
+  --rollover-press: color-mix(
+    in srgb,
+    var(--cds-text-primary, #161616) 16%,
+    transparent
+  );
+  --rollover-stroke: var(--cds-surface-rule, #dddddd);
+
+  border: 0;
+  margin: 0;
+
+  appearance: none;
+  background: none;
+  color: theme.$text-primary;
+  cursor: pointer;
+  font-family: inherit;
+  transition: color var(--cds-motion-duration-fast-01) linear;
+
+  /* Keyboard focus, the family's ring (no v11 blue): 2px in the page's
+     text color, just outside the pill, as the TagSet's "+N" and the
+     checkbox draw it. It reads on the outline and on the inverse fill. */
+  &:focus-visible {
+    outline: 2px solid theme.$text-primary;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    color: theme.$text-disabled;
+    cursor: not-allowed;
+  }
+}
+
+/* Selected: the inverse fill, its hover and press steps of that fill. */
+.cds-tag--selected {
+  --rollover-rest: var(--cds-layer-selected-inverse, #161616);
+  --rollover-hover: color-mix(
+    in srgb,
+    var(--cds-layer-selected-inverse, #161616) 86%,
+    var(--cds-background, #ffffff)
+  );
+  --rollover-press: color-mix(
+    in srgb,
+    var(--cds-layer-selected-inverse, #161616) 74%,
+    var(--cds-background, #ffffff)
+  );
+  --rollover-stroke: transparent;
+
+  color: theme.$text-inverse;
+}
+
+/* Selected and disabled: v11's way for a disabled selection, a muted fill in
+   place of the full inverse, so it still reads as on. The fill is the inverse
+   half mixed into the page (the same scale as the hover and press steps, 86%
+   and 74%), a mid gray in every theme, 3.3–4.9:1 against the page; the label
+   is the selected label's own `$text-inverse`, 3.4–5.5:1 on that fill, so it
+   stays readable while plainly dimmer than the selected tag (16:1 and up).
+   No hover or press: the rollover skips `:disabled`. */
+.cds-tag--selected:disabled {
+  --rollover-rest: color-mix(
+    in srgb,
+    var(--cds-layer-selected-inverse, #161616) 50%,
+    var(--cds-background, #ffffff)
+  );
+
+  color: theme.$text-inverse;
+}
+
+/* ── Toned: SelectableTag's `type` ────────────────────────────────────────
+   The Button's tertiary approach for a colored tag: off, an outline and label in the color's tag
+   ink, hover and press tints of that ink (`rollover-tone`); on, the colored Tag's own fill and
+   ink, its hover Carbon's tag hover color, its press a step further toward the ink. */
+@each $color
+  in (
+    'red',
+    'magenta',
+    'purple',
+    'blue',
+    'cyan',
+    'teal',
+    'green',
+    'gray',
+    'cool-gray',
+    'warm-gray'
+  )
+{
+  .cds-tag--tone-#{$color} {
+    --_tag-fill: #{component-tokens.get-var(
+        map.get(tag-tokens.$tag-tokens, 'tag-background-#{$color}'),
+        'tag-background-#{$color}'
+      )};
+    --_tag-ink: #{component-tokens.get-var(
+        map.get(tag-tokens.$tag-tokens, 'tag-color-#{$color}'),
+        'tag-color-#{$color}'
+      )};
+    --_tag-hover: #{component-tokens.get-var(
+        map.get(tag-tokens.$tag-tokens, 'tag-hover-#{$color}'),
+        'tag-hover-#{$color}'
+      )};
+  }
+}
+
+.cds-tag--selectable.cds-tag--toned {
+  @include rollover-tone(var(--_tag-ink));
+  --rollover-stroke: var(--rollover-tone);
+  --rollover-press: color-mix(in srgb, var(--rollover-tone) 20%, transparent);
+}
+
+.cds-tag--selectable.cds-tag--toned.cds-tag--selected {
+  --rollover-rest: var(--_tag-fill);
+  --rollover-hover: var(--_tag-hover);
+  --rollover-press: color-mix(in srgb, var(--_tag-hover) 84%, var(--_tag-ink));
+  --rollover-stroke: transparent;
+}
+
+/* Disabled: the neutral's off (a disabled outline and label); on, the fill
+   half mixed into the page with the ink half mixed in too, as the neutral's
+   disabled-and-on. */
+.cds-tag--selectable.cds-tag--toned:disabled {
+  --rollover-stroke: #{theme.$border-disabled};
+
+  color: theme.$text-disabled;
+}
+
+.cds-tag--selectable.cds-tag--toned.cds-tag--selected:disabled {
+  --rollover-rest: color-mix(
+    in srgb,
+    var(--_tag-fill) 50%,
+    var(--cds-background, #ffffff)
+  );
+  --rollover-stroke: transparent;
+
+  color: color-mix(
+    in srgb,
+    var(--_tag-ink) 50%,
+    var(--cds-background, #ffffff)
+  );
+}
+
+/* ── DismissibleTag — `DismissibleTag.tsx` ─────────────────────────────────
+   The Tag with a close at its end. A trailing control inside a tag or chip
+   sits on the inset, as a field's clear button does (docs/components/
+   spacing.md): the text in from the start as the Tag's,
+   the close's glyph as far in from the end (`--_tag-pad`); it hovers and
+   presses as a circle centred on its glyph, the tag's height across (a tag
+   has no track inset), whatever the tag's corners. Text to glyph is the
+   tag's gap, 4px (an icon's, a decorator's), or the circle's padding where
+   that is more (lg). The close is the family's ghost IconButton: the
+   rollover in the tag's own ink, no hover growth (it would spill past the
+   tag), the neutral ring inside it. */
+
+.cds-tag.cds-dismissible-tag {
+  --_tag-h: 1.25rem;
+  /* The circle's padding round its 16px glyph. */
+  --_tag-ctl-pad: calc((var(--_tag-h) - 1rem) / 2);
+
+  max-inline-size: 100%;
+
+  padding-inline-end: max(0px, calc(var(--_tag-pad) - var(--_tag-ctl-pad)));
+
+  &.cds-tag--sm {
+    --_tag-h: 1.125rem;
+  }
+
+  &.cds-tag--lg {
+    --_tag-h: 2rem;
+  }
+}
+
+/* v11's 200px for the text, then an ellipsis (the close says "Dismiss tag"). */
+.cds-dismissible-tag__text {
+  overflow: hidden;
+  max-inline-size: 12.5rem;
+  min-inline-size: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* `renderIcon`: icon before the text, 4px from it, optically centered. */
+.cds-tag__icon,
+.cds-dismissible-tag__icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  margin-inline-end: $spacing-02;
+
+  svg {
+    display: block;
+    fill: currentColor;
+  }
+}
+
+.cds-dismissible-tag__decorator {
+  display: inline-flex;
+  flex: none;
+  margin-inline-start: $spacing-02;
+}
+
+/* The close's wrapper (the tooltip's trigger): in the row, its glyph the
+   tag's gap (4px) from the text, the circle's padding counted in. */
+.cds-dismissible-tag > .cds-tooltip {
+  display: inline-flex;
+  flex: none;
+  margin-inline-start: max(0px, calc(#{$spacing-02} - var(--_tag-ctl-pad)));
+}
+
+.cds-tag.cds-dismissible-tag .cds-dismissible-tag__close.cds-icon-btn {
+  --icon-btn-size: var(--_tag-h);
+  --icon-btn-inset: 0px;
+  --cds-anchor-inset: 0px;
+  --rollover-expand: 0px;
+
+  color: inherit;
+}
+
+/* Disabled: v11's disabled tag, stepped back (as the MultiSelect's count
+   tag). The close keeps no hover. */
+.cds-tag.cds-dismissible-tag--disabled {
+  background: theme.$layer-02;
+  box-shadow: none;
+  color: theme.$text-disabled;
+}
+
+.cds-tag--outline.cds-dismissible-tag--disabled {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px theme.$border-disabled;
+}
+
+@media (forced-colors: active) {
+  .cds-dismissible-tag {
+    outline: 1px solid CanvasText;
+  }
+}

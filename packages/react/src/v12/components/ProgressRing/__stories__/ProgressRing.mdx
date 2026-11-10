@@ -1,0 +1,58 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ProgressRingStories from './ProgressRing.stories.tsx';
+
+<Meta of={ProgressRingStories} />
+
+# ProgressRing
+
+An amount of work as a ring, for small places such as a file chip, a row or an
+uploader item. It is the Spinner's sibling, with ProgressBar's prop names: the
+loud arc over the Spinner's quiet base, a label and helper text. It comes in the
+Spinner's sizes, 16, 20, 24 and 32px, neutral or hero. With no `value` it is the
+Spinner.
+
+<Canvas of={ProgressRingStories.Advancing} />
+
+<Canvas of={ProgressRingStories.Indeterminate} />
+
+<Canvas of={ProgressRingStories.Statuses} />
+
+## Motion
+
+- **Draw-on:** with a value, as it mounts or takes another mark's place, the arc
+  draws on from 12 o'clock, clockwise, as the track fades up. It runs on
+  entrance-productive, its clock from the arc's travel, never under
+  `moderate-01`.
+- **Value:** the arc's end travels from where it is to the new value on
+  standard-productive, its clock from the distance. The line grows with it, from
+  its rest width at 15% to twice it at 85%, in the same tween. The outer edge
+  holds, so the line grows inward.
+- **Burst:** at most one new tween per `fast-02`. An update inside that window
+  retargets the running tween from where the arc is.
+- **Hand-off from turning:** a value that arrives while the Spinner turns is one
+  move. The turn slows so the arc's tail lands at 12 o'clock while its length
+  eases to the value. It leaves at the Spinner's own speed, so it never stops
+  and restarts.
+- **Finished:** the arc completes the ring. Then the status hand-off, out then
+  in, with no fades: the ring shrinks 4px on `fast-01`, the success disc grows
+  from 4px under its size on `fast-02`, and its check draws on, `fast-02`.
+- **Error:** with a value, the arc turns red where it failed, finishes its
+  travel there, then hands off to the error disc. With no value, the whole
+  Spinner, its base too, turns red as it shrinks.
+- **Back to active:** from a mark, the mark fades out on `fast-02`, then the
+  ring or the Spinner draws on.
+- **Value removed:** the ring closes, its tail catching its head, as the track
+  fades, on `fast-02`. Then the Spinner draws on.
+- **Right to left:** the arc runs counter-clockwise.
+
+<Canvas of={ProgressRingStories.Burst} />
+
+## Reduced motion
+
+Values land at once, with no draw. The hand-off, the close and the marks are
+there at once. With no value, the Spinner's three still dots stand in for the
+turn.
+
+## Props
+
+<ArgTypes of={ProgressRingStories} />

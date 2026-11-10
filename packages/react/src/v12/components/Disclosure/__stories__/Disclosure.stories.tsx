@@ -6,7 +6,7 @@
  */
 
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import { Button } from '@carbon/react';
+import { Button } from '@carbon-labs/react-button';
 import type { ReactNode } from 'react';
 import { usePrefersReducedMotion } from '@carbon-labs/v12-motion';
 import {
@@ -184,13 +184,13 @@ function Sections({ mode = 'multiple', all = false }: SectionsProps) {
         <div style={row}>
           <Button
             size="sm"
-            kind="tertiary"
+            variant="outlined"
             onClick={() => setOpen(SECTIONS.map(() => true))}>
             Expand all
           </Button>
           <Button
             size="sm"
-            kind="tertiary"
+            variant="outlined"
             onClick={() => setOpen(SECTIONS.map(() => false))}>
             Collapse all
           </Button>
@@ -279,10 +279,10 @@ export const ListPlace = {
     return (
       <div style={{ display: 'grid', gap: 16, maxWidth: 360 }}>
         <div style={row}>
-          <Button size="sm" kind="tertiary" onClick={add}>
+          <Button size="sm" variant="outlined" onClick={add}>
             Add an event
           </Button>
-          <Button size="sm" kind="tertiary" onClick={remove}>
+          <Button size="sm" variant="outlined" onClick={remove}>
             Remove the oldest
           </Button>
         </div>

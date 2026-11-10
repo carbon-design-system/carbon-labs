@@ -6,7 +6,7 @@
  */
 
 import React, { useRef, useState } from 'react';
-import { Button } from '@carbon/react';
+import { Button } from '@carbon-labs/react-button';
 import {
   Processing,
   type ProcessingHandle,
@@ -73,7 +73,7 @@ function Working() {
             {m}
           </Button>
         ))}
-        <Button kind="ghost" size="sm" onClick={wiggle}>
+        <Button frame="ghost" size="sm" onClick={wiggle}>
           Wiggle
         </Button>
       </div>

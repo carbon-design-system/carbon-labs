@@ -6,7 +6,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { Button } from '@carbon/react';
+import { Button } from '@carbon-labs/react-button';
 import { ProgressBar } from '../index';
 import type { ProgressBarStatus } from '../index';
 import mdx from './ProgressBar.mdx';
@@ -98,20 +98,20 @@ export const Advancing = {
         <div style={row}>
           <Button
             size="sm"
-            kind="tertiary"
+            variant="outlined"
             onClick={() => setValue((v) => Math.min(100, v + 10))}>
             Add 10
           </Button>
           <Button
             size="sm"
-            kind="tertiary"
+            variant="outlined"
             onClick={() => setValue((v) => Math.min(100, v + 40))}>
             Add 40
           </Button>
-          <Button size="sm" kind="tertiary" onClick={() => setValue(100)}>
+          <Button size="sm" variant="outlined" onClick={() => setValue(100)}>
             Finish
           </Button>
-          <Button size="sm" kind="tertiary" onClick={() => setValue(10)}>
+          <Button size="sm" variant="outlined" onClick={() => setValue(10)}>
             Reset
           </Button>
         </div>
@@ -151,14 +151,17 @@ export const Burst = {
         <div style={row}>
           <Button
             size="sm"
-            kind="tertiary"
+            variant="outlined"
             onClick={() => {
               setValue(0);
               setRunning(true);
             }}>
             Start
           </Button>
-          <Button size="sm" kind="tertiary" onClick={() => setRunning(false)}>
+          <Button
+            size="sm"
+            variant="outlined"
+            onClick={() => setRunning(false)}>
             Pause
           </Button>
         </div>
@@ -188,13 +191,19 @@ export const Indeterminate = {
           helperText={helper}
         />
         <div style={row}>
-          <Button size="sm" kind="tertiary" onClick={() => setState('loop')}>
+          <Button size="sm" variant="outlined" onClick={() => setState('loop')}>
             No value
           </Button>
-          <Button size="sm" kind="tertiary" onClick={() => setState('value')}>
+          <Button
+            size="sm"
+            variant="outlined"
+            onClick={() => setState('value')}>
             Value 60
           </Button>
-          <Button size="sm" kind="tertiary" onClick={() => setState('error')}>
+          <Button
+            size="sm"
+            variant="outlined"
+            onClick={() => setState('error')}>
             Error
           </Button>
         </div>

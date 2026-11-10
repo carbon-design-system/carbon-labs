@@ -6,7 +6,7 @@
  */
 
 import React, { useRef, useState } from 'react';
-import { Button } from '@carbon/react';
+import { Button } from '@carbon-labs/react-button';
 import { usePrefersReducedMotion } from '@carbon-labs/v12-motion';
 import { ShimmerText, playShimmerReveal } from '../index';
 import mdx from './ShimmerText.mdx';

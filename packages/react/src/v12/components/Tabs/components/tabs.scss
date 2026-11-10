@@ -1,0 +1,470 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/corners';
+@use '@carbon-labs/react-selection-kit/scss/selection-landing' as *;
+
+/* Tabs — what the selection kit lacks: line tabs' underline and hairline,
+ * the sizes, the overflow (scroll buttons and the soft edge), the close
+ * glyph, the icon tab's badge; and what horizontal and vertical tabs share:
+ * the second label line and the panels' focus. The track, selector, items,
+ * hover, press and focus rings are the kit's `.sel` (selection-kit.scss). */
+
+/* ── shared with vertical tabs ───────────────────────────────────────── */
+
+.tabs__labels {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  text-align: start;
+}
+
+/* The second line: label-01 (v11's contained tabs), and the selection
+   kit's quiet text (`.sel__quiet`): one step quieter than its label. v11
+   gives it the label's own color, which reads flat beside it:
+   helper text unselected, secondary text under the pointer, and on the
+   selector the selected label's color a step down (none on hero's blue).
+   A deliberate departure from v11. */
+.tabs__secondary {
+  @include type-style('label-01');
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* With a second line, the leading icon sits level with the label's line: its
+   margin box is the second line taller, so centered it lands 8px up. */
+.tabs__tab--two-line .sel__face > svg {
+  margin-block-end: 16px;
+}
+
+/* A panel's keyboard focus (it's a tab stop): the family's ring, 2px in the
+   label's color just inside its edge. */
+.tabs__panel:focus-visible {
+  outline: 2px solid theme.$text-primary;
+  outline-offset: -2px;
+}
+
+/* ── the list ────────────────────────────────────────────────────────── */
+
+/* Sizes: the control's height (v11's layout sizes), set on the list's frame
+   so the scroll buttons read it too; the track takes it as the kit's
+   `--sel-h`. Tabs with a second line are two lines tall. */
+.tabs {
+  --tabs-h: 40px;
+  --tabs-inset: 4px;
+  --tabs-edge: var(--cds-motion-soft-edge, 16px);
+  /* The underline: the inverse selector's color; hero's blue below. */
+  --tabs-underline: #{theme.$layer-selected-inverse};
+
+  position: relative;
+  display: block;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+}
+
+.tabs--sm {
+  --tabs-h: 32px;
+}
+
+.tabs--lg {
+  --tabs-h: 48px;
+}
+
+.tabs--xl {
+  --tabs-h: 64px;
+}
+
+.tabs--two-line {
+  --tabs-h: 56px;
+
+  &.tabs--sm {
+    --tabs-h: 48px;
+  }
+
+  &.tabs--lg,
+  &.tabs--xl {
+    --tabs-h: 64px;
+  }
+}
+
+.tabs--contained.tabs--sm {
+  --tabs-inset: 3px;
+}
+
+/* A block of its own width (the kit's track is inline: no line box round it). */
+.sel.tabs__track {
+  --sel-h: var(--tabs-h);
+  --sel-inset: var(--tabs-inset);
+
+  display: flex;
+  inline-size: max-content;
+}
+
+/* The scroller: the track scrolls inside it, the selector with it, so the
+   kit measures both in one space. No scrollbar (v11's); where there's more,
+   a scroll button and, inside it, the family's soft edge (`--tabs-fade-s` /
+   `-e`: the button and the edge, or 0 at an end). */
+@property --tabs-fade-s {
+  inherits: false;
+  initial-value: 0px;
+  syntax: '<length>';
+}
+
+@property --tabs-fade-e {
+  inherits: false;
+  initial-value: 0px;
+  syntax: '<length>';
+}
+
+.tabs__scroller {
+  --tabs-fade-s: 0px;
+  --tabs-fade-e: 0px;
+
+  overflow: auto hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent calc(var(--tabs-fade-s) - var(--tabs-edge)),
+    #000000 var(--tabs-fade-s),
+    #000000 calc(100% - var(--tabs-fade-e)),
+    transparent calc(100% - var(--tabs-fade-e) + var(--tabs-edge))
+  );
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  transition:
+    --tabs-fade-s var(--cds-motion-duration-fast-02)
+      var(--cds-motion-easing-standard-productive),
+    --tabs-fade-e var(--cds-motion-duration-fast-02)
+      var(--cds-motion-easing-standard-productive);
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tabs[data-overflow-start] > & {
+    --tabs-fade-s: calc(var(--tabs-btn) + var(--tabs-edge));
+  }
+
+  .tabs[data-overflow-end] > & {
+    --tabs-fade-e: calc(var(--tabs-btn) + var(--tabs-edge));
+  }
+}
+
+/* A touch swipe scrolls the list; a drag that starts on the selected tab is
+   the selector's. */
+.sel--draggable.tabs__track {
+  touch-action: pan-x pan-y;
+
+  > .sel__item[aria-selected='true'] {
+    touch-action: pan-y;
+  }
+}
+
+.tabs--full-width .sel.tabs__track {
+  inline-size: 100%;
+}
+
+/* ── line tabs: an underline on a hairline ───────────────────────────── */
+
+/* The track has no fill and no inline inset: the tabs sit on the list's
+   hairline (the kit's quiet stroke), each item reaching the bottom edge.
+   The selector is drawn as a 2px underline at its foot; its box is still
+   the selected tab's, so the keyboard ring glides with it. The selected
+   label turns primary text (and heavier) where the underline's span covers
+   it. */
+.tabs--line {
+  // @carbon-proposal token: surface-rule — The quiet surface's hairline. replaces: `$border-subtle`. TBD
+  box-shadow: inset 0 -1px 0 var(--cds-surface-rule, #dddddd);
+}
+
+.tabs--line .sel.tabs__track {
+  --sel-track: transparent;
+  --sel-selector: transparent;
+  --sel-on: #{theme.$text-primary};
+  --sel-ring-color: var(--sel-off-hover);
+  /* Hero's rim and glow are a filled selector's: not the underline's. */
+  --sel-outline: transparent;
+
+  padding: var(--sel-inset) 0 0;
+  /* No track, so no track hairline (`outline` is the contained tabs'). */
+  box-shadow: none;
+  --sel-glow-color: initial;
+  --sel-glow-inset: 0px;
+}
+
+/* `variant="hero"`: the underline in the kit's brand (`--cds-hero`,
+   styles/_brand.scss), by default Carbon's `$border-interactive` (v11's own
+   underline): blue 60 on white (5.00:1 against the
+   background), blue 50 on g100 (5.41:1). The label stays
+   primary text: no text sits on the hue. */
+.tabs--line.tabs--hero {
+  // @carbon-proposal token: hero-color — The hero tokens: brand colour for a line, a fill, a hover, an ink on a page and on a fill. replaces: `$border-interactive` / `$interactive`, `$button-primary`, `-hover`, `-active`, `$link-primary`, `$link-inverse`. TBD
+  --tabs-underline: var(--cds-hero, #{theme.$border-interactive});
+}
+
+/* The hit areas stay inside the track (with no inline inset, the kit's
+   would reach past its ends and scroll the list by a few px). */
+.tabs--line .tabs__track > .sel__item::after {
+  inset-block-end: 0;
+}
+
+.tabs--line .tabs__track > .sel__item:first-of-type::after {
+  inset-inline-start: 0;
+}
+
+.tabs--line .tabs__track > .sel__item:last-of-type::after {
+  inset-inline-end: 0;
+}
+
+.tabs--line :is(.sel__indicator, .sel__ghost) {
+  background: transparent;
+
+  &::after {
+    position: absolute;
+    border-radius: corners.$full;
+    background: var(--tabs-underline);
+    block-size: 2px;
+    content: '';
+    inset-block-end: calc(-1 * var(--sel-press, 0px));
+    /* The grab's 1px inset moves the box, not the underline. */
+    inset-inline: calc(-1 * var(--sel-press, 0px));
+  }
+}
+
+.tabs--line.tabs--square :is(.sel__indicator, .sel__ghost)::after {
+  border-radius: 0;
+}
+
+/* The pressed tab's hover until the underline lands (the kit's landing
+   hold, for a selector that is only a line: `@mixin selection-landing-line`). */
+.tabs--line .sel.tabs__track {
+  @include selection-landing-line(block-end);
+}
+
+/* ── scroll buttons ──────────────────────────────────────────────────── */
+
+/* Over the scroller's ends, a square box the items' height; there only
+   while the list has more that way (fading in on fast-02, out on fast-01).
+   The kit's rollover, full round as an icon on its own hovers, in line and contained tabs alike. `corners="square"`
+   given to the tabs squares it (line tabs' own square default doesn't). */
+.tabs {
+  --tabs-btn-t: var(--tabs-inset);
+  --tabs-btn-b: var(--tabs-inset);
+  --tabs-btn-x: var(--tabs-inset);
+  --tabs-btn: calc(var(--tabs-h) - var(--tabs-btn-t) - var(--tabs-btn-b));
+  --tabs-btn-radius: #{corners.$full};
+}
+
+.tabs--line {
+  --tabs-btn-b: 0px;
+  --tabs-btn-x: 0px;
+}
+
+.tabs__scroll--square {
+  --tabs-btn-radius: 0px;
+}
+
+.tabs__scroll {
+  @include rollover($positioned: false);
+  --rollover-hover: color-mix(in srgb, #{theme.$text-primary} 8%, transparent);
+  --rollover-press: color-mix(in srgb, #{theme.$text-primary} 16%, transparent);
+
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: var(--tabs-btn-radius);
+  margin: 0;
+
+  appearance: none;
+  background: transparent;
+  color: theme.$icon-primary;
+  cursor: pointer;
+  inline-size: var(--tabs-btn);
+  inset-block: var(--tabs-btn-t) var(--tabs-btn-b);
+  opacity: 0;
+  transition:
+    opacity var(--cds-motion-duration-fast-01)
+      var(--cds-motion-easing-standard-productive),
+    visibility 0s linear var(--cds-motion-duration-fast-01);
+  visibility: hidden;
+
+  &--prev {
+    inset-inline-start: var(--tabs-btn-x);
+  }
+
+  &--next {
+    inset-inline-end: var(--tabs-btn-x);
+  }
+
+  svg {
+    position: relative;
+    block-size: 16px;
+    fill: currentColor;
+    inline-size: 16px;
+  }
+
+  .tabs[data-overflow-start] > &--prev,
+  .tabs[data-overflow-end] > &--next {
+    opacity: 1;
+    transition: opacity var(--cds-motion-duration-fast-02)
+      var(--cds-motion-easing-standard-productive);
+    visibility: visible;
+  }
+}
+
+/* ── icon tabs ───────────────────────────────────────────────────────── */
+
+.tabs--icon-default .sel__item--icon {
+  --sel-icon: 16px;
+}
+
+.tabs--icon-lg .sel__item--icon {
+  --sel-icon: 20px;
+}
+
+/* `badgeIndicator`: a red status pip with a knockout. On a motion icon that takes a notification
+   status it's the icon's own pip (motion-icons' status layer, shared.tsx); this is the same pip
+   for any other icon. */
+/* The status layer's geometry, in the icon's 32 grid: an 8 pip centred at (26, 8), toned
+   $support-error, the icon cut away 2 round it. The cut is a mask on the icon, so it's clear on
+   any surface (the page, the rollover, the selector). Top-right on screen, in RTL too, as the
+   icon's own pip is drawn. */
+.tabs__badge {
+  --tabs-pip-x: calc(var(--sel-icon) * 26 / 32);
+  --tabs-pip-y: calc(var(--sel-icon) * 8 / 32);
+
+  position: absolute;
+  z-index: 2;
+  border-radius: 50%;
+  background: theme.$support-error;
+  block-size: calc(var(--sel-icon) / 4);
+  inline-size: calc(var(--sel-icon) / 4);
+  inset-block-start: calc(
+    50% - var(--sel-icon) / 2 + var(--tabs-pip-y) - var(--sel-icon) / 8
+  );
+  inset-inline-start: calc(
+    50% - var(--sel-icon) / 2 + var(--tabs-pip-x) - var(--sel-icon) / 8
+  );
+  pointer-events: none;
+}
+
+.tabs__tab:has(> .tabs__badge) .sel__face svg {
+  $cut: calc(var(--sel-icon) * 6 / 32);
+
+  mask-image: radial-gradient(
+    circle at calc(var(--sel-icon) * 26 / 32) calc(var(--sel-icon) * 8 / 32),
+    transparent $cut,
+    #000000 calc(#{$cut} + 0.5px)
+  );
+}
+
+/* ── dismissable ─────────────────────────────────────────────────────── */
+
+/* The close glyph after the label, in both faces (so it takes the selected
+   color where the selector covers it): 16px in a 24px circle (20px at sm)
+   that fills on its own hover; the label's end padding gives it room. */
+.tabs--dismissable .tabs__tab:not(.sel__item--icon) .sel__face {
+  padding-inline-end: calc(var(--sel-pad) / 2);
+}
+
+.tabs__close {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  block-size: 24px;
+  inline-size: 24px;
+  transition: background-color var(--cds-motion-duration-fast-01)
+    var(--cds-motion-easing-standard-productive);
+
+  .sel--sm & {
+    block-size: 20px;
+    inline-size: 20px;
+  }
+
+  .sel__face & svg {
+    block-size: 16px;
+    inline-size: 16px;
+  }
+}
+
+/* The glyph takes the pointer: both faces sit over the item's hit area (the
+   kit's `::after`), and the selected face, which takes no pointer itself,
+   lets its copy take it — under the selector the other face's copy is
+   masked out, and a mask hit-tests. */
+.tabs--dismissable .tabs__tab .sel__face {
+  position: relative;
+  z-index: 1;
+}
+
+.tabs--dismissable .tabs__tab .sel__face--on {
+  position: absolute;
+}
+
+.sel__face--on .tabs__close {
+  pointer-events: auto;
+}
+
+/* Its hover and press, on both faces. */
+.sel__item:not(:disabled):has(.tabs__close:hover) .tabs__close {
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  transition-duration: var(--cds-motion-duration-fast-02);
+}
+
+.sel__item:not(:disabled):has(.tabs__close:active) .tabs__close {
+  background: color-mix(in srgb, currentColor 20%, transparent);
+}
+
+/* A closed tab's copy (Tabs.tsx, "Leaving"): it fades where it is, then its
+   width closes to nothing with its gap (the script animates both), and the
+   tabs after it slide in. It takes no pointer; what it holds is clipped as
+   it narrows. */
+.tabs__tab--leaving {
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* A press on the glyph isn't a press on the tab. */
+.sel--pressable .sel__item:has(.tabs__close:active) {
+  --rollover-inset: 0px;
+}
+
+/* The truncation and icon tabs' tooltip: a long label wraps, at Carbon's
+   tooltip width (18rem). */
+.tabs > .sel__tip {
+  inline-size: max-content;
+  max-inline-size: 18rem;
+  white-space: normal;
+}
+
+@media (forced-colors: active) {
+  .tabs--line :is(.sel__indicator, .sel__ghost) {
+    background: transparent;
+
+    &::after {
+      background: Highlight;
+    }
+  }
+
+  .tabs--line .sel__face--on {
+    color: ButtonText;
+  }
+
+  .tabs--line {
+    box-shadow: inset 0 -1px 0 CanvasText;
+  }
+}

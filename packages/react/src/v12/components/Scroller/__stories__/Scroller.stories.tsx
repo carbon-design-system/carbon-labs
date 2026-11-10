@@ -6,7 +6,7 @@
  */
 
 import React, { useState } from 'react';
-import { Button } from '@carbon/react';
+import { Button } from '@carbon-labs/react-button';
 import { Scroller } from '../index';
 import type { ScrollerProps, ScrollerRest } from '../index';
 import mdx from './Scroller.mdx';
@@ -152,13 +152,13 @@ export const ContentChange = {
         <div style={{ display: 'flex', gap: 8 }}>
           <Button
             size="sm"
-            kind="tertiary"
+            variant="outlined"
             onClick={() => setCount((c) => c + 16)}>
             Add lines
           </Button>
           <Button
             size="sm"
-            kind="tertiary"
+            variant="outlined"
             onClick={() => setCount((c) => Math.max(16, c - 16))}>
             Remove lines
           </Button>

@@ -1,0 +1,60 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TagStories from './Tag.stories.tsx';
+
+<Meta of={TagStories} />
+
+# Tag
+
+A short label: a status, a kind, a count. `Tag` is Carbon's read-only tag. It is
+content, not a control, and never answers the pointer. `SelectableTag` is a tag
+the person turns on and off, on the rollover. `DismissibleTag` is a tag the
+person can remove, with a close at its end. `TagSkeleton` is a tag while it
+loads. They take Carbon's props, plus `corners`, `arrive`, `show` and
+`timeScale` where they apply.
+
+<Canvas of={TagStories.Default} />
+
+<Canvas of={TagStories.Types} />
+
+<Canvas of={TagStories.Sizes} />
+
+<Canvas of={TagStories.Arriving} />
+
+<Canvas of={TagStories.ShowAndHide} />
+
+<Canvas of={TagStories.Dismissible} />
+
+<Canvas of={TagStories.Selectable} />
+
+## Motion
+
+- **Snap from below, in:** a tag that appears in UI already on screen snaps in
+  from below, 2px smaller, 3px at lg, up to full from its own center. It runs on
+  moderate-01 with entrance-productive, and fades up over its first 40ms.
+  `arrive="auto"` (the default) snaps it only when it arrives on its own, not
+  with the page, card or list it came in; `true` always; `false` never.
+- **Snap from below, out:** `show={false}` snaps it out, one step faster, on
+  fast-02 with exit-productive, down to the same scale. It fades out over its
+  last 40ms, then it is gone. Unmounted, it goes at once.
+- **Stillness:** only the first tag of a run moves. The run is warm while a snap
+  plays and for 400ms after the last one ends; a tag that appears then is simply
+  there. Tags that appear on the same frame snap together.
+- **Turn:** shown again mid-exit, or hidden mid-arrival, it turns round from
+  where it is, on the share of the clock its travel leaves.
+- **Rollover:** a SelectableTag's hover is a glow under the cursor, a flat press
+  and a release from the point of release. Its fill changes on the rollover's
+  clocks and it never moves. The DismissibleTag's close takes the rollover too,
+  as a circle on its glyph.
+- **Close icon:** hovering anywhere on a DismissibleTag plays its close icon.
+  Enter, Space, Delete or Backspace on the close dismisses it. Focus moves to
+  the next dismissible tag, or the previous one after the last. `onClose` asks
+  the host to remove the tag.
+
+## Reduced motion
+
+Tags arrive and leave at once, with no snap. A rollover's press still shows; its
+release and re-hover are at once.
+
+## Props
+
+<ArgTypes of={TagStories} />

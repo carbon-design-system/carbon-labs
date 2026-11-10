@@ -90,12 +90,13 @@ function literal(value, indent) {
  *
  * @param {object} o The parts.
  * @param {string} o.name The component's name.
+ * @param {string} [o.file] The stories' file and title name: the lane folder (default: the name).
  * @param {string} o.header The license header.
  * @param {boolean} o.exported Whether the package index exports the name.
  * @param {{ motion: string[], reduced: Record<string, string>, todo: string[] }} o.params The motion parameters.
  * @returns {string} The story source.
  */
-export function storySource({ name, header, exported, params }) {
+export function storySource({ name, file = name, header, exported, params }) {
   const v12 = { motion: params.motion, reduced: params.reduced };
   const todo = params.todo.map((t) => `      // TODO ${t}`).join('\n');
   const importLine = exported
@@ -105,10 +106,10 @@ export function storySource({ name, header, exported, params }) {
 
 import React from 'react';
 ${importLine}
-import mdx from './${name}.mdx';
+import mdx from './${file}.mdx';
 
 export default {
-  title: 'V12/${name}',
+  title: 'V12/${file}',
   component: ${name},
   tags: ['alpha'],
   parameters: {
@@ -132,14 +133,15 @@ export const Default = {
  *
  * @param {object} o The parts.
  * @param {string} o.name The component's name.
+ * @param {string} [o.file] The stories' file name: the lane folder (default: the name).
  * @param {string} o.title The doc's title.
  * @param {{ heading: string, body: string }[]} o.sections The kept sections, the opening text first.
  * @returns {string} The MDX.
  */
-export function mdxSource({ name, title, sections }) {
+export function mdxSource({ name, file = name, title, sections }) {
   const parts = [
     `import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';`,
-    `import * as ${name}Stories from './${name}.stories.tsx';`,
+    `import * as ${name}Stories from './${file}.stories.tsx';`,
     '',
     `<Meta of={${name}Stories} />`,
     '',
@@ -297,8 +299,8 @@ function inlinePackages() {
 /**
  * The package's vitest config: the kit's tests run as they do in the kit, in
  * Node (they render to strings and read no DOM; jsdom's URL is not the one
- * `node:fs` reads), with the seam's carbon-motion link kept by its linked
- * path.
+ * `node:fs` reads), with the seam's link to the motion packages kept by its
+ * linked path.
  *
  * @param {string} header The license header.
  * @returns {string} The source.
@@ -309,7 +311,7 @@ export function vitestConfig(header) {
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  // Lane packages are workspace links; they, and carbon-motion's packages
+  // Lane packages are workspace links; they, and the motion packages
   // behind the seam, run inline.
   resolve: { preserveSymlinks: true },
   test: {

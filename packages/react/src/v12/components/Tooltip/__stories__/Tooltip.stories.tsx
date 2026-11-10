@@ -121,15 +121,12 @@ export const Default = {
   ),
 };
 
-/** The four sides. Move from one to the next within 400ms: the next is there at once, with no delay and no snap. */
+/** The four sides, each a label, as the icon buttons' are: one padding on every side. Move from one to the next within 400ms: the next is there at once, with no delay and no snap. */
 export const Sides = {
   render: () => (
     <div style={{ ...stage, gap: 24 }}>
       {(['top', 'right', 'bottom', 'left'] as TooltipAlign[]).map((align) => (
-        <Tooltip
-          key={align}
-          align={align}
-          description={`Opens on the ${align}`}>
+        <Tooltip key={align} align={align} label={`Opens on the ${align}`}>
           <Button size="sm" variant="outlined">
             {align}
           </Button>

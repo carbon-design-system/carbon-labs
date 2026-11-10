@@ -1,0 +1,54 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SelectListStories from './SelectList.stories.tsx';
+
+<Meta of={SelectListStories} />
+
+# SelectList
+
+Pick one value from a vertical list of rows. It is the content switcher's
+vertical sibling, on the selection kit's track, selector and keyboard model.
+Rows are `SelectItem`s, with an optional icon, secondary text and a trailing
+accessory; `SelectItemGroup` adds headings and `SelectItemDivider` a line. With
+no value, nothing is marked.
+
+<Canvas of={SelectListStories.Default} />
+
+<Canvas of={SelectListStories.Groups} />
+
+<Canvas of={SelectListStories.Clearing} />
+
+<Canvas of={SelectListStories.Loading} />
+
+## Motion
+
+- **Glide:** a pick sends the selector from where it is to the new row, on the
+  content switcher's timing by travel. Its leading edge runs up to 24px ahead,
+  then both edges land together. A new pick mid-glide starts from where the
+  selector is.
+- **Reach:** a press on another row moves the leading edge a few px toward it
+  before the release. Slide to another row to retarget; slide off the list to
+  cancel.
+- **Drag:** the selector follows the pointer and lands on the nearest row, with
+  a 4px squash at the ends.
+- **Arrival:** the first pick grows the selector in from the row's center, 4px
+  short, over fast-02. Clearing the value shrinks it back and fades it, over
+  fast-01. A value already set on mount is placed at once.
+- **Hover:** unselected rows take the rollover; a pressed row takes the pressed
+  color while held. A motion icon plays on its row's hover.
+- **Keyboard:** ↑, ↓, Home, End and typeahead move between rows, skipping
+  disabled ones. With `activation="automatic"` they pick; with `manual` they
+  move focus and Enter or Space picks.
+- **Loading:** placeholder rows stand in the rows' own boxes. The rows take them
+  in order as one reflow, and the track's height follows on the same clock.
+
+## Reduced motion
+
+No travel: the selector fades in on the new row as it fades out of the old, on
+half the clock. There is no reach. The arrival and the clearing fade in place,
+on half the clock. The pressed color still shows; the hover's release is at
+once. A loading track changes height at once. `reduced` overrides the preference
+for the selector and the hover.
+
+## Props
+
+<ArgTypes of={SelectListStories} />

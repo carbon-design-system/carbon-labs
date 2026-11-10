@@ -1,0 +1,139 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+
+/* Only what the selection kit doesn't cover: a row's content, group headings and dividers, and
+ * the list with nothing selected. */
+
+.sl {
+  /* Quieter text in a row is the selection kit's: one step below its label in every state. */
+  /* A row's content starts at a field's edge inset from the list's edge, less the track's inset,
+     which the row already sits inside. */
+  --sl-pad: calc(var(--sel-field-pad) - var(--sel-reach));
+}
+
+/* A pill list: half the control's height from the track's edge (on a ghost list, half the row's),
+   less the inset. */
+.sl.sel--full {
+  --sl-pad: calc(var(--sel-h) / 2 - var(--sel-inset));
+}
+
+.sl .sel__face {
+  padding-inline: var(--sl-pad);
+}
+
+/* ── rows ─────────────────────────────────────────────────────────────── */
+
+/* Rows inside a group are the track's flex items too (`display: contents`), so the kit's sizing
+   and hit areas are restated for every row here. */
+.sl .sel__item {
+  flex: none;
+  block-size: calc(var(--sel-h) - 2 * var(--sel-inset));
+  inline-size: auto;
+}
+
+/* The hit area bridges the gaps and the track's inset; the end rows reach the inset at the ends
+   unless a heading or a divider sits between (`data-edge`). */
+.sel.sel--vertical.sl .sel__item::after {
+  inset: calc(-0.5 * var(--sel-gap)) calc(-1 * var(--sel-reach));
+}
+
+.sel.sel--vertical.sl .sel__item[data-edge~='start']::after {
+  inset-block-start: calc(-1 * var(--sel-reach));
+}
+
+.sel.sel--vertical.sl .sel__item[data-edge~='end']::after {
+  inset-block-end: calc(-1 * var(--sel-reach));
+}
+
+/* Label, secondary text, accessory: one line; the label and the secondary
+   text truncate (the label last), the accessory never does. */
+.sl .sel__text {
+  flex: 0 1 auto;
+  min-inline-size: 0;
+}
+
+.sl__secondary {
+  overflow: hidden;
+  flex: 0 100 auto;
+  min-inline-size: 0;
+  text-overflow: ellipsis;
+}
+
+.sl .sel__accessory {
+  flex: none;
+  padding-inline-start: var(--sel-icon-gap);
+}
+
+/* On the selector the accessory takes the kit's quiet text at regular weight; the weight is the
+   label's. */
+.sl .sel__face--on .sel__accessory {
+  color: var(--sel-on-quiet);
+  font-weight: 400;
+}
+
+.sl .sel__item:disabled .sel__accessory {
+  color: theme.$text-disabled;
+}
+
+/* ── groups and dividers ──────────────────────────────────────────────── */
+
+/* A group is a role, not a box: its heading and rows sit in the track's own
+   column, so the selector's math sees only rows. */
+.sl__group {
+  display: contents;
+}
+
+/* A heading: label-01 in secondary text, padded like a row's label, a double inset above it;
+   the selector passes under it between groups. */
+.sl__heading {
+  @include type-style('label-01');
+
+  overflow: hidden;
+
+  flex: none;
+  color: theme.$text-secondary;
+  cursor: default;
+  padding-block: calc(2 * var(--sel-inset)) calc(0.5 * var(--sel-inset));
+  padding-inline: var(--sl-pad);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &--top {
+    padding-block-start: var(--sel-inset);
+  }
+}
+
+/* A divider: a hairline across the whole track, as a menu's divider, with half an inset more space
+   either side than a gap. */
+.sl__divider {
+  flex: none;
+  background: theme.$border-subtle;
+  block-size: 1px;
+  margin-block: calc(0.5 * var(--sel-inset));
+  margin-inline: calc(-1 * var(--sel-reach));
+}
+
+/* ── nothing selected ─────────────────────────────────────────────────── */
+
+/* With no value the selector isn't shown: no selected face, nothing cut out of a row. */
+.sl:not([data-selection-shown]) {
+  .sel__indicator {
+    opacity: 0;
+  }
+
+  .sel__face--on {
+    visibility: hidden;
+  }
+
+  .sel__face,
+  .sel__item::before {
+    mask: none;
+  }
+}

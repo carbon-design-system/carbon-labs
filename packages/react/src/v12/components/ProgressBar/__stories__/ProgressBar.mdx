@@ -1,0 +1,55 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ProgressBarStories from './ProgressBar.stories.tsx';
+
+<Meta of={ProgressBarStories} />
+
+# ProgressBar
+
+An amount of work as a line, with Carbon's props: a label, the bar, helper text
+and a status mark at the bar's end. With no `value` it is indeterminate. It adds
+`variant` (neutral or hero), `pulse`, `mark` and `motion`.
+
+<Canvas of={ProgressBarStories.Advancing} />
+
+<Canvas of={ProgressBarStories.Indeterminate} />
+
+<Canvas of={ProgressBarStories.Statuses} />
+
+## Motion
+
+- **Fill:** travels from where it is to the new value on standard-productive,
+  its clock from the distance. The fill's line grows 1px from 15% to 85% of the
+  work, in the same tween.
+- **Burst:** at most one new tween per `fast-02`. An update inside that window
+  retargets the running tween from the fill's place and speed.
+- **Loop:** with no value, a segment up to 40% of the track crosses it, one pass
+  per loading period, on standard-productive. Every bar on a page is in one
+  phase.
+- **Loop and value:** a value picks up from the segment's live edges. A fill
+  that loses its value leaves toward the end, a step faster, and the loop joins
+  at the next pass.
+- **Finished:** the fill travels to the end; once it lands, the bar takes the
+  success colour and the check swaps in, then plays once.
+- **Error:** the error colour at once, and the fill stays where it failed. With
+  no value, the segment leaves toward the end.
+- **Status colour:** crossfades on `fast-02`, linear.
+- **Status mark:** swaps in place, out then in.
+- **Pulse:** `pulse`, while active with a value: a highlight crosses the filled
+  part to the leading edge, one pass every two loading periods. It never passes
+  the leading edge.
+- **Right to left:** the bar is mirrored, so the fill, the segment and the pulse
+  run from the right.
+
+<Canvas of={ProgressBarStories.Burst} />
+
+<Canvas of={ProgressBarStories.Pulse} />
+
+## Reduced motion
+
+The fill is at its value at once. With no value, three short still segments
+stand in for the loop. No pulse. The status mark snaps in, with no beat, and the
+status colour crossfades on half the clock.
+
+## Props
+
+<ArgTypes of={ProgressBarStories} />

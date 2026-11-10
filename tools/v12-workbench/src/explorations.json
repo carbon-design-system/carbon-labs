@@ -1,4 +1,40 @@
 {
+  "V12/Popover": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Popover/components/popover.scss",
+      "line": 17,
+      "text": "popover-caret-off — No caret on a popover or toggletip; the surface sits 4px off its trigger. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Popover/components/popover.scss",
+      "line": 32,
+      "text": "radius-over — A surface over the page: popover, toggletip, notifications panel, chat shell. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Popover/components/popover.scss",
+      "line": 84,
+      "text": "radius-over — A surface over the page: popover, toggletip, notifications panel, chat shell. TBD"
+    }
+  ],
+  "V12/ProgressIndicator": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/ProgressIndicator/components/progress-indicator.scss",
+      "line": 201,
+      "text": "hold-weight-width — A label that gets heavier on a state keeps its box width. TBD"
+    }
+  ],
+  "V12/SelectList": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/SelectList/proposals/README.md",
+      "line": 3,
+      "text": "api: activation-prop — One keyboard word for selection lists. TBD"
+    }
+  ],
   "V12/SelectionKit": [
     {
       "kind": "explore",
@@ -11,6 +47,26 @@
       "file": "packages/react/src/v12/components/SelectionKit/proposals/README.md",
       "line": 3,
       "text": "api: variant-prop — The colour treatment is `variant`. TBD"
+    }
+  ],
+  "V12/Tooltip": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Tooltip/components/tooltip.scss",
+      "line": 154,
+      "text": "token: hero-color — The hero tokens: brand colour for a line, a fill, a hover, an ink on a page and on a fill. replaces: `$border-interactive` / `$interactive`, `$button-primary`, `-hover`, `-active`, `$link-primary`, `$link-inverse`. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Tooltip/components/tooltip.scss",
+      "line": 164,
+      "text": "button-secondary-quiet — The secondary Button as a quiet fill one step off what it sits on, re-solved on raised surfaces. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Tooltip/components/tooltip.scss",
+      "line": 189,
+      "text": "tertiary-neutral — The outlined Button in a neutral ink on light themes. TBD"
     }
   ]
 }

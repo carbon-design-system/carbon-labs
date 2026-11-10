@@ -1,0 +1,71 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as DisclosureStories from './Disclosure.stories.tsx';
+
+<Meta of={DisclosureStories} />
+
+# Disclosure
+
+A body that opens and shuts under what discloses it. It is a pair of hooks, not
+a component: `useDisclosureMoves` on a root and `useDisclosureBody` on each
+body. The accordion's items, the data table's expandable rows, the expandable
+tile and the side nav's groups move this way. A body has three parts, each
+inside the last: `.cds-disclosure__body`, a one-row grid whose height moves;
+`.cds-disclosure__clip`, which clips under a soft bottom edge while it moves;
+and `.cds-disclosure__content`, what is disclosed, with its padding inside the
+clip.
+
+<Canvas of={DisclosureStories.Default} />
+
+<Canvas of={DisclosureStories.ExpandAll} />
+
+## Motion
+
+- **Open:** the body's height travels on the step for its travel: under 24px
+  fast-02, under 120px moderate-01, under 480px moderate-02, under 900px
+  moderate-03, else slow-01. The curve is entrance-productive.
+- **Shut:** one step faster, on exit-productive. The content holds still while
+  the edge closes over it, and goes back above only once the body has closed.
+- **Content:** it waits 8px above and comes down into place from the opening's
+  first frame, over one duration token longer than the opening, on
+  entrance-productive. The body lands first.
+- **One motion:** every body under one root that changes in one commit moves on
+  one clock: the step of the farthest travel, what is below a body included.
+  With more than one body, the step is never slower than moderate-02 (220ms),
+  before a shut's step down.
+- **Swap:** one body opening as another shuts runs on standard-productive, with
+  no step down.
+- **Soft edge:** while it moves, the clip's bottom fades over
+  `min(16px, h, H − h)`, so it is gone on the frame the body lands.
+- **Turn:** a change mid-move starts from the body's live height and takes the
+  step of what is left.
+- **Still:** inside `data-still`, or with `still`, a body is open or shut at
+  once.
+- **List place:** `openPlace` opens a row's place in a list on its travel's
+  step, entrance-productive, and brings its content down 8px into it.
+  `shutPlace` closes it one step faster, on exit-productive, the content holding
+  still.
+
+<Canvas of={DisclosureStories.Swap} />
+
+<Canvas of={DisclosureStories.ListPlace} />
+
+## Reduced motion
+
+No travel: a body opens or shuts at once, with no soft edge. Its content fades
+in on the reduced clock (fast-02 at half) and is gone at once. A list place is
+there at once, its content fading in on the reduced clock; a leaving place goes
+at once.
+
+## Hooks
+
+- `useDisclosureMoves(root, options)`: the moves of the bodies under a root.
+  `options` takes `reason`, `onEnd`, `onTimed` and `timeScale`.
+- `useDisclosureBody(ref, open, moves, reduced, still)`: one body's state:
+  `landed`, `present`, and the `bodyProps` to spread on the body.
+- `disclosureTiming(travels)` and `disclosureArrival(el, clock)`: the clock of a
+  motion and the content's arrival under it, for a component that moves its own
+  content.
+
+## Props
+
+<ArgTypes of={DisclosureStories} />

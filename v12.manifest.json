@@ -1,6 +1,30 @@
 {
   "items": [
     {
+      "id": "disclosure",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Disclosure",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "DurationToken",
+        "LayoutTransaction",
+        "REDUCED_MOTION",
+        "animateLayout",
+        "beginLayout",
+        "distanceTokens",
+        "durationStepForDistance",
+        "easingCss",
+        "inLayout",
+        "motionTokens",
+        "stepDown"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
       "id": "feedback",
       "kind": "component",
       "path": "packages/react/src/v12/components/Feedback",
@@ -274,6 +298,34 @@
       }
     },
     {
+      "id": "popover",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Popover",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "CastElevation",
+        "EDGE",
+        "GAP",
+        "SNAP_EXIT_FADE_ATTR",
+        "SNAP_FRAME",
+        "SelectionRect",
+        "SnapSurface",
+        "SurfaceShadowOption",
+        "anchorInset",
+        "mergeRefs",
+        "snapAnimations",
+        "snapProfileFor",
+        "softEdgeToken",
+        "usePrefersReducedMotion",
+        "useSnapSurface"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
       "id": "processing",
       "kind": "component",
       "path": "packages/react/src/v12/components/Processing",
@@ -286,6 +338,58 @@
         "clamp01",
         "easingCss",
         "motionTokens",
+        "useFeedbackMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "progress-bar",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/ProgressBar",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "DURATION_FLOOR_MS",
+        "DurationToken",
+        "SKELETON_WAVE",
+        "durationStepForDistance",
+        "easingCss",
+        "motionTokens",
+        "stepDown",
+        "useFeedbackMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "testsWaiting": [
+        {
+          "file": "line.test.ts",
+          "waitingOn": [
+            "progress-ring"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "progress-indicator",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/ProgressIndicator",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "DURATION_FLOOR_MS",
+        "Selection",
+        "attachRollover",
+        "attachSelection",
+        "durationStepForDistance",
+        "motionTokens",
+        "pitchAt",
+        "reachForLength",
+        "stretchForLength",
         "useFeedbackMotion"
       ],
       "source": {
@@ -320,6 +424,40 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "scroller",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Scroller",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "Scroller",
+        "ScrollerOptions",
+        "ScrollerTrackInfo",
+        "attachScroller",
+        "usePrefersReducedMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "select-list",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/SelectList",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "Selection",
+        "SelectionMoveInfo",
+        "usePrefersReducedMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
       }
     },
     {
@@ -451,6 +589,17 @@
       "source": {
         "repo": "carbon-next",
         "ref": "db8a7637e319090df402ada3bfc0f4b3e30639d7"
+      }
+    },
+    {
+      "id": "styles/cast-shadow-floating",
+      "kind": "styles",
+      "path": "packages/v12-styles/src/styles/_cast-shadow-floating.scss",
+      "labsStatus": "draft",
+      "publishable": false,
+      "source": {
+        "repo": "carbon-next",
+        "ref": "7b223a14059b86d92103693975dd1f774333a11d"
       }
     },
     {
@@ -595,6 +744,35 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "tooltip",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Tooltip",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "SNAP_EXIT_FADE_ATTR",
+        "SNAP_FRAME",
+        "TooltipGroupContext",
+        "TooltipGroupValue",
+        "TooltipMotion",
+        "TooltipMotionContext",
+        "TooltipMotionValue",
+        "TooltipTriggerOptions",
+        "TooltipTriggerProps",
+        "attachRollover",
+        "chain",
+        "mergeRefs",
+        "motionTokens",
+        "useTooltipReduced",
+        "useTooltipSurface",
+        "useTooltipTrigger"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
       }
     },
     {

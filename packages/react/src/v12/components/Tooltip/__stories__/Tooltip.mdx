@@ -1,0 +1,58 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TooltipStories from './Tooltip.stories.tsx';
+
+<Meta of={TooltipStories} />
+
+# Tooltip
+
+Short labels and descriptions on hover and keyboard focus. `Tooltip`,
+`IconButton`, `DefinitionTooltip` and `TooltipGroup` take Carbon's props and
+share one look: the inverse fill, 4px corners and no caret. Escape dismisses a
+tooltip, and the pointer can move onto it without it leaving. Only one tooltip
+shows on the page at a time.
+
+<Canvas of={TooltipStories.Default} />
+
+<Canvas of={TooltipStories.Sides} />
+
+<Canvas of={TooltipStories.Group} />
+
+<Canvas of={TooltipStories.IconButtons} />
+
+<Canvas of={TooltipStories.Definition} />
+
+## Motion
+
+- **In:** the first tooltip of a run waits its enter delay (100ms), then grows
+  from the pointer, where it is when the tooltip snaps: width from 25%, height
+  from 75%, on fast-01 and entrance-snap. The text slides on y and never scales.
+- **From the keyboard:** it grows from the trigger's center, clamped into the
+  box, and does not drift.
+- **Fade:** it fades up as it grows and out as it folds, on the fade standard.
+  `exitFade={false}` folds back opaque.
+- **Warm:** while any tooltip shows, or within 400ms of the last one leaving,
+  the next one is there at once at its final geometry: no delay, no snap, no
+  fade. It leaves the same way, after its leave delay.
+- **Moving on:** in a `TooltipGroup`, the one tooltip jumps to the next trigger,
+  its text changing in place.
+- **Drift:** while hovered, it follows the pointer along the trigger's edge, on
+  one axis, at most 2px and 10% of its own size, on fast-02 and
+  entrance-productive.
+- **Out:** after its leave delay, the last tooltip of a run folds its far edge
+  back into the trigger and is gone on its last frame.
+- **Leave delay:** 120ms (fast-02) for a label, as on `IconButton` and
+  `TooltipGroup`; 300ms (moderate-03) for text worth reading, as on `Tooltip`
+  and `DefinitionTooltip`, so the pointer can cross onto it.
+- **Interrupted:** back on the trigger while it leaves, it turns round from
+  where it is.
+- **Stillness:** a trigger that arrives under a resting pointer opens its
+  tooltip only once the pointer moves more than 0.5px.
+
+## Reduced motion
+
+Every tooltip, the first one too, is there at once after its enter delay and
+gone at once after its leave delay. There is no drift.
+
+## Props
+
+<ArgTypes of={TooltipStories} />

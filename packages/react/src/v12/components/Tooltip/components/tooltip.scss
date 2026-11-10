@@ -1,0 +1,404 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/tertiary';
+@use '@carbon-labs/v12-styles/scss/anchor-inset';
+@use '@carbon-labs/v12-styles/scss/corners';
+
+/* The tooltip family — what the selection kit's `.sel__tip` doesn't cover:
+ * the trigger wrapper, IconButton and DefinitionTooltip's term. Carbon tokens
+ * only (button tokens through their custom properties, as the rollover lab
+ * does). */
+
+/* The trigger and its tooltip (fixed, out of flow). v11's popover container
+   is inline-block too. */
+.cds-tooltip {
+  display: inline-block;
+  vertical-align: top;
+}
+
+/* ── IconButton ───────────────────────────────────────────────────────────── */
+
+.cds-icon-btn {
+  /* Size: the HOVER EXPANSION (the mixin's default) — a freestanding icon
+     button grows 1px toward the pointer and a press returns it to rest.
+     In a toolbar, the press shrink instead (toolbar.scss): the
+     expand or the shrink is a per-element choice. The painted surface
+     sits `--icon-btn-inset` inside the box (a negative bleed): 0, except a
+     freestanding ghost button (below). */
+  @include rollover(
+    $bleed-x: calc(-1 * var(--icon-btn-inset, 0px)),
+    $bleed-y: calc(-1 * var(--icon-btn-inset, 0px))
+  );
+
+  /* v11's sizes; 16px icons (20 at lg, as the selection kit draws them); the
+     selection kit's outer corner, 8px, for `corners="rounded"` (the
+     default `full` is its class, below). */
+  --icon-btn-size: 40px;
+  --icon-btn-icon: 16px;
+  --icon-btn-radius: #{corners.$in};
+
+  display: inline-grid;
+  box-sizing: border-box;
+  padding: 0;
+  border: 0;
+  border-radius: var(--icon-btn-radius);
+  margin: 0;
+
+  appearance: none;
+  background: transparent;
+  block-size: var(--icon-btn-size);
+  color: inherit;
+  cursor: pointer;
+  inline-size: var(--icon-btn-size);
+  place-items: center;
+  text-decoration: none;
+
+  svg {
+    display: block;
+    flex: none;
+    block-size: var(--icon-btn-icon);
+    fill: currentColor;
+    inline-size: var(--icon-btn-icon);
+  }
+
+  /* Keyboard focus, the selection family's way: a 2px
+     ring in the button's own icon color — the contrast to whatever it sits
+     on — just inside its edge, over the hover it shows on focus; no v11
+     blue. A filled button (below) keeps a rim of its fill round the ring. */
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: -2px;
+  }
+
+  &:disabled,
+  &.cds-icon-btn--disabled {
+    cursor: not-allowed;
+  }
+}
+
+.cds-icon-btn--xs {
+  --icon-btn-size: 24px;
+}
+
+.cds-icon-btn--sm {
+  --icon-btn-size: 32px;
+}
+
+.cds-icon-btn--md {
+  --icon-btn-size: 40px;
+}
+
+.cds-icon-btn--lg {
+  --icon-btn-size: 48px;
+  --icon-btn-icon: 20px;
+}
+
+/* The Button's sizes for an icon-only Button (v11's xl / 2xl). */
+.cds-icon-btn--xl {
+  --icon-btn-size: 64px;
+  --icon-btn-icon: 20px;
+}
+
+.cds-icon-btn--2xl {
+  --icon-btn-size: 80px;
+  --icon-btn-icon: 20px;
+}
+
+/* Corners: `full` (a circle, the default: an icon on its own hovers
+   full-round, README.md "Hovers"), `rounded` (8px, the base above, no
+   class), `square` (v11's). */
+.cds-icon-btn--full {
+  --icon-btn-radius: #{corners.$full};
+}
+
+.cds-icon-btn--square {
+  --icon-btn-radius: 0px;
+}
+
+/* v11's badge (`badgeCount`): the count at the top end, in `$support-error`
+   with `$text-on-color`, over the icon's corner. */
+.cds-icon-btn__badge {
+  @include type-style('label-01');
+
+  position: absolute;
+  z-index: 1;
+  box-sizing: border-box;
+  border-radius: corners.$full;
+  background: theme.$support-error;
+  block-size: 16px;
+  color: theme.$text-on-color;
+  font-size: 0.6875rem;
+  inset-block-start: 2px;
+  inset-inline-end: 2px;
+  line-height: 16px;
+  min-inline-size: 16px;
+  padding-inline: 4px;
+  pointer-events: none;
+  text-align: center;
+}
+
+/* Kinds: v11's button tokens as the rest colors; the rollover derives the
+   hover and press (matched lightness), with v11's hover tokens as the
+   fallback. */
+/* Primary follows the kit's brand, as Button's does (button.scss). */
+.cds-icon-btn--primary {
+  --rollover-rest: var(--cds-hero-fill, var(--cds-button-primary, #0f62fe));
+  // @carbon-proposal token: hero-color — The hero tokens: brand colour for a line, a fill, a hover, an ink on a page and on a fill. replaces: `$border-interactive` / `$interactive`, `$button-primary`, `-hover`, `-active`, `$link-primary`, `$link-inverse`. TBD
+  --rollover-hover: var(
+    --cds-hero-fill-hover,
+    var(--cds-button-primary-hover, #0050e6)
+  );
+
+  color: var(--cds-hero-on-fill, #{theme.$icon-on-color});
+}
+
+.cds-icon-btn--secondary {
+  // @carbon-explore button-secondary-quiet — The secondary Button as a quiet fill one step off what it sits on, re-solved on raised surfaces. TBD
+  --rollover-rest: var(--cds-button-secondary, #393939);
+  --rollover-hover: var(--cds-button-secondary-hover, #474747);
+
+  color: theme.$icon-on-color;
+}
+
+/* The icon-only Button's danger kinds: v11's danger tokens, the same rollover. */
+.cds-icon-btn--danger {
+  --rollover-rest: var(--cds-button-danger-primary, #da1e28);
+  --rollover-hover: var(--cds-button-danger-hover, #b81921);
+
+  color: theme.$icon-on-color;
+}
+
+/* The coloured outline and ghost kinds are toned: they hover and press in tints of their own colour, not the
+   backdrop's gray, and the icon takes one Carbon step from the backdrop
+   (more if it would still fall under 4.5:1 on them; `@mixin
+   rollover-tone`). The tertiary's stroke is its tone, the Button's
+   tertiary colour (`--cds-tertiary`: `$text-primary` light, white dark;
+   styles/_tertiary.scss). They glow, as every rollover does (v11 fills
+   them solid). */
+.cds-icon-btn--tertiary {
+  --rollover-stroke: var(--rollover-tone);
+
+  // @carbon-explore tertiary-neutral — The outlined Button in a neutral ink on light themes. TBD
+  @include rollover-tone(var(--cds-tertiary, #{theme.$text-primary}));
+}
+
+.cds-icon-btn--danger--tertiary {
+  --rollover-stroke: var(--rollover-tone);
+
+  @include rollover-tone(var(--cds-button-danger-secondary, #da1e28));
+}
+
+.cds-icon-btn--danger--ghost {
+  @include rollover-tone(var(--cds-button-danger-secondary, #da1e28));
+}
+
+/* The plain ghost's icon is `icon-primary`, a neutral: its hover stays the
+   neutral wash (matched lightness from the backdrop). */
+.cds-icon-btn--ghost {
+  --rollover-hover: #{theme.$background-hover};
+
+  color: theme.$icon-primary;
+}
+
+/* A freestanding ghost button: its hover and press fill sit inside its box
+   by the kit's inset (2 / 3 / 4 / 4px at xs / sm / md / lg), the corner
+   concentric, the focus ring on the fill's edge — as the OverflowMenu's
+   trigger, so the family's
+   icon buttons match side by side. The box keeps v11's size (the hit area
+   and layout don't change). Not in a toolbar (its controls sit the
+   toolbar's gap apart, the fill the whole control) or a field (the password
+   toggle is already inset by the field). */
+.cds-icon-btn--ghost:not(.cds-toolbar__ctl, .cds-text-input__toggle),
+.cds-icon-btn--danger--ghost:not(.cds-toolbar__ctl, .cds-text-input__toggle) {
+  --icon-btn-inset: 4px;
+  /* Its tooltip's gap is taken from the fill; a start / end edge stays on
+     the box (styles/_anchor-inset.scss). */
+  --cds-anchor-inset: var(--icon-btn-inset);
+
+  &::before {
+    border-radius: max(
+      0px,
+      calc(var(--icon-btn-radius) - var(--icon-btn-inset))
+    );
+  }
+
+  &:focus-visible {
+    outline-offset: calc(-2px - var(--icon-btn-inset));
+  }
+
+  &.cds-icon-btn--xs {
+    --icon-btn-inset: 2px;
+  }
+
+  &.cds-icon-btn--sm {
+    --icon-btn-inset: 3px;
+  }
+}
+
+/* v11's `isSelected`: the selected ghost background. */
+.cds-icon-btn--selected {
+  --rollover-rest: #{theme.$background-selected};
+  --rollover-hover: #{theme.$background-selected-hover};
+}
+
+/* A filled button: the ring 2px inside its edge, a rim of the fill round it,
+   so the button's shape stays its fill's (as the selector's ring). */
+.cds-icon-btn--primary,
+.cds-icon-btn--secondary,
+.cds-icon-btn--danger {
+  &:focus-visible {
+    outline-offset: -4px;
+  }
+}
+
+.cds-icon-btn--disabled {
+  &.cds-icon-btn--primary,
+  &.cds-icon-btn--secondary,
+  &.cds-icon-btn--danger {
+    --rollover-rest: var(--cds-button-disabled, #c6c6c6);
+
+    color: theme.$icon-on-color-disabled;
+  }
+
+  &.cds-icon-btn--tertiary,
+  &.cds-icon-btn--danger--tertiary {
+    --rollover-stroke: var(--cds-button-disabled, #c6c6c6);
+
+    color: theme.$icon-disabled;
+  }
+
+  &.cds-icon-btn--ghost,
+  &.cds-icon-btn--danger--ghost {
+    color: theme.$icon-disabled;
+  }
+}
+
+/* ── DefinitionTooltip ────────────────────────────────────────────────────── */
+
+.cds-definition {
+  display: inline;
+}
+
+/* Registered, so the dots' color transitions. */
+@property --_dot-color {
+  inherits: true;
+  initial-value: transparent;
+  syntax: '<color>';
+}
+
+/* The term's underline: round dots, as the charts' projected lines are drawn (2px dots on a
+   ~4px pitch, `$border-strong` at rest, 2px from the text, knocked out round descenders by
+   text-shadow). Hover is a contrast step toward $text-primary, press another; open or
+   selected widens the line to 3px in $border-interactive (selected blue). */
+.cds-definition__term {
+  --_dot-color: #{theme.$border-strong};
+  --_grow: 0px;
+  --_line-height: 2px;
+
+  position: relative;
+  display: inline-block;
+  padding: 0 0 2px;
+  border: 0;
+  border-radius: 0;
+  margin: 0;
+
+  appearance: none;
+  background: none;
+  color: theme.$text-primary;
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: inherit;
+  text-shadow:
+    0 0 1px var(--cds-layer, var(--cds-background, #ffffff)),
+    0 0 2px var(--cds-layer, var(--cds-background, #ffffff));
+  white-space: nowrap;
+
+  &::after {
+    position: absolute;
+    z-index: -1;
+    background-image: radial-gradient(
+      circle,
+      var(--_dot-color) 0.9px,
+      transparent 1.15px
+    );
+    background-position: left center;
+    background-repeat: repeat-x;
+    background-size: calc(100% / var(--_dots, 20)) 2px;
+    block-size: var(--_line-height, 2px);
+    content: '';
+    inset-block-end: 0;
+    inset-inline: calc(-1 * var(--_grow));
+    pointer-events: none;
+    transition:
+      inset-inline var(--cds-motion-duration-fast-02)
+        var(--cds-motion-easing-standard-productive),
+      block-size var(--cds-motion-duration-fast-01) linear,
+      --_dot-color var(--cds-motion-duration-fast-01) linear;
+  }
+
+  &:hover {
+    --_dot-color: color-mix(
+      in srgb,
+      #{theme.$border-strong} 65%,
+      #{theme.$text-primary}
+    );
+  }
+
+  &:active {
+    --_dot-color: #{theme.$text-primary};
+  }
+
+  &[aria-expanded='true'] {
+    --_grow: 2px;
+    --_line-height: 3px;
+    --_dot-color: #{theme.$border-interactive};
+
+    &::after {
+      background-image: radial-gradient(
+        circle,
+        var(--_dot-color) 1.2px,
+        transparent 1.45px
+      );
+      background-size: calc(100% / var(--_dots, 20)) 3px;
+    }
+  }
+
+  &:focus-visible {
+    --_dot-color: #{theme.$border-interactive};
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      transition-duration: var(--cds-motion-duration-floor);
+    }
+  }
+
+  /* Keyboard focus: a 2px ring in its own text color, round the term, as on
+     every control; no v11 blue. */
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 1px;
+  }
+}
+
+/* v11's definition width (`.cds--definition-tooltip`: 11rem); its padding
+   is every wrapping tooltip's, 8px 12px. */
+.cds-definition__tip.sel__tip--wrap {
+  max-inline-size: 11rem;
+}
+
+/* The edge goes on the container (the frame), so it grows with it and the
+   snap's clip never cuts it. */
+@media (forced-colors: active) {
+  .sel__tip-frame {
+    border: 1px solid CanvasText;
+  }
+}

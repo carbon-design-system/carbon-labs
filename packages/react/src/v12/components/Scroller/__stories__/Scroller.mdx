@@ -1,0 +1,57 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ScrollerStories from './Scroller.stories.tsx';
+
+<Meta of={ScrollerStories} />
+
+# Scroller
+
+A floating pill per axis in place of the native scrollbar, over native scrolling
+on a container or the window. The pill reads out where you are, and you can drag
+it or press beside it. Wheel, trackpad, touch and keys scroll natively. Size the
+root like any box; the viewport inside fills it and scrolls. `WindowScroller`
+puts the pill on the window's edge and hides the page's own scrollbar while it
+is mounted. The rest color is `$border-strong`, so it steps with the layer.
+
+<Canvas of={ScrollerStories.Default} />
+
+## Motion
+
+- **Readout:** the pill's offset follows the scroll 1:1, never eased. Its length
+  is the viewport's share of the content, at least 32px.
+- **Length:** a change in the content's size glides the length over fast-02, on
+  standard-productive. A change in the viewport's size follows at once.
+- **Arrival:** scrolling, the pointer near the edge, or keyboard focus brings
+  the pill in: a fade over fast-01, linear, while its thickness grows from 90%
+  over fast-02, on entrance-productive. A run of activity never replays it.
+- **Leave:** 1000ms after the last activity it fades over fast-02, on
+  exit-productive. Never while it is hovered, pressed, dragged or focused.
+- **Hover:** a 16px strip along the edge thickens the pill from 4 to 6px about
+  its center line, fast-02 in and fast-01 out, with the hover color step.
+- **Press:** the pill insets 0.5px on every side, with the pressed color step,
+  held while dragging.
+- **Squash:** dragged past either end, the far end comes toward the wall, up to
+  4px, and springs back over fast-01 on release.
+- **Track press:** a press beside the pill scrolls a page (87.5% of the
+  viewport) toward it, or jumps to the press. The duration follows the pill's
+  travel, 40 to 150ms, on standard-productive. A wheel, touch, key, drag or
+  another press stops it where it is.
+- **Soft edge:** a side of the viewport is masked only while content is past it,
+  `min(16px, half the viewport, the amount past)`. None at rest at the top, and
+  none where something is stuck to that side.
+- **Corner:** with both axes, each track stops short of the corner by the other
+  pill's hover footprint and the inset.
+
+<Canvas of={ScrollerStories.ContentChange} />
+
+<Canvas of={ScrollerStories.RestLooks} />
+
+<Canvas of={ScrollerStories.BothAxes} />
+
+## Reduced motion
+
+Fades only, on the reduced clock. The thickness does not grow, the length does
+not glide and the squash does not spring back. A track press jumps.
+
+## Props
+
+<ArgTypes of={ScrollerStories} />

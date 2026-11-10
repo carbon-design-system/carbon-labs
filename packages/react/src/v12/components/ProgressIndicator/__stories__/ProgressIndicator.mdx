@@ -1,0 +1,41 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ProgressIndicatorStories from './ProgressIndicator.stories.tsx';
+
+<Meta of={ProgressIndicatorStories} />
+
+# ProgressIndicator
+
+A task's steps on a line, drawn as line tabs. Its props are Carbon's
+`ProgressIndicator` and `ProgressStep`, plus `reach` from `useProgressReach`.
+Each step has an icon, a label and an optional secondary label. The current step
+carries a bar on the line, and a fill runs over the complete steps.
+`ProgressIndicatorSkeleton` draws it loading.
+
+<Canvas of={ProgressIndicatorStories.Flow} />
+
+## Motion
+
+- **Bar:** the selection's bar glides to the current step by travel, its leading
+  edge ahead by a stretch that scales with the track.
+- **Reach:** a press that will move the bar, on a step or on Back and Next
+  through `useProgressReach`, leans it toward that step. A press let go
+  elsewhere reaches back.
+- **Line:** one fill to the current step, on the bar's clock, so the two land
+  together. Without a bar move, on its own travel's duration.
+- **Icons:** each step's icon changes to its new state in place.
+- **Rollover:** a step you can choose takes the press shrink.
+- **Layout:** a resize or a change of direction places the bar and the line at
+  once.
+
+<Canvas of={ProgressIndicatorStories.Vertical} />
+
+<Canvas of={ProgressIndicatorStories.States} />
+
+## Reduced motion
+
+No travel and no reach: the bar fades across to the new step. The line and the
+icons are there at once.
+
+## Props
+
+<ArgTypes of={ProgressIndicatorStories} />

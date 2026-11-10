@@ -1,0 +1,27 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+/* A place opening or shutting (listPlace.ts): clipped under the soft bottom edge,
+   min(16px, h, H − h) for a place h tall of its open H. */
+[data-cds-place] {
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to bottom,
+    #000000
+      calc(
+        100% - max(
+            0px,
+            min(
+              var(--cds-motion-soft-edge, 16px),
+              100%,
+              var(--cds-place-open, 0px) - 100%
+            )
+          )
+      ),
+    transparent
+  );
+}

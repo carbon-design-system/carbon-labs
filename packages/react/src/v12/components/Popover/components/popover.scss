@@ -1,0 +1,169 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/cast-shadow-floating';
+
+/* Popover (Popover.tsx): the floating surface. The frame (`data-snap-frame`)
+   draws the container — its fill, hairline and corner — so the snap moves it
+   as geometry; the content sits on top. No caret. */
+
+/* v11's container: the trigger, and the content drawn from it. */
+// @carbon-explore popover-caret-off — No caret on a popover or toggletip; the surface sits 4px off its trigger. TBD
+.cds-popover-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Carries the surface's theme (the opposite one for high contrast, or the
+   trigger's into a portal) without a box of its own. */
+.cds-popover-layer {
+  display: contents;
+}
+
+.cds-popover {
+  @include surface.fields-on-surface;
+
+  // @carbon-explore radius-over — A surface over the page: popover, toggletip, notifications panel, chat shell. TBD
+  --cds-popover-radius: 16px;
+  /* The floating standard: every variant, the toggletip and the menus' frame, in its theme.
+     Only Carbon's `backgroundToken="background"` asks for another fill. */
+  --cds-popover-fill: var(--cds-surface, #{theme.$layer});
+  --cds-popover-edge: var(--cds-surface-divider, #{theme.$border-subtle-01});
+
+  /* Placed by the component (client px, whole device px). */
+  position: fixed;
+  z-index: 9000;
+  display: block;
+  box-sizing: border-box;
+  color: theme.$text-primary;
+  /* Its content's own width wherever it is placed: a fixed box's auto width
+     would shrink against the viewport's edge once moved toward it. */
+  inline-size: max-content;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  isolation: isolate;
+  max-inline-size: calc(100vw - 16px);
+  outline: none;
+  text-align: start;
+  white-space: normal;
+
+  &[hidden] {
+    display: none;
+  }
+
+  &[data-leaving] {
+    pointer-events: none;
+  }
+}
+
+.cds-popover--square {
+  --cds-popover-radius: 0px;
+}
+
+/* The page's background instead of the surface (v11's `backgroundToken`). */
+.cds-popover--background {
+  --cds-popover-fill: #{theme.$background};
+  /* On the page's background, the page's field. */
+  --cds-field-fill: #{theme.$field};
+}
+
+/* High contrast: the portal or layer carries the opposite theme, and the
+   panel is the floating surface in it: the same `--cds-surface` fill (and,
+   with `outline`, its divider), read in that theme, its rows and controls a
+   layer up (`cds--layer-one`). */
+
+.cds-popover__frame {
+  position: absolute;
+  z-index: -1;
+  // @carbon-explore radius-over — A surface over the page: popover, toggletip, notifications panel, chat shell. TBD
+  border-radius: var(--cds-popover-radius);
+  background: var(--cds-popover-fill);
+  box-shadow: inset 0 0 0 1px var(--cds-popover-edge);
+  inset: 0;
+}
+
+.cds-popover--no-outline .cds-popover__frame {
+  box-shadow: none;
+}
+
+.cds-popover__content {
+  position: relative;
+  display: block;
+}
+
+/* A tab tip: the corner it shares with its trigger is square. */
+.cds-popover--tab-tip {
+  &[data-placement='bottom-start'] .cds-popover__frame {
+    border-start-start-radius: 0;
+  }
+
+  &[data-placement='bottom-end'] .cds-popover__frame {
+    border-start-end-radius: 0;
+  }
+
+  &[data-placement='top-start'] .cds-popover__frame {
+    border-end-start-radius: 0;
+  }
+
+  &[data-placement='top-end'] .cds-popover__frame {
+    border-end-end-radius: 0;
+  }
+}
+
+/* ── a tab tip's seam ─────────────────────────────────────────────────── */
+
+/* The trigger's width of the surface's fill over its hairline, so trigger
+   and surface read as one shape. The surface's sibling (outside its clip). */
+.cds-popover__seam {
+  position: fixed;
+  z-index: 9000;
+  display: block;
+  background: var(--cds-surface, #{theme.$layer});
+  block-size: 1px;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  pointer-events: none;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.cds-popover__seam--background {
+  background: theme.$background;
+}
+
+/* A tab tip's trigger, while open: the surface's fill and hairline on the
+   three sides away from it, its corners rounded only there. */
+.cds-popover-container--tab-tip.cds-popover-container--open
+  .cds-popover--tab-tip__button {
+  --cds-tab-radius: 8px;
+
+  border-radius: var(--cds-tab-radius) var(--cds-tab-radius) 0 0;
+  background: var(--cds-surface, #{theme.$layer});
+  box-shadow:
+    inset 1px 0 0 var(--cds-surface-divider, #{theme.$border-subtle-01}),
+    inset -1px 0 0 var(--cds-surface-divider, #{theme.$border-subtle-01}),
+    inset 0 1px 0 var(--cds-surface-divider, #{theme.$border-subtle-01});
+}
+
+.cds-popover-container--tab-tip.cds-popover-container--open[data-placement^='top']
+  .cds-popover--tab-tip__button {
+  border-radius: 0 0 var(--cds-tab-radius) var(--cds-tab-radius);
+  box-shadow:
+    inset 1px 0 0 var(--cds-surface-divider, #{theme.$border-subtle-01}),
+    inset -1px 0 0 var(--cds-surface-divider, #{theme.$border-subtle-01}),
+    inset 0 -1px 0 var(--cds-surface-divider, #{theme.$border-subtle-01});
+}
+
+@media (forced-colors: active) {
+  .cds-popover__frame {
+    box-shadow: inset 0 0 0 1px CanvasText;
+  }
+}

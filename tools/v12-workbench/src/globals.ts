@@ -13,7 +13,7 @@ import { DEFAULT_GLOBALS } from './constants';
  */
 export const globalTypes = {
   theme: {
-    description: 'Theme: the two v12 themes',
+    description: 'Theme: white, g100, or the v12 light and dark previews',
     toolbar: {
       title: 'Theme',
       icon: 'paintbrush',
@@ -21,6 +21,8 @@ export const globalTypes = {
       items: [
         { value: 'white', title: 'White' },
         { value: 'g100', title: 'Gray 100' },
+        { value: 'v12-light', title: 'v12 light (preview)' },
+        { value: 'v12-dark', title: 'v12 dark (preview)' },
       ],
     },
   },

@@ -18,8 +18,14 @@ export const EVENTS = {
   request: `${ADDON_ID}/motion-request`,
 } as const;
 
-/** The toolbar's picks, in the order they are shown. */
-export const THEMES = ['white', 'g100'] as const;
+/**
+ * The toolbar's picks, in the order they are shown: Carbon's white and g100,
+ * then the v12 light and dark previews (the React Storybook's `v12-themes`),
+ * which apply on `<html>` only.
+ */
+export const THEMES = ['white', 'g100', 'v12-light', 'v12-dark'] as const;
+/** The themes Carbon's `Theme` draws as a zone of their own: the matrix's. */
+export const ZONE_THEMES = ['white', 'g100'] as const;
 export const DENSITIES = ['default', 'compact'] as const;
 export const REDUCED_MOTION = ['off', 'shorter-clock', 'at-once'] as const;
 /** The clock's speed: 1x, a quarter, a tenth. Strings, as the URL carries them. */
@@ -27,6 +33,7 @@ export const CLOCKS = ['1', '0.25', '0.1'] as const;
 export const DIRECTIONS = ['ltr', 'rtl'] as const;
 
 export type Theme = (typeof THEMES)[number];
+export type ZoneTheme = (typeof ZONE_THEMES)[number];
 export type Density = (typeof DENSITIES)[number];
 export type ReducedMotion = (typeof REDUCED_MOTION)[number];
 export type Clock = (typeof CLOCKS)[number];

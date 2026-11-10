@@ -9,7 +9,8 @@ import { describe, expect, it } from 'vitest';
 import { motionTokens } from '@carbon-labs/v12-motion';
 import { applyClock, clockDraft } from '../clock';
 import { describeMotion, motionReport } from '../motion';
-import { readGlobals, timeScaleOf } from '../constants';
+import { THEMES, ZONE_THEMES, readGlobals, timeScaleOf } from '../constants';
+import { globalTypes } from '../globals';
 import { storyFrameUrl } from '../compare';
 
 describe('the toolbar globals', () => {
@@ -18,6 +19,22 @@ describe('the toolbar globals', () => {
     expect(picks.theme).toBe('white');
     expect(picks.clock).toBe('1');
     expect(picks.dir).toBe('rtl');
+  });
+
+  it('offer white and g100, then the v12 light and dark previews', () => {
+    expect(THEMES).toEqual(['white', 'g100', 'v12-light', 'v12-dark']);
+    expect(globalTypes.theme.toolbar.items).toEqual([
+      { value: 'white', title: 'White' },
+      { value: 'g100', title: 'Gray 100' },
+      { value: 'v12-light', title: 'v12 light (preview)' },
+      { value: 'v12-dark', title: 'v12 dark (preview)' },
+    ]);
+    expect(readGlobals({ theme: 'v12-dark' }).theme).toBe('v12-dark');
+    expect(readGlobals({}).theme).toBe('white');
+  });
+
+  it('keep the matrix to the themes Carbon draws as a zone', () => {
+    expect(ZONE_THEMES).toEqual(['white', 'g100']);
   });
 
   it('turn the clock into a time scale', () => {

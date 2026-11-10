@@ -61,16 +61,10 @@ if (includeV12) {
   require('./v12-themes/_index.scss');
 }
 
-const themeItems = includeV12
-  ? [
-      { value: 'v12-light', title: 'v12 light (preview)' },
-      { value: 'v12-dark', title: 'v12 dark (preview)' },
-      { value: 'white', title: 'white (v11)' },
-      { value: 'g10', title: 'g10 (v11)' },
-      { value: 'g90', title: 'g90 (v11)' },
-      { value: 'g100', title: 'g100 (v11)' },
-    ]
-  : ['white', 'g10', 'g90', 'g100'];
+// Carbon's `GlobalTheme` knows only its own four themes: a v12 preview theme
+// is given the Carbon theme it is built on (v12-themes/generate.mjs).
+const carbonThemeOf = (theme) =>
+  ({ 'v12-light': 'white', 'v12-dark': 'g100' })[theme] ?? theme;
 import { MDXProvider } from '@mdx-js/react';
 import theme from './theme';
 
@@ -218,7 +212,7 @@ const devTools = {
 };
 
 // The lane's own picks. The v12 build takes theme and text direction from the
-// workbench add-on (tools/v12-workbench), with the lane's two themes.
+// workbench add-on (tools/v12-workbench), which adds the v12 preview themes.
 const laneGlobalTypes = {
   dir: {
     name: 'Text direction',
@@ -249,10 +243,10 @@ const laneGlobalTypes = {
   theme: {
     name: 'Theme',
     description: 'Set the global theme for displaying components',
-    defaultValue: includeV12 ? 'v12-light' : 'white',
+    defaultValue: 'white',
     toolbar: {
       icon: 'paintbrush',
-      items: themeItems,
+      items: ['white', 'g10', 'g90', 'g100'],
     },
   },
 };
@@ -374,7 +368,7 @@ const decorators = [
     }, [locale, dir, ownPicks]);
 
     return (
-      <GlobalTheme theme={theme}>
+      <GlobalTheme theme={carbonThemeOf(theme)}>
         <Layout size={layoutSize || null} density={layoutDensity || null}>
           <Story key={randomKey} {...context} />
         </Layout>

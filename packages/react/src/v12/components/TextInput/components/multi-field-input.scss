@@ -1,0 +1,502 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/field-fill' as *;
+
+/* MultiFieldInput — `MultiFieldInput.tsx`. The TextInput's field (its size,
+ * corners and accent variables come from `.cds-text-input`), cut into
+ * segments. Each segment carries the fill, its share of the `$border-subtle`
+ * hairline, and its own state on an outline over it, the TextInput's ladder:
+ * hover halfway to `$border-strong` (1px, fast-02 in), press `$border-strong`
+ * at the same 1px (at once: a step in contrast, not weight), focus
+ * the accent at 2px (fast-01), error
+ * `$support-error` at 2px (moderate-02, entrance). Only the field's two outer
+ * ends are rounded.
+ *
+ * The seams follow the kit's rule for a divided control: the field has a hairline
+ * outline, so its seams are that hairline cut through it, no gap
+ * (`--hairline`), as the neutral SplitButton's; a field with no outline
+ * (disabled: the fill alone) is cut by 2px knockouts (`--knockout`), as the
+ * filled buttons are. */
+
+$fast-01: var(--cds-motion-duration-fast-01);
+$fast-02: var(--cds-motion-duration-fast-02);
+$moderate-02: var(--cds-motion-duration-moderate-02);
+$standard: var(--cds-motion-easing-standard-productive);
+$entrance: var(--cds-motion-easing-entrance-productive);
+
+.cds-multi-field {
+  /* A segment's inset: tighter than a single field's, for narrow segments. */
+  --mf-pad: 12px;
+
+  /* Its width is the layout's, not its content's: the narrow rules below query it. */
+  container: cds-multi-field / inline-size;
+}
+
+.cds-multi-field.cds-text-input--xs,
+.cds-multi-field.cds-text-input--sm {
+  --mf-pad: 8px;
+}
+
+/* ── the shell ───────────────────────────────────────────────────────── */
+
+/* The shell is only the row: the segments carry the fill, so the gaps
+   between them knock out through it to whatever is behind the field. */
+.cds-multi-field__shell {
+  --tf-fill: #{$field-fill};
+
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  border-radius: var(--tf-radius);
+  block-size: var(--tf-h);
+  gap: 0;
+  inline-size: 100%;
+  isolation: isolate;
+}
+
+.cds-multi-field--knockout .cds-multi-field__shell {
+  gap: 2px;
+}
+
+/* ── a segment ───────────────────────────────────────────────────────── */
+
+.cds-multi-field__segment {
+  /* Its state outline: the edge and a ring inside it (transparent = none), and how far it reaches
+     into the knockouts beside it (its own weight: 1px, or 2px with the ring). */
+  --mf-edge: transparent;
+  --mf-ring: transparent;
+  --mf-reach: 1px;
+  /* Which of its sides lie on a knockout (1) rather than the field's outside (0): the layout's. */
+  --mf-cut-start: 0;
+  --mf-cut-end: 0;
+  --mf-cut-above: 0;
+  --mf-cut-below: 0;
+
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  flex: 1 1 0;
+  align-items: center;
+  background: var(--tf-fill);
+  container: cds-multi-field-segment / inline-size;
+  cursor: text;
+  min-inline-size: 0;
+  padding-inline: var(--mf-pad);
+
+  /* Only the outer ends are rounded. */
+  &:first-child {
+    border-end-start-radius: var(--tf-radius);
+    border-start-start-radius: var(--tf-radius);
+  }
+
+  &:last-child {
+    border-end-end-radius: var(--tf-radius);
+    border-start-end-radius: var(--tf-radius);
+  }
+
+  /* The rest hairline, on the segment's own box: the knockouts cut it too. */
+  &::before {
+    position: absolute;
+    z-index: 0;
+    box-sizing: border-box;
+    border: 1px solid theme.$border-subtle;
+    border-radius: inherit;
+    content: '';
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* The state outline. */
+  &::after {
+    position: absolute;
+    z-index: 2;
+    box-sizing: border-box;
+    border: 1px solid var(--mf-edge);
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px var(--mf-ring);
+    content: '';
+    inset: 0;
+    pointer-events: none;
+    transition:
+      border-color $fast-01 $standard,
+      box-shadow $fast-01 $standard;
+  }
+}
+
+/* A side's cut (`--mf-cut-*`) says whether a seam lies there: one row cuts the inner inline sides;
+   rows of two (narrow, below) cut the block sides between rows too. */
+.cds-multi-field__segment {
+  &:not(:first-child) {
+    --mf-cut-start: 1;
+  }
+
+  &:not(:last-child) {
+    --mf-cut-end: 1;
+  }
+}
+
+/* Hairline: the neutral SplitButton's cut, in the field. The segments abut; each draws
+   the seam on its end and below sides where they lie on another segment, an inset line inside its
+   own box (it meets the outline square), so the seam is one whole 1px line; there's no outline
+   down a cut side. The seam is the field's own quiet inside line: one step past the fill toward
+   the text, 9.5%, so 7–8.5 L* off the fill in every theme, as the neutral shell's seam is 8 off
+   its fill (the outline, `$border-subtle`, is 11–20 L* off the page, as neutral's hairline is 12;
+   `$border-subtle` down the seams would run from 3.5 L* off the fill on white to more on other fills). The state
+   outline covers the seam on
+   every side: on the end and below sides it's the segment's own edge; on the start and above sides
+   it reaches 1px over the neighbour's seam. A 2px state (focus, error) is the seam and 1px
+   inside, so a selected segment shows no seam line beside its outline. */
+.cds-multi-field--hairline .cds-multi-field__segment {
+  --mf-seam: color-mix(in oklab, var(--tf-fill), #{theme.$text-primary} 9.5%);
+  /* The physical side the inline end is on (the inset line is physical). */
+  --_mf-end: 1;
+
+  &:dir(rtl) {
+    --_mf-end: -1;
+  }
+
+  &::before {
+    border-block-end-width: calc(1px - var(--mf-cut-below) * 1px);
+    border-block-start-width: calc(1px - var(--mf-cut-above) * 1px);
+    border-inline-end-width: calc(1px - var(--mf-cut-end) * 1px);
+    border-inline-start-width: calc(1px - var(--mf-cut-start) * 1px);
+    box-shadow:
+      inset calc(-1px * var(--_mf-end) * var(--mf-cut-end)) 0 0 0 var(--mf-seam),
+      inset 0 calc(-1px * var(--mf-cut-below)) 0 0 var(--mf-seam);
+  }
+
+  &::after {
+    inset-block-start: calc(-1px * var(--mf-cut-above));
+    inset-inline-start: calc(-1px * var(--mf-cut-start));
+  }
+}
+
+/* Knockout (2px): no hairline down a knockout (the gap is the divider), and the state outline
+   reaches into each knockout beside the segment by its own weight, from the same box edges at any
+   zoom: a 1px hover or press lies on the knockout's half next to the segment; the 2px states (focus,
+   error) cover the whole knockout, so no sliver of it shows round a selected segment. */
+.cds-multi-field--knockout .cds-multi-field__segment {
+  &::before {
+    border-block-end-width: calc(1px - var(--mf-cut-below) * 1px);
+    border-block-start-width: calc(1px - var(--mf-cut-above) * 1px);
+    border-inline-end-width: calc(1px - var(--mf-cut-end) * 1px);
+    border-inline-start-width: calc(1px - var(--mf-cut-start) * 1px);
+  }
+
+  &::after {
+    inset-block-end: calc(-1 * var(--mf-cut-below) * var(--mf-reach));
+    inset-block-start: calc(-1 * var(--mf-cut-above) * var(--mf-reach));
+    inset-inline-end: calc(-1 * var(--mf-cut-end) * var(--mf-reach));
+    inset-inline-start: calc(-1 * var(--mf-cut-start) * var(--mf-reach));
+  }
+}
+
+/* The segment's name, before its value. */
+.cds-multi-field__name {
+  @include type-style('label-01');
+
+  flex: none;
+  color: theme.$text-secondary;
+  margin-inline-end: 6px;
+  user-select: none;
+}
+
+.cds-multi-field .cds-multi-field__input {
+  flex: 1 1 auto;
+  padding: 0;
+  border-radius: 0;
+  font-variant-numeric: tabular-nums;
+  inline-size: 0;
+  min-inline-size: 0;
+}
+
+/* Its mark: the slot opens when the segment has a status. */
+.cds-multi-field__mark-slot {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: flex-end;
+  inline-size: 0;
+  transition: inline-size 0s linear $fast-01;
+
+  .cds-multi-field__segment[data-status] & {
+    inline-size: calc(4px + var(--tf-mark));
+    transition: none;
+  }
+}
+
+/* ── narrow ──────────────────────────────────────────────────────────── */
+
+/* Every value stays whole at any width (a curve card's four numbers never read "0.…"). A
+   segment needs, inside its insets, its name (a letter or two), a 6px space and a value to two
+   decimals ("0.38"): 50px, and 20px more for a status mark. The ladder:
+     · a row while every segment gets that;
+     · narrower, four or six segments wrap into rows of two (not `cds-multi-field--one-row`, which
+       sets its own floor), each row the field's height, seams between the rows as between the
+       segments, the outer corners still the only rounded ones;
+     · a segment that is still too narrow drops its name first (it still names the input), then
+       its mark (the outline and the message line still say it); a segment with a status drops
+       its name before it would crowd the mark.
+   No smaller type: one step down saves 4px a value, not the 20px a row of four is short. */
+$content-min: 50px;
+/* 4px + `--tf-mark`. */
+$mark-room: 20px;
+/* `--mf-pad`. */
+$pad: (
+  xs: 8px,
+  sm: 8px,
+  md: 12px,
+  lg: 12px,
+);
+
+@mixin rows-of-two {
+  .cds-multi-field__shell {
+    display: grid;
+    block-size: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cds-multi-field__segment {
+    --mf-cut-start: 0;
+    --mf-cut-end: 0;
+    --mf-cut-above: 1;
+    --mf-cut-below: 1;
+
+    border-radius: 0;
+
+    block-size: var(--tf-h);
+
+    &:nth-child(even) {
+      --mf-cut-start: 1;
+    }
+
+    &:nth-child(odd) {
+      --mf-cut-end: 1;
+    }
+
+    &:nth-child(-n + 2) {
+      --mf-cut-above: 0;
+    }
+
+    &:nth-last-child(-n + 2) {
+      --mf-cut-below: 0;
+    }
+
+    /* The field's four corners; `full` ends at a row's half height. */
+    $r: min(var(--tf-radius), var(--tf-h) / 2);
+
+    &:first-child {
+      border-start-start-radius: $r;
+    }
+
+    &:nth-child(2) {
+      border-start-end-radius: $r;
+    }
+
+    &:nth-last-child(2) {
+      border-end-start-radius: $r;
+    }
+
+    &:last-child {
+      border-end-end-radius: $r;
+    }
+  }
+}
+
+/* A row while every segment gets its insets and `$content-min`. `cds-multi-field--one-row` stays a
+   row at any width (the cubic-bezier's four numbers): its segments drop their names instead. */
+@each $size, $p in $pad {
+  @each $n in (4, 6) {
+    @container cds-multi-field (inline-size < #{$n * ($content-min + 2 * $p) + ($n - 1) * 2px}) {
+      .cds-multi-field.cds-text-input--#{$size}:not(
+          .cds-multi-field--one-row
+        ):has(.cds-multi-field__segment:nth-child(#{$n}):last-child) {
+        @include rows-of-two;
+      }
+    }
+  }
+}
+
+/* A segment's size is inside its insets, so these hold at every field size. */
+@container cds-multi-field-segment (inline-size < #{$content-min + $mark-room}) {
+  .cds-multi-field__segment[data-status] .cds-multi-field__name {
+    display: none;
+  }
+}
+
+@container cds-multi-field-segment (inline-size < #{$content-min}) {
+  .cds-multi-field__name,
+  .cds-multi-field__mark-slot {
+    display: none;
+  }
+}
+
+/* ── the ladder, per segment ─────────────────────────────────────────── */
+
+.cds-multi-field:not(.cds-text-input--disabled)
+  .cds-multi-field__segment:not([data-focus], [data-status='error']):hover {
+  --tf-ph: 25%;
+}
+
+.cds-multi-field:not(.cds-text-input--disabled)
+  .cds-multi-field__segment:not(
+    [data-focus],
+    [data-status='error']
+  ):hover::after {
+  --mf-edge: color-mix(
+    in srgb,
+    #{theme.$border-subtle},
+    #{theme.$border-strong}
+  );
+
+  transition:
+    border-color $fast-02 $standard,
+    box-shadow $fast-02 $standard;
+}
+
+.cds-multi-field:not(.cds-text-input--disabled)
+  .cds-multi-field__segment:not([data-status='error']):active:not([data-held]) {
+  --tf-ph: 40%;
+}
+
+.cds-multi-field:not(.cds-text-input--disabled)
+  .cds-multi-field__segment:not([data-status='error']):active:not(
+    [data-held]
+  )::after {
+  --mf-edge: #{theme.$border-strong};
+  --mf-ring: transparent;
+  --mf-reach: 1px;
+
+  z-index: 3;
+  transition: none;
+}
+
+/* A press on an errored segment: the error's edge holds while the pointer is
+   down; the focus edge settles in on release (text-input.scss). */
+.cds-multi-field:not(.cds-text-input--disabled)
+  .cds-multi-field__segment[data-status='error']:active:not(
+    [data-held]
+  )::after {
+  --mf-edge: #{theme.$support-error};
+  --mf-ring: #{theme.$support-error};
+  --mf-reach: 2px;
+
+  z-index: 4;
+  transition: none;
+}
+
+/* A press on the focused segment holds its edge at once (text-input.scss's
+   `data-held`: no fade back from a press step read before the hold). */
+.cds-multi-field .cds-multi-field__segment[data-held]::after {
+  transition: none;
+}
+
+.cds-multi-field__segment[data-status='error']::after {
+  --mf-edge: #{theme.$support-error};
+  --mf-ring: #{theme.$support-error};
+  --mf-reach: 2px;
+
+  z-index: 3;
+
+  transition:
+    border-color $moderate-02 $entrance,
+    box-shadow $moderate-02 $entrance;
+}
+
+/* Hover contrast step on error outline, matching regular outlines on fast-02. */
+.cds-multi-field__segment[data-status='error']:not([data-focus]):hover::after {
+  --mf-edge: color-mix(
+    in srgb,
+    #{theme.$support-error},
+    #{theme.$text-primary} 15%
+  );
+  --mf-ring: color-mix(
+    in srgb,
+    #{theme.$support-error},
+    #{theme.$text-primary} 15%
+  );
+
+  transition:
+    border-color $fast-02 $standard,
+    box-shadow $fast-02 $standard;
+}
+
+/* Focus wins over the error while focused (v11); the mark and message still say it. Its outline
+   stacks above any neighbor's hover, press or error. */
+.cds-multi-field .cds-multi-field__segment[data-focus] {
+  --tf-ph: 40%;
+}
+
+.cds-multi-field .cds-multi-field__segment[data-focus]::after {
+  --mf-edge: var(--tf-accent);
+  --mf-ring: var(--tf-accent);
+  --mf-reach: 2px;
+
+  z-index: 4;
+
+  transition:
+    border-color $fast-01 $standard,
+    box-shadow $fast-01 $standard;
+}
+
+/* ── read-only and disabled ──────────────────────────────────────────── */
+
+/* Read-only: no fill, the hairline stays (v11), and the ladder with it (text-input.scss). */
+.cds-multi-field.cds-text-input--readonly .cds-multi-field__shell {
+  --tf-fill: transparent;
+}
+
+.cds-multi-field.cds-text-input--readonly .cds-multi-field__segment {
+  cursor: default;
+}
+
+/* Disabled: the fill, no edge. */
+.cds-multi-field.cds-text-input--disabled .cds-multi-field__segment {
+  cursor: not-allowed;
+
+  &::before {
+    border-color: transparent;
+  }
+}
+
+.cds-multi-field.cds-text-input--disabled .cds-multi-field__name {
+  color: theme.$text-disabled;
+}
+
+/* ── reduced motion and forced colors ────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .cds-multi-field__segment::after,
+  .cds-multi-field__segment[data-status='error']::after {
+    transition-duration: calc(#{$fast-01} / 2);
+  }
+}
+
+@media (forced-colors: active) {
+  .cds-multi-field__segment::before {
+    border-color: CanvasText;
+  }
+
+  /* No inset shadows here: the hairline seam is the segment's end and below borders instead. */
+  .cds-multi-field--hairline .cds-multi-field__segment::before {
+    border-block-end-width: 1px;
+    border-inline-end-width: 1px;
+  }
+
+  .cds-multi-field .cds-multi-field__segment[data-focus]::after {
+    border: 2px solid Highlight;
+    box-shadow: none;
+  }
+
+  .cds-multi-field__segment[data-status='error']:not([data-focus])::after {
+    border: 2px solid CanvasText;
+    box-shadow: none;
+  }
+}

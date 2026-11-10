@@ -6,7 +6,8 @@
  */
 
 import React, { useState } from 'react';
-import { Button, Checkbox } from '@carbon/react';
+import { Checkbox } from '@carbon/react';
+import { Button } from '@carbon-labs/react-button';
 import '@carbon-labs/react-selection-kit/scss/selection-kit.scss';
 import {
   SelectItem,
@@ -158,7 +159,7 @@ export const Clearing = {
         </SelectList>
         <Button
           size="sm"
-          kind="tertiary"
+          variant="outlined"
           disabled={value == null}
           onClick={() => setValue(null)}>
           Clear

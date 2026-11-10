@@ -8,7 +8,7 @@
 import React from 'react';
 import { MotionProvider } from '@carbon-labs/v12-motion';
 import { Add, Renew } from '@carbon-labs/react-motion-icons';
-import { Button } from '@carbon/react';
+import { Button } from '@carbon-labs/react-button';
 import { FollowKitMotion, useIconAnimated } from '../index';
 import mdx from './IconMotion.mdx';
 
@@ -48,17 +48,15 @@ export const Default = {
       <FollowKitMotion>
         <div style={{ display: 'flex', gap: 16 }}>
           <Button
-            kind="ghost"
+            frame="ghost"
             size="lg"
-            data-motion-icon-frame=""
             hasIconOnly
             renderIcon={Add}
             iconDescription="Add"
           />
           <Button
-            kind="ghost"
+            frame="ghost"
             size="lg"
-            data-motion-icon-frame=""
             hasIconOnly
             renderIcon={Renew}
             iconDescription="Renew"

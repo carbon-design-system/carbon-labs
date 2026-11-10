@@ -6,7 +6,7 @@
  */
 
 import React, { useState } from 'react';
-import { Button } from '@carbon/react';
+import { Button } from '@carbon-labs/react-button';
 import { RollText } from '../index';
 import mdx from './RollText.mdx';
 

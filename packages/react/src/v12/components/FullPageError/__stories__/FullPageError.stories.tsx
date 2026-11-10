@@ -6,7 +6,7 @@
  */
 
 import React, { useState } from 'react';
-import { Button } from '@carbon/react';
+import { Button } from '@carbon-labs/react-button';
 import { FullPageError } from '../index';
 import mdx from './FullPageError.mdx';
 
@@ -60,7 +60,7 @@ export const Swap = {
       <div>
         <Button
           size="sm"
-          kind="tertiary"
+          variant="outlined"
           onClick={() => setNotFound((v) => !v)}>
           Show {notFound ? '403' : '404'}
         </Button>

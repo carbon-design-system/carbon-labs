@@ -1,0 +1,620 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/field-fill' as *;
+
+/* TextInput — the kit's text field.
+ *
+ *   surface  the kit's field fill (`styles/_field-fill.scss`: Carbon's
+ *            `$field` on the page, the surface's field on a kit surface, so
+ *            it reads on a card), the selection
+ *            kit's 8px outer corner (or full / square), and a 1px
+ *            `$border-subtle` hairline all round, drawn on `::after` — no
+ *            stronger bottom line
+ *   ladder   the OUTLINE carries every state, as a progressive contrast
+ *            ladder: rest `$border-subtle` < hover
+ *            halfway to `$border-strong` (a subtle shift, fast-02 in) <
+ *            press `$border-strong`, still 1px (pointer down, at once:
+ *            a step in contrast, not weight) < selected
+ *            `--tf-accent` at 2px (fast-01). Each step is darker than the
+ *            last on light themes and lighter on dark ones; the same on
+ *            read-only (outline only), none when disabled or loading
+ *   selected neutral by default: `$border-inverse`, 2px (pointer or keyboard). The kit's brand
+ *            (`--cds-hero`, IBM blue: `$border-interactive`) is reserved for
+ *            expressive fields: `variant="hero"` sets `--tf-accent`
+ *   focus    pointer: the hairline turns `--tf-accent` (1px). Keyboard (or
+ *            the app moving focus): `--tf-accent` 2px. Both fast-01
+ *   error    a 2px `$support-error` border that settles in once on
+ *            moderate-02 (entrance) and leaves on fast-01; focus wins while
+ *            focused, as in v11 (the mark and the message still say it)
+ *   warn     no border change (v11): the mark and the message
+ *
+ * The field's box never changes size; nothing in it moves while typing. */
+
+$fast-01: var(--cds-motion-duration-fast-01);
+$fast-02: var(--cds-motion-duration-fast-02);
+$moderate-02: var(--cds-motion-duration-moderate-02);
+$standard: var(--cds-motion-easing-standard-productive);
+$entrance: var(--cds-motion-easing-entrance-productive);
+
+.cds-text-input {
+  /* v11's sizes, the kit's inset and corners. The spacing inside follows the
+     kit's spacing standard: every part's ink — text,
+     icon, mark, a control's glyph — sits `--tf-pad` in from the field's
+     edge at either end and `--tf-gap` from its neighbour. */
+  --tf-h: 40px;
+  /* The edge inset: 8 · 12 · 14 · 16px at xs · sm · md · lg, or half the
+     height on a pill (`--full`). */
+  --tf-pad: 14px;
+  --tf-gap: 8px;
+  // @carbon-explore radius-field — A field's corner. TBD
+  --tf-radius: 8px;
+  /* The kit's track inset at this size: a trailing control's box is the
+     field's height less it, top and bottom. */
+  // @carbon-explore field-inset — A field's edge inset by size. TBD
+  --tf-inset: 4px;
+  --tf-mark: 16px;
+  /* The field's icons (a chevron, the calendar, a control's glyph): 20px at lg. */
+  --tf-icon: 16px;
+  /* A trailing control (the password toggle, the clear button, the
+     steppers): a circle centred on its glyph, `--tf-ctl` across (the
+     field's height less the track inset top and bottom), the glyph where an
+     icon would sit, so the circle reaches `--tf-ctl-pad` nearer the edge
+     than the ink, and opens the gap before it only as far as its own
+     padding needs. */
+  --tf-ctl: calc(var(--tf-h) - 2 * var(--tf-inset));
+  --tf-ctl-pad: calc((var(--tf-ctl) - var(--tf-icon)) / 2);
+  --tf-ctl-end: calc(var(--tf-pad) - var(--tf-ctl-pad));
+  --tf-ctl-gap: max(0px, calc(var(--tf-gap) - var(--tf-ctl-pad)));
+  /* The selected color: neutral. Blue is for expressive fields (`primary`). */
+  --tf-accent: #{theme.$border-inverse};
+
+  @include type-style('body-compact-01');
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  color: theme.$text-primary;
+  min-inline-size: 0;
+}
+
+/* Hero (`variant="hero"`): the accent in the kit's brand (`--cds-hero`,
+   styles/_brand.scss; by default `$border-interactive`, blue on every theme,
+   where `$focus` is white on g100). It is the field's own selected and
+   focus edge, which the neutral field draws in `$border-inverse`. */
+.cds-text-input--primary {
+  --tf-accent: var(--cds-hero, #{theme.$border-interactive});
+}
+
+.cds-text-input--xs {
+  --tf-h: 24px;
+  --tf-inset: 2px;
+  --tf-pad: 8px;
+}
+
+.cds-text-input--sm {
+  --tf-h: 32px;
+  --tf-inset: 3px;
+  --tf-pad: 12px;
+}
+
+.cds-text-input--lg {
+  --tf-h: 48px;
+  --tf-icon: 20px;
+  --tf-pad: 16px;
+}
+
+.cds-text-input--square {
+  --tf-radius: 0px;
+}
+
+/* Fully rounded: half the field's height. The content clears the curve as
+   the Button pill's does: half the height in from either end
+   (12 · 16 · 20 · 24px), the trailing icons as far in as the text. */
+.cds-text-input--full {
+  --tf-radius: calc(var(--tf-h) / 2);
+  --tf-pad: calc(var(--tf-h) / 2);
+}
+
+/* A hidden label with no counter leaves no row (v11's visually hidden label). */
+.cds-field-label-row--hidden {
+  margin: 0;
+}
+
+.cds-text-input__outer {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+/* ── the field ───────────────────────────────────────────────────────── */
+
+.cds-text-input__field {
+  /* The fill never changes: the hairline carries every state. */
+  --tf-fill: #{$field-fill};
+  /* The hairline's color, and the ring inside it (transparent = none). */
+  --tf-edge: #{theme.$border-subtle};
+  --tf-ring: transparent;
+
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  align-items: stretch;
+  border-radius: var(--tf-radius);
+  background: var(--tf-fill);
+  block-size: var(--tf-h);
+  cursor: text;
+  inline-size: 100%;
+
+  /* The hairline and the ring, above the fill; the box never changes. */
+  &::after {
+    position: absolute;
+    box-sizing: border-box;
+    border: 1px solid var(--tf-edge);
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px var(--tf-ring);
+    content: '';
+    inset: 0;
+    pointer-events: none;
+    /* Leaving any state: fast-01. */
+    transition:
+      border-color $fast-01 $standard,
+      box-shadow $fast-01 $standard;
+  }
+}
+
+.cds-text-input--light .cds-text-input__field {
+  --tf-fill: #{theme.$field-02};
+}
+
+/* `frame="ghost"`: no fill or hairline at rest. The ladder below sets its
+   edges on the `::after`, so hover, press, focus and status still draw. */
+.cds-text-input.cds-text-input--ghost .cds-text-input__field {
+  --tf-fill: transparent;
+  --tf-edge: transparent;
+}
+
+/* ── hover, press, release: one ladder for every field ───────────────── */
+
+/* Every field container takes these (TextInput, PasswordInput, NumberInput,
+   Search, the Dropdown / ComboBox / MultiSelect and Select fields, the date
+   and time pickers' inputs, read-only included: the outline-only field hovers
+   and presses as the filled one does). Disabled and loading have none. MultiFieldInput and
+   Search's snap frame draw the same steps on their own outlines.
+
+     hover    the outline halfway from `$border-subtle` to `$border-strong`, in
+              on fast-02, out on fast-01; the placeholder rises a step
+     press    `$border-strong`, the same 1px, at once: a step in contrast,
+              never in weight
+     release  the press settles to the focus edge on fast-01
+     status   an error's edge beats the hover and the press; focus beats the
+              error once the press is over (v11)
+
+   Not over focus: a field already focused keeps its edge under the pointer
+   (`data-focus`, and `data-held` for a press on it). */
+.cds-text-input:not(
+    .cds-text-input--disabled,
+    .cds-text-input--loading,
+    [data-status='error']
+  )
+  .cds-text-input__field:not([data-focus]):hover {
+  --tf-ph: 25%;
+}
+
+.cds-text-input:not(
+    .cds-text-input--disabled,
+    .cds-text-input--loading,
+    [data-status='error']
+  )
+  .cds-text-input__field:not([data-focus]):hover::after {
+  --tf-edge: color-mix(
+    in srgb,
+    #{theme.$border-subtle},
+    #{theme.$border-strong}
+  );
+
+  transition:
+    border-color $fast-02 $standard,
+    box-shadow $fast-02 $standard;
+}
+
+.cds-text-input:not(
+    .cds-text-input--disabled,
+    .cds-text-input--loading,
+    [data-status='error']
+  )
+  .cds-text-input__field:active:not([data-held]) {
+  --tf-ph: 40%;
+}
+
+.cds-text-input:not(
+    .cds-text-input--disabled,
+    .cds-text-input--loading,
+    [data-status='error']
+  )
+  .cds-text-input__field:active:not([data-held])::after {
+  --tf-edge: #{theme.$border-strong};
+  --tf-ring: transparent;
+
+  transition: none;
+}
+
+/* The error settles in once: 1px → 2px of `$support-error`, on moderate-02. */
+.cds-text-input[data-status='error'] .cds-text-input__field::after {
+  --tf-edge: #{theme.$support-error};
+  --tf-ring: #{theme.$support-error};
+
+  transition:
+    border-color $moderate-02 $entrance,
+    box-shadow $moderate-02 $entrance;
+}
+
+/* Hover contrast step on error outline, matching regular outlines on fast-02. */
+.cds-text-input[data-status='error']:not(
+    .cds-text-input--disabled,
+    .cds-text-input--loading
+  )
+  .cds-text-input__field:not([data-focus]):hover::after {
+  --tf-edge: color-mix(
+    in srgb,
+    #{theme.$support-error},
+    #{theme.$text-primary} 15%
+  );
+  --tf-ring: color-mix(
+    in srgb,
+    #{theme.$support-error},
+    #{theme.$text-primary} 15%
+  );
+
+  transition:
+    border-color $fast-02 $standard,
+    box-shadow $fast-02 $standard;
+}
+
+/* Focus — where the caret is, always. The accent at 2px, whether the caret
+   came by pointer or keyboard. It wins over the error while focused (v11). */
+.cds-text-input .cds-text-input__field[data-focus]::after {
+  --tf-edge: var(--tf-accent);
+  --tf-ring: var(--tf-accent);
+
+  transition:
+    border-color $fast-01 $standard,
+    box-shadow $fast-01 $standard;
+}
+
+.cds-text-input .cds-text-input__field[data-focus] {
+  --tf-ph: 40%;
+}
+
+/* A press on an errored field: the error's edge holds while the pointer is
+   down (the caret's focus arrives with the press, and would otherwise take
+   the edge at once); on release the focus edge settles in as on any field.
+   The status always beats the press step. */
+.cds-text-input[data-status='error']:not(
+    .cds-text-input--disabled,
+    .cds-text-input--loading
+  )
+  .cds-text-input__field:active:not([data-held])::after {
+  --tf-edge: #{theme.$support-error};
+  --tf-ring: #{theme.$support-error};
+
+  transition: none;
+}
+
+/* A press on the focused field (`data-held`): the edge stays as it is, at
+   once. The browser sets `:active` before the press's handlers run, so a
+   style read in that gap sees the press step for a moment; with a transition
+   the edge would fade back from it, a flash on every re-click. Held, any change lands without one. */
+.cds-text-input .cds-text-input__field[data-held]::after {
+  transition: none;
+}
+
+/* Forced colors (Windows high contrast): shadows and our colors are dropped, so
+   the ladder is rebuilt from real borders in system colors. Rest and hover
+   are told apart by color (`Highlight` on hover), and press, selected and
+   error by weight (2px; the border box doesn't move the layout): colour alone
+   can't tell press from hover there, so only here the press keeps its weight. Verified
+   with Playwright's `forcedColors: 'active'`: the status marks stay
+   (black, distinct by shape) and the browser already forces the placeholder
+   to `GrayText`, so neither needs a rule. */
+@media (forced-colors: active) {
+  .cds-text-input__field::after {
+    border-color: ButtonText;
+    box-shadow: none;
+  }
+
+  .cds-text-input:not(.cds-text-input--disabled, .cds-text-input--loading)
+    .cds-text-input__field:hover::after {
+    border-color: Highlight;
+  }
+
+  .cds-text-input:not(.cds-text-input--disabled, .cds-text-input--loading)
+    .cds-text-input__field:active::after,
+  .cds-text-input .cds-text-input__field[data-focus]::after {
+    border: 2px solid Highlight;
+  }
+
+  .cds-text-input[data-status='error']
+    .cds-text-input__field:not([data-focus])::after {
+    border: 2px solid ButtonText;
+  }
+
+  .cds-text-input--disabled .cds-text-input__field::after {
+    border-color: GrayText;
+  }
+}
+
+/* Read-only: no fill, a quiet hairline all round (v11: transparent,
+   `$border-subtle`). It takes focus and its text can be selected, so it keeps
+   the ladder's hover, press and release (above); v11's has no hover. */
+.cds-text-input--readonly .cds-text-input__field {
+  --tf-fill: transparent;
+
+  cursor: default;
+}
+
+/* Disabled: the fill, no edge, no hover. */
+.cds-text-input--disabled .cds-text-input__field {
+  --tf-edge: transparent;
+
+  cursor: not-allowed;
+}
+
+/* ── the input ───────────────────────────────────────────────────────── */
+
+.cds-text-input__input {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  border: 0;
+  border-radius: inherit;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+  block-size: 100%;
+  caret-color: theme.$text-primary;
+  color: theme.$text-primary;
+  font: inherit;
+  letter-spacing: inherit;
+  min-inline-size: 0;
+  outline: 0;
+  padding-block: 0;
+  padding-inline: var(--tf-pad) 0;
+  text-overflow: ellipsis;
+
+  /* The placeholder rises toward `$text-secondary` with the ladder (--tf-ph:
+     0 at rest, 25% hover, 40% press and selected). */
+  &::placeholder {
+    color: color-mix(
+      in srgb,
+      #{theme.$text-placeholder} calc(100% - var(--tf-ph, 0%)),
+      #{theme.$text-secondary} var(--tf-ph, 0%)
+    );
+    opacity: 1;
+    transition: color $fast-01 $standard;
+  }
+
+  &:disabled {
+    color: theme.$text-disabled;
+    cursor: not-allowed;
+    -webkit-text-fill-color: theme.$text-disabled;
+
+    &::placeholder {
+      color: theme.$text-disabled;
+    }
+  }
+
+  &:read-only {
+    cursor: default;
+  }
+
+  /* The browser's autofill wash would paint a square inside the rounded
+     field: hold it off. */
+  &:-webkit-autofill {
+    -webkit-text-fill-color: theme.$text-primary;
+    transition: background-color 600000s 0s;
+  }
+}
+
+/* Carbon's global `input[data-invalid]:not(:focus)` outline (v11's form
+   styles, loaded for the labs' v11 components) would draw a second error
+   ring round the input alone; the field draws the status. */
+.cds-text-input .cds-text-input__input:is(*, [data-invalid]) {
+  box-shadow: none;
+  outline: 0;
+}
+
+/* ── the trailing edge: the mark, a decorator, a control ─────────────── */
+
+.cds-text-input__trail {
+  display: flex;
+  flex: none;
+  align-items: center;
+  padding-inline-end: var(--tf-pad);
+}
+
+/* The mark's slot opens at once when a status arrives (the mark then fades
+   in) and closes only after the mark has faded out. 24px: the gap and the
+   16px mark. */
+.cds-text-input__mark-slot {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: flex-end;
+  inline-size: 0;
+  transition: inline-size 0s linear $fast-01;
+
+  .cds-text-input:is([data-status='warn'], [data-status='error']) & {
+    inline-size: calc(var(--tf-gap) + var(--tf-mark));
+    transition: none;
+  }
+}
+
+.cds-text-input__decorator {
+  display: inline-flex;
+  align-items: center;
+  margin-inline-start: var(--tf-gap);
+}
+
+/* The password toggle: a circle `--tf-inset` from the field's top and
+   bottom, centred on its glyph, the glyph on the field's inset (`--tf-pad`
+   from the end, as an icon or the text would be). */
+.cds-text-input--password .cds-text-input__trail {
+  padding-inline-end: var(--tf-ctl-end);
+}
+
+.cds-text-input--password .cds-text-input__mark-slot {
+  /* The mark keeps 8px from the toggle's glyph (the circle may meet it). */
+  padding-inline-end: 0;
+}
+
+/* Every in-field control takes this class (the password toggle, the
+   steppers, the clear buttons of Search, ComboBox and the filterable
+   MultiSelect): its hover and press are a circle on its glyph, whatever the
+   field's corners. The rollover's surface inherits the radius, so the press shrinks
+   it as a circle and the focus ring follows it. */
+.cds-text-input__toggle.cds-icon-btn {
+  --icon-btn-size: var(--tf-ctl);
+  --icon-btn-radius: 50%;
+  /* Inside the field: the press shrink, never the hover expand. */
+  --rollover-expand: 0px;
+  /* Hover against the field's fill (layer-02), not the page backdrop.
+     The ghost's background-hover is too close to layer-02 to read at
+     small sizes (faint at xs: 2px padding, 20px circle on a 24px field). */
+  --rollover-hover: #{theme.$layer-hover};
+
+  cursor: pointer;
+
+  /* Its glyph `--tf-gap` from the text or the mark before it. */
+  margin-inline-start: var(--tf-ctl-gap);
+}
+
+/* ── the AI fill (aiFill.tsx) ────────────────────────────────────────── */
+
+/* The revert button: a trailing control, as the password toggle is. */
+.cds-text-input--revertible .cds-text-input__trail {
+  padding-inline-end: var(--tf-ctl-end);
+}
+
+/* Undo points back along the line: it faces the start side. */
+.cds-field-ai-revert:dir(rtl) svg {
+  transform: scaleX(-1);
+}
+
+/* The revert's room while it isn't shown: the text ends in one place. */
+.cds-field-ai-room {
+  flex: none;
+  inline-size: var(--tf-ctl);
+  margin-inline-start: var(--tf-ctl-gap);
+}
+
+/* The swap's 8px of travel stays inside the outline. */
+.cds-text-input__field[data-ai-swap] {
+  overflow: clip;
+}
+
+/* The old value's face, laid over the control's text while it leaves. */
+.cds-field-ai-face {
+  position: absolute;
+  z-index: 1;
+  overflow: hidden;
+  box-sizing: border-box;
+  align-items: center;
+  margin: 0;
+  color: theme.$text-primary;
+  pointer-events: none;
+
+  /* A password's dots, drawn as the input draws its own. */
+  &[data-secret] {
+    -webkit-text-security: disc;
+  }
+}
+
+/* The tooltip's wrapper round a control is a flex box, so the circle sits on
+   the field's centre line: an inline-block wrapper takes the line's height
+   and put the toggle and the ComboBox's clear 1px high at xs (Search's clear
+   already had this, search.scss). */
+.cds-text-input__trail .cds-icon-tooltip:has(> .cds-text-input__toggle) {
+  display: flex;
+}
+
+/* ── inline (v11) ────────────────────────────────────────────────────── */
+
+.cds-text-input--inline {
+  flex-direction: row;
+  align-items: center;
+
+  .cds-field-label-row {
+    margin: 0;
+  }
+
+  .cds-text-input__outer {
+    flex: 8 1 auto;
+  }
+}
+
+.cds-text-input__inline-label,
+.cds-text-input__inline-message {
+  flex: 0 1 auto;
+  max-inline-size: 142px;
+  overflow-wrap: break-word;
+}
+
+.cds-text-input__inline-label {
+  margin-inline-end: 8px;
+}
+
+.cds-text-input__inline-message {
+  margin-inline-start: 8px;
+}
+
+/* ── reduced motion and forced colors ────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .cds-text-input__field::after,
+  .cds-text-input[data-status='error'] .cds-text-input__field::after {
+    transition-duration: calc(#{$fast-01} / 2);
+  }
+}
+
+@media (forced-colors: active) {
+  .cds-text-input__field::after {
+    border-color: CanvasText;
+  }
+
+  .cds-text-input .cds-text-input__field[data-focus]::after {
+    border-color: Highlight;
+    box-shadow: inset 0 0 0 1px Highlight;
+  }
+}
+
+/* ── loading (the component loading standard) ───────────────────────── */
+
+/* No hover, no caret while the value loads; the frame is drawn for real. */
+.cds-text-input--loading .cds-text-input__field {
+  cursor: default;
+}
+
+/* The input isn't there to fill the row: the trailing controls keep the end. */
+.cds-text-input--loading .cds-text-input__trail {
+  margin-inline-start: auto;
+}
+
+/* The value's slot: where the input's text sits — after the field's
+   padding, on the field's own type — over the input during the handoff. */
+.cds-text-input__skeleton {
+  position: absolute;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  inset-block: 0;
+  inset-inline-start: var(--tf-pad);
+  max-inline-size: calc(100% - 2 * var(--tf-pad));
+  pointer-events: none;
+}

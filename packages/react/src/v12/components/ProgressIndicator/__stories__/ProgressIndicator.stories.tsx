@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Button } from '@carbon/react';
+import { Button } from '@carbon-labs/react-button';
 import React, { useState } from 'react';
 import {
   ProgressIndicator,
@@ -87,7 +87,7 @@ export const Flow = {
         <div style={row}>
           <Button
             size="sm"
-            kind="tertiary"
+            variant="outlined"
             disabled={current === 0}
             {...reach.press(Math.max(0, current - 1))}
             onClick={() => setCurrent((i) => Math.max(0, i - 1))}>

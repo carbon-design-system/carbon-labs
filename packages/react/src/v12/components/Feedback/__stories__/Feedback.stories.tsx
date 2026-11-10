@@ -6,7 +6,8 @@
  */
 
 import React, { useState } from 'react';
-import { Button, Checkbox } from '@carbon/react';
+import { Checkbox } from '@carbon/react';
+import { Button } from '@carbon-labs/react-button';
 import {
   CountPill,
   SPINNER_SIZES,
@@ -99,13 +100,13 @@ export const StatusHandoff = {
     return (
       <div style={row}>
         <StatusMark kind={kind} from={from} size={24} description={kind} />
-        <Button size="sm" kind="tertiary" onClick={() => go('pending')}>
+        <Button size="sm" variant="outlined" onClick={() => go('pending')}>
           Pending
         </Button>
-        <Button size="sm" kind="tertiary" onClick={() => go('success')}>
+        <Button size="sm" variant="outlined" onClick={() => go('success')}>
           Success
         </Button>
-        <Button size="sm" kind="tertiary" onClick={() => go('error')}>
+        <Button size="sm" variant="outlined" onClick={() => go('error')}>
           Error
         </Button>
       </div>
@@ -122,13 +123,13 @@ export const Count = {
         <CountPill value={value} label={`${value} new`} />
         <Button
           size="sm"
-          kind="tertiary"
+          variant="outlined"
           onClick={() => setValue((v) => v + 1)}>
           Add one
         </Button>
         <Button
           size="sm"
-          kind="tertiary"
+          variant="outlined"
           onClick={() => setValue((v) => Math.max(0, v - 1))}>
           Remove one
         </Button>
@@ -163,7 +164,7 @@ export const ComponentAsSkeleton = {
         }}>
         <strong className="card-title">Quarterly report</strong>
         <span className="card-meta">Updated 2 hours ago</span>
-        <Button size="sm" kind="tertiary" className="card-action">
+        <Button size="sm" variant="outlined" className="card-action">
           Open
         </Button>
       </div>

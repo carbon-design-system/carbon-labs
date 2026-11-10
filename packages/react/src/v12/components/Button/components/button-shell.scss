@@ -1,0 +1,532 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/tertiary';
+// The face the grid's labels draw on, as the selection kit's weighted labels.
+@use '@carbon-labs/react-selection-kit/scss/plex-var';
+
+/* The button shell — `shell.ts`. One button shape divided into cells, rounded
+ * only at its outer corners: SplitButton, MenuButton and ButtonGrid sit on it.
+ *
+ * Its seams follow the kit's one rule for a control divided into segments,
+ * at the outline's 1px
+ * width:
+ *   filled kinds (primary, secondary)       a 1px knockout: a gap that shows
+ *                                           the surface behind (v11's
+ *                                           ComboButton's 1px column gap)
+ *   outlined (tertiary)                     a 1px line in the outline's own
+ *                                           colour, no gap: two outlined
+ *                                           buttons sharing one edge
+ *   tonal (neutral)                         its quiet 1px hairline, no gap: as
+ *                                           quiet as its outline
+ *
+ * Each cell is a real button with the Button's kind classes (button.scss:
+ * the rest colours, the tone, the disabled colours, the focus offset) and its
+ * own rollover surface: the glow, the pressed colour and the release circle,
+ * clipped to the cell. No 1px growth on hover and no 1px press:
+ * nothing moves, so the seams never do.
+ *
+ * The lines are each cell's `::after`, over its surface: the shell's outline
+ * on its outside sides (tertiary and neutral), the hairline seam on its end
+ * and below sides where they lie on another cell (`--cut-*`, shell.ts). A
+ * cell draws the seam inside its own box, so the seam is one whole 1px line
+ * between two cells, whatever the hover, press or focus either side. A
+ * knockout is the shell's `gap`: the cells' corners at it stay square. */
+
+.cds-btn-shell {
+  --btn-h: 48px;
+  /* The corner (`corners`): full (a pill) by default, as the Button. */
+  --shell-radius: 999px;
+  --shell-r: min(var(--shell-radius), calc(var(--btn-h) / 2));
+  /* A label's inset at a rounded end: half the height (the Button's pill, ≤ 32px);
+     16px (v11's) for 8px and square corners. */
+  --shell-pill: min(calc(var(--btn-h) / 2), 32px);
+  /* The label's inset at a seam: as at a rounded end, at most 16px (v11's). */
+  --shell-seam-pad: min(var(--shell-pill), 16px);
+  /* Between a label and its chevron: the Button pill's gap (8px at xs and sm, 12px at md and lg). */
+  --shell-icon-gap: 8px;
+  /* The chevron cell's insets (SplitButton): on a pill the icon sits where the Button pill's icon
+     does, its far edge the pill's inset from the shell's end, the pill's gap from the seam;
+     centred in a square cell otherwise, below. */
+  --shell-chev-start: var(--shell-icon-gap);
+  --shell-chev-end: var(--shell-pill);
+  /* The outline (tertiary, neutral), the hairline seam and the knockout: per kind, below. */
+  --shell-outline-w: 0px;
+  --shell-outline: transparent;
+  --shell-seam: transparent;
+  --shell-gap: 0px;
+  /* A selected label's weight (neutral's), and the weight every grid label reserves its width at. */
+  --shell-sel-weight: 500;
+  /* The physical side a cell's inline end is on (the seam's inset shadow is physical). */
+  --_end: 1;
+
+  position: relative;
+  display: inline-flex;
+  gap: var(--shell-gap);
+  isolation: isolate;
+  max-inline-size: 100%;
+  vertical-align: top;
+
+  &:dir(rtl) {
+    --_end: -1;
+  }
+}
+
+.cds-btn-shell--xs {
+  --btn-h: 24px;
+}
+
+.cds-btn-shell--sm {
+  --btn-h: 32px;
+}
+
+.cds-btn-shell--md {
+  --btn-h: 40px;
+  --shell-icon-gap: 12px;
+}
+
+.cds-btn-shell--lg {
+  --btn-h: 48px;
+  --shell-icon-gap: 12px;
+}
+
+.cds-btn-shell--rounded {
+  --shell-radius: 8px;
+  --shell-pill: 16px;
+}
+
+.cds-btn-shell--square {
+  --shell-radius: 0px;
+  --shell-pill: 16px;
+}
+
+/* No curve to clear: the chevron centred in a square cell (16px in at lg, as the Button's icon). */
+.cds-btn-shell:is(.cds-btn-shell--rounded, .cds-btn-shell--square) {
+  --shell-chev-start: calc((var(--btn-h) - 16px) / 2);
+  --shell-chev-end: calc((var(--btn-h) - 16px) / 2);
+}
+
+/* ── the seams, per kind ─────────────────────────────────────────────────
+     The seam is as strong as what holds the shape, and as wide as its
+     outline (1px):
+     filled     a 1px knockout, no line: the gap shows the surface behind,
+                as the text input's multi-field knockouts; a light line
+                reads as a scratch in the fill. 1px, the outline's width,
+                not the MultiFieldInput's 2px
+     tertiary   one outline round the shell, the Button's tertiary colour
+                (`--cds-tertiary`, styles/_tertiary.scss), and the seam the
+                same line: the chevron is its own target, so its edge keeps
+                the outline's 3:1 (17.9:1 on white); a faint tint of the
+                outline (about 1.4:1) would read as a tick in one button
+     neutral    tertiary's lines in the kit's standard surface (the side
+                nav's): the hairline round the shell, `--cds-surface-rule`
+                (12 L* off the page); the seam the surface's own inside line,
+                `--cds-surface-divider` (8 L* off the fill, as a data table's
+                rows)
+   A tertiary shell with every cell disabled takes the disabled outline. */
+
+:root,
+[data-carbon-theme='white'],
+.cds--white {
+  --cds-shell-selected: 16%;
+}
+
+[data-carbon-theme='g100'],
+.cds--g100 {
+  --cds-shell-selected: 11.5%;
+}
+
+.cds-btn-shell:is(.cds-btn-shell--primary, .cds-btn-shell--secondary) {
+  --shell-gap: 1px;
+}
+
+.cds-btn-shell--tertiary {
+  --shell-outline-w: 1px;
+  --shell-outline: var(--cds-tertiary, #{theme.$text-primary});
+  --shell-seam: var(--shell-outline);
+
+  &:not(:has(.cds-btn-cell:enabled)) {
+    --shell-outline: var(--cds-button-disabled, #c6c6c6);
+  }
+}
+
+.cds-btn-shell--neutral {
+  --shell-outline-w: 1px;
+  --shell-outline: var(--cds-surface-rule);
+  --shell-seam: var(--cds-surface-divider);
+}
+
+/* A neutral cell (no Button has the kind): the surface's fill, a
+   `$text-primary` label, the hover and press tints of `$text-primary` at the
+   quiet card's steps (`useShellRollover`'s `quiet`). Disabled: no fill, the
+   label `$text-disabled`. */
+.cds-btn--neutral {
+  --rollover-rest: var(--cds-surface);
+
+  @include rollover-tone(#{theme.$text-primary});
+
+  &.cds-btn--disabled {
+    --rollover-rest: transparent;
+
+    color: theme.$text-disabled;
+  }
+}
+
+/* A disabled cell's hairline seam (tonal): its own (disabled) label colour at 30%. Tertiary's seam
+   is the outline, which takes the disabled colour with every cell disabled (above). */
+.cds-btn-shell--neutral .cds-btn-cell:disabled {
+  --shell-seam: color-mix(in srgb, currentColor 30%, transparent);
+}
+
+/* ── a cell ─────────────────────────────────────────────────────────── */
+
+/* The outline is the shell's (the lines, below), not the tertiary Button's stroke, enabled or
+   disabled (`.cds-btn--disabled.cds-btn--tertiary`): over both. */
+.cds-btn-shell .cds-btn-cell.cds-btn-cell {
+  --rollover-stroke: transparent;
+}
+
+/* The rollover, at no specificity (the kind classes and the rules below set
+   its tokens), its growth and press inset off (`$press-inset: 0`). */
+:where(.cds-btn-cell) {
+  @include rollover($press-inset: 0px);
+}
+
+.cds-btn-cell {
+  /* Its sides on another cell (1) or outside (0): set per cell (`cutStyle`). */
+  --cut-start: 0;
+  --cut-end: 0;
+  --cut-above: 0;
+  --cut-below: 0;
+  --rollover-expand: 0px;
+
+  @include type-style('body-compact-01');
+
+  display: inline-flex;
+  box-sizing: border-box;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  border: 0;
+  margin: 0;
+
+  appearance: none;
+  background: transparent;
+  block-size: var(--btn-h);
+  border-end-end-radius: calc(
+    var(--shell-r) * (1 - var(--cut-end)) * (1 - var(--cut-below))
+  );
+  border-end-start-radius: calc(
+    var(--shell-r) * (1 - var(--cut-start)) * (1 - var(--cut-below))
+  );
+  border-start-end-radius: calc(
+    var(--shell-r) * (1 - var(--cut-end)) * (1 - var(--cut-above))
+  );
+  /* Only the corners between two outside sides are rounded. */
+  border-start-start-radius: calc(
+    var(--shell-r) * (1 - var(--cut-start)) * (1 - var(--cut-above))
+  );
+  cursor: pointer;
+  font-family: inherit;
+  min-inline-size: 0;
+  -webkit-tap-highlight-color: transparent;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+
+  /* The lines: the outline on the outside sides, the seam on the end and below sides on another
+     cell (an inset shadow inside the outline, so it meets the outline square). */
+  &::after {
+    position: absolute;
+    box-sizing: border-box;
+    border: 0 solid var(--shell-outline);
+    border-radius: inherit;
+    border-block-end-width: calc(
+      var(--shell-outline-w) * (1 - var(--cut-below))
+    );
+    border-block-start-width: calc(
+      var(--shell-outline-w) * (1 - var(--cut-above))
+    );
+    border-inline-end-width: calc(
+      var(--shell-outline-w) * (1 - var(--cut-end))
+    );
+    border-inline-start-width: calc(
+      var(--shell-outline-w) * (1 - var(--cut-start))
+    );
+    box-shadow:
+      inset calc(-1px * var(--_end) * var(--cut-end)) 0 0 0 var(--shell-seam),
+      inset 0 calc(-1px * var(--cut-below)) 0 0 var(--shell-seam);
+    content: '';
+    inset: 0;
+    pointer-events: none;
+  }
+}
+
+.cds-btn-cell__label {
+  overflow: hidden;
+  min-inline-size: 0;
+  text-overflow: ellipsis;
+}
+
+/* A label that holds its width whatever its weight (ButtonGrid's cells, which
+   carry `data-label`): a hidden copy of it at the selected weight, a 0-tall
+   line under it, so the label is always as wide as its selected self and
+   selecting never changes its width. The copy is `visibility: hidden` and its
+   alternative text empty (`/ ''`), so it's never read. On IBM Plex Sans
+   Variable, as the selection kit's weighted labels (`_plex-var.scss`, which
+   ButtonGrid loads): the static Plex has no 500, so medium would draw as
+   regular. */
+.cds-btn-cell__label[data-label] {
+  display: inline-block;
+  font-family: 'IBM Plex Sans Var', 'IBM Plex Sans', system-ui, sans-serif;
+
+  &::after {
+    display: block;
+    overflow: hidden;
+    block-size: 0;
+    content: attr(data-label) / '';
+    font-weight: var(--shell-sel-weight, 500);
+    pointer-events: none;
+    user-select: none;
+    visibility: hidden;
+  }
+}
+
+.cds-btn-cell svg:not(.cds-btn__spinner) {
+  flex: none;
+  fill: currentColor;
+}
+
+/* Keyboard focus, the Button's: 2px in the cell's own text colour just inside
+   its edge, a 2px rim of the fill round it on the filled kinds. The ring
+   follows the cell's corners: round outside, square at a seam. */
+.cds-btn-shell .cds-btn-cell {
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: -2px;
+  }
+
+  &:is(.cds-btn--primary, .cds-btn--secondary):focus-visible {
+    outline-offset: -4px;
+  }
+
+  &:is(:disabled, .cds-btn--disabled) {
+    cursor: not-allowed;
+  }
+}
+
+/* ── the cells' roles ────────────────────────────────────────────────── */
+
+/* A label (SplitButton's action): the pill's inset at a rounded end, at most 16px at a seam. */
+.cds-btn-shell .cds-btn-cell--label {
+  padding-inline-end: calc(
+    var(--shell-pill) + (var(--shell-seam-pad) - var(--shell-pill)) *
+      var(--cut-end)
+  );
+  padding-inline-start: calc(
+    var(--shell-pill) + (var(--shell-seam-pad) - var(--shell-pill)) *
+      var(--cut-start)
+  );
+}
+
+/* The chevron (SplitButton's trigger): on a pill, the pill's gap from the seam and the pill's inset
+   to the end (xs 36, sm 40, md 48, lg 52 wide); square, as wide as the shell is tall, otherwise. */
+.cds-btn-shell .cds-btn-cell--chevron {
+  padding-block: 0;
+  padding-inline: var(--shell-chev-start) var(--shell-chev-end);
+}
+
+/* A labelled trigger (MenuButton): the label, then the chevron, each the pill's inset from its end. */
+.cds-btn-shell .cds-btn-cell--menu {
+  justify-content: space-between;
+  gap: var(--shell-icon-gap);
+  padding-inline: var(--shell-pill);
+}
+
+/* ── open, selected, busy ────────────────────────────────────────────── */
+
+/* A trigger holds its hover colour while its menu shows (MenuButton's, before
+   the shell: primary its v11 active colour). Secondary holds its hover: as
+   it's the quiet fill under a `$text-primary` label, v11's
+   `$button-secondary-active` (#6f6f6f) put that label at 3.60:1 on the
+   light themes. */
+.cds-btn-shell .cds-btn-cell[aria-expanded='true'] {
+  --rollover-rest: var(--rollover-hover);
+
+  &.cds-btn--primary {
+    --rollover-rest: var(
+      --cds-hero-fill-active,
+      var(--cds-button-primary-active, #002d9c)
+    );
+  }
+}
+
+/* Selected (ButtonGrid's `selected`: the action that last ran). On the quiet
+   kinds (tertiary, neutral): a step of `$text-primary` over the cell's rest
+   (neutral's fill; tertiary's transparent rest, so the page under it) under a
+   `$text-primary` label. Secondary, the quiet fill, takes the same step over
+   its own fill (Carbon's #6f6f6f would put its `$text-primary` label at 3.60:1
+   on the light themes). Primary: its Carbon active colour.
+   Doubled: over the tone's hover label.
+
+   The step, for the same contrast in every theme: `$text-primary` at the
+   share that puts the selected cell 1.40:1 against the rest in every theme,
+   `--cds-shell-selected` (16% light, 11.5% dark, per theme above).
+   `$layer-selected` varies from 1.20 to 1.74 against neutral's fill
+   across white / g100. The hover and press tint
+   on top of it (the rollover's toned steps are solved over the rest).
+
+   The selected label also takes weight on both quiet kinds, as the side
+   nav's selection does: medium, `--shell-sel-weight` (500, the side nav's
+   `--sel-on-weight`; 600 reads too bold). Its colour is `$text-primary` on
+   both (tertiary's own on the light themes; on the dark, white turns gray 10),
+   one rule for both kinds. The label reserves its width at that weight (`data-label`,
+   below), so selecting never changes it. */
+.cds-btn-shell .cds-btn-cell.cds-btn-cell--selected.cds-btn-cell--selected {
+  &:is(.cds-btn--tertiary, .cds-btn--neutral, .cds-btn--secondary) {
+    --rollover-rest: color-mix(
+      in srgb,
+      #{theme.$text-primary} var(--cds-shell-selected, 16%),
+      var(--_sel-under, transparent)
+    );
+
+    color: theme.$text-primary;
+    font-weight: var(--shell-sel-weight);
+  }
+
+  /* Tertiary's tint is over the page (no fill of its own): the page's share, a darker page's larger. */
+  &.cds-btn--tertiary {
+    --rollover-rest: color-mix(
+      in srgb,
+      #{theme.$text-primary}
+        var(--cds-shell-selected-page, var(--cds-shell-selected, 16%)),
+      transparent
+    );
+  }
+
+  &.cds-btn--neutral {
+    --_sel-under: var(--cds-surface);
+  }
+
+  &.cds-btn--secondary {
+    --_sel-under: var(--cds-surface-secondary);
+  }
+
+  &.cds-btn--primary {
+    --rollover-rest: var(
+      --cds-hero-fill-active,
+      var(--cds-button-primary-active, #002d9c)
+    );
+  }
+}
+
+/* Busy (SplitButton's action): the label kept for assistive tech, the kit's
+   Spinner in its place, so the width holds; no hover or press (aria-disabled).
+   Out, then in: the label fades out before the spinner draws on, and back
+   after it closes (useBusySwap's clocks, as the Button's). */
+.cds-btn-shell .cds-btn-cell--label > .cds-btn-cell__label {
+  transition: opacity var(--cds-busy-in, 0ms) var(--cds-busy-entrance, linear);
+}
+
+.cds-btn-shell .cds-btn-cell--swapped > .cds-btn-cell__label {
+  opacity: 0;
+  transition: opacity var(--cds-busy-out, 0ms) var(--cds-busy-exit, linear);
+}
+
+.cds-btn-shell .cds-btn-cell--label {
+  > .cds-btn__spinner {
+    position: absolute;
+    inset-block-start: calc(50% - 8px);
+    inset-inline-start: calc(50% - 8px);
+  }
+}
+
+.cds-btn-shell .cds-btn-cell--busy {
+  cursor: progress;
+}
+
+/* ── ButtonGrid ──────────────────────────────────────────────────────── */
+
+.cds-btn-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-inline-size: 0;
+}
+
+.cds-btn-grid__group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-inline-size: 0;
+}
+
+.cds-btn-grid__label {
+  @include type-style('label-01');
+
+  color: theme.$text-secondary;
+  user-select: none;
+}
+
+/* Equal columns (`--cols`, from the grid's width and `minCellWidth`), every
+   group on the same ones. */
+.cds-btn-shell--grid {
+  display: grid;
+  gap: var(--shell-gap);
+  grid-template-columns: repeat(var(--cols, 1), minmax(0, 1fr));
+  inline-size: 100%;
+}
+
+.cds-btn-shell .cds-btn-cell--grid {
+  inline-size: 100%;
+  padding-inline: 8px;
+}
+
+/* ── forced colors (the Button's) ────────────────────────────────────── */
+
+@media (forced-colors: active) {
+  .cds-btn-shell .cds-btn-cell {
+    &,
+    &:focus {
+      outline: 1px solid ButtonText;
+      outline-offset: -1px;
+    }
+
+    &::before,
+    &::after {
+      display: none;
+    }
+
+    &:hover {
+      outline-color: Highlight;
+    }
+
+    &:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: -2px;
+    }
+
+    &:is(:disabled, .cds-btn--disabled) {
+      color: GrayText;
+      outline-color: GrayText;
+    }
+
+    &.cds-btn-cell--selected {
+      outline: 2px solid ButtonText;
+      outline-offset: -2px;
+    }
+  }
+}

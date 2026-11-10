@@ -14,8 +14,9 @@
  *
  *   scale    the page draws back to 99% about the viewport's centre, on the
  *            overlay's clocks (a composited `scale`)
- *   blur     one 2.25px backdrop-filter layer over the whole page: one pass,
- *            whatever the surface's size
+ *   blur     one backdrop-filter layer over the whole page: one pass,
+ *            whatever the surface's size. Its radius is MODAL_BACKDROP.even,
+ *            the one value every overlay's blur reads (`backdropBlur`)
  *
  * The blur layer fades with the overlay on its own opacity: an ancestor's
  * opacity would make it the backdrop root, and the blur would see nothing.
@@ -93,9 +94,18 @@ export function resolveBackdrop(b: ModalBackdrop | false | undefined): {
 /** The backdrop's values. */
 export const MODAL_BACKDROP = {
   scale: 0.99,
-  /** px, the blur's radius. */
-  even: 2.25,
+  /** px, the blur's radius: every overlay's (`backdropBlur`). */
+  even: 1.125,
 } as const;
+
+/** The backdrop's blur, as a `backdrop-filter` value: the one radius, MODAL_BACKDROP.even. */
+export const backdropBlur = () => `blur(${MODAL_BACKDROP.even}px)`;
+
+/** A blur layer's inline style: `backdropBlur`, with its prefixed twin. */
+export const backdropBlurStyle = () => ({
+  backdropFilter: backdropBlur(),
+  WebkitBackdropFilter: backdropBlur(),
+});
 
 /** The page's scale for a `backdrop` prop (its default filled in), or null. */
 export const backdropScale = (
@@ -752,13 +762,8 @@ function drawWarmUp(
     host.append(page);
   }
   if (blur) {
-    const b = el(
-      `position:absolute;inset:0;backdrop-filter:blur(${MODAL_BACKDROP.even}px)`
-    );
-    b.style.setProperty(
-      '-webkit-backdrop-filter',
-      `blur(${MODAL_BACKDROP.even}px)`
-    );
+    const b = el(`position:absolute;inset:0;backdrop-filter:${backdropBlur()}`);
+    b.style.setProperty('-webkit-backdrop-filter', backdropBlur());
     fade(b);
     host.append(b);
   }

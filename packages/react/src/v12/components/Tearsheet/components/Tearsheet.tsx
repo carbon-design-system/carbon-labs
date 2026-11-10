@@ -59,11 +59,11 @@ import { Scroller } from '@carbon-labs/react-scroller';
 import { lockPageScroll } from '@carbon-labs/react-scroller';
 import { useLatest } from '@carbon-labs/react-selection-kit';
 import {
+  backdropBlurStyle,
   holdPageScale,
   prewarmBackdrop,
   releasePageScale,
   resolveBackdrop,
-  MODAL_BACKDROP,
   type ModalBackdrop,
 } from '@carbon-labs/react-modal';
 import {
@@ -77,11 +77,6 @@ import {
 import { inertProps } from '@carbon-labs/react-util';
 import '@carbon-labs/react-modal/scss/modal.scss';
 import './tearsheet.scss';
-
-const blurStyle = (px: number) => ({
-  backdropFilter: `blur(${px}px)`,
-  WebkitBackdropFilter: `blur(${px}px)`,
-});
 
 /* ============================================================================
  * Tearsheet, TearsheetNarrow — Carbon for IBM Products' tearsheets, on the kit
@@ -972,7 +967,7 @@ const TearsheetShell = forwardRef<
       {base && blur === 'even' && (
         <div
           className="cds-modal__blur cds-modal__blur--even"
-          style={blurStyle(MODAL_BACKDROP.even)}
+          style={backdropBlurStyle()}
           aria-hidden="true"
         />
       )}

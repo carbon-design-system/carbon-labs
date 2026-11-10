@@ -1837,7 +1837,7 @@
   },
   "V12/Util": {
     "title": "Util",
-    "summary": "The helpers the v12 components share: class names, form state, the page's\nlayer stack and focus, colour parsing, the reduced-motion getter, the\nvisibility a looping motion pauses on, and the ref and `inert` helpers that\nread the same on React 18 and 19.",
+    "summary": "The helpers the v12 components share: class names, form state, the page's\nlayer stack and focus, colour parsing, the reduced-motion getter, the\nvisibility a looping motion pauses on, and the ref and `inert` helpers that\nread the same on React 18 and 19.\n\nThe keyboard and screen reader helpers:\n\n- `isRtl`, `useDirection` and `inlineKey`: direction, read one way.\n  `inlineKey(e.key, el)` hands back a horizontal arrow as it reads left to\n  right, so one handler serves both directions.\n- `rovingIndex` and `useRovingTabStop`: a group of controls that is one tab\n  stop, moved through with the arrows (by direction), Home and End.\n- `useAnnouncer`: a polite and an assertive live region to render, and the\n  `announce` that writes to them.",
     "sections": [],
     "facts": {
       "tests": true,

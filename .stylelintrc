@@ -42,6 +42,42 @@
         "no-descending-specificity": null,
         "a11y/media-prefers-reduced-motion": null
       }
+    },
+    # The model's style rules, as warnings until the components move onto it.
+    # In a component stylesheet:
+    #   a radius is a corners variable or inner(), never a literal length
+    #   a page layer is Carbon's z(), never a fixed z-index (100 and up)
+    #   a fill is a kit surface property or a contextual token, never a
+    #   numbered layer token ($layer-01), which does not step inside a Layer
+    #   no selector names a theme: the theme scopes are set in v12-styles
+    {
+      "files": ["packages/react/src/v12/components/**/*.scss"],
+      "rules": {
+        "declaration-property-value-disallowed-list": [
+          {
+            "/^(border(-[a-z]+)*-radius|--[\\w-]*radius)$/": [
+              "/^(?!.*inner\\().*(^|[\\s(,])-?\\d*\\.?\\d*[1-9]\\d*(px|r?em|%)/"
+            ],
+            "z-index": ["/^-?\\d{3,}$/"],
+            "/.*/": ["/(\\$|--cds-)layer(-[a-z]+)*-0[1-3]\\b/"]
+          },
+          {
+            "severity": "warning",
+            "message": "Off the model: \"%s: %s\". Use a corners variable or inner() for a radius, z() for a page layer, a kit surface or contextual token for a fill"
+          }
+        ],
+        "selector-disallowed-list": [
+          [
+            "/\\[data-carbon-theme/",
+            "/\\.cds--(white|g10|g90|g100)\\b/",
+            "/\\.v12-(light|dark)\\b/"
+          ],
+          {
+            "severity": "warning",
+            "message": "Off the model: \"%s\" names a theme. Read a theme's values from the properties v12-styles sets on its scope"
+          }
+        ]
+      }
     }
   ]
 }

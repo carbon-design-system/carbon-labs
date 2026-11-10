@@ -16,6 +16,7 @@ import {
   fixWritten,
   formatWritten,
   importedOnly,
+  laneFolder,
   laneName,
   laneReaches,
   planImport,
@@ -1119,10 +1120,28 @@ describe('writing', () => {
         source: { repo: 'carbon-next', ref: base },
       },
     ]);
-    // A second import into the repo refuses to overwrite.
+    // A second import into the repo refuses: the lane owns it now, even
+    // with its folder removed. --out still writes it elsewhere to compare.
     const again = cli('widget', '--from', source, '--ref', base);
     expect(again.status).toBe(1);
-    expect(again.stderr).toContain('exists');
+    expect(again.stderr).toContain('widget is in the lane');
+    fs.rmSync(dir, { recursive: true });
+    const removed = cli('widget', '--from', source, '--ref', base);
+    expect(removed.status).toBe(1);
+    expect(removed.stderr).toContain('widget is in the lane');
+    expect(fs.existsSync(dir)).toBe(false);
+    const out = path.join(tmp, 'compare');
+    const compare = cli(
+      'widget',
+      '--from',
+      source,
+      '--ref',
+      base,
+      '--out',
+      out
+    );
+    expect(compare.status).toBe(0);
+    expect(fs.existsSync(path.join(out, 'Widget', 'index.ts'))).toBe(true);
   });
 
   it("formats what it writes with the repository's Prettier", () => {
@@ -1261,6 +1280,31 @@ export { Processing as Gauge } from '../processing';
     const gauge = planImport({ id: 'gauge', from: source, ref, labs });
     expect(output(gauge, 'index.ts')).toContain(
       "from '@carbon-labs/react-processing-v2'"
+    );
+  });
+
+  it('puts a folder where the config says, its stories titled by that folder', () => {
+    const ref = commit(
+      {
+        'packages/kit/src/date-picker/index.ts': `${HEADER}
+export const DatePicker = () => null;
+`,
+      },
+      'date picker'
+    );
+    const plan = planImport({ id: 'date-picker', from: source, ref, labs });
+    expect(laneFolder('date-picker')).toBe('DatePickerV2');
+    expect(laneFolder('split-button')).toBe('SplitButton');
+    expect(plan.target).toBe('packages/react/src/v12/components/DatePickerV2');
+    expect(JSON.parse(output(plan, 'package.json')).name).toBe(
+      '@carbon-labs/react-date-picker-v2'
+    );
+    const story = output(plan, '__stories__/DatePickerV2.stories.tsx');
+    expect(story).toContain("title: 'V12/DatePickerV2'");
+    expect(story).toContain("import { DatePicker } from '../index';");
+    expect(story).toContain("import mdx from './DatePickerV2.mdx';");
+    expect(output(plan, '__stories__/DatePickerV2.mdx')).toContain(
+      "from './DatePickerV2.stories.tsx'"
     );
   });
 });

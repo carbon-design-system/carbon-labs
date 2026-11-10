@@ -298,14 +298,19 @@
 }
 
 .v12r-settings {
-  display: grid;
-  align-content: start;
-  padding: 16px;
   border-radius: 8px;
   background: var(--cds-layer-01);
-  gap: 16px;
   max-block-size: 720px;
-  overflow-y: auto;
+}
+
+// The settings scroll in the kit's Scroller (its viewport), as every
+// scrolling area in the app does.
+.v12r-settings__body {
+  display: grid;
+  box-sizing: border-box;
+  align-content: start;
+  padding: 16px;
+  gap: 16px;
 }
 
 .v12r-frame {
@@ -331,10 +336,8 @@
 }
 
 // ── tables ──
-.v12r-table-wrap {
-  overflow-x: auto;
-}
-
+// A table wider than the page scrolls sideways in the kit's Scroller
+// (`axis="x"`).
 .v12r-table {
   @include type.type-style('body-01');
 

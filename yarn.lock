@@ -5024,6 +5024,7 @@ __metadata:
     "@carbon-labs/react-feedback": "workspace:*"
     "@carbon-labs/react-motion-icons": "workspace:*"
     "@carbon-labs/react-radio-button": "workspace:*"
+    "@carbon-labs/react-selection-kit": "workspace:*"
     "@carbon-labs/react-util": "workspace:*"
     "@carbon-labs/utilities": "npm:0.28.0"
     "@carbon-labs/v12-motion": "workspace:*"

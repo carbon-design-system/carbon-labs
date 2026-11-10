@@ -41,6 +41,7 @@
     "@carbon-labs/react-feedback": "workspace:*",
     "@carbon-labs/react-motion-icons": "workspace:*",
     "@carbon-labs/react-radio-button": "workspace:*",
+    "@carbon-labs/react-selection-kit": "workspace:*",
     "@carbon-labs/react-util": "workspace:*",
     "@carbon-labs/v12-motion": "workspace:*",
     "@carbon-labs/v12-styles": "workspace:*",

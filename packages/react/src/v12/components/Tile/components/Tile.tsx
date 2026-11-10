@@ -24,7 +24,7 @@ import { attachRollover } from '@carbon-labs/v12-motion';
 import { ArrowRight } from '@carbon-labs/react-motion-icons';
 import { Checkbox } from '@carbon-labs/react-checkbox';
 import { mergeRefs } from '@carbon-labs/v12-motion';
-import { quietSteps } from '@carbon-labs/react-util';
+import { ghostSteps } from '@carbon-labs/react-selection-kit';
 import './tile.scss';
 import { cx } from '@carbon-labs/react-util';
 import { useReducedGetter } from '@carbon-labs/react-util';
@@ -37,8 +37,10 @@ import { useReducedGetter } from '@carbon-labs/react-util';
  *   shape     8px corners, 16px in
  *   surface   the kit's standard surface, `--cds-surface` (the side nav's)
  *   hover     by content (the rule for controls inside a surface):
- *             a text tile's rollover is painted BEHIND the content, quiet
- *             matched-lightness steps of its fill (`hoverSteps`), growing 1px
+ *             a text tile's rollover is painted BEHIND the content, the
+ *             quiet surfaces' matched-lightness steps of its fill
+ *             (`hoverSteps`: the ghost's, one step as Carbon's layers
+ *             step off their page, in both themes), growing 1px
  *             and pressing 1px in; a tile holding controls or a checkbox
  *             shows a 1px `$border-strong-01` ring, keeps its fill, no press
  *   selected  a steady 2px ring in the selection color
@@ -87,12 +89,17 @@ export function fromNested(
 }
 
 /**
- * How far a tile's hover and press step from its fill: `quiet`
- * (default) is half the house steps — hover 4.5 L* on the light and dark
- * themes alike, press twice that — on top of the rollover's own easing
- * for big surfaces; `standard` is the house steps, as every other control.
+ * How far a tile's hover and press step from its fill: `quiet` (default) is
+ * the quiet surfaces' steps, the ghost's (`ghostSteps`): half the house step
+ * on the light themes, three quarters on the dark, so the hover reads as one
+ * step in both, press twice that, on top of the rollover's own easing for big
+ * surfaces; `standard` is the house steps, as every other control.
  */
 export type TileHoverSteps = 'quiet' | 'standard';
+
+/** The rollover's steps for `hoverSteps`: undefined is the house steps. */
+export const tileSteps = (hoverSteps: TileHoverSteps) =>
+  hoverSteps === 'quiet' ? ghostSteps() : undefined;
 
 /**
  * The rollover on a tile or card, unless disabled. `press: false` for a
@@ -113,7 +120,7 @@ export function useTileRollover(
     if (!node || off) return;
     return attachRollover(node, {
       selector,
-      steps: hoverSteps === 'quiet' ? quietSteps() : undefined,
+      steps: tileSteps(hoverSteps),
       timeScale,
       press,
       reduced: rolloverReduced,

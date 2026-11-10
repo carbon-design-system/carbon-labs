@@ -47,8 +47,8 @@ $_surface: var(--cds-surface, #{theme.$layer-01});
 .cds-kit-tile--expandable {
   @include rollover;
   --rollover-rest: #{$_surface};
-  /* Fallbacks; the rollover solves matched-lightness steps of the rest, at
-     half the house steps (Tile.tsx, TILE_STEPS). */
+  /* Fallbacks; the rollover solves matched-lightness steps of the rest, the
+     quiet surfaces' steps (Tile.tsx, `tileSteps`). */
   --rollover-hover: color-mix(
     in srgb,
     var(--cds-text-primary, #161616) 4%,

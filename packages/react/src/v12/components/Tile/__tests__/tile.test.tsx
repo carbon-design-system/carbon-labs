@@ -21,15 +21,16 @@ import {
   TileAboveTheFoldContent,
   TileBelowTheFoldContent,
 } from '../components/ExpandableTile';
-import { quietSteps } from '@carbon-labs/react-util';
+import { tileSteps } from '../components/Tile';
 
 describe('Tile family', () => {
-  it('solves quiet hover and press steps at half the house rollover steps', () => {
-    expect(quietSteps()).toEqual({
+  it('steps a quiet hover half the house step on light themes and three quarters on dark', () => {
+    expect(tileSteps('quiet')).toEqual({
       ...LIGHTNESS_STEPS,
       hoverLight: LIGHTNESS_STEPS.hoverLight / 2,
-      hoverDark: LIGHTNESS_STEPS.hoverDark / 2,
+      hoverDark: (LIGHTNESS_STEPS.hoverDark * 3) / 4,
     });
+    expect(tileSteps('standard')).toBeUndefined();
   });
 
   it('renders static, clickable, selectable, radio and expandable tiles with their base and modifier classes', () => {

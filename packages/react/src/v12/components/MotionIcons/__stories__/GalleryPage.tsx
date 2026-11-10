@@ -40,8 +40,10 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Search, Select, SelectItem } from '@carbon/react';
+import { Search } from '@carbon-labs/react-search';
+import { Select, SelectItem } from '@carbon-labs/react-select';
 import { playContentSwap } from '@carbon-labs/v12-motion';
+import { inertProps } from '@carbon-labs/react-util';
 import { MotionIconProvider } from '../context/MotionIconProvider';
 import {
   ApiTable,
@@ -109,13 +111,10 @@ export function useUrlState(
   return [value, set];
 }
 
-/** The pages' header, the same on every Motion Icons page. */
+/** The pages' opening line. The host names the page (Storybook's sidebar, the review app's heading). */
 export function PageHeader({ lede }: { lede: React.ReactNode }) {
   return (
     <header className="mi-header">
-      <h1 className="mi-header__title">
-        Carbon icons · <span className="mi-header__accent">Motion</span>
-      </h1>
       <p className="mi-header__lede">{lede}</p>
     </header>
   );
@@ -258,7 +257,8 @@ export const GalleryPage = memo(function GalleryPage() {
         <div className="mi-toolbar__group">
           <Select
             id="mi-group"
-            labelText="group"
+            labelText="Group"
+            hideLabel
             size="sm"
             value={group}
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
@@ -397,7 +397,7 @@ function SwapPanels<K extends string>({
           aria-label={label(k)}
           data-off={k !== active ? '' : undefined}
           aria-hidden={k !== active || undefined}
-          inert={k !== active}>
+          {...inertProps(k !== active)}>
           <Held held={k !== active}>{children(k)}</Held>
         </div>
       ))}

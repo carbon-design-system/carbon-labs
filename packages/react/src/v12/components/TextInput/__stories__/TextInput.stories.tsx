@@ -6,7 +6,7 @@
  */
 
 import React, { useState } from 'react';
-import { Checkbox } from '@carbon/react';
+import { Checkbox } from '@carbon-labs/react-checkbox';
 import { Button } from '@carbon-labs/react-button';
 import {
   FieldMessage,

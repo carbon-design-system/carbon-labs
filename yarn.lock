@@ -3183,7 +3183,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-empty-state@workspace:packages/react/src/v12/components/EmptyState":
+"@carbon-labs/react-empty-state@workspace:*, @carbon-labs/react-empty-state@workspace:packages/react/src/v12/components/EmptyState":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-empty-state@workspace:packages/react/src/v12/components/EmptyState"
   dependencies:
@@ -3268,6 +3268,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-full-page-error@workspace:packages/react/src/v12/components/FullPageError"
   dependencies:
+    "@carbon-labs/react-empty-state": "workspace:*"
     "@carbon-labs/react-feedback": "workspace:*"
     "@carbon-labs/react-illustrations": "workspace:*"
     "@carbon-labs/react-util": "workspace:*"

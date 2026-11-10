@@ -13,13 +13,14 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ICON_PAGE_CSS, IconPage } from './IconPage';
 import { WithWebComponents } from './statusControls';
+import { WithV12Controls } from './host';
 
 const meta: Meta = {
   title: 'V12/Motion Icons/Icon',
   tags: ['alpha'],
   parameters: { layout: 'fullscreen', controls: { disable: true } },
   args: { name: 'Copy' },
-  decorators: [WithWebComponents],
+  decorators: [WithWebComponents, WithV12Controls],
 };
 export default meta;
 

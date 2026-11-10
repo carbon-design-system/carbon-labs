@@ -74,6 +74,10 @@ recorded commit and:
 One pull request per component: `feat(v12-<name>): import <Name>`. There is no
 long-lived integration branch. `--dry-run` previews the result.
 
+A component comes in once. After that it is changed in the lane: the tool
+refuses to import a component the manifest records, and `--out` writes one
+elsewhere to compare.
+
 ## Checks
 
 The `v12` job in CI runs, beside the repository's existing checks (`yarn build`,

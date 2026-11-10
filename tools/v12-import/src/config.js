@@ -26,7 +26,11 @@ export const CONFIG = {
     labsPrefix: '@carbon-labs/react-',
     // A lane package named other than its kit folder, where the folder's own
     // name is another workspace's.
-    laneNames: { processing: 'processing-v2' },
+    laneNames: { processing: 'processing-v2', 'date-picker': 'date-picker-v2' },
+    // A lane folder named other than its kit folder, where the folder is
+    // another package's (carbon-labs' own v12 DatePicker): its stories' title
+    // follows the folder; the component keeps its name.
+    laneFolders: { 'date-picker': 'DatePickerV2' },
   },
   seam: {
     js: '@carbon-labs/v12-motion',

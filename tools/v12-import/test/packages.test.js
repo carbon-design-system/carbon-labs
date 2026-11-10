@@ -21,6 +21,7 @@ const FILES = {
   [`${CORE}/src/index.ts`]: `export { animate } from './engine/animate';\nexport { motionTokens } from './tokens';\n`,
   [`${CORE}/src/engine/animate.ts`]: `export const animate = (d: number) => d;\n`,
   [`${CORE}/src/tokens.ts`]: `import Add16 from '@carbon/icons/es/add/16.js';
+// The tokens, read from \`@carbon-motion/core\`.
 export { motionTokens } from '@carbon-motion/core/tokens';
 export const art = Add16;
 `,
@@ -236,6 +237,10 @@ describe('a core package', () => {
     expect(pkg.sideEffects).toBe(false);
     expect(output(plan, 'src/tokens.ts')).toContain(
       "export { motionTokens } from '@carbon-labs/motion-core/tokens';"
+    );
+    // And named so in its comments: carbon-motion by its published name.
+    expect(output(plan, 'src/tokens.ts')).toContain(
+      '// The tokens, read from `@carbon-labs/motion-core`.'
     );
     expect(pkg.dependencies).toEqual({
       '@carbon-labs/motion-core': 'portal:../../../motion/packages/core',

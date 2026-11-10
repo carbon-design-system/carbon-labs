@@ -1,0 +1,54 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as JobsTrayStories from './JobsTray.stories.tsx';
+
+<Meta of={JobsTrayStories} />
+
+# JobsTray
+
+Background jobs in a panel from the header, with no Carbon counterpart. Each job
+has a title, a ProgressBar, a StatusIndicator, and Cancel or Retry. A job is
+`queued`, `running`, `finished`, `failed` or `cancelled`; its `progress` is 0 to
+100, and a running job with none is indeterminate. The host owns `open` and
+`jobs`. A press outside, or Escape, calls `onClickOutside`, and Escape puts
+focus back on the trigger. `JobsTrayIndicator` is the trigger's face: put it in
+the header's IconButton, and name the button with the count and the status
+(`jobsStatus`, `jobsStatusLabel`).
+
+<Canvas of={JobsTrayStories.Default} />
+
+<Canvas of={JobsTrayStories.Toasts} />
+
+<Canvas of={JobsTrayStories.IndicatorChanges} />
+
+## Motion
+
+- **Open:** the floating snap from its trigger, timed by size. A tray over 320px
+  takes the surface rule's clocks. The presence fade runs with it. Closing, the
+  far edge folds back.
+- **Progress:** each job's bar retargets as progress comes in, and travels only
+  on an update. Done, the bar sits full; queued, empty.
+- **Status:** the StatusIndicator hands off from pending to the job's end.
+- **Arrive:** a job added while the tray is open opens its place.
+- **Clear finished:** each ended job's place shuts. Once the list is empty, the
+  empty text comes in after the places have shut.
+- **Trigger mark:** the activity icon carries a status mark in its corner:
+  pending while any job is at work, then failed if any ended failed, else done.
+  The mark stays while ended jobs are in the tray; once cleared, the plain icon
+  is back. The mark comes in, changes and goes on its own motion.
+- **Count:** the jobs still working, on the CountPill, whose digits roll.
+- **Toast:** a job that ends while the tray is closed shows one quiet toast,
+  grouped with the others, and never again for that run. A success leaves after
+  5 seconds; a failure stays. A retry starts a new run. It toasts only where a
+  `ToastStack` is above it, and not with `toast={false}`.
+
+<Canvas of={JobsTrayStories.Indicator} />
+
+## Reduced motion
+
+The tray fades in place. Places open and shut at once. The trigger's mark is
+there at once, with pending as still dots. The bar and the count take their own
+reduced motion.
+
+## Props
+
+<ArgTypes of={JobsTrayStories} />

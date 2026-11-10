@@ -1,0 +1,65 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as NotificationsPanelStories from './NotificationsPanel.stories.tsx';
+
+<Meta of={NotificationsPanelStories} />
+
+# NotificationsPanel
+
+Carbon for IBM Products' notifications panel, prop for prop: a floating panel
+from the header's bell, its notifications grouped into Today, Yesterday and
+Previous. Each row has a status mark, when it came, a title, a description with
+Read more past two lines, and a link. Unread rows carry a blue dot cut out of
+the mark, and a semibold title. The header holds Dismiss all, Do not disturb and
+settings; View all is the foot. The host owns `open` and `data`. A press
+outside, not on the trigger, or Escape calls `onClickOutside`, and Escape puts
+focus back on the trigger. `NotificationsBell` is the trigger's icon: pass it
+the panel's Do not disturb state, and the same state back as
+`doNotDisturbDefaultToggled`, so the panel opens as it was left.
+
+<Canvas of={NotificationsPanelStories.Default} />
+
+<Canvas of={NotificationsPanelStories.Arrivals} />
+
+<Canvas of={NotificationsPanelStories.Empty} />
+
+## Motion
+
+- **Open:** the floating snap from its trigger, timed by size. The frame grows
+  from the trigger while the content moves down with the opening, landing just
+  after the frame.
+- **Close:** the far edge pulls back into the trigger. Reopened mid-exit, it
+  turns round.
+- **Dismiss:** a dismissed row's place shuts, one step faster as an exit, while
+  its content holds still and the soft edge closes over it, with no fade. What
+  is below closes up with it in one move. A group's title goes with its last
+  row.
+- **Dismiss all:** the titles and rows leave on a stagger faster than the
+  entrance, each rising 8px and fading out. Then the list resizes to the empty
+  state, which comes in after it.
+- **Arrive:** a notification added while the panel is open opens its place on
+  its travel's step under the soft edge. Its content comes down 8px into it from
+  half the open over `fast-02`, with no fade. Its status mark plays its beat
+  once it has landed.
+- **Read more:** the description's place opens on its travel's step and shuts
+  one step faster, under the soft edge. Its lines are already there, so the text
+  is uncovered in place. The clamp comes back once the place has closed. The
+  label rolls, and the chevron turns.
+- **Do not disturb:** the header's toggle and the bell slash on the icon's own
+  motion. Turned on, the pip goes and the slash draws in. Turned off, the slash
+  retracts and the bell rings, then the pip is back. Arrivals keep coming.
+- **View all:** the whole footer cell takes the ghost Button's rollover. Its
+  count rolls.
+- **Rollover:** a row that is a control (`onNotificationClick`), Read more and
+  the link take the kit's rollover.
+
+<Canvas of={NotificationsPanelStories.Bell} />
+
+## Reduced motion
+
+The panel fades in place. Places open and close at once. Dismiss all and an
+arrival's content are fades on the reduced clock, with no travel. The bell's
+drawings change at once, and Read more's label swaps in place.
+
+## Props
+
+<ArgTypes of={NotificationsPanelStories} />

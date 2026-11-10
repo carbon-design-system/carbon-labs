@@ -1,0 +1,64 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as FileUploaderStories from './FileUploader.stories.tsx';
+
+<Meta of={FileUploaderStories} />
+
+# FileUploader
+
+Carbon's file uploader, with its props. `FileUploader` is a title, a
+description, an add button and the files it has added, all with one
+`filenameStatus`; its ref clears them (`clearFiles()`). For an uploader the app
+builds itself, the parts are `FileUploaderButton`, `FileUploaderDropContainer`,
+`FileUploaderItem` and `FileUploaderSkeleton`. Each file is an item on the quiet
+surface with one status slot: a progress mark while it uploads and once it is
+complete, and a remove button to edit. With `progress`, a known size, the mark
+is a ring that fills by it; without, it is the Spinner. `arrive={false}` lists a
+file with no motion, as for files already there on load.
+
+<Canvas of={FileUploaderStories.Uploads} />
+
+<Canvas of={FileUploaderStories.Item} />
+
+<Canvas of={FileUploaderStories.Statuses} />
+
+## Motion
+
+- **Arrive:** an item opens its place in the list as it mounts, as a disclosure:
+  on its travel's step, the content following from half the open. What is below
+  moves with it.
+- **Arrival stagger:** items added in one commit open in document order on a
+  stagger. Its step comes from the items' pitch, and the last starts within the
+  stagger window.
+- **Status hand-off:** uploading and complete are one mark, the ProgressRing at
+  16px. Complete is that mark changing in place: the ring completes, then it
+  shrinks 4px, the success disc grows from 4px under its size, and the check
+  draws on.
+- **Face swap:** a change between the progress mark and the remove button is a
+  content swap in place. The old face fades fully out, then the new fades in,
+  with no travel.
+- **Error:** an invalid item's error opens under the name as its own disclosure
+  body, so the item grows. The new face waits for that move to land. The warning
+  mark plays its motion icon once it has landed.
+- **Leave:** a removed item leaves a copy where it stood, and the copy's place
+  closes, one step faster, its content held still. Items removed together each
+  rise 8px and fade out in order, then close as one motion.
+- **Drag-over:** with a file held over the drop zone, the rollover's hover glow
+  follows the file and a 2px blue ring fades in inside the edge, in on
+  `fast-02`, out on `fast-01`. Moving onto a child of the zone does not end it.
+- **Rollover:** the drop zone, the remove button and the add button take the
+  kit's rollover.
+- **Label roll:** the add button's label changes to the chosen file's name, or
+  "N files", through RollText, so only the parts that change roll.
+  `disableLabelChanges` keeps the label.
+
+<Canvas of={FileUploaderStories.AddButton} />
+
+## Reduced motion
+
+No travel and no stagger: an item is there, or gone, at once, and so is its
+error. The faces snap and the marks do not beat. The ring and the glow on the
+drop zone are there or gone at once. The add button's label swaps in place.
+
+## Props
+
+<ArgTypes of={FileUploaderStories} />

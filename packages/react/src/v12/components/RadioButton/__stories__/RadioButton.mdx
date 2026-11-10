@@ -1,0 +1,60 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as RadioButtonStories from './RadioButton.stories.tsx';
+
+<Meta of={RadioButtonStories} />
+
+# RadioButton
+
+A circle for choosing one option from a group. `RadioButton` and
+`RadioButtonGroup` take Carbon's props, plus `timeScale`. The group holds the
+choice, its legend and one message line; it is in a row by default. `RadioMark`
+is the circle and dot alone, for a control that draws a radio it doesn't own.
+`RadioButtonSkeleton` is the radio button while it loads.
+
+<Canvas of={RadioButtonStories.Default} />
+
+<Canvas of={RadioButtonStories.ChangeChoice} />
+
+<Canvas of={RadioButtonStories.Group} />
+
+<Canvas of={RadioButtonStories.Vertical} />
+
+<Canvas of={RadioButtonStories.LabelStart} />
+
+<Canvas of={RadioButtonStories.States} />
+
+<Canvas of={RadioButtonStories.GroupStatus} />
+
+<Canvas of={RadioButtonStories.Skeleton} />
+
+## Motion
+
+- **Dot in:** the fill changes at once. 40ms later the 6px dot grows from its
+  center, half size to full, on fast-02 with entrance-productive. The state
+  reads first.
+- **Dot out:** the dot shrinks and fades on fast-01 with exit-productive.
+- **Hover:** the rollover on the circle. Off, a wash of the text color at 8%;
+  on, a toned step of the fill. The glow fades in on fast-02 and out on fast-01.
+  The circle grows 1px. Hovering the label plays it too, however the label
+  wraps.
+- **Press:** no press color of its own. The circle presses 1px in.
+- **Status ring:** `invalid` and `warn` color the circle's stroke and add 1px
+  outside it, red or yellow. The rollover paints the ring, so it grows with the
+  hover. A group's status rings every button in it. Disabled and read-only show
+  no status.
+- **Message line:** helper, warning and error share one line and swap in place,
+  out then in.
+- **Keyboard:** a native radio group. One tab stop; the arrow keys move the
+  choice and wrap, and the dots follow. Read-only changes nothing.
+- **Focus:** keyboard only, 2px `$text-primary`, 2px outside the circle; 3px out
+  while a status shows. It has no transition.
+
+## Reduced motion
+
+The dot appears and leaves at once. The hover changes at once. The press still
+shows; the release and the return to hover are at once. The message line changes
+at once.
+
+## Props
+
+<ArgTypes of={RadioButtonStories} />

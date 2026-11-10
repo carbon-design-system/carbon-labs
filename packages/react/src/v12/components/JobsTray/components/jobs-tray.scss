@@ -1,0 +1,184 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/cast-shadow-floating';
+
+/* JobsTray — JobsTray.tsx. The frame draws the surface, so the snap moves it
+   as geometry; the notifications panel's measures: content 12px in. */
+
+.cds-jobs-portal {
+  display: contents;
+}
+
+.cds-jobs {
+  --cds-jobs-radius: 16px;
+  --cds-jobs-pad: 12px;
+
+  /* Physical: place() sets left and top, in either direction. */
+  position: fixed;
+  z-index: 9000;
+  box-sizing: border-box;
+  color: theme.$text-primary;
+  inline-size: min(22.5rem, calc(100vw - 16px));
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  isolation: isolate;
+  outline: none;
+
+  &[data-leaving] {
+    pointer-events: none;
+  }
+}
+
+.cds-jobs__frame {
+  position: absolute;
+  z-index: -1;
+  border-radius: var(--cds-jobs-radius);
+  // @carbon-proposal token: surface-quiet — The quiet surface fill: side nav panel, tiles, tables, jobs tray, tabs fade. replaces: `$layer-01`. TBD
+  background: var(--cds-surface);
+  // @carbon-proposal token: surface-rule — The quiet surface's hairline. replaces: `$border-subtle`. TBD
+  box-shadow: inset 0 0 0 1px var(--cds-surface-rule);
+  inset: 0;
+}
+
+.cds-jobs__content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-block-size: min(32rem, calc(100vh - 4rem));
+}
+
+.cds-jobs__header {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  padding: 0.25rem 0.25rem 0.25rem var(--cds-jobs-pad);
+  // @carbon-proposal token: surface-divider — A line inside the surface (table rows, header underline). replaces: `$border-subtle`. TBD
+  border-block-end: 1px solid var(--cds-surface-divider);
+  min-block-size: 2.5rem;
+}
+
+.cds-jobs__title {
+  @include type-style('heading-compact-01');
+
+  flex: 1 1 auto;
+  margin: 0;
+  min-inline-size: 0;
+}
+
+.cds-jobs__scroller {
+  flex: 1 1 auto;
+}
+
+.cds-jobs__body {
+  overscroll-behavior: contain;
+}
+
+.cds-jobs__list {
+  position: relative;
+}
+
+.cds-jobs__job {
+  position: relative;
+  display: flow-root;
+
+  & + &::before {
+    position: absolute;
+    background: var(--cds-surface-divider);
+    block-size: 1px;
+    content: '';
+    inset-block-start: 0;
+    inset-inline: var(--cds-jobs-pad);
+  }
+}
+
+.cds-jobs__job-content {
+  display: flex;
+  flex-direction: column;
+  padding: $spacing-04 0.25rem $spacing-04 var(--cds-jobs-pad);
+  gap: $spacing-03;
+}
+
+.cds-jobs__job-head {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-03;
+  margin-block: -0.25rem;
+}
+
+.cds-jobs__job-text {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  padding-block: 0.25rem;
+}
+
+.cds-jobs__job-title {
+  @include type-style('body-compact-01');
+
+  overflow: hidden;
+
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cds-jobs__job-desc {
+  @include type-style('label-01');
+
+  margin: $spacing-01 0 0;
+  color: theme.$text-secondary;
+}
+
+.cds-jobs__bar {
+  margin-inline-end: calc(var(--cds-jobs-pad) - 0.25rem);
+}
+
+.cds-jobs__job-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-04;
+  margin-inline-end: calc(var(--cds-jobs-pad) - 0.25rem);
+}
+
+.cds-jobs__pct {
+  @include type-style('label-01');
+
+  color: theme.$text-secondary;
+  font-variant-numeric: tabular-nums;
+}
+
+.cds-jobs__empty {
+  @include type-style('body-compact-01');
+
+  padding: $spacing-06 var(--cds-jobs-pad);
+
+  margin: 0;
+  color: theme.$text-secondary;
+}
+
+/* ── the trigger's face ───────────────────────────────────────────────── */
+
+.cds-jobs-indicator {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+}
+
+/* The count over the icon's top end, as a badge: its foot at the icon's middle at every size, clear of the status mark
+   in the lower corner. */
+.cds-jobs-indicator__count {
+  position: absolute;
+  background: theme.$background-brand;
+  color: theme.$text-on-color;
+  inset-block-end: 50%;
+  inset-inline-start: calc(50% + 2px);
+  pointer-events: none;
+}

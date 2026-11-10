@@ -1,0 +1,298 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/corners';
+@use '@carbon-labs/v12-styles/scss/text-pairs';
+
+/* Checkbox — `Checkbox.tsx` (first pass; its header lists the choices). */
+
+$fast-01: var(--cds-motion-duration-fast-01);
+$fast-02: var(--cds-motion-duration-fast-02);
+$standard: var(--cds-motion-easing-standard-productive);
+/* The mark waits this long after the fill (the toggle's state-color step). */
+$color: calc(#{$fast-01} * 4 / 7);
+
+.cds-checkbox {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.cds-checkbox__row {
+  @include type-style('body-compact-01');
+
+  display: inline-flex;
+  align-items: flex-start;
+  color: theme.$text-primary;
+  cursor: pointer;
+  gap: 8px;
+  /* v11's row: 24px, the box centred on the first line. */
+  padding-block: 2px;
+}
+
+.cds-checkbox__label {
+  padding-block-start: 1px;
+}
+
+.cds-checkbox__label--hidden {
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip: rect(0, 0, 0, 0);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+/* ── the box ──────────────────────────────────────────────────────────── */
+
+.cds-checkbox__box {
+  /* The input's hover and press are its label's too (HTML): hovering or
+     pressing the label plays the box's rollover. */
+  @include rollover($control: '> .cds-checkbox__input');
+
+  /* Off: a stroke and no fill; hover, a wash of the text color. No press colour: the press
+     holds the hover's, since the checked fill replaces it in the same moment. */
+  --rollover-rest: transparent;
+  // @carbon-explore hover-tint — Hover and press as a share of the text colour mixed into the fill. TBD
+  --rollover-hover: color-mix(
+    in srgb,
+    var(--cds-text-primary, #161616) 8%,
+    transparent
+  );
+  --rollover-press: var(--rollover-hover);
+  --rollover-stroke: var(--cds-border-strong-01, #8d8d8d);
+
+  display: inline-grid;
+  flex: none;
+  /* A mark's corner on the ladder (`corners.$mark`, 2px; v11's). */
+  border-radius: corners.$mark;
+  block-size: 16px;
+  color: theme.$icon-inverse;
+  inline-size: 16px;
+  margin-block-start: 2px;
+  place-items: center;
+}
+
+/* The control: invisible, over the box and 4px round it (a 24px target). */
+.cds-checkbox__input {
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  block-size: auto;
+  cursor: inherit;
+  inline-size: auto;
+  inset: -4px;
+  opacity: 0;
+}
+
+/* On (checked or mixed): the family's inverse selector, its steps toned. */
+.cds-checkbox__box:has(> .cds-checkbox__input:is(:checked, :indeterminate)) {
+  --rollover-rest: var(--cds-layer-selected-inverse, #161616);
+  --rollover-hover: color-mix(
+    in srgb,
+    var(--cds-layer-selected-inverse, #161616) 86%,
+    var(--cds-background, #ffffff)
+  );
+  --rollover-stroke: transparent;
+}
+
+/* ── the mark ─────────────────────────────────────────────────────────── */
+
+.cds-checkbox__mark {
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+  block-size: 16px;
+  fill: none;
+  inline-size: 16px;
+  pointer-events: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
+/* The check draws itself on, and fades when it goes. */
+.cds-checkbox__check {
+  opacity: 0;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition:
+    opacity $fast-01 $standard,
+    stroke-dashoffset 0s linear $fast-01;
+}
+
+.cds-checkbox__input:checked ~ .cds-checkbox__mark .cds-checkbox__check {
+  opacity: 1;
+  stroke-dashoffset: 0;
+  transition:
+    opacity 0s,
+    stroke-dashoffset $fast-02 $standard $color;
+}
+
+/* Mixed: the dash grows from its middle (and the check stays hidden). */
+.cds-checkbox__dash {
+  opacity: 0;
+  transform: scaleX(0);
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    opacity $fast-01 $standard,
+    transform 0s linear $fast-01;
+}
+
+/* The DOM's mixed state (`:indeterminate`), not the prop's: a click clears it
+   and the box follows at once, never keeping the prop's dash under the DOM's
+   new check. After the checked rule, which this overrides at the same specificity. */
+.cds-checkbox__input:indeterminate ~ .cds-checkbox__mark {
+  .cds-checkbox__check {
+    opacity: 0;
+  }
+
+  .cds-checkbox__dash {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0s,
+      transform $fast-02 $standard $color;
+  }
+}
+
+/* ── focus: the family's keyboard ring ───────────────────────────────── */
+
+.cds-checkbox__box:has(> .cds-checkbox__input:focus-visible) {
+  outline: 2px solid theme.$text-primary;
+  outline-offset: 2px;
+}
+
+/* ── disabled ─────────────────────────────────────────────────────────── */
+
+.cds-checkbox--disabled {
+  .cds-checkbox__row {
+    color: theme.$text-disabled;
+    cursor: not-allowed;
+  }
+
+  .cds-checkbox__box {
+    --rollover-stroke: #{theme.$border-disabled};
+  }
+
+  /* On: a muted fill, the inverse half mixed into the page. */
+  .cds-checkbox__box:has(> .cds-checkbox__input:is(:checked, :indeterminate)) {
+    --rollover-rest: color-mix(
+      in srgb,
+      var(--cds-layer-selected-inverse, #161616) 50%,
+      var(--cds-background, #ffffff)
+    );
+    --rollover-stroke: transparent;
+  }
+}
+
+/* ── read-only: v11's ─────────────────────────────────────────────────── */
+
+.cds-checkbox--readonly {
+  .cds-checkbox__row {
+    cursor: default;
+  }
+
+  .cds-checkbox__box,
+  .cds-checkbox__box:has(> .cds-checkbox__input:is(:checked, :indeterminate)) {
+    --rollover-rest: transparent;
+    --rollover-stroke: #{theme.$border-disabled};
+
+    color: theme.$icon-primary;
+  }
+}
+
+/* ── status: error and warning ──────────────────────────────────────────
+   A 2px ring in the status's color: the box's own 1px stroke and 1px more
+   OUTSIDE it, so a thicker stroke never eats into the shape: the box, its fill and its corner are the same
+   in every state. Both are painted by the rollover's surface
+   (`--rollover-ring`), so on hover the ring grows out with the fill at the
+   same 2px and comes back with it on press: an error checkbox grows both
+   its fill and its red outline.
+
+   Warning (v11's `warn`): the same ring all in `$support-warning`, the
+   box's stroke too, all yellow. Yellow on a light page is about 1.6:1, under
+   the 3:1 a control's edge asks for; that is accepted, and the message line
+   says it in words.
+
+   Focus: while a status shows, the keyboard ring sits 3px out, not 2px. The
+   status ring reaches 1px past the box at rest and 2px on hover, so at 2px
+   the two would touch. */
+
+.cds-checkbox--invalid .cds-checkbox__box,
+.cds-checkbox--invalid
+  .cds-checkbox__box:has(> .cds-checkbox__input:is(:checked, :indeterminate)) {
+  --rollover-stroke: #{theme.$support-error};
+  --rollover-ring: #{theme.$support-error};
+}
+
+.cds-checkbox--warn .cds-checkbox__box,
+.cds-checkbox--warn
+  .cds-checkbox__box:has(> .cds-checkbox__input:is(:checked, :indeterminate)) {
+  --rollover-stroke: #{theme.$support-warning};
+  --rollover-ring: #{theme.$support-warning};
+}
+
+.cds-checkbox:is(.cds-checkbox--invalid, .cds-checkbox--warn)
+  .cds-checkbox__box:has(> .cds-checkbox__input:focus-visible) {
+  outline-offset: 3px;
+}
+
+.cds-checkbox__message {
+  padding-inline-start: 24px;
+}
+
+/* ── the group (CheckboxGroup.tsx) ────────────────────────────────────── */
+
+.cds-checkbox-group {
+  padding: 0;
+  border: 0;
+  margin: 0;
+  min-inline-size: 0;
+}
+
+/* The kit's group label: 8px above the first checkbox's row (styles/_text-pairs.scss). */
+.cds-checkbox-group__legend {
+  @include text-pairs.group-label;
+}
+
+/* 8px apart, as RadioButtonGroup's buttons are. */
+.cds-checkbox-group__boxes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cds-checkbox-group--horizontal .cds-checkbox-group__boxes {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+
+/* Each state's own selector, so this wins over its transition by order. */
+@media (prefers-reduced-motion: reduce) {
+  .cds-checkbox__check,
+  .cds-checkbox__dash,
+  .cds-checkbox__input:checked ~ .cds-checkbox__mark .cds-checkbox__check,
+  .cds-checkbox__input:indeterminate ~ .cds-checkbox__mark .cds-checkbox__dash {
+    transition-delay: 0s;
+    transition-duration: var(--cds-motion-duration-floor);
+  }
+}
+
+@media (forced-colors: active) {
+  .cds-checkbox__box {
+    border: 1px solid CanvasText;
+  }
+}

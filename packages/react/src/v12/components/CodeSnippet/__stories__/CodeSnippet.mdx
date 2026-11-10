@@ -1,0 +1,65 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as CodeSnippetStories from './CodeSnippet.stories.tsx';
+
+<Meta of={CodeSnippetStories} />
+
+# CodeSnippet
+
+Carbon's CodeSnippet and CodeSnippetSkeleton, prop for prop. The code sits in a
+quiet well with no outline, set by `--cds-snippet-fill`. `type` is single,
+inline or multi. Single and multi are a read-only textbox you can tab to, with a
+copy button after it. Inline is one button round the code. A copy writes
+`copyText`, or the code's text, to the clipboard, then calls `onClick`. Code
+that runs past the end has a 16px soft edge there, gone while the code has
+focus. A multi snippet taller than `maxCollapsedNumberOfRows` rows gets Show
+more. `loading` draws the snippet as its skeleton; `CodeSnippetSkeleton` is the
+same. `light` is accepted and not drawn.
+
+<Canvas of={CodeSnippetStories.Default} />
+
+<Canvas of={CodeSnippetStories.Inline} />
+
+<Canvas of={CodeSnippetStories.Multi} />
+
+<Canvas of={CodeSnippetStories.Overflow} />
+
+<Canvas of={CodeSnippetStories.States} />
+
+<Canvas of={CodeSnippetStories.Loading} />
+
+## Motion
+
+- **Show more:** the disclosure opens the rest of the code on the travel's step,
+  on entrance-productive. It shuts one step faster, on exit-productive. It is
+  one layout transaction, so what sits below moves with it. The code does not
+  move: the body uncovers it. The first measure lands still.
+- **Soft edge, collapsed:** a 16px soft edge over the bottom of the collapsed
+  code. It closes as the body lands open.
+- **Label roll:** Show more rolls to Show less, whole. The chevron is the
+  disclosure's motion icon, down collapsed and up expanded.
+- **Copy:** single and multi use CopyButton. The Copy icon plays its action and
+  the tooltip's text moves sideways to `feedback` for `feedbackTimeout`. Inline
+  gives the same feedback, with the whole snippet as the trigger. The feedback
+  is also read out from a polite live region.
+- **Rollover:** inline, the snippet takes the rollover, its hover a step toward
+  the text. Single and multi: the copy button and Show more take it.
+- **Scrollbar:** the kit's Scroller pill. On multi, the down track starts below
+  the copy button's 40px box.
+- **Loading:** the snippet's frame, its code lines as blocks, and a disabled
+  copy button. When the code arrives, the blocks dissolve in place as it fades
+  up. Loading again reverses it. Inline does not load.
+- **Slow motion:** `TooltipMotion`'s `timeScale` reaches the tooltip, the
+  rollovers, the label roll, the scroller and Show more.
+
+<Canvas of={CodeSnippetStories.SlowMotion} />
+
+## Reduced motion
+
+Show more opens and shuts at once, and the collapsed code has no soft edge. The
+label and the tooltip's text change at once. The Copy icon's action does not
+play. A rollover's press still shows; its release lands at once. The pill only
+fades.
+
+## Props
+
+<ArgTypes of={CodeSnippetStories} />

@@ -1,0 +1,418 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/cast-shadow-floating';
+
+/* Modal — ComposedModal.tsx (the shell), parts.tsx (header, body, footer),
+ * Modal.tsx.
+ *
+ *   overlay   Carbon's $overlay over the whole page, faded by the component
+ *   surface   the kit's quiet surface: the side nav's panel fill
+ *             (--cds-surface) and hairline (--cds-surface-rule), 16px corners
+ *             (a panel's, as the Popover's). Its frame (`data-snap-frame`)
+ *             draws them, so the snap moves them as true geometry
+ *   size      v11's widths per breakpoint (xs / sm / md / lg), and its
+ *             largest heights; below 672px every size is the viewport less
+ *             16px a side
+ *   layout    header, body (the kit's Scroller), footer — a column whose
+ *             body takes what's left and scrolls
+ */
+
+/* The fill and hairline: the quiet standard, one step up on the dark themes
+   (over the dimmed page the standard's fill sits 1.2:1 off it on g100). There the fill is `--cds-surface-raised` and the
+   hairline moves the same 3.8 L* step, so the two keep the standard's
+   spacing. Set on the theme scopes, as the surface tokens are, so the
+   nearest theme wins.
+
+   The fields on it (`--cds-modal-field`, styles/_field-fill.scss): the standard surface's field on
+   white. On g100 the raised fill sits where Carbon's field tokens are (`$field-02` is the
+   hairline's own colour), so the field
+   steps 4.2% off the fill toward the text. */
+$_field-step: color-mix(
+  in oklab,
+  var(--cds-modal-fill),
+  #{theme.$text-primary} 4.2%
+);
+
+:root,
+[data-carbon-theme='white'],
+.cds--white {
+  --cds-modal-fill: var(--cds-surface, #{theme.$layer-01});
+  --cds-modal-rule: var(--cds-surface-rule, #{theme.$border-subtle-01});
+  --cds-modal-field: var(--cds-surface-field, #{theme.$field-02});
+}
+
+[data-carbon-theme='g100'],
+.cds--g100 {
+  --cds-modal-fill: var(--cds-surface-raised, #262626);
+  --cds-modal-rule: var(--cds-surface-raised-rule);
+  --cds-modal-field: #{$_field-step};
+}
+
+$_surface: var(--cds-modal-fill, var(--cds-surface, #{theme.$layer-01}));
+$_rule: var(
+  --cds-modal-rule,
+  var(--cds-surface-rule, #{theme.$border-subtle-01})
+);
+
+.cds-modal-portal {
+  display: contents;
+}
+
+/* The page-wide layer: above the page's chrome (the window scroller's 6000,
+   and the shell's fixed header's 8001, so the header dims and blurs with the
+   page, as v11's overlay covers its UI shell, and takes no press while the
+   modal is up), under floating surfaces opened from inside it (menus,
+   9000). The page scale leaves the header be (backdrop.ts, "The chrome"). */
+.cds-modal {
+  position: fixed;
+  z-index: 8100;
+  inset: 0;
+}
+
+.cds-modal__overlay {
+  position: absolute;
+  background: theme.$overlay;
+  inset: 0;
+  opacity: 0;
+}
+
+/* The backdrop's blur (backdrop.ts), under the dim: one layer over the
+   page, its radius inline. It fades on its own opacity: an ancestor's would
+   make that ancestor the backdrop root, and the blur would see nothing. */
+.cds-modal__blur {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* The shadow's light easing to where it is going as the pointer comes near
+   or leaves (the cast shadow's offsets otherwise never transition). */
+.cds-modal
+  > .cast-floating
+  > .cast-floating__frame[data-cast-ease]
+  > [data-cast-layer] {
+  transition: translate var(--cds-motion-duration-moderate-01)
+    var(--cds-motion-easing-standard-productive);
+}
+
+.cds-modal__container {
+  --cds-modal-radius: 16px;
+  --cds-modal-w: 84%;
+  --cds-modal-max-h: 90%;
+
+  /* Placed by the component (client px, whole device px), centred. */
+  position: fixed;
+  /* Over its cast shadow (motion-core's floating shadow: a 9000 sibling drawn
+     just before it), inside the modal's own layer. */
+  z-index: 9000;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  color: theme.$text-primary;
+  inline-size: var(--cds-modal-w);
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  isolation: isolate;
+  max-block-size: var(--cds-modal-max-h);
+  outline: none;
+  /* What's inside sits on this fill; a field takes the modal's field (above). */
+  --cds-surface: var(--cds-modal-fill);
+  --cds-field-fill: var(--cds-modal-field);
+
+  &[data-leaving] {
+    pointer-events: none;
+  }
+
+  @media (width <= 41.98rem) {
+    --cds-modal-w: calc(100% - 32px);
+    --cds-modal-max-h: calc(100% - 32px);
+  }
+}
+
+/* v11's widths: md at 672px / 1056px / 1312px. */
+@media (width >= 42rem) {
+  .cds-modal__container--xs {
+    --cds-modal-w: 48%;
+  }
+
+  .cds-modal__container--sm {
+    --cds-modal-w: 60%;
+  }
+
+  .cds-modal__container--lg {
+    --cds-modal-w: 96%;
+  }
+}
+
+@media (width >= 66rem) {
+  .cds-modal__container {
+    --cds-modal-w: 60%;
+    --cds-modal-max-h: 84%;
+  }
+
+  .cds-modal__container--xs {
+    --cds-modal-w: 32%;
+    --cds-modal-max-h: 48%;
+  }
+
+  .cds-modal__container--sm {
+    --cds-modal-w: 42%;
+    --cds-modal-max-h: 72%;
+  }
+
+  .cds-modal__container--lg {
+    --cds-modal-w: 84%;
+    --cds-modal-max-h: 96%;
+  }
+}
+
+@media (width >= 82rem) {
+  .cds-modal__container {
+    --cds-modal-w: 48%;
+  }
+
+  .cds-modal__container--xs {
+    --cds-modal-w: 24%;
+  }
+
+  .cds-modal__container--sm {
+    --cds-modal-w: 36%;
+  }
+
+  .cds-modal__container--lg {
+    --cds-modal-w: 72%;
+  }
+}
+
+/* The container: fill, hairline, corners. The snap moves its insets. */
+.cds-modal__frame {
+  position: absolute;
+  z-index: -1;
+  border-radius: var(--cds-modal-radius);
+  background: $_surface;
+  box-shadow: inset 0 0 0 1px $_rule;
+  inset: 0;
+}
+
+.cds-modal__content {
+  /* The surface the body's ghost selection stands on: what its scroll fades paint to. */
+  --sel-ghost-page: #{$_surface};
+
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-block-size: 0;
+}
+
+/* ── header ─────────────────────────────────────────────────────────────── */
+
+.cds-modal__header {
+  position: relative;
+  flex: none;
+  /* 16px in, the close button's room at the end; the gap to the body is the
+     body's (8px). With no label or title it still clears the close button,
+     so the body's text never runs under it. */
+  padding-block: 16px 0;
+  padding-inline: 16px 56px;
+
+  &:not(:has(.cds-modal__label, .cds-modal__heading)) {
+    min-block-size: 40px;
+  }
+}
+
+.cds-modal__label {
+  @include type-style('label-01');
+
+  margin: 0 0 4px;
+  color: theme.$text-secondary;
+}
+
+.cds-modal__heading {
+  @include type-style('heading-03');
+
+  margin: 0;
+  color: theme.$text-primary;
+}
+
+.cds-modal__close {
+  position: absolute;
+  inset-block-start: 8px;
+  inset-inline-end: 8px;
+}
+
+/* ── body ───────────────────────────────────────────────────────────────── */
+
+.cds-modal__body {
+  @include type-style('body-01');
+
+  flex: 1 1 auto;
+  color: theme.$text-primary;
+  min-block-size: 0;
+}
+
+.cds-modal__viewport {
+  box-sizing: border-box;
+  /* 8px under the title's box (about 15px between the ink, with the two
+     lines' half-leading), 24px to the footer's buttons, or to the edge of a
+     passive modal (not v11's 48px, with 16px more under a last paragraph). */
+  padding-block: 8px 24px;
+  padding-inline: 16px;
+
+  &:focus-visible {
+    outline: 2px solid theme.$text-primary;
+    outline-offset: -2px;
+  }
+
+  /* Text keeps v11's measure: 20% short of the end (not in xs or sm). */
+  > .cds-modal__inner > p,
+  > .cds-modal__inner > .cds-modal-swap > .cds-modal-swap__layer > p {
+    margin: 0 0 16px;
+    padding-inline-end: 20%;
+  }
+
+  /* The last block sits on the body's padding, not on its own margin too. */
+  > .cds-modal__inner > :last-child,
+  > .cds-modal__inner > .cds-modal-swap > .cds-modal-swap__layer > :last-child {
+    margin-block-end: 0;
+  }
+
+  /* Scrolling: the soft edge (16px, the token) where there's more. */
+  &[data-more-below] {
+    mask-image: linear-gradient(
+      to bottom,
+      #000000 calc(100% - 16px),
+      transparent
+    );
+  }
+
+  &[data-more-above] {
+    mask-image: linear-gradient(to top, #000000 calc(100% - 16px), transparent);
+  }
+
+  &[data-more-above][data-more-below] {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      #000000 16px,
+      #000000 calc(100% - 16px),
+      transparent
+    );
+  }
+}
+
+.cds-modal__container--xs,
+.cds-modal__container--sm {
+  .cds-modal__inner > p,
+  .cds-modal__inner > .cds-modal-swap > .cds-modal-swap__layer > p {
+    padding-inline-end: 0;
+  }
+}
+
+.cds-modal__container--full-width .cds-modal__viewport {
+  padding: 0;
+}
+
+/* ── footer ─────────────────────────────────────────────────────────────── */
+
+/* The kit's buttons at their natural width, at the end (not v11's equal
+   split); 16px from the edges, 8px apart.
+   Too many for the width, they wrap, still at the end. An empty footer
+   (no buttons) takes no room. */
+.cds-modal__footer {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  padding: 0 16px 16px;
+  gap: 8px;
+
+  > .cds-btn {
+    flex: none;
+  }
+}
+
+.cds-modal__footer--empty {
+  padding: 0;
+}
+
+.cds-modal__assistive {
+  position: absolute;
+  overflow: hidden;
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+/* The primary button's loading label (a content swap inside the button) and
+   its status mark, which stays put while the label swaps. */
+.cds-modal__btn-content {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+.cds-modal__btn-swap {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+.cds-modal__btn-status {
+  display: block;
+}
+
+/* The status mark where the button's icon goes: 16px from its end, in the
+   button's colour (the check and the slash knocked out of it), the spinner's
+   base faint, as the busy Button's. */
+.cds-modal__btn-icon {
+  --cds-spinner-base: color-mix(in srgb, currentColor 30%, transparent);
+
+  position: absolute;
+  display: grid;
+  block-size: 16px;
+  inline-size: 16px;
+  inset-block-start: calc(50% - 8px);
+  /* The label's box ends 64px from the button's end; the icon sits 16px from it. */
+  inset-inline-end: -48px;
+
+  .fb-mark {
+    --fb-status: currentColor;
+  }
+}
+
+/* ── the content swap (ModalSwap) ───────────────────────────────────────── */
+
+.cds-modal-swap {
+  position: relative;
+
+  /* While it swaps: a window on y, so content travelling in and out is cut
+     at its edge. At rest nothing is clipped. */
+  &[data-swapping] {
+    overflow-y: clip;
+  }
+}
+
+.cds-modal-swap__layer--out {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  pointer-events: none;
+}
+
+@media (forced-colors: active) {
+  .cds-modal__frame {
+    border: 1px solid CanvasText;
+    background: Canvas;
+  }
+}

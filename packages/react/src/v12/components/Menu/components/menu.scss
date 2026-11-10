@@ -1,0 +1,492 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/anchor-inset';
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/corners';
+@use '@carbon-labs/v12-styles/scss/cast-shadow-floating';
+
+/* Menu — what the selection kit doesn't already draw.
+ *
+ * The surface is the snap's container model: the frame (`data-snap-frame`)
+ * paints the menu's background and edge — the floating surface, the
+ * Popover's fill and edge (`--cds-surface` and `--cds-surface-divider`: every
+ * floating panel matches), 8px corners — and the
+ * list inside is a
+ * `.sel--vertical.sel--highlight` track with no fill of its own. Rows are the
+ * kit's items, sized from the kit's control size (a row is the size less the
+ * track's inset), their corners concentric with the frame's. The marker is the
+ * highlight; rows take no rollover glow and no label step of their own. */
+
+$ease: var(--cds-motion-easing-standard-productive);
+
+/* The portal's theme carrier (the trigger's theme class): no box of its own. */
+.cds-menu-portal {
+  display: contents;
+}
+
+/* ── the surface ─────────────────────────────────────────────────────── */
+
+.cds-menu {
+  /* Placed by the component (client px, whole device px). */
+  position: fixed;
+  z-index: 9000;
+  box-sizing: border-box;
+  color: theme.$text-primary;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  isolation: isolate;
+  max-inline-size: 18rem;
+  /* v11's menu widths. */
+  min-inline-size: 10rem;
+}
+
+/* Leaving (Menu.tsx): the pointer passes through it — nothing in it reacts
+   (a row's hover, the highlight leaving), and a press lands on what's below. */
+.cds-menu[data-leaving] {
+  pointer-events: none;
+}
+
+/* A gallery's menu, in flow (`inline`). */
+.cds-menu--inline {
+  position: relative;
+  z-index: auto;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.cds-menu__frame {
+  position: absolute;
+  z-index: -1;
+  border-radius: corners.$in;
+  background: var(--cds-surface, #{theme.$layer});
+  box-shadow: inset 0 0 0 1px
+    var(--cds-surface-divider, #{theme.$border-subtle-01});
+  inset: 0;
+}
+
+.cds-menu--no-outline .cds-menu__frame {
+  box-shadow: none;
+}
+
+.cds-menu--square .cds-menu__frame {
+  border-radius: 0;
+}
+
+/* `corners="full"`: the kit's pill rows (`.sel--full`, half a row's height)
+   and a frame concentric with them — half a row plus the list's inset, i.e.
+   half the control size (12 / 16 / 20 / 24px), not a capsule round the whole
+   menu. The frame sits outside the list, so it takes the size from the surface. */
+.cds-menu--full .cds-menu__frame {
+  border-radius: calc(var(--cds-menu-h) / 2);
+}
+
+.cds-menu--xs {
+  --cds-menu-h: 24px;
+}
+
+.cds-menu--sm {
+  --cds-menu-h: 32px;
+}
+
+.cds-menu--md {
+  --cds-menu-h: 40px;
+}
+
+.cds-menu--lg {
+  --cds-menu-h: 48px;
+}
+
+/* ── the list: a vertical highlight track ────────────────────────────── */
+
+.cds-menu .cds-menu__list.sel {
+  /* Rows read primary, as v11's do; the marker is the hover, so no step. */
+  --sel-off: #{theme.$text-primary};
+  --sel-off-hover: var(--sel-off);
+  /* A row's secondary text (the shortcut, the chevron), off and on the marker. */
+  --cds-menu-secondary: #{theme.$text-secondary};
+  --cds-menu-secondary-on: #{theme.$text-secondary};
+  /* The chosen value's mark (a menu's check or radio, at the row's start; a
+     listbox's check, at its end), off and on the marker: neutral, the
+     label's own `$icon-primary`: a value chosen in a popup gets a neutral
+     check, blue only under hero. Hero's is the brand's ink (below). */
+  --cds-menu-check: #{theme.$icon-primary};
+  --cds-menu-check-on: var(--cds-menu-check);
+  /* A row's content starts at a field's edge inset from the frame (8 · 12 ·
+     14 · 16px), so a listbox's options line up with its field's value and a
+     menu's with the fields beside it: the inset less the list's own, which the row sits
+     inside. The first ink is whatever leads the
+     row (the check or radio column, the icon, the label); the last, the
+     shortcut, the trailing check or the submenu chevron. */
+  --cds-menu-pad: calc(var(--sel-field-pad) - var(--sel-inset));
+
+  display: flex;
+  background: none;
+  inline-size: 100%;
+  outline: none;
+}
+
+/* A pill menu: the pill rule, half the control's height from the frame
+   (12 · 16 · 20 · 24px), the frame's own curve. */
+.cds-menu--full .cds-menu__list.sel {
+  --cds-menu-pad: calc(var(--sel-h) / 2 - var(--sel-inset));
+}
+
+/* A pill listbox (opened from a pill field): the rows' first ink tracks the
+   field's value — both sit half the field's height from the edge. The field's
+   pill inset is --tf-h / 2 (no track-inset subtraction); since the field and
+   its listbox share the same size, --sel-h = --tf-h here, so the inset is
+   simply --sel-h / 2. */
+.cds-menu--full.cds-listbox .cds-menu__list.sel {
+  --cds-menu-pad: calc(var(--sel-h) / 2);
+}
+
+.cds-menu .cds-menu__list.sel--inverse {
+  --cds-menu-secondary-on: var(--sel-on);
+  /* On the inverse marker the check takes its text color, as the label does
+     where the marker covers it: blue on the dark marker of the light theme is
+     3.62:1. */
+  --cds-menu-check-on: var(--sel-on);
+}
+
+/* Hero: the marker in the kit's brand, as the selection kit draws its hero
+   (a hero root is `sel--inverse` and `sel--hero`, so its secondary text and
+   check take the marker's label color on it). Off the marker, the chosen mark
+   is the brand's ink (`--cds-hero-ink`, `$link-primary` by default, 4.55–7.68:1). */
+.cds-menu .cds-menu__list.sel--hero {
+  --cds-menu-check: var(--cds-hero-ink, #{theme.$link-primary});
+}
+
+/* A danger row under the marker: the danger button's color, changing on the
+   glide's own clock (`--cds-menu-glide`, written as each glide starts; 0 when
+   the mark arrives). */
+.cds-menu .cds-menu__list[data-danger] {
+  --sel-selector: var(--cds-button-danger-primary, #da1e28);
+  --sel-outline: transparent;
+  /* A hero menu's glow is its brand's hover; on the red, the kit's own step. */
+  --sel-glow-color: initial;
+}
+
+.cds-menu .cds-menu__list .sel__indicator {
+  transition:
+    box-shadow var(--cds-motion-duration-fast-01) $ease,
+    background-color var(--cds-menu-glide, 0ms) $ease;
+}
+
+/* The highlight leaving (`data-hiding`, Menu.tsx): its labels cross-fade with
+   it. The row's own face is whole again (no hole cut for the marker) and the
+   on-marker face fades out over it on the marker's clock (motion-core's
+   hide: fast-01, exit-productive), so neither label is left in the wrong
+   color over a fading marker. Coming back, the highlight is simply there
+   (stillness): the rule goes and the face is whole at once. */
+.cds-menu .cds-menu__list[data-hiding][data-selection-shown] {
+  .sel__face {
+    mask: none;
+  }
+
+  .sel__face--on {
+    opacity: 0;
+    transition: opacity var(--cds-motion-duration-fast-01)
+      var(--cds-motion-easing-exit-productive);
+  }
+}
+
+/* Held: the kit's grab, instant in. */
+.cds-menu .cds-menu__list[data-grabbed] .sel__indicator {
+  transition: background-color var(--cds-menu-glide, 0ms) $ease;
+}
+
+/* Rows: full width, the kit's row height wherever they sit (in a group too). */
+.cds-menu .cds-menu__list .sel__item {
+  /* The marker is the hover: no rollover glow on the row itself. */
+  --rollover-hover: transparent;
+
+  flex: none;
+  block-size: calc(var(--sel-h) - 2 * var(--sel-inset));
+  inline-size: auto;
+  outline-offset: -2px;
+}
+
+/* The hit area bridges the gaps between rows and the track's inset. */
+.cds-menu .cds-menu__list.sel .sel__item::after {
+  inset: calc(-0.5 * var(--sel-gap)) calc(-1 * var(--sel-inset));
+}
+
+/* Keyboard focus: the highlight IS the focused row, so the ring is the
+   selection kit's on its marker — 2px in the marker's label color — gliding
+   with it (an outline on the row reached it a glide before the marker did). */
+.cds-menu .cds-menu__list.sel .sel__item:focus-visible {
+  --rollover-shadow: inset 0 0 transparent;
+
+  outline: none;
+}
+
+.cds-menu
+  .cds-menu__list.sel[data-selection-shown]:not([data-input='pointer']):has(
+    .sel__item:focus-visible
+  ) {
+  --sel-ring-gap: 0px;
+  --sel-ring: 2px;
+}
+
+.cds-menu .cds-menu__list.sel[data-danger] {
+  --sel-on: #{theme.$text-on-color};
+}
+
+/* Focus that followed the pointer (hovering a row focuses it,
+   `data-input="pointer"`): no ring — the highlight marks it. The ring comes
+   back with the first key (Menu.tsx). */
+
+.cds-menu .cds-menu__list .sel__face {
+  justify-content: flex-start;
+  /* Content at the field's edge inset from the frame (above; v11's is 16px). */
+  padding-inline: var(--cds-menu-pad);
+}
+
+.cds-menu__item--danger {
+  --sel-off: #{theme.$text-error};
+  /* Re-declared here: the list's `var(--sel-off)` resolves to primary text,
+     so a hovered danger row's own label would be dark wherever the marker
+     doesn't cover it (mid-glide, and as the highlight leaves), then ease to red. */
+  --sel-off-hover: var(--sel-off);
+}
+
+.cds-menu__item--danger .sel__face--on {
+  color: theme.$text-on-color;
+}
+
+.cds-menu .cds-menu__list .sel__item[aria-disabled='true'] {
+  color: theme.$text-disabled;
+  cursor: not-allowed;
+
+  .sel__face {
+    mask: none;
+  }
+
+  .sel__face--on {
+    display: none;
+  }
+
+  .sel__accessory {
+    color: inherit;
+  }
+}
+
+/* ── row content ─────────────────────────────────────────────────────── */
+
+/* The mark (check / radio) and icon columns: a row without one keeps the
+   space, so every label in the menu starts on one line. */
+.cds-menu__slot {
+  display: inline-flex;
+  flex: none;
+  block-size: var(--sel-icon);
+  inline-size: var(--sel-icon);
+}
+
+/* The chosen value's mark, at the row's start: the check's colour (above),
+   the marker's label colour where the marker covers it. */
+.cds-menu .cds-menu__mark {
+  color: var(--cds-menu-check);
+}
+
+.cds-menu .sel__face--on .cds-menu__mark {
+  color: var(--cds-menu-check-on);
+}
+
+.cds-menu .sel__text {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+.cds-menu .sel__accessory {
+  display: inline-flex;
+  flex: none;
+  color: var(--cds-menu-secondary);
+  padding-inline-start: 1rem;
+}
+
+.cds-menu .sel__face--on .sel__accessory {
+  color: var(--cds-menu-secondary-on);
+}
+
+.cds-menu__item--danger .sel__face--on .sel__accessory {
+  color: inherit;
+}
+
+/* The chevron ends on the row's padding like the shortcut's text. */
+.cds-menu__chevron {
+  margin-inline-end: -2px;
+}
+
+/* A listbox's check (ListboxSurface): the chosen option's, in the
+   shortcut's slot at the row's end, its glyph ending on the row's padding
+   like the shortcut's text. A menu's check is at the row's start (the mark
+   column, above). */
+.cds-menu .sel__accessory.cds-menu__check {
+  color: var(--cds-menu-check);
+  margin-inline-end: -2px;
+}
+
+.cds-menu .sel__face--on .sel__accessory.cds-menu__check {
+  color: var(--cds-menu-check-on);
+}
+
+/* ── groups and dividers ─────────────────────────────────────────────── */
+
+.cds-menu__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sel-gap);
+}
+
+.cds-menu__group-label {
+  @include type-style('label-01');
+
+  padding: var(--sel-inset) var(--cds-menu-pad) 0;
+  color: theme.$text-secondary;
+  user-select: none;
+}
+
+/* A group's divider: the surface's own line, the outline's colour
+   (`--cds-surface-divider`), edge to edge, so it meets the outline as one
+   line. Carbon draws a layer's edge and the dividers on it in one token
+   (`$border-subtle` on `$layer`; v11's `.cds--menu-item-divider`); the kit's
+   floating surface does the same with its own pair. */
+.cds-menu__divider {
+  flex: none;
+  background: var(--cds-surface-divider, #{theme.$border-subtle-01});
+  block-size: 1px;
+  margin-inline: calc(-1 * var(--sel-inset));
+}
+
+/* ── the trigger: OverflowMenu ───────────────────────────────────────── */
+
+/* (MenuButton is on the button shell: ../button/button-shell.scss.) The
+   family's buttons with the rollover, in Carbon's sizes. Size: the HOVER
+   EXPANSION (the mixin's default, a per-element choice) — a freestanding
+   trigger grows 1px toward the pointer and a press returns it to rest. */
+.cds-menu-trigger {
+  /* The painted surface sits `--cds-trigger-inset` inside the box (a
+     negative bleed): the kit's inset for the icon trigger (below). */
+  @include rollover(
+    $bleed-x: calc(-1 * var(--cds-trigger-inset, 0px)),
+    $bleed-y: calc(-1 * var(--cds-trigger-inset, 0px))
+  );
+  @include type-style('body-compact-01');
+  --rollover-rest: transparent;
+  --rollover-hover: color-mix(in srgb, currentColor 10%, transparent);
+  --cds-trigger-h: 48px;
+  /* The corners (three modes, as the family's): a pill
+     (`full`, the triggers' default), 8px (`rounded`), none (`square`). */
+  --cds-trigger-radius: #{corners.$in};
+
+  display: inline-flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: space-between;
+  border: 0;
+  border-radius: var(--cds-trigger-radius);
+
+  appearance: none;
+  background: transparent;
+  block-size: var(--cds-trigger-h);
+  color: theme.$text-primary;
+  cursor: pointer;
+  font: inherit;
+  gap: 8px;
+  padding-inline: 16px 12px;
+  -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+
+  svg {
+    flex: none;
+    fill: currentColor;
+  }
+
+  /* Keyboard focus: the family's ring — 2px in the trigger's own text color,
+     just inside its edge (a filled trigger keeps a rim of its fill, below). */
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: -2px;
+  }
+
+  &:disabled {
+    --rollover-rest: transparent;
+    --rollover-stroke: transparent;
+
+    color: theme.$text-disabled;
+    cursor: not-allowed;
+  }
+
+  /* Open: it holds its hover tint while its menu shows. */
+  &[aria-expanded='true'] {
+    --rollover-rest: var(--rollover-hover);
+  }
+}
+
+.cds-menu-trigger--xs {
+  --cds-trigger-h: 24px;
+}
+
+.cds-menu-trigger--sm {
+  --cds-trigger-h: 32px;
+}
+
+.cds-menu-trigger--md {
+  --cds-trigger-h: 40px;
+}
+
+.cds-menu-trigger--full {
+  /* 999px, not half the height: the hover grows 1px, and a radius pinned to
+     the rest height would flatten the grown circle's sides. */
+  --cds-trigger-radius: #{corners.$full};
+}
+
+.cds-menu-trigger--square {
+  --cds-trigger-radius: 0px;
+}
+
+/* The overflow trigger: an icon button in v11's square sizes, its hover and
+   press INSET by the kit's inset at its size (2 / 3 / 4 / 4px), as a track's
+   items and a toolbar surface's controls sit inside theirs — a 40px trigger in a 40px
+   row shows a 32px fill. The box stays v11's size (the hit area, the
+   layout); the fill's corner is concentric (the box's less the inset), and
+   the focus ring is drawn on the fill's edge. */
+.cds-menu-trigger--icon {
+  --cds-trigger-inset: 4px;
+  /* Its menu's gap (and a tooltip's) is taken from the fill; a start / end
+     edge stays on the box (styles/_anchor-inset.scss). */
+  --cds-anchor-inset: var(--cds-trigger-inset);
+
+  justify-content: center;
+  padding: 0;
+  color: theme.$icon-primary;
+
+  inline-size: var(--cds-trigger-h);
+
+  &::before {
+    border-radius: max(
+      0px,
+      calc(var(--cds-trigger-radius) - var(--cds-trigger-inset))
+    );
+  }
+
+  &:focus-visible {
+    outline-offset: calc(-2px - var(--cds-trigger-inset));
+  }
+
+  &.cds-menu-trigger--xs {
+    --cds-trigger-inset: 2px;
+  }
+
+  &.cds-menu-trigger--sm {
+    --cds-trigger-inset: 3px;
+  }
+}

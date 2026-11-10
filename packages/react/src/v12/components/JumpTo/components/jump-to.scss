@@ -1,0 +1,96 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon-labs/v12-styles/scss/cast-shadow-floating';
+
+/* JumpTo: the pill's host is sticky and 0 tall, at the start or the end of the
+   engine's out-of-flow layer, so the pill rides the view's edge. */
+.cds-jump-to__host {
+  position: sticky;
+  z-index: 3;
+  display: block;
+  padding: 0;
+  margin: 0;
+  block-size: 0;
+  pointer-events: none;
+
+  &[data-place='top'] {
+    inset-block-start: 0;
+  }
+
+  &[data-place='bottom'] {
+    inset-block-end: 0;
+  }
+}
+
+/* Clear of the scroll soft edge, so the pill is never faded by it. */
+.cds-jump-to {
+  position: absolute;
+  border-radius: 999px;
+  inline-size: max-content;
+  // Physical on purpose: a logical start with a physical translate puts it off-centre in RTL.
+  inset-inline-start: 50%;
+  isolation: isolate;
+  pointer-events: auto;
+  translate: -50% 0;
+
+  &--top {
+    inset-block-start: var(--cds-motion-soft-edge, 16px);
+  }
+
+  &--bottom {
+    inset-block-end: var(--cds-motion-soft-edge, 16px);
+  }
+
+  &:not([data-shown]) {
+    visibility: hidden;
+  }
+
+  &[data-leaving] {
+    pointer-events: none;
+  }
+}
+
+/* The cast shadow's host (the snap surface's `shadow`), the pill's sibling just before it: the
+   pill's place, drawn first, so it lies under the pill. motion-core sizes it and plays the snap on it. */
+.cast-floating:has(+ .cds-jump-to) {
+  position: absolute;
+  z-index: auto;
+  inset-inline-start: 50%;
+  translate: -50% 0;
+}
+
+.cast-floating:has(+ .cds-jump-to--top) {
+  inset-block-start: var(--cds-motion-soft-edge, 16px);
+}
+
+.cast-floating:has(+ .cds-jump-to--bottom) {
+  inset-block-end: var(--cds-motion-soft-edge, 16px);
+  inset-block-start: auto;
+}
+
+.cast-floating:has(+ .cds-jump-to) > .cast-floating__frame {
+  border-radius: 999px;
+}
+
+/* The snap's container: its clip's shape; the button paints the surface. */
+.cds-jump-to__frame {
+  position: absolute;
+  z-index: -1;
+  border-radius: 999px;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cds-jump-to__live {
+  position: absolute;
+  overflow: hidden;
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  white-space: nowrap;
+}

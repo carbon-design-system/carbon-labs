@@ -31,12 +31,48 @@
       "text": "api: button-axes — Button splits v11's kinds into `kind` (role), `variant` (`outlined`, `tonal`) and `frame` (`ghost`, `none`). TBD"
     }
   ],
+  "V12/Checkbox": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Checkbox/components/checkbox.scss",
+      "line": 65,
+      "text": "hover-tint — Hover and press as a share of the text colour mixed into the fill. TBD"
+    }
+  ],
   "V12/ContentSwitcher": [
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/ContentSwitcher/proposals/README.md",
       "line": 3,
       "text": "api: activation-prop — One keyboard word for selection lists. TBD"
+    }
+  ],
+  "V12/EmptyState": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/EmptyState/proposals/README.md",
+      "line": 3,
+      "text": "api: logical-positions — Placement values are logical. TBD"
+    }
+  ],
+  "V12/JobsTray": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/JobsTray/components/jobs-tray.scss",
+      "line": 44,
+      "text": "token: surface-quiet — The quiet surface fill: side nav panel, tiles, tables, jobs tray, tabs fade. replaces: `$layer-01`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/JobsTray/components/jobs-tray.scss",
+      "line": 46,
+      "text": "token: surface-rule — The quiet surface's hairline. replaces: `$border-subtle`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/JobsTray/components/jobs-tray.scss",
+      "line": 63,
+      "text": "token: surface-divider — A line inside the surface (table rows, header underline). replaces: `$border-subtle`. TBD"
     }
   ],
   "V12/Notification": [
@@ -85,6 +121,20 @@
       "file": "packages/react/src/v12/components/ProgressIndicator/components/progress-indicator.scss",
       "line": 201,
       "text": "hold-weight-width — A label that gets heavier on a state keeps its box width. TBD"
+    }
+  ],
+  "V12/RadioButton": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/RadioButton/components/radio-button.scss",
+      "line": 70,
+      "text": "hover-tint — Hover and press as a share of the text colour mixed into the fill. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/RadioButton/proposals/README.md",
+      "line": 3,
+      "text": "api: logical-positions — Placement values are logical. TBD"
     }
   ],
   "V12/SelectList": [
@@ -153,6 +203,14 @@
       "file": "packages/react/src/v12/components/Tag/components/tag.scss",
       "line": 75,
       "text": "radius-tag-rounded — A tag's rounded corner at every size. TBD"
+    }
+  ],
+  "V12/TextArea": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/TextArea/proposals/README.md",
+      "line": 3,
+      "text": "api: textarea-size — TextArea takes the field family's `size` (xs 24 to lg 48). TBD"
     }
   ],
   "V12/TextInput": [

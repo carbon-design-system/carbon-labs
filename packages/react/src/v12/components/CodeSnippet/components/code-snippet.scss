@@ -1,0 +1,323 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/corners';
+
+/* CodeSnippet — v11's CodeSnippet on the kit's quiet surface
+   (CodeSnippet.tsx).
+
+     .cds-snippet                 the code's well: `--cds-snippet-fill`, no
+                                 outline, 8px corners (below: why)
+       .cds-snippet__scroller     the kit's Scroller (its pill)
+         .cds-snippet__container  its viewport: the textbox (16px in)
+           .cds-snippet__pre > code the code, code-01 on 16px rows
+       .cds-snippet__copy         the CopyButton, at the end (40px box, its
+                                 fill 4px in, full round: an icon on its own)
+       .cds-snippet__expand       multi's Show more, 4px in at the bottom end
+
+   Multi's container sits in the disclosure module's body and clip
+   (disclosure.scss): a body that rests partly open. Its rows are the
+   collapsed height (`--cds-disclosure-shut`) and the rest (0fr shut, 1fr
+   open); the clip spans both, so the body's height is the collapsed height
+   plus the opened share of the rest, and the travel is only the rest. */
+
+$_soft: var(--cds-motion-soft-edge, 16px);
+
+/* The code's fill: a well, not a field, so it reads apart from a text input,
+   and quiet.
+
+   A field is a fill and an outline, and the outline carries its every state
+   (hover, press, focus, error: the field ladder). A snippet has no outline
+   (v11's has none either: `$layer`, no border): what reads as an edge reads
+   as an input. Its fill is the kit's `--cds-surface-code` (styles/_surface.scss):
+   a quiet step below the page in every theme, as code environments and
+   editors draw code (about 3 L*: #0f0f0f on
+   g100), so it sits on the other side of the page from the field on
+   g100; white has no room above the field, so its code goes one
+   step past it (#efefef). Single, multi and inline all take it. Set
+   `--cds-snippet-fill` to change it for one snippet. */
+.cds-snippet,
+.cds-snippet-inline {
+  --cds-snippet-fill: var(--cds-surface-code);
+}
+
+.cds-snippet {
+  @include type-style('code-01');
+
+  position: relative;
+  box-sizing: border-box;
+  border-radius: corners.$in;
+  background-color: var(--cds-snippet-fill);
+  color: theme.$text-primary;
+  inline-size: 100%;
+  max-inline-size: 48rem;
+  min-inline-size: 0;
+
+  code {
+    @include type-style('code-01');
+  }
+}
+
+.cds-snippet__pre {
+  margin: 0;
+  white-space: pre;
+}
+
+/* The scroller: the kit's Scroller, its pill over the code. Its keyboard
+   ring is the family's (2px in the text colour, inside the edge), at the
+   snippet's corners. */
+.cds-snippet__scroller {
+  border-radius: inherit;
+  min-inline-size: 0;
+}
+
+/* The textbox, the Scroller's viewport. A soft edge where code runs past the
+   end (v11's fade, on the kit's soft-edge token), in its own end padding, so
+   it covers only code that overflows; gone while it has focus. The mask is
+   the viewport's, so the pill (the Scroller's) stays whole. */
+.cds-snippet__container {
+  position: relative;
+  box-sizing: border-box;
+  border-radius: inherit;
+  mask-image: linear-gradient(
+    to right,
+    #000000 calc(100% - #{$_soft}),
+    transparent
+  );
+  min-inline-size: 0;
+  padding-inline: $spacing-05;
+
+  &:focus-within {
+    mask-image: none;
+  }
+}
+
+[dir='rtl'] .cds-snippet__container {
+  mask-image: linear-gradient(
+    to left,
+    #000000 calc(100% - #{$_soft}),
+    transparent
+  );
+}
+
+/* ── single ─────────────────────────────────────────────────────────────── */
+
+.cds-snippet--single {
+  display: flex;
+  align-items: center;
+  block-size: 40px;
+
+  > .cds-snippet__scroller {
+    flex: 1 1 auto;
+    align-self: stretch;
+  }
+
+  .cds-snippet__container {
+    display: flex;
+    align-items: center;
+  }
+
+  .cds-snippet__copy {
+    flex: none;
+    block-size: 40px;
+  }
+}
+
+/* ── multi ──────────────────────────────────────────────────────────────── */
+
+.cds-snippet--multi {
+  > .cds-snippet__copy {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+  }
+
+  .cds-snippet__container {
+    padding-block: $spacing-05;
+  }
+
+  /* Room for the copy button at the end (its ghost fill shows the code
+     through, so the code doesn't run under it). */
+  &:not(.cds-snippet--no-copy) .cds-snippet__container {
+    padding-inline-end: 40px;
+  }
+}
+
+.cds-snippet--wraptext .cds-snippet__pre {
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+/* Partly open at rest: the collapsed rows, then the rest of the code. */
+.cds-snippet__body {
+  grid-template-rows: var(--cds-disclosure-shut, 0px) 0fr;
+
+  &[data-open] {
+    grid-template-rows: var(--cds-disclosure-shut, 0px) 1fr;
+  }
+
+  > .cds-snippet__clip {
+    grid-row: 1 / span 2;
+  }
+
+  /* The code is already in place: the body uncovers it, it doesn't arrive
+     (no 8px lead, no fade under reduced motion). */
+  > .cds-snippet__clip > .cds-disclosure__content,
+  &[data-open] > .cds-snippet__clip > .cds-disclosure__content,
+  &[data-reduced] > .cds-snippet__clip > .cds-disclosure__content {
+    opacity: 1;
+    transition: none;
+    translate: none;
+  }
+}
+
+/* With Show more: the button's row under the code (4px round the button). */
+.cds-snippet--has-more {
+  padding-block-end: 40px;
+
+  .cds-snippet__container {
+    padding-block-end: 0;
+  }
+}
+
+.cds-snippet .cds-snippet__expand {
+  --btn-radius: #{corners.$small};
+
+  @include font-family('sans');
+
+  position: absolute;
+  inset-block-end: 4px;
+  inset-inline-end: 4px;
+}
+
+/* ── inline ─────────────────────────────────────────────────────────────── */
+
+.cds-snippet-inline {
+  display: inline;
+  vertical-align: baseline;
+}
+
+.cds-snippet--inline {
+  @include rollover;
+
+  /* The same well, no outline; the hover a step further toward the text. */
+  --rollover-rest: var(--cds-snippet-fill);
+  --rollover-hover: color-mix(
+    in srgb,
+    var(--cds-snippet-fill),
+    #{theme.$text-primary} 8%
+  );
+
+  display: inline-block;
+  padding: 2px 0;
+  border: 0;
+  border-radius: corners.$small;
+  margin: 0;
+
+  appearance: none;
+  background: transparent;
+  box-shadow: none;
+  color: theme.$text-primary;
+  cursor: pointer;
+  inline-size: auto;
+  max-inline-size: none;
+  vertical-align: baseline;
+
+  code {
+    position: relative;
+    display: block;
+    padding-inline: $spacing-03;
+    white-space: pre;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 1px;
+  }
+
+  &:disabled {
+    color: theme.$text-disabled;
+    cursor: not-allowed;
+  }
+}
+
+/* No copy: the same fill, no hover. */
+span.cds-snippet--inline.cds-snippet--no-copy {
+  display: inline-block;
+  padding: 2px 0;
+  border-radius: corners.$small;
+  background: var(--cds-snippet-fill);
+  cursor: auto;
+  inline-size: auto;
+
+  code {
+    display: block;
+    padding-inline: $spacing-03;
+    white-space: pre;
+  }
+}
+
+/* ── disabled ───────────────────────────────────────────────────────────── */
+
+.cds-snippet--disabled {
+  color: theme.$text-disabled;
+}
+
+/* ── loading ────────────────────────────────────────────────────────────── */
+
+/* The code's lines as blocks, each one 16px row. In flow while loading;
+   over the code through the handoff. */
+.cds-snippet__skeleton {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: center;
+  min-inline-size: 0;
+  pointer-events: none;
+}
+
+.cds-snippet__pre + .cds-snippet__skeleton {
+  position: absolute;
+  inset-inline: $spacing-05;
+
+  .cds-snippet--single & {
+    inset-block: 0;
+  }
+
+  .cds-snippet--multi & {
+    inset-block-start: $spacing-05;
+  }
+}
+
+.cds-snippet--loading .cds-snippet__container {
+  mask-image: none;
+}
+
+/* The live regions that read the feedback out. */
+.cds-snippet__status {
+  position: absolute;
+  overflow: hidden;
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+@media (forced-colors: active) {
+  .cds-snippet {
+    outline: 1px solid CanvasText;
+  }
+}

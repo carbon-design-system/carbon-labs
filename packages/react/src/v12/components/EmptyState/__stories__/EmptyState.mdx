@@ -1,0 +1,46 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as EmptyStateStories from './EmptyState.stories.tsx';
+
+<Meta of={EmptyStateStories} />
+
+# EmptyState
+
+What a region shows when it has nothing to show: first use, no results, an
+error, no access. It has a visual, a required `title`, a `subtitle`, an `action`
+and a `link`, and no words of its own. The visual is your own image, a still
+32px `icon`, or the drawing for a `kind`; `EmptyStateArt` is that drawing alone.
+`context` is the region it sits in, a page, a table's place, a panel or a tile,
+and sets the size and the alignment. With no context, it is a panel on a framed
+surface and a page elsewhere. It has no surface of its own.
+
+<Canvas of={EmptyStateStories.Default} />
+
+<Canvas of={EmptyStateStories.ListCleared} />
+
+<Canvas of={EmptyStateStories.Kinds} />
+
+<Canvas of={EmptyStateStories.Contexts} />
+
+<Canvas of={EmptyStateStories.IllustrationPositions} />
+
+<Canvas of={EmptyStateStories.WithIcon} />
+
+## Motion
+
+- **No motion of its own:** it is simply there. The drawings and the icon are
+  still.
+- **Content swap:** a swap to or from the empty state is its region's content
+  swap, out then in. The old content leaves fully before the new content comes
+  in, so no frame shows both. In the `ListCleared` story, the region plays it.
+- **Rollover:** the action and the link take the kit Button's and Link's
+  rollover. `timeScale` multiplies their clock.
+
+## Reduced motion
+
+The empty state has nothing of its own to change. The region's content swap is a
+snap: the new content is there on the frame the old one goes. The action and the
+link follow their own reduced rules.
+
+## Props
+
+<ArgTypes of={EmptyStateStories} />

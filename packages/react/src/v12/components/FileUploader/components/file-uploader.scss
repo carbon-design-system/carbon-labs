@@ -1,0 +1,367 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/corners';
+
+/* The file uploader — FileUploader, FileUploaderButton,
+   FileUploaderDropContainer, FileUploaderItem (their headers have the
+   behavior). The items are on the kit's quiet surface; their places open
+   and close through the disclosure module (disclosure.scss). */
+
+$_surface: var(--cds-surface, #{theme.$layer-01});
+
+.cds-file__visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip: rect(0, 0, 0, 0);
+  inline-size: 1px;
+  visibility: inherit;
+  white-space: nowrap;
+}
+
+/* ── FileUploader: title, description, button, files ─────────────────── */
+
+.cds-file-uploader {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: theme.$text-primary;
+}
+
+.cds-file__label {
+  @include type-style('heading-compact-01');
+
+  margin: 0 0 0.5rem;
+  color: theme.$text-primary;
+}
+
+.cds-file__label-description {
+  @include type-style('body-compact-01');
+
+  margin: 0 0 1rem;
+  color: theme.$text-secondary;
+}
+
+.cds-file__label--disabled,
+.cds-file__label-description--disabled {
+  color: theme.$text-disabled;
+}
+
+.cds-file__container {
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  margin-block-start: 1rem;
+}
+
+/* ── FileUploaderDropContainer ─────────────────────────────────────────── */
+
+.cds-file {
+  inline-size: 100%;
+  max-inline-size: 20rem;
+}
+
+.cds-file__drop {
+  @include rollover;
+  @include type-style('body-compact-01');
+  --rollover-rest: transparent;
+  --rollover-hover: color-mix(
+    in srgb,
+    var(--cds-text-primary, #161616) 6%,
+    transparent
+  );
+
+  display: flex;
+  box-sizing: border-box;
+  align-items: flex-start;
+  padding: 1rem;
+  border: 0;
+  border-radius: corners.$in;
+  margin: 0;
+
+  appearance: none;
+  background: transparent;
+  block-size: 6rem;
+  color: theme.$link-primary;
+  cursor: pointer;
+  font-family: inherit;
+  inline-size: 100%;
+  text-align: start;
+
+  /* The dashed hairline at rest; dragging a file over it, the 2px blue
+     ring inside the edge. Both on one layer over the rollover, so the
+     press's inset never pulls the edge in. */
+  &::after {
+    position: absolute;
+    border: 1px dashed theme.$border-strong-01;
+    border-radius: inherit;
+    content: '';
+    inset: 0;
+    outline: 2px solid transparent;
+    outline-offset: -2px;
+    pointer-events: none;
+    transition:
+      outline-color var(--cds-motion-duration-fast-01)
+        var(--cds-motion-easing-standard-productive),
+      border-color var(--cds-motion-duration-fast-01)
+        var(--cds-motion-easing-standard-productive);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid theme.$text-primary;
+    outline-offset: -2px;
+  }
+}
+
+/* A file held over it: the ring in (fast-02, as a hover's in), the dashed
+   edge under it gone, and the rollover's hover glow on, following the file
+   (its position written from each dragover). */
+.cds-file__drop[data-drag-over] {
+  &::after {
+    border-color: transparent;
+    outline-color: theme.$focus;
+    transition-duration: var(--cds-motion-duration-fast-02);
+  }
+
+  &::before {
+    --cds-motion-rollover-hover: 1;
+    --cds-motion-rollover-grow: 1;
+
+    transition:
+      --cds-motion-rollover-hover var(--cds-motion-duration-fast-02)
+        var(--cds-motion-easing-standard-productive),
+      --cds-motion-rollover-grow var(--cds-motion-duration-moderate-02)
+        var(--cds-motion-easing-entrance-productive);
+  }
+}
+
+/* Reduced motion (the system's, or a provider's): at once. */
+.cds-file__drop[data-reduced] {
+  &::before,
+  &::after {
+    transition-duration: var(--cds-motion-duration-floor);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cds-file__drop::after {
+    transition-duration: var(--cds-motion-duration-floor);
+  }
+}
+
+.cds-file__drop--disabled,
+.cds-file__drop:disabled {
+  color: theme.$text-disabled;
+  cursor: not-allowed;
+
+  &::after {
+    border-color: theme.$border-disabled;
+  }
+}
+
+/* ── FileUploaderItem ──────────────────────────────────────────────────── */
+
+/* The row: a disclosure body (its place opens and closes); the 8px under
+   each item is inside the content, so it opens and closes with it. */
+.cds-file__row {
+  inline-size: 100%;
+}
+
+.cds-file__row-content {
+  padding-block-end: 0.5rem;
+}
+
+/* The surface. Its control cell is square, `--file-ctl` wide, set
+   `--file-ctl-inset` in from the end, so every face (spinner, mark, remove)
+   shares one centre and the remove button's circle sits concentric in the
+   row. */
+.cds-file__selected-file {
+  --file-row: 48px;
+  --file-ctl: 32px;
+  --file-ctl-inset: 8px;
+
+  position: relative;
+  display: grid;
+  box-sizing: border-box;
+  align-items: center;
+  border-radius: corners.$in;
+  background: $_surface;
+  color: theme.$text-primary;
+  grid-template-columns: minmax(0, 1fr) auto;
+  max-inline-size: 20rem;
+  min-block-size: var(--file-row);
+}
+
+.cds-file__selected-file--md {
+  --file-row: 40px;
+  --file-ctl-inset: 4px;
+}
+
+.cds-file__selected-file--sm {
+  --file-row: 32px;
+  --file-ctl: 24px;
+  --file-ctl-inset: 4px;
+}
+
+/* Invalid: a 2px error ring inside the edge (v11's). */
+.cds-file__selected-file--invalid {
+  outline: 2px solid theme.$support-error;
+  outline-offset: -2px;
+}
+
+.cds-file__name-cell {
+  display: flex;
+  align-items: center;
+  min-block-size: var(--file-row);
+  min-inline-size: 0;
+  padding-inline: 1rem 0.5rem;
+}
+
+.cds-file__name {
+  @include type-style('body-compact-01');
+
+  overflow: hidden;
+
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* A long name: a button that shows it whole in a tooltip (v11). */
+.cds-file__name-tooltip {
+  display: flex;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+}
+
+.cds-file__name-button {
+  display: block;
+  padding: 0;
+  border: 0;
+  appearance: none;
+  background: none;
+  color: inherit;
+  cursor: default;
+  font: inherit;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  text-align: start;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    border-radius: corners.$mark;
+    outline: 2px solid theme.$text-primary;
+    outline-offset: 2px;
+  }
+}
+
+/* The status slot: the faces share one cell; a change is out, then in. */
+.cds-file__state {
+  display: grid;
+  align-items: center;
+  justify-items: end;
+  margin-inline-end: var(--file-ctl-inset);
+}
+
+.cds-file__face {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  block-size: var(--file-ctl);
+  grid-area: 1 / 1;
+
+  /* A single glyph sits centred in the control cell. */
+  > .cds-file__ring {
+    margin-inline: calc((var(--file-ctl) - 16px) / 2);
+  }
+}
+
+.cds-file__face[inert] {
+  pointer-events: none;
+}
+
+/* The progress mark is the kit's ProgressRing (progress-ring.scss): a ring
+   with a known size, the kit's one Spinner without; its own clocks, phase and
+   reduced form. This only sets it in the cell, and its colour when disabled. */
+
+/* v11's invalid mark before the remove button: WarningFilled in the error
+   color, as the kit's field error mark draws it. */
+.cds-file__invalid-mark {
+  display: grid;
+  color: theme.$support-error;
+  margin-inline-end: 0.25rem;
+  place-items: center;
+
+  svg {
+    display: block;
+    fill: currentColor;
+  }
+}
+
+.cds-file__close {
+  flex: none;
+}
+
+/* The error, its own body under the name: across both columns, under the
+   divider. */
+.cds-file__error-body {
+  grid-column: 1 / -1;
+}
+
+.cds-file__requirement {
+  padding: 0.5rem 0 0.75rem;
+  border-block-start: 1px solid
+    var(--cds-surface-divider, #{theme.$border-subtle-01});
+  margin-inline: 1rem;
+}
+
+.cds-file__requirement-title {
+  @include type-style('heading-compact-01');
+
+  color: theme.$text-error;
+}
+
+.cds-file__requirement-supplement {
+  @include type-style('body-compact-01');
+
+  margin: 0.25rem 0 0;
+  color: theme.$text-primary;
+}
+
+.cds-file__selected-file--disabled {
+  color: theme.$text-disabled;
+
+  .cds-file__ring {
+    color: theme.$icon-disabled;
+  }
+}
+
+/* A copy closing a removed item's place: nothing in it answers. */
+[data-file-leaving] {
+  pointer-events: none;
+}
+
+/* ── FileUploaderSkeleton ─────────────────────────────────────────────── */
+
+.cds-file-uploader--skeleton {
+  gap: 0.5rem;
+}

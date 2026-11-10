@@ -15,6 +15,7 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GalleryPage, PAGE_ARGS } from './GalleryPage';
 import { WithWebComponents } from './statusControls';
+import { WithV12Controls } from './host';
 
 const meta: Meta = {
   title: 'V12/Motion Icons/Gallery',
@@ -25,7 +26,7 @@ const meta: Meta = {
   // every arg change, a switch or a search, it walked every mounted card
   // (thousands of nodes once Hover is open), 1s of main thread each time.
   globals: { a11y: { manual: true } },
-  decorators: [WithWebComponents],
+  decorators: [WithWebComponents, WithV12Controls],
 };
 export default meta;
 

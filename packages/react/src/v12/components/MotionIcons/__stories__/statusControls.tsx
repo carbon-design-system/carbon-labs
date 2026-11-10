@@ -91,6 +91,12 @@ export interface GalleryUI {
     kind?: 'ghost' | 'icon';
     'aria-label'?: string;
   }>;
+  /** A whole number of 0 or more, with steppers (a notification's count). */
+  NumberInput?: React.ComponentType<{
+    value: number;
+    onChange: (n: number) => void;
+    label: string;
+  }>;
   /** The page theme, when the host can switch it. */
   theme?: { value: Theme; onChange: (t: Theme) => void };
   /** Page state the host keeps in its URL (Storybook: the story's args), read once and written on change. */
@@ -343,54 +349,59 @@ export function CountControls({
   onPlacement?: (p: CountPlacement) => void;
 }) {
   const id = React.useId();
+  const { NumberInput: Host } = useGalleryUI();
   return (
     <>
       <Field label="count">
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
-          <div
-            className="cds--form-item"
-            style={{ flex: 'none', inlineSize: '8.5rem' }}>
-            <div className="cds--number cds--number--nolabel cds--number--sm">
-              <label htmlFor={id} className="cds--label cds--visually-hidden">
-                count
-              </label>
-              <div className="cds--number__input-wrapper">
-                <input
-                  id={id}
-                  type="number"
-                  min={0}
-                  step={1}
-                  inputMode="numeric"
-                  value={count}
-                  style={{ fontVariantNumeric: 'tabular-nums' }}
-                  onChange={(e) => {
-                    const n = Number.parseInt(e.target.value, 10);
-                    onCount(Number.isFinite(n) ? Math.max(0, n) : 0);
-                  }}
-                />
-                <div className="cds--number__controls">
-                  <button
-                    type="button"
-                    className="cds--number__control-btn down-icon"
-                    aria-label="Count down"
-                    title="Count down"
-                    onClick={() => onCount(Math.max(0, count - 1))}>
-                    <Glyph d={SUBTRACT} className="down-icon" />
-                  </button>
-                  <div className="cds--number__rule-divider" />
-                  <button
-                    type="button"
-                    className="cds--number__control-btn up-icon"
-                    aria-label="Count up"
-                    title="Count up"
-                    onClick={() => onCount(count + 1)}>
-                    <Glyph d={ADD} className="up-icon" />
-                  </button>
-                  <div className="cds--number__rule-divider" />
+          {Host ? (
+            <Host value={count} onChange={onCount} label="count" />
+          ) : (
+            <div
+              className="cds--form-item"
+              style={{ flex: 'none', inlineSize: '8.5rem' }}>
+              <div className="cds--number cds--number--nolabel cds--number--sm">
+                <label htmlFor={id} className="cds--label cds--visually-hidden">
+                  count
+                </label>
+                <div className="cds--number__input-wrapper">
+                  <input
+                    id={id}
+                    type="number"
+                    min={0}
+                    step={1}
+                    inputMode="numeric"
+                    value={count}
+                    style={{ fontVariantNumeric: 'tabular-nums' }}
+                    onChange={(e) => {
+                      const n = Number.parseInt(e.target.value, 10);
+                      onCount(Number.isFinite(n) ? Math.max(0, n) : 0);
+                    }}
+                  />
+                  <div className="cds--number__controls">
+                    <button
+                      type="button"
+                      className="cds--number__control-btn down-icon"
+                      aria-label="Count down"
+                      title="Count down"
+                      onClick={() => onCount(Math.max(0, count - 1))}>
+                      <Glyph d={SUBTRACT} className="down-icon" />
+                    </button>
+                    <div className="cds--number__rule-divider" />
+                    <button
+                      type="button"
+                      className="cds--number__control-btn up-icon"
+                      aria-label="Count up"
+                      title="Count up"
+                      onClick={() => onCount(count + 1)}>
+                      <Glyph d={ADD} className="up-icon" />
+                    </button>
+                    <div className="cds--number__rule-divider" />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
           <GhostButton onClick={() => onCount(count + 5)}>+5</GhostButton>
           <GhostButton onClick={() => onCount(0)}>0</GhostButton>
         </span>

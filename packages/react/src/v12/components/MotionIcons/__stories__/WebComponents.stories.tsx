@@ -16,6 +16,9 @@
  */
 import React, { useEffect, useRef, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { Button } from '@carbon-labs/react-button';
+import { ContentSwitcher, Switch } from '@carbon-labs/react-content-switcher';
+import { Select, SelectItem } from '@carbon-labs/react-select';
 import '@carbon-labs/wc-motion-icons/icons/add';
 import '@carbon-labs/wc-motion-icons/icons/search';
 import '@carbon-labs/wc-motion-icons/icons/settings';
@@ -107,7 +110,7 @@ function ToggleWithEvents() {
 }
 export const Toggle: Story = { render: () => <ToggleWithEvents /> };
 
-/** A progress step's icon, set by `value` (its clicks don't change it): each button sets every size to that state. */
+/** A progress step's icon, set by `value` (its clicks don't change it): the switcher sets every size to that state. */
 function ProgressSteps() {
   const states = ['incomplete', 'current', 'complete', 'invalid'] as const;
   const [value, setValue] = useState<(typeof states)[number]>('incomplete');
@@ -123,17 +126,16 @@ function ProgressSteps() {
           />
         ))}
       </div>
-      <div style={{ display: 'flex', gap: 8 }}>
-        {states.map((s) => (
-          <button
-            key={s}
-            type="button"
-            className="cn-btn"
-            aria-pressed={s === value}
-            onClick={() => setValue(s)}>
-            {s}
-          </button>
-        ))}
+      <div>
+        <ContentSwitcher
+          size="sm"
+          aria-label="value"
+          selectedIndex={states.indexOf(value)}
+          onChange={({ index }) => index != null && setValue(states[index])}>
+          {states.map((s) => (
+            <Switch key={s} name={s} text={s} />
+          ))}
+        </ContentSwitcher>
       </div>
     </div>
   );
@@ -172,7 +174,6 @@ function Actions() {
       .closest('[data-actions]')
       ?.querySelectorAll<Actor>(tags.join(',')) ?? []),
   ];
-  const ghost = 'cn-btn'; // The host Storybook's ghost button, where its stylesheet has one; plain elsewhere
   return (
     <div style={{ display: 'grid', gap: 12 }} data-actions="">
       <div style={row}>
@@ -191,28 +192,25 @@ function Actions() {
         ))}
       </div>
       <div style={{ display: 'flex', gap: 8 }}>
-        <button
-          type="button"
-          className={ghost}
+        <Button
+          frame="ghost"
+          size="sm"
           onClick={(e) => actors(e).forEach((el) => void el.trigger?.())}>
           el.trigger()
-        </button>
-        <button
-          type="button"
-          className={ghost}
+        </Button>
+        <Button
+          frame="ghost"
+          size="sm"
           onClick={(e) =>
             void actors(e)[0]?.trigger?.({
               then: { status: 'success', for: 1500 },
             })
           }>
           copy: then success
-        </button>
-        <button
-          type="button"
-          className={ghost}
-          onClick={() => setLooping((v) => !v)}>
+        </Button>
+        <Button frame="ghost" size="sm" onClick={() => setLooping((v) => !v)}>
           renew: {looping ? 'remove loop (hands off to success)' : 'set loop'}
-        </button>
+        </Button>
       </div>
     </div>
   );
@@ -265,18 +263,27 @@ export const ByName: Story = {
       const [name, setName] = useState('settings');
       return (
         <div style={row}>
-          <select value={name} onChange={(e) => setName(e.target.value)}>
-            {[
-              'settings',
-              'add',
-              'search',
-              'download',
-              'bookmark-toggle',
-              'save',
-            ].map((n) => (
-              <option key={n}>{n}</option>
-            ))}
-          </select>
+          <div style={{ inlineSize: 240 }}>
+            <Select
+              id="mi-wc-name"
+              labelText="name"
+              size="sm"
+              value={name}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                setName(e.target.value)
+              }>
+              {[
+                'settings',
+                'add',
+                'search',
+                'download',
+                'bookmark-toggle',
+                'save',
+              ].map((n) => (
+                <SelectItem key={n} value={n} text={n} />
+              ))}
+            </Select>
+          </div>
           <El tag="clabs-motion-icon" name={name} size="32" />
         </div>
       );

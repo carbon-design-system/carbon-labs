@@ -1,0 +1,159 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/size-classes';
+@use '@carbon-labs/v12-styles/scss/text-pairs';
+
+/* DescriptionList (`DescriptionList.tsx`): the term over its value is the
+   kit's label pair; an InlineEdit's text lines up with the plain values. */
+
+$fast-01: var(--cds-motion-duration-fast-01);
+
+.cds-description-list {
+  /* The value's line height, the space between pairs, and a beside term's column. */
+  --dl-lh: 18px;
+  --dl-row-gap: #{$spacing-06};
+  --dl-term-w: minmax(8rem, 33%);
+
+  container-type: inline-size;
+  min-inline-size: 0;
+}
+
+.cds-description-list--sm {
+  --dl-row-gap: #{$spacing-05};
+}
+
+.cds-description-list--lg {
+  --dl-lh: 22px;
+  --dl-row-gap: #{$spacing-07};
+}
+
+.cds-description-list__items {
+  display: grid;
+  padding: 0;
+  margin: 0;
+  column-gap: $spacing-07;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: var(--dl-row-gap);
+}
+
+.cds-description-list[data-columns='2'] > .cds-description-list__items {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@container (min-width: #{size-classes.$medium}) {
+  .cds-description-list[data-columns='auto'] > .cds-description-list__items {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.cds-description-list__item {
+  display: flex;
+  flex-direction: column;
+  gap: text-pairs.$label-to-controls;
+  min-inline-size: 0;
+}
+
+.cds-description-list__item--span {
+  grid-column: 1 / -1;
+}
+
+/* Beside: the term in its own column, on the value's first line. */
+.cds-description-list--inline .cds-description-list__item {
+  display: grid;
+  align-items: baseline;
+  column-gap: $spacing-05;
+  grid-template-columns: var(--dl-term-w) minmax(0, 1fr);
+}
+
+.cds-description-list__term {
+  @include type-style('label-01');
+
+  margin: 0;
+  color: theme.$text-secondary;
+}
+
+.cds-description-list--lg .cds-description-list__term {
+  @include type-style('body-compact-01');
+}
+
+.cds-description-list__value {
+  @include type-style('body-compact-01');
+
+  display: flex;
+  align-items: flex-start;
+  margin: 0;
+  color: theme.$text-primary;
+  gap: $spacing-02;
+  line-height: var(--dl-lh);
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+.cds-description-list--lg .cds-description-list__value {
+  @include type-style('body-compact-02');
+
+  line-height: var(--dl-lh);
+}
+
+.cds-description-list__reveal {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+/* The value and its copy button, beside its text. */
+.cds-description-list__content {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-02;
+  min-inline-size: 0;
+}
+
+/* A row of its own, so an inline box (a tag) sits on the line, not on its baseline. */
+.cds-description-list__text {
+  display: flex;
+  align-items: center;
+  min-block-size: var(--dl-lh);
+  min-inline-size: 0;
+}
+
+.cds-description-list__text > .cds-inline-edit--fill {
+  flex: 1 1 auto;
+}
+
+.cds-description-list__text:has(> .cds-inline-edit--fill) {
+  flex: 1 1 auto;
+}
+
+/* An InlineEdit's text on the line of the values round it. */
+.cds-description-list__text > .cds-inline-edit {
+  margin-block: calc((var(--dl-lh) - var(--ie-h)) / 2);
+  margin-inline-start: calc(-1 * var(--ie-pad));
+}
+
+/* The copy button on the value's line, shown on hover or focus. */
+.cds-description-list__copy {
+  display: inline-flex;
+  flex: none;
+  margin-block: calc((var(--dl-lh) - 24px) / 2);
+  opacity: 0;
+  transition: opacity $fast-01 linear;
+}
+
+.cds-description-list__item:hover .cds-description-list__copy,
+.cds-description-list__copy:focus-within {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .cds-description-list__copy {
+    opacity: 1;
+  }
+}

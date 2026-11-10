@@ -7,7 +7,7 @@
 
 import React, { useState, type SVGProps } from 'react';
 import '@carbon-labs/react-selection-kit/scss/selection-kit.scss';
-import { Checkbox } from '@carbon/react';
+import { Checkbox } from '@carbon-labs/react-checkbox';
 import { ContentSwitcher, IconSwitch, Switch, SwitchPanels } from '../index';
 import type { ContentSwitcherProps } from '../index';
 import mdx from './ContentSwitcher.mdx';

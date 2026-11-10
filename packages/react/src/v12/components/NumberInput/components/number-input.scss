@@ -1,0 +1,126 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+
+/* NumberInput — what the text input's field (text-input.scss) doesn't already
+ * draw: the platform's spin buttons hidden,
+ * the steppers inset at the field's end, and the rolling number over the
+ * input's own text. */
+
+/* The platform's spin buttons: the steppers stand for them (v11). */
+.cds-number-input__input {
+  -moz-appearance: textfield;
+  appearance: textfield;
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
+  }
+}
+
+/* The field's hover, press and release are the text input's, one ladder for
+   every field (text-input.scss): a press steps the outline to `$border-strong`
+   at the same 1px. */
+
+/* The steppers sit inside the field as the password toggle does
+   (text-input.scss): circles the kit's track inset from the top and bottom,
+   each centred on its glyph, the last glyph on the field's inset from the
+   end, the first the field's gap from the text. The two circles are the
+   track inset apart at their nearest, as far as each is from the field's
+   top and bottom: they never touch, and only one shows at a time. */
+.cds-number-input:not(.cds-number-input--nosteppers) .cds-text-input__trail {
+  padding-inline-end: var(--tf-ctl-end);
+}
+
+.cds-number-input__steppers {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--tf-inset);
+  margin-inline-start: var(--tf-ctl-gap);
+}
+
+.cds-number-input__stepper.cds-icon-btn {
+  margin-inline-start: 0;
+}
+
+/* The AI fill's revert before the steppers: its circle the steppers' inset
+   from the first, as they are from each other. */
+.cds-number-input--revertible .cds-number-input__steppers {
+  margin-inline-start: max(var(--tf-ctl-gap), var(--tf-inset));
+}
+
+/* Without steppers the revert ends the field, as the password toggle does. */
+.cds-number-input--nosteppers.cds-number-input--revertible
+  .cds-text-input__trail {
+  padding-inline-end: var(--tf-ctl-end);
+}
+
+/* The status mark before the steppers reads with the value, not as a third
+   control: it keeps v11's 16px (two gaps) from the first stepper's circle,
+   so the mark is further from − than − is from + at every size (md: 24px
+   to the − glyph, 20 from − to +). Before a single control (the password
+   toggle) the mark keeps the gap to the glyph, as text does. The slot's
+   extra room is the mark's end margin; it opens and closes with the slot. */
+.cds-number-input {
+  --nb-mark-clear: max(0px, calc(2 * var(--tf-gap) - var(--tf-ctl-gap)));
+}
+
+.cds-number-input:is([data-status='warn'], [data-status='error'])
+  .cds-text-input__mark-slot:has(+ .cds-number-input__steppers) {
+  inline-size: calc(var(--tf-gap) + var(--tf-mark) + var(--nb-mark-clear));
+}
+
+.cds-number-input
+  .cds-text-input__mark-slot:has(+ .cds-number-input__steppers)
+  > .cds-field-mark {
+  margin-inline-end: var(--nb-mark-clear);
+}
+
+.cds-number-input.cds-text-input--disabled
+  .cds-number-input__stepper.cds-icon-btn,
+.cds-number-input.cds-text-input--readonly
+  .cds-number-input__stepper.cds-icon-btn {
+  cursor: not-allowed;
+}
+
+.cds-number-input.cds-text-input--readonly
+  .cds-number-input__stepper.cds-icon-btn {
+  cursor: default;
+}
+
+/* The rolling number: where the input's text is (after the field's padding,
+   in the field's own type), shown only while it rolls; the input's text is
+   hidden under it then, its caret kept. */
+.cds-number-input__roll {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  color: theme.$text-primary;
+  inset-block: 0;
+  inset-inline-start: var(--tf-pad);
+  pointer-events: none;
+  visibility: hidden;
+  white-space: nowrap;
+
+  &[data-on] {
+    visibility: visible;
+  }
+}
+
+.cds-number-input[data-rolling] .cds-number-input__input {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (forced-colors: active) {
+  .cds-number-input__roll {
+    color: CanvasText;
+  }
+}

@@ -1,0 +1,364 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+
+/* Search — the kit's search. The field is
+   the text input's (text-input.scss, by class: `.cds-text-input`,
+   `.cds-text-input__field`, `.cds-text-input__input`, the clear button as its
+   `.cds-text-input__toggle`): its fill, corners, hairline and contrast
+   ladder, read-only and disabled. This file adds what a search has:
+
+     .cds-search                    the `role="search"` root (its width moves
+                                   when it expands)
+       .cds-search__field           the field
+         .cds-search__magnifier     the icon's slot: the icon `--tf-pad` in,
+                                   the text `--tf-gap` after it (the
+                                   spacing standard); an expandable search's is
+                                   a ghost IconButton, the field's height
+                                   square, its glyph centred as an icon
+                                   button's is
+         .cds-search__clip          the rest of the field; clips, under a
+                                   soft trailing edge while it moves
+           .cds-search__content     the input and the clear button: laid out
+                                   at its open width while it moves
+             .cds-search__clear-slot
+
+   An expandable search, shut, is its magnifier button alone: no fill, no
+   hairline. Opening, the field is drawn from the first frame, its fill and
+   hairline fading in on fast-02; closing, it stays drawn until it has
+   closed into the button, then fades out on fast-01. */
+
+$fast-01: var(--cds-motion-duration-fast-01);
+$fast-02: var(--cds-motion-duration-fast-02);
+$standard: var(--cds-motion-easing-standard-productive);
+$exit: var(--cds-motion-easing-exit-productive);
+$reduced-clock: var(--cds-motion-reduced-clock, 0.5);
+
+.cds-search {
+  /* No label row, no message line: the field is the whole search. */
+  flex-direction: row;
+  align-items: center;
+  inline-size: 100%;
+  max-inline-size: 100%;
+}
+
+.cds-search__field {
+  /* The fill fades in and out with an expandable search's opening and
+     closing (it doesn't change otherwise). */
+  transition: background-color $fast-01 $standard;
+}
+
+/* ── the magnifier ─────────────────────────────────────────────────────── */
+
+/* The text starts after the icon: `--tf-pad` + `--tf-icon` + `--tf-gap`
+   (40px at md). */
+.cds-search {
+  --cds-search-text: calc(var(--tf-pad) + var(--tf-icon) + var(--tf-gap));
+}
+
+.cds-search__magnifier {
+  display: grid;
+  box-sizing: border-box;
+  flex: none;
+  block-size: 100%;
+  color: theme.$icon-secondary;
+  inline-size: var(--cds-search-text);
+  padding-inline-start: var(--tf-pad);
+  place-items: center start;
+  pointer-events: none;
+
+  svg {
+    display: block;
+    fill: currentColor;
+  }
+}
+
+.cds-search--disabled .cds-search__magnifier {
+  color: theme.$icon-disabled;
+}
+
+/* An expandable search's magnifier: the family's ghost IconButton, the
+   field's size and corner. Not inset as a freestanding ghost button is: the
+   field grows from its whole box, so its fill is the box. The press
+   shrink, never the hover expand (the field's box never grows on hover). */
+.cds-search .cds-icon-tooltip:has(> .cds-search__magnifier--button) {
+  display: flex;
+  flex: none;
+  /* The text starts where the standard puts it, whatever the button's
+     square is (less at xs, more at lg: it may sit 4px under the button). */
+  margin-inline-end: calc(var(--cds-search-text) - var(--tf-h));
+}
+
+.cds-search .cds-search__magnifier--button.cds-icon-btn {
+  --icon-btn-size: var(--tf-h);
+  --icon-btn-radius: var(--tf-radius);
+  --icon-btn-inset: 0px;
+  --cds-anchor-inset: 0px;
+  --rollover-expand: 0px;
+
+  padding: 0;
+  color: theme.$icon-primary;
+
+  inline-size: var(--tf-h);
+  place-items: center;
+  pointer-events: auto;
+  transition: color $fast-01 $standard;
+
+  &::before {
+    border-radius: var(--icon-btn-radius);
+  }
+
+  &:focus-visible {
+    outline-offset: -2px;
+  }
+
+  &:disabled {
+    color: theme.$icon-disabled;
+  }
+}
+
+/* An expandable search's magnifier is an icon on its own: a full-round hover
+   on the hovers rule, shut on the page and in a toolbar alike.
+   `50%` on its square box, so the press shrink stays a circle; open, it has
+   no hover, so the field's own corner is never cut by it. */
+.cds-search--expandable .cds-search__magnifier--button.cds-icon-btn {
+  --icon-btn-radius: 50%;
+}
+
+/* Open, the magnifier is the field's icon again: no pointer, no hover (v11). */
+.cds-search--expanded .cds-search__magnifier--button.cds-icon-btn {
+  color: theme.$icon-secondary;
+  cursor: text;
+  pointer-events: none;
+}
+
+/* ── the clip and the content ──────────────────────────────────────────── */
+
+.cds-search__clip {
+  display: flex;
+  /* `clip`, not `hidden`: not a scroll container, so focusing the input
+     while it moves never scrolls it. */
+  overflow: clip;
+  flex: 1 1 0;
+  min-inline-size: 0;
+}
+
+.cds-search__content {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  min-inline-size: 0;
+}
+
+/* While it moves, the content is laid out at its open width (its text never
+   reflows or truncates), and the clip's trailing edge is soft:
+   `min(16px, w, W − w)` for a clip w wide of its open W, so it grows over
+   the first 16px of travel and closes over the last (the disclosure's). */
+.cds-search[data-moving] {
+  .cds-search__content {
+    flex: none;
+    inline-size: var(--cds-search-open);
+  }
+
+  .cds-search__clip {
+    mask-image: linear-gradient(
+      to right,
+      #000000
+        calc(
+          100% - min(
+              var(--cds-motion-soft-edge, 16px),
+              100%,
+              var(--cds-search-open, 0px) - 100%
+            )
+        ),
+      transparent
+    );
+  }
+
+  &:dir(rtl) .cds-search__clip {
+    mask-image: linear-gradient(
+      to left,
+      #000000
+        calc(
+          100% - min(
+              var(--cds-motion-soft-edge, 16px),
+              100%,
+              var(--cds-search-open, 0px) - 100%
+            )
+        ),
+      transparent
+    );
+  }
+}
+
+/* Shut and at rest, the content waits 8px back toward the button: opening,
+   it comes into place with the opening (useSearchExpand). */
+.cds-search--collapsed .cds-search__content {
+  translate: calc(-1 * var(--cds-motion-distance-sm, 8px)) 0;
+
+  &:dir(rtl) {
+    translate: var(--cds-motion-distance-sm, 8px) 0;
+  }
+}
+
+/* ── the input ─────────────────────────────────────────────────────────── */
+
+/* The magnifier's box is the text's indent (v11: the field's height). The
+   text sits where the text input's does: the line box centred, no optical
+   lift, as the text input's. */
+.cds-search .cds-search__input {
+  padding: 0;
+
+  &::-webkit-search-decoration,
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-results-button,
+  &::-webkit-search-results-decoration {
+    display: none;
+    appearance: none;
+  }
+}
+
+/* ── the clear button ──────────────────────────────────────────────────── */
+
+/* Inset from the field's end as the password toggle is (text-input.scss),
+   a circle on its glyph. It holds its place when hidden,
+   so the text never reflows as it comes and goes. Its glyph sits `--tf-pad`
+   from the end (`--tf-ctl-end`: its box is the glyph's padding nearer). */
+.cds-search__clear-slot {
+  display: flex;
+  flex: none;
+  align-items: center;
+  padding-inline-end: var(--tf-ctl-end);
+}
+
+/* Hidden, it takes the edge inset (an empty field's text, its placeholder,
+   ends there as any field's does); the button, invisible, overflows it. */
+.cds-search__clear-slot:not([data-shown]) {
+  justify-content: flex-end;
+  padding: 0;
+  inline-size: var(--tf-pad);
+}
+
+/* The tooltip's wrapper is a flex box, so the button sits at the slot's
+   centre (an inline-block wrapper took the line's height and put it 1px high at xs). */
+.cds-search__clear-slot .cds-icon-tooltip {
+  display: flex;
+}
+
+/* Arriving: the snap's mark — opaque from the first frame at half size,
+   growing about its centre (`SNAP.mark`: fast-02, entrance-productive;
+   the root writes its values). Leaving: one step faster, fast-01,
+   exit-productive, back to half size and fading; hidden once it's gone. */
+.cds-search__clear.cds-icon-btn {
+  opacity: 0;
+  scale: var(--cds-search-mark-from, 0.5);
+  transition:
+    scale $fast-01 $exit,
+    opacity $fast-01 $exit,
+    visibility 0s linear $fast-01;
+  visibility: hidden;
+}
+
+.cds-search__clear-slot[data-shown] .cds-search__clear.cds-icon-btn {
+  opacity: 1;
+  scale: 1;
+  transition: scale var(--cds-search-mark-in, #{$fast-02})
+    var(--cds-search-mark-ease, var(--cds-motion-easing-entrance-productive));
+  visibility: visible;
+}
+
+/* ── an expandable search, shut ────────────────────────────────────────── */
+
+.cds-search--expandable {
+  inline-size: var(--tf-h);
+}
+
+.cds-search--expandable.cds-search--expanded {
+  inline-size: var(--cds-search-expanded-inline-size, 100%);
+}
+
+/* Shut and at rest: the button alone — no fill, no hairline, none of the
+   field's ladder (the button has its own hover). The ladder's selectors
+   are specific (text-input.scss), so these are too. The fill and hairline
+   fade out on fast-01 as it lands shut. */
+.cds-search.cds-search--collapsed > .cds-search__field.cds-text-input__field {
+  --tf-fill: transparent;
+
+  cursor: default;
+}
+
+.cds-search.cds-search--collapsed.cds-search--collapsed.cds-search--collapsed
+  > .cds-search__field.cds-text-input__field::after {
+  --tf-edge: transparent;
+  --tf-ring: transparent;
+
+  transition:
+    border-color $fast-01 $standard,
+    box-shadow $fast-01 $standard;
+}
+
+/* Opening: the fill and hairline fade in on fast-02 as the field grows. */
+.cds-search[data-moving='open'] > .cds-search__field {
+  transition-duration: $fast-02;
+}
+
+.cds-search[data-moving='open'] > .cds-search__field::after {
+  transition:
+    border-color $fast-02 $standard,
+    box-shadow $fast-02 $standard;
+}
+
+/* ── reduced motion ────────────────────────────────────────────────────── */
+
+/* No travel, no scale: open or shut at once, the content fading in on the
+   reduced clock; the clear button fades on it. */
+.cds-search[data-reduced] {
+  /* The field's fill and edge, and the magnifier's colour: the reduced clock. */
+  > .cds-search__field,
+  .cds-search__magnifier--button.cds-icon-btn {
+    transition-duration: calc(#{$fast-01} * #{$reduced-clock});
+  }
+
+  &.cds-search.cds-search > .cds-search__field::after {
+    transition-duration: calc(#{$fast-01} * #{$reduced-clock});
+  }
+
+  &.cds-search--collapsed .cds-search__content {
+    opacity: 0;
+    translate: none;
+  }
+
+  &.cds-search--expanded .cds-search__content {
+    opacity: 1;
+    transition: opacity calc(#{$fast-02} * #{$reduced-clock}) linear;
+  }
+
+  .cds-search__clear.cds-icon-btn {
+    scale: 1;
+    transition:
+      opacity calc(#{$fast-01} * #{$reduced-clock}) linear,
+      visibility 0s linear calc(#{$fast-01} * #{$reduced-clock});
+  }
+
+  .cds-search__clear-slot[data-shown] .cds-search__clear.cds-icon-btn {
+    transition: opacity calc(#{$fast-02} * #{$reduced-clock}) linear;
+  }
+}
+
+/* ── forced colors ─────────────────────────────────────────────────────── */
+
+@media (forced-colors: active) {
+  .cds-search.cds-search--collapsed.cds-search--collapsed.cds-search--collapsed
+    > .cds-search__field.cds-text-input__field::after {
+    border-color: transparent;
+  }
+
+  .cds-search__magnifier {
+    color: CanvasText;
+  }
+}

@@ -1,0 +1,65 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TextAreaStories from './TextArea.stories.tsx';
+
+<Meta of={TextAreaStories} />
+
+# TextArea
+
+Carbon's TextArea on the text input's field: the same label row and counter,
+fill, outline, status mark and message line. It is `rows` lines tall, 4 by
+default, and one row is the size's field height. It resizes vertically only;
+with `cols`, disabled or read-only it does not resize. The status mark sits at
+the top of the trailing edge, on the first line, and its room is kept, so a
+status never re-wraps the text. `enableCounter` with `maxCount` shows
+`count/maxCount` in the label row; `counterMode` counts characters or words.
+Read-only and disabled beat both statuses, and invalid beats warn.
+`TextAreaSkeleton` is the text area while it loads.
+
+<Canvas of={TextAreaStories.Default} />
+
+<Canvas of={TextAreaStories.StatusChange} />
+
+<Canvas of={TextAreaStories.Validation} />
+
+<Canvas of={TextAreaStories.States} />
+
+<Canvas of={TextAreaStories.Sizes} />
+
+<Canvas of={TextAreaStories.Counter} />
+
+<Canvas of={TextAreaStories.Scrolling} />
+
+<Canvas of={TextAreaStories.AiFill} />
+
+<Canvas of={TextAreaStories.Skeleton} />
+
+## Motion
+
+- **Outline ladder:** the text input's. The outline carries hover, press and
+  focus. A press on a focused field holds its focus edge.
+- **Error border:** an error's 2px border settles in once, on moderate-02. It
+  never shakes.
+- **Message line:** helper text, warning and error share one line and swap in
+  place, out then in. The old text fades out on fast-01, then the new one fades
+  in where it is. An error fades in on moderate-02, with the border. Nothing
+  slides.
+- **Status mark:** a change is the content swap, 8px down: the old mark leaves
+  on fast-01, then the new one arrives on fast-02. From no status, it arrives at
+  once. `statusBeat` plays the mark's icon once as it arrives.
+- **Late status:** an error or warning that rises while typing waits for a pause
+  (`typingPauseMs`, default 1000ms) or blur. It leaves on the keystroke that
+  fixes it. `lateErrors={false}` shows every status at once.
+- **Scroller:** text past the rows gets the kit's pill in place of the native
+  bar, and a soft edge the text leaves into as it scrolls.
+- **AI fill:** a filled value arrives by the content swap, 8px up, clipped to
+  the field. A revert plays it back down.
+
+## Reduced motion
+
+The message line, the status mark and an AI fill change at once. The outline and
+the error border change on half of fast-01. A rising status still waits for the
+pause or blur. The pill does not grow, glide or squash; it only fades.
+
+## Props
+
+<ArgTypes of={TextAreaStories} />

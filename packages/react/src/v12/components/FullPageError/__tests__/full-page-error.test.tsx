@@ -10,6 +10,7 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { evaluateCurve } from '@carbon-labs/v12-motion';
 import { describe, expect, it } from 'vitest';
+import { EmptyStateArt, EmptyStateKinds } from '@carbon-labs/react-empty-state';
 import { ARROW, arrowDraw, FullPageError } from '../components/FullPageError';
 import { FullPageErrorArt } from '../components/art';
 
@@ -67,9 +68,14 @@ describe('FullPageError arrow', () => {
 
 describe('illustrations are line only', () => {
   it('draws paths only, no filled shapes', () => {
-    const all = (['403', '404', 'custom'] as const).map((k) =>
-      renderToStaticMarkup(<FullPageErrorArt kind={k} />)
-    );
+    const all = [
+      ...EmptyStateKinds.map((k) =>
+        renderToStaticMarkup(<EmptyStateArt kind={k} />)
+      ),
+      ...(['403', '404', 'custom'] as const).map((k) =>
+        renderToStaticMarkup(<FullPageErrorArt kind={k} />)
+      ),
+    ];
     for (const html of all) {
       expect(html).toContain('<path');
       expect(html).not.toMatch(/<(polygon|circle|rect|ellipse)\b|fill="/);

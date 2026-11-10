@@ -1,0 +1,45 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as DescriptionListStories from './DescriptionList.stories.tsx';
+
+<Meta of={DescriptionListStories} />
+
+# DescriptionList
+
+Terms and their values for a details page. The list is one column, two, or by
+width: two once the list itself is 672px wide, the medium size class. Each
+`DescriptionListItem` is a term and its value, above it or beside it. A value is
+text or any node. `copyable` adds the kit's CopyButton after the value, and
+`span` runs a pair across every column. While `loading`, the terms are drawn and
+each value is a bar of its line.
+
+<Canvas of={DescriptionListStories.Default} />
+
+<Canvas of={DescriptionListStories.Loading} />
+
+<Canvas of={DescriptionListStories.Copyable} />
+
+<Canvas of={DescriptionListStories.Layouts} />
+
+<Canvas of={DescriptionListStories.Columns} />
+
+<Canvas of={DescriptionListStories.Sizes} />
+
+## Motion
+
+- **Skeleton hand-off:** when the values load, each bar stays over its value and
+  dissolves in place on fast-01, while the value fades in on fast-02. Every fade
+  is linear. Nothing slides. Loading again plays it back: the bar fades up over
+  the value, which dissolves into it. Either one, interrupted, turns round from
+  where it is.
+- **Copy reveal:** the copy button fades in on fast-01, linear, while the pair
+  is hovered or the button has focus. On touch it always shows. A click plays
+  the CopyButton's own motion.
+
+## Reduced motion
+
+The hand-off's fades run on the reduced clock, half as long. The copy button
+follows its own reduced rules.
+
+## Props
+
+<ArgTypes of={DescriptionListStories} />

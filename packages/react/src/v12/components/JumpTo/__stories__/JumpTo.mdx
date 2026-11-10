@@ -1,0 +1,51 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as JumpToStories from './JumpTo.stories.tsx';
+
+<Meta of={JumpToStories} />
+
+# JumpTo
+
+A floating pill back to a point in a scrolled container. It shows while its
+target is out of view by more than `threshold`, and hides when the target is
+back. It sits at the top or the bottom center of the view, with an arrow toward
+the target. A preset sets the target, the words and where the target lands:
+Latest (the live edge, counting what arrives), Unread, Top, Selection or
+Current. The pill is the kit Button, tonal, and takes no room in the layout. A
+count is announced in a polite live region. `useJumpTo` is the same without the
+pill, for a host that draws its own control.
+
+<Canvas of={JumpToStories.Default} />
+
+<Canvas of={JumpToStories.Unread} />
+
+<Canvas of={JumpToStories.BackToTop} />
+
+<Canvas of={JumpToStories.Selection} />
+
+<Canvas of={JumpToStories.Sizes} />
+
+<Canvas of={JumpToStories.ReducedAndSlow} />
+
+## Motion
+
+- **4px arrival:** the pill arrives from 4px short of its measured width and
+  height, about its center, on fast-02 with the entrance-snap curve, as it fades
+  in. It leaves to the same size on fast-01, exit-productive. When the target
+  moves to the other side, the pill leaves, then arrives at its new place.
+- **Scroll glide:** a jump glides the container to the target, on a clock set by
+  the distance, with the standard-productive curve. Past two views, it first
+  moves to one view short of the target, then glides the rest. A reader's own
+  wheel, touch, key or press stops the glide where it is.
+- **Stick to end:** with Latest, a view at the end stays there as content grows.
+  A reader's own scroll toward the start lets go once it settles.
+- **Keyboard:** Enter or Space on the pill jumps and moves focus to the target,
+  or to the container. A pointer press leaves focus where it is.
+
+## Reduced motion
+
+The jump lands at once, with no glide. The pill only fades, in and out.
+`reduced` overrides the preference.
+
+## Props
+
+<ArgTypes of={JumpToStories} />

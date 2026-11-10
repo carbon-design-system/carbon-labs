@@ -52,6 +52,8 @@
   },
   "devDependencies": {
     "@carbon-labs/utilities": "0.28.0",
+    "@testing-library/react": "^16.1.0",
+    "jsdom": "^26.0.0",
     "vitest": "^4.0.0"
   }
 }

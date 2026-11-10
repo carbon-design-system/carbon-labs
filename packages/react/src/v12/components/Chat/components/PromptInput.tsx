@@ -388,7 +388,7 @@ export function PromptInput({
                 </IconButton>
                 <Popover
                   open={paramsOpen}
-                  onClose={() => setParamsOpen(false)}
+                  onRequestClose={() => setParamsOpen(false)}
                   anchor={paramsButton}
                   label={parametersButtonLabel}
                   align="bottom-start"

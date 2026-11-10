@@ -253,6 +253,8 @@ export const SIDE_NAV_MOTION: SideNavMotion = {
 };
 
 const ITEM = '.sel__item';
+/** A ghost nav's filter field, hovered as a row (side-nav-filter.scss). */
+const FILTER_FIELD = '.sidenav__filter .cds-text-input__field';
 const LINK = '.sidenav__link';
 const HEADER = '.sidenav__header';
 /** The pass's soft edges, px: the selector fades out over this much of a header's row, and back in. */
@@ -1724,6 +1726,18 @@ export function SideNav({
     timeScale: m.timeScale,
     reduced: reducedRef,
     steps: frame === 'ghost' ? ghostSteps : undefined,
+  });
+  // A ghost nav's filter field hovers as its rows do: the same rollover, off the same page, with no press (a
+  // press focuses it). side-nav-filter.scss paints it.
+  useItemRollover(rootRef, {
+    selector: FILTER_FIELD,
+    itemSelector: FILTER_FIELD,
+    press: false,
+    preview: false,
+    timeScale: m.timeScale,
+    reduced: reducedRef,
+    steps: ghostSteps,
+    enabled: frame === 'ghost' && filter !== undefined && filter !== false,
   });
 
   /** The links in order, a shut group's current link standing in for its header (where the selector rests). */

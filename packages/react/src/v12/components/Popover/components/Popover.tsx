@@ -496,6 +496,11 @@ function PopoverSurface({
         (firstControl ?? el).focus({ preventScroll: true });
       }
     },
+    // Shown open from the start, it folds back into its trigger.
+    source: () => {
+      const a = latest.current.anchor()?.getBoundingClientRect();
+      return a ? { x: a.left + a.width / 2, y: a.top + a.height / 2 } : null;
+    },
     leave: () => {
       const el = ref.current;
       const first = firstRun();

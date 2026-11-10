@@ -397,6 +397,21 @@ function baseOrigin(bar: HTMLElement, r: DOMRect, at: Pt | null): SnapOrigin {
   return { x: left ? 0 : bar.offsetWidth, y: bar.offsetHeight };
 }
 
+/**
+ * Where it folds back to as it closes: the origin it opened from (the snap keeps it), so
+ * nothing is passed. Shown open from the start, it has none: then the edge it would have grown
+ * from with no cause (`originOf`: its top edge's middle, or its base in a toolbar row's place),
+ * so its far edge folds back to it and the other holds, as after a snap in. Without this the
+ * snap closes it toward its own middle, both long edges travelling.
+ */
+export function closeOrigin(
+  bar: HTMLElement,
+  opened: SnapOrigin | null,
+  band: number
+): SnapOrigin | undefined {
+  return opened ? undefined : originOf(bar, null, band, false);
+}
+
 /** What last could have opened it: a press (where), or a key (on what). */
 type Cause = { press: Pt } | { key: Element };
 
@@ -1246,7 +1261,9 @@ function ContextualBarRoot({
     holdRow();
     hideContent();
     let live = true;
-    const folding = surface.close();
+    const el = bar.current;
+    const to = el ? closeOrigin(el, surface.origin(), originBand) : undefined;
+    const folding = surface.close(to ? { origin: to } : undefined);
     void Promise.all([
       folding,
       inline ? glideSpace('closed', false) : null,

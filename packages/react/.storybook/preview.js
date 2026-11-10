@@ -3,6 +3,7 @@ import { white, g10, g90, g100 } from '@carbon/themes';
 import { breakpoints } from '@carbon/layout';
 import { GlobalTheme, Theme } from '@carbon/react/es/components/Theme';
 import { Layout } from '@carbon/react/es/components/Layout';
+import { FeatureFlags } from '@carbon/react/es/components/FeatureFlags';
 import { DocsContainer, Meta, Unstyled } from '@storybook/addon-docs/blocks';
 import {
   Accordion,
@@ -51,6 +52,25 @@ import {
   Video,
 } from '@carbon-labs/mdx-components';
 import './styles.scss';
+
+// The v12 Storybook (STORYBOOK_INCLUDE_V12) previews Carbon's v12 light and dark
+// themes from carbon#23376 until @carbon/themes ships them. Storybook inlines
+// the variable at build time, so the standard Storybook carries none of this.
+const includeV12 = process.env.STORYBOOK_INCLUDE_V12 === 'true';
+if (includeV12) {
+  require('./v12-themes/_index.scss');
+}
+
+const themeItems = includeV12
+  ? [
+      { value: 'v12-light', title: 'v12 light (preview)' },
+      { value: 'v12-dark', title: 'v12 dark (preview)' },
+      { value: 'white', title: 'white (v11)' },
+      { value: 'g10', title: 'g10 (v11)' },
+      { value: 'g90', title: 'g90 (v11)' },
+      { value: 'g100', title: 'g100 (v11)' },
+    ]
+  : ['white', 'g10', 'g90', 'g100'];
 import { MDXProvider } from '@mdx-js/react';
 import theme from './theme';
 
@@ -118,6 +138,24 @@ const Container = ({ children, ...props }) => {
       document.documentElement.classList.remove('cds--mdx');
     }
   }, [isCarbonMdx]);
+
+  // The v12 pages follow the toolbar's theme: no fixed Carbon theme around
+  // them, and the page takes the theme's background (styles.scss, .v12-docs).
+  if (isCarbonMdx && includeV12) {
+    return (
+      <MDXProvider components={customMarkdown}>
+        <DocsContainer {...props}>
+          <Unstyled>
+            <div
+              className="v12-docs"
+              style={{ paddingBottom: '5rem', paddingTop: '4rem' }}>
+              {children}
+            </div>
+          </Unstyled>
+        </DocsContainer>
+      </MDXProvider>
+    );
+  }
 
   // Disable Storybook markdown styles and ignore global theme switchers
   if (isCarbonMdx) {
@@ -211,15 +249,13 @@ const laneGlobalTypes = {
   theme: {
     name: 'Theme',
     description: 'Set the global theme for displaying components',
-    defaultValue: 'white',
+    defaultValue: includeV12 ? 'v12-light' : 'white',
     toolbar: {
       icon: 'paintbrush',
-      items: ['white', 'g10', 'g90', 'g100'],
+      items: themeItems,
     },
   },
 };
-
-const includeV12 = process.env.STORYBOOK_INCLUDE_V12 === 'true';
 
 export const globalTypes = {
   ...(includeV12 ? {} : laneGlobalTypes),
@@ -257,7 +293,7 @@ export const parameters = {
   },
   options: {
     storySort: {
-      order: ['V12', 'Components', '*'],
+      order: ['V12', ['Catalog', 'Experiences', '*'], 'Components', '*'],
     },
   },
   // Small (<672)
@@ -265,8 +301,10 @@ export const parameters = {
   // Large (1056 - 1312px)
   // X-Large (1312 - 1584px)
   // Max (>1584)
+  // `options`, not `viewports`: Storybook 9 renamed the key, and a set left under
+  // the old name is read by nothing, so the toolbar offers no widths at all.
   viewport: {
-    viewports: {
+    options: {
       sm: {
         name: 'Small',
         styles: {
@@ -320,17 +358,20 @@ const decorators = [
       theme = 'g10';
     }
 
+    // An app story (the review app) sets the theme and direction itself.
+    const ownPicks = !!context.parameters?.v12?.app;
     React.useEffect(() => {
+      if (ownPicks) return;
       document.documentElement.setAttribute('data-carbon-theme', theme);
       document.documentElement.dir = dir;
-    }, [theme, dir]);
+    }, [theme, dir, ownPicks]);
 
     React.useLayoutEffect(() => {
       document.documentElement.lang = locale;
-      document.documentElement.dir = dir;
+      if (!ownPicks) document.documentElement.dir = dir;
       // Need to set random key to recalculate Popover coordinates
       setRandomKey(Math.floor(Math.random() * 10));
-    }, [locale, dir]);
+    }, [locale, dir, ownPicks]);
 
     return (
       <GlobalTheme theme={theme}>
@@ -342,9 +383,17 @@ const decorators = [
   },
 ];
 
+// The v12 Storybook renders every story with `enable-v12-release` on, as
+// core's `.storybook-v12` does.
+const withV12Release = (Story, context) => (
+  <FeatureFlags enableV12Release>
+    <Story {...context} />
+  </FeatureFlags>
+);
+
 const preview = {
   parameters,
-  decorators,
+  decorators: includeV12 ? [withV12Release, ...decorators] : decorators,
   globalTypes,
   tags: ['autodocs'],
 };

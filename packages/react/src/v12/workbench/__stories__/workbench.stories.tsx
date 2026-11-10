@@ -11,7 +11,7 @@
 // compared.
 
 import React, { useId, useLayoutEffect, useRef, useState } from 'react';
-import { Button } from '@carbon/react';
+import { Button } from '@carbon-labs/react-button';
 import {
   playContentSwap,
   usePrefersReducedMotion,
@@ -74,7 +74,10 @@ function SwapDemo() {
           Step {oddStep}
         </span>
       </p>
-      <Button kind="tertiary" size="sm" onClick={() => setCount((c) => c + 1)}>
+      <Button
+        variant="outlined"
+        size="sm"
+        onClick={() => setCount((c) => c + 1)}>
         Next step
       </Button>
     </div>

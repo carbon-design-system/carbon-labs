@@ -26,6 +26,53 @@ body,
   color: styles.$text-primary;
 }
 
+// A v12 docs page and its story frames follow the theme.
+.sbdocs-wrapper:has(.v12-docs),
+.v12-docs .sbdocs-preview,
+.v12-docs .docs-story {
+  border-color: styles.$border-subtle-01;
+  background: styles.$background;
+  color: styles.$text-primary;
+}
+
+.v12-docs .docblock-argstable {
+  color: styles.$text-primary;
+
+  // Doubled to outweigh the docs block's own doubled class.
+  &.docblock-argstable th,
+  &.docblock-argstable tbody > tr > * {
+    border-color: styles.$border-subtle-01;
+    background: styles.$layer-01;
+    color: styles.$text-primary;
+  }
+
+  & th *,
+  &.docblock-argstable tbody > tr > * * {
+    color: inherit;
+  }
+
+  // The type chips under each description.
+  &.docblock-argstable tbody > tr > :not(:first-child) div > span[class^='css-'] {
+    border-color: styles.$border-subtle-01;
+    background: styles.$layer-02;
+  }
+
+  &.docblock-argstable th {
+    background: styles.$background;
+    color: styles.$text-secondary;
+  }
+
+  & tbody {
+    box-shadow: 0 0 0 1px styles.$border-subtle-01;
+  }
+
+  & code {
+    border-color: styles.$border-subtle-01;
+    background: styles.$layer-02;
+    color: styles.$text-primary;
+  }
+}
+
 .sb-show-main.sb-main-padded {
   padding: 0;
 }

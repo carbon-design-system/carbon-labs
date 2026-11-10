@@ -1,4 +1,18 @@
 {
+  "V12/Accordion": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Accordion/components/accordion.scss",
+      "line": 204,
+      "text": "radius-concentric — An inner part's radius is the outer radius less its inset, never below 0. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Accordion/proposals/README.md",
+      "line": 3,
+      "text": "api: frame-prop — What a component stands on is `frame`. TBD"
+    }
+  ],
   "V12/AppShell": [
     {
       "kind": "explore",
@@ -343,6 +357,14 @@
       "file": "packages/react/src/v12/components/Tile/components/tile.scss",
       "line": 169,
       "text": "hover-ring-by-content — A surface holding controls hovers with a 1px inset ring and keeps its fill; a text-only surface keeps the fill. TBD"
+    }
+  ],
+  "V12/Toggle": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Toggle/proposals/README.md",
+      "line": 3,
+      "text": "api: variant-prop — The colour treatment is `variant`. TBD"
     }
   ],
   "V12/Tooltip": [

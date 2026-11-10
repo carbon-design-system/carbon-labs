@@ -1,0 +1,67 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ToggleStories from './Toggle.stories.tsx';
+
+<Meta of={ToggleStories} />
+
+# Toggle
+
+A switch for a setting. It is a track with two stops, and its knob is the
+selection family's selector. `Toggle` takes Carbon's props: `labelText`,
+`labelA` and `labelB` for the state text, `size`, `toggled`, `defaultToggled`,
+`onToggle`, `disabled` and `readOnly`. It adds `corners`, `variant`, `mark`,
+`disabledReason`, `motion`, `timeScale` and `onMove`. It is a `role="switch"`
+button, and Space and Enter flip it. `ToggleSkeleton` is the toggle while it
+loads.
+
+<Canvas of={ToggleStories.Default} />
+
+<Canvas of={ToggleStories.Sizes} />
+
+<Canvas of={ToggleStories.Labels} />
+
+<Canvas of={ToggleStories.Controlled} />
+
+<Canvas of={ToggleStories.Variants} />
+
+<Canvas of={ToggleStories.Marks} />
+
+<Canvas of={ToggleStories.Corners} />
+
+<Canvas of={ToggleStories.States} />
+
+<Canvas of={ToggleStories.DisabledReason} />
+
+<Canvas of={ToggleStories.Skeleton} />
+
+## Motion
+
+- **Glide:** a click, a key or a change of `toggled` moves the knob as the
+  family's selector moves. Its leading edge runs ahead, at most half the travel.
+  The duration comes from the distance.
+- **Color:** the on color is a fill that rides the knob's live place. The knob's
+  color follows its place too, so the two ease together over the glide, or with
+  the pointer in a drag.
+- **Mark:** the status dot sits at the stop the knob isn't on. It fades on
+  fast-02. A hero or status track never shows it.
+- **Press:** anywhere on the track, the knob included, the knob reaches 2px
+  toward the other side at once. At `md` the track also shrinks 1px a side; at
+  `sm` it doesn't. A grabbed knob insets 1px.
+- **Drag:** the knob follows the pointer and stops at the walls with the kit's
+  squash. It lands on the nearer side.
+- **State text:** both texts share one cell, so the row keeps its width and
+  nothing beside it moves.
+- **Tonal track:** with `variant="tonal"`, the track takes its hue from where it
+  sits.
+- **Hover:** none. The reach on a press and the inset on a grab are the
+  feedback.
+- **Focus:** keyboard only, 2px `$text-primary`, outside the track with a 2px
+  gap. It has no transition.
+
+## Reduced motion
+
+The knob doesn't glide. It fades in on the side it lands on and out on the
+other, at half the duration. The color changes at once.
+
+## Props
+
+<ArgTypes of={ToggleStories} />

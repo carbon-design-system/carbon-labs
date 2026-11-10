@@ -1,0 +1,494 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/react-selection-kit/scss/track';
+
+/* Toggle — one track, one knob, its two stops (Toggle.tsx). The step slider
+ * is the Slider's `track` variant (../slider/slider.scss).
+ *
+ * The knob is motion-core's selection marker: the engine
+ * writes its live edges on the track (`--cds-motion-selection-l/t/r/b`), and
+ * the knob and the fill read them, so they never lag each other.
+ *
+ *   track   `$layer-accent` (contextual), fully rounded by default
+ *   knob    inset `--tg-inset` from the track; its corner concentric
+ *   press   the knob insets 1px while held (`data-grabbed`), its corner kept
+ *   color   the track is always the off color and the on color is a fill that
+ *           rides the knob's live place (`.cds-toggle__fill`), so it arrives
+ *           with the knob with no timing of its own; the knob's color follows
+ *           its own live place across the travel, so it eases with the fill
+ *           on a click, a key or a drag; the marks take `$color`
+ *           (40ms)
+ *   hover   none: no glow, no color step
+ *   press   a toggle's track shrinks 1px every side (`data-pressed`, the content
+ *           switcher's press shrink; not at `sm`) and its knob reaches 2px toward
+ *           the other side: the shrink is the press, the reach the direction
+ *   look    `variant` (inverse · tonal · outlined, the content switcher's)
+ *           picks the neutral colors, `hero` and `status` a colored track;
+ *           `mark="status"` colors the dot */
+
+$fast-01: var(--cds-motion-duration-fast-01);
+$fast-02: var(--cds-motion-duration-fast-02);
+$standard: var(--cds-motion-easing-standard-productive);
+/* A state's color change: much faster than the glide. */
+$color: var(--cds-motion-duration-fast-00);
+
+/* The knob's press: registered so it eases back (the kit's `--sel-press`). */
+@property --cds-knob-press {
+  inherits: true;
+  initial-value: 0px;
+  syntax: '<length>';
+}
+
+/* ── the track, its stops and the knob ───────────────────────────────── */
+
+.cds-toggle__track {
+  --_track: #{theme.$layer-accent};
+  --_knob: #{theme.$icon-on-color};
+  --cds-knob-press: 0px;
+
+  position: relative;
+  box-sizing: border-box;
+  flex: none;
+  padding: 0;
+  border: 0;
+  border-radius: var(--tg-radius);
+  margin: 0;
+  background-color: var(--_track);
+  block-size: var(--tg-h);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none;
+  transition:
+    background-color $color #{$standard},
+    --cds-knob-press $fast-01 $standard;
+  user-select: none;
+
+  /* The keyboard's ring (the selection engine marks the last input, `data-input`): the
+     family's, with no v11 blue: 2px in `$text-primary`,
+     outside the track with a 2px gap. Outside, because it must contrast with the
+     page, and a ring inside the track can't (on a filled "on" track it needs a rim of
+     the fill outside it, a ring, a gap and the knob: four layers in the knob's 3px
+     inset; without the rim it meets the page and, in some themes, the track in the
+     same color, and disappears). */
+  &:focus-visible:not([data-input='pointer']) {
+    outline: 2px solid theme.$text-primary;
+    outline-offset: 2px;
+  }
+
+  &[data-grabbed] {
+    --cds-knob-press: 1px;
+
+    transition: background-color $color #{$standard};
+  }
+}
+
+.cds-toggle__stop {
+  position: absolute;
+  block-size: var(--tg-knob);
+  inline-size: var(--tg-knob);
+  inset-block-start: var(--tg-inset);
+  pointer-events: none;
+}
+
+.cds-toggle__knob {
+  position: absolute;
+  z-index: 2;
+  box-sizing: border-box;
+  border-radius: max(0px, calc(var(--tg-radius) - var(--tg-inset)));
+  background-color: var(--_knob);
+  block-size: calc(
+    var(--cds-motion-selection-b, 0px) - var(--cds-motion-selection-t, 0px) -
+      2 * var(--cds-knob-press)
+  );
+  inline-size: calc(
+    var(--cds-motion-selection-r, 0px) - var(--cds-motion-selection-l, 0px) -
+      2 * var(--cds-knob-press)
+  );
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  pointer-events: none;
+  /* No transition: its color rides its live place (`--_k`, below), as the fill does. */
+  transition: none;
+  /* The engine's live rect, less the press on every side. */
+  translate: calc(
+      var(--cds-motion-selection-l, var(--tg-inset)) + var(--cds-knob-press)
+    )
+    calc(var(--cds-motion-selection-t, var(--tg-inset)) + var(--cds-knob-press));
+}
+
+/* Before the engine places it: nothing (it places at once, on mount). */
+.cds-toggle__track:not([data-placed]) .cds-toggle__knob {
+  visibility: hidden;
+}
+
+/* ── Toggle ──────────────────────────────────────────────────────────── */
+
+.cds-toggle {
+  /* v11's md: 48 × 24, an 18px handle. */
+  --tg-w: 48px;
+  --tg-h: 24px;
+  --tg-inset: 3px;
+  --tg-knob: 18px;
+  --tg-mark: 4px;
+  --tg-radius: calc(var(--tg-h) / 2);
+  /* The press shrink: 1px every side, as a scale of the 48 × 24 track. */
+  --tg-press-x: 0.9583;
+  --tg-press-y: 0.9167;
+
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.cds-toggle--sm {
+  /* v11's sm: 32 × 16, a 12px handle. */
+  --tg-w: 32px;
+  --tg-h: 16px;
+  --tg-inset: 2px;
+  --tg-knob: 12px;
+  --tg-mark: 3px;
+  /* No press shrink on the smallest toggle: at 32 × 16 the 1px a side is most of the track's
+     give; the knob's reach is the press. */
+  --tg-press-x: 1;
+  --tg-press-y: 1;
+}
+
+.cds-toggle__label {
+  @include type-style('label-01');
+
+  color: theme.$text-secondary;
+
+  margin-block-end: 1rem;
+}
+
+.cds-toggle__visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip: rect(0, 0, 0, 0);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+.cds-toggle__row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cds-toggle__track {
+  /* The variant's colors for each side (inverse: the default). */
+  --_off-track: #{theme.$layer-accent};
+  --_off-knob: #{theme.$icon-on-color};
+  --_off-edge: transparent;
+  --_on-track: #{theme.$background-inverse};
+  --_on-knob: #{theme.$background};
+  --_on-edge: transparent;
+  --_track: var(--_off-track);
+  --_edge: var(--_off-edge);
+
+  box-shadow: inset 0 0 0 1px var(--_edge);
+
+  inline-size: var(--tg-w);
+  transition:
+    scale $fast-01 #{$standard},
+    --cds-knob-press $fast-01 #{$standard};
+
+  /* A press, anywhere on it (the knob's reach is the direction cue; this is
+     the track's own, the content switcher's 1px press shrink). */
+  &[data-pressed] {
+    scale: var(--tg-press-x) var(--tg-press-y);
+  }
+}
+
+/* The on color: a fill whose soft edge is driven by the knob's live place (the
+   engine's variables), so the color arrives with the knob on every frame of a
+   glide, a drag or a quick flip, with no timing of its own. `--_p` is how far
+   the knob has travelled (px), read from the edge a press's reach does NOT move
+   (a reach leans the knob's leading edge 2px, and reading that one made the
+   color shrink on a press): its left edge going on, its right edge coming off.
+   The fill's edge sits at 2.6 × that (the travel is half the track, and 30% of
+   the track more is the feather), so it is empty at the off stop and whole at
+   the on one, and the edge is a soft gradient, not a line. It carries the on
+   side's hairline (the track's, under it, is the off side's).
+
+   The knob's color comes from the same place: `--_k` is how far its live
+   center (`--_c`, the middle of its live edges) has come across the travel,
+   0 at the off stop and 1 at the on one, and the knob mixes the off knob's
+   color toward the on knob's by it. So the color eases over the whole glide,
+   on its clock and curve, on a click or a key, and moves with the pointer on
+   a drag (back, too, if the drag comes back); at rest it is exactly one or
+   the other. Reduced motion moves the knob at once, so the fill and the color
+   both change at once. tan(atan2()) divides the lengths. */
+.cds-toggle__track {
+  --_p: calc(var(--cds-motion-selection-l, var(--tg-inset)) - var(--tg-inset));
+  --_feather: calc(var(--tg-w) * 0.3);
+  --_c: calc(
+    (
+        var(--cds-motion-selection-l, var(--tg-inset)) +
+          var(--cds-motion-selection-r, calc(var(--tg-inset) + var(--tg-knob)))
+      ) /
+      2
+  );
+  --_k: clamp(
+    0,
+    tan(
+      atan2(
+        calc(var(--_c) - var(--tg-inset) - var(--tg-knob) / 2),
+        calc(var(--tg-w) - 2 * var(--tg-inset) - var(--tg-knob))
+      )
+    ),
+    1
+  );
+  --_knob: color-mix(
+    in srgb,
+    var(--_on-knob) calc(var(--_k) * 100%),
+    var(--_off-knob)
+  );
+
+  &[data-on] {
+    --_p: calc(
+      var(
+          --cds-motion-selection-r,
+          calc(var(--tg-inset) + var(--tg-knob))
+        ) - var(--tg-inset) - var(--tg-knob)
+    );
+  }
+}
+
+.cds-toggle__fill {
+  position: absolute;
+  z-index: 0;
+  border-radius: inherit;
+  background: var(--_on-track);
+  box-shadow: inset 0 0 0 1px var(--_on-edge);
+  inset: 0;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    #000000 calc(var(--_e) - var(--_feather)),
+    transparent var(--_e)
+  );
+  mask-image: linear-gradient(
+    to right,
+    #000000 calc(var(--_e) - var(--_feather)),
+    transparent var(--_e)
+  );
+  pointer-events: none;
+  --_e: calc(2.6 * var(--_p));
+}
+
+.cds-toggle--disabled .cds-toggle__fill,
+.cds-toggle--readonly .cds-toggle__fill {
+  display: none;
+}
+
+/* variant — the content switcher's looks. Tonal: the content switcher's track (`_track.scss`,
+   re-hued to its context as every tonal look), then the selected layer; the knob dark. Outlined:
+   no fill, a hairline that firms up when on. */
+.cds-toggle--tonal .cds-toggle__track {
+  --_off-track: oklch(
+    from #{track.$surface} l var(--tonal-c, c) var(--tonal-h, h)
+  );
+  --_off-knob: #{theme.$icon-secondary};
+  --_on-track: oklch(
+    from #{theme.$layer-selected} l var(--tonal-c, c) var(--tonal-h, h)
+  );
+  --_on-knob: #{theme.$icon-primary};
+}
+
+#{track.$layer-scopes} .cds-toggle--tonal .cds-toggle__track {
+  --_off-track: oklch(
+    from #{track.$in-layer} l var(--tonal-c, c) var(--tonal-h, h)
+  );
+}
+
+.cds-toggle--outlined .cds-toggle__track {
+  --_off-track: transparent;
+  --_off-knob: #{theme.$icon-secondary};
+  --_off-edge: #{theme.$border-strong-01};
+  --_on-track: transparent;
+  --_on-knob: #{theme.$icon-primary};
+  --_on-edge: #{theme.$icon-primary};
+
+  /* The gap from the hairline's inner edge to the knob is the gap from the
+     fill's edge to the knob on the other variants: 1px more inset, a knob
+     2px smaller. */
+  --tg-inset: 4px;
+  --tg-knob: 16px;
+}
+
+.cds-toggle--outlined.cds-toggle--sm .cds-toggle__track {
+  --tg-inset: 3px;
+  --tg-knob: 10px;
+}
+
+/* Colored tracks, `status` (red off, green on) and `hero` (blue on): a white knob,
+   a hairline in a contrasting mix of the color, no dot. `--status-mark` colors the dot. */
+.cds-toggle--status .cds-toggle__track {
+  --_off-track: #{theme.$support-error};
+  --_off-knob: #{theme.$icon-on-color};
+  --_off-edge: color-mix(
+    in srgb,
+    #{theme.$support-error} 60%,
+    #{theme.$text-primary}
+  );
+}
+
+.cds-toggle--status .cds-toggle__track,
+.cds-toggle--hero .cds-toggle__track {
+  --_on-track: #{theme.$support-success};
+  --_on-knob: #{theme.$icon-on-color};
+  --_on-edge: color-mix(
+    in srgb,
+    #{theme.$support-success} 60%,
+    #{theme.$text-primary}
+  );
+}
+
+/* Hero: the on track in the brand (`--cds-hero`, `$interactive` by default); its white
+   knob 5.00:1 on the light themes, 3.33–3.35:1 on the dark, in every hue. */
+.cds-toggle--hero .cds-toggle__track {
+  --_on-track: var(--cds-hero, #{theme.$interactive});
+  --_on-edge: color-mix(in srgb, var(--_on-track) 60%, #{theme.$text-primary});
+}
+
+.cds-toggle--status .cds-toggle__mark,
+.cds-toggle--hero .cds-toggle__mark {
+  display: none;
+}
+
+.cds-toggle__stop--off {
+  inset-inline-start: var(--tg-inset);
+}
+
+.cds-toggle__stop--on {
+  inset-inline-start: calc(var(--tg-w) - var(--tg-inset) - var(--tg-knob));
+}
+
+/* The status marks (the reference's dot): one at each stop's center, the
+   one the knob isn't on showing — faint when off, `$support-success` on. */
+.cds-toggle__mark {
+  position: absolute;
+  z-index: 1;
+  border-radius: 50%;
+  block-size: var(--tg-mark);
+  inline-size: var(--tg-mark);
+  inset-block-start: calc(50% - var(--tg-mark) / 2);
+  opacity: 0;
+  pointer-events: none;
+  /* Soft, like the fill's edge. */
+  transition: opacity $fast-02 #{$standard};
+}
+
+.cds-toggle__mark--off {
+  background: theme.$icon-disabled;
+  /* Where the knob goes when it's on. */
+  inset-inline-start: calc(
+    var(--tg-w) - var(--tg-inset) - var(--tg-knob) / 2 - var(--tg-mark) / 2
+  );
+
+  .cds-toggle--status-mark & {
+    background: theme.$support-error;
+  }
+
+  .cds-toggle__track:not([data-on]) & {
+    opacity: 1;
+  }
+}
+
+.cds-toggle__mark--on {
+  /* Grays only, unless `mark="status"` colors it: the knob's color, dimmed. */
+  background: color-mix(in srgb, var(--_on-knob) 50%, transparent);
+  inset-inline-start: calc(
+    var(--tg-inset) + var(--tg-knob) / 2 - var(--tg-mark) / 2
+  );
+
+  .cds-toggle--status-mark & {
+    background: theme.$support-success;
+  }
+
+  .cds-toggle__track[data-on] & {
+    opacity: 1;
+  }
+}
+
+.cds-toggle__state {
+  @include type-style('body-compact-01');
+
+  /* Both labels in one cell: the row is as wide as the wider one, so a flip never
+     moves what is beside the toggle. */
+  display: inline-grid;
+  color: theme.$text-primary;
+}
+
+.cds-toggle__state-text {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+
+  &:not([data-active]) {
+    visibility: hidden;
+  }
+}
+
+.cds-toggle--sm .cds-toggle__state {
+  @include type-style('label-01');
+}
+
+/* Disabled: no hover, no press; v11's disabled tokens. */
+.cds-toggle--disabled {
+  .cds-toggle__label,
+  .cds-toggle__state {
+    color: theme.$text-disabled;
+  }
+
+  .cds-toggle__track {
+    --_track: #{theme.$layer-accent};
+    --_knob: #{theme.$icon-disabled};
+    --_off-edge: transparent;
+    --_on-edge: transparent;
+
+    cursor: not-allowed;
+  }
+
+  .cds-toggle__mark {
+    display: none;
+  }
+}
+
+/* Read-only: the state shown, no interaction, a hairline instead of a fill. */
+.cds-toggle--readonly .cds-toggle__track {
+  --_track: transparent;
+  --_knob: #{theme.$icon-primary};
+
+  box-shadow: inset 0 0 0 1px theme.$border-subtle;
+  cursor: default;
+}
+
+/* Corners come after every base --tg-radius (same specificity: source order decides). */
+.cds-toggle--rounded {
+  --tg-radius: min(8px, calc(var(--tg-h) / 2));
+}
+
+.cds-toggle--square {
+  --tg-radius: 0px;
+}
+
+@media (forced-colors: active) {
+  .cds-toggle__fill {
+    background: Highlight;
+  }
+
+  .cds-toggle__knob {
+    background: ButtonText;
+  }
+}

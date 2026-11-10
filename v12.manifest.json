@@ -15,6 +15,23 @@
       }
     },
     {
+      "id": "accordion",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Accordion",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "Leads",
+        "attachRollover",
+        "createLeads",
+        "usePrefersReducedMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
       "id": "activity-feed",
       "kind": "component",
       "path": "packages/react/src/v12/components/ActivityFeed",
@@ -181,6 +198,41 @@
       }
     },
     {
+      "id": "contextual-bar",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/ContextualBar",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "DurationToken",
+        "SNAP_FRAME",
+        "SNAP_SLIVER_PX",
+        "SnapEase",
+        "SnapOrigin",
+        "SnapProfile",
+        "SurfaceShadowOption",
+        "animateLayout",
+        "cubicBezier",
+        "distanceTokens",
+        "durationStepForDistance",
+        "lightnessColors",
+        "lightnessStep",
+        "motionTokens",
+        "playContentSwap",
+        "snapEaseBezier",
+        "snapFadeFor",
+        "snapFades",
+        "snapSliverWindow",
+        "stepDown",
+        "usePrefersReducedMotion",
+        "useSnapSurface"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
       "id": "copy-button",
       "kind": "component",
       "path": "packages/react/src/v12/components/CopyButton",
@@ -212,6 +264,34 @@
       "source": {
         "repo": "carbon-next",
         "ref": "cc399cae4faca8121f33ee0848418247070756bd"
+      }
+    },
+    {
+      "id": "date-picker",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/DatePickerV2",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "SNAP_FRAME",
+        "SurfaceShadowOption",
+        "attachRollover",
+        "fieldAria",
+        "hasText",
+        "motionTokens",
+        "normalizeFieldProps",
+        "placeOnAnchor",
+        "playContentSwap",
+        "snapAnimations",
+        "snapProfileFor",
+        "themeOf",
+        "useLateStatus",
+        "usePrefersReducedMotion",
+        "useSnapSurface"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "b213ff86e0edb4632797a8d1c23eb1ad3c8ee1e3"
       }
     },
     {
@@ -407,6 +487,21 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "filter-panel",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/FilterPanel",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "usePrefersReducedMotion",
+        "useStagger"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "b213ff86e0edb4632797a8d1c23eb1ad3c8ee1e3"
       }
     },
     {
@@ -844,6 +939,26 @@
       "source": {
         "repo": "carbon-next",
         "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      }
+    },
+    {
+      "id": "options-tile",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/OptionsTile",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "CubicBezier",
+        "attachRollover",
+        "evaluateCurve",
+        "motionTokens",
+        "playContentSwap",
+        "snapFadeFor",
+        "usePrefersReducedMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
       }
     },
     {
@@ -1769,6 +1884,23 @@
         "hasText",
         "normalizeFieldProps",
         "useLateStatus"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "toggle",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Toggle",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "SelectionMoveInfo",
+        "usePrefersReducedMotion",
+        "useStepGesture",
+        "watchTonal"
       ],
       "source": {
         "repo": "carbon-next",

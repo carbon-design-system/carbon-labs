@@ -1,0 +1,586 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/corners';
+
+/* DatePicker — what the text input's field (text-input.scss), the Menu's
+ * surface (menu.scss) and the selection kit (selection-kit.scss) don't
+ * already draw.
+ *
+ *   fields    v11's widths: simple 120px (152 with a status), short 5.7rem,
+ *             single 288px, a range's two 144px apiece, 8px apart
+ *   surface   the Menu's frame (8px, `$layer`, the hairline; the cast
+ *             shadow with `shadow`), its content 4px in: a 36px day on a 4px gap, its
+ *             corner concentric (8 − 4 = 4px)
+ *   days      the kit's items in a 7-column grid: the rollover's hover
+ *             (neutral), the marker under the picked day in the hero blue;
+ *             a day of another month in secondary text; today a 1px stroke
+ *             on the rollover's surface and semibold (neutral), and, when
+ *             it's picked, a 2px ring outside the selector
+ *   range     the ends in the blue, the band a tint of it across the gaps
+ *             (22%, a preview 11%; 28% and 14% on g100)
+ *   pips      6px dots under the number in the support colors, ringed in
+ *             white on a picked day
+ *   events    a marked day's events in the kit's Tooltip */
+
+$cell: 36px;
+$gap: 4px;
+$standard: var(--cds-motion-easing-standard-productive);
+
+/* The range band's strength (below): 22% of the blue on the light themes, a
+   little more on the dark ones, where 22% reads faint. Set on the theme
+   scopes, so the nearest theme wins (the calendar is portalled with its
+   field's theme). */
+:root,
+[data-carbon-theme='white'],
+.cds--white {
+  --cds-calendar-band-share: 22%;
+}
+
+[data-carbon-theme='g100'],
+.cds--g100 {
+  --cds-calendar-band-share: 28%;
+}
+
+/* ── the fields ──────────────────────────────────────────────────────── */
+
+.cds-date-picker-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  max-inline-size: 100%;
+}
+
+.cds-date-picker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.cds-date-picker--simple .cds-date-picker-input {
+  inline-size: 7.5rem;
+
+  &:is([data-status='warn'], [data-status='error']) {
+    inline-size: 9.5rem;
+  }
+}
+
+.cds-date-picker--simple.cds-date-picker--short .cds-date-picker-input {
+  inline-size: 5.7rem;
+}
+
+.cds-date-picker--single .cds-date-picker-input {
+  inline-size: 18rem;
+}
+
+.cds-date-picker--range .cds-date-picker-input {
+  inline-size: 9rem;
+}
+
+.cds-date-picker-input {
+  max-inline-size: 100%;
+}
+
+/* The calendar icon: motion-icons' Calendar, hovering with the field. */
+.cds-date-picker-input__icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  color: theme.$icon-primary;
+  margin-inline-start: 8px;
+  pointer-events: none;
+
+  svg {
+    display: block;
+    fill: currentColor;
+  }
+
+  .cds-text-input--disabled & {
+    color: theme.$icon-disabled;
+  }
+}
+
+/* ── the surface ─────────────────────────────────────────────────────── */
+
+.cds-date-picker__calendar.cds-menu {
+  padding: $gap;
+  max-inline-size: none;
+  min-inline-size: 0;
+}
+
+/* `inline`: in flow under the inputs, on the same frame: the floating
+   surface's fill and edge (the menu's and the Popover's). */
+.cds-date-picker__inline {
+  position: relative;
+  display: inline-block;
+  align-self: flex-start;
+  padding: $gap;
+  border-radius: corners.$in;
+  background: var(--cds-surface, #{theme.$layer});
+  box-shadow: inset 0 0 0 1px
+    var(--cds-surface-divider, #{theme.$border-subtle-01});
+  color: theme.$text-primary;
+  margin-block-start: 8px;
+}
+
+/* ── the calendar ────────────────────────────────────────────────────── */
+
+.cds-calendar {
+  @include type-style('body-compact-01');
+
+  display: flex;
+  flex-direction: column;
+  color: theme.$text-primary;
+  gap: $gap;
+  inline-size: calc(7 * #{$cell} + 6 * #{$gap});
+}
+
+.cds-calendar__header {
+  display: flex;
+  align-items: center;
+  block-size: $cell;
+  gap: $gap;
+}
+
+/* The month nav: ghost buttons on the rollover (press shrink: they sit
+   the grid's gap from the title), full circle — as all icon-only controls. */
+.cds-calendar__nav {
+  @include rollover;
+  --rollover-hover: #{theme.$layer-hover};
+  --rollover-expand: 0px;
+
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: corners.$full;
+  margin: 0;
+
+  appearance: none;
+  background: transparent;
+  block-size: $cell;
+  color: theme.$icon-primary;
+  cursor: pointer;
+  inline-size: $cell;
+
+  svg {
+    display: block;
+    fill: currentColor;
+  }
+
+  &:disabled {
+    color: theme.$icon-disabled;
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: none;
+    --rollover-shadow: inset 0 0 0 2px #{theme.$icon-primary};
+  }
+}
+
+.cds-calendar__title {
+  @include type-style('heading-compact-01');
+
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-inline-size: 0;
+}
+
+.cds-calendar__month {
+  white-space: nowrap;
+}
+
+/* v11's year field: text until hovered or focused. */
+.cds-calendar__year {
+  box-sizing: content-box;
+  padding: 2px 4px;
+  border: 0;
+  border-radius: corners.$row;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  inline-size: 4ch;
+  letter-spacing: inherit;
+  transition: background-color var(--cds-motion-duration-fast-01) $standard;
+
+  &:hover {
+    background: theme.$layer-hover;
+    transition-duration: var(--cds-motion-duration-fast-02);
+  }
+
+  &:focus {
+    box-shadow: inset 0 0 0 2px theme.$text-primary;
+    outline: none;
+  }
+}
+
+.cds-calendar__weekdays {
+  @include type-style('label-01');
+
+  display: grid;
+  align-items: center;
+  block-size: 24px;
+  color: theme.$text-secondary;
+  gap: $gap;
+  grid-template-columns: repeat(7, #{$cell});
+  text-align: center;
+}
+
+/* The months: the one shown in flow, the one leaving over it. They clip
+   to the grid (a window the swap passes through). */
+.cds-calendar__pages {
+  position: relative;
+  overflow: clip;
+  overflow-clip-margin: $gap;
+}
+
+/* A month: the kit's selection root as a 7-column grid of days. */
+.cds-calendar .cds-calendar__grid.sel {
+  --sel-inset: #{$gap};
+  --sel-gap: #{$gap};
+  --sel-off: #{theme.$text-primary};
+  --sel-off-hover: #{theme.$text-primary};
+  /* The range's band (below), from the hero blue on the track; the preview at half strength. */
+  --cds-calendar-band: color-mix(
+    in srgb,
+    var(--sel-selector) var(--cds-calendar-band-share, 22%),
+    var(--sel-track)
+  );
+  --cds-calendar-band-preview: color-mix(
+    in srgb,
+    var(--sel-selector) calc(var(--cds-calendar-band-share, 22%) / 2),
+    var(--sel-track)
+  );
+
+  display: grid;
+  padding: 0;
+  background: none;
+  block-size: auto;
+  font-variant-numeric: tabular-nums;
+  gap: $gap;
+  grid-auto-rows: $cell;
+  grid-template-columns: repeat(7, #{$cell});
+}
+
+.cds-calendar__grid--leaving {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  pointer-events: none;
+}
+
+.cds-calendar__row {
+  display: contents;
+}
+
+.cds-calendar .cds-calendar__day {
+  /* Press shrink, never the hover expand: days sit the gap apart. */
+  --rollover-expand: 0px;
+
+  block-size: $cell;
+
+  inline-size: $cell;
+  outline: none;
+
+  /* The hit area bridges the gaps. */
+  &::after {
+    inset: calc(-0.5 * #{$gap});
+  }
+
+  .sel__face {
+    justify-content: center;
+    padding-inline: 0;
+  }
+
+  .sel__text {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+}
+
+/* A day of the month before or after. */
+.cds-calendar .cds-calendar__day[data-outside] {
+  --sel-off: #{theme.$text-secondary};
+  --sel-off-hover: #{theme.$text-primary};
+}
+
+/* Today: a 1px stroke on the rollover's own surface (it grows and presses
+   with the hover), and semibold. Neutral, so blue only ever means what's
+   picked. */
+.cds-calendar .cds-calendar__day[data-today] {
+  font-weight: 600;
+
+  &:not([aria-selected='true']) {
+    --rollover-stroke: #{theme.$border-strong-01};
+  }
+}
+
+/* Today picked (the selected day, or either end of a range): a 2px ring just
+   outside the selector, so it still reads as today.
+   Concentric with the selector's corner (4px + 2px), in `$border-inverse`
+   (gray 100 on white, gray 10 on g100): on the surface 16.5
+   · 13.8:1, on the band 12.1 · 10.7:1, beside the
+   blue 3.6:1 (light) and 4.6:1 (dark). It fills its half of the
+   4px gap, where the band and the neighbours' own paint stop, so nothing
+   covers it, and the grid's clip margin (4px) keeps it at the edges. A
+   border, not a shadow, so forced colors keep it. It fades in with the
+   marker's arrival (fast-02) and out on fast-01; reduced, on half that. */
+.cds-calendar__today {
+  position: absolute;
+  z-index: -1;
+  box-sizing: border-box;
+  border: 2px solid theme.$border-inverse;
+  border-radius: calc(var(--sel-radius) + 2px);
+  inset: -2px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--cds-motion-duration-fast-01) $standard;
+
+  .cds-calendar__day[aria-selected='true'] > & {
+    opacity: 1;
+    transition-duration: var(--cds-motion-duration-fast-02);
+  }
+
+  .cds-calendar__grid[data-reduced] & {
+    transition-duration: calc(var(--cds-motion-duration-fast-01) / 2);
+  }
+
+  .cds-calendar__grid[data-reduced]
+    .cds-calendar__day[aria-selected='true']
+    > & {
+    transition-duration: calc(var(--cds-motion-duration-fast-02) / 2);
+  }
+}
+
+/* Keyboard focus on a day that isn't picked: "hover, plus a ring" (the
+   kit's); on the picked one, the ring on the marker (the kit's). */
+.cds-calendar
+  .cds-calendar__grid.sel:not([data-input='pointer'])
+  .cds-calendar__day:focus-visible:not([aria-selected='true']) {
+  --rollover-shadow: inset 0 0 0 2px var(--sel-off-hover);
+}
+
+/* In-range day hover: the rollover's standard rounded behaviour
+   (hover → press → release, press shrink) with a blue-contrast tint —
+   the neutral grey disappears against the band.
+   Double the band's share (44%) gives a step clearly richer than the band,
+   clearly lighter than the selector. These days' rollover reads it as written
+   (Calendar.tsx: `colors: 'tokens'`); matched lightness would write a grey
+   over it, so the tint would never show. A press on a day picks it (it
+   becomes an end and the selector arrives), so no day has a pressed state of
+   its own. Ends (aria-selected) use the kit's hero rollover. */
+.cds-calendar
+  .cds-calendar__day:has(> .cds-calendar__band:not([data-preview])):not(
+    [aria-selected='true']
+  ) {
+  --rollover-hover: color-mix(
+    in srgb,
+    var(--sel-selector) 44%,
+    var(--sel-track)
+  );
+}
+
+/* A range's band: between the ends, into the gaps, under the hover (the
+   blue-contrast tint above, so a hovered day stays clearly visible in the band).
+   A tint of the ends' blue on the surface: 22% on the light themes, 28% on the dark (above). In-range
+   text on it, and the ends against it:
+     white  22%  #c2d4f6  text 12.1:1  ends 3.3:1
+     g100   28%  #203762  text 10.7:1  ends 2.4:1, their rim 3.5:1
+   It is there with its range: while the end is being picked it previews at
+   half strength, and picking the end firms it (fast-02) — the band never
+   travels. */
+.cds-calendar__band {
+  position: absolute;
+  z-index: -2;
+  background: var(--cds-calendar-band);
+  inset-block: 0;
+  pointer-events: none;
+  transition: background-color var(--cds-motion-duration-fast-02) $standard;
+}
+
+/* The provisional band (a range's start picked, the end under the pointer,
+   the drag or the keys): half as strong, and simply there as it follows
+   (stillness). */
+.cds-calendar__band[data-preview] {
+  background: var(--cds-calendar-band-preview);
+  transition: none;
+}
+
+.cds-calendar__grid[data-reduced] .cds-calendar__band {
+  transition-duration: calc(var(--cds-motion-duration-fast-02) / 2);
+}
+
+/* A range's other end: still, in the marker's colors and rim. */
+.cds-calendar__still {
+  position: absolute;
+  z-index: -2;
+  border-radius: var(--sel-radius);
+  background: var(--sel-selector);
+  box-shadow: inset 0 0 0 1px var(--sel-outline);
+  inset: 0;
+  pointer-events: none;
+}
+
+.cds-calendar .cds-calendar__day[data-still] .sel__face {
+  color: var(--sel-on);
+}
+
+/* Status pips: up to three 6px dots, 2px apart, centered under the number
+   (whole px at one, two or three). The support colors, each with a 1px rim
+   halfway to the text color, so every kind clears 3:1 against the surface
+   and the band in all four themes (warning's yellow alone is 1.5:1 on
+   white; its rim is 4.6:1, and 3.4:1 on the band). On a picked day each
+   keeps its color inside a 1px ring of the label's white: the ring stands 5:1 off the
+   blue, so the pips read, and the colors inside tell the kinds apart. */
+.cds-calendar__pips {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  inset-block-end: 3px;
+  inset-inline: 0;
+  pointer-events: none;
+}
+
+.cds-calendar__pip {
+  --_pip: #{theme.$icon-secondary};
+
+  border-radius: 50%;
+  background: var(--_pip);
+  block-size: 6px;
+  box-shadow: inset 0 0 0 1px
+    color-mix(in srgb, var(--_pip) 50%, #{theme.$text-primary});
+
+  inline-size: 6px;
+
+  &[data-kind='error'] {
+    --_pip: #{theme.$support-error};
+  }
+
+  &[data-kind='warning'] {
+    --_pip: #{theme.$support-warning};
+  }
+
+  &[data-kind='success'] {
+    --_pip: #{theme.$support-success};
+  }
+
+  &[data-kind='info'] {
+    --_pip: #{theme.$support-info};
+  }
+
+  .sel__face--on &,
+  .cds-calendar__day[data-still] & {
+    box-shadow: inset 0 0 0 1px var(--sel-on);
+  }
+
+  .cds-calendar__day[aria-disabled='true'] & {
+    --_pip: #{theme.$icon-disabled};
+  }
+}
+
+/* A marked day's tooltip (the kit's): its events, a line each, after a pip
+   of the kind in the inverse support colors, rimmed as the day's pips are
+   (halfway to the tooltip's text). The wrapper stays out of the grid. Hidden
+   while a range is dragged (it would cover the row above) and on a month
+   that's leaving. */
+.cds-calendar .cds-calendar__tip.cds-tooltip {
+  display: contents;
+}
+
+.cds-calendar[data-range-drag] .cds-calendar__tip .sel__tip,
+.cds-calendar__grid--leaving .cds-calendar__tip .sel__tip {
+  visibility: hidden;
+}
+
+.cds-calendar__events {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cds-calendar__event {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cds-calendar__event-pip {
+  --_pip: #{theme.$icon-inverse};
+
+  flex: none;
+  border-radius: 50%;
+  background: var(--_pip);
+  block-size: 6px;
+  box-shadow: inset 0 0 0 1px
+    color-mix(in srgb, var(--_pip) 50%, #{theme.$text-inverse});
+  inline-size: 6px;
+
+  &[data-kind='error'] {
+    --_pip: #{theme.$support-error-inverse};
+  }
+
+  &[data-kind='warning'] {
+    --_pip: #{theme.$support-warning-inverse};
+  }
+
+  &[data-kind='success'] {
+    --_pip: #{theme.$support-success-inverse};
+  }
+
+  &[data-kind='info'] {
+    --_pip: #{theme.$support-info-inverse};
+  }
+}
+
+@media (forced-colors: active) {
+  .cds-calendar__band {
+    background: Highlight;
+    opacity: 0.35;
+  }
+
+  .cds-calendar__still {
+    background: Highlight;
+  }
+
+  .cds-calendar__pip {
+    background: CanvasText;
+    box-shadow: none;
+  }
+
+  .sel__face--on .cds-calendar__pip,
+  .cds-calendar__day[data-still] .cds-calendar__pip {
+    background: HighlightText;
+  }
+
+  .cds-calendar__event-pip {
+    background: CanvasText;
+    box-shadow: none;
+  }
+
+  .cds-calendar .cds-calendar__day[data-still] .sel__face {
+    color: HighlightText;
+  }
+
+  .cds-calendar .cds-calendar__day[data-today] {
+    outline: 1px solid CanvasText;
+    outline-offset: -1px;
+  }
+}

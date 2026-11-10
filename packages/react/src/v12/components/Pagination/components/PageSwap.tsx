@@ -65,7 +65,9 @@ export function splitRange(text: string): {
   part: string;
   after: string;
 } {
-  const m = /\d[\d.,]*\s*[–—-]\s*\d[\d.,]*/.exec(text);
+  // A range starts at a number's first digit, so a long run of digits is
+  // scanned once, not from each of its digits.
+  const m = /(?<![\d.,])\d[\d.,]*\s*[–—-]\s*\d[\d.,]*/.exec(text);
   if (!m) return { before: '', part: text, after: '' };
   return {
     before: text.slice(0, m.index),

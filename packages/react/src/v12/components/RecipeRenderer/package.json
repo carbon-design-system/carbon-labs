@@ -38,6 +38,10 @@
     "recipes",
     "recipe.schema.json"
   ],
+  "sideEffects": [
+    "*.scss",
+    "*.css"
+  ],
   "scripts": {
     "build": "node ../../../../tasks/build.js",
     "clean": "rimraf es lib scss",

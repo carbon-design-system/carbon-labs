@@ -30,6 +30,10 @@
     "scss",
     "telemetry.yml"
   ],
+  "sideEffects": [
+    "*.scss",
+    "*.css"
+  ],
   "scripts": {
     "build": "node ../../../../tasks/build.js",
     "clean": "rimraf es lib scss",
@@ -39,7 +43,6 @@
     "@carbon-labs/react-button": "workspace:*",
     "@carbon-labs/react-feedback": "workspace:*",
     "@carbon-labs/react-kit-defaults": "workspace:*",
-    "@carbon-labs/react-loading": "workspace:*",
     "@carbon-labs/react-motion-icons": "workspace:*",
     "@carbon-labs/react-popover": "workspace:*",
     "@carbon-labs/react-props": "workspace:*",

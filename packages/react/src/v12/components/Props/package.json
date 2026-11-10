@@ -30,13 +30,16 @@
     "scss",
     "telemetry.yml"
   ],
+  "sideEffects": [
+    "*.scss",
+    "*.css"
+  ],
   "scripts": {
     "build": "node ../../../../tasks/build.js",
     "clean": "rimraf es lib scss",
     "test": "vitest run"
   },
   "dependencies": {
-    "@carbon-labs/v12-motion": "workspace:*",
     "@ibm/telemetry-js": "^1.10.2"
   },
   "peerDependencies": {

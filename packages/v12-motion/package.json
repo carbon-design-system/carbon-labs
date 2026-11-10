@@ -18,6 +18,7 @@
   "module": "./es/index.js",
   "types": "./es/index.d.ts",
   "sideEffects": [
+    "*.scss",
     "*.css"
   ],
   "exports": {

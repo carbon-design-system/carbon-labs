@@ -30,6 +30,12 @@
     "scss",
     "telemetry.yml"
   ],
+  "sideEffects": [
+    "./es/components/press-cause.js",
+    "./lib/components/press-cause.js",
+    "*.scss",
+    "*.css"
+  ],
   "scripts": {
     "build": "node ../../../../tasks/build.js",
     "clean": "rimraf es lib scss"

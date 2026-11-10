@@ -112,7 +112,7 @@ jobs:
   v12:
     # The v12 lane: its checks (leaks, motion literals, motion only through
     # @carbon-labs/v12-motion), the motion contract, its packages' tests and
-    # the v12 Storybook build.
+    # their size, and the v12 Storybook build.
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -135,6 +135,8 @@ jobs:
         run: yarn v12:contract --check
       - name: Run the v12 packages' tests
         run: yarn v12:test
+      - name: Check the v12 components' size
+        run: yarn size:check
       - name: Build the v12 Storybook
         run: yarn workspace @carbon-labs/react storybook:build:v12
 

@@ -57,7 +57,7 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Card/components/card.scss",
-      "line": 52,
+      "line": 53,
       "text": "hover-tint — Hover and press as a share of the text colour mixed into the fill. TBD"
     },
     {

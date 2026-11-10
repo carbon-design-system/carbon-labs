@@ -203,6 +203,15 @@ describe('the shared mixins', () => {
     ).toContain('border-block-end: 1px solid var(--cds-surface-divider);');
   });
 
+  it('rollover hovers a surface while its own action has the keyboard focus', () => {
+    const css = compile(
+      `@use '@carbon-labs/v12-styles/scss/rollover' as *;\n.x { @include rollover; }`
+    );
+    expect(css).toMatch(
+      /\.x:has\(> \[data-rollover-own\]:focus-visible\)::before[^{]*\{\s*--cds-motion-rollover-hover: 1;/
+    );
+  });
+
   it('hairline refuses a line or an edge it does not have', () => {
     expect(() => rule('surface', '@include m.hairline(border);')).toThrow(
       /rule, divider or raised-rule/

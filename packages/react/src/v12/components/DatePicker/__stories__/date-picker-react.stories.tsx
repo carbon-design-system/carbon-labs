@@ -83,6 +83,12 @@ export default {
     docs: {
       page: mdx,
     },
+    // For the workbench.
+    v12: {
+      motion: [],
+      reduced: {},
+      states: ['enabled', 'disabled', 'readOnly', 'invalid'],
+    },
   },
   argTypes: {
     light: {

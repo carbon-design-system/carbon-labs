@@ -1,0 +1,568 @@
+{
+  "$description": "Every place the v12 lane departs from Carbon, as data. `axis` is color, shape, space, type, elevation, api or other. `status` is explore (an @carbon-explore mark) or proposal (an @carbon-proposal mark); an entry adopted upstream or dropped leaves the list. `appliesTo` says where the marks go: `in` is a component folder, or a path from the repository root; `props` puts a mark on every declaration of those props that the folder's components export; `uses` puts one mark above the first code line that holds any of those strings, when the place has none. `yarn v12:departures --write` places them; `yarn v12:check` warns on an entry without its marks and on a mark without an entry.",
+  "departures": [
+    {
+      "id": "page-base",
+      "axis": "color",
+      "status": "explore",
+      "what": "The page's background is a half step off white and black (#fafafa light, #0b0b0b dark), so the surfaces on it can step darker in light themes and lighter in dark ones.",
+      "replaces": "`$background` (#ffffff light, #161616 dark), with the field and its hairline solved for that page.",
+      "appliesTo": [
+        {
+          "in": "packages/v12-styles/src/styles/_surface.scss",
+          "uses": ["--cds-background: #fafafa"]
+        }
+      ]
+    },
+    {
+      "id": "surface-quiet",
+      "axis": "color",
+      "status": "proposal",
+      "what": "One quiet surface fill (#f4f4f4 light, #1e1e1e dark) for panels, tiles, tables and trays, so every quiet surface is the same step off the page.",
+      "replaces": "`$layer-01`",
+      "appliesTo": [
+        {
+          "in": "packages/v12-styles/src/styles/_surface.scss",
+          "uses": ["--cds-surface: #f4f4f4"]
+        },
+        { "in": "JobsTray", "uses": ["var(--cds-surface"] },
+        { "in": "Pagination", "uses": ["var(--cds-surface"] },
+        { "in": "SideNav", "uses": ["var(--cds-surface)"] },
+        { "in": "Tabs", "uses": ["var(--cds-surface"] }
+      ]
+    },
+    {
+      "id": "surface-rule",
+      "axis": "color",
+      "status": "proposal",
+      "what": "The quiet surface's 1px hairline (#dddddd light, #2f2f2f dark), 12 L* off the page, so a surface is edged by a line rather than a shadow.",
+      "replaces": "`$border-subtle`",
+      "appliesTo": [
+        {
+          "in": "packages/v12-styles/src/styles/_surface.scss",
+          "uses": ["--cds-surface-rule: #dddddd"]
+        },
+        { "in": "JobsTray", "uses": ["var(--cds-surface-rule"] },
+        { "in": "SideNav", "uses": ["var(--cds-surface-rule"] },
+        { "in": "Tabs", "uses": ["var(--cds-surface-rule"] }
+      ]
+    },
+    {
+      "id": "surface-divider",
+      "axis": "color",
+      "status": "proposal",
+      "what": "A line inside a quiet surface, such as a table's rows and a header's underline, solved 8 L* off the surface's fill rather than off the page.",
+      "replaces": "`$border-subtle`",
+      "appliesTo": [
+        {
+          "in": "packages/v12-styles/src/styles/_surface.scss",
+          "uses": ["--cds-surface-divider: #dddddd"]
+        },
+        { "in": "JobsTray", "uses": ["var(--cds-surface-divider"] },
+        { "in": "Pagination", "uses": ["var(--cds-surface-divider"] }
+      ]
+    },
+    {
+      "id": "surface-raised",
+      "axis": "color",
+      "status": "proposal",
+      "what": "One contrast step up from the quiet fill (#e9e9e9 light, #262626 dark) for a data table's header and zebra rows, so they read on the quiet surface.",
+      "replaces": "`$layer-accent-01`",
+      "appliesTo": [
+        {
+          "in": "packages/v12-styles/src/styles/_surface.scss",
+          "uses": ["--cds-surface-raised: #e9e9e9"]
+        },
+        { "in": "Tearsheet", "uses": ["var(--cds-surface-raised"] }
+      ]
+    },
+    {
+      "id": "surface-step",
+      "axis": "color",
+      "status": "explore",
+      "what": "Surfaces stepped up in elevation (an outlined selector's lift, a workspace's content, a field on it) take their own fills, solved from the quiet surface.",
+      "replaces": "`$layer-02`, `$layer` and `$field-02`",
+      "appliesTo": [
+        {
+          "in": "packages/v12-styles/src/styles/_surface.scss",
+          "uses": ["--cds-surface-lift: #ffffff"]
+        },
+        { "in": "AppShell", "uses": ["--cds-surface-lift-field"] }
+      ]
+    },
+    {
+      "id": "surface-code",
+      "axis": "color",
+      "status": "proposal",
+      "what": "Code (a snippet's well, inline code) sits in its own fill a step below the page, as code environments draw it.",
+      "replaces": "`$layer-01`",
+      "appliesTo": [
+        {
+          "in": "packages/v12-styles/src/styles/_surface.scss",
+          "uses": ["--cds-surface-code: #efefef"]
+        },
+        { "in": "Chat", "uses": ["var(--cds-surface-code"] }
+      ]
+    },
+    {
+      "id": "button-secondary-quiet",
+      "axis": "color",
+      "status": "explore",
+      "what": "The secondary Button is a quiet fill one step off whatever it sits on, re-solved on raised surfaces, so it stays a step apart on every surface.",
+      "replaces": "`$button-secondary`",
+      "appliesTo": [
+        {
+          "in": "packages/v12-styles/src/styles/_surface.scss",
+          "uses": ["--cds-surface-secondary: #d5d5d5"]
+        },
+        { "in": "Button", "uses": ["var(--cds-surface-secondary"] },
+        { "in": "Tooltip", "uses": ["var(--cds-surface-secondary"] }
+      ]
+    },
+    {
+      "id": "track-step",
+      "axis": "color",
+      "status": "explore",
+      "what": "A track is one quiet step off the surface it sits on, the text colour mixed in at 5% light and 3.75% dark, so it reads on any surface.",
+      "replaces": "`$layer-accent-01`",
+      "appliesTo": [
+        {
+          "in": "packages/v12-styles/src/styles/_surface.scss",
+          "uses": ["--cds-surface-track: color-mix("]
+        },
+        { "in": "SelectionKit", "uses": ["--cds-surface-track"] }
+      ]
+    },
+    {
+      "id": "selected-wash",
+      "axis": "color",
+      "status": "explore",
+      "what": "A row that is one of many chosen takes a 10% wash of the text colour, so it reads on any surface without a fill of its own.",
+      "replaces": "`$layer-selected`",
+      "appliesTo": [
+        {
+          "in": "packages/v12-styles/src/styles/_surface.scss",
+          "uses": ["--cds-selected-wash: 10%"]
+        },
+        { "in": "Chat", "uses": ["--cds-selected-wash"] },
+        { "in": "StructuredList", "uses": ["--cds-selected-wash"] }
+      ]
+    },
+    {
+      "id": "hover-tint",
+      "axis": "color",
+      "status": "explore",
+      "what": "Hover and press mix a share of the text colour into the fill (hover 4 to 8%, press 8%), so the states follow whatever surface the control sits on.",
+      "replaces": "`$layer-hover` and `$layer-active`",
+      "appliesTo": [
+        { "in": "Card", "uses": ["color-mix("] },
+        { "in": "Checkbox", "uses": ["color-mix("] },
+        { "in": "RadioButton", "uses": ["color-mix("] }
+      ]
+    },
+    {
+      "id": "tertiary-neutral",
+      "axis": "color",
+      "status": "explore",
+      "what": "The outlined Button draws in the neutral text colour on light themes, keeping blue for the one primary action.",
+      "replaces": "`$button-tertiary` (blue 60 on light themes)",
+      "appliesTo": [
+        {
+          "in": "packages/v12-styles/src/styles/_tertiary.scss",
+          "uses": ["--cds-tertiary: #{theme.$text-primary}"]
+        },
+        { "in": "Button", "uses": ["var(--cds-tertiary"] },
+        { "in": "Tooltip", "uses": ["var(--cds-tertiary"] }
+      ]
+    },
+    {
+      "id": "brand-hue",
+      "axis": "color",
+      "status": "explore",
+      "what": "A brand zone turns every hero colour into another IBM hue (purple, magenta, cyan or teal), each from its own Carbon grades, so a product can carry its brand.",
+      "replaces": "Blue only (`$interactive`, `$button-primary`)",
+      "appliesTo": [
+        {
+          "in": "packages/v12-styles/src/styles/_brand.scss",
+          "uses": ["[data-cds-brand='#{$hue}'],"]
+        },
+        { "in": "KitDefaults", "props": ["brand"] }
+      ]
+    },
+    {
+      "id": "hero-color",
+      "axis": "color",
+      "status": "proposal",
+      "what": "The hero tokens give the brand colour for a line, a fill and its hover and press, and an ink on a page and on a fill; with no brand set, each is its Carbon token.",
+      "replaces": "`$border-interactive`, `$interactive`, `$button-primary` and its hover and active, `$link-primary`, `$link-inverse`",
+      "appliesTo": [
+        {
+          "in": "packages/v12-styles/src/styles/_brand.scss",
+          "uses": ["--cds-hero: var(--cds-hue-"]
+        },
+        { "in": "Chat", "uses": ["var(--cds-hero"] },
+        { "in": "SideNav", "uses": ["var(--cds-hero"] },
+        { "in": "Tabs", "uses": ["var(--cds-hero"] },
+        { "in": "Tooltip", "uses": ["var(--cds-hero"] }
+      ]
+    },
+    {
+      "id": "loader-neutral",
+      "axis": "color",
+      "status": "explore",
+      "what": "Loaders (the spinner, the ring and the bar) draw in the neutral ink over a gray base by default, and take the brand colour only when asked, so waiting never competes with the action.",
+      "replaces": "The blue arc or fill (`$interactive`, `$button-primary`)",
+      "appliesTo": [
+        {
+          "in": "Feedback",
+          "uses": ["--cds-loader-neutral-base: #{c.$gray-20-hover}"]
+        },
+        { "in": "Loading", "uses": ["color: theme.$icon-primary"] },
+        {
+          "in": "ProgressBar",
+          "uses": ["--cds-loader-base: var(--cds-loader-neutral-base)"]
+        }
+      ]
+    },
+    {
+      "id": "radius-field",
+      "axis": "shape",
+      "status": "explore",
+      "what": "A field's corner is 8px, the radius of a control in the page, so a field reads as something to touch.",
+      "replaces": "`$border-radius-04` (4px)",
+      "appliesTo": [
+        { "in": "TextInput", "uses": ["--tf-radius: 8px"] },
+        { "in": "FileChip", "uses": ["border-radius"] }
+      ]
+    },
+    {
+      "id": "radius-over",
+      "axis": "shape",
+      "status": "explore",
+      "what": "A surface over the page (a popover, a toggletip, the notifications panel, the chat shell) takes a 16px corner, the radius of everything above the page.",
+      "replaces": "`$border-radius-08` for popovers and panels",
+      "appliesTo": [
+        { "in": "Popover", "uses": ["border-radius"] },
+        { "in": "Chat", "uses": ["border-radius"] }
+      ]
+    },
+    {
+      "id": "radius-notification",
+      "axis": "shape",
+      "status": "explore",
+      "what": "An inline notification takes the 8px corner of everything in the page.",
+      "replaces": "`$border-radius-04` for inline notifications and callouts",
+      "appliesTo": [{ "in": "Notification", "uses": ["border-radius"] }]
+    },
+    {
+      "id": "radius-tag-rounded",
+      "axis": "shape",
+      "status": "explore",
+      "what": "A tag's rounded corner is 2px at every size, the radius of small marks; its default is a full pill.",
+      "replaces": "`$border-radius-02` small and `$border-radius-04` medium and large",
+      "appliesTo": [{ "in": "Tag", "uses": ["border-radius"] }]
+    },
+    {
+      "id": "radius-concentric",
+      "axis": "shape",
+      "status": "explore",
+      "what": "An inner part's radius is the outer radius less its inset, never below 0, so nested corners stay concentric.",
+      "replaces": "One component radius (`$border-radius-04`) at every depth",
+      "appliesTo": [
+        {
+          "in": "packages/v12-styles/src/styles/_corners.scss",
+          "uses": ["@function inner($outer, $inset)"]
+        },
+        { "in": "Accordion", "uses": ["corners.inner("] },
+        { "in": "Chat", "uses": ["corners.inner("] },
+        { "in": "SidePanel", "uses": ["corners.inner("] },
+        {
+          "in": "SelectionKit",
+          "uses": [
+            "--sel-radius: max(2px, calc(var(--sel-track-radius) - var(--sel-inset)))"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "popover-caret-off",
+      "axis": "shape",
+      "status": "explore",
+      "what": "A popover or toggletip has no caret and sits 4px off its trigger, as no floating surface in the lane draws one.",
+      "replaces": "The caret, on by default",
+      "appliesTo": [{ "in": "Popover", "uses": [".cds-popover-container {"] }]
+    },
+    {
+      "id": "row-scale",
+      "axis": "space",
+      "status": "explore",
+      "what": "One row height per size (xs 20, sm 26, md 32, lg 40px) across the menu, the select list, the side nav and the tree view, so lists of a size line up.",
+      "replaces": "The control heights 24, 32, 40 and 48px",
+      "appliesTo": [
+        { "in": "TreeView", "uses": ["--cds-tree-row: 20px"] },
+        {
+          "in": "SelectionKit",
+          "uses": ["block-size: calc(var(--sel-h) - 2 * var(--sel-inset))"]
+        }
+      ]
+    },
+    {
+      "id": "field-inset",
+      "axis": "space",
+      "status": "explore",
+      "what": "A field's edge inset grows with its size (8, 12, 14 and 16px at xs, sm, md and lg), and a pill's is half its height, so text sits evenly in every size.",
+      "replaces": "16px (`$spacing-05`) at every size",
+      "appliesTo": [{ "in": "TextInput", "uses": ["--tf-inset:"] }]
+    },
+    {
+      "id": "textarea-size",
+      "axis": "api",
+      "status": "proposal",
+      "what": "TextArea takes the field family's `size` (xs 24 to lg 48px), so it lines up with the other fields.",
+      "replaces": "No `size`: one height",
+      "appliesTo": [{ "in": "TextArea", "props": ["size"] }]
+    },
+    {
+      "id": "hold-weight-width",
+      "axis": "type",
+      "status": "explore",
+      "what": "A label that gets heavier on a state keeps its box width, so nothing around it moves.",
+      "replaces": "The label reflows when its weight changes",
+      "appliesTo": [
+        {
+          "in": "packages/v12-styles/src/styles/_hold-weight.scss",
+          "uses": ["@mixin hold-weight-width("]
+        },
+        { "in": "ProgressIndicator", "uses": ["hold-weight-width("] }
+      ]
+    },
+    {
+      "id": "floating-hairline",
+      "axis": "elevation",
+      "status": "explore",
+      "what": "A floating surface (a menu, a popover, a modal, a panel) stands on its fill and a 1px hairline, with no cast shadow unless one is asked for.",
+      "replaces": "The `box-shadow` mixin (0 2px 6px `$shadow`)",
+      "appliesTo": [
+        {
+          "in": "Popover",
+          "uses": ["box-shadow: inset 0 0 0 1px var(--cds-popover-edge)"]
+        },
+        { "in": "Menu", "uses": ["box-shadow: inset 0 0 0 1px"] },
+        { "in": "Modal", "uses": ["box-shadow: inset 0 0 0 1px $_rule"] }
+      ]
+    },
+    {
+      "id": "cast-shadow",
+      "axis": "elevation",
+      "status": "explore",
+      "what": "An opt-in shadow drawn in layers whose colour is solved for contrast on its backdrop, at three elevations (resting, raised, floating).",
+      "replaces": "The `box-shadow` mixin",
+      "appliesTo": [
+        {
+          "in": "packages/v12-styles/src/styles/_cast-shadow.scss",
+          "uses": ["@mixin cast-shadow("]
+        },
+        { "in": "Card", "uses": ["@include cast-shadow.cast-shadow"] },
+        { "in": "SideNav", "uses": ["@include cast-shadow.cast-shadow"] }
+      ]
+    },
+    {
+      "id": "hover-ring-by-content",
+      "axis": "other",
+      "status": "explore",
+      "what": "A surface holding controls hovers with a 1px inset ring and keeps its fill, so its hover never reads as one of its controls'; a text-only surface keeps the fill.",
+      "replaces": "The `$layer-hover` fill",
+      "appliesTo": [
+        {
+          "in": "packages/v12-styles/src/styles/_rollover.scss",
+          "uses": [
+            "&[data-rollover-surface]:not([data-rollover-surface='fill']):is("
+          ]
+        },
+        {
+          "in": "Tile",
+          "uses": ["--rollover-stroke: #{theme.$border-strong-01}"]
+        }
+      ]
+    },
+    {
+      "id": "progress-bar-label-row",
+      "axis": "other",
+      "status": "explore",
+      "what": "The status icon sits at the bar's end in every type, and a hidden label still keeps its row, so the bar never grows or shrinks as it finishes or fails.",
+      "replaces": "The icon after the words when inline, and a hidden label that takes no room",
+      "appliesTo": [
+        {
+          "in": "ProgressBar",
+          "uses": [
+            ".cds-progress-bar:not(.cds-progress-bar--inline, .cds-progress-bar--markless)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frame-prop",
+      "axis": "api",
+      "status": "proposal",
+      "what": "What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour.",
+      "replaces": "The booleans and kinds `isFlush`, `contained`, `kind=\"floating\"` and `ghost`",
+      "appliesTo": [
+        { "in": "Accordion", "props": ["frame"] },
+        { "in": "AppShell", "props": ["frame"] },
+        { "in": "Button", "props": ["frame"] },
+        { "in": "Dropdown", "props": ["frame"] },
+        { "in": "KitDefaults", "props": ["frame"] },
+        { "in": "Menu", "props": ["frame"] },
+        { "in": "NumberInput", "props": ["frame"] },
+        { "in": "PageHeader", "props": ["frame"] },
+        { "in": "Recipes", "props": ["frame"] },
+        { "in": "Search", "props": ["frame"] },
+        { "in": "Select", "props": ["frame"] },
+        { "in": "SelectList", "props": ["frame"] },
+        { "in": "SideNav", "props": ["frame"] },
+        { "in": "SidePanel", "props": ["frame"] },
+        { "in": "StructuredList", "props": ["frame"] },
+        { "in": "Tabs", "props": ["frame"] },
+        { "in": "TextArea", "props": ["frame"] },
+        { "in": "TextInput", "props": ["frame"] },
+        { "in": "Tooltip", "props": ["frame"] }
+      ]
+    },
+    {
+      "id": "variant-prop",
+      "axis": "api",
+      "status": "proposal",
+      "what": "The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure.",
+      "replaces": "`kind=\"tertiary\"`, `lowContrast`, `contrast` and `emphasis`",
+      "appliesTo": [
+        { "in": "Button", "props": ["variant"] },
+        { "in": "Chat", "props": ["variant"] },
+        { "in": "ContextualBar", "props": ["variant"] },
+        { "in": "Feedback", "props": ["variant"] },
+        { "in": "KitDefaults", "props": ["variant"] },
+        { "in": "Loading", "props": ["variant"] },
+        { "in": "Menu", "props": ["variant"] },
+        { "in": "Notification", "props": ["variant"] },
+        { "in": "NumberInput", "props": ["variant"] },
+        { "in": "PaginationNav", "props": ["variant"] },
+        { "in": "Popover", "props": ["variant"] },
+        { "in": "Processing", "props": ["variant"] },
+        { "in": "ProgressBar", "props": ["variant"] },
+        { "in": "ProgressRing", "props": ["variant"] },
+        { "in": "Search", "props": ["variant"] },
+        { "in": "Select", "props": ["variant"] },
+        { "in": "SelectionKit", "props": ["variant"] },
+        { "in": "SideNav", "props": ["variant"] },
+        { "in": "Slider", "props": ["variant"] },
+        { "in": "SplitButton", "props": ["variant"] },
+        { "in": "StatusIndicator", "props": ["variant"] },
+        { "in": "TextArea", "props": ["variant"] },
+        { "in": "TextInput", "props": ["variant"] },
+        { "in": "Toggle", "props": ["variant"] },
+        { "in": "Tooltip", "props": ["variant"] },
+        { "in": "TreeView", "props": ["variant"] }
+      ]
+    },
+    {
+      "id": "button-axes",
+      "axis": "api",
+      "status": "proposal",
+      "what": "Button splits the old kinds into `kind` (the role), `variant` (outlined, tonal) and `frame` (ghost, none), so each prop says one thing.",
+      "replaces": "`kind=\"tertiary\"`, `kind=\"ghost\"`, `kind=\"danger--tertiary\"` and `kind=\"danger--ghost\"`",
+      "appliesTo": [
+        { "in": "Button", "props": ["kind"] },
+        { "in": "SplitButton", "props": ["kind"] },
+        { "in": "Tooltip", "props": ["kind"] }
+      ]
+    },
+    {
+      "id": "corners-prop",
+      "axis": "api",
+      "status": "explore",
+      "what": "Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius.",
+      "replaces": "The button radius custom property and per-corner properties",
+      "appliesTo": [
+        { "in": "Accordion", "props": ["corners"] },
+        { "in": "AppShell", "props": ["corners"] },
+        { "in": "Button", "props": ["corners"] },
+        { "in": "Chat", "props": ["corners"] },
+        { "in": "ContainedList", "props": ["corners"] },
+        { "in": "DataTable", "props": ["corners"] },
+        { "in": "DatePickerV2", "props": ["corners"] },
+        { "in": "Dropdown", "props": ["corners"] },
+        { "in": "InlineEdit", "props": ["corners"] },
+        { "in": "KitDefaults", "props": ["corners"] },
+        { "in": "Notification", "props": ["corners"] },
+        { "in": "NumberInput", "props": ["corners"] },
+        { "in": "PageHeader", "props": ["corners"] },
+        { "in": "Popover", "props": ["corners"] },
+        { "in": "Search", "props": ["corners"] },
+        { "in": "Select", "props": ["corners"] },
+        { "in": "Slider", "props": ["corners"] },
+        { "in": "StructuredList", "props": ["corners"] },
+        { "in": "Tag", "props": ["corners"] },
+        { "in": "TextArea", "props": ["corners"] },
+        { "in": "TextInput", "props": ["corners"] },
+        { "in": "TimePicker", "props": ["corners"] },
+        { "in": "Toggle", "props": ["corners"] },
+        { "in": "Tooltip", "props": ["corners"] }
+      ]
+    },
+    {
+      "id": "theme-names",
+      "axis": "api",
+      "status": "explore",
+      "what": "The themes are named `light` and `dark`, drawn in Carbon's `white` and `g100`, while the DOM keeps Carbon's classes.",
+      "replaces": "The theme names `white` and `g100`",
+      "appliesTo": [
+        {
+          "in": "ThemeZone",
+          "uses": ["export type KitTheme = 'light' | 'dark'"]
+        }
+      ]
+    },
+    {
+      "id": "region-surface",
+      "axis": "api",
+      "status": "explore",
+      "what": "A `Region` names the colour an area stands on (`surface`: page, quiet or raised, with its `outline`), and that sets the default frame of what is inside.",
+      "replaces": "Nested `Theme` and `Layer`",
+      "appliesTo": [{ "in": "AppShell", "props": ["surface"] }]
+    },
+    {
+      "id": "kit-defaults",
+      "axis": "api",
+      "status": "explore",
+      "what": "A provider sets the brand, corners, variant, frame, shadow and density for a subtree, and a component's own prop always wins over it.",
+      "replaces": "Per-component props only",
+      "appliesTo": [
+        { "in": "KitDefaults", "uses": ["export function KitDefaults("] }
+      ]
+    },
+    {
+      "id": "logical-positions",
+      "axis": "api",
+      "status": "proposal",
+      "what": "Placement values are logical, `start` and `end`, so they follow the reading direction.",
+      "replaces": "`left` and `right`",
+      "appliesTo": [
+        { "in": "Card", "props": ["mediaPosition"] },
+        { "in": "EmptyState", "props": ["illustrationPosition"] },
+        { "in": "RadioButton", "props": ["labelPosition"] },
+        { "in": "SidePanel", "props": ["placement"] },
+        { "in": "Tearsheet", "props": ["influencerPosition"] }
+      ]
+    },
+    {
+      "id": "activation-prop",
+      "axis": "api",
+      "status": "proposal",
+      "what": "One keyboard word, `activation` (automatic or manual), on every selection list: the arrows select, or only move focus.",
+      "replaces": "ContentSwitcher's `selectionMode`",
+      "appliesTo": [
+        { "in": "ContentSwitcher", "props": ["activation"] },
+        { "in": "SelectList", "props": ["activation"] }
+      ]
+    }
+  ]
+}

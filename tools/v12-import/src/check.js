@@ -13,9 +13,9 @@
 //
 // Rules that report as warnings only, until the lane moves onto what they
 // ask for: how motion is reduced, timed and eased (the motion rules below),
-// and the shared prop vocabulary (vocab.js). A `// v12-allow <rule>: <why>`
-// comment on the line, or the one above, allows one site; the check counts
-// those.
+// the shared prop vocabulary (vocab.js), and the departures registry's marks
+// (ledger.js). A `// v12-allow <rule>: <why>` comment on the line, or the one
+// above, allows one site; the check counts those.
 
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
@@ -23,7 +23,8 @@ import path from 'node:path';
 import { CONFIG } from './config.js';
 import { scanLeaks } from './doc.js';
 import { motionLiterals } from './importer.js';
-import { vocabFindings } from './vocab.js';
+import { departureFindings } from './ledger.js';
+import { laneProgram, vocabFindings } from './vocab.js';
 
 const SEAM_DIR = 'packages/v12-motion';
 // Built output, and the changelog the release writes (dated, by design).
@@ -455,14 +456,18 @@ export function styleMotion(text) {
  * The findings in the lane.
  *
  * @param {string} labs The carbon-labs checkout.
- * @param {{ directMotion?: { file: string, spec: string }[], vocabulary?: boolean }} [options]
+ * @param {{ directMotion?: { file: string, spec: string }[], vocabulary?: boolean, departures?: boolean }} [options]
  *   The recorded allowances, when not the configured ones; whether to run the
- *   vocabulary rule (on by default).
+ *   vocabulary rule and the departures rule (both on by default).
  * @returns {{ kind: string, at: string, match: string, level: 'error' | 'warning' | 'allowed' }[]} The findings.
  */
 export function checkLane(
   labs,
-  { directMotion = CONFIG.directMotion, vocabulary = true } = {}
+  {
+    directMotion = CONFIG.directMotion,
+    vocabulary = true,
+    departures = true,
+  } = {}
 ) {
   const manifest = JSON.parse(
     fs.readFileSync(path.join(labs, 'v12.manifest.json'), 'utf8')
@@ -605,9 +610,17 @@ export function checkLane(
       }
     }
   }
+  // The lane's exports, read once for the two rules that need them.
+  const lane = vocabulary || departures ? laneProgram(labs) : undefined;
   // The shared prop vocabulary, over every component folder's exports.
   if (vocabulary) {
-    for (const f of vocabFindings(labs)) {
+    for (const f of vocabFindings(labs, undefined, lane)) {
+      report(f.kind, f.at, f.match, 'warning');
+    }
+  }
+  // Every registry entry has its marks, and every mark an entry.
+  if (departures) {
+    for (const f of departureFindings(labs, { lane })) {
       report(f.kind, f.at, f.match, 'warning');
     }
   }

@@ -83,7 +83,7 @@ interface MatrixProps<P> {
 /**
  * The grid: a row per state, a column per theme and density. Each cell is
  * its own Carbon theme zone and layout density; the rest of the toolbar
- * (corners, reduced motion, clock, direction) applies to all of them.
+ * (reduced motion, clock, direction) applies to all of them.
  */
 function Matrix<P extends object>({
   component,

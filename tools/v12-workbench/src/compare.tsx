@@ -44,9 +44,11 @@ export function storyFrameUrl(
   url.search = '';
   url.searchParams.set('id', id);
   url.searchParams.set('viewMode', 'story');
+  // Storybook's URL form: a boolean is `!true` or `!false` (a bare `false`
+  // reads as the string, which is truthy).
   const picks = Object.entries(globals)
     .filter(([, v]) => ['string', 'number', 'boolean'].includes(typeof v))
-    .map(([k, v]) => `${k}:${v}`)
+    .map(([k, v]) => `${k}:${typeof v === 'boolean' ? `!${v}` : v}`)
     .join(';');
   if (picks) url.searchParams.set('globals', picks);
   return url.toString();

@@ -34,6 +34,8 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@carbon-labs/react-icon-motion": "workspace:*",
+    "@carbon-labs/react-kit-defaults": "workspace:*",
     "@carbon-labs/v12-motion": "workspace:*"
   },
   "peerDependencies": {

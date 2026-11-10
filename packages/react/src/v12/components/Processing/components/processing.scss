@@ -1,0 +1,81 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+/* Processing (Processing.tsx): the layout, the visually hidden label and the
+ * dots' color. Every animation is the engine's (Web Animations), and so is
+ * reduced motion: the engine paints still states when the feedback family's
+ * motion says reduced, so there is no media query here. Each dot's place and
+ * presence are its transform and its pulse its `r`, both the engine's; a CSS
+ * value would override the still states. */
+
+.cds-processing {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  block-size: var(--cds-processing-size, 32px);
+  inline-size: var(--cds-processing-size, 32px);
+}
+
+.cds-processing__svg {
+  display: block;
+  overflow: visible; /* a dot's peak briefly passes the viewBox */
+  block-size: 100%;
+  inline-size: 100%;
+}
+
+/* Hero: the loaders' brand grade (styles/_brand.scss). On the mark itself,
+   so it wins over the host's colour. */
+.cds-processing.cds-processing--hero {
+  color: var(--cds-hero-loader);
+}
+
+/* Right to left: the drawing mirrors, so the stagger runs right to left and
+   the spin turns counter-clockwise. Two rules, so a browser without :dir()
+   keeps the attribute form. */
+[dir='rtl'] .cds-processing__svg {
+  transform: scaleX(-1);
+}
+
+.cds-processing__svg:dir(rtl) {
+  transform: scaleX(-1);
+}
+
+.cds-processing__dot {
+  fill: none;
+  stroke: currentColor;
+}
+
+/* 16px: solid dots. The ring's hole is under a pixel there, so at the
+   pulse's peak a ring reads as a smudge; a filled dot keeps its edge. The
+   dot's outer edge is the same either way. */
+.cds-processing--solid .cds-processing__dot {
+  fill: currentColor;
+}
+
+@media (forced-colors: active) {
+  .cds-processing__dot {
+    stroke: CanvasText;
+  }
+
+  .cds-processing--solid .cds-processing__dot {
+    fill: CanvasText;
+  }
+}
+
+.cds-processing__label {
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip: rect(0, 0, 0, 0);
+  inline-size: 1px;
+  white-space: nowrap;
+}

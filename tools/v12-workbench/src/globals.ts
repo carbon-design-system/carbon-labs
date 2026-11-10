@@ -8,7 +8,7 @@
 import { DEFAULT_GLOBALS } from './constants';
 
 /**
- * The toolbar: six picks, as Storybook globals. Storybook's own toolbar
+ * The toolbar: five picks, as Storybook globals. Storybook's own toolbar
  * draws them; `withWorkbench` applies them.
  */
 export const globalTypes = {
@@ -33,18 +33,6 @@ export const globalTypes = {
       items: [
         { value: 'default', title: 'Default density' },
         { value: 'compact', title: 'Compact density' },
-      ],
-    },
-  },
-  corners: {
-    description: 'Corners: rounded or square',
-    toolbar: {
-      title: 'Corners',
-      icon: 'box',
-      dynamicTitle: true,
-      items: [
-        { value: 'rounded', title: 'Rounded corners' },
-        { value: 'square', title: 'Square corners' },
       ],
     },
   },

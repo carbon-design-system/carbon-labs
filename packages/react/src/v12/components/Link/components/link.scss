@@ -1,0 +1,117 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+
+/* Link — v11's Link on the rollover's text standard (Link.tsx). The look and the motion are
+   `@mixin rollover-link`: link-blue text with the hover glow, press and
+   release painted into its letters. Its rest is a background colour
+   (`$rest: color`), so `:visited` can change it. */
+
+.cds-link {
+  @include rollover-link($underline: hover, $rest: color);
+
+  & {
+    @include type-style('body-compact-01');
+  }
+
+  vertical-align: baseline;
+
+  /* The ring in the link's rest colour, not the dimmed hover colour that
+     focus shows in the letters (as the Button's text kind). */
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--rollover-rest);
+    outline-offset: 2px;
+  }
+}
+
+/* v11's sizes. */
+.cds-link--sm {
+  @include type-style('helper-text-01');
+}
+
+.cds-link--lg {
+  @include type-style('body-compact-02');
+}
+
+/* v11's icon: after the text, 8px from it, on the text's line; 20px at lg.
+   It takes `color`, which follows rest → hover → press flatly. */
+.cds-link__icon {
+  display: inline-flex;
+  align-items: center;
+  block-size: 1lh;
+  margin-inline-start: $spacing-03;
+  vertical-align: top;
+
+  svg {
+    display: block;
+    fill: currentColor;
+  }
+}
+
+/* Inline: in a sentence, in the sentence's own type (a size still sets
+   one), underlined always. It wraps with the text: the underline is a real
+   text decoration, painted through the letters with them, and the glow
+   follows the pointer on a link's first line. */
+.cds-link--inline {
+  display: inline;
+  font: inherit;
+  letter-spacing: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  white-space: normal;
+
+  &::after {
+    display: none;
+  }
+
+  &.cds-link--sm {
+    @include type-style('helper-text-01');
+  }
+
+  &.cds-link--md {
+    @include type-style('body-compact-01');
+  }
+
+  &.cds-link--lg {
+    @include type-style('body-compact-02');
+  }
+}
+
+/* Visited (v11's `visited` + `:visited`): the rest takes `link-visited`.
+   Only colours can change under `:visited`, which is why the rest is a
+   background colour here. Hovered, focused or pressed, it takes the link
+   blue's rollover, as v11 hovers a visited link in the hover blue. */
+.cds-link--visited:visited:not(
+    :hover,
+    :focus-visible,
+    :active,
+    [aria-disabled='true']
+  ) {
+  background-color: theme.$link-visited;
+  color: theme.$link-visited;
+}
+
+/* Disabled: no glow, no underline on a standalone link (v11); an inline
+   link keeps its underline in the disabled colour. */
+.cds-link--disabled {
+  cursor: not-allowed;
+}
+
+@media (forced-colors: active) {
+  .cds-link--disabled {
+    color: GrayText;
+  }
+}

@@ -15,9 +15,11 @@ export type { CompareOptions } from './compare';
 export { describeMotion, motionReport } from './motion';
 export type { MotionEntry, MotionReport, MotionRow } from './motion';
 export { applyClock, clockDraft } from './clock';
+export { WorkbenchFrame } from './decorator';
 export {
   CLOCKS,
-  CORNERS,
+  DEFAULT_GLOBALS,
+  MOTION_LEVEL,
   DENSITIES,
   DIRECTIONS,
   REDUCED_MOTION,
@@ -27,7 +29,6 @@ export {
 } from './constants';
 export type {
   Clock,
-  Corners,
   Density,
   Direction,
   ReducedBehaviour,

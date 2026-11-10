@@ -9,13 +9,13 @@ It is registered only in the v12 build of the React Storybook
 
 ## Toolbar
 
-Six globals, drawn by Storybook's toolbar and applied by the add-on's decorator.
+Five globals, drawn by Storybook's toolbar and applied by the add-on's
+decorator.
 
 | Pick           | Values                      | What it does                                                                                                                                                                                                                                                                |
 | -------------- | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Theme          | white, g100                 | `data-carbon-theme` on `<html>` (the lane's styles switch on it; its own decorator reads the same global).                                                                                                                                                                  |
 | Density        | default, compact            | `data-density` on `<html>` and Carbon's `Layout` density (`normal`, `condensed`) around the story.                                                                                                                                                                          |
-| Corners        | rounded, square             | `data-corners` on `<html>`, for the lane's styles to read. No v12 style reads it yet.                                                                                                                                                                                       |
 | Reduced motion | off, shorter clock, at once | `MotionProvider level` around the story (`full`, `reduced`, `none`), which `usePrefersReducedMotion` reads, plus `data-motion-level` on `<html>` for the tokens CSS, and `FeedbackMotion reduced`. Off forces the motion on, whatever the system prefers.                   |
 | Clock          | 1x, 0.25x, 0.1x             | The draft layer scales every duration and stagger token live, so script-driven motion that reads `motionTokens` follows; each CSS transition and animation runs at that playback rate as it starts; `FeedbackMotion timeScale` for the feedback family. See `src/clock.ts`. |
 | Direction      | ltr, rtl                    | `dir` on `<html>`.                                                                                                                                                                                                                                                          |
@@ -108,4 +108,6 @@ Two stories side by side, each in its own frame, under the same toolbar picks.
 - The clock cannot slow a duration a component reads once at module load.
 - The Carbon v11 components a story also renders slow down only through their
   CSS; their script-driven motion does not read carbon-motion's tokens.
-- Corners and density set attributes the v12 styles do not read yet.
+- Density sets an attribute the v12 styles do not read yet.
+- There is no corners pick: a component's corners come from its own spec (pills,
+  round icon buttons, rounded containers), not from a global.

@@ -12,6 +12,11 @@
 // the seam, on every v12 story.
 import '@carbon-labs/v12-motion/tokens.css';
 import { withWorkbench } from './decorator';
+import { quietCancelledAnimationWaits } from './animation-wait';
+
+if (typeof window !== 'undefined') {
+  quietCancelledAnimationWaits();
+}
 
 export { globalTypes, initialGlobals } from './globals';
 export const decorators = [withWorkbench];

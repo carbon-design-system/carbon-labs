@@ -1,0 +1,13 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as UtilStories from './Util.stories.tsx';
+
+<Meta of={UtilStories} />
+
+# Util
+
+The helpers the v12 components share: class names, form state, the page's
+layer stack and focus, colour parsing, the reduced-motion getter, the
+visibility a looping motion pauses on, and the ref and `inert` helpers that
+read the same on React 18 and 19.
+
+<Canvas of={UtilStories.Default} />

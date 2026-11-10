@@ -1,0 +1,48 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ProcessingStories from './Processing.stories.tsx';
+
+<Meta of={ProcessingStories} />
+
+# Processing
+
+The working mark for a turn or a job: three dots that load in and pulse on the
+loading clock, turn into a triangle while the machine acts and a square while it
+waits on a person, and shrink out.
+
+<Canvas of={ProcessingStories.Default} />
+
+## Motion
+
+| Pattern             | Where                           | Values                                                                                                                                                            |
+| ------------------- | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Load-in             | On mount, or any mode after out | Each dot grows in over slow-01, fast-02 apart, entrance-expressive, joining the running pulse at once                                                             |
+| Pulse               | Every formation                 | In sets, dots 250ms apart; each swells 225ms, entrance-expressive, and settles 600ms, standard-productive; then 175ms quiet. A set is 1500ms, the square's 1750ms |
+| Swing               | A change of mode                | One clockwise swing on arcs, 150° into a shape, at least 90° into the line; dots fast-00 apart, longest arc first, standard-productive                            |
+| Swing clock         | By the longest arc              | Under 8 units moderate-03, under 12 slow-01, under 16 slow-02, else slow-03; the same time at every size                                                          |
+| Spin                | Triangle, square                | One revolution in 8 loading periods, clockwise                                                                                                                    |
+| Square's fourth dot | Into the square                 | Grows in as the others swing; into or out of the square the dots finish their set first                                                                           |
+| Wiggle              | The handle, any formation       | Each dot bobs over slow-01, moderate-02 apart, standard-expressive: 6 units up from the line, 3 out from a shape's centre                                         |
+| Out                 | `out`, or the handle            | Each dot shrinks over fast-01, fast-00 apart, exit-expressive                                                                                                     |
+| Shared clock        | Every mark on a page            | Pulse and spin read one page clock, so marks pulse and turn together; off screen they hold                                                                        |
+| Interruption        | A request mid-swing             | Swings on clockwise from where the dots are, never back; out interrupts at once                                                                                   |
+| Reduced motion      | Every change                    | Each mode's still picture; out hides the dots at once; the wiggle does nothing                                                                                    |
+
+## Props beyond Carbon's
+
+| Prop        | What it does                                                                                                                                        |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `mode`      | Loading, triangle, square or out; a change is one swing from where the dots are. Default loading.                                                   |
+| `loop`      | Whether the pulse repeats. Off runs one cycle, then shrinks out. Default on.                                                                        |
+| `label`     | The live region's text, read out when it changes. Default "Processing".                                                                             |
+| `size`      | 32px, the standard, or 16px, the small fallback with solid dots. Default 32.                                                                        |
+| `variant`   | Neutral, the host's colour, or hero, the kit's brand. Not given: the kit's default, else neutral.                                                   |
+| `onModeEnd` | Called when the mode is reached; not for a mode replaced before it landed.                                                                          |
+| `ref`       | The handle: `triggerLoading`, `triggerTriangle`, `triggerSquare`, `triggerWiggle`, `triggerOut`. Each resolves true once landed, false if replaced. |
+
+### Behaviour
+
+- The dots take the text colour where they sit.
+- Right to left, the drawing mirrors: the stagger runs right to left and the
+  spin turns counter-clockwise.
+- Its clocks are the loading clock's and the tokens', so it has no `motion`
+  prop.

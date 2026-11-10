@@ -24470,7 +24470,7 @@
             "motion": {
               "type": "object",
               "unchecked": "Partial<ShimmerTextMotion>",
-              "description": "Tuning: the length rule's `shortSpeed`, `longSpeed` and `restMs`, the band's `band` width and `weight`, and `weightAt`."
+              "description": "Tuning: the length rule's `shortSpeed`, `longSpeed` and `restMs`, and the band's `band` width."
             },
             "onBlur": {
               "$ref": "#/$defs/event"

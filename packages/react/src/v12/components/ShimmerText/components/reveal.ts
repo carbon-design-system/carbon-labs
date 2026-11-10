@@ -7,8 +7,8 @@
 
 import { DURATION_FLOOR_MS } from '@carbon-labs/v12-motion';
 import {
-  SHIMMER_RIDE,
   SHIMMER_RIDE_AT,
+  SHIMMER_RIDE_BAND,
   SHIMMER_TEXT,
   deferShimmerPass,
   easingCss,
@@ -22,7 +22,7 @@ import {
 /* ============================================================================
  * The shimmer's reveal: words (or a row) arrive through the shimmer's band,
  * as one pass of it, instead of fading or popping in: a smooth gradient
- * reveal with the band's weight step, its contrast and its easing.
+ * reveal with the band's colours and its easing.
  *
  *   edge     a mask on the element: shown behind the band's middle, hidden
  *            ahead of its front, so the band's leading half is the soft edge.
@@ -30,8 +30,8 @@ import {
  *            its words are long (`SHIMMER_TEXT.band`, 75%, 96 to 240px),
  *            as its passes are
  *   band     every ShimmerText inside (active or not) carries its band along
- *            the edge, in step with it: its words come in dark and one step
- *            heavier, and settle to their own color and weight behind it.
+ *            the edge, in step with it: its words come in in the band's
+ *            colour and settle to their own behind it.
  *            Words that aren't a ShimmerText, and marks, arrive under the
  *            edge alone
  *   angle    the shimmer's (the skeleton wave's, 45°)
@@ -183,10 +183,10 @@ export function playShimmerReveal(
     rides.push(
       s.animate(
         [
-          { [SHIMMER_RIDE_AT]: `${-d}px`, '--cds-shimmer-band': w },
-          { [SHIMMER_RIDE_AT]: `${span - d}px`, '--cds-shimmer-band': w },
+          { [SHIMMER_RIDE_AT]: `${-d}px`, [SHIMMER_RIDE_BAND]: w },
+          { [SHIMMER_RIDE_AT]: `${span - d}px`, [SHIMMER_RIDE_BAND]: w },
         ],
-        { ...timing, pseudoElement: SHIMMER_RIDE }
+        timing
       )
     );
     // Its own passes (an active one's) set off one rest after the reveal's band has gone: the reveal is a pass.

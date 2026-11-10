@@ -1,0 +1,123 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/corners';
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+
+/* One row at the start of a reply, at its own height from the first frame: the mark, the label
+   or summary in secondary text, the seconds in tabular figures. */
+
+.cds-turn-status {
+  @include type-style('body-compact-01');
+
+  display: flex;
+  align-items: center;
+  color: theme.$text-secondary;
+  gap: 0.5rem;
+  min-block-size: 1.5rem;
+}
+
+/* The mark's slot: a 24px square. Processing's 32px drawing hangs its empty margin 4px over each
+   side, its ink inside; the 16px fallback and the error mark sit inside. */
+.cds-turn-status__mark {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  block-size: 1.5rem;
+  color: theme.$icon-primary;
+  inline-size: 1.5rem;
+}
+
+.cds-turn-status__mark--32 > .cds-processing {
+  margin: -0.25rem;
+}
+
+/* The label's and the seconds' places: the seconds glide when the label's
+   width changes (glide.ts). */
+.cds-turn-status__place,
+.cds-turn-status__elapsed-place {
+  display: inline-grid;
+  min-inline-size: 0;
+}
+
+.cds-turn-status__slot {
+  justify-items: start;
+  min-inline-size: 0;
+
+  > .cds-swap-slot__face {
+    justify-items: start;
+  }
+}
+
+.cds-turn-status__label,
+.cds-turn-status__summary {
+  white-space: nowrap;
+}
+
+.cds-turn-status__elapsed {
+  color: theme.$text-helper;
+  font-variant-numeric: tabular-nums;
+}
+
+.cds-turn-status__error {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cds-turn-status__cause {
+  color: theme.$text-error;
+}
+
+/* The summary, once the turn has details: a text toggle on `rollover-text`, its words and a
+   chevron, starting where the row starts. */
+.cds-turn-status__toggle {
+  @include rollover-text(
+    $underline: none,
+    $display: inline-flex,
+    $colors: matched
+  );
+  --rollover-rest: #{theme.$text-secondary};
+  --rollover-hover: #{theme.$text-helper};
+
+  align-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: corners.$mark;
+  margin: 0;
+
+  appearance: none;
+  background-color: transparent;
+  font: inherit;
+  gap: 0.25rem;
+
+  &:focus-visible {
+    outline: 2px solid theme.$text-primary;
+    outline-offset: 2px;
+  }
+}
+
+/* The details (the turn's steps) under the row: the kit's disclosure. Its
+   16px marks centre under the row's 24px mark slot. */
+.cds-turn-status__details-content {
+  padding-inline-start: 0.25rem;
+}
+
+.cds-turn-status__announce {
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip: rect(0, 0, 0, 0);
+  inline-size: 1px;
+  white-space: nowrap;
+}

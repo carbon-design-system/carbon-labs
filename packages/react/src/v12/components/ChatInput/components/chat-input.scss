@@ -1,0 +1,379 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon foundations only: a labs v12 component consumes @carbon/styles and
+// never mirrors it. Two things Carbon lacks are read through get-var under a
+// carbon-proposal callout (the box fill, the menus' selected tint), and the
+// grown box's send corner is the composer-corner exploration.
+@use '@carbon/styles/scss/config' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/layer' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/motion' as *;
+@use '@carbon/styles/scss/border-radius' as *;
+@use '@carbon/styles/scss/utilities/box-shadow' as *;
+@use '@carbon/styles/scss/utilities/custom-property';
+@use '@carbon/styles/scss/utilities/focus-outline' as *;
+@use '@carbon/styles/scss/utilities/z-index' as *;
+@use '../../../explorations' as explore;
+
+$block: '#{$prefix}--chat-input';
+
+.#{$block} {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-02;
+}
+
+// ---- the box ---------------------------------------------------------------
+
+.#{$block}__box {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  padding: $spacing-03 $spacing-03 $spacing-03 $spacing-06;
+  // 24 is a full pill at 48, and unlike $border-radius-max it interpolates:
+  // the corners ease to 16 as the box grows instead of snapping at the end.
+  border-radius: $border-radius-24;
+  // @carbon-proposal token: chat-input-background — in dark, the card's own fill with its rule until the v12 themes land (carbon-labs#1417); then the shell, so FileChip steps up from it. TBD
+  background-color: custom-property.get-var(
+    'chat-input-background',
+    $chat-prompt-background
+  );
+  // The hairline is an inset shadow, not a border: it takes no space, so the
+  // pill is exactly 8 + 32 + 8 = 48 on the spacing scale.
+  box-shadow: inset 0 0 0 1px $border-subtle;
+  gap: $spacing-03;
+  // The shape moves with the growth: the same disclosure surface as the
+  // prompt's height (moderate-01, productive entrance easing).
+  transition:
+    border-radius $duration-moderate-01 motion(entrance, productive),
+    box-shadow $duration-fast-02 motion(standard, productive);
+}
+
+// A text-entry control never fills on hover; it steps its edge up a rung.
+// Pointer activation and typing hold that edge.
+.#{$block}__box:hover,
+.#{$block}__box--active {
+  box-shadow: inset 0 0 0 1px $border-strong;
+}
+
+// Only a keyboard arrival draws Carbon's focus ring.
+.#{$block}__box--keyboard-focus,
+.#{$block}__box--keyboard-focus:hover {
+  box-shadow: inset 0 0 0 2px $focus;
+}
+
+.#{$block}__box--drop {
+  outline: 1px dashed $border-interactive;
+  outline-offset: -1px;
+}
+
+// Grown past one row or holding files: border-radius-16, with the corner that
+// holds send concentric with it.
+.#{$block}__box--grown {
+  border-radius: $border-radius-16;
+  // @carbon-explore composer-corner — the send corner of the grown box reads concentric with the 32px send control. TBD
+  border-end-end-radius: explore.$explore-composer-corner;
+}
+
+.#{$block}__attachments {
+  // Always rendered, so with no files it takes the box's gap back: the pill
+  // stays 8 + 32 + 8. The list carries that gap below it instead.
+  margin-block-end: -$spacing-03;
+  // The height is measured and set from script; it moves with the prompt.
+  transition: block-size $duration-moderate-01 motion(entrance, productive);
+}
+
+.#{$block}__attachments--moving {
+  overflow: hidden;
+}
+
+.#{$block}__attachment-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-03;
+  padding-block-end: $spacing-03;
+}
+
+.#{$block}--actions-below .#{$block}__attachment-list {
+  padding-block-start: $spacing-05;
+}
+
+// No files: no padding, so the row measures 0.
+.#{$block} .#{$block}__attachment-list:empty {
+  padding: 0;
+}
+
+.#{$block}__row {
+  display: flex;
+  align-items: center;
+  gap: $spacing-05;
+  min-block-size: $spacing-07;
+}
+
+.#{$block}__box--grown .#{$block}__row {
+  align-items: flex-end;
+}
+
+.#{$block}__prompt {
+  @include type-style('body-01');
+
+  flex: 1 1 auto;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background: transparent;
+  color: $text-primary;
+  min-inline-size: 0;
+  outline: none;
+  resize: none;
+  // The box grows on Carbon's disclosure surface: moderate-01, productive
+  // entrance easing (@carbon/motion surfaces, carbon#23739). The margin that
+  // opens when it grows moves with it, or the row would jump first.
+  transition:
+    block-size $duration-moderate-01 motion(entrance, productive),
+    margin $duration-moderate-01 motion(entrance, productive);
+}
+
+.#{$block}__prompt::placeholder {
+  color: $text-placeholder;
+  opacity: 1;
+}
+
+.#{$block}--actions-below .#{$block}__box--grown .#{$block}__prompt {
+  margin-block: $spacing-03;
+}
+
+.#{$block}__prompt:disabled {
+  color: $text-disabled;
+  cursor: not-allowed;
+}
+
+// ---- actions ---------------------------------------------------------------
+
+.#{$block}__actions {
+  // The shared tooltip is placed against the group.
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: $spacing-02;
+}
+
+.#{$block}--actions-below > .#{$block}__actions {
+  padding-inline-start: $spacing-05;
+}
+
+// Inside, one 16 margin all round, matching the box's 16 radius: the box
+// pads 8 and each part brings 8 of its own (a 32 ghost button's icon sits 8
+// in; the prompt and the files pad 8), so text, files and icons all sit 16
+// from the edge.
+.#{$block}--actions-inside .#{$block}__box {
+  padding: $spacing-03;
+  gap: $spacing-03;
+}
+
+.#{$block}--actions-inside .#{$block}__prompt {
+  margin-block-start: $spacing-03;
+  padding-inline: $spacing-03;
+}
+
+// No button shares the prompt's row here, so it does not hold the 32 a
+// button needs, which would push the text to 20.
+.#{$block}--actions-inside .#{$block}__row {
+  min-block-size: 0;
+}
+
+.#{$block}--actions-inside .#{$block}__attachment-list {
+  padding-block-start: $spacing-03;
+  padding-inline: $spacing-03;
+}
+
+.#{$block}__spacer {
+  flex: 1 1 auto;
+}
+
+// ---- menus: Carbon's Menu, inverse ----------------------------------------
+
+// The <Theme> that hosts a menu takes no space; it only re-themes.
+.#{$block}__menu-host {
+  display: contents;
+}
+
+// Where fixed 0,0 is for the menu, read to place it (ChatInputMenus).
+.#{$block}__menu-anchor {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+}
+
+// ---- the actions' shared tooltip --------------------------------------------
+
+// Carbon's Popover with Carbon's tooltip classes, as a 32px box over the
+// button it names; ActionGroup sets its start and size.
+.#{$block}__actions .#{$block}__tip {
+  position: absolute;
+  inset-block: 0;
+  pointer-events: none;
+}
+
+.#{$block}__tip-anchor {
+  display: block;
+  block-size: 100%;
+}
+
+.#{$block}__actions .#{$block}__tip .#{$prefix}--popover-content {
+  pointer-events: auto;
+  white-space: nowrap;
+}
+
+// Moving between buttons, it slides rather than reappearing.
+.#{$block}__tip--sliding {
+  transition: inset-inline-start $duration-fast-02 motion(standard, productive);
+}
+
+// Carbon's Menu focuses its first row when it opens (the menu-button
+// pattern, so the arrows work at once) and rings it on :focus. Opened with a
+// pointer, that ring reads as a choice nobody made, so it shows for keyboard
+// focus only, as the box's does.
+.#{$block}__menu.#{$prefix}--menu--open:focus:not(:focus-visible),
+.#{$block}__menu .#{$prefix}--menu-item:focus:not(:focus-visible) {
+  @include focus-outline('reset');
+}
+
+// Carbon hovers a menu row on $layer-hover, a plain neutral. On the blue-gray
+// ladder hover is one step from the surface and selected is two, so the two
+// read as the same ladder rather than a grey and then a tint.
+.#{$block}__menu .#{$prefix}--menu-item:hover {
+  // @carbon-proposal token: chat-input-menu-hover — Carbon's menu hover is a neutral, not a step on the selected ladder. TBD
+  background-color: custom-property.get-var(
+    'chat-input-menu-hover',
+    $layer-hover
+  );
+}
+
+// Carbon's Menu marks selection with a checkmark only. The tint is the
+// blue-gray ladder at the selected step, with the brand label solved on it.
+.#{$block}__menu .#{$prefix}--menu-item[aria-checked='true'] {
+  // @carbon-proposal token: chat-input-menu-selected — Carbon's Menu has no selected tint; the checkmark stays. TBD
+  background-color: custom-property.get-var(
+    'chat-input-menu-selected',
+    $layer-selected
+  );
+  // @carbon-proposal token: chat-input-menu-selected-text — the brand label solved on the selected tint. TBD
+  color: custom-property.get-var(
+    'chat-input-menu-selected-text',
+    $text-primary
+  );
+}
+
+// The press is the ladder's active rung, one step past selected, so it reads
+// as the same blue-gray rather than Carbon's neutral between two tints. After
+// the selected rule, so pressing the selected row still shows the press.
+.#{$block}__menu .#{$prefix}--menu-item:active {
+  // @carbon-proposal token: chat-input-menu-active — Carbon's menu press is a neutral, not a step on the selected ladder. replaces: layer-active-01. TBD
+  background-color: custom-property.get-var(
+    'chat-input-menu-active',
+    $layer-active
+  );
+}
+
+.#{$block}__menu
+  .#{$prefix}--menu-item[aria-checked='true']
+  .#{$prefix}--menu-item__selection-icon
+  svg {
+  fill: currentColor;
+}
+
+// The old set's visible group titles. Carbon names a group for assistive
+// tech only (aria-label); this shows the same name.
+.#{$block}__menu .#{$prefix}--menu-item-radio-group > ul::before {
+  @include type-style('label-01');
+
+  display: block;
+  padding: $spacing-03 $spacing-04 $spacing-02;
+  color: $text-secondary;
+  content: attr(aria-label);
+}
+
+// ---- the / command list, drawn like the menus ------------------------------
+
+.#{$block}__commands {
+  position: absolute;
+  z-index: z('dropdown');
+  inset-block-end: calc(100% + #{$spacing-02});
+  inset-inline: 0;
+}
+
+.#{$block}__command-list,
+.#{$block}__command-empty {
+  @include box-shadow;
+
+  padding: $spacing-02;
+  border: 1px solid $border-subtle;
+  border-radius: $border-radius-08;
+  margin: 0;
+  background-color: $layer;
+  list-style: none;
+}
+
+.#{$block}__command {
+  @include type-style('body-compact-01');
+
+  display: flex;
+  align-items: center;
+  border-radius: $border-radius-04;
+  block-size: $spacing-07;
+  color: $text-secondary;
+  cursor: pointer;
+  gap: $spacing-03;
+  padding-inline: $spacing-04;
+}
+
+.#{$block}__command--active {
+  background-color: $layer-hover;
+  color: $text-primary;
+}
+
+.#{$block}__command-name {
+  @include type-style('heading-compact-01');
+}
+
+.#{$block}__command-description {
+  @include type-style('label-01');
+
+  overflow: hidden;
+  flex: 1 1 auto;
+  color: $text-secondary;
+  text-align: end;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.#{$block}__command-empty {
+  @include type-style('body-compact-01');
+
+  color: $text-secondary;
+  padding-block: $spacing-03;
+  padding-inline: $spacing-04;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .#{$block}__box,
+  .#{$block}__prompt,
+  .#{$block}__attachments,
+  .#{$block}__tip--sliding {
+    transition: none;
+  }
+
+  // With no transition there is no transitionend to clear the clip.
+  .#{$block}__attachments--moving {
+    overflow: visible;
+  }
+}

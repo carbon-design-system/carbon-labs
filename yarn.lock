@@ -3019,7 +3019,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-activity-feed@workspace:packages/react/src/v12/components/ActivityFeed":
+"@carbon-labs/react-activity-feed@workspace:*, @carbon-labs/react-activity-feed@workspace:packages/react/src/v12/components/ActivityFeed":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-activity-feed@workspace:packages/react/src/v12/components/ActivityFeed"
   dependencies:
@@ -3164,6 +3164,101 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-chat-input@workspace:*, @carbon-labs/react-chat-input@workspace:packages/react/src/v12/components/ChatInput":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-chat-input@workspace:packages/react/src/v12/components/ChatInput"
+  dependencies:
+    "@carbon-labs/react-file-chip": "workspace:*"
+    "@carbon-labs/react-mega-button": "workspace:*"
+    classnames: "npm:^2.3.2"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    "@carbon/icons-react": ^11.0.0
+    "@carbon/react": ^1.95.0
+    react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+    react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-chat-panels@workspace:*, @carbon-labs/react-chat-panels@workspace:packages/react/src/v12/components/ChatPanels":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-chat-panels@workspace:packages/react/src/v12/components/ChatPanels"
+  dependencies:
+    "@carbon-labs/react-mega-button": "workspace:*"
+    "@carbon/layout": "npm:^11.61.0"
+    classnames: "npm:^2.3.2"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    "@carbon/react": ^1.95.0
+    react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+    react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-chat-thread@workspace:*, @carbon-labs/react-chat-thread@workspace:packages/react/src/v12/components/ChatThread":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-chat-thread@workspace:packages/react/src/v12/components/ChatThread"
+  dependencies:
+    "@carbon-labs/react-code-snippet-alt": "workspace:*"
+    "@carbon-labs/react-mega-button": "workspace:*"
+    "@carbon-labs/react-reasoning-trace": "workspace:*"
+    classnames: "npm:^2.3.2"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    "@carbon/react": ^1.95.0
+    react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+    react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-chat@workspace:*, @carbon-labs/react-chat@workspace:packages/react/src/v12/components/Chat":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-chat@workspace:packages/react/src/v12/components/Chat"
+  dependencies:
+    "@carbon-labs/react-activity-feed": "workspace:*"
+    "@carbon-labs/react-button": "workspace:*"
+    "@carbon-labs/react-disclosure": "workspace:*"
+    "@carbon-labs/react-feedback": "workspace:*"
+    "@carbon-labs/react-jump-to": "workspace:*"
+    "@carbon-labs/react-menu": "workspace:*"
+    "@carbon-labs/react-motion-icons": "workspace:*"
+    "@carbon-labs/react-notification": "workspace:*"
+    "@carbon-labs/react-popover": "workspace:*"
+    "@carbon-labs/react-processing-v2": "workspace:*"
+    "@carbon-labs/react-scroller": "workspace:*"
+    "@carbon-labs/react-select-list": "workspace:*"
+    "@carbon-labs/react-selection-kit": "workspace:*"
+    "@carbon-labs/react-shimmer-text": "workspace:*"
+    "@carbon-labs/react-tag-set": "workspace:*"
+    "@carbon-labs/react-text-input": "workspace:*"
+    "@carbon-labs/react-tooltip": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    vitest: "npm:^4.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-chats-panel@workspace:*, @carbon-labs/react-chats-panel@workspace:packages/react/src/v12/components/ChatsPanel":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-chats-panel@workspace:packages/react/src/v12/components/ChatsPanel"
+  dependencies:
+    "@carbon-labs/react-mega-button": "workspace:*"
+    "@carbon/layout": "npm:^11.61.0"
+    classnames: "npm:^2.3.2"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    "@carbon/react": ^1.95.0
+    react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+    react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-checkbox@workspace:*, @carbon-labs/react-checkbox@workspace:packages/react/src/v12/components/Checkbox":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-checkbox@workspace:packages/react/src/v12/components/Checkbox"
@@ -3194,6 +3289,21 @@ __metadata:
     "@ibm/telemetry-js": "npm:^1.10.2"
   peerDependencies:
     "@carbon/colors": ">=11"
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-code-snippet-alt@workspace:*, @carbon-labs/react-code-snippet-alt@workspace:packages/react/src/v12/components/CodeSnippetAlt":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-code-snippet-alt@workspace:packages/react/src/v12/components/CodeSnippetAlt"
+  dependencies:
+    "@carbon-labs/react-mega-button": "workspace:*"
+    classnames: "npm:^2.3.2"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    "@carbon/icons-react": ^11.0.0
+    "@carbon/react": ^1.95.0
+    react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+    react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
   languageName: unknown
   linkType: soft
 
@@ -3295,7 +3405,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-data-table@workspace:packages/react/src/v12/components/DataTable":
+"@carbon-labs/react-data-table@workspace:*, @carbon-labs/react-data-table@workspace:packages/react/src/v12/components/DataTable":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-data-table@workspace:packages/react/src/v12/components/DataTable"
   dependencies:
@@ -3495,6 +3605,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-file-chip@workspace:*, @carbon-labs/react-file-chip@workspace:packages/react/src/v12/components/FileChip":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-file-chip@workspace:packages/react/src/v12/components/FileChip"
+  dependencies:
+    "@carbon-labs/react-mega-button": "workspace:*"
+    classnames: "npm:^2.3.2"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    "@carbon/icons-react": ^11.0.0
+    "@carbon/react": ^1.95.0
+    react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+    react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-file-uploader@workspace:packages/react/src/v12/components/FileUploader":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-file-uploader@workspace:packages/react/src/v12/components/FileUploader"
@@ -3592,6 +3717,20 @@ __metadata:
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
     react-dom: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-history-rail@workspace:*, @carbon-labs/react-history-rail@workspace:packages/react/src/v12/components/HistoryRail":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-history-rail@workspace:packages/react/src/v12/components/HistoryRail"
+  dependencies:
+    "@carbon-labs/react-chat-thread": "workspace:*"
+    classnames: "npm:^2.3.2"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    "@carbon/react": ^1.95.0
+    react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+    react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
   languageName: unknown
   linkType: soft
 
@@ -3702,6 +3841,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-keyboard-shortcut@workspace:*, @carbon-labs/react-keyboard-shortcut@workspace:packages/react/src/v12/components/KeyboardShortcut":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-keyboard-shortcut@workspace:packages/react/src/v12/components/KeyboardShortcut"
+  dependencies:
+    classnames: "npm:^2.3.2"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    "@carbon/react": ^1.95.0
+    react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+    react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-kit-defaults@workspace:*, @carbon-labs/react-kit-defaults@workspace:packages/react/src/v12/components/KitDefaults":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-kit-defaults@workspace:packages/react/src/v12/components/KitDefaults"
@@ -3772,6 +3924,20 @@ __metadata:
     vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-mega-button@workspace:*, @carbon-labs/react-mega-button@workspace:packages/react/src/v12/components/MegaButton":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-mega-button@workspace:packages/react/src/v12/components/MegaButton"
+  dependencies:
+    "@carbon-labs/react-keyboard-shortcut": "workspace:*"
+    classnames: "npm:^2.3.2"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    "@carbon/react": ^1.95.0
+    react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+    react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
   languageName: unknown
   linkType: soft
 
@@ -4066,7 +4232,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-processing-v2@workspace:packages/react/src/v12/components/Processing":
+"@carbon-labs/react-processing-v2@workspace:*, @carbon-labs/react-processing-v2@workspace:packages/react/src/v12/components/Processing":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-processing-v2@workspace:packages/react/src/v12/components/Processing"
   dependencies:
@@ -4179,6 +4345,71 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-reasoning-trace@workspace:*, @carbon-labs/react-reasoning-trace@workspace:packages/react/src/v12/components/ReasoningTrace":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-reasoning-trace@workspace:packages/react/src/v12/components/ReasoningTrace"
+  dependencies:
+    "@carbon-labs/react-code-snippet-alt": "workspace:*"
+    classnames: "npm:^2.3.2"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    "@carbon/icons-react": ^11.0.0
+    "@carbon/react": ^1.95.0
+    react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+    react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-recipe-renderer@workspace:packages/react/src/v12/components/RecipeRenderer":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-recipe-renderer@workspace:packages/react/src/v12/components/RecipeRenderer"
+  dependencies:
+    "@carbon-labs/react-chat-input": "workspace:*"
+    "@carbon-labs/react-chat-panels": "workspace:*"
+    "@carbon-labs/react-chat-thread": "workspace:*"
+    "@carbon-labs/react-chats-panel": "workspace:*"
+    "@carbon-labs/react-code-snippet-alt": "workspace:*"
+    "@carbon-labs/react-history-rail": "workspace:*"
+    "@carbon-labs/react-mega-button": "workspace:*"
+    "@carbon-labs/react-reasoning-trace": "workspace:*"
+    "@carbon-labs/react-session-switcher": "workspace:*"
+    "@carbon-labs/react-system-message": "workspace:*"
+    classnames: "npm:^2.3.2"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    "@carbon/react": ^1.95.0
+    react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+    react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-recipes@workspace:packages/react/src/v12/components/Recipes":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-recipes@workspace:packages/react/src/v12/components/Recipes"
+  dependencies:
+    "@carbon-labs/react-app-shell": "workspace:*"
+    "@carbon-labs/react-chat": "workspace:*"
+    "@carbon-labs/react-data-table": "workspace:*"
+    "@carbon-labs/react-disclosure": "workspace:*"
+    "@carbon-labs/react-feedback": "workspace:*"
+    "@carbon-labs/react-kit-defaults": "workspace:*"
+    "@carbon-labs/react-motion-icons": "workspace:*"
+    "@carbon-labs/react-side-panel": "workspace:*"
+    "@carbon-labs/react-step-flow": "workspace:*"
+    "@carbon-labs/react-tearsheet": "workspace:*"
+    "@carbon-labs/react-theme-zone": "workspace:*"
+    "@carbon-labs/react-tooltip": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    vitest: "npm:^4.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-registration-flow@workspace:packages/react/src/components/RegistrationFlow":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-registration-flow@workspace:packages/react/src/components/RegistrationFlow"
@@ -4259,7 +4490,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-select-list@workspace:packages/react/src/v12/components/SelectList":
+"@carbon-labs/react-select-list@workspace:*, @carbon-labs/react-select-list@workspace:packages/react/src/v12/components/SelectList":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-select-list@workspace:packages/react/src/v12/components/SelectList"
   dependencies:
@@ -4315,6 +4546,20 @@ __metadata:
     vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-session-switcher@workspace:*, @carbon-labs/react-session-switcher@workspace:packages/react/src/v12/components/SessionSwitcher":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-session-switcher@workspace:packages/react/src/v12/components/SessionSwitcher"
+  dependencies:
+    "@carbon-labs/react-mega-button": "workspace:*"
+    classnames: "npm:^2.3.2"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    "@carbon/react": ^1.95.0
+    react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+    react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
   languageName: unknown
   linkType: soft
 
@@ -4462,7 +4707,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-step-flow@workspace:packages/react/src/v12/components/StepFlow":
+"@carbon-labs/react-step-flow@workspace:*, @carbon-labs/react-step-flow@workspace:packages/react/src/v12/components/StepFlow":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-step-flow@workspace:packages/react/src/v12/components/StepFlow"
   dependencies:
@@ -4508,6 +4753,21 @@ __metadata:
     "@carbon-labs/wc-style-picker": "workspace:^"
     "@ibm/telemetry-js": "npm:^1.11.0"
     "@lit/react": "npm:^1.0.1"
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-system-message@workspace:*, @carbon-labs/react-system-message@workspace:packages/react/src/v12/components/SystemMessage":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-system-message@workspace:packages/react/src/v12/components/SystemMessage"
+  dependencies:
+    "@carbon-labs/react-chat-thread": "workspace:*"
+    classnames: "npm:^2.3.2"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    "@carbon/icons-react": ^11.0.0
+    "@carbon/react": ^1.95.0
+    react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+    react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
   languageName: unknown
   linkType: soft
 

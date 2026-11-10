@@ -126,6 +126,41 @@
       }
     },
     {
+      "id": "chat",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Chat",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "CONTENT_SWAP",
+        "DURATION_FLOOR_MS",
+        "FeedbackMotion",
+        "LOADING_MOTION",
+        "LayoutTransaction",
+        "SKELETON_WAVE",
+        "SurfaceShadowOption",
+        "animateLayout",
+        "attachRollover",
+        "beginLayout",
+        "bezierEase",
+        "durationStepForDistance",
+        "motionTokens",
+        "paneMove",
+        "playContentSwap",
+        "playPaneContent",
+        "playSoftEdge",
+        "reduceTokens",
+        "stepDown",
+        "toEasing",
+        "useFeedbackMotion",
+        "watchTonal"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "4de90c46ff699ecade477457490e747a986e8a71"
+      }
+    },
+    {
       "id": "checkbox",
       "kind": "component",
       "path": "packages/react/src/v12/components/Checkbox",
@@ -1196,6 +1231,24 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "recipes",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Recipes",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "DURATION_FLOOR_MS",
+        "animateLayout",
+        "inLayout",
+        "reflowTiming",
+        "usePrefersReducedMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "4de90c46ff699ecade477457490e747a986e8a71"
       }
     },
     {

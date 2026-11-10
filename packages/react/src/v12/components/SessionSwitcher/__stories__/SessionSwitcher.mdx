@@ -1,0 +1,72 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SessionSwitcherStories from './SessionSwitcher.stories';
+
+<Meta isTemplate />
+
+# SessionSwitcher
+
+- **Initiative owner(s):** FILL THIS LINE
+- **Status:** Draft
+- **Target library:** @carbon/react
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Component API](#component-api)
+- [Getting started](#getting-started)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+{/* carbon-labs-create:problem-statement */}
+{/*
+ * TODO: Replace this block with a concise problem statement.
+ *
+ * Answer:
+ *   - What gap does this component fill?
+ *   - What user need does it address?
+ *   - Which existing Carbon component is the nearest neighbor (if any)?
+ */}
+> **Problem statement:** _Describe the gap this component fills (edit or delete this line)._
+
+<Canvas of={SessionSwitcherStories.Default} />
+
+## Component API
+
+<ArgTypes of={SessionSwitcherStories.Default} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-session-switcher
+```
+
+### JS (via import)
+
+```javascript
+import { SessionSwitcher } from '@carbon-labs/react-session-switcher/es/index';
+
+function App() {
+  return <SessionSwitcher />;
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-session-switcher/scss/session-switcher';
+```

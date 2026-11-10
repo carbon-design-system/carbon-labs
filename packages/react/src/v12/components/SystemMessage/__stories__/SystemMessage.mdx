@@ -1,0 +1,103 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SystemMessageStories from './SystemMessage.stories';
+
+<Meta isTemplate />
+
+# SystemMessage
+
+- **Initiative owner(s):** @ryanmellody
+- **Status:** Draft
+- **Target library:** @carbon/react
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Severity](#severity)
+- [Boundaries](#boundaries)
+- [In a thread](#in-a-thread)
+- [Component API](#component-api)
+- [Getting started](#getting-started)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+{/* carbon-labs-create:problem-statement */}
+
+> **Problem statement:** A transcript needs to say what happened _to_ the
+> conversation — the model changed, the context was cleared, a new day began —
+> without that reading as something either party said. Carbon has no such
+> object: `InlineNotification` is the nearest and is a different thing, with a
+> container, a kind and a dismiss affordance that a transcript notice should not
+> have. `SystemMessage` is the centred, recessive line between turns.
+
+It is the companion to `HistoryRail`. The rail is the whole history at a glance,
+down the edge of the panel; this is the same event in its place in the flow.
+
+<Canvas of={SystemMessageStories.Default} />
+
+## Severity
+
+`severity` is the one axis that moves, and it moves three things together: the
+ink, the glyph, and what a screen reader hears.
+
+- **`status`** is a fact about the conversation. `$text-secondary`, no glyph,
+  `role="status"` — it waits its turn.
+- **`alert`** is something that cost the person work. `$text-primary`, a
+  `WarningFilled` glyph, `role="alert"` — it interrupts.
+
+Severity is never carried by colour alone: the glyph and the role move with it,
+which is what keeps it legible in greyscale and to a reader (ACC-4).
+
+<Canvas of={SystemMessageStories.Alert} />
+
+## Boundaries
+
+`variant="divider"` draws the text between two hairlines — a day boundary, a
+session break. **It carries no severity**, and passing one does nothing: a
+boundary is not something that went wrong.
+
+<Canvas of={SystemMessageStories.Divider} />
+
+## In a thread
+
+<Canvas of={SystemMessageStories.InAThread} />
+
+## Component API
+
+<ArgTypes of={SystemMessageStories.Default} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-system-message
+```
+
+### JS (via import)
+
+```javascript
+import { SystemMessage } from '@carbon-labs/react-system-message/es/index';
+
+function App() {
+  return <SystemMessage text="Model changed to Granite 3.1" />;
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-system-message/scss/system-message';
+```

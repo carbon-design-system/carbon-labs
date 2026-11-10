@@ -1,0 +1,76 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ChatsPanelStories from './ChatsPanel.stories';
+
+<Meta isTemplate />
+
+# ChatsPanel
+
+- **Initiative owner(s):** FILL THIS LINE
+- **Status:** Draft
+- **Target library:** @carbon/react
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Component API](#component-api)
+- [Getting started](#getting-started)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+{/* carbon-labs-create:problem-statement */}
+
+> **Problem statement:** A chat surface has to let someone reach their other
+> conversations without losing the one they are in, and the right way to show
+> that list depends on who owns the screen. A standalone chat application can
+> give the list a column of its own and push the conversation aside, because the
+> layout is the chat's to spend. The same chat embedded in a product cannot: the
+> product owns the layout, so the list has to borrow the space and give it
+> straight back. Carbon has `SideNav` for a product's own navigation and `Menu`
+> for a short list of choices, and neither answers this — a list of
+> conversations is navigation inside one surface, not navigation of the
+> application, and it is browsed rather than picked from. ChatsPanel is that
+> list and the control that reveals it, with `presentation` deciding only
+> whether it takes space or borrows it.
+
+<Canvas of={ChatsPanelStories.Default} />
+
+## Component API
+
+<ArgTypes of={ChatsPanelStories.Default} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-chats-panel
+```
+
+### JS (via import)
+
+```javascript
+import { ChatsPanel } from '@carbon-labs/react-chats-panel/es/index';
+
+function App() {
+  return <ChatsPanel />;
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-chats-panel/scss/chats-panel';
+```

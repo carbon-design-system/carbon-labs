@@ -1,0 +1,251 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/corners';
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+
+/* Rows of [mark] [label] [detail or duration], 2rem high, joined by a 1px rule from 4px under one
+   mark to 4px over the next; each row arrives as a disclosure body opening. */
+
+$_row: 2rem;
+$_mark: 1rem;
+$_gap: 0.25rem;
+
+.cds-step-list {
+  @include type-style('body-compact-01');
+
+  position: relative;
+  color: theme.$text-secondary;
+}
+
+.cds-step-list__steps {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.cds-step-list__item {
+  margin: 0;
+}
+
+.cds-step-list__step {
+  position: relative;
+}
+
+/* The rule over and under each mark; under the last row it is drawn shut, so a row arriving
+   below grows it down with the opening (StepList.tsx animates it). */
+.cds-step-list__item:not(:first-child)
+  > .cds-step-list__arrival
+  .cds-step-list__step::before,
+.cds-step-list__item > .cds-step-list__arrival .cds-step-list__step::after {
+  position: absolute;
+  background: theme.$border-subtle;
+  content: '';
+  inline-size: 1px;
+  inset-inline-start: calc(#{$_mark} / 2 - 0.5px);
+}
+
+.cds-step-list__item:not(:first-child)
+  > .cds-step-list__arrival
+  .cds-step-list__step::before {
+  block-size: calc((#{$_row} - #{$_mark}) / 2 - #{$_gap});
+  inset-block-start: 0;
+}
+
+.cds-step-list__item > .cds-step-list__arrival .cds-step-list__step::after {
+  inset-block: calc((#{$_row} + #{$_mark}) / 2 + #{$_gap}) 0;
+  scale: 1 0;
+  transform-origin: top;
+}
+
+.cds-step-list__item:not(:last-child)
+  > .cds-step-list__arrival
+  .cds-step-list__step::after {
+  scale: 1 1;
+}
+
+/* No rule into or out of a row with no mark (cancelled). */
+.cds-step-list__item[data-status='cancelled']
+  > .cds-step-list__arrival
+  .cds-step-list__step::before,
+.cds-step-list__item:has(+ .cds-step-list__item[data-status='cancelled'])
+  > .cds-step-list__arrival
+  .cds-step-list__step::after {
+  display: none;
+}
+
+.cds-step-list__row {
+  display: grid;
+  align-items: center;
+  column-gap: 0.5rem;
+  grid-template-columns: $_mark minmax(0, 1fr) auto auto;
+  min-block-size: $_row;
+}
+
+/* A list with tool calls keeps the expander's column on every row, so the
+   trailing words line up. */
+.cds-step-list--calls .cds-step-list__row {
+  grid-template-columns: $_mark minmax(0, 1fr) auto 1.5rem;
+}
+
+.cds-step-list__mark {
+  display: inline-grid;
+  block-size: $_mark;
+  color: theme.$icon-secondary;
+  inline-size: $_mark;
+  place-items: center;
+}
+
+.cds-step-list__words {
+  justify-items: start;
+  min-inline-size: 0;
+
+  > .cds-swap-slot__face {
+    justify-items: start;
+    max-inline-size: 100%;
+    min-inline-size: 0;
+  }
+}
+
+.cds-step-list__label {
+  overflow: hidden;
+  max-inline-size: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cds-step-list__item:is([data-status='queued'], [data-status='cancelled'])
+  .cds-step-list__label {
+  color: theme.$text-helper;
+}
+
+.cds-step-list__item:is([data-status='waiting'], [data-status='error'])
+  .cds-step-list__label {
+  color: theme.$text-primary;
+}
+
+/* The trailing words' place: its width glides, the words held to its end, so a narrower place
+   hides them behind the label rather than sliding them in. */
+.cds-step-list__trail-place {
+  display: inline-flex;
+  justify-content: flex-end;
+}
+
+.cds-step-list__trail {
+  justify-items: end;
+
+  > .cds-swap-slot__face {
+    justify-items: end;
+  }
+}
+
+.cds-step-list__trail-face {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cds-step-list__detail {
+  color: theme.$text-helper;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.cds-step-list__item[data-status='error'] .cds-step-list__detail {
+  color: theme.$text-error;
+}
+
+/* A call's input and output, under its row, past the mark's column. */
+.cds-step-list__io {
+  display: grid;
+  gap: 0.5rem;
+  padding-block: 0 0.75rem;
+  padding-inline-start: calc(#{$_mark} + 0.5rem);
+}
+
+.cds-step-list__io-part {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.cds-step-list__io-name {
+  @include type-style('label-01');
+
+  color: theme.$text-helper;
+}
+
+.cds-step-list__io-value {
+  @include type-style('code-01');
+
+  padding: 0.5rem 0.75rem;
+  border-radius: corners.$in;
+  /* The fill of code (styles/_surface.scss `--cds-surface-code`), the code snippet's well. */
+  // @carbon-proposal token: surface-code — The fill of code: snippet well, inline code. replaces: `$layer-01`. TBD
+  background: var(--cds-surface-code, #{theme.$layer-01});
+  color: theme.$text-primary;
+
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+/* The counter line: a text toggle on `rollover-text`, the chevron in its own place so it can
+   glide when the words change width. */
+.cds-step-list__toggle {
+  @include rollover-text(
+    $underline: none,
+    $display: inline-flex,
+    $colors: matched
+  );
+  --rollover-rest: #{theme.$text-secondary};
+  --rollover-hover: #{theme.$text-helper};
+
+  align-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: corners.$mark;
+  margin: 0;
+
+  appearance: none;
+  background-color: transparent;
+  font: inherit;
+  gap: 0.25rem;
+  min-block-size: 1.5rem;
+
+  &:focus-visible {
+    outline: 2px solid theme.$text-primary;
+    outline-offset: 2px;
+  }
+}
+
+.cds-step-list__chevron {
+  display: inline-flex;
+}
+
+.cds-step-list__announce {
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip: rect(0, 0, 0, 0);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+@media (forced-colors: active) {
+  .cds-step-list__item:not(:first-child)
+    > .cds-step-list__arrival
+    .cds-step-list__step::before,
+  .cds-step-list__item:not(:last-child)
+    > .cds-step-list__arrival
+    .cds-step-list__step::after {
+    background: CanvasText;
+  }
+}

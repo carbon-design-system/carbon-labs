@@ -1,0 +1,432 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/corners';
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+
+/* The conversation, the dock round the prompt, the follow-up card and the suggestions.
+ * The rows are the select list's, restyled only where a chat needs it. */
+
+$fast-01: var(--cds-motion-duration-fast-01);
+$fast-02: var(--cds-motion-duration-fast-02);
+$standard: var(--cds-motion-easing-standard-productive);
+
+/* ── the dock ────────────────────────────────────────────────────────── */
+
+.cds-chat-dock {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+}
+
+.cds-chat-dock__slot {
+  position: relative;
+
+  /* Moving (ChatDock): a window resizing round content that never reflows. */
+  &[data-moving] {
+    overflow: clip;
+  }
+}
+
+/* The gap to the prompt is the entry's own (the reference's 12px), so an
+   empty slot is no height at all and the move carries the gap with it. */
+.cds-chat-dock__slot--above > .cds-chat-dock__entry {
+  padding-block-end: 12px;
+}
+
+.cds-chat-dock__slot--below > .cds-chat-dock__entry {
+  padding-block-start: 12px;
+}
+
+/* Leaving: out of flow, against the prompt, while it plays out. */
+.cds-chat-dock__entry[data-chat-dock-leaving] {
+  position: absolute;
+  inset-inline: 0;
+}
+
+.cds-chat-dock__slot--above > .cds-chat-dock__entry[data-chat-dock-leaving] {
+  inset-block-end: 0;
+}
+
+.cds-chat-dock__slot--below > .cds-chat-dock__entry[data-chat-dock-leaving] {
+  inset-block-start: 0;
+}
+
+/* ── the transcript ──────────────────────────────────────────────────── */
+
+.cds-chat-transcript {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-block-size: 0;
+}
+
+.cds-chat-transcript__scroller {
+  flex: 1 1 auto;
+}
+
+.cds-chat-transcript__empty {
+  @include type-style('body-01');
+
+  color: theme.$text-secondary;
+
+  padding-block: 16px;
+}
+
+.cds-chat-transcript__turns {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+  margin: 0;
+  gap: 24px;
+  list-style: none;
+}
+
+.cds-chat-transcript__turn--user {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  // @carbon-explore radius-over — A surface over the page: popover, toggletip, notifications panel, chat shell. TBD
+  border-radius: corners.$over;
+  isolation: isolate;
+}
+
+/* A question the turn navigator jumped to: focus on the row, and a quiet wash that fades as it lands. */
+.cds-chat-transcript__turn--user:focus-visible {
+  outline: 2px solid theme.$focus;
+  outline-offset: 4px;
+}
+
+.cds-chat-transcript__turn--user[data-highlight]::before {
+  position: absolute;
+  z-index: -1;
+  // @carbon-explore radius-over — A surface over the page: popover, toggletip, notifications panel, chat shell. TBD
+  border-radius: corners.$over;
+  // @carbon-explore selected-wash — A row that is one of many chosen: a wash of the text colour. TBD
+  background: color-mix(
+    in srgb,
+    theme.$text-primary var(--cds-selected-wash, 10%),
+    transparent
+  );
+  content: '';
+  inset: -4px 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── the turn navigator's list ───────────────────────────────────────── */
+
+.cds-chat-turns {
+  inline-size: 20rem;
+  max-block-size: 20rem;
+  max-inline-size: calc(100vw - 32px);
+}
+
+.cds-chat-turns .sl .sel__text {
+  flex: 1 1 auto;
+}
+
+.cds-chat-turns__text {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The time holds; the question's line truncates. */
+.cds-chat-turns .sl .sl__secondary {
+  flex: none;
+}
+
+/* ── a turn ──────────────────────────────────────────────────────────── */
+
+/* The user's bubble in the chat's variant, as the selection family's selectors;
+   contextual tokens, a step up from the shell in every theme. */
+.cds-chat-message--user {
+  @include type-style('body-01');
+
+  box-sizing: border-box;
+  padding: 8px 16px;
+  // @carbon-explore radius-over — A surface over the page: popover, toggletip, notifications panel, chat shell. TBD
+  border-radius: corners.$over;
+  background: theme.$layer-selected-inverse;
+  color: theme.$text-inverse;
+  max-inline-size: 80%;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+/* Tonal: the selected layer and the tonal contour (`.sel--contour.sel--tonal`). */
+/* Tonal: re-hued to its context, as every tonal look (the core's tonal watcher). */
+.cds-chat-message--user.cds-chat-message--tonal {
+  background: oklch(
+    from theme.$layer-selected l var(--tonal-c, c) var(--tonal-h, h)
+  );
+  box-shadow: inset 0 0 0 1px
+    oklch(from theme.$border-tile l var(--tonal-c, c) var(--tonal-h, h));
+  color: theme.$text-primary;
+}
+
+/* Outlined: a layer up from what it sits on, with the outlined hairline
+   (`.sel--outlined`). */
+.cds-chat-message--user.cds-chat-message--outlined {
+  background: theme.$layer;
+  box-shadow: inset 0 0 0 1px theme.$border-subtle-01;
+  color: theme.$text-primary;
+}
+
+/* The assistant's: text on the page, no bubble. */
+.cds-chat-message--assistant {
+  display: flex;
+  flex-direction: column;
+  color: theme.$text-primary;
+  gap: 8px;
+}
+
+.cds-chat-message__text {
+  @include type-style('body-01');
+
+  margin: 0;
+}
+
+/* The actions: always laid out, shown in on fast-02 and out on fast-01; the row steps out 4px
+   so the ghost buttons' inset fills sit flush with the text. */
+.cds-chat-message__actions {
+  margin-inline-start: -4px;
+  opacity: 0;
+  transition: opacity $fast-01 $standard;
+}
+
+.cds-chat-message[data-done][data-actions='latest'] .cds-chat-message__actions,
+.cds-chat-message[data-done]:is(:hover, :focus-within)
+  .cds-chat-message__actions {
+  opacity: 1;
+  transition-duration: $fast-02;
+}
+
+/* No hover to reveal them: always. */
+@media (hover: none) {
+  .cds-chat-message[data-done] .cds-chat-message__actions {
+    opacity: 1;
+  }
+}
+
+.cds-chat-actions {
+  display: flex;
+  /* 32px buttons overhanging by 4px: the icons line up with the text as 24px ones did. */
+  margin: -4px;
+}
+
+/* ── suggestions (a select list with no value) ───────────────────────── */
+
+/* No track of its own; the label primary, the rest secondary, the label not stepping on hover.
+   Text sits 16px from the prompt's edge, as the prompt's own. */
+.cds-chat-suggestions.sel {
+  --sel-off: #{theme.$text-primary};
+  --sel-off-hover: #{theme.$text-primary};
+  --sel-quiet: #{theme.$text-secondary};
+  --sel-quiet-hover: #{theme.$text-secondary};
+
+  background: none;
+
+  /* The rest reads on from the start, a word space apart (no icon gap). */
+  .sel__face {
+    gap: 0.3em;
+    padding-inline: calc(16px - var(--sel-inset));
+  }
+}
+
+/* ── the follow-up card ──────────────────────────────────────────────── */
+
+/* The prompt's surface, `$layer`, and its hairline; corners concentric from the rows out:
+   rows 8px, the track 12px, the card 16px. */
+$_followup-card: corners.$over;
+$_followup-track: corners.inner($_followup-card, 4px);
+
+.cds-followup {
+  box-sizing: border-box;
+  padding: 4px;
+  // @carbon-explore radius-concentric — An inner part's radius is the outer radius less its inset, never below 0. TBD
+  border-radius: $_followup-card;
+  background: theme.$layer;
+  box-shadow: inset 0 0 0 1px theme.$border-subtle-01;
+  color: theme.$text-primary;
+}
+
+.cds-followup__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-block-size: 40px;
+  padding-inline: 12px 4px;
+}
+
+.cds-followup__title {
+  @include type-style('heading-compact-01');
+
+  margin: 0;
+}
+
+.cds-followup__choices.sel {
+  --sel-track-radius: #{$_followup-track};
+  --sel-off: #{theme.$text-primary};
+
+  background: none;
+
+  /* Content 16px from the card's edge: the card's padding, the track's
+     inset, the face's padding. */
+  .sel__face {
+    padding-inline: calc(12px - var(--sel-inset));
+  }
+}
+
+/* A row's number key: a small keycap in the row's own text color (so it
+   reads on the selector too), its corner 4px. */
+.cds-followup__key {
+  @include type-style('label-01');
+
+  display: inline-flex;
+  box-sizing: border-box;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: corners.$small;
+  block-size: 20px;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 30%, transparent);
+  color: inherit;
+  font-variant-numeric: tabular-nums;
+  inline-size: 20px;
+}
+
+.cds-followup__divider {
+  margin: 2px 0;
+  background: theme.$border-subtle;
+  block-size: 1px;
+}
+
+/* "Something else": a row that is a field, a row's box with the text field's outline ladder,
+   from no edge at rest. */
+.cds-followup__other {
+  --fu-h: 40px;
+  --fu-edge: transparent;
+  --fu-ring: transparent;
+
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  // @carbon-explore radius-concentric — An inner part's radius is the outer radius less its inset, never below 0. TBD
+  border-radius: corners.inner($_followup-track, 4px);
+  margin: 4px;
+  block-size: calc(var(--fu-h) - 8px);
+  cursor: text;
+  gap: 8px;
+  padding-inline: 8px 12px;
+
+  &::after {
+    position: absolute;
+    box-sizing: border-box;
+    border: 1px solid var(--fu-edge);
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px var(--fu-ring);
+    content: '';
+    inset: 0;
+    pointer-events: none;
+    transition:
+      border-color $fast-01 $standard,
+      box-shadow $fast-01 $standard;
+  }
+
+  /* With text: the field's resting hairline. */
+  &[data-filled] {
+    --fu-edge: #{theme.$border-subtle};
+  }
+
+  /* Hover: a step toward `$border-strong`, in on fast-02. */
+  &:hover:not([data-focus])::after {
+    --fu-edge: color-mix(
+      in srgb,
+      #{theme.$border-subtle},
+      #{theme.$border-strong}
+    );
+
+    transition-duration: $fast-02;
+  }
+
+  /* The caret: the accent at 2px (the text field's selected edge). */
+  &[data-focus] {
+    --fu-edge: #{theme.$border-inverse};
+    --fu-ring: #{theme.$border-inverse};
+  }
+
+  svg {
+    flex: none;
+    fill: theme.$icon-secondary;
+  }
+}
+
+.cds-followup__other--xs {
+  --fu-h: 24px;
+}
+
+.cds-followup__other--sm {
+  --fu-h: 32px;
+}
+
+.cds-followup__other--md {
+  --fu-h: 40px;
+}
+
+.cds-followup__other--lg {
+  --fu-h: 48px;
+}
+
+.cds-followup__field {
+  @include type-style('body-compact-01');
+
+  flex: 1 1 auto;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background: transparent;
+  color: theme.$text-primary;
+  font: inherit;
+  min-inline-size: 0;
+  outline: 0;
+
+  &::placeholder {
+    color: theme.$text-placeholder;
+  }
+}
+
+.cds-followup__skip {
+  @include rollover-link;
+
+  flex: none;
+
+  /* After the mixin's `font: inherit`. */
+  & {
+    @include type-style('body-compact-01');
+  }
+}
+
+@media (forced-colors: active) {
+  .cds-followup__other::after {
+    box-shadow: none;
+  }
+
+  .cds-followup__other:hover::after {
+    border-color: Highlight;
+  }
+
+  .cds-followup__other[data-focus]::after {
+    border: 2px solid Highlight;
+  }
+}

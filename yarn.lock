@@ -3170,8 +3170,13 @@ __metadata:
   dependencies:
     "@carbon-labs/react-file-chip": "workspace:*"
     "@carbon-labs/react-mega-button": "workspace:*"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
     classnames: "npm:^2.3.2"
+    jsdom: "npm:^26.0.0"
     prop-types: "npm:^15.8.1"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     "@carbon/icons-react": ^11.0.0
     "@carbon/react": ^1.95.0
@@ -3186,8 +3191,13 @@ __metadata:
   dependencies:
     "@carbon-labs/react-mega-button": "workspace:*"
     "@carbon/layout": "npm:^11.61.0"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
     classnames: "npm:^2.3.2"
+    jsdom: "npm:^26.0.0"
     prop-types: "npm:^15.8.1"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     "@carbon/react": ^1.95.0
     react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
@@ -3202,8 +3212,13 @@ __metadata:
     "@carbon-labs/react-code-snippet-alt": "workspace:*"
     "@carbon-labs/react-mega-button": "workspace:*"
     "@carbon-labs/react-reasoning-trace": "workspace:*"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
     classnames: "npm:^2.3.2"
+    jsdom: "npm:^26.0.0"
     prop-types: "npm:^15.8.1"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     "@carbon/react": ^1.95.0
     react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
@@ -3250,8 +3265,13 @@ __metadata:
   dependencies:
     "@carbon-labs/react-mega-button": "workspace:*"
     "@carbon/layout": "npm:^11.61.0"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
     classnames: "npm:^2.3.2"
+    jsdom: "npm:^26.0.0"
     prop-types: "npm:^15.8.1"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     "@carbon/react": ^1.95.0
     react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
@@ -3297,8 +3317,13 @@ __metadata:
   resolution: "@carbon-labs/react-code-snippet-alt@workspace:packages/react/src/v12/components/CodeSnippetAlt"
   dependencies:
     "@carbon-labs/react-mega-button": "workspace:*"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
     classnames: "npm:^2.3.2"
+    jsdom: "npm:^26.0.0"
     prop-types: "npm:^15.8.1"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     "@carbon/icons-react": ^11.0.0
     "@carbon/react": ^1.95.0
@@ -3610,8 +3635,13 @@ __metadata:
   resolution: "@carbon-labs/react-file-chip@workspace:packages/react/src/v12/components/FileChip"
   dependencies:
     "@carbon-labs/react-mega-button": "workspace:*"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
     classnames: "npm:^2.3.2"
+    jsdom: "npm:^26.0.0"
     prop-types: "npm:^15.8.1"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     "@carbon/icons-react": ^11.0.0
     "@carbon/react": ^1.95.0
@@ -3725,8 +3755,13 @@ __metadata:
   resolution: "@carbon-labs/react-history-rail@workspace:packages/react/src/v12/components/HistoryRail"
   dependencies:
     "@carbon-labs/react-chat-thread": "workspace:*"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
     classnames: "npm:^2.3.2"
+    jsdom: "npm:^26.0.0"
     prop-types: "npm:^15.8.1"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     "@carbon/react": ^1.95.0
     react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
@@ -3845,8 +3880,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-keyboard-shortcut@workspace:packages/react/src/v12/components/KeyboardShortcut"
   dependencies:
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
     classnames: "npm:^2.3.2"
+    jsdom: "npm:^26.0.0"
     prop-types: "npm:^15.8.1"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     "@carbon/react": ^1.95.0
     react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
@@ -3932,8 +3972,13 @@ __metadata:
   resolution: "@carbon-labs/react-mega-button@workspace:packages/react/src/v12/components/MegaButton"
   dependencies:
     "@carbon-labs/react-keyboard-shortcut": "workspace:*"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
     classnames: "npm:^2.3.2"
+    jsdom: "npm:^26.0.0"
     prop-types: "npm:^15.8.1"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     "@carbon/react": ^1.95.0
     react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
@@ -4350,8 +4395,13 @@ __metadata:
   resolution: "@carbon-labs/react-reasoning-trace@workspace:packages/react/src/v12/components/ReasoningTrace"
   dependencies:
     "@carbon-labs/react-code-snippet-alt": "workspace:*"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
     classnames: "npm:^2.3.2"
+    jsdom: "npm:^26.0.0"
     prop-types: "npm:^15.8.1"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     "@carbon/icons-react": ^11.0.0
     "@carbon/react": ^1.95.0
@@ -4374,8 +4424,13 @@ __metadata:
     "@carbon-labs/react-reasoning-trace": "workspace:*"
     "@carbon-labs/react-session-switcher": "workspace:*"
     "@carbon-labs/react-system-message": "workspace:*"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
     classnames: "npm:^2.3.2"
+    jsdom: "npm:^26.0.0"
     prop-types: "npm:^15.8.1"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     "@carbon/react": ^1.95.0
     react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
@@ -4554,8 +4609,13 @@ __metadata:
   resolution: "@carbon-labs/react-session-switcher@workspace:packages/react/src/v12/components/SessionSwitcher"
   dependencies:
     "@carbon-labs/react-mega-button": "workspace:*"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
     classnames: "npm:^2.3.2"
+    jsdom: "npm:^26.0.0"
     prop-types: "npm:^15.8.1"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     "@carbon/react": ^1.95.0
     react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
@@ -4761,8 +4821,13 @@ __metadata:
   resolution: "@carbon-labs/react-system-message@workspace:packages/react/src/v12/components/SystemMessage"
   dependencies:
     "@carbon-labs/react-chat-thread": "workspace:*"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
     classnames: "npm:^2.3.2"
+    jsdom: "npm:^26.0.0"
     prop-types: "npm:^15.8.1"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     "@carbon/icons-react": ^11.0.0
     "@carbon/react": ^1.95.0

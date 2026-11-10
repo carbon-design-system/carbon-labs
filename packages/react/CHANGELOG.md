@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.226.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.225.0...%40carbon-labs%2Freact%400.226.0) (2026-11-10)
+
+### Features
+
+* **react:** the v12 review app, catalog and console ([#1468](https://github.com/carbon-design-system/carbon-labs/issues/1468)) ([f81b7fc](https://github.com/carbon-design-system/carbon-labs/commit/f81b7fcc42309574a22ec6a8691ebf342f217542))
+
+
 # [0.225.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.224.0...%40carbon-labs%2Freact%400.225.0) (2026-11-10)
 
 **Note:** Version bump only for package @carbon-labs/react

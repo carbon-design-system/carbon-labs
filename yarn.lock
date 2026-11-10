@@ -3350,7 +3350,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-content-switcher@workspace:packages/react/src/v12/components/ContentSwitcher":
+"@carbon-labs/react-content-switcher@workspace:*, @carbon-labs/react-content-switcher@workspace:packages/react/src/v12/components/ContentSwitcher":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-content-switcher@workspace:packages/react/src/v12/components/ContentSwitcher"
   dependencies:
@@ -4115,7 +4115,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-page-header@workspace:packages/react/src/v12/components/PageHeader":
+"@carbon-labs/react-page-header@workspace:*, @carbon-labs/react-page-header@workspace:packages/react/src/v12/components/PageHeader":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-page-header@workspace:packages/react/src/v12/components/PageHeader"
   dependencies:
@@ -4578,7 +4578,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-side-nav@workspace:packages/react/src/v12/components/SideNav":
+"@carbon-labs/react-side-nav@workspace:*, @carbon-labs/react-side-nav@workspace:packages/react/src/v12/components/SideNav":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-side-nav@workspace:packages/react/src/v12/components/SideNav"
   dependencies:
@@ -5154,6 +5154,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.26.0"
     "@babel/preset-react": "npm:^7.26.3"
     "@babel/preset-typescript": "npm:^7.26.0"
+    "@carbon-labs/v12-review": "workspace:*"
     "@carbon-labs/v12-workbench": "workspace:*"
     "@carbon/icons-react": "npm:^11.90.0"
     "@carbon/react": "npm:^1.118.0"
@@ -5290,6 +5291,43 @@ __metadata:
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
     react-dom: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/v12-review@workspace:*, @carbon-labs/v12-review@workspace:tools/v12-review":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/v12-review@workspace:tools/v12-review"
+  dependencies:
+    "@carbon-labs/react-app-shell": "workspace:*"
+    "@carbon-labs/react-button": "workspace:*"
+    "@carbon-labs/react-content-switcher": "workspace:*"
+    "@carbon-labs/react-link": "workspace:*"
+    "@carbon-labs/react-motion-icons": "workspace:*"
+    "@carbon-labs/react-number-input": "workspace:*"
+    "@carbon-labs/react-page-header": "workspace:*"
+    "@carbon-labs/react-popover": "workspace:*"
+    "@carbon-labs/react-search": "workspace:*"
+    "@carbon-labs/react-select": "workspace:*"
+    "@carbon-labs/react-side-nav": "workspace:*"
+    "@carbon-labs/react-tabs": "workspace:*"
+    "@carbon-labs/react-tag": "workspace:*"
+    "@carbon-labs/react-text-input": "workspace:*"
+    "@carbon-labs/react-toggle": "workspace:*"
+    "@carbon-labs/react-tooltip": "workspace:*"
+    "@carbon-labs/v12-workbench": "workspace:*"
+    "@storybook/react": "npm:^9.1.2"
+    "@types/node": "npm:^20.17.10"
+    "@types/react": "npm:^18.3.12"
+    jsdom: "npm:^26.0.0"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+    storybook: "npm:^9.1.2"
+    typescript: "npm:^5.7.2"
+    vitest: "npm:^4.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+    react-dom: ^18.2.0 || ^19.0.0
+    storybook: ^9.0.0
   languageName: unknown
   linkType: soft
 

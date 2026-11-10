@@ -29,7 +29,11 @@ const storiesGlobs = includeV12
 
 const config = {
   stories: storiesGlobs,
-  staticDirs: ['../../../public'],
+  staticDirs: [
+    '../../../public',
+    // The review app's short address, v12/review-app.
+    ...(includeV12 ? [{ from: '../src/v12/review/static', to: '/v12' }] : []),
+  ],
   addons: [
     getAbsolutePath('@storybook/addon-a11y'),
     getAbsolutePath('storybook-addon-accessibility-checker'),

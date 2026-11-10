@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-session-switcher",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "publishConfig": {
     "access": "public",

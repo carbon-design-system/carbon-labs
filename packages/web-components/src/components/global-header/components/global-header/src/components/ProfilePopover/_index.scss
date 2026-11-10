@@ -14,6 +14,6 @@
   border: 1px solid colorToken.$gray-80;
   background-color: var(--clabs-global-header-background-color);
   box-shadow: 0 2px 6px 0 rgb(0 0 0 / 30%);
-  color: colorToken.$white-0;
+  color: var(--clabs-global-header-text-color);
   inline-size: 18rem;
 }

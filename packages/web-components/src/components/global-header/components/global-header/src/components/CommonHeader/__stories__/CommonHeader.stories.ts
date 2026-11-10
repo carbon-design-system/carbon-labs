@@ -557,8 +557,14 @@ const setCustomTheme = () => {
   if (element instanceof HTMLElement) {
     element.style.setProperty(
       '--clabs-global-header-background-color',
-      'darkblue'
+      'palegoldenrod'
     );
+    element.style.setProperty(
+      '--clabs-global-header-background-hover',
+      'burlywood'
+    );
+    element.style.setProperty('--clabs-global-header-text-color', 'olive');
+    element.style.setProperty('--clabs-global-header-icon-color', 'olive');
   }
 };
 
@@ -569,6 +575,12 @@ const setDefaultTheme = () => {
       '--clabs-global-header-background-color',
       '#161616'
     );
+    element.style.setProperty(
+      '--clabs-global-header-background-hover',
+      'rgba(141, 141, 141, 0.16)'
+    );
+    element.style.setProperty('--clabs-global-header-text-color', '#f4f4f4');
+    element.style.setProperty('--clabs-global-header-icon-color', '#f4f4f4');
   }
 };
 
@@ -582,6 +594,31 @@ export const Theme: Story = {
       <br />
       <button @click="${setCustomTheme}">Set custom theme</button>
       <button @click="${setDefaultTheme}">Restore G100 theme</button>
+      <br />
+      <br />
+      <p>Custom theme variables:</p>
+      <ul>
+        <li>
+          <code>--clabs-global-header-background-color</code>&nbsp;&nbsp;
+          <div
+            style="display:inline-block; width:24px; height:24px; background-color:palegoldenrod;"></div>
+        </li>
+        <li>
+          <code>--clabs-global-header-background-hover</code>&nbsp;&nbsp;
+          <div
+            style="display:inline-block; width:24px; height:24px; background-color:burlywood;"></div>
+        </li>
+        <li>
+          <code>--clabs-global-header-text-color</code>&nbsp;&nbsp;
+          <div
+            style="display:inline-block; width:24px; height:24px; background-color:olive;"></div>
+        </li>
+        <li>
+          <code>--clabs-global-header-icon-color</code>&nbsp;&nbsp;
+          <div
+            style="display:inline-block; width:24px; height:24px; background-color:olive;"></div>
+        </li>
+      </ul>
     </div>
   `,
 };

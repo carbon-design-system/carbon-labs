@@ -26,7 +26,7 @@ cds-custom-header-global-action clabs-global-header-user-profile-image {
   list-style: none;
 
   svg {
-    fill: $icon-on-color;
+    fill: var(--clabs-global-header-icon-color);
   }
 
   .ibm-automation-cds--text-truncate--end {
@@ -47,7 +47,7 @@ cds-custom-header-global-action clabs-global-header-user-profile-image {
 
 .automation-global-header__notification {
   svg {
-    fill: $icon-on-color;
+    fill: var(--clabs-global-header-icon-color);
 
     circle {
       fill: #d61f28;
@@ -57,7 +57,7 @@ cds-custom-header-global-action clabs-global-header-user-profile-image {
 
 .ibm-automation-cds__globalaction {
   svg {
-    fill: $icon-on-color;
+    fill: var(--clabs-global-header-icon-color);
   }
 }
 
@@ -145,7 +145,7 @@ cds-custom-header-global-action.mcsp-header-user-profile > div {
   }
 
   .trial-label {
-    color: #f4f4f4;
+    color: var(--clabs-global-header-text-color);
     padding-inline-start: 5px;
     text-align: center;
     white-space: nowrap;
@@ -194,7 +194,7 @@ cds-custom-header-global-action.mcsp-header-user-profile > div {
 
 .ibm-automation-cds--btn.ibm-automation-cds--btn--icon-only.ibm-automation-cds--header__action
   svg {
-  fill: $icon-on-color;
+  fill: var(--clabs-global-header-icon-color);
 }
 
 // for windows high contrast mode

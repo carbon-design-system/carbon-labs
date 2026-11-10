@@ -259,10 +259,11 @@ $_surface: var(--cds-surface, #{theme.$layer-01});
   }
 }
 
-/* The mark is the RadioButton's (RadioMark, radio-button.scss); here, only
-   its place. Two classes, because the mark's own rule (`.cds-radio__circle`:
-   the rollover's `position: relative`, a 2px nudge for a label's line) loads
-   after this file and would otherwise win, dropping the mark over the name. */
+/* The mark is the RadioButton's (RadioMark, radio-button.scss), the radio
+   inside it; here, only its place. Two classes, because the mark's own rule
+   (`.cds-radio__circle`: the rollover's `position: relative`, a 2px nudge
+   for a label's line) loads after this file and would otherwise win,
+   dropping the mark over the name. */
 .cds-kit-tile--radio > .cds-kit-tile__radio {
   position: absolute;
   z-index: 1;
@@ -271,17 +272,12 @@ $_surface: var(--cds-surface, #{theme.$layer-01});
   inset-inline-end: 0.75rem;
 }
 
-/* The radio itself: over the mark, invisible, the group's keyboard stop. */
-.cds-kit-tile__radio-input {
-  position: absolute;
-  z-index: 2;
-  margin: 0;
-  block-size: 24px;
-  cursor: inherit;
-  inline-size: 24px;
-  inset-block-start: 0.5rem;
-  inset-inline-end: 0.5rem;
-  opacity: 0;
+/* The radio itself is the mark's (`.cds-radio__input`: over the circle and
+   4px round it, invisible), the group's keyboard stop. Its keyboard ring is
+   the tile's (above), not the circle's own. */
+.cds-kit-tile--radio
+  > .cds-kit-tile__radio:has(> .cds-kit-tile__radio-input:focus-visible) {
+  outline: none;
 }
 
 /* ── ExpandableTile (ExpandableTile.tsx) ─────────────────────────────── */

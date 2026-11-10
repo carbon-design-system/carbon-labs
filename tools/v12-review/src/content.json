@@ -1176,7 +1176,7 @@
   },
   "V12/RadioButton": {
     "title": "RadioButton",
-    "summary": "A circle for choosing one option from a group. `RadioButton` and\n`RadioButtonGroup` take Carbon's props, plus `timeScale`. The group holds the\nchoice, its legend and one message line; it is in a row by default. `RadioMark`\nis the circle and dot alone, for a control that draws a radio it doesn't own.\n`RadioButtonSkeleton` is the radio button while it loads.",
+    "summary": "A circle for choosing one option from a group. `RadioButton` and\n`RadioButtonGroup` take Carbon's props, plus `timeScale`. The group holds the\nchoice, its legend and one message line; it is in a row by default. `RadioMark`\nis the circle and dot alone, for a control that draws a radio it doesn't own.\nGiven its radio as `children`, it is the circle with its motion, for a control\nthat owns one. `RadioButtonSkeleton` is the radio button while it loads.",
     "sections": [
       {
         "title": "Motion",

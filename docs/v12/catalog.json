@@ -22549,8 +22549,16 @@
             "checked": {
               "type": "boolean"
             },
+            "children": {
+              "$ref": "#/$defs/node",
+              "description": "The radio (`<input type=\"radio\" className=\"cds-radio__input\">`)."
+            },
             "disabled": {
               "type": "boolean"
+            },
+            "timeScale": {
+              "type": "number",
+              "description": "Slow motion: multiplies the rollover's durations. Default 1."
             }
           }
         }

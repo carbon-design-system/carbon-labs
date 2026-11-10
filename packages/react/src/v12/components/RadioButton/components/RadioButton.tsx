@@ -416,23 +416,42 @@ export function RadioButtonGroup({
   );
 }
 
-/** The mark alone, for a control that draws a radio it doesn't own (RadioTile). */
+/**
+ * The mark alone. Drawn, for a control that draws a radio it doesn't own (a
+ * structured list's row); or, given its radio as `children`, the
+ * RadioButton's circle for a control that owns one (RadioTile): the radio
+ * inside it, over it and 4px round it, with the circle's rollover (hover,
+ * the 1px grow and press) and the dot's growth.
+ */
 export function RadioMark({
   checked,
   disabled,
   className,
+  children,
+  timeScale,
 }: {
   checked: boolean;
   disabled?: boolean;
   className?: string;
+  /** The radio (`<input type="radio" className="cds-radio__input">`). */
+  children?: ReactNode;
+  /** Slow motion: multiplies the rollover's durations. Default 1. */
+  timeScale?: number;
 }) {
+  const circle = useRef<HTMLSpanElement>(null);
+  const live = children != null;
+  useMarkRollover(circle, !live || !!disabled, timeScale);
   return (
     <span
+      ref={circle}
       className={cx('cds-radio__circle', 'cds-radio__circle--mark', className)}
       data-checked={checked || undefined}
       data-disabled={disabled || undefined}
-      aria-hidden="true">
-      <span className="cds-radio__dot" />
+      // As the RadioButton's circle: a disabled radio's hover shows nothing.
+      aria-disabled={(live && disabled) || undefined}
+      aria-hidden={live ? undefined : 'true'}>
+      {children}
+      <span className="cds-radio__dot" aria-hidden={live || undefined} />
     </span>
   );
 }

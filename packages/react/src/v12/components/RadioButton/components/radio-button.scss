@@ -11,7 +11,8 @@
 @use '@carbon-labs/v12-styles/scss/text-pairs';
 
 /* RadioButton — `RadioButton.tsx` (first pass; its header lists the
-   choices). The mark (`.cds-radio__circle`) is RadioTile's too (RadioMark). */
+   choices). The mark (`.cds-radio__circle`) is RadioTile's too (RadioMark,
+   its radio inside it). */
 
 $fast-01: var(--cds-motion-duration-fast-01);
 $fast-02: var(--cds-motion-duration-fast-02);
@@ -99,9 +100,12 @@ $after-fill: calc(#{$fast-01} * 4 / 7);
   }
 }
 
-/* The drawn mark alone (RadioTile): no pointer of its own. */
+/* The mark alone (RadioMark): drawn, no pointer of its own; holding its
+   radio, the radio's. */
 .cds-radio__circle--mark {
-  pointer-events: none;
+  &:not(:has(> .cds-radio__input)) {
+    pointer-events: none;
+  }
 
   &[data-disabled] {
     --rollover-stroke: #{theme.$border-disabled};

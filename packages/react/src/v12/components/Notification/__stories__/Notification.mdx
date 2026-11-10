@@ -1,0 +1,91 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as NotificationStories from './Notification.stories.tsx';
+
+<Meta of={NotificationStories} />
+
+# Notification
+
+Inline, toast and actionable notifications, and the callout, with Carbon's
+props: the six kinds, `title`, `subtitle`, `caption`, `lowContrast`,
+`hideCloseButton`, `role`, a toast's `timeout` and `onClose`. A plain surface
+whose outline, in the status color, says the kind. `variant` picks outlined,
+inverse or tonal; by default errors and actionable notifications are inverse,
+the rest outlined. `ToastStack` is the one place toasts live, and `useToasts`
+shows and closes them from anywhere inside it. `StaticNotification` is the
+callout's deprecated name.
+
+<Canvas of={NotificationStories.Default} />
+
+<Canvas of={NotificationStories.Inline} />
+
+<Canvas of={NotificationStories.Timers} />
+
+<Canvas of={NotificationStories.UpdateInPlace} />
+
+<Canvas of={NotificationStories.Stack} />
+
+## Motion
+
+- **Arrive:** the snap from the top center. The container grows, the content
+  slides on y, and nothing else moves. `from` grows it from a control instead.
+  With `arrive={false}` it is part of the page from the start, as a callout is.
+- **Leave:** the far edge folds back into the top center it grew from.
+- **Inline place:** an inline notification opens its place in the page as it
+  arrives and closes it as it leaves, on one clock. What is below it follows.
+- **Status mark:** the mark plays its motion icon once it has landed. With
+  `icon`, an action icon loads in with its status; with `pending`, it shows its
+  spinner until the kind changes. A change of kind is a match cut.
+- **Update in place:** new words, from an update by id or a group's next member,
+  swap out, then in. No frame shows both. The status turns on the empty card
+  between them, and so does a change of height, timed by its travel.
+- **Timer:** a toast's timeout you can see, as a ring round the close button or
+  a bar under the text (`timer`). Hover or focus pauses it.
+- **Buttons:** the close and action buttons take the rollover. The close
+  button's icon is a motion icon.
+- **Focus:** closed with focus inside, focus moves to the next toast, or back
+  where it came from.
+
+### Toast stack
+
+- **Deck:** the newest toast in front, the next two behind it, each 8px below
+  the one in front and inset 6px a side. Their content is faded out, and each
+  further back is dimmer.
+- **Front change:** with `frontChange="swap"` (the default) the front stays one
+  surface. A new toast turns it to its own outline, fill and height while the
+  text crossfades in place, and the old front steps down the stack behind it.
+  The snap plays only into an empty deck and out of a last card. With `snap`,
+  every arrival and exit snaps.
+- **One move:** every change in the deck starts on the same frame and runs on
+  one clock and one curve.
+- **Open:** hover or focus deals the deck into a list, newest at the top.
+  Leaving closes it after a beat. On touch, a tap opens it and a tap elsewhere
+  closes it.
+- **Cap:** `cap` toasts at once (3). One more pushes the oldest to the back,
+  where it fades out. An error, or a toast asking for action, is never pushed
+  out.
+- **Missed:** a toast that times out or is pushed out is counted (`onMissed`) on
+  the frame it starts to go. A toast the person closes just leaves.
+- **Group:** `show` with a `group` already showing merges into that toast. Its
+  count rolls up, its text and kind become the latest, and it comes to the
+  front.
+- **Burst:** of toasts shown at once, only the newest arrives. The ones behind
+  it fade in at their places once it has landed.
+- **Swipe:** a toast can be swiped right, off the screen's edge. Let go early,
+  it settles back.
+- **Stillness:** a toast that takes the place of one with the same mark does not
+  replay its icon.
+- **Cast shadow:** off by default; `shadow` turns it on. Only the front casts in
+  a closed deck, and every card does in the open list.
+
+## Reduced motion
+
+A notification is there at once and gone at once, with no growth, fold or fade.
+An inline notification's place opens and closes at once, and so does a change of
+height. An update shows the new words on the same frame the old ones go. The
+status mark is simply there, with no beat. In a stack, the deck's fades and
+resizes run on the reduced clock, with no travel and no deal, and a swipe does
+not follow the pointer.
+
+## Props
+
+<ArgTypes of={NotificationStories} />

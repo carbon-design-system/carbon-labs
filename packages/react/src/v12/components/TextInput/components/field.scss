@@ -1,0 +1,218 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/colors' as c;
+@use '@carbon/react/scss/type' as *;
+
+/* The pieces every kit field shares (FieldMessage, FieldStatusMark,
+ * the label and the counter), so validation's other fields reuse them as
+ * they are. Carbon tokens only; motion-core's duration and easing tokens. */
+
+$fast-01: var(--cds-motion-duration-fast-01);
+$moderate-01: var(--cds-motion-duration-moderate-01);
+$moderate-02: var(--cds-motion-duration-moderate-02);
+$standard: var(--cds-motion-easing-standard-productive);
+$entrance: var(--cds-motion-easing-entrance-productive);
+
+/* ── the label row ───────────────────────────────────────────────────── */
+
+.cds-field-label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-block-end: 8px;
+}
+
+.cds-field-label {
+  @include type-style('label-01');
+
+  color: theme.$text-secondary;
+  overflow-wrap: anywhere;
+}
+
+/* The counter, at the label row's end (v11): the figures are tabular, so
+   the count never jiggles as it changes. */
+.cds-field-counter {
+  @include type-style('label-01');
+
+  flex: none;
+  color: theme.$text-secondary;
+  font-variant-numeric: tabular-nums;
+  margin-inline-start: auto;
+}
+
+.cds-field-label--disabled,
+.cds-field-counter--disabled {
+  color: theme.$text-disabled;
+}
+
+.cds-field-visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip: rect(0, 0, 0, 0);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+/* ── the message line (FieldMessage) ─────────────────────────────────── */
+
+/* One 20px line: 4px above, 16px of helper-text-01. */
+.cds-field-message {
+  @include type-style('helper-text-01');
+
+  display: grid;
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-block-size: 20px;
+  padding-block-start: 4px;
+}
+
+/* In the form's 32px gap: the line hangs below the field's box, so it
+   takes no room. A message that wraps pushes by its overflow only. */
+.cds-field-message--gap {
+  margin-block-end: -20px;
+}
+
+/* In the layout, but no room for a line with nothing to say in any state (no helper, warning or error). */
+.cds-field-message--flow[data-empty] {
+  min-block-size: 0;
+  padding-block-start: 0;
+}
+
+.cds-field-message--inline {
+  padding: 0;
+  min-block-size: 0;
+}
+
+/* The faces share one cell. The shown one fades in where it is; the
+   others fade out under it, then leave the accessibility tree. */
+.cds-field-message__face {
+  grid-area: 1 / 1;
+  min-inline-size: 0;
+  opacity: 0;
+  overflow-wrap: anywhere;
+  transition:
+    opacity $fast-01 $standard,
+    visibility 0s linear $fast-01;
+  visibility: hidden;
+
+  &[data-on] {
+    opacity: 1;
+    transition:
+      opacity $moderate-01 $standard,
+      visibility 0s;
+    visibility: visible;
+  }
+}
+
+/* Out then in: a face replacing one that showed text waits for it to leave (fast-01). */
+.cds-field-message[data-swap] .cds-field-message__face[data-on] {
+  transition-delay: $fast-01, 0s;
+}
+
+.cds-field-message__face--none {
+  color: theme.$text-helper;
+}
+
+/* v11: a warning's text is primary; an error's is $text-error. */
+.cds-field-message__face--warn {
+  color: theme.$text-primary;
+}
+
+.cds-field-message__face--error {
+  color: theme.$text-error;
+
+  /* It settles in with the border, on the same clock. */
+  &[data-on] {
+    transition:
+      opacity $moderate-02 $entrance,
+      visibility 0s;
+  }
+}
+
+.cds-field-message--disabled .cds-field-message__face {
+  color: theme.$text-disabled;
+}
+
+/* ── the status mark (FieldStatusMark) ───────────────────────────────── */
+
+.cds-field-mark {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  pointer-events: none;
+}
+
+/* Shown or not at rest; a change between them is FieldStatusMark's content swap. */
+.cds-field-mark__icon {
+  display: grid;
+  grid-area: 1 / 1;
+  opacity: 0;
+
+  &[data-on] {
+    opacity: 1;
+  }
+
+  svg {
+    display: block;
+    fill: currentColor;
+  }
+}
+
+.cds-field-mark__icon--error {
+  color: theme.$support-error;
+}
+
+/* v11's two-tone warning: the glyph inside the triangle in black. */
+.cds-field-mark__icon--warn {
+  color: theme.$support-warning;
+
+  [data-icon-path='inner-path'] {
+    fill: c.$black-100;
+    opacity: 1;
+  }
+}
+
+/* The message, under reduced motion: at once. The old words go and the new ones are there
+   on the same frame. */
+.cds-field-message[data-reduced] {
+  .cds-field-message__face,
+  .cds-field-message__face[data-on],
+  &[data-swap] .cds-field-message__face[data-on] {
+    transition-delay: 0s;
+    transition-duration: 0s;
+  }
+}
+
+@media (forced-colors: active) {
+  .cds-field-mark__icon svg {
+    fill: CanvasText;
+  }
+}
+
+/* A data slot while loading: its text unseen (the width and line box), a
+   skeleton bar over it (SkeletonText `lineHeight`: the bar inside the
+   line's box). */
+.cds-field-skeleton-slot {
+  position: relative;
+  display: inline-block;
+  color: transparent;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.cds-field-skeleton-slot__bar.cds-field-skeleton-slot__bar {
+  position: absolute;
+  inline-size: 100%;
+  inset: 0;
+}

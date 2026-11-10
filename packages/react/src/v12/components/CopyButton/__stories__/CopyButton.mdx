@@ -1,0 +1,52 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as CopyButtonStories from './CopyButton.stories.tsx';
+
+<Meta of={CopyButtonStories} />
+
+# CopyButton
+
+Carbon's CopyButton, prop for prop, on the kit's IconButton. Its description is
+the tooltip and the accessible name. A click turns the tooltip's text into the
+feedback for `feedbackTimeout`, and another click restarts it. It does not write
+the clipboard: `onClick` does. The feedback is also read out once per copy from
+a polite live region. The frame is ghost by default; `frame="inset"` gives the
+button its own surface. `useCopyFeedback` gives the same feedback to other
+triggers.
+
+<Canvas of={CopyButtonStories.Default} />
+
+<Canvas of={CopyButtonStories.WithText} />
+
+<Canvas of={CopyButtonStories.FramesAndSizes} />
+
+## Motion
+
+- **Rollover:** IconButton's. A glow under the pointer, the 1px growth on hover
+  and the press, the release circle, and a keyboard ring in the icon's color.
+- **Copied mark:** a copy closes the two pages into one square, which cuts to a
+  checkmark, on moderate-02. It goes back to Copy as the feedback ends, on
+  moderate-01.
+- **Icon hover:** the hover of whichever icon shows plays on the button's hover
+  or focus.
+- **Tooltip:** it arrives and leaves on the snap.
+- **Feedback roll:** the description moves out to the side and the feedback
+  comes in from the other, whole, on moderate-01. The tooltip resizes round the
+  text as it moves. After `feedbackTimeout` it goes back the other way. If the
+  pointer and focus have just left, the text waits for the tooltip to be gone,
+  so a leaving tooltip never changes its text.
+- **Re-placing:** the tooltip is placed again on every frame its box resizes, so
+  it stays centered on the button.
+- **Slow motion:** `TooltipMotion`'s `timeScale` reaches the tooltip, the
+  rollover and the roll.
+
+<Canvas of={CopyButtonStories.SlowMotion} />
+
+## Reduced motion
+
+The icon swaps to the checkmark and back at once, and it has no hover. The text
+swaps at once, with no roll. The rollover's glow, growth and release land at
+once.
+
+## Props
+
+<ArgTypes of={CopyButtonStories} />

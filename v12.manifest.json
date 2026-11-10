@@ -1,6 +1,52 @@
 {
   "items": [
     {
+      "id": "button",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Button",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "TooltipMotionContext",
+        "attachRollover"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "content-switcher",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/ContentSwitcher",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "SNAP_FRAME",
+        "SelectionMoveInfo",
+        "usePrefersReducedMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      }
+    },
+    {
+      "id": "copy-button",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/CopyButton",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "TooltipMotionContext",
+        "motionTokens"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
       "id": "disclosure",
       "kind": "component",
       "path": "packages/react/src/v12/components/Disclosure",
@@ -262,6 +308,43 @@
       }
     },
     {
+      "id": "notification",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Notification",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "CastElevation",
+        "DURATION_FLOOR_MS",
+        "FloatingCastShadow",
+        "SnapLive",
+        "StackSource",
+        "StackSwap",
+        "SurfaceShadowOption",
+        "animateLayout",
+        "attachFloatingCastShadow",
+        "attachRollover",
+        "durationStepForDistance",
+        "holdLayout",
+        "inLayout",
+        "motionTokens",
+        "playContentSwap",
+        "reducedClock",
+        "snapAnimations",
+        "snapDurationMs",
+        "snapEaseAt",
+        "snapEaseCss",
+        "snapIn",
+        "snapProfileFor",
+        "stepDown",
+        "useFeedbackMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
       "id": "package/motion-icons",
       "kind": "package",
       "path": "packages/react/src/v12/components/MotionIcons",
@@ -390,6 +473,25 @@
         "pitchAt",
         "reachForLength",
         "stretchForLength",
+        "useFeedbackMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "progress-ring",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/ProgressRing",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "DURATION_FLOOR_MS",
+        "DurationToken",
+        "durationStepForDistance",
+        "easingCss",
+        "motionTokens",
         "useFeedbackMotion"
       ],
       "source": {
@@ -735,12 +837,100 @@
       }
     },
     {
+      "id": "tabs",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Tabs",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "SNAP_FRAME",
+        "SelectionMoveInfo",
+        "animateLayout",
+        "attachRollover",
+        "cubicBezier",
+        "distanceTokens",
+        "followLayout",
+        "motionTokens",
+        "selectionDuration",
+        "usePrefersReducedMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      }
+    },
+    {
+      "id": "tag",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Tag",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "DURATION_FLOOR_MS",
+        "DurationToken",
+        "SNAP",
+        "StillnessMember",
+        "TooltipMotionContext",
+        "attachRollover",
+        "createStillness",
+        "motionTokens",
+        "snapDurationMs",
+        "snapEaseCss",
+        "snapFadeFor",
+        "staggerSteps",
+        "usePrefersReducedMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "text-input",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/TextInput",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "FIELD_TIMING",
+        "FieldStatus",
+        "LateStatusOptions",
+        "NormalizedFieldProps",
+        "counterAnnouncement",
+        "fieldAria",
+        "hasText",
+        "normalizeFieldProps",
+        "playContentSwap",
+        "useFeedbackMotion",
+        "useLateStatus",
+        "usePrefersReducedMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
       "id": "theme-zone",
       "kind": "component",
       "path": "packages/react/src/v12/components/ThemeZone",
       "labsStatus": "draft",
       "publishable": false,
       "motion": [],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      }
+    },
+    {
+      "id": "toggletip",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Toggletip",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "attachRollover"
+      ],
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
@@ -773,6 +963,21 @@
       "source": {
         "repo": "carbon-next",
         "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      }
+    },
+    {
+      "id": "user-avatar",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/UserAvatar",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "playContentSwap",
+        "usePrefersReducedMotion"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
       }
     },
     {

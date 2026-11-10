@@ -1,0 +1,624 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/tertiary';
+@use '@carbon-labs/v12-styles/scss/ghost' as *;
+
+/* Button — v11's Button on the family's rollover.
+ *
+ * v11's geometry (`@carbon/styles` button): 24 / 32 / 40 / 48 / 64 / 80px
+ * tall, 16px in at the start and 64px at the end (the icon's room), the
+ * label on one body-compact-01 line, the icon 16px in from the end. The
+ * label and the icon share one centre line, the button's, at every size
+ * (v11 keeps xl and 2xl's label top-left). v11's 1px
+ * border is folded into the padding: the shape is painted only by the
+ * rollover's tokens, so the press can inset it. */
+
+.cds-btn {
+  /* It grows 1px on hover; a press reverses that growth (back to rest). A
+     press with no hover growth (a key, a touch) pushes in 1px. The rollover's exclusive mode
+     does the first; the rule below the second (not for a pointer press that
+     has slipped just off the button, `data-rollover-off`: the same press). */
+  --rollover-expand: 1px;
+  --rollover-size-exclusive: 1;
+
+  &:active:not(:hover, [data-rollover-off]) {
+    --rollover-size-exclusive: 0;
+  }
+  --btn-h: 48px;
+  --btn-lh: 18px;
+  --btn-icon: 16px;
+  --btn-radius: 8px;
+
+  @include rollover;
+  @include type-style('body-compact-01');
+
+  display: inline-flex;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  border: 0;
+  border-radius: var(--btn-radius);
+  margin: 0;
+
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  inline-size: max-content;
+  max-inline-size: 20rem;
+  min-block-size: var(--btn-h);
+  /* One line, centred: its line box's centre is the button's (a longer
+     label wraps, and the icon centres on the whole label). */
+  padding-block: calc((var(--btn-h) - var(--btn-lh)) / 2);
+  padding-inline: 16px 64px;
+  -webkit-tap-highlight-color: transparent;
+  text-align: start;
+  text-decoration: none;
+  vertical-align: top;
+
+  /* Keyboard focus, the family's button rule (carbon-motion's selection-pattern 3f): a 2px
+     ring in the button's own text color just inside its edge; filled kinds
+     keep a 2px rim of their fill round it (below). No v11 blue. */
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: -2px;
+  }
+
+  &.cds-btn--disabled,
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  /* Busy: no hover or press (the mixin's aria-disabled rule), its own colors. */
+  &.cds-btn--busy {
+    cursor: progress;
+  }
+}
+
+.cds-btn__icon {
+  position: absolute;
+  flex-shrink: 0;
+  block-size: var(--btn-icon);
+  fill: currentColor;
+  inline-size: var(--btn-icon);
+  inset-block-start: calc(50% - var(--btn-icon) / 2);
+  inset-inline-end: 16px;
+}
+
+.cds-btn__assistive {
+  position: absolute;
+  overflow: hidden;
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+/* ── sizes ─────────────────────────────────────────────────────────────── */
+
+.cds-btn--xs {
+  --btn-h: 24px;
+}
+
+.cds-btn--sm {
+  --btn-h: 32px;
+}
+
+.cds-btn--md {
+  --btn-h: 40px;
+}
+
+.cds-btn--lg {
+  --btn-h: 48px;
+}
+
+.cds-btn--xl {
+  --btn-h: 64px;
+}
+
+.cds-btn--2xl {
+  --btn-h: 80px;
+}
+
+/* v11's expressive: body-compact-02 and a 20px icon. */
+.cds-btn--expressive {
+  --btn-lh: 22px;
+  --btn-icon: 20px;
+
+  @include type-style('body-compact-02');
+}
+
+/* ── corners ───────────────────────────────────────────────────────────── */
+
+.cds-btn--full {
+  /* A pill is symmetric: the label starts half its height in, so it clears
+     the curve (24px at lg; 32px at most, xl and 2xl), and the icon sits the
+     same distance in from the other end; Carbon's 16px at every size crowds the
+     curve on the tall sizes and sits further in than the label on the small
+     ones. Between the label's room and the icon, a gap half the pill's
+     inset, on Carbon's spacing scale (Carbon's 32px reads wide in a toolbar):
+     xs and sm 8px, md and lg 12px, xl and 2xl 16px. Without an icon, the
+     pill's inset at both ends, not the icon's room that Carbon keeps as end
+     padding: xs 12, sm 16, md 20, lg 24, xl and 2xl 32. */
+  --btn-radius: 999px;
+  --btn-pill: min(calc(var(--btn-h) / 2), 32px);
+  --btn-gap: 8px;
+  --btn-icon-end: max(10px, calc(var(--btn-pill) - 6px));
+
+  &.cds-btn--md,
+  &.cds-btn--lg {
+    --btn-gap: 12px;
+  }
+
+  &.cds-btn--xl,
+  &.cds-btn--2xl {
+    --btn-gap: 16px;
+    --btn-icon-end: calc(var(--btn-pill) - 8px);
+  }
+
+  padding-inline: var(--btn-pill)
+    calc(var(--btn-icon-end) + var(--btn-icon, 16px) + var(--btn-gap));
+
+  .cds-btn__icon {
+    inset-inline-end: var(--btn-icon-end);
+  }
+
+  &.cds-btn--no-icon {
+    padding-inline: var(--btn-pill);
+  }
+
+  /* Busy with no icon: no room for the spinner, so it takes the label's
+     place, centred, and the label goes (kept for screen readers; it fades
+     out first, below): the width holds, as every busy button's does. */
+  &.cds-btn--no-icon {
+    > .cds-btn__spinner {
+      position: absolute;
+      margin: 0;
+      inset-inline-end: calc(50% - var(--btn-icon) / 2);
+    }
+  }
+}
+
+.cds-btn--square {
+  --btn-radius: 0px;
+}
+
+/* Icon-only is the kit's IconButton; the same corner choice, its ghost fill
+   still concentric inside (the kit's `max(0, radius − inset)`). v11's xl and
+   2xl icon-only squares, which IconButton doesn't size. */
+.cds-icon-btn.cds-btn-corners--full {
+  --icon-btn-radius: 999px;
+}
+
+.cds-icon-btn.cds-btn-corners--square {
+  --icon-btn-radius: 0px;
+}
+
+.cds-icon-btn.cds-btn-icon-only--xl {
+  --icon-btn-size: 64px;
+  --icon-btn-icon: 20px;
+}
+
+.cds-icon-btn.cds-btn-icon-only--2xl {
+  --icon-btn-size: 80px;
+  --icon-btn-icon: 20px;
+}
+
+/* ── kinds ─────────────────────────────────────────────────────────────────
+ * v11's button tokens as the rest colors. The filled kinds: the rollover
+ * derives the hover and press from the fill (matched lightness, the fill's
+ * own hue), v11's hover tokens the fallback.
+ *
+ * The outline and ghost kinds (tertiary, danger--tertiary, ghost,
+ * danger--ghost) are toned: the kit's `rollover-tone`. Their hover and
+ * press are tints of their own colour, solved against the backdrop to move
+ * it 6 / 12 L* in every theme (tertiary's gray, `$text-primary` light and
+ * white dark: the neutral's 9 / 18), and the label steps one Carbon step
+ * from the backdrop in every theme (white stays), and further only where it
+ * would still fall under 4.5:1 on a tint: eased on hover, at once on a
+ * press. They glow; v11 fills them and turns the text inverse. */
+
+/* Primary follows the kit's brand (styles/_brand.scss):
+   the hero fill and its hover under `KitDefaults brand`, and with no brand
+   exactly Carbon's blue (`--cds-hero-fill` is `$button-primary`, value for
+   value). The press is the rollover's, from the fill. */
+.cds-btn--primary {
+  --rollover-rest: var(--cds-hero-fill, var(--cds-button-primary, #0f62fe));
+  --rollover-hover: var(
+    --cds-hero-fill-hover,
+    var(--cds-button-primary-hover, #0050e6)
+  );
+
+  color: var(--cds-hero-on-fill, #{theme.$text-on-color});
+}
+
+/* Secondary: the quiet fill, one step off whatever it sits on
+   (`--cds-surface-secondary`, styles/_surface.scss): the page's per theme, a
+   raised surface's re-solved from its own fill (`secondary-on-surface`), so a
+   modal's or a side panel's footer reads as the page does. */
+.cds-btn--secondary {
+  // @carbon-explore button-secondary-quiet — The secondary Button as a quiet fill one step off what it sits on, re-solved on raised surfaces. TBD
+  --rollover-rest: var(--cds-surface-secondary, #{theme.$layer-accent-01});
+  --rollover-hover: var(
+    --cds-surface-secondary-hover,
+    color-mix(
+      in srgb,
+      #{theme.$text-primary} 12%,
+      var(--cds-surface-secondary, #{theme.$layer-accent-01})
+    )
+  );
+
+  color: theme.$text-primary;
+}
+
+.cds-btn--danger {
+  --rollover-rest: var(--cds-button-danger-primary, #da1e28);
+  --rollover-hover: var(--cds-button-danger-hover, #b81921);
+
+  color: theme.$text-on-color;
+}
+
+/* Tertiary: an outline in the kit's tertiary colour (`--cds-tertiary`,
+   styles/_tertiary.scss): `$text-primary` on the light themes, a neutral hue
+   rather than v11's blue 60, and v11's white on the dark. Neutral is the filled quiet kind: the standard
+   surface and its hairline. */
+.cds-btn--tertiary {
+  --rollover-stroke: var(--rollover-tone);
+
+  // @carbon-explore tertiary-neutral — The outlined Button in a neutral ink on light themes. TBD
+  @include rollover-tone(var(--cds-tertiary, #{theme.$text-primary}));
+}
+
+.cds-btn--danger--tertiary,
+.cds-btn--danger--ghost {
+  @include rollover-tone(var(--cds-button-danger-secondary, #da1e28));
+}
+
+.cds-btn--danger--tertiary {
+  --rollover-stroke: var(--rollover-tone);
+}
+
+.cds-btn--ghost,
+.cds-btn--danger--ghost {
+  padding-inline-end: 16px;
+
+  /* A ghost pill: its icon follows the label, so both ends are the pill's. */
+  &.cds-btn--full {
+    padding-inline-end: var(--btn-pill);
+  }
+
+  /* After the label, on the button's centre line (the flex row's). */
+  .cds-btn__icon {
+    position: static;
+    margin-inline-start: 8px;
+  }
+}
+
+/* v11: ghost text in link blue, its icon toned to the text color. */
+.cds-btn--ghost {
+  @include rollover-ghost;
+
+  .cds-btn__icon {
+    color: currentColor;
+    fill: currentColor;
+  }
+}
+
+/* Neutral (the kit's): the button shell's quiet kind on its own, so the
+   family's kinds match. The kit's standard surface and its hairline, a
+   `$text-primary` label toned on hover and press at the quiet card's steps
+   (the rollover's `quietSteps`). A shell's neutral cell is the shell's
+   (button-shell.scss): its outline is the shell's. */
+.cds-btn--neutral:not(.cds-btn-cell) {
+  --rollover-rest: var(--cds-surface);
+  --rollover-stroke: var(--cds-surface-rule);
+
+  @include rollover-tone(#{theme.$text-primary});
+}
+
+/* A filled button: the ring 2px inside its edge, a rim of the fill round it. */
+.cds-btn--primary,
+.cds-btn--secondary,
+.cds-btn--danger {
+  &:focus-visible {
+    outline-offset: -4px;
+  }
+}
+
+/* ── disabled (v11's colors; the rollover goes still) ─────────────────── */
+
+.cds-btn--disabled {
+  &.cds-btn--primary,
+  &.cds-btn--secondary,
+  &.cds-btn--danger {
+    --rollover-rest: var(--cds-button-disabled, #c6c6c6);
+
+    color: theme.$text-on-color-disabled;
+  }
+
+  &.cds-btn--tertiary,
+  &.cds-btn--danger--tertiary {
+    --rollover-stroke: var(--cds-button-disabled, #c6c6c6);
+
+    color: theme.$text-disabled;
+  }
+
+  &.cds-btn--neutral:not(.cds-btn-cell) {
+    --rollover-rest: transparent;
+    --rollover-stroke: var(--cds-button-disabled, #c6c6c6);
+
+    color: theme.$text-disabled;
+  }
+
+  &.cds-btn--ghost,
+  &.cds-btn--danger--ghost {
+    color: theme.$text-disabled;
+
+    .cds-btn__icon {
+      color: inherit;
+      fill: currentColor;
+    }
+  }
+}
+
+/* ── the text button (`frame="none"`, the kit's own) ───────────────────
+ * The family's link-blue text button (`@mixin rollover-link`, the labs'
+ * `.cds-text-button`): the glow in the letters, no box. Its keyboard ring is
+ * the button rule's, in its own color, outside the text. */
+
+.cds-text-btn {
+  @include rollover-link;
+
+  & {
+    @include type-style('body-compact-01');
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--rollover-rest);
+    outline-offset: 2px;
+  }
+
+  .cds-btn__icon {
+    position: static;
+    margin-inline-start: 4px;
+    vertical-align: -3px;
+  }
+}
+
+/* Busy: the kit's one Spinner (feedback/spinner.scss) in the icon's place, its
+   arc in the button's own colour, its line size / 16 (1px at 16px, 1.25px at
+   20px). Its base, gap, swing, turn, start, stop and reduced dots are its own. What rests in its place — the icon, or a label-only button's
+   label — fades out first and back after (useBusySwap writes the clocks:
+   `--cds-busy-out` on the exit curve, `--cds-busy-in` on the entrance; 0 under
+   reduced motion). */
+/* Its quiet base is the button's own colour, faint, so it reads on every
+   kind's fill (a grey token would muddy the primary's blue). Also the
+   SplitButton's action and the modal's busy button. */
+.cds-btn__spinner {
+  --cds-spinner-base: color-mix(in srgb, currentColor 30%, transparent);
+}
+
+.cds-btn > .cds-btn__icon:not(.cds-btn__spinner),
+.cds-btn > .cds-btn__label {
+  transition: opacity var(--cds-busy-in, 0ms) var(--cds-busy-entrance, linear);
+}
+
+.cds-btn--swapped > .cds-btn__icon:not(.cds-btn__spinner),
+.cds-btn--swapped.cds-btn--no-icon > .cds-btn__label {
+  opacity: 0;
+  transition: opacity var(--cds-busy-out, 0ms) var(--cds-busy-exit, linear);
+}
+
+/* ── skeleton (ButtonSkeleton) ─────────────────────────────────────────── */
+
+.fb-skeleton.cds-btn-skeleton {
+  --skeleton-radius: var(--btn-radius, 8px);
+
+  display: inline-block;
+  box-sizing: border-box;
+  block-size: var(--btn-h, 48px);
+  inline-size: 150px;
+  vertical-align: top;
+}
+
+/* With the button's label (`label`): exactly the button's box — its padding
+   (16 / 64, a pill's start, a ghost's 16 end; a label-only pill's inset at
+   both ends unless `hasIcon`, from `.cds-btn--full.cds-btn--no-icon`) round its
+   label, hidden, so the skeleton is the button's size. */
+.fb-skeleton.cds-btn-skeleton--sized {
+  inline-size: auto;
+  padding-block: 0;
+
+  &:not(.cds-btn--full) {
+    padding-inline: 16px 64px;
+  }
+
+  &:not(.cds-btn--full):is(
+      .cds-btn--ghost,
+      .cds-btn--danger--ghost,
+      .cds-btn--text
+    ) {
+    padding-inline-end: 16px;
+  }
+
+  /* A pill: the button's own (symmetric) padding, from `.cds-btn--full`. */
+  &.cds-btn--full:is(.cds-btn--ghost, .cds-btn--danger--ghost) {
+    padding-inline-end: var(--btn-pill);
+  }
+}
+
+.cds-btn-skeleton__label {
+  @include type-style('body-compact-01');
+
+  display: block;
+  line-height: var(--btn-h, 48px);
+  visibility: hidden;
+  white-space: nowrap;
+
+  .cds-btn--expressive > & {
+    @include type-style('body-compact-02');
+
+    line-height: var(--btn-h, 48px);
+  }
+}
+
+/* ── ButtonSet ─────────────────────────────────────────────────────────────
+ * The set follows the buttons' corners (full, 8px rounded or square):
+ *
+ *   square           v11's joined set: shared edges, the 1px separator
+ *   rounded, full    each button keeps its corners, 8px apart */
+
+.cds-btn-set,
+.cds-btn-set__fluid-inner {
+  display: flex;
+  gap: 8px;
+
+  &:has(> .cds-btn--square) {
+    gap: 0;
+  }
+}
+
+.cds-btn-set > .cds-btn {
+  inline-size: 100%;
+  max-inline-size: 12.25rem;
+}
+
+.cds-btn-set--stacked {
+  flex-direction: column;
+}
+
+/* Square: v11's 1px separator, dropped beside a focused button. */
+.cds-btn-set:not(.cds-btn-set--stacked),
+.cds-btn-set__fluid-inner {
+  > .cds-btn--square:not(:first-child):not(:focus-visible) {
+    box-shadow: -1px 0 0 0 var(--cds-button-separator, #e0e0e0);
+  }
+}
+
+.cds-btn-set--stacked > .cds-btn--square:not(:first-child):not(:focus-visible) {
+  box-shadow: 0 -1px 0 0 var(--cds-button-separator, #e0e0e0);
+}
+
+/* Fluid (v11): fills its container, stacking once a button would be under
+   176px (and the gaps between); ButtonSet reads `--cds-btn-set-direction`
+   back to sort. */
+.cds-btn-set--fluid {
+  container-type: inline-size;
+}
+
+.cds-btn-set__fluid-inner {
+  --cds-btn-set-direction: row;
+
+  flex-direction: var(--cds-btn-set-direction);
+  justify-content: flex-end;
+  inline-size: 100%;
+
+  > .cds-btn {
+    flex: 0 1 25%;
+    max-inline-size: 14.5rem;
+    min-inline-size: 11rem;
+  }
+
+  > :is(.cds-btn--ghost, .cds-btn--danger--ghost) {
+    flex: 1 1 25%;
+    max-inline-size: none;
+  }
+
+  /* v11's set ghost start (not a pill's: a pill keeps its own, symmetric). */
+  > :is(.cds-btn--ghost, .cds-btn--danger--ghost):not(.cds-btn--full) {
+    padding-inline-start: 32px;
+  }
+}
+
+@mixin fluid-column {
+  --cds-btn-set-direction: column;
+
+  > .cds-btn {
+    flex: initial;
+    inline-size: 100%;
+    max-inline-size: none;
+  }
+
+  > :is(.cds-btn--ghost, .cds-btn--danger--ghost):not(.cds-btn--full) {
+    padding-inline-start: 16px;
+  }
+
+  > .cds-btn--square:not(:first-child):not(:focus-visible) {
+    box-shadow: 0 -1px 0 0 var(--cds-button-separator, #e0e0e0);
+  }
+}
+
+@for $i from 1 through 4 {
+  /* Joined (square): n × 176px. */
+  @container (width <= #{$i * 11}rem) {
+    .cds-btn-set__fluid-inner:has(> .cds-btn--square):has(
+        > :nth-child(#{$i}):last-child
+      ) {
+      @include fluid-column;
+    }
+  }
+
+  /* Apart: n × 176px and the n − 1 gaps. */
+  @container (width <= calc(#{$i * 11}rem + #{($i - 1) * 8}px)) {
+    .cds-btn-set__fluid-inner:not(:has(> .cds-btn--square)):has(
+        > :nth-child(#{$i}):last-child
+      ) {
+      @include fluid-column;
+    }
+  }
+}
+
+/* ── forced colors (Windows high contrast) ─────────────────────────────────
+ * As the selection kit: the author-colored rollover is hidden; the button
+ * is a 1px system-colored outline, Highlight on hover, a 2px Highlight
+ * ring for keyboard focus, GrayText when disabled. */
+
+@media (forced-colors: active) {
+  .cds-btn {
+    &,
+    &:focus {
+      outline: 1px solid ButtonText;
+      outline-offset: -1px;
+    }
+
+    &::before {
+      display: none;
+    }
+
+    &:hover {
+      outline-color: Highlight;
+    }
+
+    &:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: -2px;
+    }
+
+    &:is(:disabled, .cds-btn--disabled) {
+      color: GrayText;
+      outline-color: GrayText;
+    }
+  }
+
+  .cds-btn-skeleton {
+    outline: 1px solid CanvasText;
+  }
+}

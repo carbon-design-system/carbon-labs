@@ -1,0 +1,66 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ContentSwitcherStories from './ContentSwitcher.stories.tsx';
+
+<Meta of={ContentSwitcherStories} />
+
+# ContentSwitcher
+
+Pick one of two or more options or views. The switches sit in one track, and a
+selector glides between them. `ContentSwitcher` takes Carbon's API:
+`selectedIndex`, `activation`, `size`, `lowContrast`, `onChange` and disabled
+switches. `Switch` is a labelled switch, with an optional icon before the label.
+`IconSwitch` is an icon only, named by its tooltip. `SwitchPanels` swaps the
+content the selection shows.
+
+<Canvas of={ContentSwitcherStories.Default} />
+
+<Canvas of={ContentSwitcherStories.Icons} />
+
+<Canvas of={ContentSwitcherStories.Panels} />
+
+<Canvas of={ContentSwitcherStories.Loading} />
+
+## Motion
+
+- **Glide:** a new selection sends the selector from where it is to the new
+  switch, on standard-productive. Its duration comes from the distance, from
+  fast-00 to moderate-01. Its leading edge runs ahead, then both edges land
+  together. Labels change color, and weight, where it covers them. A new
+  selection mid-glide starts from where the selector is.
+- **Press and reach:** the pressed switch takes a flat pressed color, inset 1px,
+  while held. A press on another switch starts the selector toward it before the
+  release. Slide to another switch to retarget; slide off to cancel.
+- **Drag:** on by default. The selector follows the pointer and lands on the
+  nearest switch, stopping at the walls with a 4px squash.
+- **Hover:** unselected switches take the rollover glow and a label color step.
+  The selector glows a step off its own fill under the pointer. A switch just
+  picked keeps its hover until the selector lands on it. A motion icon plays on
+  its switch's hover.
+- **Tooltip:** on icon switches, the first tooltip snaps in from the pointer.
+  While it shows, it jumps from switch to switch. The pointer can move onto it.
+- **Content swap:** `SwitchPanels` swaps out, then in, never overlapping. The
+  old content moves 8px the way the selector goes and fades, on fast-01 and
+  exit-productive. The new content follows from 8px behind, on fast-02 and
+  entrance-productive. In right to left it still follows the selector on screen.
+- **Container resize:** with `fit="content"`, the default, the panels' container
+  resizes to the new panel as a window, starting with the in. `fit="largest"`
+  holds the largest panel's size.
+- **Loading:** `loading` puts placeholder switches in the switches' own boxes,
+  each label a bar. The switches take them in order as one reflow along x.
+  `skeletonCount` defaults to the switches on screen, else 3.
+- **Keyboard:** ← and → wrap and skip disabled switches; Home and End go to the
+  ends. With `activation="automatic"` they select; with `manual` they move
+  focus, and Enter or Space selects. A disabled switch with a `disabledReason`
+  stays in the arrows' path and shows why in a tooltip.
+
+## Reduced motion
+
+No travel: the selector fades in on the new switch as it fades out of the old,
+on half the clock. There is no reach. The pressed color still shows; the hover's
+release is at once. Tooltips show and leave at once, with no drift. The new
+panel replaces the old on one frame, and the container resizes at once. A
+loading track changes width at once.
+
+## Props
+
+<ArgTypes of={ContentSwitcherStories} />

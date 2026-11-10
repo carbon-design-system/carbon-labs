@@ -50,7 +50,7 @@ import {
   SelectionTakenFace,
   type SelectionLoadingProps,
 } from '@carbon-labs/react-selection-kit';
-import { useStableCallback } from '@carbon-labs/react-util';
+import { assignRef, useStableCallback } from '@carbon-labs/react-util';
 import { useDefaultFrame } from '@carbon-labs/react-kit-defaults';
 import {
   TABS_MOTION,
@@ -331,7 +331,10 @@ const VTabButton = memo(
       <button
         {...itemRest}
         {...rowStructureProps(entryKey, took)}
-        ref={(el) => setRef(i, el)}
+        ref={(el) => {
+          setRef(i, el);
+          assignRef(it.ref, el);
+        }}
         type="button"
         role="tab"
         id={tabId(baseId, i)}

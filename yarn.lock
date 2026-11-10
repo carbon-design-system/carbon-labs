@@ -4858,6 +4858,10 @@ __metadata:
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    jsdom: "npm:^26.0.0"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
   languageName: unknown

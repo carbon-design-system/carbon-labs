@@ -1,0 +1,383 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+// The review app's own parts. The shell, the nav and the controls are the
+// components'; this is the page's type, its cards, its stages and tables,
+// all on the theme's tokens.
+.v12r-shell {
+  background: var(--cds-background);
+  color: var(--cds-text-primary);
+  min-block-size: 100vh;
+}
+
+.v12r-picks {
+  display: grid;
+  box-sizing: border-box;
+  padding: 16px;
+  gap: 16px;
+  inline-size: 320px;
+}
+
+.v12r-pick {
+  display: grid;
+  gap: 8px;
+}
+
+.v12r-pick__label {
+  color: var(--cds-text-secondary);
+  font-size: var(--cds-label-01-font-size, 0.75rem);
+  letter-spacing: var(--cds-label-01-letter-spacing, 0.32px);
+  line-height: var(--cds-label-01-line-height, 1.3333);
+}
+
+// A page: its header (the kit's PageHeader, its title in line with the
+// body's start), then its body.
+.v12r-page {
+  --cds-page-header-inset: 32px;
+
+  box-sizing: border-box;
+  max-inline-size: 1200px;
+  padding-block: 0 96px;
+}
+
+.v12r-page__body {
+  // Its first section's top margin stays inside: it doesn't collapse into
+  // the room the header keeps under it as it collapses.
+  display: flow-root;
+  padding-inline: 32px;
+}
+
+// The summary past its first paragraph, under the header's subtitle, in
+// its type.
+.v12r-header-text {
+  color: var(--cds-text-secondary);
+
+  p,
+  li {
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
+.v12r-prose {
+  p,
+  ul {
+    margin: 0 0 12px;
+    max-inline-size: 72ch;
+  }
+
+  ul {
+    padding-inline-start: 20px;
+  }
+
+  li {
+    margin-block-end: 6px;
+  }
+
+  h4 {
+    margin: 16px 0 8px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  code {
+    padding: 0 4px;
+    border-radius: 4px;
+    background: var(--cds-layer-01);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.875em;
+  }
+}
+
+.v12r-note {
+  color: var(--cds-text-secondary);
+}
+
+.v12r-count {
+  margin: 12px 0 0;
+  color: var(--cds-text-secondary);
+  font-size: 14px;
+}
+
+.v12r-home-search {
+  margin-block-start: 24px;
+  max-inline-size: 384px;
+}
+
+// ── the home's categories and cards ──
+.v12r-category {
+  margin-block-start: 48px;
+}
+
+.v12r-category__title {
+  margin: 0 0 4px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+.v12r-category__summary {
+  margin: 0 0 16px;
+  color: var(--cds-text-secondary);
+  font-size: 14px;
+}
+
+.v12r-cards {
+  display: grid;
+  padding: 0;
+  margin: 0;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  list-style: none;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .v12r-card {
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    padding: 16px;
+    border-radius: 8px;
+    background: var(--cds-layer-01);
+    block-size: 100%;
+    color: var(--cds-text-primary);
+    gap: 8px;
+    min-block-size: 168px;
+    text-decoration: none;
+    transition: none;
+
+    &:hover {
+      background: var(--cds-layer-hover-01);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--cds-focus);
+      outline-offset: 2px;
+    }
+  }
+}
+
+.v12r-card {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  padding: 16px;
+  border-radius: 8px;
+  background: var(--cds-layer-01);
+  block-size: 100%;
+  color: var(--cds-text-primary);
+  gap: 8px;
+  min-block-size: 168px;
+  text-decoration: none;
+  transition: background-color var(--cds-motion-duration-fast-02, 110ms)
+    var(--cds-motion-easing-standard-productive, ease);
+
+  &:hover {
+    background: var(--cds-layer-hover-01);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cds-focus);
+    outline-offset: 2px;
+  }
+}
+
+.v12r-card__title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+}
+
+.v12r-card__summary {
+  flex: 1;
+  color: var(--cds-text-secondary);
+  font-size: 14px;
+  line-height: 20px;
+
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.875em;
+  }
+}
+
+.v12r-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.v12r-card__foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  color: var(--cds-text-secondary);
+  font-size: 12px;
+  gap: 8px;
+
+  svg {
+    flex: none;
+    fill: currentColor;
+  }
+}
+
+// ── a component's page ──
+// A section reached from a tab lands below the collapsed page header (the
+// workspace's top, 64, its row and tabs, 88) with room to spare.
+.v12r-section {
+  margin-block-start: 48px;
+  scroll-margin-block-start: 168px;
+}
+
+.v12r-section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.v12r-section__title {
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+.v12r-section__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.v12r-section__text {
+  color: var(--cds-text-secondary);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.v12r-story__bar {
+  display: flex;
+  gap: 8px;
+  margin-block-end: 8px;
+}
+
+.v12r-story__body {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.v12r-story--settings .v12r-story__body {
+  grid-template-columns: minmax(0, 1fr) 272px;
+}
+
+// A story's stage: what it fixes to the screen stays inside (the transform
+// makes the stage its containing block), and a tall one scrolls.
+.v12r-stage {
+  position: relative;
+  box-sizing: border-box;
+  min-block-size: 80px;
+  padding-block: 16px;
+  // A story's fixed and portalled parts stay in its place on the page.
+  transform: translateZ(0);
+}
+
+.v12r-stage--full {
+  padding: 0;
+}
+
+.v12r-settings {
+  display: grid;
+  align-content: start;
+  padding: 16px;
+  border-radius: 8px;
+  background: var(--cds-layer-01);
+  gap: 16px;
+  max-block-size: 720px;
+  overflow-y: auto;
+}
+
+.v12r-frame {
+  display: block;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 8px;
+  background: var(--cds-background);
+  inline-size: 100%;
+}
+
+.v12r-frame--idle {
+  display: grid;
+  padding: 16px;
+  background: var(--cds-layer-01);
+  color: var(--cds-text-secondary);
+  font-size: 12px;
+  gap: 8px;
+  justify-items: center;
+  place-content: center;
+  text-align: center;
+}
+
+// ── tables ──
+.v12r-table-wrap {
+  overflow-x: auto;
+}
+
+.v12r-table {
+  border-collapse: collapse;
+  font-size: 14px;
+  inline-size: 100%;
+  line-height: 20px;
+
+  caption {
+    color: var(--cds-text-secondary);
+    font-size: 12px;
+    padding-block-end: 8px;
+    text-align: start;
+  }
+
+  th {
+    padding: 8px 12px;
+    background: var(--cds-layer-01);
+    color: var(--cds-text-secondary);
+    font-weight: 400;
+    text-align: start;
+  }
+
+  td {
+    padding: 10px 12px;
+    border-block-end: 1px solid var(--cds-border-subtle-01);
+    vertical-align: top;
+  }
+
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.875em;
+  }
+}
+
+.v12r-table--motion {
+  margin-block-start: 16px;
+  max-inline-size: 640px;
+}
+
+.v12r-type {
+  color: var(--cds-text-secondary);
+  word-break: break-word;
+}
+
+.v12r-required {
+  color: var(--cds-text-error);
+  font-size: 12px;
+}
+
+// Reduced motion: the card's fill changes at once.
+@media (prefers-reduced-motion: reduce) {
+  .v12r-card {
+    transition: none;
+  }
+}

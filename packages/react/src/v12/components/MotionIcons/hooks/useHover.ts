@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useReducer, useRef } from 'react';
 import type React from 'react';
 import {
   bindHover,
@@ -43,7 +43,8 @@ interface UseHoverOptions {
 
 interface UseHoverResult {
   ref: React.RefObject<SVGSVGElement | null>;
-  isHovering: boolean;
+  /** Whether a hover shows. Reading it makes the hover state: the caller re-renders as it changes. */
+  readonly isHovering: boolean;
   /**
    * Assign a click/toggle handler here on every render (e.g.
    * `frameClickRef.current = handleToggle`) to have it also fire for clicks
@@ -178,7 +179,21 @@ export function useHover({
   frameClick = true,
 }: UseHoverOptions = {}): UseHoverResult {
   const ref = useRef<SVGSVGElement | null>(null);
-  const [isHovering, setIsHovering] = useState(false);
+  // The hover is state only for a caller that reads `isHovering`: an icon
+  // draws its hover in the engine, so a pointer crossing a list of icons
+  // re-renders none of them.
+  const [, rerender] = useReducer((n: number) => n + 1, 0);
+  const hovering = useRef(false);
+  const readsHover = useRef(false);
+  const setIsHovering = (on: boolean) => {
+    if (hovering.current === on) {
+      return;
+    }
+    hovering.current = on;
+    if (readsHover.current) {
+      rerender();
+    }
+  };
   const frameClickRef = useRef<((e?: React.MouseEvent) => void) | null>(null);
   // The bound play (see "play()"), while bound.
   const playRef = useRef<(() => Promise<void>) | null>(null);
@@ -347,5 +362,13 @@ export function useHover({
 
   const play = useCallback(() => playRef.current?.() ?? resolved(), []);
 
-  return { ref, isHovering, frameClickRef, play };
+  return {
+    ref,
+    get isHovering() {
+      readsHover.current = true;
+      return hovering.current;
+    },
+    frameClickRef,
+    play,
+  };
 }

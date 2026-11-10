@@ -211,7 +211,7 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Checkbox/components/checkbox.scss",
-      "line": 65,
+      "line": 66,
       "text": "hover-tint — Hover and press as a share of the text colour mixed into the fill. TBD"
     }
   ],

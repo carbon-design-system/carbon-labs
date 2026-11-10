@@ -1,0 +1,390 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/react-selection-kit/scss/selection-landing' as *;
+
+/* TreeView — TreeView.tsx (its header lists the choices). The rows, the
+   marker, the faces, the hover and the press are the selection kit's
+   (`.sel .sel--vertical`); the children's body, its soft edge and their
+   arrival are the disclosure's (disclosure/disclosure.scss). This file
+   has what a tree adds: no track, rows indented by depth, the caret, a node
+   (not its row) taking focus, and the still fill of a second selection. */
+
+/* The label above the tree (v11's `cds--label`). */
+.cds-tree-label {
+  @include type-style('label-01');
+
+  display: block;
+  color: theme.$text-secondary;
+  margin-block-end: 0.5rem;
+}
+
+/* The tree sits on the page: the selection kit's ghost (`.sel--ghost`: no
+   track, no inset round it, rows 2px apart so a hover never touches the
+   marker, a 4px corner). Its sizes are the kit's row scale (the selection
+   family's rows: the control less its inset), and so are its icons and
+   icon gap (`.sel--xs` … `.sel--lg`);
+   what's the tree's own is its padding: the field's edge inset (8 · 12 · 14
+   · 16px; `--sel-field-pad`, as the menus' and the select list's rows),
+   with no track inset to take from it. The indent is a caret's width
+   (16px; 20 at lg), so a child's caret starts where its parent's ends at
+   every size. */
+.sel.cds-tree {
+  --sel-inset: 0px;
+  --sel-pad: var(--sel-field-pad);
+  --cds-tree-row: 32px;
+  --cds-tree-indent: var(--sel-icon);
+  /* A second selected node (multiselect): the kit's selected wash
+     (`--cds-selected-wash`, the data table's 10% of the text colour) over
+     whatever the tree sits on, as every row that is one of many chosen,
+     not a still `$layer-selected` fill. */
+  --cds-tree-also: color-mix(
+    in srgb,
+    #{theme.$text-primary} var(--cds-selected-wash, 10%),
+    transparent
+  );
+
+  @include type-style('body-compact-01');
+
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  border-radius: 0;
+  margin: 0;
+  block-size: auto;
+  inline-size: 100%;
+  list-style: none;
+}
+
+/* The kit's row scale: xs 20 · sm 26 · md 32 · lg 40, the side nav's,
+   the select list's and the menus' rows of the same size. xs takes the
+   kit's xs type, as a menu's xs rows do. */
+.sel.cds-tree--xs {
+  --cds-tree-row: 20px;
+
+  @include type-style('label-01');
+}
+
+.sel.cds-tree--sm {
+  --cds-tree-row: 26px;
+}
+
+.sel.cds-tree--lg {
+  --cds-tree-row: 40px;
+}
+
+/* A node: its row, then (a parent) its children's body. */
+.cds-tree__node {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  gap: 0;
+  list-style: none;
+
+  /* The row shows the focus; the node itself draws none. */
+  &:focus {
+    outline: none;
+  }
+}
+
+/* The row: the kit's item, indented by its depth, so the marker's left edge
+   moves with the depth as it glides. Its hit area reaches back to the
+   tree's start edge, so the indent is the row's too. */
+.sel.cds-tree .cds-tree__row {
+  flex: none;
+  block-size: var(--cds-tree-row);
+  inline-size: auto;
+  margin-inline-start: calc(var(--cds-tree-depth, 0) * var(--cds-tree-indent));
+
+  /* Under the faces (over the rollover's layer), so the caret and the
+     checkbox take their own clicks on a row the marker covers too: a face
+     the marker covers is masked, which makes it a stacking context, and the
+     hit area, painted after it, sat over everything in it. */
+  &::after {
+    z-index: -1;
+    inset: calc(-0.5 * var(--sel-gap)) 0;
+    inset-inline-start: calc(
+      -1 * var(--cds-tree-depth, 0) * var(--cds-tree-indent)
+    );
+  }
+}
+
+/* Rows read from the start: caret, icon, label. */
+.cds-tree .sel__face {
+  justify-content: flex-start;
+}
+
+/* ── two colours: the label over its caret and icon ───────────────────── */
+
+/* The label in the primary text, the caret and the icon a step back in the
+   secondary icon colour, not one colour for all three, which reads flat
+   (the kit's `$text-secondary` label; v11's tree, whose
+   `$text-secondary` label and `$icon-secondary` glyphs are the same grey on
+   white). The glyphs are signs, the label is the content: VS Code's
+   explorer and Finder's list view draw the name in the strongest text and
+   the twistie (and, where it's monochrome, the icon) dimmer. On white
+   #161616 over #525252; on g100 #f4f4f4 over #c6c6c6.
+   - hover (and keyboard focus): the glyphs step up to `$icon-primary`, on
+     the label step's clock, the wash shows the row; the label is primary
+     already
+   - under the marker: one colour, the marker's label colour (`--sel-on`),
+     because on the marker the selected state is the emphasis
+   - disabled: the row's `$text-disabled` for all three, as before */
+.sel.cds-tree {
+  --sel-off: #{theme.$text-primary};
+}
+
+.cds-tree .sel__face {
+  --cds-tree-glyph: #{theme.$icon-secondary};
+
+  > :is(.cds-tree__caret, svg) {
+    color: var(--cds-tree-glyph);
+    transition: color var(--cds-motion-duration-fast-01)
+      var(--cds-motion-easing-standard-productive);
+  }
+}
+
+.cds-tree .sel__face--on,
+.cds-tree .cds-tree__row[data-disabled] .sel__face {
+  --cds-tree-glyph: currentColor;
+}
+
+/* Hover and keyboard focus on an unselected row (the kit's label step's
+   rule), and the landing row's held hover. */
+.cds-tree
+  .cds-tree__row:not([data-selected], [data-disabled]):is(
+    :hover,
+    :focus-visible
+  ),
+.sel.cds-tree:not([data-input='pointer'])
+  .cds-tree__node:focus-visible
+  > .cds-tree__row:not([data-selected]),
+.sel.cds-tree[data-landing] .cds-tree__row[data-selected]:hover {
+  .sel__face:not(.sel__face--on) {
+    --cds-tree-glyph: #{theme.$icon-primary};
+
+    > :is(.cds-tree__caret, svg) {
+      transition-duration: var(--cds-motion-duration-fast-02);
+    }
+  }
+}
+
+/* The children: one more step in, a gap above the first. Their padding is
+   inside the disclosure's clip, so a shut body is 0px. */
+.cds-tree__group {
+  display: flex;
+  flex-direction: column;
+  padding: var(--sel-gap) 0 0;
+  margin: 0;
+  gap: var(--sel-gap);
+  list-style: none;
+}
+
+/* ── the caret: down open, pointing at the label shut ─────────────────── */
+
+/* It turns on the children's clock: the CSS starts the turn and
+   TreeView.tsx gives it the disclosure's clock for the move as it starts
+   (opening on entrance-productive, shutting on exit-productive, as the
+   body). */
+.cds-tree__caret {
+  /* Above the row's hit area: a click on it toggles, not selects. */
+  position: relative;
+  z-index: 1;
+  display: inline-grid;
+  flex: none;
+  block-size: var(--sel-icon);
+  inline-size: var(--sel-icon);
+  place-items: center;
+  rotate: -90deg;
+  transition: rotate var(--cds-motion-duration-fast-02)
+    var(--cds-motion-easing-exit-productive);
+
+  svg {
+    fill: currentColor;
+  }
+
+  .cds-tree__node[aria-expanded='true'] > .cds-tree__row & {
+    rotate: 0deg;
+    transition-duration: var(--cds-motion-duration-moderate-01);
+    transition-timing-function: var(--cds-motion-easing-entrance-productive);
+  }
+
+  :dir(rtl) & {
+    rotate: 90deg;
+  }
+}
+
+/* A leaf keeps the caret's place, so labels at one depth line up. */
+.cds-tree__caret--none {
+  rotate: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cds-tree__caret {
+    transition: none;
+  }
+}
+
+/* Reduced motion from a MotionProvider: the body is open or shut at once,
+   and so is its caret. */
+.cds-tree__node:has(> .cds-tree__body[data-reduced])
+  > .cds-tree__row
+  .cds-tree__caret {
+  transition: none;
+}
+
+/* ── focus: the node holds it, its row shows it ───────────────────────── */
+
+/* Keyboard only (the root's `data-input`): an unselected row takes its
+   hover and a 2px ring in the label's hover color, as the kit's items do;
+   the marked row's ring is the marker's. */
+.sel.cds-tree:not([data-input='pointer'])
+  .cds-tree__node:focus-visible
+  > .cds-tree__row:not([data-selected]) {
+  --rollover-shadow: inset 0 0 0 2px var(--sel-off-hover);
+
+  &::before {
+    --cds-motion-rollover-hover: 1;
+  }
+
+  .sel__face:not(.sel__face--on) {
+    color: var(--sel-off-hover);
+  }
+}
+
+.sel.cds-tree:not([data-input='pointer']):has(
+    .cds-tree__node:focus-visible > .cds-tree__row[data-selected]
+  ) {
+  --sel-ring-gap: 0px;
+  --sel-ring: 2px;
+}
+
+/* ── a second selection (multiselect) ─────────────────────────────────── */
+
+/* Every selected node the marker isn't on (in multiselect, every selected
+   node: it has no marker): the selected wash, still, the
+   label in the primary text, and its checkbox checked (below). */
+.cds-tree__row[data-also-selected] {
+  --rollover-rest: var(--cds-tree-also);
+
+  color: theme.$text-primary;
+}
+
+/* ── many chosen (multiselect): a checkbox per row ────────────────────── */
+
+/* The kit's Checkbox as the row's mark, after the caret (many chosen rows
+   get a checkbox and the selected wash; no marker, so it's in the row's
+   own face only). The box is inert;
+   this span takes its click (a toggle, TreeView.tsx), above the row's hit
+   area as the caret is, over the box's 24px target (4px round it). The row
+   keeps its field inset; the box is 16px at every size. */
+.cds-tree__check {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  flex: none;
+  padding: 4px;
+  margin: -4px;
+  cursor: pointer;
+
+  .cds-checkbox__row {
+    cursor: inherit;
+    padding-block: 0;
+  }
+
+  .cds-checkbox__box {
+    margin-block-start: 0;
+  }
+
+  /* The checkbox's own mark, not the row's icon size and fill. */
+  .sel__face & svg {
+    block-size: 16px;
+    fill: none;
+    inline-size: 16px;
+  }
+
+  .cds-tree__row[data-disabled] & {
+    cursor: not-allowed;
+  }
+}
+
+/* ── disabled ─────────────────────────────────────────────────────────── */
+
+.sel.cds-tree .cds-tree__row[data-disabled] {
+  color: theme.$text-disabled;
+  cursor: not-allowed;
+
+  &::before {
+    --_rhc: transparent;
+    --cds-motion-rollover-hover: 0;
+
+    transition: none;
+  }
+
+  .sel__face--on {
+    display: none;
+  }
+}
+
+/* ── the row the marker is landing on ─────────────────────────────────── */
+
+/* The selection kit's (selection-kit/_selection-landing.scss, jump.ts
+   `hold`): from the click until the marker has landed (`data-landing`), the
+   new row keeps an unselected row's hover round the marker, the marker cut
+   out of it, as the side nav's rows do; on a jump between levels that hover
+   shrinks with the old marker and the new one grows out of it. */
+.sel.cds-tree {
+  @include selection-landing;
+}
+
+/* ── the marker ───────────────────────────────────────────────────────── */
+
+/* Nothing selected (or the selected node not shown): no marker, nothing cut
+   out of a row, as the select list with no value. */
+.sel.cds-tree:not([data-selection-shown]) {
+  .sel__indicator {
+    opacity: 0;
+  }
+
+  .sel__face--on {
+    visibility: hidden;
+  }
+
+  .sel__face,
+  .sel__item::before {
+    mask: none;
+  }
+}
+
+/* Folded: its parent shut over the selected node. The marker goes with the
+   row at once; the row folds away unselected under the clip. */
+.sel.cds-tree[data-sel-folded] {
+  :is(.sel__indicator, .sel__ghost),
+  .sel__face--on {
+    visibility: hidden;
+  }
+
+  .sel__face,
+  .sel__item::before {
+    mask: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .cds-tree__row[data-selected] {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+
+  .cds-tree__node:focus-visible > .cds-tree__row {
+    outline: 2px solid CanvasText;
+    outline-offset: -2px;
+  }
+}

@@ -159,6 +159,34 @@
       "text": "api: variant-prop — The colour treatment is `variant`. TBD"
     }
   ],
+  "V12/SidePanel": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/SidePanel/components/side-panel.scss",
+      "line": 244,
+      "text": "radius-concentric — An inner part's radius is the outer radius less its inset, never below 0. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/SidePanel/proposals/README.md",
+      "line": 3,
+      "text": "api: frame-prop — What a component stands on is `frame`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/SidePanel/proposals/README.md",
+      "line": 4,
+      "text": "api: logical-positions — Placement values are logical. TBD"
+    }
+  ],
+  "V12/StructuredList": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/StructuredList/components/structured-list.scss",
+      "line": 293,
+      "text": "selected-wash — A row that is one of many chosen: a wash of the text colour. TBD"
+    }
+  ],
   "V12/Tabs": [
     {
       "kind": "proposal",
@@ -231,6 +259,14 @@
       "file": "packages/react/src/v12/components/TextInput/proposals/README.md",
       "line": 3,
       "text": "api: variant-prop — The colour treatment is `variant`. TBD"
+    }
+  ],
+  "V12/Tile": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Tile/components/tile.scss",
+      "line": 169,
+      "text": "hover-ring-by-content — A surface holding controls hovers with a 1px inset ring and keeps its fill; a text-only surface keeps the fill. TBD"
     }
   ],
   "V12/Tooltip": [

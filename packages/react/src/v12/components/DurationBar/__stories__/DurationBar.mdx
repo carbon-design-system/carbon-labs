@@ -1,0 +1,51 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as DurationBarStories from './DurationBar.stories.tsx';
+
+<Meta of={DurationBarStories} />
+
+# DurationBar
+
+A duration on a shared scale, drawn by the Slider: the `track` shape at `sm`,
+its fill the duration, with dots every 100ms, so a column of bars reads as one
+scale. With `onChange` it is editable: drag the knob, press the track, use the
+keys (5ms; Shift, 50ms) or type in the number field. Values snap to 5ms and stay
+within 0 and `max` (default 1000). Without `onChange` it is a fixed value: a bar
+to the value, no knob and no hover, a meter to assistive tech. `reference` marks
+a second value, such as the last saved one. `hideNumber` hides the number. There
+is no disabled state: a duration that can't be edited reads only.
+
+<Canvas of={DurationBarStories.Default} />
+
+<Canvas of={DurationBarStories.Scale} />
+
+<Canvas of={DurationBarStories.Durations} />
+
+<Canvas of={DurationBarStories.Reference} />
+
+<Canvas of={DurationBarStories.Fixed} />
+
+## Motion
+
+The motion is the Slider's, on the track. A fixed bar has none.
+
+- **Glide:** a key or a click sends the knob from where it is to the new value,
+  on standard-productive. Its duration comes from the distance. A held key's
+  repeats move at once.
+- **Press:** a press on the track starts the knob toward the pressed point. The
+  release lands there.
+- **Drag:** the knob follows the pointer exactly and squashes against the ends.
+- **Hover and press:** hover grows the knob 2px. A pointer press takes back 1px.
+  A press with no hover, a key or a touch, insets it 1px. On fast-01.
+- **Fill:** rides the knob's live center on every frame. On hover it steps
+  toward the knob's color and grows thicker, on fast-02, standard-productive.
+- **Dots:** the dot under the pointer grows, and a press within 12px of a dot
+  glides the knob there.
+
+## Reduced motion
+
+No glide: the knob moves to the new value and fades in there, on half the clock.
+There is no press reach. The knob's hover and press keep their clock.
+
+## Props
+
+<ArgTypes of={DurationBarStories} />

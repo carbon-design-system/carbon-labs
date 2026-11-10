@@ -1,0 +1,298 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/corners';
+
+/* ContainedList — `ContainedList.tsx` (its header lists the choices).
+ *
+ * v11's structure and sizes on the kit's hairline (`--cds-surface-rule`).
+ * The hairline between items is the item's `::after`, above its content's
+ * rollover, so a hovered or pressed item keeps its lines. A clickable item's
+ * content is a row in a wide list: the rollover as an even wash, pressing
+ * flat (no inset), flush with its lines. */
+
+$_rule: var(--cds-surface-rule, #{theme.$border-subtle-01});
+$_step: var(--cds-text-primary, #161616);
+
+.cds-contained-list {
+  /* The item height (v11's layout sizes) and the inline padding. */
+  --cds-cl-h: 3rem;
+  --cds-cl-pad: #{$spacing-05};
+
+  position: relative;
+  min-inline-size: 0;
+
+  > ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+}
+
+.cds-contained-list--sm {
+  --cds-cl-h: 2rem;
+}
+
+.cds-contained-list--md {
+  --cds-cl-h: 2.5rem;
+}
+
+.cds-contained-list--xl {
+  --cds-cl-h: 4rem;
+}
+
+.cds-contained-list--on-page + .cds-contained-list--on-page {
+  margin-block-start: $spacing-05;
+}
+
+/* ── the header ───────────────────────────────────────────────────────── */
+
+.cds-contained-list__header {
+  position: sticky;
+  z-index: 2;
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  gap: $spacing-05;
+  inset-block-start: 0;
+  padding-inline: var(--cds-cl-pad);
+}
+
+.cds-contained-list__label {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+.cds-contained-list__action {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: flex-end;
+  min-inline-size: 0;
+}
+
+.cds-contained-list--on-page .cds-contained-list__header {
+  @include type-style('heading-compact-01');
+
+  background: theme.$layer-background;
+
+  block-size: var(--cds-cl-h);
+  border-block-end: 1px solid $_rule;
+  color: theme.$text-primary;
+}
+
+.cds-contained-list--disclosed .cds-contained-list__header {
+  @include type-style('label-01');
+
+  background: var(--cds-surface, #{theme.$layer});
+
+  block-size: 2rem;
+  color: theme.$text-secondary;
+}
+
+/* ── the search: in the header (the action) or above the items ────────── */
+
+/* The search takes the room beside the label; the label keeps its width. */
+.cds-contained-list--action-search {
+  .cds-contained-list__label {
+    flex: none;
+  }
+
+  .cds-contained-list__action {
+    flex: 1 1 auto;
+  }
+
+  .cds-contained-list__action > .cds-search:not(.cds-search--expandable),
+  .cds-contained-list__action > .cds-search--expanded {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+  }
+
+  /* To the list's end: the search's trailing glyph (its clear button, an
+     expandable's magnifier) on the column of the items' trailing glyphs,
+     `--cds-cl-pad` from the end, as the items' close buttons are. The
+     field's glyph sits `--tf-pad` in from its end, so the field runs that
+     far past the header's padding, lined up with the close buttons below
+     it. Read from the field's own
+     `--tf-pad` (its size's edge inset, set on the search's root), so a
+     change to the field's insets keeps the column; the 14px is only the
+     fallback outside a field. */
+  .cds-contained-list__action > .cds-search {
+    margin-inline-end: calc(-1 * var(--tf-pad, 14px));
+    max-inline-size: none;
+  }
+}
+
+.cds-contained-list__search {
+  position: sticky;
+  z-index: 2;
+  background: theme.$layer-background;
+  inset-block-start: var(--cds-cl-h);
+}
+
+/* A search above the items sits in from the list's sides, clear of the
+   header's hairline. */
+.cds-contained-list__search {
+  padding-block: $spacing-03;
+  padding-inline: var(--cds-cl-pad);
+}
+
+/* ── items ────────────────────────────────────────────────────────────── */
+
+.cds-contained-list-item {
+  position: relative;
+  display: list-item;
+  list-style: none;
+}
+
+/* The hairline between items: above the content's hover and press. */
+.cds-contained-list-item:not(:last-of-type)::after {
+  position: absolute;
+  z-index: 1;
+  background: $_rule;
+  block-size: 1px;
+  content: '';
+  inset-block-end: 0;
+  inset-inline: 0;
+  pointer-events: none;
+}
+
+.cds-contained-list--inset-rulers
+  .cds-contained-list-item:not(:last-of-type)::after {
+  inset-inline: var(--cds-cl-pad);
+}
+
+.cds-contained-list-item__content {
+  @include type-style('body-01');
+
+  display: flex;
+  box-sizing: border-box;
+  align-items: flex-start;
+  /* The text's first line centered in the item (a 20px line). */
+  padding: calc((var(--cds-cl-h) - 1.25rem) / 2) var(--cds-cl-pad);
+  color: theme.$text-primary;
+  gap: $spacing-04;
+  inline-size: 100%;
+  min-block-size: var(--cds-cl-h);
+  text-align: start;
+}
+
+.cds-contained-list-item__text {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+.cds-contained-list-item__icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  block-size: 1.25rem;
+  color: theme.$icon-primary;
+}
+
+.cds-contained-list-item--with-action .cds-contained-list-item__content {
+  padding-inline-end: 4rem;
+}
+
+.cds-contained-list-item__action {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  block-size: var(--cds-cl-h);
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  padding-inline-end: $spacing-03;
+}
+
+/* A clickable item: the rollover, an even wash across the row. */
+.cds-contained-list-item__content--clickable {
+  @include rollover($press-inset: 0);
+  --rollover-rest: transparent;
+  --rollover-flat: 1;
+  /* Fallbacks; attachRollover solves matched-lightness steps. */
+  --rollover-hover: color-mix(in srgb, #{$_step} 8%, transparent);
+  --rollover-press: color-mix(in srgb, #{$_step} 16%, transparent);
+
+  border: 0;
+  margin: 0;
+
+  appearance: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+
+  &:focus {
+    outline: none;
+  }
+
+  /* The kit's ring, inside the item so the hairlines don't cut it. */
+  &::after {
+    position: absolute;
+    z-index: 2;
+    box-shadow: inset 0 0 0 2px theme.$text-primary;
+    content: '';
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &:focus-visible::after {
+    opacity: 1;
+  }
+
+  &:disabled {
+    color: theme.$text-disabled;
+    cursor: not-allowed;
+
+    .cds-contained-list-item__icon {
+      color: theme.$icon-disabled;
+    }
+  }
+}
+
+/* ── corners (`corners`, ContainedList.tsx): square by default (v11).
+   Rounded: 8px on the list, and the rows at its corners on the same radius
+   (they sit at inset 0): the header (or, with none, the first item), and
+   the last item, their wash and their focus ring with them ─────────────── */
+
+.cds-contained-list--rounded {
+  --cds-cl-radius: #{corners.$in};
+
+  border-radius: var(--cds-cl-radius);
+
+  > .cds-contained-list__header:first-child,
+  > ul:first-child
+    > .cds-contained-list-item:first-child
+    > .cds-contained-list-item__content {
+    border-start-end-radius: var(--cds-cl-radius);
+    border-start-start-radius: var(--cds-cl-radius);
+  }
+
+  > ul:last-child
+    > .cds-contained-list-item:last-child
+    > .cds-contained-list-item__content {
+    border-end-end-radius: var(--cds-cl-radius);
+    border-end-start-radius: var(--cds-cl-radius);
+  }
+
+  .cds-contained-list-item__content--clickable::after {
+    border-radius: inherit;
+  }
+}
+
+@media (forced-colors: active) {
+  .cds-contained-list-item:not(:last-of-type)::after {
+    background: CanvasText;
+  }
+}

@@ -1,0 +1,524 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/corners';
+
+/* StructuredList — `StructuredList.tsx` (its header lists the choices).
+ *
+ * v11's table layout, so columns size to their content, on the page: the
+ * rows divided by the kit's hairline (`--cds-surface-rule`). With
+ * `selection`, a body row is a control: the rollover (the quiet card hover,
+ * an even wash) under its cells, and the selection kit's marker, which
+ * travels between rows, under them all. Its look is the `frame`: `line`
+ * (default) the two row lines it lands on, in the selected treatment;
+ * `ghost` one wash. The marker and its reduced-motion ghost are painted
+ * from the engine's edges (`--cds-motion-selection-l / -t / -r / -b`, the
+ * ghost's `-gl …`). */
+
+$_rule: var(--cds-surface-rule, #{theme.$border-subtle-01});
+$_step: var(--cds-text-primary, #161616);
+$sel: --cds-motion-selection;
+/* The `line` frame's selected treatment: line tabs' bar (tabs.scss,
+   vertical-tabs.scss), 2px `$layer-selected-inverse`. */
+$_selected-line: var(--cds-sl-selected-line, #{theme.$layer-selected-inverse});
+
+.cds-structured-list {
+  position: relative;
+  display: table;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  inline-size: 100%;
+  isolation: isolate;
+}
+
+.cds-structured-list__head {
+  display: table-header-group;
+  vertical-align: middle;
+}
+
+.cds-structured-list__body {
+  display: table-row-group;
+  vertical-align: middle;
+}
+
+.cds-structured-list__row {
+  display: table-row;
+}
+
+/* ── the hairlines ────────────────────────────────────────────────────────
+   Each body row's line is at its top edge, in the 1px band its (transparent)
+   border keeps; the last row's closing line sits just below it, in the 1px
+   the list's end margin keeps. Both are the cells' own pseudo-elements, above
+   the row's hover and press (as ContainedList's). With `frame="line"` they
+   always stay: the marker's own two lines lie over the ones it lands on.
+   With `frame="ghost"` a line steps aside for the wash: while the marker
+   reaches toward a pressed row, or stretches across rows mid-glide, every
+   line inside its span hides and the marker carries a line on each of its
+   edges (below, "the ghost's lines"), so the lines never cut through the
+   selected area. */
+.cds-structured-list:has(> .cds-structured-list__body) {
+  margin-block-end: 1px;
+}
+
+.cds-structured-list__body > .cds-structured-list__row {
+  border-block-start: 1px solid transparent;
+
+  > .cds-structured-list__td::before,
+  &:last-child > .cds-structured-list__td::after {
+    position: absolute;
+    z-index: 1;
+    background: $_rule;
+    block-size: 1px;
+    content: '';
+    inset-inline: 0;
+    pointer-events: none;
+  }
+
+  /* Over the cell's top border (the row's, collapsed). */
+  > .cds-structured-list__td::before {
+    inset-block-start: -1px;
+  }
+
+  &:last-child > .cds-structured-list__td::after {
+    inset-block-end: -1px;
+  }
+}
+
+/* Ghost: a row the marker covers (the engine writes `data-selection-covered`,
+   the marker's live edges `-t` / `-b` and the row's own box `-iy` on it):
+   its line hides while it lies inside the marker, more than half a pixel
+   from either edge. At the edges it stays, under the marker's own line, so
+   the marker at rest on a row changes nothing. */
+.cds-structured-list--ghost[data-selection-shown]
+  .cds-structured-list__row--body[data-selection-covered]
+  > .cds-structured-list__td::before {
+  block-size: clamp(
+    0px,
+    max(
+        var(#{$sel}-t, 0px) + 0.5px - var(#{$sel}-iy, 0px),
+        var(#{$sel}-iy, 0px) - var(#{$sel}-b, 0px) + 0.5px
+      ) *
+      1000,
+    1px
+  );
+}
+
+/* ── cells ────────────────────────────────────────────────────────────── */
+
+.cds-structured-list__th,
+.cds-structured-list__td {
+  display: table-cell;
+  box-sizing: border-box;
+  text-align: start;
+}
+
+.cds-structured-list__th {
+  @include type-style('heading-compact-01');
+
+  padding: $spacing-05 $spacing-03 $spacing-03;
+
+  block-size: 2.5rem;
+  color: theme.$text-primary;
+  vertical-align: top;
+}
+
+.cds-structured-list__td {
+  @include type-style('body-01');
+
+  position: relative;
+  padding: $spacing-05 $spacing-03 $spacing-06;
+  color: theme.$text-secondary;
+  max-inline-size: 36rem;
+  /* A hovered row's text steps up on the hover's clock: out fast-01. */
+  transition: color var(--cds-motion-duration-fast-01)
+    var(--cds-motion-easing-standard-productive);
+}
+
+.cds-structured-list__row
+  > :is(.cds-structured-list__th, .cds-structured-list__td):first-child {
+  padding-inline-start: $spacing-05;
+}
+
+.cds-structured-list__cell--nowrap {
+  white-space: nowrap;
+}
+
+.cds-structured-list--condensed {
+  .cds-structured-list__th,
+  .cds-structured-list__td {
+    padding: $spacing-03;
+  }
+
+  .cds-structured-list__row
+    > :is(.cds-structured-list__th, .cds-structured-list__td):first-child {
+    padding-inline-start: $spacing-05;
+  }
+}
+
+/* Flush: in line with the page's text (v11: not with selection). */
+.cds-structured-list--flush
+  .cds-structured-list__row
+  > :is(.cds-structured-list__th, .cds-structured-list__td),
+.cds-structured-list--flush
+  .cds-structured-list__row
+  > :is(.cds-structured-list__th, .cds-structured-list__td):first-child {
+  padding-inline: 0 $spacing-05;
+}
+
+/* Selection: 16px either side of every cell (v11's), the radio's column as
+   narrow as the mark. */
+.cds-structured-list--selection {
+  .cds-structured-list__th,
+  .cds-structured-list__td,
+  .cds-structured-list__row
+    > :is(.cds-structured-list__th, .cds-structured-list__td):first-child {
+    padding-inline: $spacing-05;
+  }
+
+  .cds-structured-list__select {
+    inline-size: 1rem;
+    line-height: 0;
+    padding-inline-end: 0;
+  }
+
+  .cds-structured-list__select .cds-radio__circle {
+    /* On the first line of the row's text (body-01's 20px line). */
+    margin-block-start: 2px;
+  }
+}
+
+/* ── selection: the rows ──────────────────────────────────────────────── */
+
+.cds-structured-list--selection .cds-structured-list__row--body {
+  /* The quiet card hover as an even wash; rows press flat, flush with the
+     hairlines; no 1px hover growth either. Painted on `::after`: Chrome
+     wraps a table row's leading pseudo-element in a cell of its own, even
+     out of the flow, which shifted every row a column over. */
+  @include rollover($pseudo: '::after', $press-inset: 0);
+  --rollover-rest: transparent;
+  --rollover-flat: 1;
+  /* Fallbacks; attachRollover solves matched-lightness steps at half the
+     house steps (`quietSteps`). */
+  --rollover-hover: color-mix(in srgb, #{$_step} 5%, transparent);
+  --rollover-press: color-mix(in srgb, #{$_step} 10%, transparent);
+
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+
+  &:hover > .cds-structured-list__td,
+  &.cds-structured-list__row--selected > .cds-structured-list__td {
+    color: theme.$text-primary;
+    transition-duration: var(--cds-motion-duration-fast-02);
+  }
+}
+
+/* The keyboard's ring (its radio focused, not by a pointer's pick): 2px
+   `$text-primary`, inside the row's edge so the next hairline doesn't cut
+   it. */
+.cds-structured-list--selection:not([data-input='pointer'])
+  .cds-structured-list__row--body:has(
+    .cds-structured-list__input:focus-visible
+  ) {
+  /* Over the line marker (z-index 1, below), so the ring stays whole. */
+  z-index: 2;
+  outline: 2px solid theme.$text-primary;
+  outline-offset: -2px;
+
+  > .cds-structured-list__td {
+    color: theme.$text-primary;
+  }
+}
+
+/* The marked row: no hover and no press of its own — the marker is there,
+   and its arrival is the release. Its hover leaves on the hover's way out. */
+.cds-structured-list--selection
+  .cds-structured-list__row--body.cds-structured-list__row--selected.cds-structured-list__row--selected::after {
+  --cds-motion-rollover-hover: 0;
+  --cds-motion-rollover-grow: 0.8;
+  --_rp: 0;
+
+  transition:
+    --cds-motion-rollover-hover var(--cds-motion-duration-fast-01)
+      var(--cds-motion-easing-standard-productive),
+    --cds-motion-rollover-grow var(--cds-motion-duration-moderate-02)
+      var(--cds-motion-easing-entrance-productive);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: var(--cds-motion-duration-floor);
+  }
+}
+
+.cds-structured-list--selection .cds-structured-list__row--selected {
+  cursor: default;
+}
+
+/* The radio: visually hidden; the row is what you see (v11's). */
+.cds-structured-list__input {
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip: rect(0, 0, 0, 0);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+/* ── selection: the marker ────────────────────────────────────────────── */
+
+.cds-structured-list__marker,
+.cds-structured-list__ghost {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Ghost: the kit's selected wash (`--cds-selected-wash`, the data table's 10%
+   of the text color), over whatever the list sits on. */
+.cds-structured-list--ghost
+  :is(.cds-structured-list__marker, .cds-structured-list__ghost) {
+  // @carbon-explore selected-wash — A row that is one of many chosen: a wash of the text colour. TBD
+  background: color-mix(
+    in srgb,
+    #{$_step} var(--cds-selected-wash, 10%),
+    transparent
+  );
+}
+
+/* Physical placement: the engine's edges are px from the left and top in
+   either direction (selection-kit.scss, the header). */
+.cds-structured-list__marker {
+  block-size: calc(var(#{$sel}-b, 0px) - var(#{$sel}-t, 0px));
+  inline-size: calc(var(#{$sel}-r, 0px) - var(#{$sel}-l, 0px));
+  inset-block-start: var(#{$sel}-t, 0px);
+  inset-inline-start: var(#{$sel}-l, 0px);
+}
+
+/* Reduced motion: the old place fading out while the marker fades in. */
+.cds-structured-list__ghost {
+  block-size: calc(var(#{$sel}-gb, 0px) - var(#{$sel}-gt, 0px));
+  inline-size: calc(var(#{$sel}-gr, 0px) - var(#{$sel}-gl, 0px));
+  inset-block-start: var(#{$sel}-gt, 0px);
+  inset-inline-start: var(#{$sel}-gl, 0px);
+  opacity: 0;
+}
+
+/* Line (the default, for lists with only horizontal dividing lines): the
+   marker is its two
+   lines and nothing else: no fill, no sides. Each lies on a row line it
+   lands on, the row's top line and the line below it, 2px in the selected
+   treatment, its extra pixel inside the selected row. They're drawn the
+   whole time the marker shows, at rest and in flight, and the rows' own
+   lines never hide, so nothing switches on or off as it travels: the two
+   lines glide, the leading one ahead, and the lines they pass over stay
+   (hiding each line the wash passes, or switching the marker's own edge
+   lines on and off as it crosses a row, reads as the selector blinking).
+   The reduced-motion ghost is the
+   same two lines, fading at the old row. Straight whatever the corners. */
+.cds-structured-list--line
+  :is(.cds-structured-list__marker, .cds-structured-list__ghost) {
+  /* Above the rows, so a press on a nearby row never hides the lines. Each
+     row is a stacking context of its own (the rollover isolates it) and
+     comes after the marker, so at z-index 0 a row paints over it: a pressed
+     or hovered row's wash is opaque (`quietSteps`), and a press reaches the
+     near line into that row, where the wash would hide it whole (a hover on
+     the row beside, its pixel).
+     The lines are 2px on the row edges, clear of the cells' padding, so
+     nothing they cover is content; they lie over the rows' own hairlines,
+     as they're meant to. */
+  z-index: 1;
+
+  &::before,
+  &::after {
+    position: absolute;
+    background: $_selected-line;
+    block-size: 2px;
+    content: '';
+    inset-inline: 0;
+  }
+
+  /* A row's line is the 1px just above its box (the cell's `::before`), so
+     the top line is that pixel and the row's first; the bottom line the
+     next row's line (the selected row's last pixel) and the one above it. */
+  &::before {
+    inset-block-start: -1px;
+  }
+
+  &::after {
+    inset-block-end: 0;
+  }
+}
+
+/* The last row's closing line is the 1px just below it (the list's end
+   margin): the bottom line on the last row is that pixel and the row's
+   last. */
+.cds-structured-list--line:has(
+    > .cds-structured-list__body
+      > .cds-structured-list__row--selected:last-child
+  )
+  .cds-structured-list__marker::after {
+  inset-block-end: -1px;
+}
+
+/* Ghost: the marker's lines, one at its top edge, one just below its bottom
+   (where the rows' lines sit), straight whatever its corners. Shown only
+   while it spans a row's line: two rows covered at once — a reach toward a
+   pressed row, a glide crossing rows. On one row they'd be lines the list
+   doesn't have (the first pick's arrival from the row's center); at rest
+   they lie on the rows' own lines either way. */
+.cds-structured-list--ghost .cds-structured-list__marker::before,
+.cds-structured-list--ghost .cds-structured-list__marker::after {
+  position: absolute;
+  background: $_rule;
+  block-size: 1px;
+  content: '';
+  inset-inline: 0;
+  opacity: 0;
+}
+
+.cds-structured-list--ghost .cds-structured-list__marker::before {
+  inset-block-start: 0;
+}
+
+.cds-structured-list--ghost .cds-structured-list__marker::after {
+  inset-block-end: -1px;
+}
+
+/* Two adjacent rows covered: `data-spans-rows`, written by StructuredList
+   (never a `:has()` on `data-selection-covered`: that restyles the whole
+   page on every write of it, on any selection list). */
+.cds-structured-list--ghost[data-spans-rows] .cds-structured-list__marker {
+  &::before,
+  &::after {
+    opacity: 1;
+  }
+}
+
+/* Ghost: a row's hover and press stop at the marker's edge (the selection
+   kit's `selector-hole`): the reach into a pressed row doesn't double its
+   wash. A line marker has no wash to double: the press stays whole. */
+.cds-structured-list--ghost
+  .cds-structured-list__row--body[data-selection-covered]:not(
+    .cds-structured-list__row--selected
+  )::after {
+  mask-composite: exclude;
+  mask-image: linear-gradient(#000000 0 0), linear-gradient(#000000 0 0);
+  mask-position:
+    0 0,
+    calc(var(#{$sel}-l, 0px) - var(#{$sel}-ix, 0px))
+      calc(var(#{$sel}-t, 0px) - var(#{$sel}-iy, 0px));
+  mask-repeat: no-repeat;
+  mask-size:
+    100% 100%,
+    calc(var(#{$sel}-r, 0px) - var(#{$sel}-l, 0px))
+      calc(var(#{$sel}-b, 0px) - var(#{$sel}-t, 0px));
+}
+
+.cds-structured-list:not([data-placed]) .cds-structured-list__marker {
+  visibility: hidden;
+}
+
+/* No selection: nothing marked (the engine's show / hide set
+   `data-selection-shown`, after the marker has left). */
+.cds-structured-list:not([data-selection-shown]) .cds-structured-list__marker {
+  opacity: 0;
+}
+
+/* ── corners (`corners`, StructuredList.tsx): square by default (v11).
+   Rounded: 8px on the list, and the rows at its corners on the same radius
+   (they sit at inset 0): the last row, and the first when there's no head.
+   A row's hover (its `::after`) and its focus ring (an outline) follow its
+   radius; the marker takes it while it's on such a row. The hairlines stay
+   straight under them ─────────────────────────────────────────────────── */
+
+.cds-structured-list--rounded {
+  --cds-sl-radius: #{corners.$in};
+
+  border-radius: var(--cds-sl-radius);
+
+  &:not(:has(> .cds-structured-list__head))
+    > .cds-structured-list__body
+    > .cds-structured-list__row:first-child {
+    border-start-end-radius: var(--cds-sl-radius);
+    border-start-start-radius: var(--cds-sl-radius);
+  }
+
+  > .cds-structured-list__body > .cds-structured-list__row:last-child {
+    border-end-end-radius: var(--cds-sl-radius);
+    border-end-start-radius: var(--cds-sl-radius);
+  }
+
+  /* The marker on the first row (it starts at the list's top: no head). */
+  .cds-structured-list__marker {
+    border-start-end-radius: max(
+      0px,
+      calc(var(--cds-sl-radius) - var(#{$sel}-t, 0px) * 100)
+    );
+    border-start-start-radius: max(
+      0px,
+      calc(var(--cds-sl-radius) - var(#{$sel}-t, 0px) * 100)
+    );
+  }
+
+  &:has(
+      > .cds-structured-list__body
+        > .cds-structured-list__row--selected:last-child
+    )
+    .cds-structured-list__marker {
+    border-end-end-radius: var(--cds-sl-radius);
+    border-end-start-radius: var(--cds-sl-radius);
+  }
+}
+
+/* ── skeleton ─────────────────────────────────────────────────────────── */
+
+.cds-structured-list--skeleton {
+  .cds-structured-list__th:nth-child(3n + 1) {
+    inline-size: 30%;
+  }
+
+  .cds-structured-list__select {
+    inline-size: 1rem;
+  }
+}
+
+@media (forced-colors: active) {
+  .cds-structured-list--ghost .cds-structured-list__marker {
+    background: Highlight;
+    opacity: 0.3;
+  }
+
+  .cds-structured-list--line
+    :is(.cds-structured-list__marker, .cds-structured-list__ghost) {
+    &::before,
+    &::after {
+      background: Highlight;
+      forced-color-adjust: none;
+    }
+  }
+
+  .cds-structured-list__body
+    > .cds-structured-list__row
+    > .cds-structured-list__td::before,
+  .cds-structured-list__body
+    > .cds-structured-list__row:last-child
+    > .cds-structured-list__td::after,
+  .cds-structured-list--ghost .cds-structured-list__marker::before,
+  .cds-structured-list--ghost .cds-structured-list__marker::after {
+    background: CanvasText;
+    forced-color-adjust: none;
+  }
+}

@@ -5397,6 +5397,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/v12-scenes@workspace:tools/v12-scenes":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/v12-scenes@workspace:tools/v12-scenes"
+  dependencies:
+    "@playwright/test": "npm:^1.39.0"
+    vitest: "npm:^4.0.0"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/v12-styles@workspace:*, @carbon-labs/v12-styles@workspace:packages/v12-styles":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/v12-styles@workspace:packages/v12-styles"

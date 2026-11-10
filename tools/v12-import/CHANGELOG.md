@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-import%400.4.0...%40carbon-labs%2Fv12-import%400.5.0) (2026-11-10)
+
+### Features
+
+* **v12-import:** motion and vocabulary rules in the check, as warnings ([#1471](https://github.com/carbon-design-system/carbon-labs/issues/1471)) ([c880dcb](https://github.com/carbon-design-system/carbon-labs/commit/c880dcba8d75c494b0d604b337fa6e945a0230d5))
+
+
 # [0.4.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-import%400.3.0...%40carbon-labs%2Fv12-import%400.4.0) (2026-11-10)
 
 ### Features

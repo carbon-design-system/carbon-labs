@@ -4167,6 +4167,7 @@ __metadata:
     "@carbon-labs/react-app-shell": "workspace:*"
     "@carbon-labs/react-breadcrumb": "workspace:*"
     "@carbon-labs/react-button": "workspace:*"
+    "@carbon-labs/react-jump-to": "workspace:*"
     "@carbon-labs/react-kit-defaults": "workspace:*"
     "@carbon-labs/react-menu": "workspace:*"
     "@carbon-labs/react-motion-icons": "workspace:*"

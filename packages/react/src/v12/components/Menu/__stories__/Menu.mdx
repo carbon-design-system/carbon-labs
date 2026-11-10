@@ -17,6 +17,14 @@ drawn in place, with no portal, placement, snap or close.
 
 <Canvas of={MenuStories.WithMenuButton} />
 
+## Corners
+
+8px by default, with rows at a field's inset, on every trigger: a pill
+MenuButton opens an 8px menu. `corners="full"`, or `KitDefaults corners="full"`,
+draws the pill, its rows half a row's height in. `corners="square"` has none.
+
+<Canvas of={MenuStories.Corners} />
+
 <Canvas of={MenuStories.Submenu} />
 
 <Canvas of={MenuStories.Selectable} />

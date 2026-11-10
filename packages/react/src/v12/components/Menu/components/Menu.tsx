@@ -84,7 +84,10 @@ import {
   type SurfaceAlignment,
 } from '@carbon-labs/v12-motion';
 import type { SurfaceShadowOption } from '@carbon-labs/v12-motion';
-import { useSurfaceShadow } from '@carbon-labs/react-kit-defaults';
+import {
+  useKitDefaults,
+  useSurfaceShadow,
+} from '@carbon-labs/react-kit-defaults';
 import { KitPortal } from '@carbon-labs/react-kit-defaults';
 import { iconSizeFor, useWithTimeScale } from '@carbon-labs/react-props';
 import { useDisabledReason } from '@carbon-labs/react-tooltip';
@@ -94,6 +97,7 @@ const skipped = (row: { disabled: boolean; reason?: string } | undefined) =>
   !!row?.disabled && !row.reason;
 import '@carbon-labs/react-selection-kit/scss/selection-kit.scss';
 import { applyDrawnScale, cssPx, drawnScale } from './drawn-scale';
+import { menuCorners } from './menu-corners';
 import './menu.scss';
 import { isComposing } from '@carbon-labs/react-util';
 
@@ -475,8 +479,14 @@ export const MENU_MOTION: MenuMotion = {
 
 export type MenuStyleProps = Pick<
   SelectionStyleProps,
-  'lowContrast' | 'corners' | 'contour' | 'outlinedFill'
+  'lowContrast' | 'contour' | 'outlinedFill'
 > & {
+  /**
+   * `rounded` (default): 8px corners and rows at a field's inset. `full`: a
+   * pill frame and pill rows, half a row's height in. `square`: none. Takes
+   * `KitDefaults corners` when not given.
+   */
+  corners?: SelectionStyleProps['corners'];
   /**
    * The highlight's look: inverse (default), tonal, outlined, or hero: the
    * marker in the kit's brand (IBM blue unless `KitDefaults brand` says
@@ -594,7 +604,7 @@ export function Menu({
   onMove,
   variant,
   lowContrast,
-  corners,
+  corners: cornersProp,
   contour,
   outlinedFill,
   outline = true,
@@ -614,6 +624,7 @@ export function Menu({
   const rows = useMemo(() => readRows(children, '', 0), [children]);
   const reduced = usePrefersReducedMotion();
   const elevation = useSurfaceShadow(shadow);
+  const corners = menuCorners(cornersProp, useKitDefaults().corners);
   const m: SelectionMotion = {
     ...SELECTION_KIT_MOTION,
     drag: false,

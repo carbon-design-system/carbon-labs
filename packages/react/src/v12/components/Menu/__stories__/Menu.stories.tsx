@@ -127,6 +127,7 @@ export const Default = {
   args: {
     label: 'Edit',
     variant: 'inverse',
+    corners: 'rounded',
     menuAlignment: 'bottom-start',
     outline: true,
     shadow: false,
@@ -217,6 +218,29 @@ export const WithOverflowMenu = {
         <MenuItem label="Preferences" />
         <MenuItem label="Keyboard shortcuts" />
       </OverflowMenu>
+    </div>
+  ),
+};
+
+/** Corners: 8px by default, whatever the trigger's shape. `corners="full"` (or `KitDefaults corners="full"`) asks for the pill. */
+export const Corners = {
+  render: () => (
+    <div style={stage}>
+      <MenuButton label="Rounded (default)">
+        <MenuItem label="Duplicate" />
+        <MenuItem label="Move to folder" />
+        <MenuItem label="Archive" />
+      </MenuButton>
+      <MenuButton label="Pill" corners="full">
+        <MenuItem label="Duplicate" />
+        <MenuItem label="Move to folder" />
+        <MenuItem label="Archive" />
+      </MenuButton>
+      <MenuButton label="Square" corners="square">
+        <MenuItem label="Duplicate" />
+        <MenuItem label="Move to folder" />
+        <MenuItem label="Archive" />
+      </MenuButton>
     </div>
   ),
 };

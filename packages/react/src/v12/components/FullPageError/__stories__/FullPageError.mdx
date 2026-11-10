@@ -1,0 +1,28 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as FullPageErrorStories from './FullPageError.stories.tsx';
+
+<Meta of={FullPageErrorStories} />
+
+# FullPageError
+
+A whole page that says something went wrong: a 403, a 404, or a custom error.
+Its props are the Carbon Products FullPageError's.
+
+<Canvas of={FullPageErrorStories.Default} />
+
+## Motion
+
+- The label's arrow draws: its line from the top, down and right, and its head
+  grows from the tip before the line ends.
+- The error (label and title) fades in as the head draws; then the description,
+  actions and art fade in.
+- A new error on a mounted page swaps out, then in.
+- Held still while it is off screen.
+
+## Reduced motion
+
+No drawing: the page fades in at once, on the reduced clock.
+
+## Props
+
+<ArgTypes of={FullPageErrorStories} />

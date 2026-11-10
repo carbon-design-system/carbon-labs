@@ -1,0 +1,1359 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+@use '@carbon-labs/v12-styles/scss/surface';
+@use '@carbon-labs/v12-styles/scss/corners';
+@use './selector-glow' as *;
+@use './selection-landing' as *;
+@use './track';
+// The face `selectedWeight` draws on.
+@use './plex-var';
+
+/* The selection kit — the content switcher's look and selection, for every
+ * list where one thing marks one item: the content switcher, the select
+ * list, vertical tabs, menus, toolbars' toggle groups.
+ * A track with 8px corners, its items' corners concentric inside it
+ * (8px − the inset), and the same small gap between items as round them, so a
+ * hover never touches the selected item. Tokens only. The track is
+ * the kit's quiet surface (`--cds-surface`, styles/_surface.scss: the side
+ * nav's panel fill), fill only; its hairline (`--cds-surface-rule`) is
+ * opt-in, `outline`. In a <Layer>, `$layer`; a switcher on a raised surface, a
+ * step off its fill (`_track.scss`). The variants colour the selector:
+ *
+ *   inverse   (default) selector `$layer-selected-inverse` — v11's
+ *             default look, and the Figma's
+ *   tonal     selector `$layer-selected`
+ *   outlined  selector one step up (`--cds-surface-lift`) with a
+ *             `$border-subtle-01` hairline — a raised selector, after the
+ *             reference app's mode switcher (structure only)
+ *
+ * The selector and the selected labels are painted from motion-core's
+ * `attachSelection` variables, written only where they are read:
+ *   indicator  --cds-motion-selection-l / -t / -r / -b   the selector's live edges
+ *   covered    the same edges, and --cds-motion-selection-ix / -iy / -iw / -ih,
+ *              the switch's own box, on each item the selector covers
+ *              (`data-selection-covered`; within `--cds-motion-selection-margin`)
+ * Each switch draws its face twice: the unselected face with the selector's
+ * rect masked out, and the selected face clipped to it — so a label turns its
+ * selected color exactly where the selector covers it, mid-glide. A switch the
+ * selector doesn't cover draws only its unselected face, unmasked: a glide
+ * restyles and repaints the few rows under it, not the whole list.
+ *
+ * The edges are physical: px from the root's left and top (padding box), in
+ * either direction. So whatever is placed from them is placed with physical
+ * properties (`left` / `top` / `width` / `height`, a mask-position, a
+ * clip-path inset), never `inset-inline-start`, which counts from the right
+ * in right to left and would put the selector under the wrong item after a press. */
+
+$sel: --cds-motion-selection;
+
+/* Cuts the selector's live rect out of a layer that fills its switch's box,
+   grown by `$grow` on every side. */
+@mixin selector-hole($grow: 0px) {
+  mask-composite: exclude;
+  mask-image: linear-gradient(#000000 0 0), linear-gradient(#000000 0 0);
+  mask-position:
+    0 0,
+    calc(var(#{$sel}-l, 0px) - var(#{$sel}-ix, 0px) - #{$grow})
+      calc(var(#{$sel}-t, 0px) - var(#{$sel}-iy, 0px) - #{$grow});
+  mask-repeat: no-repeat;
+  mask-size:
+    100% 100%,
+    calc(var(#{$sel}-r, 0px) - var(#{$sel}-l, 0px) + 2 * #{$grow})
+      calc(var(#{$sel}-b, 0px) - var(#{$sel}-t, 0px) + 2 * #{$grow});
+}
+
+/* How near the selector an item counts as covered (motion-core reads it at
+   each measure): the hover's cut-out reaches the gap past the selector, and a
+   px more keeps a sub-pixel edge on the safe side. Registered, so it reads
+   back as px. */
+@property --cds-motion-selection-margin {
+  inherits: true;
+  initial-value: 0px;
+  syntax: '<length>';
+}
+
+.sel {
+  --cds-motion-selection-margin: calc(var(--sel-gap) + 1px);
+
+  /* The whole control's height (v11's sizes); the track's inset round the
+     switches, which is also the gap between them (so a hover glow keeps the
+     same distance from the selected switch as from the track's edge); the
+     track's corner, and the selector's, concentric inside it. The icon size
+     is 16px — pixel-exact for the 32-grid art at 2× — and 20 at lg
+     (Carbon's own 20; 16 for xs and sm too, where 12 / 14
+     read soft). */
+  --sel-h: 40px;
+  --sel-inset: 4px;
+  --sel-gap: var(--sel-inset);
+  --sel-track-radius: 8px;
+  --sel-radius: max(2px, calc(var(--sel-track-radius) - var(--sel-inset)));
+  --sel-pad: 16px;
+  /* A field's edge inset at this size (`--tf-pad`, text-input.scss: 8 · 12 ·
+     14 · 16px): where a vertical list opened from a field, or standing in
+     for one, starts its rows' content — menus, listboxes, the select list
+     (the spacing rule for vertical lists). */
+  --sel-field-pad: 14px;
+  /* How far a row's hit area reaches past the row into the track's inset:
+     the inset, or nothing on a ghost list (no track to reach into). */
+  --sel-reach: var(--sel-inset);
+  --sel-icon: 16px;
+  --sel-icon-gap: 8px;
+  --sel-off: #{theme.$text-secondary};
+  /* An unselected label under the pointer: one step up, to primary text. */
+  --sel-off-hover: #{theme.$text-primary};
+  --sel-on: #{theme.$text-primary};
+  /* Quieter text in a row (a second line, an accessory, a tag): one step
+     below its label in every state, one rule for every list. Unselected, helper text (the label
+     is secondary text); under the pointer, secondary (the label is primary);
+     on the selector, the selected label's color mixed 70% over the
+     selector's: `$text-secondary` on tonal and outlined, the inverse text a
+     step down on inverse (white: #b9b9b9 on #161616). Hero has no step
+     (below). A selector that is only a line sets its own. */
+  --sel-quiet: #{theme.$text-helper};
+  --sel-quiet-hover: #{theme.$text-secondary};
+  --sel-on-quiet: color-mix(in srgb, var(--sel-on) 70%, var(--sel-selector));
+  /* The track's surface: the kit's quiet surface (one surface for the
+     selection family and the menus, the side nav's #1e1e1e on g100). The same value as
+     `$layer` on white; a step quieter on g100. In a Carbon
+     <Layer>, `$layer` (below), so a track on a layered card still steps. */
+  --sel-surface: var(--cds-surface, #{theme.$layer});
+  --sel-track: var(--sel-surface);
+  --sel-selector: #{theme.$layer-selected};
+  --sel-outline: transparent;
+
+  @include type-style('body-compact-01');
+
+  position: relative;
+  display: inline-flex;
+  box-sizing: border-box;
+  padding: var(--sel-inset);
+  border-radius: var(--sel-track-radius);
+  background: var(--sel-track);
+  block-size: var(--sel-h);
+  gap: var(--sel-gap);
+  isolation: isolate;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* A content switcher's track is the family's (`_track.scss`): on a raised surface, one step off
+   its fill, as the page's track is off the page; without it, the surface's own colour. */
+.sel.cs {
+  --sel-surface: #{track.$surface};
+}
+
+/* Inside a Carbon <Layer> (or a surface that steps the layers, as the
+   toolbar's): the contextual layer, as before, so the track reads on the
+   layer it stands on. */
+:is(.cds--layer-two, .cds--layer-three) .sel {
+  --sel-surface: #{theme.$layer};
+}
+
+/* A raised surface inside a <Layer> (a side panel or a popover in a layered shell) still steps
+   off its own fill: the layer's token there is the surface's colour. */
+#{track.$layer-scopes} .sel.cs {
+  --sel-surface: #{track.$in-layer};
+}
+
+/* `outline`: the quiet surface's hairline round the track (the side nav's,
+   `--cds-surface-rule`, 12 L* off the page), opt-in. The prop's word is the
+   floating surfaces' (Menu, Popover, the tooltips: `outline` is a hairline
+   on the surface); drawn inside the track's edge, so a scroller's clip
+   keeps it and the control's size doesn't change. A ghost list has no
+   surface to edge. */
+.sel--outline:not(.sel--ghost) {
+  box-shadow: inset 0 0 0 1px
+    var(--cds-surface-rule, #{theme.$border-subtle-01});
+}
+
+.sel--inverse {
+  --sel-selector: #{theme.$layer-selected-inverse};
+  --sel-on: #{theme.$text-inverse};
+}
+
+/* Hero: the selection in the kit's brand, IBM blue
+   unless `KitDefaults brand` sets another hue (styles/_brand.scss), for the
+   one emphasized control on a page.
+   resolveSelectionStyle gives a hero root the inverse classes plus
+   `sel--hero`, so its press, glow and rings behave as inverse's; this
+   repaints them. The fill is the brand's fill (`--cds-hero-fill`: Carbon's
+   primary action, blue 60 in every theme), under `--cds-hero-on-fill`
+   (text-on-color); the glow its hover; the rim the brand's line. Contrast,
+   all four themes, for the blue (every brand hue is within 0.3:1 of it):
+     label         #fff on #0f62fe                   5.00:1
+     hover glow    #fff on #0050e6 (primary hover)   6.38:1; the neutral
+                   variants' step, 10% toward the label, would be 4.26:1
+     focus ring    70% toward white, on the fill     3.21:1; inverse's
+                   halfway step would be 2.33:1
+     rim           1px `$border-interactive`: the fill itself on white
+                   (the fill is 5.00:1 against the track); blue
+                   50 on g100 (4.52:1 against the track,
+                   where the fill alone is 3.03:1)
+   Unselected items keep inverse's rollover (matched-lightness steps on the
+   track), so their hover and press read as on any neutral selection.
+   Doubled class: the ring's color is set on `.sel` further down. */
+.sel.sel--hero {
+  --sel-selector: var(--cds-hero-fill, var(--cds-button-primary, #0f62fe));
+  --sel-on: var(--cds-hero-on-fill, #{theme.$text-on-color});
+  --sel-outline: var(--cds-hero, #{theme.$border-interactive});
+  --sel-glow-color: var(
+    --cds-hero-fill-hover,
+    var(--cds-button-primary-hover, #0050e6)
+  );
+  --sel-glow-inset: 1px;
+  --sel-ring-color: color-mix(in srgb, var(--sel-on) 70%, var(--sel-selector));
+  /* No quieter step on the brand's selector: white is 4.99–5.02:1 on every
+     brand's fill, and any mix toward it falls under 4.5:1 (70% is 3.21:1). */
+  --sel-on-quiet: var(--sel-on);
+}
+
+/* Tonal takes its hue and saturation from where it sits, for every tonal
+   color: each tonal color is its Carbon token at its own
+   lightness, re-hued to the context (`--tonal-h` / `--tonal-c`, written by
+   the core's `watchTonalContext`). On a neutral surface, the token as it is. */
+.sel--tonal {
+  --sel-track: oklch(
+    from var(--sel-surface) l var(--tonal-c, c) var(--tonal-h, h)
+  );
+  --sel-selector: oklch(
+    from #{theme.$layer-selected} l var(--tonal-c, c) var(--tonal-h, h)
+  );
+}
+
+.sel--outlined {
+  /* One step up from the track, in elevation: the quiet surface's lift
+     (`--cds-surface-lift`, styles/_surface.scss), as the track is the quiet
+     surface; inside a <Layer>, the next layer up (below). Lighter than the
+     track on white (#ffffff over #f4f4f4) and on g100. `--cds-surface-raised`, the contrast
+     step toward the text, would put the selector (#efefef) darker than
+     its track on white. */
+  --sel-raised: var(--cds-surface-lift, #{theme.$layer-02});
+  --sel-selector: var(--sel-raised);
+  --sel-outline: #{theme.$border-subtle-01};
+}
+
+/* `outlinedFill="subtle"` (default): outline-led — the fill only halfway from
+   the track to the next layer, so the hairline carries the selection.
+   On g100 the raised layer, the selected layer and their borders are
+   the same values, so a full raised fill would make outlined identical to
+   tonal. */
+.sel--outlined.sel--outline-led {
+  --sel-selector: color-mix(in srgb, var(--sel-track) 50%, var(--sel-raised));
+}
+
+.sel--xs {
+  --sel-h: 24px;
+  --sel-inset: 2px;
+  --sel-pad: 8px;
+  --sel-field-pad: 8px;
+  --sel-icon: 16px;
+  --sel-icon-gap: 4px;
+
+  @include type-style('label-01');
+}
+
+.sel--sm {
+  --sel-h: 32px;
+  --sel-inset: 3px;
+  --sel-pad: 12px;
+  --sel-field-pad: 12px;
+  --sel-icon: 16px;
+  --sel-icon-gap: 6px;
+}
+
+.sel--lg {
+  --sel-h: 48px;
+  --sel-field-pad: 16px;
+  --sel-icon: 20px;
+}
+
+.sel--fill {
+  display: flex;
+  inline-size: 100%;
+}
+
+/* ── orientation ─────────────────────────────────────────────────────── */
+
+/* Vertical (`.sel--vertical`): a column of full-width rows — the select
+   list, vertical tabs, a menu. `--sel-h` is still the control size the row
+   comes from: a row is `--sel-h` less the track's inset top and bottom, so
+   rows line up with the horizontal switcher of the same size. The selector
+   travels on the block axis; the leading edge is the bottom going down. */
+.sel--vertical {
+  flex-direction: column;
+  align-items: stretch;
+  block-size: auto;
+
+  > .sel__item {
+    block-size: calc(var(--sel-h) - 2 * var(--sel-inset));
+    inline-size: auto;
+  }
+
+  /* Rows read from the start: icon, label, then a trailing accessory. */
+  .sel__face {
+    justify-content: flex-start;
+  }
+
+  /* The hit area bridges the gaps above and below, and the inset round. */
+  > .sel__item::after {
+    inset: calc(-0.5 * var(--sel-gap)) calc(-1 * var(--sel-reach));
+  }
+
+  > .sel__item:first-of-type::after {
+    inset-block-start: calc(-1 * var(--sel-reach));
+  }
+
+  > .sel__item:last-of-type::after {
+    inset-block-end: calc(-1 * var(--sel-reach));
+  }
+}
+
+/* ── frame="ghost": no surface of its own ─────────────────────────────── */
+
+/* Ghost (ghost.ts): for a list inside something that already frames it — a card, a side panel,
+   a tearsheet column, a settings section. No track and no inset round the rows: the first row's
+   edge is the list's. The variant still colours the selector. */
+/* Rows sit 2px apart (the kit's gap, so a hover never touches the selector) with a 4px corner
+   (`rounded`), a pill (`full`, half the row) or none (`square`), as TreeView's always have. The
+   row's height is the inset list's (the control size less its inset), so a ghost and an inset
+   list of one size have the same rows. */
+/* The hover is matched lightness off whatever is behind (`ghostSteps`); `--sel-ghost-page` names
+   that surface for what CSS has to paint itself (a scroll fade), `$background` unless a framing
+   surface sets it. */
+.sel.sel--ghost {
+  --sel-track: transparent;
+  --sel-gap: 2px;
+  --sel-reach: 0px;
+  --sel-radius: 4px;
+
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.sel.sel--ghost.sel--full {
+  --sel-radius: calc(var(--sel-h) / 2 - var(--sel-inset));
+  --sel-track-radius: var(--sel-radius);
+}
+
+.sel.sel--ghost.sel--square {
+  --sel-radius: 0px;
+}
+
+/* No inset: a horizontal ghost's hit areas stop at its edge too. */
+.sel--ghost:not(.sel--vertical) > .sel__item::after {
+  inset-block: 0;
+}
+
+.sel--ghost:not(.sel--vertical) > .sel__item:first-of-type::after {
+  inset-inline-start: 0;
+}
+
+.sel--ghost:not(.sel--vertical) > .sel__item:last-of-type::after {
+  inset-inline-end: 0;
+}
+
+/* Touch: with drag on, a drag along the list's axis is the selector's and
+   the other axis still scrolls the page; with drag off, the page scrolls
+   either way, so a vertical list never blocks page scrolling with drag
+   off. */
+.sel--draggable {
+  touch-action: pan-y;
+}
+
+.sel--draggable.sel--vertical {
+  touch-action: pan-x;
+}
+
+/* A trailing accessory (a chevron, a shortcut, a count) pushed to the row's end. */
+.sel__accessory {
+  color: var(--sel-off);
+  margin-inline-start: auto;
+}
+
+/* ── highlight mode ──────────────────────────────────────────────────── */
+
+/* `.sel--highlight`: the marker comes and goes with the pointer and the
+   keyboard (a menu, a toolbar) rather than resting on a selection. While it
+   is hidden, the selected face and the cut-out are off, so no label is left
+   windowed by a marker that isn't there. motion-core's `show()` / `hide()`
+   set `data-selection-shown`. */
+.sel--highlight:not([data-selection-shown]) {
+  .sel__indicator {
+    opacity: 0;
+  }
+
+  .sel__face--on {
+    visibility: hidden;
+  }
+
+  .sel__face,
+  .sel__item::before {
+    mask: none;
+  }
+}
+
+/* `interaction="preview"` (tonal, outlined): hover and press step from the
+   track toward the selector's fill — hover halfway, press three-quarters —
+   so the press is a subtle step past the hover that never reaches the
+   selection, and neither reads stronger than the selected switch. Fills only: no edge on
+   an unselected switch (an outline there reads broken where the reach cuts
+   through it). */
+.sel--preview .sel__item {
+  --rollover-hover: color-mix(
+    in srgb,
+    var(--sel-track) 50%,
+    var(--sel-selector)
+  );
+  --rollover-press: color-mix(
+    in srgb,
+    var(--sel-track) 25%,
+    var(--sel-selector)
+  );
+}
+
+/* Outline-led outlined: its fill is only half a step off the track, so a
+   step toward it would be a quarter of one — on the quiet surface 1.0 L* on
+   g100 (#1e1e1e → #202020). The hover and press step toward the raised step itself
+   instead: hover halfway (the selector's fill, without its hairline),
+   press three-quarters. g100 #222222 / #242424,
+   white #fafafa / #fcfcfc, on the lift. */
+.sel--outlined.sel--outline-led.sel--preview .sel__item {
+  --rollover-hover: color-mix(in srgb, var(--sel-track) 50%, var(--sel-raised));
+  --rollover-press: color-mix(in srgb, var(--sel-track) 25%, var(--sel-raised));
+}
+
+/* `contour` (default): a tonal selector gets a subtle contour,
+   `$border-tile-01` (`$border-strong` is too
+   high-contrast). It steps down from `$border-strong` in every theme — white
+   #c6c6c6, g100 #525252 — where
+   `$border-subtle-selected-01` only softened the light themes. The outlined
+   hairline is `$border-subtle-01` (above). */
+.sel--contour.sel--tonal {
+  --sel-outline: oklch(
+    from #{theme.$border-tile-01} l var(--tonal-c, c) var(--tonal-h, h)
+  );
+  --sel-glow-inset: 1px;
+}
+
+.sel--outlined {
+  --sel-glow-inset: 1px;
+}
+
+/* In a Carbon <Layer>: the track and the tonal selector step with the
+   contextual tokens; the outlined selector, one layer up from the track, is
+   stepped here. */
+.cds--layer-two .sel--outlined {
+  --sel-raised: #{theme.$layer-03};
+}
+
+.cds--layer-three .sel--outlined {
+  --sel-raised: #{theme.$layer-02};
+}
+
+/* `corners="full"`: fully rounded — pill selectors (half the row's height),
+   the track's corner concentric with them (half the control's height): in
+   a vertical list the track's corners match its rows', not a capsule round
+   the whole list. */
+.sel--full {
+  --sel-track-radius: calc(var(--sel-h) / 2);
+  --sel-radius: calc(var(--sel-h) / 2 - var(--sel-inset));
+}
+
+/* `corners="square"`: no rounded corners — track, selector, hover, focus. */
+.sel--square {
+  --sel-track-radius: 0px;
+  --sel-radius: 0px;
+}
+
+/* ── the selector ─────────────────────────────────────────────────────────── */
+
+/* The press, as geometry: the selector's box insets 1px on every side —
+   its fill, hairline, focus ring and corner unchanged — while it's held.
+   Registered, so it
+   eases back without the glide's live edges lagging behind a transition. The
+   labels are windowed to the selector's live edges, not its box, so they
+   don't move. */
+@property --sel-press {
+  inherits: true;
+  initial-value: 0px;
+  syntax: '<length>';
+}
+
+/* A jump's hover inset (jump.ts): the landing row's hover shrinks with the
+   old selector, 0 to 2px on every side, on the track. Registered, so it
+   animates (`_selection-landing.scss`). */
+@property --sel-jump-inset {
+  inherits: true;
+  initial-value: 0px;
+  syntax: '<length>';
+}
+
+.sel__indicator,
+.sel__ghost {
+  position: absolute;
+  z-index: 0;
+  border-radius: var(--sel-radius);
+  background: var(--sel-selector);
+  /* With keyboard focus (below), the 2px ring at the edge — over the
+     outlined / tonal hairline, which it replaces while it shows (an optional
+     rim of the fill outside it, `--sel-ring-gap`, off). */
+  box-shadow:
+    inset 0 0 0 var(--sel-ring-gap, 0px) var(--sel-selector),
+    inset 0 0 0 calc(var(--sel-ring-gap, 0px) + var(--sel-ring, 0px))
+      var(--sel-ring-color),
+    inset 0 0 0 1px var(--sel-outline);
+  pointer-events: none;
+}
+
+/* Pressed: instant in; back over fast-01. Set on the ROOT, so the selector's
+   box and the glow on it inset together and the 2px focus ring keeps its
+   width (the glow, clipped to the unpressed rect, would cover 1px of it).
+   The focus ring has no transition: it is there, or not, at once. */
+.sel {
+  --sel-press: 0px;
+
+  transition: --sel-press var(--cds-motion-duration-fast-01)
+    var(--cds-motion-easing-standard-productive);
+}
+
+/* Grabbed by the pointer: the press. */
+.sel[data-grabbed] {
+  --sel-press: 1px;
+
+  transition: none;
+}
+
+/* Keyboard focus on the selected item, the kit's way:
+   a 2px ring a contrast STEP from the selector's fill — halfway from the fill
+   to its label color (`--sel-ring-color`: inverse #161616 → #8b8b8b,
+   5.3:1; tonal #e0e0e0 → #7b7b7b, 3.2:1 — the least even step that clears
+   WCAG's 3:1 for a focus indicator on every fill), not the label color —
+   drawn ON the selector, at its edge, so it glides with the fill and can't
+   part from it (v11's outline sat on the item, which the focus reached a
+   glide before the fill did: a sliver). A rim of the fill outside the ring
+   (2px in) reads as a thick inset band; the gap var keeps that option. Set on the root, so the selector's glow
+   clips inside the ring too, and the press keeps the glow (no darkening). */
+/* The ring's color, whenever it shows (the menu's highlight too). */
+.sel {
+  --sel-ring-color: color-mix(in srgb, var(--sel-selector) 50%, var(--sel-on));
+}
+
+.sel:not([data-input='pointer']):has(
+    .sel__item:is(
+        [aria-selected='true'],
+        [aria-checked='true'],
+        [data-selected]
+      ):focus-visible
+  ) {
+  --sel-ring-gap: 0px;
+  --sel-ring: 2px;
+}
+
+/* Enter / Space on the selected item: the press while the key is down, held
+   fast-01 (80ms) after it comes up so the hit registers
+   (`useItemRollover`'s `data-key-pressed`). */
+.sel--pressable:has(
+  .sel__item:is(
+      [aria-selected='true'],
+      [aria-checked='true'],
+      [data-selected]
+    )[data-key-pressed]
+) {
+  --sel-press: 1px;
+
+  transition: none;
+}
+
+/* Placed from the engine's physical edges (left and top, in either
+   direction): see the header. */
+.sel__indicator {
+  block-size: calc(
+    var(#{$sel}-b, 0px) - var(#{$sel}-t, 0px) - 2 * var(--sel-press)
+  );
+  inline-size: calc(
+    var(#{$sel}-r, 0px) - var(#{$sel}-l, 0px) - 2 * var(--sel-press)
+  );
+  inset-block-start: calc(var(#{$sel}-t, 0px) + var(--sel-press));
+  inset-inline-start: calc(var(#{$sel}-l, 0px) + var(--sel-press));
+}
+
+/* Reduced motion: the old place, fading out while the selector fades in at the new one. */
+.sel__ghost {
+  block-size: calc(var(#{$sel}-gb, 0px) - var(#{$sel}-gt, 0px));
+  inline-size: calc(var(#{$sel}-gr, 0px) - var(#{$sel}-gl, 0px));
+  inset-block-start: var(#{$sel}-gt, 0px);
+  inset-inline-start: var(#{$sel}-gl, 0px);
+  opacity: 0;
+}
+
+.sel:not([data-placed]) .sel__indicator {
+  visibility: hidden;
+}
+
+/* ── switches ─────────────────────────────────────────────────────────── */
+
+/* The selected item is `[aria-selected='true']` (a tab, an option),
+   `[aria-checked='true']` (a toolbar's exclusive toggle) or `[data-selected]`:
+   an item the selector marks that has no selection role of its own — a side
+   nav's current page (a link, `aria-current="page"`) or the header of the
+   shut group that holds it. */
+
+.sel__item {
+  /* The rollover's own press inset stays off: it moves this layer's box 1px,
+     and with it the cut-out round the selector, so the gap would read wider one
+     way than the other. The 1px press comes from
+     `--rollover-inset` instead (below), which clips the press and hover
+     layers inside the shape and leaves the box where it is. Size: the PRESS
+     SHRINK, never the hover expansion — an item sits the track's gap from
+     its neighbors and the selector, and growing on hover would close it
+     (the expand or the shrink is a per-element choice). */
+  @include rollover($press-inset: 0px);
+  --rollover-hover: color-mix(in srgb, currentColor 10%, transparent);
+
+  z-index: 1;
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: var(--sel-radius);
+  margin: 0;
+
+  appearance: none;
+  background: transparent;
+  block-size: 100%;
+  color: var(--sel-off);
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: inherit;
+  min-inline-size: 0;
+
+  .sel--fill & {
+    flex: 1 1 0;
+  }
+
+  /* The hover never touches the selector: at rest the gap between switches
+     keeps it off, and as the selector passes, the hover is cut back from it
+     by that same gap. */
+  &::before {
+    @include selector-hole(var(--sel-gap));
+  }
+
+  /* The hit area bridges the gaps and the track's inset, so the pointer is
+     always over a switch inside the track. */
+  &::after {
+    position: absolute;
+    content: '';
+    inset: calc(-1 * var(--sel-inset)) calc(-0.5 * var(--sel-gap));
+  }
+
+  .sel > &:first-of-type::after {
+    inset-inline-start: calc(-1 * var(--sel-inset));
+  }
+
+  .sel > &:last-of-type::after {
+    inset-inline-end: calc(-1 * var(--sel-inset));
+  }
+
+  /* The selected switch is the selector's: no hover of its own (with
+     `selectorGlow`, the glow is the selector's — below). Nor does a disabled
+     one, nor any switch while the selector is being dragged. */
+  &:is([aria-selected='true'], [data-selected])::before {
+    --_rhc: transparent;
+  }
+
+  .sel--selector-glow &:is([aria-selected='true'], [data-selected])::before {
+    @include selector-glow;
+  }
+
+  &:is(:disabled, [aria-disabled='true'])::before,
+  .sel[data-dragging] &::before {
+    --_rhc: transparent;
+  }
+
+  &:is([aria-selected='true'], [data-selected]) {
+    cursor: default;
+  }
+
+  .sel--draggable &:is([aria-selected='true'], [data-selected]) {
+    cursor: grab;
+  }
+
+  .sel[data-dragging] & {
+    cursor: grabbing;
+  }
+
+  &:is(:disabled, [aria-disabled='true']) {
+    color: theme.$text-disabled;
+    cursor: not-allowed;
+  }
+
+  /* Hover: the unselected label (and its icon) brighten a step, a flat color
+     fade on the rollover's clock — in over fast-02, out over fast-01. A
+     highlight, not a weight change: weight is the selection's (`selectedWeight`).
+     Not on the selected switch, a disabled one, or while the selector is
+     dragged. The selected face is untouched. */
+  .sel__face {
+    transition: color var(--cds-motion-duration-fast-01)
+      var(--cds-motion-easing-standard-productive);
+  }
+
+  &:not([aria-selected='true'], [data-selected]):not(:disabled):not(
+      [aria-disabled='true']
+    ):is(:hover, :focus-visible)
+    .sel__face:not(.sel__face--on) {
+    color: var(--sel-off-hover);
+    transition-duration: var(--cds-motion-duration-fast-02);
+  }
+
+  .sel[data-dragging] &:hover .sel__face:not(.sel__face--on) {
+    color: inherit;
+  }
+
+  /* Keyboard focus on an unselected item: a 2px ring in the label's hover
+     color (`--sel-off-hover`, `$text-primary`) inside the item, on its
+     concentric corner, over the hover it already shows on focus — "hover,
+     plus a ring" — the same language as the selected item's ring on the
+     selector, in place of v11's blue. */
+  /* Drawn on the hover surface itself (the rollover's `::before`, as its
+     `--rollover-shadow`), so the ring and the hover are one surface — the
+     one that arrives on a Tab into the list (below). */
+  &:focus-visible {
+    outline: none;
+  }
+
+  .sel:not([data-input='pointer'])
+    &:not([aria-selected='true']):not(
+      [aria-checked='true'],
+      [data-selected]
+    ):focus-visible {
+    --rollover-shadow: inset 0 0 0 2px var(--sel-off-hover);
+  }
+
+  /* Tabbing into a list onto an unselected item (a list with nothing
+     selected): its focus — hover and ring — arrives as the selector does,
+     4px smaller in width and height, opaque, on entrance-snap over fast-02
+     (the snap arrival, matched, seamless with the keyboard styling). Only the arrival: focus moving on within the list is simply
+     there (stillness). `data-focus-arrive` is set for that one move by
+     `useItemRollover`. */
+  &[data-focus-arrive]::before {
+    /* SELECTION_ARRIVAL: 4px smaller, opaque, entrance-snap over fast-02.
+       Entrance-snap's CSS token is entrance-productive (the test holds them equal). */
+    animation: sel-focus-arrive var(--cds-motion-duration-fast-02)
+      var(--cds-motion-easing-entrance-productive);
+  }
+
+  /* The selected item's focus is the selector's ring (above), not an outline. */
+  &:is(
+      [aria-selected='true'],
+      [aria-checked='true'],
+      [data-selected]
+    ):focus-visible {
+    outline: none;
+  }
+}
+
+@keyframes sel-focus-arrive {
+  from {
+    inset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sel__item[data-focus-arrive]::before {
+    animation: none;
+  }
+}
+
+/* The press on an unselected switch: its pressed color insets 1px from the
+   switch's edge while held, as every control's press does.
+   The grabbed selector insets 1px the same way. */
+.sel--pressable
+  .sel__item:not([aria-selected='true'], [data-selected]):not(:disabled):not(
+    [aria-disabled='true']
+  ):is(:active:not([data-rollover-slid]), [data-key-pressed]) {
+  --rollover-inset: 1px;
+}
+
+/* Full-round items (`corners="full"`: pills, and circles on icon items).
+   The selector's hole (`selector-hole`) is a rectangle: where the selector
+   comes near — the press's reach toward the item, a glide passing over it —
+   it would cut a flat side into the curve. Here the hover shrinks evenly instead, by just
+   enough to clear the selector and its gap on the nearer side (all sides
+   alike, so it stays a circle or a pill: the radius is clamped to the
+   smaller box), and is gone while the selector covers it. Only on the items
+   the selector is near (`data-selection-covered`: the engine writes the
+   edges there and nowhere else), never the selected one (its surface is
+   the selector's glow, `selectorGlow`). The label's cut-out (`.sel__face`)
+   stays: it is the selected face's window, not a shape. `.sel--round` is
+   the same for a list whose corners are full by its own radius. */
+:is(.sel--full, .sel--round)
+  .sel__item[data-selection-covered]:not(
+    [aria-selected='true'],
+    [aria-checked='true'],
+    [data-selected]
+  )::before {
+  --_rnd-l: calc(var(#{$sel}-r, 0px) + var(--sel-gap) - var(#{$sel}-ix, 0px));
+  --_rnd-r: calc(
+    var(#{$sel}-ix, 0px) + var(#{$sel}-iw, 0px) - var(#{$sel}-l, 0px) +
+      var(--sel-gap)
+  );
+  --_rnd-t: calc(var(#{$sel}-b, 0px) + var(--sel-gap) - var(#{$sel}-iy, 0px));
+  --_rnd-b: calc(
+    var(#{$sel}-iy, 0px) + var(#{$sel}-ih, 0px) - var(#{$sel}-t, 0px) +
+      var(--sel-gap)
+  );
+  /* Clear along one axis is enough: the least of the four overlaps. */
+  --_re: calc(
+    -1 *
+      clamp(
+        0px,
+        min(var(--_rnd-l), var(--_rnd-r), var(--_rnd-t), var(--_rnd-b)),
+        min(var(#{$sel}-iw, 0px), var(#{$sel}-ih, 0px)) / 2
+      )
+  );
+
+  mask: none;
+}
+
+/* The item a glide lands on keeps its hover until the selector has landed,
+   so its hover fill doesn't blink off. A pressed item is
+   `aria-selected` from the release, and a selected item's hover is the
+   selector's glow, windowed to the selector's live rect: still over the old
+   item then, so the new one would show no fill at all until the selector
+   reached it. From the release until the selector has landed
+   (`data-landing`, jump.ts `useLandingHold`), the item keeps an unselected
+   item's hover round the selector, the selector cut out of it, and the glow
+   where the selector covers it (`@mixin selection-landing`, the side nav's
+   and the tree's rule), so the wash hands over to the selected item's hover
+   as the selector arrives. Only the lists that hold set `data-landing`:
+   tabs, vertical tabs, the content switcher. */
+.sel {
+  @include selection-landing("[aria-selected='true']");
+}
+
+.sel__item--icon {
+  flex: 0 0 auto;
+  /* Square: the selector's height. */
+  inline-size: calc(var(--sel-h) - 2 * var(--sel-inset));
+
+  .sel--fill & {
+    flex: 0 0 auto;
+  }
+}
+
+.sel__face {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  block-size: 100%;
+  gap: var(--sel-icon-gap);
+  padding-inline: var(--sel-pad);
+  white-space: nowrap;
+
+  /* The selector's rect, cut out of the unselected face. */
+  @include selector-hole;
+
+  /* A pill row (`corners="full"`, horizontal): the label clears the
+     selector's curve as the Button pill's does, half the selector's height
+     in, so the text sits half the control's height from the track's end
+     (12 · 16 · 20 · 24px). Never closer than
+     the size's own padding. */
+  .sel--full:not(.sel--vertical) & {
+    padding-inline: max(
+      var(--sel-pad),
+      calc(var(--sel-h) / 2 - var(--sel-inset))
+    );
+  }
+
+  .sel__item--icon & {
+    padding-inline: 0;
+  }
+
+  /* Every icon at the control's size, whatever size it is drawn at. */
+  svg {
+    flex: none;
+    block-size: var(--sel-icon);
+    fill: currentColor;
+    inline-size: var(--sel-icon);
+  }
+}
+
+/* The selected weight (`selectedWeight`): both faces on IBM Plex Sans
+   Variable, regular and the chosen weight, so the label gets heavier exactly
+   where the selector covers it; the component tightens the heavier face's
+   letter-spacing so its width holds. */
+.sel--weighted {
+  font-family: 'IBM Plex Sans Var', 'IBM Plex Sans', system-ui, sans-serif;
+
+  .sel__face {
+    font-weight: 400;
+  }
+
+  .sel__face--on {
+    font-weight: var(--sel-on-weight, 600);
+  }
+}
+
+/* ── the wrap ─────────────────────────────────────────────────────────── */
+
+/* A keyboard move past an end travels as if the list were a loop (motion-core
+   `attachSelection`'s wrap): the selector slides off the
+   end it is heading for and in from the other, the ghost playing the leaving
+   part. While it runs, the two MARKERS clip to the track's content box —
+   inside its inset, so the container's edge shows round the content as they
+   pass out and in (the engine's `-cl` … `-cb`) — not the root, whose overflow clip would also cut its
+   tooltip and anything else past its edge, a flicker on every wrap — the
+   ghost is the selector's twin, and labels take their selected face under
+   either marker. */
+.sel[data-selection-wrap] {
+  .sel__indicator {
+    clip-path: inset(
+      max(0px, calc(var(#{$sel}-ct, 0px) - var(#{$sel}-t, 0px)))
+        max(0px, calc(var(#{$sel}-r, 0px) - var(#{$sel}-cr, 0px)))
+        max(0px, calc(var(#{$sel}-b, 0px) - var(#{$sel}-cb, 0px)))
+        max(0px, calc(var(#{$sel}-cl, 0px) - var(#{$sel}-l, 0px)))
+    );
+  }
+
+  .sel__ghost {
+    clip-path: inset(
+      max(0px, calc(var(#{$sel}-ct, 0px) - var(#{$sel}-gt, 0px)))
+        max(0px, calc(var(#{$sel}-gr, 0px) - var(#{$sel}-cr, 0px)))
+        max(0px, calc(var(#{$sel}-gb, 0px) - var(#{$sel}-cb, 0px)))
+        max(0px, calc(var(#{$sel}-cl, 0px) - var(#{$sel}-gl, 0px)))
+    );
+    opacity: 1;
+  }
+
+  /* The item the ghost leaves reads the ghost's edges as the marker's, so its
+     faces, hover hole and glow window to the ghost; every other item keeps
+     the arriving selector's. (Each item only ever sits under one of the two:
+     a mask with both rects cut out, three layers deep, drops some labels
+     altogether in Chrome.) */
+  .sel__item[data-selection-ghosted] {
+    #{$sel}-l: var(#{$sel}-gl, 0px);
+    #{$sel}-t: var(#{$sel}-gt, 0px);
+    #{$sel}-r: var(#{$sel}-gr, 0px);
+    #{$sel}-b: var(#{$sel}-gb, 0px);
+  }
+}
+
+/* An item the selector doesn't cover (motion-core marks the ones it does,
+   `data-selection-covered`, and writes the edges only there): nothing cut out
+   of it and no selected face — the pixels it had, since the selector's rect
+   lies outside it — and no mask or clip to repaint. Its edges read as far
+   away, so any other layer windowed to the selector (the selected item's
+   glow, a toolbar's) shows nothing there. */
+.sel__item:not([data-selection-covered]) {
+  #{$sel}-l: -99999px;
+  #{$sel}-t: -99999px;
+  #{$sel}-r: -99999px;
+  #{$sel}-b: -99999px;
+
+  &::before,
+  .sel__face {
+    mask: none;
+  }
+
+  .sel__face--on {
+    visibility: hidden;
+  }
+}
+
+/* `.sel--ends` (a selector that is only a line: vertical line tabs; ends.ts
+   `useSelectionEnds`): only the move's two ends restyle — the row it lands
+   on (the selected one) and the row it leaves (`data-sel-from`, until the
+   selector has left it). A row the bar slides past keeps its unselected
+   face whole and no selected face, as a row the selector doesn't cover:
+   the box the faces are windowed to is invisible on a line, so a row it
+   passed would light up and go out, one after another. Its hover isn't cut by the box either: the line's own
+   cut is (`@mixin selection-landing-line`). */
+.sel--ends
+  > .sel__item[data-selection-covered]:not(
+    [aria-selected='true'],
+    [aria-checked='true'],
+    [data-selected],
+    [data-sel-from]
+  ) {
+  .sel__face {
+    mask: none;
+  }
+
+  .sel__face--on {
+    visibility: hidden;
+  }
+}
+
+/* The selected face, shown only where the selector is. */
+.sel__face--on {
+  position: absolute;
+  clip-path: inset(
+    max(0px, calc(var(#{$sel}-t, 0px) - var(#{$sel}-iy, 0px)))
+      max(
+        0px,
+        calc(var(#{$sel}-ix, 0px) + var(#{$sel}-iw, 0px) - var(#{$sel}-r, 0px))
+      )
+      max(
+        0px,
+        calc(var(#{$sel}-iy, 0px) + var(#{$sel}-ih, 0px) - var(#{$sel}-b, 0px))
+      )
+      max(0px, calc(var(#{$sel}-l, 0px) - var(#{$sel}-ix, 0px))) round
+      var(--sel-radius)
+  );
+  color: var(--sel-on);
+  inset: 0;
+  mask: none;
+  pointer-events: none;
+
+  .sel__item:is(:disabled, [aria-disabled='true']) & {
+    display: none;
+  }
+}
+
+.sel__text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Quieter text in a row (`.sel__quiet`: vertical tabs' and tabs' second
+   line, the select list's secondary text): one step below its label in
+   every state (`--sel-quiet`, `--sel-quiet-hover`, `--sel-on-quiet`, on
+   `.sel`), on the label's own clock, and regular weight on the selector
+   (the weight is the label's). */
+.sel__quiet {
+  color: var(--sel-quiet);
+  transition: color var(--cds-motion-duration-fast-01)
+    var(--cds-motion-easing-standard-productive);
+}
+
+.sel__item:not(
+    [aria-selected='true'],
+    [data-selected],
+    :disabled,
+    [aria-disabled='true']
+  ):is(:hover, :focus-visible)
+  > .sel__face:not(.sel__face--on)
+  .sel__quiet {
+  color: var(--sel-quiet-hover);
+  transition-duration: var(--cds-motion-duration-fast-02);
+}
+
+.sel[data-dragging]
+  .sel__item:hover
+  > .sel__face:not(.sel__face--on)
+  .sel__quiet {
+  color: var(--sel-quiet);
+}
+
+.sel__face--on .sel__quiet {
+  color: var(--sel-on-quiet);
+  font-weight: 400;
+}
+
+.sel__item:is(:disabled, [aria-disabled='true']) .sel__quiet {
+  color: theme.$text-disabled;
+}
+
+/* ── the tooltip (createTooltip) ───────────────────────────────────────────── */
+
+/* The snap's container model (motion-core snap: the
+   container scales from a point by the cursor):
+   the surface draws nothing itself. Its first child, the frame
+   (`.sel__tip-frame`, `SNAP_FRAME`), is the container — the inverse fill and
+   the radius — and grows from the cursor as true geometry while the surface
+   clips to it; the text (`.sel__tip-text`, the surface's other child) never
+   scales, it only translates on one axis (or holds still, `content:
+   'mask'`). `isolation` keeps the frame's `z-index: -1` inside the surface. */
+.sel__tip {
+  @include type-style('body-compact-01');
+
+  position: absolute;
+  z-index: 2;
+  box-sizing: border-box;
+  /* A label: 2px block, 8px inline. The inline padding is the field inset
+     rule's for its height (8 · 12 · 14 · 16px at
+     24 · 32 · 40 · 48px): the label is 22px tall, the xs step, so 8px, where
+     an xs field's text sits. (v11's icon tooltip has 16px inline,
+     `$spacing-05`, which reads as too much padding beside the 16px icons it
+     labels.) Wrapping text
+     takes the rule for its own line's height (`--wrap`). */
+  padding: 2px 8px;
+  /* A small surface on the ladder (`corners.$small`, 4px).
+     A tooltip is a surface that holds text,
+     not a mark, so it takes the inner step, as a row in a track; the
+     checkbox's box stays a 2px mark. Every tooltip: the label, a description, a
+     definition, the content switcher's and the toolbar's. */
+  border-radius: corners.$small;
+  color: theme.$text-inverse;
+  inline-size: max-content;
+  /* createTooltip places the box's top-left (the side, the alignment and the
+     4px gap, `$spacing-02`, are all in its arithmetic), so nothing here offsets it. Its width
+     is its content's, wherever it is placed. */
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  isolation: isolate;
+  pointer-events: none;
+  /* The drift (createTooltip): a `translate` that follows the cursor over the
+     trigger, retargeted on every pointermove — on an ease-out
+     (entrance-productive), so each new target is followed at once instead
+     of re-accelerating from rest. `--sel-tip-drift-ms: 0ms` (set for one
+     frame) lands it with no transition. */
+  transition: translate
+    var(--sel-tip-drift-ms, var(--cds-motion-duration-fast-02))
+    var(--cds-motion-easing-entrance-productive);
+  white-space: nowrap;
+
+  &[hidden] {
+    display: none;
+  }
+
+  /* Shown already, it slides to the next switch (the snap: "moving on is the
+     surface's slide, never a second snap"). */
+  &[data-moving] {
+    transition:
+      left var(--cds-motion-duration-moderate-01)
+        var(--cds-motion-easing-standard-productive),
+      top var(--cds-motion-duration-moderate-01)
+        var(--cds-motion-easing-standard-productive),
+      translate var(--sel-tip-drift-ms, var(--cds-motion-duration-fast-02))
+        var(--cds-motion-easing-entrance-productive);
+  }
+}
+
+/* The container: behind the text, the surface's whole box at rest; the snap
+   moves its insets (never a scale, so the radius stays 4px on every frame). */
+.sel__tip-frame {
+  position: absolute;
+  z-index: -1;
+  box-sizing: border-box;
+  border-radius: inherit;
+  background: theme.$background-inverse;
+  inset: 0;
+}
+
+/* The outlined surface (`outline`): a hairline in the page's subtle border
+   colour on the container, inside its box — it grows with the frame as
+   geometry, so it stays 1px on every frame. Off by default. */
+.sel__tip--outline > .sel__tip-frame {
+  /* The hairline is the INVERSE surface's own: one gray step from its fill
+     toward its text (white theme #393939 → ~#525252; g100 #f4f4f4 →
+     ~#e0e0e0), as the opposite theme's `$border-subtle` sits on its layer.
+     The page's `$border-subtle` here would draw a near-white ring round a
+     dark tooltip. */
+  border: 1px solid
+    color-mix(in srgb, #{theme.$background-inverse} 88%, #{theme.$text-inverse});
+}
+
+/* The content: a block, so it can translate (an inline box can't). */
+.sel__tip-text {
+  display: block;
+}
+
+/* `strategy: 'fixed'`: placed in client px, so it escapes overflow and scroll
+   containers while staying in its trigger's DOM (and <Theme>) scope. */
+.sel__tip--fixed {
+  position: fixed;
+  z-index: 9000;
+}
+
+/* Open, a fixed tooltip is a manual popover in the top layer (createTooltip):
+   above every stacking context round its trigger. The UA's popover box —
+   centred, bordered, Canvas-filled, scrolling — is undone; the frame is the
+   container. */
+.sel__tip--fixed[popover] {
+  overflow: visible;
+  border: 0;
+  margin: 0;
+  background: transparent;
+  color: theme.$text-inverse;
+  inset: 0 auto auto 0;
+}
+
+/* WCAG 1.4.13: the pointer can move onto it without it leaving. */
+.sel__tip--hoverable {
+  pointer-events: auto;
+}
+
+/* Longer text (a Tooltip's description, a definition) wraps, at v11's
+   widths. Its padding is the field inset rule's for one line's height, as
+   Button's is: 8px block round a 20px line is 36px, the sm
+   step, so 12px inline. More lines don't widen it, as a field's inset
+   doesn't grow with its text (v11's `.cds--tooltip-content` is 16px all
+   round, a definition's 8px 16px). */
+.sel__tip--wrap {
+  @include type-style('body-01');
+
+  padding: 8px 12px;
+
+  max-inline-size: 18rem;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+/* ── panels ───────────────────────────────────────────────────────────── */
+
+/* `fit="content"` (default): the container is the surface. The active panel
+   sets its height; the others leave the flow, top-aligned, so the leaving
+   one can play out over the new one. The container clips, a window resizing
+   round content that never reflows. Give it the background; give the panels
+   their padding (an absolute panel sits in the container's padding box). */
+.sel-panels--content {
+  position: relative;
+  overflow: clip;
+
+  > .sel-panels__panel:not([data-active]) {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+  }
+}
+
+/* `fit="largest"`: every panel in one cell, so the box is the largest
+   panel's on every switch and never resizes. */
+.sel-panels--largest {
+  display: grid;
+
+  > .sel-panels__panel {
+    grid-area: 1 / 1;
+  }
+}
+
+.sel-panels__panel {
+  min-inline-size: 0;
+}
+
+/* Forced colors (Windows high contrast). Checked with Playwright's
+   `forcedColors: 'active'`.
+   - The selector is `Highlight` and the selected face `HighlightText`, but the
+     item's system button styling put an opaque Canvas box behind the selected
+     label (white text on a white box, unreadable). `forced-color-adjust: none`
+     on the item removes it, so the item's colors are set here, in system
+     colors, instead (which also lets the rollover's author-colored wash
+     through, hence its removal below).
+   - Focus rings are shadows (the selector's, the rollover's), which forced
+     colors drops, so keyboard focus is an outline: inside the selector for the
+     selected item, inside the item for an unselected one. */
+@media (forced-colors: active) {
+  .sel__indicator {
+    background: Highlight;
+  }
+
+  .sel__item {
+    background: transparent;
+    color: ButtonText;
+    forced-color-adjust: none;
+  }
+
+  .sel__item:is(:disabled, [aria-disabled='true']) {
+    color: GrayText;
+  }
+
+  /* The rollover's hover wash is author-colored, so it shows tinted here: hover
+     and press are an outline instead. */
+  .sel__item::before {
+    display: none;
+  }
+
+  .sel__item:not(
+      [aria-selected='true'],
+      [aria-checked='true'],
+      [data-selected],
+      :disabled,
+      [aria-disabled='true']
+    ):hover {
+    outline: 1px solid Highlight;
+    outline-offset: -1px;
+  }
+
+  .sel__face--on {
+    color: HighlightText;
+  }
+
+  .sel:not([data-input='pointer']):has(
+      .sel__item:is(
+          [aria-selected='true'],
+          [aria-checked='true'],
+          [data-selected]
+        ):focus-visible
+    )
+    .sel__indicator {
+    outline: 2px solid HighlightText;
+    outline-offset: -4px;
+  }
+
+  .sel:not([data-input='pointer'])
+    .sel__item:not(
+      [aria-selected='true'],
+      [aria-checked='true'],
+      [data-selected]
+    ):focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+}
+
+/* ── loading options (loading.tsx; the loading standard's structure tier) ── */
+
+/* A placeholder row: the row's own box and padding, nothing to press. Its
+   face is the row's face — the icon slot, then the expected label printed
+   unseen, with one skeleton bar over both (SkeletonText `lineHeight`: the
+   bar inside the label's line box). */
+.sel__item[data-selection-skeleton] {
+  cursor: default;
+}
+
+.sel__face--skeleton {
+  color: transparent;
+  mask: none;
+  user-select: none;
+}
+
+/* The label's bar is the kit's SkeletonRun (feedback/skeleton): beside an
+   icon it runs out over the icon's slot and the gap (`lead`), so the line is
+   one bar; the slot keeps its box, unseen. An icon-only row's slot is the
+   block (`.fb-skeleton`). */
+.sel__skeleton-icon {
+  flex: none;
+  block-size: var(--sel-icon);
+  inline-size: var(--sel-icon);
+  --skeleton-radius: 4px;
+}
+
+/* A row that took its placeholder: the placeholder's face lies over it while
+   its pulse fades on the move's clock, and the row's own faces fade up in
+   place under it (fast-02, linear — the data tier's handoff). */
+.sel__taken {
+  position: absolute;
+  display: flex;
+  inset: 0;
+  pointer-events: none;
+
+  > .sel__face {
+    flex: 1 1 auto;
+  }
+}
+
+.sel__item[data-selection-took] > .sel__face:not(.sel__face--skeleton) {
+  animation: sel-took-in var(--cds-motion-duration-fast-02) linear backwards;
+}
+
+@keyframes sel-took-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sel__item[data-selection-took] > .sel__face:not(.sel__face--skeleton) {
+    animation-duration: var(--cds-motion-duration-fast-01);
+  }
+}

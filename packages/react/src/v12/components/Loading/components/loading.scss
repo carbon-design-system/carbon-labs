@@ -1,0 +1,115 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/spacing' as *;
+
+/* Loading and InlineLoading (Loading.tsx, InlineLoading.tsx). The spinner
+ * neutral, in `$icon-primary` (`variant="hero"`: v11's `$interactive`), 64px
+ * or small, 16px; the overlay in `$overlay`. The spinner is the kit's one Spinner (feedback/spinner.scss): its turn,
+ * its start and stop, its line and its reduced dots are its own. Loading.tsx
+ * writes the overlay's clocks on the element (`--cds-loading-start`, `-stop`,
+ * already scaled for slow motion and reduced motion). Reduced motion is a
+ * class (`--reduced`), set from the motion preference or a lab's pick, never
+ * a media query, so the pick reaches it. */
+
+/* ── Loading ─────────────────────────────────────────────────────────── */
+
+.cds-loading {
+  display: inline-block;
+  flex: none;
+  block-size: 4rem;
+  color: theme.$icon-primary;
+  inline-size: 4rem;
+}
+
+.cds-loading--small {
+  block-size: 1rem;
+  inline-size: 1rem;
+  line-height: 1rem;
+}
+
+.cds-loading__svg {
+  block-size: 100%;
+  inline-size: 100%;
+}
+
+/* The overlay: the page under `$overlay`, the spinner centred. It fades up
+   on the start's clock as it mounts or starts, and out on the stop's. */
+.cds-loading-overlay {
+  position: fixed;
+  z-index: 8000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: theme.$overlay;
+  inset: 0;
+  opacity: 1;
+  transition: opacity
+    var(--cds-loading-start, var(--cds-motion-duration-moderate-01)) linear;
+  user-select: none;
+
+  @starting-style {
+    opacity: 0;
+  }
+}
+
+.cds-loading-overlay--stop {
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity var(--cds-loading-stop, var(--cds-motion-duration-fast-02)) linear,
+    visibility 0s linear
+      var(--cds-loading-stop, var(--cds-motion-duration-fast-02));
+  visibility: hidden;
+}
+
+/* Over the overlay's dimmed page the grey token would read lighter than the
+   arc; the base is the arc's own colour, faint, so it stays the quiet one. */
+.cds-loading-overlay {
+  --cds-spinner-base: color-mix(in srgb, currentColor 25%, transparent);
+}
+
+.cds-loading-overlay__dialog {
+  display: grid;
+  place-items: center;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+/* ── InlineLoading ───────────────────────────────────────────────────── */
+
+/* v11's: a 32px row, the mark then the text in `label-02`, secondary. The
+   mark is one StatusMark that changes in place; the text is a swap slot
+   (out, then in). */
+.cds-inline-loading {
+  display: flex;
+  align-items: center;
+  color: theme.$text-secondary;
+  inline-size: 100%;
+  min-block-size: 2rem;
+}
+
+.cds-inline-loading__animation {
+  display: flex;
+}
+
+/* The mark and its 8px gap, so an empty slot (inactive) takes no room. */
+.cds-inline-loading__mark {
+  display: grid;
+  margin-inline-end: $spacing-03;
+  place-items: center;
+}
+
+.cds-inline-loading__text {
+  @include type-style('label-02');
+
+  justify-items: start;
+}

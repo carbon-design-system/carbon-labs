@@ -1,0 +1,32 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as FeedbackStories from './Feedback.stories.tsx';
+
+<Meta of={FeedbackStories} />
+
+# Feedback
+
+The kit's shared feedback parts, which other v12 components build on:
+
+- `Spinner`: the loader, in six sizes, neutral or hero.
+- `StatusMark`: a status's icon, with the hand-off from pending to a result.
+- `CountPill`: a count whose changing digits roll.
+- `SkeletonText`, `SkeletonPlaceholder` and `SkeletonOf`: loading states,
+  pulsing on the skeleton wave; `SkeletonOf` draws a component as its own
+  skeleton.
+
+<Canvas of={FeedbackStories.SpinnerDefault} />
+
+<Canvas of={FeedbackStories.StatusHandoff} />
+
+<Canvas of={FeedbackStories.ComponentAsSkeleton} />
+
+## Reduced motion
+
+Nothing turns: three still dots stand in for the spinner. A status is there at
+once, its glyph drawn, with no hand-off. A count's new figure fades in place on
+the reduced clock, with no roll. Skeletons do not pulse; their blocks rest at
+their peak.
+
+## Props
+
+<ArgTypes of={FeedbackStories} />

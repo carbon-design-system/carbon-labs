@@ -3044,6 +3044,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-feedback@workspace:*, @carbon-labs/react-feedback@workspace:packages/react/src/v12/components/Feedback":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-feedback@workspace:packages/react/src/v12/components/Feedback"
+  dependencies:
+    "@carbon-labs/react-kit-defaults": "workspace:*"
+    "@carbon-labs/react-motion-icons": "workspace:*"
+    "@carbon-labs/react-roll-text": "workspace:*"
+    "@carbon-labs/react-shimmer-text": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    vitest: "npm:^4.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+    react-dom: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-first-time-orientation@workspace:packages/react/src/components/FirstTimeOrientation":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-first-time-orientation@workspace:packages/react/src/components/FirstTimeOrientation"
@@ -3051,6 +3072,25 @@ __metadata:
     "@carbon-labs/utilities": "npm:0.28.0"
     "@carbon/ibm-products": "npm:^2.76.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-full-page-error@workspace:packages/react/src/v12/components/FullPageError":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-full-page-error@workspace:packages/react/src/v12/components/FullPageError"
+  dependencies:
+    "@carbon-labs/react-feedback": "workspace:*"
+    "@carbon-labs/react-illustrations": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    vitest: "npm:^4.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+    react-dom: ^18.2.0 || ^19.0.0
   languageName: unknown
   linkType: soft
 
@@ -3069,7 +3109,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-illustrations@workspace:packages/react/src/v12/components/Illustrations":
+"@carbon-labs/react-illustrations@workspace:*, @carbon-labs/react-illustrations@workspace:packages/react/src/v12/components/Illustrations":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-illustrations@workspace:packages/react/src/v12/components/Illustrations"
   dependencies:
@@ -3144,6 +3184,22 @@ __metadata:
     "@carbon-labs/v12-motion": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-loading@workspace:packages/react/src/v12/components/Loading":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-loading@workspace:packages/react/src/v12/components/Loading"
+  dependencies:
+    "@carbon-labs/react-feedback": "workspace:*"
+    "@carbon-labs/react-kit-defaults": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
   languageName: unknown
@@ -3281,7 +3337,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-roll-text@workspace:packages/react/src/v12/components/RollText":
+"@carbon-labs/react-roll-text@workspace:*, @carbon-labs/react-roll-text@workspace:packages/react/src/v12/components/RollText":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-roll-text@workspace:packages/react/src/v12/components/RollText"
   dependencies:
@@ -3294,7 +3350,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-shimmer-text@workspace:packages/react/src/v12/components/ShimmerText":
+"@carbon-labs/react-selection-kit@workspace:packages/react/src/v12/components/SelectionKit":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-selection-kit@workspace:packages/react/src/v12/components/SelectionKit"
+  dependencies:
+    "@carbon-labs/react-feedback": "workspace:*"
+    "@carbon-labs/react-kit-defaults": "workspace:*"
+    "@carbon-labs/react-motion-icons": "workspace:*"
+    "@carbon-labs/react-props": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    vitest: "npm:^4.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-shimmer-text@workspace:*, @carbon-labs/react-shimmer-text@workspace:packages/react/src/v12/components/ShimmerText":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-shimmer-text@workspace:packages/react/src/v12/components/ShimmerText"
   dependencies:
@@ -3329,6 +3405,22 @@ __metadata:
   dependencies:
     "@carbon-labs/utilities": "npm:0.28.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-status-indicator@workspace:packages/react/src/v12/components/StatusIndicator":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-status-indicator@workspace:packages/react/src/v12/components/StatusIndicator"
+  dependencies:
+    "@carbon-labs/react-feedback": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.28.0"
+    "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    vitest: "npm:^4.0.0"
+  peerDependencies:
+    react: ^18.2.0 || ^19.0.0
+    react-dom: ^18.2.0 || ^19.0.0
   languageName: unknown
   linkType: soft
 

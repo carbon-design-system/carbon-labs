@@ -1,1 +1,16 @@
-{}
+{
+  "V12/SelectionKit": [
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/SelectionKit/components/_track.scss",
+      "line": 12,
+      "text": "track-step — A track one quiet step off the surface it sits on. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/SelectionKit/proposals/README.md",
+      "line": 3,
+      "text": "api: variant-prop — The colour treatment is `variant`. TBD"
+    }
+  ]
+}

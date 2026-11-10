@@ -1,0 +1,33 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SelectionKitStories from './SelectionKit.stories.tsx';
+
+<Meta of={SelectionKitStories} />
+
+# SelectionKit
+
+What the v12 selection components (content switcher, tabs, select list, menu)
+share: the selection engine's hooks, the selector's faces and styles, and
+`SelectionPanels`, the content a selection switches. Each component imports
+`selection-kit.scss`; the motion comes from the motion package.
+
+<Canvas of={SelectionKitStories.Panels} />
+
+## SelectionPanels
+
+- **Out:** the old content moves 8px the way the selector goes, and fades.
+- **In:** once it has gone, the new content follows from 8px behind. Out then
+  in, never overlapping.
+- **Box:** `fit="content"` (the default) resizes the container to the new panel,
+  starting with the in. `fit="largest"` holds the largest panel's size and never
+  resizes.
+- **Direction:** `travel="with"` follows the selector on screen, right to left
+  included; `against` goes the other way.
+
+## Reduced motion
+
+A snap: the new panel replaces the old on one frame, with no travel or fade, and
+the container resizes at once.
+
+## Props
+
+<ArgTypes of={SelectionKitStories} />

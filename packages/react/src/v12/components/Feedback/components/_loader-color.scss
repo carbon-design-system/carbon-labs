@@ -1,0 +1,56 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/colors' as c;
+@use '@carbon-labs/v12-styles/scss/brand';
+
+/* The loaders' colours: one system for the Spinner, the ProgressRing and the
+   ProgressBar, matching the progress bar's values: a colorable version and
+   a neutral one.
+
+     neutral   the arc or fill in the host's colour (`$icon-primary`
+               standalone)
+     hero      the arc or fill in `--cds-hero-loader`: the kit's brand
+               (styles/_brand.scss), IBM blue unless a brand zone says
+               otherwise
+
+   Both over the neutral base, `--cds-loader-neutral-base`, a neutral gray
+   under every brand, and so are success and error (a red arc or fill never
+   sits on a tint). A component sets `--cds-loader-base` on itself and its base reads
+   it, with a host's `--cds-spinner-base` over it (a button's faint
+   currentColor, the overlay's).
+
+   The neutral base, per theme:
+
+     white   gray 20 hover #d1d1d1
+     g100    gray 80 #393939
+
+   On white it is a hover step up from gray 20, a little stronger: 1.5:1 on
+   the page, about 15 L* off it, as g100's base is. Set on the theme scopes, as
+   `--cds-surface` and `--cds-tertiary`, so the nearest theme wins.
+
+   The neutral glint, `--cds-loader-neutral-glint`: what the progress bar's
+   pulse mixes a neutral fill toward (55%). White on the light themes, as
+   hero's; on g100 the neutral fill is gray 10, so a white glint
+   would be invisible (#fafafa on #f4f4f4, 1.05:1). There it is the page's own
+   gray instead, a darker band pushing through the light fill:
+
+     white   white                  #969696 on gray 100, 6.1:1
+     g100    gray 100 #161616       #7a7a7a on gray 10, 3.9:1 */
+
+:root,
+[data-carbon-theme='white'],
+.cds--white {
+  --cds-loader-neutral-base: #{c.$gray-20-hover};
+  --cds-loader-neutral-glint: #{c.$white};
+}
+
+[data-carbon-theme='g100'],
+.cds--g100 {
+  --cds-loader-neutral-base: #{c.$gray-80};
+  --cds-loader-neutral-glint: #{c.$gray-100};
+}

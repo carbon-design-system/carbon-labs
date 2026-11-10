@@ -1,0 +1,248 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use './selector-glow' as *;
+
+/* The row a selector is landing on keeps its hover round the selector until
+ * the selector has landed (jump.ts, `hold`: the side nav's and the tree's
+ * glides and jumps), and on a jump shrinks with the old selector.
+ * Output-free: mixins only, included on the component's
+ * track (`.sidenav__track.sel`, `.sel.cds-tree`). */
+
+/* ── the clicked row's hover, until the selector lands on it ─────────────
+   The new row is `[data-selected]` from the click, and a selected row's
+   hover is the selector's (its glow, or none). Until the selector has
+   landed on the row (`data-landing`: from the click to the end of a glide,
+   or from a jump's out to the end of its in; one rule for both moves), the
+   row keeps an unselected row's hover round it: the wash and the label's
+   hover color, and where the selector already covers the row, the selected
+   row's hover on it. So the row reads as one surface: the wash right up to
+   the selector's edge (cut out exactly round it, its corners too: under it
+   the wash would tint the selector), the glow on the selector, and no panel
+   showing in the fringe while the selector grows in, or on the part of the
+   row a gliding selector hasn't reached. Once it has landed the row is the
+   selector's alone, as at rest. Meanwhile the old row keeps its selected
+   face under the leaving selector (the kit's clip, nothing added). */
+$_sel: --cds-motion-selection;
+
+/* The selector's drawn box (in by a press) cut out of a layer the size of
+   its row: the rounded rect as two bands and four corner discs, taken off
+   the whole (`subtract`). Where the selector isn't over the row (the
+   engine's edges read as far away), nothing is cut. */
+@mixin selector-cutout {
+  --_hl: calc(
+    var(#{$_sel}-l, 0px) - var(#{$_sel}-ix, 0px) + var(--sel-press, 0px)
+  );
+  --_ht: calc(
+    var(#{$_sel}-t, 0px) - var(#{$_sel}-iy, 0px) + var(--sel-press, 0px)
+  );
+  --_hw: max(
+    0px,
+    calc(
+      var(#{$_sel}-r, 0px) - var(#{$_sel}-l, 0px) - 2 * var(--sel-press, 0px)
+    )
+  );
+  --_hh: max(
+    0px,
+    calc(
+      var(#{$_sel}-b, 0px) - var(#{$_sel}-t, 0px) - 2 * var(--sel-press, 0px)
+    )
+  );
+  --_hr: min(var(--sel-radius), var(--_hw) / 2, var(--_hh) / 2);
+
+  $box: linear-gradient(#000000 0 0);
+  $disc: radial-gradient(
+    closest-side,
+    #000000 calc(100% - 0.5px),
+    transparent calc(100% + 0.5px)
+  );
+  $d: calc(2 * var(--_hr));
+  $far-x: calc(var(--_hl) + var(--_hw) - #{$d});
+  $far-y: calc(var(--_ht) + var(--_hh) - #{$d});
+
+  mask-composite: subtract, add, add, add, add, add, add;
+
+  mask-image: $box, $box, $box, $disc, $disc, $disc, $disc;
+  mask-position:
+    0 0,
+    var(--_hl) calc(var(--_ht) + var(--_hr)),
+    calc(var(--_hl) + var(--_hr)) var(--_ht),
+    var(--_hl) var(--_ht),
+    $far-x var(--_ht),
+    var(--_hl) $far-y,
+    $far-x $far-y;
+  mask-repeat: no-repeat;
+  mask-size:
+    100% 100%,
+    var(--_hw) calc(var(--_hh) - #{$d}),
+    calc(var(--_hw) - #{$d}) var(--_hh),
+    $d $d,
+    $d $d,
+    $d $d,
+    $d $d;
+}
+
+/* On the track (`&`): the landing row's wash and label, and its glow.
+   `$selected` is how the list marks its selected item: `[data-selected]`
+   (the side nav's page, the tree's row), or `[aria-selected='true']` (a
+   tab, a switch: the kit's own lists, selection-kit.scss). */
+@mixin selection-landing($selected: '[data-selected]') {
+  &[data-landing] .sel__item#{$selected} {
+    /* The wash: an unselected row's hover, the selector cut out of it. */
+    &::before {
+      --_rhc: var(--cds-motion-rollover-hover-color, var(--rollover-hover));
+      --_rp: var(--cds-motion-rollover-press);
+      --_rh: calc(
+        var(--cds-motion-rollover-hover) * var(--cds-motion-rollover-rehover)
+      );
+
+      clip-path: none;
+      @include selector-cutout;
+    }
+
+    &:is(:hover, :focus-visible) .sel__face:not(.sel__face--on) {
+      color: var(--sel-off-hover);
+    }
+  }
+
+  /* A jump (`data-jump`, from its out to the landing): the wash shrinks with
+     the old selector, the same 2px on every side on the same clock and curve
+     (`--sel-jump-inset`, animated on the track), to the box the new selector
+     comes in at, corner and all, so the new selector's entrance stands out.
+     There it waits, under the selector growing out of it.
+     In by the press too, as the selector's box is (a held Enter): so the new
+     selector, its arrival measured from the pressed box, starts at exactly
+     the wash's edge. */
+  &[data-landing][data-jump] .sel__item#{$selected}::before {
+    clip-path: inset(
+      calc(var(--sel-jump-inset) + var(--sel-press, 0px)) round
+        var(--sel-radius)
+    );
+  }
+
+  /* The glow, where the selector covers the row: the selected row's hover
+     (`@mixin selector-glow`, its clip and color) drawn under the selected
+     label, as the row's own layer draws it once the selector has landed.
+     The pointer is on the row, so at full strength. */
+  &.sel--selector-glow[data-landing]
+    .sel__item#{$selected}:is(:hover, :focus-visible)
+    > .sel__face--on {
+    @include selector-glow;
+    --cds-motion-rollover-x: inherit;
+    --cds-motion-rollover-y: inherit;
+
+    background-image: radial-gradient(
+      circle var(--cds-motion-rollover-glow, 64px) at
+        var(--cds-motion-rollover-x, 50%) var(--cds-motion-rollover-y, 50%),
+      var(--_rhc) 0%,
+      color-mix(in srgb, var(--_rhc) 84.4%, transparent) 25%,
+      color-mix(in srgb, var(--_rhc) 50%, transparent) 50%,
+      color-mix(in srgb, var(--_rhc) 15.6%, transparent) 75%,
+      transparent 100%
+    );
+  }
+}
+
+/* A selector that is only a line (line tabs' 2px underline at the box's
+   block end, vertical tabs' 2px bar at its inline start), on a track that
+   includes `selection-landing` (the kit's `.sel` does). Its box has no fill,
+   so there is nothing to cut out round it: the item keeps its whole hover,
+   the release's circle and all, until the line has landed and the release
+   has played out (jump.ts `useLandingHold`), and the selected item's hover
+   takes over from it smoothly. The selected item's hover is an unselected item's color (the
+   rollover's matched lightness, or its token), so the handover is the same
+   pixels: no step. Both are cut out where the line is (the line is under
+   the items, and matched lightness is opaque), so the line shows through
+   as it glides in, and under the pointer once it has landed. */
+
+/* On an item (`&`): its hover layer, the line's live rect cut out of it. */
+@mixin -line-cut($bar, $size) {
+  &::before {
+    --_ll: calc(var(#{$_sel}-l, 0px) - var(#{$_sel}-ix, 0px));
+    --_lt: calc(var(#{$_sel}-t, 0px) - var(#{$_sel}-iy, 0px));
+    --_lw: max(0px, calc(var(#{$_sel}-r, 0px) - var(#{$_sel}-l, 0px)));
+    --_lh: max(0px, calc(var(#{$_sel}-b, 0px) - var(#{$_sel}-t, 0px)));
+
+    mask-composite: exclude;
+
+    mask-image: linear-gradient(#000000 0 0), linear-gradient(#000000 0 0);
+    mask-repeat: no-repeat;
+
+    @if $bar == block-end {
+      mask-position:
+        0 0,
+        var(--_ll) calc(var(--_lt) + var(--_lh) - #{$size});
+      mask-size:
+        100% 100%,
+        var(--_lw) #{$size};
+    } @else if $bar == inline-end {
+      mask-position:
+        0 0,
+        calc(var(--_ll) + var(--_lw) - #{$size}) var(--_lt);
+      mask-size:
+        100% 100%,
+        #{$size} var(--_lh);
+    } @else {
+      mask-position:
+        0 0,
+        var(--_ll) var(--_lt);
+      mask-size:
+        100% 100%,
+        #{$size} var(--_lh);
+    }
+  }
+
+  /* Right to left: an inline-start bar is at the box's right, an inline-end one at its left. */
+  @if $bar == inline-start {
+    &:dir(rtl)::before {
+      mask-position:
+        0 0,
+        calc(var(--_ll) + var(--_lw) - #{$size}) var(--_lt);
+    }
+  } @else if $bar == inline-end {
+    &:dir(rtl)::before {
+      mask-position:
+        0 0,
+        var(--_ll) var(--_lt);
+    }
+  }
+}
+
+/* `$bar`: block-end (line tabs), inline-start or inline-end (vertical line tabs, `linePosition`). */
+@mixin selection-landing-line(
+  $bar: block-end,
+  $size: 2px,
+  $selected: "[aria-selected='true']"
+) {
+  > .sel__item {
+    --sel-glow-color: var(
+      --cds-motion-rollover-hover-color,
+      var(--rollover-hover)
+    );
+  }
+
+  > .sel__item#{$selected} {
+    @include -line-cut($bar, $size);
+  }
+
+  /* An item the line passes (covered, not selected): its hover is cut only
+     where the line is, not by the line's whole box, so a hovered tab keeps
+     its hover as the line slides past instead of blinking out. */
+  > .sel__item[data-selection-covered] {
+    @include -line-cut($bar, $size);
+  }
+
+  /* While it lands: the whole hover round the line, and no glow drawn on the
+     selected face (that glow is for a selector with a fill to draw it on). */
+  &[data-landing] > .sel__item#{$selected} {
+    @include -line-cut($bar, $size);
+
+    &:is(:hover, :focus-visible) > .sel__face--on {
+      background-image: none;
+    }
+  }
+}

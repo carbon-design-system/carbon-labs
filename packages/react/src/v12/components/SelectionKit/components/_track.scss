@@ -1,0 +1,17 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+
+/* The selection family's track, shared by the content switcher and the tonal toggle: the quiet
+   surface on the page, one step off a raised surface's fill there (styles/_surface.scss). */
+// @carbon-explore track-step — A track one quiet step off the surface it sits on. TBD
+$surface: var(--cds-surface-track, var(--cds-surface, #{theme.$layer}));
+$in-layer: var(--cds-surface-track, #{theme.$layer});
+
+/* The layers that step the contextual `$layer` (a Carbon <Layer>, the toolbar's surface). */
+$layer-scopes: ':is(.cds--layer-two, .cds--layer-three)';

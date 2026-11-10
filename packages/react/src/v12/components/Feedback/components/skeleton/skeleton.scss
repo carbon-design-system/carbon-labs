@@ -1,0 +1,536 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon-labs/v12-styles/scss/skeleton' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
+
+/* The Skeleton family — v11's sizes, painted as skeleton-wave blocks.
+ *
+ * Every block is `[data-skeleton]` with the app's `skeleton-block` mixin: the
+ * fill on `::before`, whose opacity the wave pulses; the block's own opacity
+ * is its entrance. Both are motion-core's to drive — this only paints. */
+
+@include skeleton-theme-zones;
+
+.fb-skeleton {
+  /* One corner rule for every block, neutral and AI: AI is a tint, never a
+   * shape, until the AI style is settled.
+   * v12's 4px (`enable-v12-release`), the big number counter's. */
+  --skeleton-radius: 4px;
+
+  padding: 0;
+  border: none;
+  pointer-events: none;
+}
+
+/* Neutral or AI, never both: the neutral tint's theme rule would otherwise
+ * outrank the AI block's own range. */
+.fb-skeleton:not(.fb-skeleton--ai) {
+  @include skeleton-block;
+}
+
+.fb-skeleton--ai {
+  @include skeleton-block(true);
+}
+
+/* SkeletonText: a 16px line, 8px below it (v11's 1rem / $spacing-03). */
+.fb-skeleton__text {
+  display: block;
+  margin: 0 0 $spacing-03;
+  block-size: 1rem;
+  inline-size: 100%;
+}
+
+.fb-skeleton__heading {
+  block-size: 1.5rem;
+}
+
+/* A paragraph: one block over its lines and the 8px between them. */
+.fb-skeleton__text--block {
+  block-size: calc(
+    1rem * var(--skeleton-lines) + #{$spacing-03} * (var(--skeleton-lines) - 1)
+  );
+}
+
+.fb-skeleton__heading.fb-skeleton__text--block {
+  block-size: calc(
+    1.5rem * var(--skeleton-lines) + #{$spacing-03} *
+      (var(--skeleton-lines) - 1)
+  );
+}
+
+/* `lineHeight`: the text lines' box, the bar inside it, in from the first
+ * line's top and the last line's bottom as a one-line bar is. */
+.fb-skeleton.fb-skeleton__text--line {
+  margin: 0;
+  block-size: calc(var(--skeleton-line) * var(--skeleton-lines, 1));
+
+  &::before {
+    inset-block: calc(var(--skeleton-line) * 0.18);
+  }
+}
+
+/* stylelint-disable declaration-no-important -- a skeleton hides whatever the
+   slot under it draws, so its rules win over the slot's own. */
+
+/* SkeletonRun: one bar over a line's run of data parts (the merge rule).
+ * The parts are printed unseen and size the
+ * run; the bar lies over their union box, out over the `lead` (a leading
+ * slot and its gap) too, in the line box as a SkeletonText line's. */
+.fb-skeleton-run {
+  position: relative;
+
+  /* The run carries its slot's own class (its type and line box), and that
+   * class may clip (a label's ellipsis) or colour it (a quiet second line):
+   * here neither may win. The parts are never seen, and the bar runs out
+   * over the `lead`, past the run's own box. */
+  overflow: visible !important;
+  /* …and it still shrinks as the clipped slot would (a flex item that
+   * doesn't clip won't shrink below its text), so the line's geometry is
+   * the loaded line's. */
+  min-inline-size: 0;
+  user-select: none;
+
+  &,
+  * {
+    background-image: none !important;
+    color: transparent !important;
+    text-decoration: none !important;
+    /* A slot painted as clipped text (a link's rollover gradient) too. */
+    -webkit-text-fill-color: transparent !important;
+  }
+}
+
+/* stylelint-enable declaration-no-important */
+
+.fb-skeleton-run__bar.fb-skeleton-run__bar {
+  position: absolute;
+  inset-block: 0;
+  inset-inline: calc(-1 * var(--fb-skeleton-run-lead, 0px)) 0;
+}
+
+/* SkeletonPlaceholder: 100 × 100, sized by its class. */
+.fb-skeleton__placeholder {
+  block-size: 6.25rem;
+  inline-size: 6.25rem;
+}
+
+/* SkeletonIcon: 16 × 16, inline. */
+.fb-skeleton__icon {
+  display: inline-block;
+  block-size: 1rem;
+  inline-size: 1rem;
+}
+
+/* DataTableSkeleton: v11's bars on v11's table layout. */
+.fb-skeleton-table__title {
+  display: block;
+  block-size: 1.5rem;
+  inline-size: 7.5rem;
+}
+
+.fb-skeleton-table__description {
+  display: block;
+  block-size: 1rem;
+  inline-size: 10rem;
+  margin-block-start: $spacing-03;
+}
+
+.fb-skeleton-table__button {
+  display: block;
+  block-size: 2rem;
+  inline-size: 9.375rem;
+}
+
+.fb-skeleton-table__cell {
+  display: block;
+  block-size: 1rem;
+  inline-size: 4rem;
+}
+
+.fb-skeleton-table__table {
+  th {
+    padding-inline-start: 1rem;
+    vertical-align: middle;
+  }
+}
+
+/* A skeleton row doesn't answer the pointer (v11's skeleton): no hover wash
+   over its row's fill (the data table's `--cds-row-wash`, data-table.scss). */
+.cds--data-table.fb-skeleton-table__table tbody tr:hover {
+  --cds-row-wash: 0%;
+}
+
+/* SkeletonReveal: through the handoff (and its return) the skeleton sits
+ * over the content, at its top-left, fading in place. */
+.fb-skeleton-reveal {
+  position: relative;
+}
+
+.fb-skeleton-reveal[data-overlaid] > .fb-skeleton-reveal__skeleton {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  pointer-events: none;
+}
+
+/* AITextReveal (stream): the text and the AI skeleton share one cell, so
+ * the part keeps the skeleton's height while the text arrives over it, and
+ * nothing moves. */
+.fb-ai-text[data-mode='stream'] {
+  display: grid;
+
+  > * {
+    grid-area: 1 / 1;
+    min-inline-size: 0;
+  }
+}
+
+.fb-ai-text__text {
+  align-self: start; /* its own height: how far the text has reached */
+  margin: 0;
+}
+
+/* While the text arrives the part holds its lines (text past them waits,
+ * clipped); complete, it takes the text's height in one move. */
+.fb-ai-text {
+  position: relative;
+}
+
+/* The part's height is the component's (inline, moved in one step); before
+ * its first layout it holds its lines. */
+.fb-ai-text {
+  overflow: clip;
+  block-size: calc(var(--fb-ai-lines, 3) * var(--fb-ai-line, 20px));
+}
+
+/* clamp: the text past the held lines waits under a soft fade on the last one. */
+.fb-ai-text[data-clamped] .fb-ai-text__text {
+  mask-image: linear-gradient(
+    to bottom,
+    #000000 calc((var(--fb-ai-lines, 3) - 1) * var(--fb-ai-line, 20px)),
+    transparent calc(var(--fb-ai-lines, 3) * var(--fb-ai-line, 20px))
+  );
+}
+
+/* Show more, opening (the kit's disclosure, AITextReveal.tsx `openTo`): the
+   part's bottom under a soft edge, `min(fade, H − h)` for the part h tall
+   of its open H (`--fb-ai-open`): it starts as the clamp's fade (the last
+   line, so nothing pops as the clamp goes) and closes over the last of the
+   travel, gone as the part lands. */
+.fb-ai-text[data-opening] {
+  mask-image: linear-gradient(
+    to bottom,
+    #000000
+      calc(
+        100% - max(
+            0px,
+            min(var(--fb-ai-line, 20px), var(--fb-ai-open, 0px) - 100%)
+          )
+      ),
+    transparent
+  );
+}
+
+/* Show more: on the last line, at its end, the kit's text link. */
+.fb-ai-text__more-row {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  animation: fb-ai-more-in var(--cds-motion-duration-fast-02) linear;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--fb-ai-surface, var(--cds-layer-01)) 2rem
+  );
+  block-size: var(--fb-ai-line, 20px);
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  padding-inline-start: 2rem;
+}
+
+/* The shared text-only link (Hover, Press, Release's link variant): link-primary at rest, hover and press dimming
+   toward the background, the family's 2px focus ring, no underline. */
+.fb-ai-text__more {
+  @include rollover-link;
+
+  margin: 0;
+}
+
+.fb-ai-text:not([data-clamped]) .fb-ai-text__more-row {
+  display: none;
+}
+
+@keyframes fb-ai-more-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.fb-ai-text__text:focus {
+  outline: none;
+}
+
+.fb-ai-text__probe {
+  position: absolute;
+  margin: 0;
+  block-size: 0;
+  visibility: hidden;
+}
+
+.fb-ai-text__skeleton {
+  align-self: start;
+  pointer-events: none;
+}
+
+/* Streaming: the block's lines the text covers dissolve under a mask, clear
+ * above `--fb-cover-from`, the band down to `--fb-cover-to` fading. */
+@property --fb-cover-band {
+  inherits: false;
+  initial-value: 1;
+  syntax: '<number>';
+}
+
+.fb-ai-text__skeleton [data-skeleton] {
+  mask-image: linear-gradient(
+    to bottom,
+    transparent var(--fb-cover-from, 0px),
+    rgb(0 0 0 / var(--fb-cover-band)) var(--fb-cover-from, 0px),
+    rgb(0 0 0 / var(--fb-cover-band)) var(--fb-cover-to, 0px),
+    #000000 var(--fb-cover-to, 0px)
+  );
+}
+
+/* The structure tier: a container (placeholder or real) is a surface and its
+ * content, so the reflow engine's window can move and resize it — the
+ * surface spans the move, the content rides the corner (`data-flip-surface`
+ * / `data-flip-content`). At rest it clips to itself. */
+.fb-structure {
+  --fb-structure-radius: 8px;
+
+  position: relative;
+  border-radius: var(--fb-structure-radius);
+  clip-path: inset(0 round var(--fb-structure-radius));
+  color: var(--cds-text-primary);
+}
+
+.fb-structure__surface {
+  position: absolute;
+  background: var(--fb-structure-surface, var(--cds-layer-01));
+  inset: 0;
+}
+
+.fb-structure__content {
+  position: relative;
+  display: block;
+  block-size: 100%;
+}
+
+/* A placeholder's pulse: one block, the whole surface (its backdrop is the
+ * surface, so the wave solves its contrast against the container). */
+.fb-structure__pulse.fb-skeleton {
+  position: absolute;
+  inset: 0;
+  --skeleton-radius: 0px;
+}
+
+/* DataTableReveal: the real table holds the layout (its fixed columns, its
+ * header, its rows' space); the skeleton body lies over it, cell for cell,
+ * its header row invisible so the rows line up exactly. */
+.fb-table-reveal {
+  /* The selection column's width: the colgroup's, the frame's minimum's and
+   * the column fit's (DataTableReveal's useColumnFit reads it). */
+  --fb-table-reveal-select: #{$spacing-08};
+
+  position: relative;
+}
+
+/* The table and its skeleton, together, in the Scroller: never narrower
+ * than its columns' minimums (and the selection column), so a narrow
+ * container scrolls it rather than truncating every cell. */
+.fb-table-reveal__frame {
+  position: relative;
+  min-inline-size: var(--fb-table-reveal-min, 0px);
+}
+
+.fb-table-reveal[data-selectable] .fb-table-reveal__frame {
+  min-inline-size: calc(
+    var(--fb-table-reveal-min, 0px) + var(--fb-table-reveal-select)
+  );
+}
+
+.fb-table-reveal__table {
+  inline-size: 100%;
+  table-layout: fixed;
+
+  td:not(.cds--table-column-checkbox) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* The selection column: v11's (the checkbox, 16px in from the edge, 4px
+ * before the next cell), fixed by the colgroup. */
+.fb-table-reveal col.fb-table-reveal__select {
+  inline-size: var(--fb-table-reveal-select);
+}
+
+/* Where a row's checkbox will be: a block the box's size, on the wave. */
+.fb-table-reveal__check {
+  display: block;
+  block-size: $spacing-05;
+  inline-size: $spacing-05;
+}
+
+/* Nor does a revealing table's row; a selectable one, loaded, hovers as
+ * the DataTable's. */
+.fb-table-reveal:not([data-selectable][data-phase='loaded'])
+  .cds--data-table.fb-table-reveal__table
+  tbody
+  tr:hover {
+  --cds-row-wash: 0%;
+}
+
+/* A row leaving in a reflow takes no presses while it fades. */
+.fb-table-reveal tbody tr[data-out] {
+  pointer-events: none;
+}
+
+.fb-table-reveal__skeleton {
+  position: absolute;
+  inset: 0 0 auto;
+  pointer-events: none;
+
+  thead {
+    visibility: hidden;
+  }
+
+  td {
+    vertical-align: middle;
+  }
+}
+
+/* The overlay draws bars only (lines are structure).
+ * The rows' fills and dividers are the real table's beneath, drawn once and
+ * never in the handoff; the overlay's own copies (the data table's rules, at
+ * their table-and-four-classes weight, five with the zebra's) go
+ * transparent. Each bar's backdrop is its cell's unpainted
+ * `.fb-table-reveal__backdrop`: the row's fill. */
+table.cds--data-table.cds--data-table.cds--data-table.cds--data-table.fb-table-reveal__skeleton.fb-table-reveal__skeleton {
+  &,
+  thead,
+  tbody,
+  tr,
+  tr > :is(td, th) {
+    border-color: transparent;
+    background: transparent;
+  }
+}
+
+.fb-table-reveal__backdrop {
+  display: none;
+  background: var(--cds-row);
+}
+
+/* A cell's bar: its column's typical value (`skeletonValue`) printed unseen
+ * in the cell's type, the bar over it, never wider than the cell; without
+ * one, 60% of the cell. */
+.fb-table-reveal__value {
+  display: inline-block;
+  max-inline-size: 100%;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.fb-table-reveal__value--share {
+  inline-size: 60%;
+}
+
+/* ChartPlotReveal: the plot's box, filled by ONE block while loading (no
+ * value shapes), by the plot once it's in. The host sizes it. */
+.fb-chart-plot {
+  block-size: 100%;
+}
+
+.fb-chart-plot > .fb-skeleton-reveal__content,
+.fb-chart-plot > .fb-skeleton-reveal__skeleton {
+  block-size: 100%;
+}
+
+.fb-chart-plot[data-overlaid] > .fb-skeleton-reveal__skeleton {
+  inset-block-end: 0;
+}
+
+.fb-chart-plot__block.fb-skeleton__placeholder {
+  block-size: 100%;
+  inline-size: 100%;
+}
+
+/* SkeletonOf: the component itself, loading. No box of its own, so the
+ * component lays out exactly where it will load. */
+.fb-skeleton-of {
+  display: contents;
+}
+
+/* stylelint-disable declaration-no-important -- as SkeletonRun's: the block
+   wins over the part's own drawing. */
+
+/* A part that is data: a block of its own box and corners. Its own drawing
+ * (fill, hairline, rings, contents) gives way to the block's fill. */
+.fb-skeleton-of [data-skeleton-part] {
+  @include skeleton-block($own-radius: true);
+
+  border-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: transparent !important;
+  outline: none !important;
+
+  > * {
+    visibility: hidden !important;
+  }
+
+  &::before {
+    background: var(--skeleton-fill) !important;
+    box-shadow: none !important;
+    inset: 0 !important;
+    transform: none !important;
+  }
+
+  &::after {
+    visibility: hidden !important;
+  }
+}
+
+.fb-skeleton-of [data-skeleton-unseen] {
+  visibility: hidden !important;
+}
+
+/* SkeletonLines: the expected text unseen, one block over the lines it wraps to. */
+.fb-skeleton-lines {
+  position: relative;
+  display: block;
+  user-select: none;
+
+  &,
+  * {
+    background-image: none !important;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+  }
+}
+
+/* stylelint-enable declaration-no-important */
+
+.fb-skeleton-lines__bars {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  inset: 0;
+}

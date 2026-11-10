@@ -178,6 +178,7 @@ export interface ContentSwitcherProps
   onChange: (params: SwitchEventHandlersParams) => void;
   /** The selected switch. Follows changes to the prop, as v11 does. */
   selectedIndex?: number;
+  // @carbon-proposal api: activation-prop — One keyboard word, `activation` (automatic or manual), on every selection list: the arrows select, or only move focus. TBD
   /** `automatic` (default): arrows select. `manual`: arrows move focus; Enter / Space select. */
   activation?: KeyboardMode;
   /** `hug` (default): each switch sized by its label. `fill`: v11's equal widths across the container. */

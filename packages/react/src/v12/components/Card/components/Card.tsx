@@ -117,6 +117,7 @@ export interface CardProps extends Omit<
   label?: ReactNode;
   /** ExpressiveCard: an image or other media, to the card's edge. */
   media?: ReactNode;
+  // @carbon-proposal api: logical-positions — Placement values are logical, `start` and `end`, so they follow the reading direction. TBD
   /** ExpressiveCard: media above (default) or beside the content. */
   mediaPosition?: CardMediaPosition;
   /** Makes the card a control (one tab stop, the hover; the cast shadow with `shadow`). */

@@ -78,6 +78,7 @@ export interface ProcessingProps {
   label?: string;
   /** The mark's size, px: 32 (default, the standard) or 16 (the small fallback). */
   size?: ProcessingSize;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** `neutral` (default): the dots in the host's colour. `hero`: in the kit's brand (IBM blue by default; `KitDefaults brand`). Not given: `KitDefaults variant`, else neutral. */
   variant?: ProcessingVariant;
   /** Additional class names, on the root. */

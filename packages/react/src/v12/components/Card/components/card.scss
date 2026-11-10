@@ -46,6 +46,7 @@ $_pad: 1rem;
    pointer, drawn in on press. */
 .cds-kit-card--clickable {
   @include rollover;
+  // @carbon-explore cast-shadow — An opt-in shadow drawn in layers whose colour is solved for contrast on its backdrop, at three elevations (resting, raised, floating). TBD
   @include cast-shadow.cast-shadow;
   --rollover-rest: #{$_surface};
   /* Fallbacks; the rollover solves the tiles' quiet steps off the surface. */

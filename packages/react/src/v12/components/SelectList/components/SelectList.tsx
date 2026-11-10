@@ -149,12 +149,14 @@ export interface SelectListProps
   /** The value selected at first when `value` isn't given. Default none. */
   defaultValue?: SelectListValue | null;
   onChange?: (params: SelectListChangeParams) => void;
+  // @carbon-proposal api: activation-prop — One keyboard word, `activation` (automatic or manual), on every selection list: the arrows select, or only move focus. TBD
   /** `automatic` (default): arrows and typeahead select. `manual`: they move focus; Enter / Space select. */
   activation?: KeyboardMode;
   /** ↑ / ↓ wrap past the ends. Default false: a list has ends. */
   wrap?: boolean;
   /** `hug` (default): as wide as the widest row. `fill`: the container's width. */
   fit?: 'hug' | 'fill';
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /** `inset`: its own track (default; `ghost` in a framed Region). `ghost`: no track, inside a card or panel. */
   frame?: 'inset' | 'ghost';
   /** Motion dials; omitted keys take `SELECT_LIST_MOTION`. */

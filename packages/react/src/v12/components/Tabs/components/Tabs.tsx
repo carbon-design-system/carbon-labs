@@ -183,6 +183,7 @@ export interface TabListProps extends HTMLAttributes<HTMLDivElement> {
   'aria-label'?: string;
   /** `Tab` and `IconTab` elements. */
   children?: ReactNode;
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /**
    * What the tabs stand on. `line` (default): the underline on the
    * family's hairline. `inset`: the content switcher's track and selector

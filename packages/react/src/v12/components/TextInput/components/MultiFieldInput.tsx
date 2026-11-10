@@ -97,6 +97,7 @@ export interface MultiFieldInputProps {
   segments: MultiFieldSegment[];
   /** xs 24 · sm 32 · md 40 (default) · lg 48, as TextInput. */
   size?: TextInputSize;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** The outer ends: `rounded` (8px, default), `full`, `square`. */
   corners?: 'full' | 'rounded' | 'square';
   /** Hide the segments' names (they still name the inputs). */
@@ -113,6 +114,7 @@ export interface MultiFieldInputProps {
   typingPauseMs?: number;
   /** The message line: in the form's gap (default) or in the layout. */
   messagePlacement?: 'gap' | 'flow';
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** `hero`: the blue accent for focus (expressive fields). Default `neutral`. */
   variant?: FieldVariant;
   className?: string;

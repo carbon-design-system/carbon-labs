@@ -162,7 +162,9 @@ export interface FilterableMultiSelectProps<Item> extends Omit<
 
   /** Shown in the list when nothing matches. Default "No results found"; `null` for an empty list. */
   emptyText?: ReactNode;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   corners?: 'full' | 'rounded' | 'square';
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /** `inset` (default) its fill and hairline; `ghost` neither at rest, for a field a header or toolbar frames. */
   frame?: FieldFrameKind;
   shadow?: SurfaceShadowOption;

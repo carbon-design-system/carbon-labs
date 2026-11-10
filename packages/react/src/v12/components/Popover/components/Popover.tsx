@@ -176,8 +176,10 @@ export interface PopoverProps extends Omit<
   label?: string;
   /** The snap's origin, client px: the press that opened it. Default the press on the trigger, else its center. */
   origin?: { x: number; y: number } | null;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** `rounded` (16px, default) or `square`. */
   corners?: 'rounded' | 'square';
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** The look: `outlined` (default), `tonal` (no hairline), `inverse` (the opposite theme; as `highContrast`). */
   variant?: 'inverse' | 'tonal' | 'outlined';
   /** The hairline. Default on, except `tonal` and `inverse`. */

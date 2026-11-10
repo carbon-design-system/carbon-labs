@@ -113,6 +113,7 @@ export interface DatePickerInputProps extends Omit<
 
   /* ── Beyond Carbon's API ────────────────────────────────────────────────────── */
 
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** `rounded` (8px, default), `full` or `square`, as the text input's. */
   corners?: 'full' | 'rounded' | 'square';
 }

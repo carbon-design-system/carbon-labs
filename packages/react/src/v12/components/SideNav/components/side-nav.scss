@@ -494,6 +494,7 @@ $_ghost-aim: var(--cds-motion-duration-moderate-01)
   /* The layers are the li's (where the pointer is), at z-index −2 in the
      track's stacking context: under the container (−1), the selector (0)
      and the rows (1). */
+  // @carbon-explore cast-shadow — An opt-in shadow drawn in layers whose colour is solved for contrast on its backdrop, at three elevations (resting, raised, floating). TBD
   @include cast-shadow.cast-shadow(
     $layers: (
       contact,

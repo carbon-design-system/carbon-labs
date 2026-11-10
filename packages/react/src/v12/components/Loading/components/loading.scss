@@ -24,6 +24,7 @@
   display: inline-block;
   flex: none;
   block-size: 4rem;
+  // @carbon-explore loader-neutral — Loaders (the spinner, the ring and the bar) draw in the neutral ink over a gray base by default, and take the brand colour only when asked, so waiting never competes with the action. TBD
   color: theme.$icon-primary;
   inline-size: 4rem;
 }

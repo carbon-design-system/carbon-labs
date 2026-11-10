@@ -89,15 +89,22 @@
 :root,
 [data-carbon-theme='white'],
 .cds--white {
+  // @carbon-proposal token: surface-quiet — One quiet surface fill (#f4f4f4 light, #1e1e1e dark) for panels, tiles, tables and trays, so every quiet surface is the same step off the page. replaces: `$layer-01`. TBD
   --cds-surface: #f4f4f4;
+  // @carbon-proposal token: surface-rule — The quiet surface's 1px hairline (#dddddd light, #2f2f2f dark), 12 L* off the page, so a surface is edged by a line rather than a shadow. replaces: `$border-subtle`. TBD
   --cds-surface-rule: #dddddd;
+  // @carbon-proposal token: surface-raised — One contrast step up from the quiet fill (#e9e9e9 light, #262626 dark) for a data table's header and zebra rows, so they read on the quiet surface. replaces: `$layer-accent-01`. TBD
   --cds-surface-raised: #e9e9e9;
+  // @carbon-explore surface-step — Surfaces stepped up in elevation (an outlined selector's lift, a workspace's content, a field on it) take their own fills, solved from the quiet surface. TBD
   --cds-surface-lift: #ffffff;
   --cds-surface-up: #f4f4f4;
   --cds-surface-lift-field: #ffffff;
+  // @carbon-proposal token: surface-divider — A line inside a quiet surface, such as a table's rows and a header's underline, solved 8 L* off the surface's fill rather than off the page. replaces: `$border-subtle`. TBD
   --cds-surface-divider: #dddddd;
   --cds-surface-field: var(--cds-field-02, #ffffff);
+  // @carbon-proposal token: surface-code — Code (a snippet's well, inline code) sits in its own fill a step below the page, as code environments draw it. replaces: `$layer-01`. TBD
   --cds-surface-code: #efefef;
+  // @carbon-explore button-secondary-quiet — The secondary Button is a quiet fill one step off whatever it sits on, re-solved on raised surfaces, so it stays a step apart on every surface. TBD
   --cds-surface-secondary: #d5d5d5;
   --cds-surface-secondary-hover: #c5c5c5;
 }
@@ -136,6 +143,7 @@
 .cds--g100 {
   --cds-panel: var(--cds-surface);
   --cds-rule: var(--cds-surface-rule);
+  // @carbon-explore selected-wash — A row that is one of many chosen takes a 10% wash of the text colour, so it reads on any surface without a fill of its own. TBD
   --cds-selected-wash: 10%;
 }
 
@@ -194,6 +202,7 @@
 /* A raised surface's tracks (a content switcher's): one quiet step off the surface's own fill, as the
    page's track is off the page. Without it a track on the surface is the surface's own colour. */
 @mixin track-on-surface($fill: var(--cds-surface)) {
+  // @carbon-explore track-step — A track is one quiet step off the surface it sits on, the text colour mixed in at 5% light and 3.75% dark, so it reads on any surface. TBD
   --cds-surface-track: color-mix(
     in srgb,
     #{$fill},
@@ -248,6 +257,7 @@
    darker off it and dark lighter. Over Carbon's own page and zone rules (`html[…]`, `[class]`). */
 html[data-carbon-theme='white'],
 .cds--white[class] {
+  // @carbon-explore page-base — The page's background is a half step off white and black (#fafafa light, #0b0b0b dark), so the surfaces on it can step darker in light themes and lighter in dark ones. TBD
   --cds-background: #fafafa;
   /* What steps off the page, re-solved for it (they were for #ffffff): the field, its hairline and
      the track a quiet step off it, the code well 5 off the field, the secondary 1.47:1 as before. */

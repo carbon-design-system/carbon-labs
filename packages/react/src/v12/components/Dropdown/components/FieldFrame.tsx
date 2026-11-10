@@ -80,7 +80,9 @@ export interface FieldFrameProps {
   size: ListboxSize;
   inline?: boolean;
   readOnly?: boolean;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   corners?: 'full' | 'rounded' | 'square';
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   frame?: FieldFrameKind;
   className?: string;
   variantClass: string;

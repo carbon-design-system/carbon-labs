@@ -118,6 +118,7 @@ export interface TextAreaProps
 
   /* ── Beyond Carbon's API ─────────────────────────────────────────────── */
 
+  // @carbon-proposal api: textarea-size — TextArea takes the field family's `size` (xs 24 to lg 48px), so it lines up with the other fields. TBD
   /** The field's inset and its one-line height: xs 24 · sm 32 · md 40 (default) · lg 48. */
   size?: TextAreaSize;
   /** Errors (and warnings) arrive late: while typing, after a pause or on blur. Default true. */
@@ -126,10 +127,13 @@ export interface TextAreaProps
   typingPauseMs?: number;
   /** Where the message line sits: `gap` (default) in the form's 32px gap, or `flow` in the layout. */
   messagePlacement?: 'gap' | 'flow';
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** `neutral` (default): the selected edge is greyscale. `hero`: the kit's brand, for expressive fields. */
   variant?: FieldVariant;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** `rounded` (8px, default), `square`, or `full` (half a one-line field's height). */
   corners?: 'full' | 'rounded' | 'square';
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /** `inset` (default) its fill and hairline; `ghost` neither at rest, for a field a header or toolbar frames. */
   frame?: FieldFrame;
   /** The status mark plays its motion-icon once as it arrives. Default false. */

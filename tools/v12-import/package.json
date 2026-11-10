@@ -18,7 +18,8 @@
     "import": "node ./bin/v12-import.js",
     "test": "vitest run",
     "contract": "node ./bin/contract.js",
-    "check": "node ./bin/check.js"
+    "check": "node ./bin/check.js",
+    "catalog": "node ./bin/catalog.js"
   },
   "devDependencies": {
     "typescript": "^5.2.2",

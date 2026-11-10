@@ -15,6 +15,9 @@
   z-index: 8050;
   /* Override the CDS tokens that the Shadow DOM stylesheet reads internally */
   --cds-background: var(--clabs-global-header-background-color);
+  --cds-background-hover: var(--clabs-global-header-background-hover);
+  --cds-text-primary: var(--clabs-global-header-text-color);
+  --cds-icon-primary: var(--clabs-global-header-icon-color);
 }
 
 .#{automation.$namespace-prefix}__header-name {

@@ -108,9 +108,14 @@ cds-custom-header-menu::part(trigger) {
   align-items: center !important;
   justify-content: space-between !important;
   background-color: var(--clabs-global-header-background-color);
+  color: var(--cds-text-primary);
   max-inline-size: 224px;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  &:hover {
+    background-color: var(--clabs-global-header-background-hover);
+  }
 }
 
 cds-custom-header-menu-item:nth-last-child(2) {

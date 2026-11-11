@@ -23,7 +23,7 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/AppShell/components/AppShell.tsx",
-      "line": 357,
+      "line": 361,
       "text": "api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD"
     },
     {
@@ -47,7 +47,7 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/AppShell/components/app-shell.scss",
-      "line": 487,
+      "line": 518,
       "text": "surface-step — Surfaces stepped up in elevation: the outlined selector's lift, a workspace's content, a field on it. TBD"
     }
   ],
@@ -1171,13 +1171,13 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/SideNav/components/SideNav.tsx",
-      "line": 1266,
+      "line": 1268,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/SideNav/components/SideNav.tsx",
-      "line": 1269,
+      "line": 1271,
       "text": "api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD"
     },
     {

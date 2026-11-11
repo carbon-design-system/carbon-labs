@@ -31,7 +31,7 @@
     },
     "resolvedFrom": "figma-sync/state-colors.resolved.json",
     "resolved": 0,
-    "pending": 786
+    "pending": 792
   },
   "items": [
     {
@@ -8470,6 +8470,36 @@
         "proposal: token: surface-rule"
       ],
       "stateColors": [
+        {
+          "file": "packages/react/src/v12/components/SideNav/components/side-nav-filter.scss",
+          "selector": ".sidenav--ghost .sidenav__filter .cds-text-input__field",
+          "property": "--rollover-hover",
+          "state": "hover",
+          "spaces": [
+            "srgb"
+          ],
+          "expression": "color-mix(in srgb, currentColor 10%, transparent)",
+          "values": {
+            "white": {
+              "pending": "browser-render"
+            },
+            "g10": {
+              "pending": "browser-render"
+            },
+            "g90": {
+              "pending": "browser-render"
+            },
+            "g100": {
+              "pending": "browser-render"
+            },
+            "v12-light": {
+              "pending": "browser-render"
+            },
+            "v12-dark": {
+              "pending": "browser-render"
+            }
+          }
+        },
         {
           "file": "packages/react/src/v12/components/SideNav/components/side-nav.scss",
           "selector": ".sidenav--ghost .sidenav__group-bg",

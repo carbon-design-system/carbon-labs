@@ -5411,6 +5411,7 @@ __metadata:
     "@carbon-labs/react-number-input": "workspace:*"
     "@carbon-labs/react-page-header": "workspace:*"
     "@carbon-labs/react-popover": "workspace:*"
+    "@carbon-labs/react-scroller": "workspace:*"
     "@carbon-labs/react-search": "workspace:*"
     "@carbon-labs/react-select": "workspace:*"
     "@carbon-labs/react-side-nav": "workspace:*"

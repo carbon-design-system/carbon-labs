@@ -191,4 +191,22 @@ $mega: '#{$prefix}--mega-button';
       ),
     )
   );
+
+  // A translate is physical, and right to left the panel's edge is the left:
+  // the surface's exit is mirrored there.
+  &[data-carbon-surface-state='exit']:dir(rtl) {
+    transform: translateX(-100%);
+  }
+}
+
+// So is where it enters from when it is first rendered open, the surface's
+// own starting style.
+@media (prefers-reduced-motion: no-preference) {
+  @starting-style {
+    .#{$area}--overlay .#{$area}__panel:dir(rtl),
+    .#{$area}--overlay
+      .#{$area}__panel[data-carbon-surface-state='enter']:dir(rtl) {
+      transform: translateX(-100%);
+    }
+  }
 }

@@ -16,16 +16,21 @@
 // and the shared prop vocabulary (vocab.js). A `// v12-allow <rule>: <why>`
 // comment on the line, or the one above, allows one site; the check counts
 // those.
+//
+// The design sync's tool and snapshots are checked for leaks too, and for
+// anything that identifies a design file: they hold logical keys only.
 
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { CONFIG } from './config.js';
-import { scanLeaks } from './doc.js';
+import { scanDesignIds, scanLeaks } from './doc.js';
 import { motionLiterals } from './importer.js';
 import { vocabFindings } from './vocab.js';
 
 const SEAM_DIR = 'packages/v12-motion';
+// The design sync's tool and its snapshots: leaks and design ids only.
+const SYNC_DIRS = ['tools/v12-figma', 'figma-sync'];
 // Built output, and the changelog the release writes (dated, by design).
 const SKIP =
   /(^|\/)(node_modules|es|lib|dist|scss|storybook-static)(\/|$)|(^|\/)CHANGELOG\.md$/;
@@ -37,37 +42,43 @@ const DIRECT_MOTION =
  * The language the import's checks read a file as.
  *
  * @param {string} file The file.
+ * @param {boolean} [data] Whether JSON is read too, as the sync's files are.
  * @returns {'ts' | 'scss' | 'other' | null} The language, or null to skip it.
  */
-function langOf(file) {
+function langOf(file, data = false) {
   if (/\.[cm]?[jt]sx?$/.test(file)) {
     return 'ts';
   }
   if (/\.scss$/.test(file)) {
     return 'scss';
   }
-  return /\.(mdx?|css)$/.test(file) ? 'other' : null;
+  return /\.(mdx?|css)$/.test(file) || (data && /\.json$/.test(file))
+    ? 'other'
+    : null;
 }
 
 /**
  * Every checked file under a folder, by its path in the folder.
  *
  * @param {string} root The folder.
+ * @param {boolean} [data] Whether JSON is checked too.
  * @returns {string[]} The files.
  */
-function filesIn(root) {
+function filesIn(root, data = false) {
   if (!fs.existsSync(root)) {
     return [];
   }
   if (fs.statSync(root).isFile()) {
-    return langOf(root) ? [''] : [];
+    return langOf(root, data) ? [''] : [];
   }
   return fs
     .readdirSync(root, { recursive: true })
     .map((f) => f.split(path.sep).join('/'))
     .filter(
       (f) =>
-        !SKIP.test(f) && langOf(f) && fs.statSync(path.join(root, f)).isFile()
+        !SKIP.test(f) &&
+        langOf(f, data) &&
+        fs.statSync(path.join(root, f)).isFile()
     );
 }
 
@@ -477,6 +488,7 @@ export function checkLane(
       .filter((d) => d.startsWith('v12-'))
       .map((d) => ({ id: null, kind: 'lane', dir: `packages/${d}` })),
     { id: null, kind: 'docs', dir: 'docs/v12' },
+    ...SYNC_DIRS.map((dir) => ({ id: null, kind: 'sync', dir })),
   ];
   // A folder once, as the manifest records it when it does.
   const unique = roots.filter(
@@ -545,13 +557,20 @@ export function checkLane(
     const allowances = isPackage
       ? (CONFIG.packages[id.replace(/^package\//, '')]?.literals ?? [])
       : (CONFIG.kitLiterals[id] ?? []);
-    for (const rel of filesIn(path.join(labs, dir))) {
+    const isSync = kind === 'sync';
+    for (const rel of filesIn(path.join(labs, dir), isSync)) {
       const at = rel ? `${dir}/${rel}` : dir;
       const text = fs.readFileSync(path.join(labs, at), 'utf8');
-      const lang = langOf(at);
+      const lang = langOf(at, isSync);
       const isTest = /(^|\/)(__tests__|test)\/|\.test\.[jt]sx?$/.test(rel);
       for (const leak of scanLeaks(text, [], { code: lang === 'ts' })) {
         report(`leak (${leak.kind})`, `${at}:${leak.line}`, leak.match);
+      }
+      if (isSync) {
+        for (const leak of scanDesignIds(text)) {
+          report(`leak (${leak.kind})`, `${at}:${leak.line}`, leak.match);
+        }
+        continue;
       }
       if (isSeam || lang === 'other') {
         continue;

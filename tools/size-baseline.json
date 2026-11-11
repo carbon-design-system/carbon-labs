@@ -24,12 +24,12 @@
     "gzip": 4843
   },
   "Card": {
-    "raw": 4913,
-    "gzip": 1914
+    "raw": 5295,
+    "gzip": 2029
   },
   "Chat": {
-    "raw": 62327,
-    "gzip": 21007
+    "raw": 62343,
+    "gzip": 21009
   },
   "ChatInput": {
     "raw": 13615,
@@ -48,8 +48,8 @@
     "gzip": 1304
   },
   "Checkbox": {
-    "raw": 4087,
-    "gzip": 1624
+    "raw": 4761,
+    "gzip": 1910
   },
   "CodeSnippet": {
     "raw": 6832,
@@ -104,8 +104,8 @@
     "gzip": 504
   },
   "EasingGraph": {
-    "raw": 3701,
-    "gzip": 1831
+    "raw": 3735,
+    "gzip": 1847
   },
   "EmptyState": {
     "raw": 4813,
@@ -136,8 +136,8 @@
     "gzip": 2060
   },
   "HistoryRail": {
-    "raw": 4939,
-    "gzip": 2235
+    "raw": 5012,
+    "gzip": 2266
   },
   "IconMotion": {
     "raw": 313,
@@ -188,8 +188,8 @@
     "gzip": 1628
   },
   "Menu": {
-    "raw": 24604,
-    "gzip": 8935
+    "raw": 24647,
+    "gzip": 8962
   },
   "Modal": {
     "raw": 27160,
@@ -228,8 +228,8 @@
     "gzip": 3896
   },
   "Popover": {
-    "raw": 15409,
-    "gzip": 6289
+    "raw": 15342,
+    "gzip": 6261
   },
   "Processing": {
     "raw": 13233,
@@ -308,8 +308,8 @@
     "gzip": 4482
   },
   "Slider": {
-    "raw": 32659,
-    "gzip": 12646
+    "raw": 32732,
+    "gzip": 12667
   },
   "Snap": {
     "raw": 696,
@@ -336,16 +336,16 @@
     "gzip": 477
   },
   "Tabs": {
-    "raw": 26564,
-    "gzip": 9611
+    "raw": 27111,
+    "gzip": 9829
   },
   "Tag": {
     "raw": 7825,
     "gzip": 3330
   },
   "TagSet": {
-    "raw": 12256,
-    "gzip": 5030
+    "raw": 12263,
+    "gzip": 5032
   },
   "Tearsheet": {
     "raw": 12301,
@@ -356,8 +356,8 @@
     "gzip": 3218
   },
   "TextInput": {
-    "raw": 18161,
-    "gzip": 6490
+    "raw": 18183,
+    "gzip": 6507
   },
   "ThemeZone": {
     "raw": 2031,
@@ -376,8 +376,8 @@
     "gzip": 1734
   },
   "Toggletip": {
-    "raw": 2751,
-    "gzip": 1204
+    "raw": 2753,
+    "gzip": 1203
   },
   "Toolbar": {
     "raw": 15998,
@@ -388,15 +388,15 @@
     "gzip": 4465
   },
   "TreeView": {
-    "raw": 14259,
-    "gzip": 5771
+    "raw": 14318,
+    "gzip": 5783
   },
   "UserAvatar": {
     "raw": 2144,
     "gzip": 1083
   },
   "Util": {
-    "raw": 8616,
-    "gzip": 3595
+    "raw": 12666,
+    "gzip": 5102
   }
 }

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.229.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.228.0...%40carbon-labs%2Freact%400.229.0) (2026-11-11)
+
+### Features
+
+* **v12:** shared direction, roving and announcer helpers, style mixins ([#1479](https://github.com/carbon-design-system/carbon-labs/issues/1479)) ([f12c43a](https://github.com/carbon-design-system/carbon-labs/commit/f12c43a834b0eb88ad4840fd0af682c1e2188833))
+
+
 # [0.228.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.227.0...%40carbon-labs%2Freact%400.228.0) (2026-11-11)
 
 **Note:** Version bump only for package @carbon-labs/react

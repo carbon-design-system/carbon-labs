@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.16.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-select-list%400.15.0...%40carbon-labs%2Freact-select-list%400.16.0) (2026-11-11)
+
+### Features
+
+* **v12-selection-kit:** one selection list model for tabs and lists ([#1503](https://github.com/carbon-design-system/carbon-labs/issues/1503)) ([e189a83](https://github.com/carbon-design-system/carbon-labs/commit/e189a83e5d68b3851ca9088be97bafd5b7287b8f))
+
+
 # [0.15.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-select-list%400.14.0...%40carbon-labs%2Freact-select-list%400.15.0) (2026-11-11)
 
 **Note:** Version bump only for package @carbon-labs/react-select-list

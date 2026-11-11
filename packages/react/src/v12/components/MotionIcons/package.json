@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-motion-icons",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - MotionIcons for React (v12)",

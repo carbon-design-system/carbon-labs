@@ -151,7 +151,7 @@ export const Clickable = {
   ),
 };
 
-/** `hoverSteps`: quiet, half the house steps, by default; standard, the house steps. */
+/** `hoverSteps`: quiet by default (half the house step on light themes, three quarters on dark); standard, the house steps. */
 export const HoverSteps = {
   render: () => (
     <div style={grid}>

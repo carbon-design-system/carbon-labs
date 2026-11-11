@@ -1049,7 +1049,7 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/RadioButton/components/radio-button.scss",
-      "line": 70,
+      "line": 71,
       "text": "hover-tint — Hover and press as a share of the text colour mixed into the fill. TBD"
     }
   ],
@@ -1357,7 +1357,7 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Tearsheet/components/Tearsheet.tsx",
-      "line": 211,
+      "line": 206,
       "text": "api: logical-positions — Placement values are logical, `start` and `end`, so they follow the reading direction. TBD"
     },
     {

@@ -21,15 +21,16 @@ import {
   TileAboveTheFoldContent,
   TileBelowTheFoldContent,
 } from '../components/ExpandableTile';
-import { quietSteps } from '@carbon-labs/react-util';
+import { tileSteps } from '../components/Tile';
 
 describe('Tile family', () => {
-  it('solves quiet hover and press steps at half the house rollover steps', () => {
-    expect(quietSteps()).toEqual({
+  it('steps a quiet hover half the house step on light themes and three quarters on dark', () => {
+    expect(tileSteps('quiet')).toEqual({
       ...LIGHTNESS_STEPS,
       hoverLight: LIGHTNESS_STEPS.hoverLight / 2,
-      hoverDark: LIGHTNESS_STEPS.hoverDark / 2,
+      hoverDark: (LIGHTNESS_STEPS.hoverDark * 3) / 4,
     });
+    expect(tileSteps('standard')).toBeUndefined();
   });
 
   it('renders static, clickable, selectable, radio and expandable tiles with their base and modifier classes', () => {
@@ -87,5 +88,33 @@ describe('Tile family', () => {
         </ClickableTile>
       )
     ).toContain('data-rollover-surface="ring"');
+  });
+
+  it("puts a radio tile's radio inside the RadioButton's circle, so the mark takes its motion", () => {
+    const html = renderToStaticMarkup(
+      <RadioTile id="r2" name="group" value="b">
+        Choice
+      </RadioTile>
+    );
+    const mark = html.match(
+      /<span class="cds-radio__circle cds-radio__circle--mark cds-kit-tile__radio"[^>]*>(.*?)<\/span><div/
+    );
+    expect(mark).not.toBeNull();
+    // The circle itself isn't hidden: the radio in it is the group's control.
+    expect(mark![0].slice(0, mark![0].indexOf('>'))).not.toContain(
+      'aria-hidden'
+    );
+    expect(mark![1]).toMatch(/^<input[^>]*class="cds-radio__input/);
+    expect(mark![1]).toContain('type="radio"');
+    expect(mark![1]).toContain('class="cds-radio__dot"');
+  });
+
+  it("keeps a disabled radio tile's mark from hovering", () => {
+    const html = renderToStaticMarkup(
+      <RadioTile id="r3" name="group" value="c" disabled>
+        Choice
+      </RadioTile>
+    );
+    expect(html).toMatch(/cds-kit-tile__radio"[^>]*aria-disabled="true"/);
   });
 });

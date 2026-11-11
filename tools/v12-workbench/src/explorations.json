@@ -851,7 +851,7 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Menu/components/menu.scss",
-      "line": 70,
+      "line": 71,
       "text": "floating-hairline — A floating surface (a menu, a popover, a modal, a panel) stands on its fill and a 1px hairline, with no cast shadow unless one is asked for. TBD"
     }
   ],
@@ -859,7 +859,7 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Modal/components/modal.scss",
-      "line": 202,
+      "line": 203,
       "text": "floating-hairline — A floating surface (a menu, a popover, a modal, a panel) stands on its fill and a 1px hairline, with no cast shadow unless one is asked for. TBD"
     }
   ],
@@ -985,7 +985,7 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Popover/components/popover.scss",
-      "line": 87,
+      "line": 88,
       "text": "floating-hairline — A floating surface (a menu, a popover, a modal, a panel) stands on its fill and a 1px hairline, with no cast shadow unless one is asked for. TBD"
     }
   ],

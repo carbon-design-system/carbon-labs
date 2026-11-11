@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-modal",
-  "version": "0.2.0",
+  "version": "0.6.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - Modal for React (v12)",
@@ -29,6 +29,12 @@
     "lib",
     "scss",
     "telemetry.yml"
+  ],
+  "sideEffects": [
+    "./es/components/press-cause.js",
+    "./lib/components/press-cause.js",
+    "*.scss",
+    "*.css"
   ],
   "scripts": {
     "build": "node ../../../../tasks/build.js",

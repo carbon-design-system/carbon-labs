@@ -94,7 +94,7 @@
       "status": "draft",
       "docs": "v12-card--overview",
       "firstSentence": "A tile with a header, a body, actions and a footer, on `--cds-surface` with 8px corners and 16px in.",
-      "summary": "A tile with a header, a body, actions and a footer, on `--cds-surface` with 8px corners and 16px in. A card has a label, a title and a description, a body, action icons and an overflow menu, and primary and secondary buttons. With `onClick` it is a control, one tab stop; without it, it is a plain surface. `ProductiveCard` is dense, for product UI, with its actions at the top and a ghost primary button. Its `clickZone` sets where a click counts. `ExpressiveCard` holds media to the card's edge, or a pictogram, with its actions at the bottom. `CardSkeleton` is a card while it loads. `decorator` and `slug` are accepted and render nothing.",
+      "summary": "A tile with a header, a body, actions and a footer, on `--cds-surface` with 8px corners and 16px in. A card has a label, a title and a description, a body, action icons and an overflow menu, and primary and secondary buttons. With `onClick` its action is one button over the card, named by the title, and the card's own buttons sit beside it; without it, it is a plain surface. `ProductiveCard` is dense, for product UI, with its actions at the top and a ghost primary button. Its `clickZone` sets where a click counts. `ExpressiveCard` holds media to the card's edge, or a pictogram, with its actions at the bottom. `CardSkeleton` is a card while it loads. `decorator` and `slug` are accepted and render nothing.",
       "sections": [
         "Motion",
         "Reduced motion"
@@ -123,7 +123,7 @@
       "status": "draft",
       "docs": "v12-checkbox--overview",
       "firstSentence": "A box that turns one option on or off.",
-      "summary": "A box that turns one option on or off. A parent of partly checked children shows mixed, a dash. `Checkbox` takes Carbon's props, plus `disabledReason` and `timeScale`. `CheckboxGroup` sets several checkboxes under one legend, stacked or in a row. `CheckboxSkeleton` is the checkbox while it loads.",
+      "summary": "A box that turns one option on or off. A parent of partly checked children shows mixed, a dash. `Checkbox` takes Carbon's props, plus `disabledReason` and `timeScale`. `CheckboxGroup` sets several checkboxes under one legend, stacked or in a row; its `invalid` or `warn` reaches each checkbox in it, with one message under the group. `CheckboxSkeleton` is the checkbox while it loads.",
       "sections": [
         "Motion",
         "Reduced motion"
@@ -1405,7 +1405,7 @@
       "status": "draft",
       "docs": "v12-util--overview",
       "firstSentence": "The helpers the v12 components share: class names, form state, the page's layer stack and focus, colour parsing, the reduced-motion getter, the visibility a looping motion pauses on, and the ref and `inert` helpers that read the same on React 18 and 19.",
-      "summary": "The helpers the v12 components share: class names, form state, the page's layer stack and focus, colour parsing, the reduced-motion getter, the visibility a looping motion pauses on, and the ref and `inert` helpers that read the same on React 18 and 19.",
+      "summary": "The helpers the v12 components share: class names, form state, the page's layer stack and focus, colour parsing, the reduced-motion getter, the visibility a looping motion pauses on, and the ref and `inert` helpers that read the same on React 18 and 19. The keyboard and screen reader helpers: - `isRtl`, `useDirection` and `inlineKey`: direction, read one way. `inlineKey(e.key, el)` hands back a horizontal arrow as it reads left to right, so one handler serves both directions. - `rovingIndex` and `useRovingTabStop`: a group of controls that is one tab stop, moved through with the arrows (by direction), Home and End. - `useAnnouncer`: a polite and an assertive live region to render, and the `announce` that writes to them.",
       "sections": []
     }
   ]

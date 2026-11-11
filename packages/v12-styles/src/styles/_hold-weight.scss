@@ -32,6 +32,7 @@
    @param $weight  the heavier weight the label takes (600 semibold, or a
                    custom property such as `var(--sel-on-weight, 500)`)
    @param $attr    the attribute carrying the label's text */
+// @carbon-explore hold-weight-width — A label that gets heavier on a state keeps its box width, so nothing around it moves. TBD
 @mixin hold-weight-width($weight: 600, $attr: 'data-text') {
   &[#{$attr}]::after {
     display: block;

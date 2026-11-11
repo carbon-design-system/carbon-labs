@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-popover",
-  "version": "0.4.0",
+  "version": "0.8.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - Popover for React (v12)",
@@ -30,6 +30,10 @@
     "scss",
     "telemetry.yml"
   ],
+  "sideEffects": [
+    "*.scss",
+    "*.css"
+  ],
   "scripts": {
     "build": "node ../../../../tasks/build.js",
     "clean": "rimraf es lib scss",
@@ -52,6 +56,8 @@
   },
   "devDependencies": {
     "@carbon-labs/utilities": "0.28.0",
+    "@testing-library/react": "^16.1.0",
+    "jsdom": "^26.0.0",
     "vitest": "^4.0.0"
   }
 }

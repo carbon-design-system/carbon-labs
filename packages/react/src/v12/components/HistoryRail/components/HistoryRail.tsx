@@ -19,6 +19,7 @@ import React, {
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { usePrefix } from '@carbon/react';
+import { inlineKey } from '@carbon-labs/react-util';
 import { HistoryMarker } from './HistoryMarker';
 import { HistoryMarkerCard } from './HistoryMarkerCard';
 
@@ -315,7 +316,8 @@ export const HistoryRail = forwardRef<HTMLDivElement, HistoryRailProps>(
         Home: 0,
         End: items.length - 1,
       };
-      const next = keys[event.key];
+      // Right to left the horizontal arrows swap: ← is the later iteration.
+      const next = keys[inlineKey(event.key, event.currentTarget)];
       if (next === undefined) {
         return;
       }

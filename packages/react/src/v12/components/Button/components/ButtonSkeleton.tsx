@@ -32,6 +32,7 @@ import './button.scss';
 
 export interface ButtonSkeletonProps extends HTMLAttributes<HTMLElement> {
   className?: string;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** The button's corner. Default 'full', as the Button's. */
   corners?: ButtonCorners;
   href?: string;
@@ -44,10 +45,13 @@ export interface ButtonSkeletonProps extends HTMLAttributes<HTMLElement> {
    * box (its padding round the label, hidden). Without it, v11's 150px.
    */
   label?: string;
+  // @carbon-proposal api: button-axes — Button splits the old kinds into `kind` (the role), `variant` (outlined, tonal) and `frame` (ghost, none), so each prop says one thing. TBD
   /** With `label`: the button's role. */
   kind?: ButtonKind;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** With `label`: the button's treatment. */
   variant?: ButtonVariant;
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /** With `label`: the button's frame (a ghost's or text button's end padding). */
   frame?: ButtonFrame;
   /** With `label`: the button's expressive type. */

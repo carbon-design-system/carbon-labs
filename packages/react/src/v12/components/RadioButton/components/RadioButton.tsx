@@ -125,6 +125,7 @@ export interface RadioButtonProps extends Omit<
   disabled?: boolean;
   hideLabel?: boolean;
   id?: string;
+  // @carbon-proposal api: logical-positions — Placement values are logical, `start` and `end`, so they follow the reading direction. TBD
   /** `end` (default): the label after the button; `start`, before it. */
   labelPosition?: RadioButtonLabelPosition;
   name?: string;
@@ -295,6 +296,7 @@ export interface RadioButtonGroupProps {
   ) => void;
   /** Default `horizontal` (v11). */
   orientation?: 'horizontal' | 'vertical';
+  // @carbon-proposal api: logical-positions — Placement values are logical, `start` and `end`, so they follow the reading direction. TBD
   /** Every button's label: `end` (default) or `start`. */
   labelPosition?: RadioButtonLabelPosition;
   disabled?: boolean;

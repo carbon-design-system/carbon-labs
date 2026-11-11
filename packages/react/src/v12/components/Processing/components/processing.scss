@@ -9,8 +9,8 @@
  * dots' color. Every animation is the engine's (Web Animations), and so is
  * reduced motion: the engine paints still states when the feedback family's
  * motion says reduced, so there is no media query here. Each dot's place and
- * presence are its transform and its pulse its `r`, both the engine's; a CSS
- * value would override the still states. */
+ * presence are its group's transform, and its pulse its rings' scale and
+ * opacity, all the engine's; a CSS value would override the still states. */
 
 .cds-processing {
   position: relative;
@@ -49,6 +49,12 @@
 .cds-processing__dot {
   fill: none;
   stroke: currentColor;
+}
+
+/* A ring scales about its own centre. */
+.cds-processing__ring {
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
 /* 16px: solid dots. The ring's hole is under a pixel there, so at the

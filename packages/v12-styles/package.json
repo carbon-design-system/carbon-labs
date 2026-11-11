@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/v12-styles",
-  "version": "0.2.0",
+  "version": "0.6.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - shared styles for v12 components",
@@ -15,6 +15,7 @@
     "title": "V12 styles"
   },
   "sideEffects": [
+    "*.scss",
     "*.css"
   ],
   "exports": {

@@ -358,6 +358,7 @@ export interface AppShellProps extends Omit<
   onSizeClassChange?: (sizeClass: SizeClass) => void;
   /** Main's element's props (an id, a label). */
   mainProps?: HTMLAttributes<HTMLElement>;
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /**
    * What main stands on: `flush` (default), the page; `inset`, the workspace: its own rounded surface
    * standing in from the page, the nav ghost beside it. Inset from medium up, flush at compact (`APP_SHELL_LAYOUT`).

@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-recipe-renderer",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "private": true,
   "publishConfig": {
     "access": "public",
@@ -37,6 +37,10 @@
     "telemetry.yml",
     "recipes",
     "recipe.schema.json"
+  ],
+  "sideEffects": [
+    "*.scss",
+    "*.css"
   ],
   "scripts": {
     "build": "node ../../../../tasks/build.js",

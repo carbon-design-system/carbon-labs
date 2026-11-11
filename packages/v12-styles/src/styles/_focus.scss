@@ -1,0 +1,52 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/theme';
+
+/* The kit's focus ring: one ring, drawn one way.
+
+     outside   2px of the text colour, 2px outside the box: the neutral
+               ring, on every surface
+     inside    2px of the label's own colour, 4px in: a filled control
+               (a filled button), where a ring outside would sit on the
+               fill's own edge (`$inside: true`)
+     forced    `Highlight` in forced colours
+
+   `focus-ring` is the declarations, for a selector a component already has;
+   `focus-visible` puts them on the keyboard's focus (`:focus-visible`) and
+   takes the browser's ring off a pointer's; `focus-within` puts them on a
+   wrapper whose control has the keyboard's focus. */
+
+@mixin focus-ring($inside: false) {
+  @if $inside {
+    outline: 2px solid currentColor;
+    outline-offset: -4px;
+  } @else {
+    outline: 2px solid theme.$text-primary;
+    outline-offset: 2px;
+  }
+
+  @media (forced-colors: active) {
+    outline-color: Highlight;
+  }
+}
+
+@mixin focus-visible($inside: false) {
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    @include focus-ring($inside);
+  }
+}
+
+@mixin focus-within($inside: false) {
+  &:has(:focus-visible) {
+    @include focus-ring($inside);
+  }
+}

@@ -137,8 +137,10 @@ export interface StructuredListWrapperProps extends HTMLAttributes<HTMLDivElemen
   selectedInitialRow?: string;
   /** Slow motion for the marker. Default 1. */
   timeScale?: number;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** `square` (v11, default) or `rounded` (8px), inside a card or a rounded region. Default: KitDefaults' (a Region's), else `square`. */
   corners?: ContainerCorners;
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /**
    * The selection marker's look. `line` (default): the two row
    * lines it lands on, in the selected treatment, no fill and no sides.

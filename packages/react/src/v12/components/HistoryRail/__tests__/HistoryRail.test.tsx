@@ -117,6 +117,27 @@ describe('HistoryRail', () => {
     expect(onChange).toHaveBeenLastCalledWith(items[3], 3);
   });
 
+  it('reads the horizontal arrows by direction', async () => {
+    const onChange = jest.fn();
+    const props = { current: 'd', defaultValue: 'b', onChange };
+    const { unmount } = rail(props);
+    screen.getByRole('slider').focus();
+    await userEvent.keyboard('{ArrowRight}');
+    expect(onChange).toHaveBeenLastCalledWith(items[2], 2);
+    unmount();
+
+    render(
+      <div dir="rtl">
+        <HistoryRail label="History" items={items} {...props} />
+      </div>
+    );
+    screen.getByRole('slider').focus();
+    await userEvent.keyboard('{ArrowLeft}');
+    expect(onChange).toHaveBeenLastCalledWith(items[2], 2);
+    await userEvent.keyboard('{ArrowRight}');
+    expect(onChange).toHaveBeenLastCalledWith(items[1], 1);
+  });
+
   // A mark with a target is a place in the conversation: its divider.
   describe('linked to the conversation', () => {
     const linked = items.map((item) => ({ ...item, target: `div-${item.id}` }));

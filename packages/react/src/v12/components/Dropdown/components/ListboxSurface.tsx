@@ -188,6 +188,7 @@ export interface ListboxSurfaceProps {
    */
   followPointer?: boolean;
   size: SelectionSize;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** `full`: the list of a pill field is a pill too, its rows and frame fully rounded. Otherwise the list's own 8px. */
   corners?: 'full';
   /** `bottom` (default) or `top`: the side it opens on, flipping when there's no room. */

@@ -193,7 +193,7 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/ChatPanels/components/ChatPanels.tsx",
-      "line": 258,
+      "line": 259,
       "text": "api: chat-panel-toggle-icon-only — a panel toggle is icon-only with a tooltip; Carbon's icon-only allow-list does not name panel toggles. TBD"
     }
   ],

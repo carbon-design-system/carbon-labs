@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-radio-button",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - RadioButton for React (v12)",

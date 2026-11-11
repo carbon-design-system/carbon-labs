@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-toggletip",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - Toggletip for React (v12)",

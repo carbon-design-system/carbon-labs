@@ -24,13 +24,11 @@
 // token — and which is about 1.7:1, the gap the proposal exists to close.
 // The values are proposals/tokens.json's; they are not declared here as law.
 [data-carbon-theme='v12-light'],
-[data-carbon-theme='white'],
-[data-carbon-theme='g10'] {
+.cds--v12-light {
   --cds-system-message-icon-alert: #836700;
 }
 
 [data-carbon-theme='v12-dark'],
-[data-carbon-theme='g90'],
-[data-carbon-theme='g100'] {
+.cds--v12-dark {
   --cds-system-message-icon-alert: #cea400;
 }

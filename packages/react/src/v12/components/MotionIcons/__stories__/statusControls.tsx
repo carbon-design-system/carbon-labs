@@ -68,8 +68,8 @@ const segment: React.CSSProperties = { inlineSize: 'auto', flex: '0 0 auto' };
 /** The sizes a switcher comes in: `xs` (24px) in cards, `sm` (32px) in toolbars, `md` (40px) for page tabs. */
 export type SwitcherSize = 'xs' | 'sm' | 'md';
 
-/** Carbon's four themes, the page's theme switch. */
-export const THEMES = ['white', 'g10', 'g90', 'g100'] as const;
+/** The v12 themes, the page's theme switch. */
+export const THEMES = ['v12-light', 'v12-dark'] as const;
 export type Theme = (typeof THEMES)[number];
 
 /** A host's own controls (all optional; the Carbon-class defaults stand in for any left out). */

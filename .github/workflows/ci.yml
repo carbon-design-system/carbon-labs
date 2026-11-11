@@ -155,7 +155,7 @@ jobs:
         run: yarn v12:scenes --base HEAD^1
       - name: Upload the scene tier's results
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: v12-scenes
           path: tools/v12-scenes/results

@@ -61,7 +61,7 @@ import { TOOLTIP_LEAVE_TEXT_MS } from './delays';
  *   group     inside a `TooltipGroup`, triggers share one tooltip that jumps
  *             between them with its text changing in place
  *   place     `position: fixed` in its trigger's DOM: it escapes overflow and
- *             scroll containers and keeps its `<Theme>`
+ *             scroll containers and keeps its theme zone
  * ========================================================================== */
 
 export interface TooltipProps extends Omit<

@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-user-avatar",
-  "version": "0.11.0",
+  "version": "0.14.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - UserAvatar for React (v12)",

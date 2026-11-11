@@ -72,7 +72,7 @@ import {
 } from '@carbon-labs/react-props';
 import './slider.scss';
 import { useFormFieldState } from '@carbon-labs/react-util';
-import { inlineKey } from '@carbon-labs/react-util';
+import { inlineKey, isRtl } from '@carbon-labs/react-util';
 
 /* ============================================================================
  * Slider — Carbon's Slider (v11's API: one knob or two, the number fields), on
@@ -756,14 +756,30 @@ export function Slider({
         : 1;
     return (clientX - b.left) * k - tr.clientLeft;
   };
+  // Every x here is px from the track's left, as the engine's edges are.
+  // Right to left the track runs from the right (`min` is the right-hand
+  // end): the maps between a value and its x turn round, and so does each
+  // place that asks which side `max` is on.
+  const rtl = () => isRtl(trackRef.current);
+  /** The share of the travel at center `c`: 0 at `min`'s end, 1 at `max`'s. */
+  const shareAt = (c: number) => {
+    const g = geom();
+    if (g.hi <= g.lo) return 0;
+    const f = (c - g.lo) / (g.hi - g.lo);
+    return rtl() ? 1 - f : f;
+  };
   const centerOf = (v: number) => {
     const g = geom();
-    return g.lo + frac(v) * (g.hi - g.lo);
+    const f = frac(v);
+    return g.lo + (rtl() ? 1 - f : f) * (g.hi - g.lo);
   };
   /** The value at center `c`, on the snap increment when snapping. */
-  const valueAt = (c: number) => {
-    const g = geom();
-    return quantize(g.hi > g.lo ? (c - g.lo) / (g.hi - g.lo) : 0, inc || step);
+  const valueAt = (c: number) => quantize(shareAt(c), inc || step);
+  /** The centers of two values, the left one first. */
+  const span = (v0: number, v1: number): [number, number] => {
+    const x0 = centerOf(v0);
+    const x1 = centerOf(v1);
+    return x0 <= x1 ? [x0, x1] : [x1, x0];
   };
   /** The knob at center `c`; past a wall it stops there and its trailing edge gives (the kit's squash). */
   const squashed = (c: number, a: number, b: number) => {
@@ -775,11 +791,9 @@ export function Slider({
         ? { l: b - w / 2 + wallSquash(c - b), r: b + w / 2, ...v }
         : { l: c - w / 2, r: c + w / 2, ...v };
   };
-  /** Where a knob's center may go: the track's ends, or the other knob. */
-  const walls = (h: SliderHandlePosition): [number, number] => {
-    const [a, b] = bounds(h);
-    return [centerOf(a), centerOf(b)];
-  };
+  /** Where a knob's center may go, left to right: the track's ends, or the other knob. */
+  const walls = (h: SliderHandlePosition): [number, number] =>
+    span(...bounds(h));
   /** Snapping's hysteresis, px past the halfway point (`sticky`), under half a stop's travel. */
   const hold = () => {
     const pitch = Math.abs(centerOf(min + inc) - centerOf(min));
@@ -816,7 +830,7 @@ export function Slider({
   /** Put the handle's aim spot at center `c` (an element the engine can reach and glide to). */
   const aimAt = (h: SliderHandlePosition, c: number) => {
     const el = part(`aim--${h}`)!;
-    el.style.insetInlineStart = `${c - geom().w / 2}px`;
+    el.style.left = `${c - geom().w / 2}px`;
     return el;
   };
 
@@ -1043,7 +1057,9 @@ export function Slider({
         // Two knobs on one value: the drag's direction says which one it took (the one free to go
         // that way), decided once; it never changes mid-drag.
         if (g.undecided) {
-          const h: SliderHandlePosition = x > g.x0 ? 'upper' : 'lower';
+          // Toward `max`: rightward, or leftward right to left.
+          const h: SliderHandlePosition =
+            x > g.x0 !== rtl() ? 'upper' : 'lower';
           if (h !== g.handle) {
             delete tr.dataset[
               g.handle === 'lower' ? 'pressLower' : 'pressUpper'
@@ -1073,12 +1089,13 @@ export function Slider({
       const pushed = g.handle === 'lower' ? 'upper' : 'lower';
       // Pushing knobs: the track's ends are the walls (the other knob yields). Otherwise the ends,
       // or the other knob (triangles stop where their stems meet).
-      const [a, b] = pushes ? [centerOf(min), centerOf(max)] : walls(g.handle);
+      const [a, b] = pushes ? span(min, max) : walls(g.handle);
       // Triangles: the other knob is a hard stop, not a wall to squash against: past it the knob
       // doesn't move at all, not even its overdrag, so only the stems ever coincide. The track's ends still give.
+      // The other knob is the lower's right wall, the upper's left; right to left, the reverse.
       const c = !triangles
         ? x - g.grabD
-        : g.handle === 'lower'
+        : (g.handle === 'lower') !== rtl()
           ? Math.min(x - g.grabD, b)
           : Math.max(x - g.grabD, a);
       const at = clamp(c, a, b);
@@ -1138,7 +1155,7 @@ export function Slider({
     const dl = Math.abs(x - liveCenter('lower'));
     const du = Math.abs(x - liveCenter('upper'));
     if (Math.abs(dl - du) < 0.5)
-      return x > liveCenter('upper') ? 'upper' : 'lower';
+      return x > liveCenter('upper') !== rtl() ? 'upper' : 'lower';
     return du < dl ? 'upper' : 'lower';
   };
   /** On a knob's hit area (`.cds-slider__hit`, at least 24 × 24px; slider.scss). */
@@ -1399,11 +1416,11 @@ export function Slider({
     if (!el || !tr || reduced) return land();
     // The clock: the selection timing for the distance the edge travels (the fill's length; a
     // range's two edges meet in the middle, so half of it), as a knob's glide over it.
-    const span = twoHandles
+    const travel = twoHandles
       ? (liveCenter('upper') - liveCenter('lower')) / 2
-      : liveCenter('lower') - geom().lo;
+      : liveCenter('lower') - centerOf(min);
     const cs = getComputedStyle(tr);
-    const token = selectionDuration(span);
+    const token = selectionDuration(travel);
     const ms =
       parseFloat(cs.getPropertyValue(`--cds-motion-duration-${token}`)) ||
       motionTokens.duration[token];
@@ -1469,10 +1486,7 @@ export function Slider({
     reduced,
     hasSpecial: !!stepList && n > 2 && stepList.some((_, i) => isSpecial(i)),
     knob: () => sel.lower.current?.live() ?? null,
-    progress: () => {
-      const g = geom();
-      return g.hi > g.lo ? (liveCenter('lower') - g.lo) / (g.hi - g.lo) : 0;
-    },
+    progress: () => shareAt(liveCenter('lower')),
   });
   useLayoutEffect(() => {
     const canvas = canvasRef.current;

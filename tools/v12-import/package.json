@@ -19,7 +19,8 @@
     "test": "vitest run",
     "contract": "node ./bin/contract.js",
     "check": "node ./bin/check.js",
-    "catalog": "node ./bin/catalog.js"
+    "catalog": "node ./bin/catalog.js",
+    "departures": "node ./bin/departures.js"
   },
   "devDependencies": {
     "typescript": "^5.2.2",

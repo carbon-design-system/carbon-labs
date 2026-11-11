@@ -84,6 +84,7 @@ export interface StatusIndicatorProps extends Omit<
   labels?: readonly string[];
   /** A new label travels (8px up and out, then up from below) or swaps in place. Default travel; in place with `labels`. */
   labelSwap?: 'travel' | 'in-place';
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** Pending's spinner: neutral, or hero (the kit's brand). Default neutral. */
   variant?: SpinnerVariant;
 }

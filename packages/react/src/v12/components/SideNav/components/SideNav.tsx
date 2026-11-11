@@ -1263,8 +1263,10 @@ export interface SideNavProps
   children?: ReactNode;
   /** Row size: `sm` (26px rows) / `md` (32px rows, default) / `lg` (40px rows) — the kit's row scale. Unset, a `KitDefaults` density's: compact sm, default md, spacious lg. */
   size?: SideNavSize;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** `inverse` (default) / `tonal` / `outlined`: the kit's selector styles; `hero` the brand blue, for a nav that is the page's one emphasized control. */
   variant?: SideNavVariant;
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /**
    * `inset` (default; `ghost` in a framed Region): a rounded panel, its rows inset, with a hairline
    * just outside it. `flush`: the column itself, full height, its rows

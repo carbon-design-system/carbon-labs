@@ -41,6 +41,7 @@
     "v12:check": "yarn workspace @carbon-labs/v12-import check",
     "v12:contract": "yarn workspace @carbon-labs/v12-import contract",
     "v12:catalog": "yarn workspace @carbon-labs/v12-import catalog",
+    "v12:departures": "yarn workspace @carbon-labs/v12-import departures",
     "v12:figma": "yarn workspace @carbon-labs/v12-figma figma",
     "v12:scenes": "yarn workspace @carbon-labs/v12-scenes scenes",
     "v12:test": "yarn workspaces foreach -A --include 'packages/react/src/v12/components/*' --include 'packages/v12-*' --include 'tools/v12-*' run test",

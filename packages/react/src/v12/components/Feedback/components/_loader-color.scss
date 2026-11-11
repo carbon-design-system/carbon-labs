@@ -45,6 +45,7 @@
 :root,
 [data-carbon-theme='white'],
 .cds--white {
+  // @carbon-explore loader-neutral — Loaders (the spinner, the ring and the bar) draw in the neutral ink over a gray base by default, and take the brand colour only when asked, so waiting never competes with the action. TBD
   --cds-loader-neutral-base: #{c.$gray-20-hover};
   --cds-loader-neutral-glint: #{c.$white};
 }

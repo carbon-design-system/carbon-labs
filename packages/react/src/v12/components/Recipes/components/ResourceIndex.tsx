@@ -130,6 +130,7 @@ export interface ResourceIndexProps {
   density?: Density;
   /** Where the screen lives: the page, or a container (a frame, a pane). Default `page`. */
   scope?: AppShellScope;
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /** The shell's frame (AppShell's): `inset`, the workspace (default), or `flush`. */
   frame?: AppShellFrame;
   /** Where the header goes (AppShell's): `nav`, the nav column's top row (default), or `bar`. */

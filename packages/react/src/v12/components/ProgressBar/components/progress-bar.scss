@@ -81,6 +81,7 @@ $loader-size: (
 
 .cds-progress-bar {
   --_bar: #{theme.$icon-primary};
+  // @carbon-explore loader-neutral — Loaders (the spinner, the ring and the bar) draw in the neutral ink over a gray base by default, and take the brand colour only when asked, so waiting never competes with the action. TBD
   --cds-loader-base: var(--cds-loader-neutral-base);
   /* Tokens, a host's to set on the bar or any ancestor: the base's color
      (`--cds-progress-bar-base`, default the loaders' neutral base, as the
@@ -418,6 +419,7 @@ $loader-size: (
    the bar's one row (below). Not with no mark (`mark={false}`): there is no
    icon to hold room for, so a hidden label takes none, as v11's (the bare
    line). */
+// @carbon-explore progress-bar-label-row — The status icon sits at the bar's end in every type, and a hidden label still keeps its row, so the bar never grows or shrinks as it finishes or fails. TBD
 .cds-progress-bar:not(.cds-progress-bar--inline, .cds-progress-bar--markless)
   .cds-progress-bar__label.cds-progress-bar__hidden {
   position: static;

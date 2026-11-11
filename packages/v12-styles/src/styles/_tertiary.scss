@@ -24,6 +24,7 @@
 :root,
 [data-carbon-theme='white'],
 .cds--white {
+  // @carbon-explore tertiary-neutral — The outlined Button draws in the neutral text colour on light themes, keeping blue for the one primary action. TBD
   --cds-tertiary: #{theme.$text-primary};
 }
 

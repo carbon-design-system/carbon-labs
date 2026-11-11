@@ -171,6 +171,7 @@ export interface TabsVerticalProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>, TabsRootProps {
   /** Row height: sm 32 / md 40 / lg 48 / xl 64px (default). */
   size?: VerticalTabsSize;
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /**
    * What the list stands on. `inset` (default; `ghost` in a framed Region): its own track. `ghost`: no
    * track, for tabs inside something that already frames them (a card, a

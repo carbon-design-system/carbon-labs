@@ -66,6 +66,7 @@
    the select list's and the menus' rows of the same size. xs takes the
    kit's xs type, as a menu's xs rows do. */
 .sel.cds-tree--xs {
+  // @carbon-explore row-scale — One row height per size (xs 20, sm 26, md 32, lg 40px) across the menu, the select list, the side nav and the tree view, so lists of a size line up. TBD
   --cds-tree-row: 20px;
 
   @include type-style('label-01');

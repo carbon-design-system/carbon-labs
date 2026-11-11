@@ -182,6 +182,7 @@ export interface ProgressBarProps {
    * `hideLabel`, the bare line. Finished and error still colour the line.
    */
   mark?: boolean;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** `neutral` (default, `$icon-primary` over the neutral base) or `hero` (the kit's brand, IBM blue by default), as the Spinner's and the ring's. Not given: `KitDefaults variant`, else neutral. */
   variant?: 'neutral' | 'hero';
 }

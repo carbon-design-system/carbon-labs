@@ -283,6 +283,7 @@ export interface SliderProps extends Omit<
   gradient?: 'none' | 'red-green' | 'cold-warm';
   /** The slider's shape (as `knobShape` is the knob's). `line` (default): a thin line and a round knob. `track`: the knob sits in a 24px track (16 / 32 at sm / lg), filled up to it; the step slider's look. `knob`: the track's knob, stops and base with no fill, for an ordered choice where a fill would read as an amount. */
   shape?: SliderShape;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /**
    * The treatment. `inverse` (default) or `hero`: the selection kit's hero,
    * the knob and the fill in the
@@ -294,6 +295,7 @@ export interface SliderProps extends Omit<
   variant?: SliderVariant;
   /** The `track` and `knob` shapes' base (the part behind the fill): `inset` (default) 2 / 3 / 4px inside the slider's box (sm / md / lg, the knob's own inset), concentric, so the fill and the knob stand proud of it; or `flush` with the box. */
   base?: 'flush' | 'inset';
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** The `track` shape's corners: `full` (default), `rounded` (8px), `square`. */
   corners?: 'full' | 'rounded' | 'square';
   /** The `track` shape, one knob: the projection texture (an AI choice) on the fill, the knob its lens. Under reduced motion it holds still. */

@@ -1107,7 +1107,13 @@
       },
       "title": "V12/Charts",
       "stories": [
-        "v12-charts--fixtures"
+        "v12-charts--fixtures",
+        "v12-charts--small",
+        "v12-charts--medium",
+        "v12-charts--large",
+        "v12-charts--loading",
+        "v12-charts--empty",
+        "v12-charts--load-error"
       ],
       "docs": "v12-charts--overview",
       "props": {
@@ -1120,9 +1126,28 @@
           "figma": "VARIANT",
           "values": [
             "sm",
+            "md",
             "lg"
           ],
           "surface": true
+        },
+        "state": {
+          "figma": "VARIANT",
+          "values": [
+            "ready",
+            "loading",
+            "empty",
+            "error"
+          ]
+        },
+        "theme": {
+          "figma": "VARIANT",
+          "values": [
+            "page",
+            "light",
+            "dark",
+            "inverse"
+          ]
         },
         "live": {
           "figma": "BOOLEAN"
@@ -1131,10 +1156,21 @@
       "notMapped": [],
       "state": [
         "rest",
-        "live-update"
+        "live-update",
+        "loading",
+        "empty",
+        "error"
       ],
-      "motion": [],
-      "reduced": {},
+      "motion": [
+        "duration-moderate-01",
+        "easing-standard-productive",
+        "easing-entrance-productive"
+      ],
+      "reduced": {
+        "duration-moderate-01": "at-once",
+        "easing-standard-productive": "at-once",
+        "easing-entrance-productive": "at-once"
+      },
       "departures": [],
       "stateColors": []
     },

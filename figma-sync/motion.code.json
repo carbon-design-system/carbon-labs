@@ -2766,10 +2766,35 @@
       "id": "charts",
       "title": "V12/Charts",
       "declared": true,
-      "items": [],
+      "items": [
+        {
+          "item": "duration-moderate-01",
+          "reduced": "at-once",
+          "tokens": [
+            "duration-moderate-01"
+          ]
+        },
+        {
+          "item": "easing-standard-productive",
+          "reduced": "at-once",
+          "tokens": [
+            "easing-standard-productive"
+          ]
+        },
+        {
+          "item": "easing-entrance-productive",
+          "reduced": "at-once",
+          "tokens": [
+            "easing-entrance-productive"
+          ]
+        }
+      ],
       "states": [
         "rest",
-        "live-update"
+        "live-update",
+        "loading",
+        "empty",
+        "error"
       ],
       "seam": [
         "DURATION_FLOOR_MS",

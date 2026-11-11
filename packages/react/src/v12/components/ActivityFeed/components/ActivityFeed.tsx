@@ -61,7 +61,6 @@ import {
 } from './relativeTime';
 import './activity-feed.scss';
 import { cx } from '@carbon-labs/react-util';
-import { IN_DEVELOPMENT } from '@carbon-labs/react-util';
 
 /* ============================================================================
  * ActivityFeed: events in time order, newest first, by day.
@@ -154,15 +153,6 @@ export interface ActivityFeedProps extends Omit<
   /** Slow motion. Default 1. */
   timeScale?: number;
 }
-
-/** In development, renders counted on the page for its tests: a tick re-renders times, never rows. */
-type RenderCount = { feed: number; rows: number; times: number };
-const counted = (k: keyof RenderCount) => {
-  if (!IN_DEVELOPMENT || typeof window === 'undefined') return;
-  const w = window as unknown as { __cnActivityFeedRenders?: RenderCount };
-  w.__cnActivityFeedRenders ??= { feed: 0, rows: 0, times: 0 };
-  w.__cnActivityFeedRenders[k] += 1;
-};
 
 /** Events per window block. */
 const BLOCK = 25;
@@ -285,7 +275,6 @@ const EventTime = memo(function EventTime({
   t: number;
   words?: RelativeTimeWords;
 }) {
-  counted('times');
   const text = useRelativeTime(t, words);
   return (
     <time
@@ -320,7 +309,6 @@ const Row = memo(function Row({
   pos: number;
   total: number;
 }) {
-  counted('rows');
   const shared = useContext(Shared)!;
   const { reduced } = useFeedbackMotion();
   const [open, setOpen] = useState(() => shared.open.get(event.id) ?? false);
@@ -509,7 +497,6 @@ export function ActivityFeed({
   className,
   ...rest
 }: ActivityFeedProps) {
-  counted('feed');
   const { reduced } = useFeedbackMotion();
   const viewport = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);

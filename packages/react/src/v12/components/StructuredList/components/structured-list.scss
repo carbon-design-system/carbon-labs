@@ -301,18 +301,20 @@ $_selected-line: var(--cds-sl-selected-line, #{theme.$layer-selected-inverse});
 /* Physical placement: the engine's edges are px from the left and top in
    either direction (selection-kit.scss, the header). */
 .cds-structured-list__marker {
+  /* stylelint-disable-next-line csstools/use-logical -- the engine's edges are physical */
+  left: var(#{$sel}-l, 0px);
   block-size: calc(var(#{$sel}-b, 0px) - var(#{$sel}-t, 0px));
   inline-size: calc(var(#{$sel}-r, 0px) - var(#{$sel}-l, 0px));
   inset-block-start: var(#{$sel}-t, 0px);
-  inset-inline-start: var(#{$sel}-l, 0px);
 }
 
 /* Reduced motion: the old place fading out while the marker fades in. */
 .cds-structured-list__ghost {
+  /* stylelint-disable-next-line csstools/use-logical -- the engine's edges are physical */
+  left: var(#{$sel}-gl, 0px);
   block-size: calc(var(#{$sel}-gb, 0px) - var(#{$sel}-gt, 0px));
   inline-size: calc(var(#{$sel}-gr, 0px) - var(#{$sel}-gl, 0px));
   inset-block-start: var(#{$sel}-gt, 0px);
-  inset-inline-start: var(#{$sel}-gl, 0px);
   opacity: 0;
 }
 

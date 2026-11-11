@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.241.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.240.0...%40carbon-labs%2Freact%400.241.0) (2026-11-11)
+
+### Bug Fixes
+
+* **v12-review:** skip the accessibility scan on the review app story ([#1493](https://github.com/carbon-design-system/carbon-labs/issues/1493)) ([d71dc92](https://github.com/carbon-design-system/carbon-labs/commit/d71dc92a1c0c0ca032798bc4d4c3b6ac517f66c9))
+
+
 # [0.240.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.239.0...%40carbon-labs%2Freact%400.240.0) (2026-11-11)
 
 ### Bug Fixes

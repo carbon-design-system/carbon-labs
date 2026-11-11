@@ -2346,6 +2346,25 @@
       ]
     },
     {
+      "name": "@carbon-labs/react-charts",
+      "folder": "Charts",
+      "labsStatus": "draft",
+      "motion": [
+        "DURATION_FLOOR_MS",
+        "DurationToken",
+        "MotionLevel",
+        "STAGGER",
+        "bezierEase",
+        "cubicBezier",
+        "distanceTokens",
+        "motionTokens",
+        "reducedClock",
+        "staggerSteps",
+        "toEasing"
+      ],
+      "components": []
+    },
+    {
       "name": "@carbon-labs/react-chat",
       "folder": "Chat",
       "labsStatus": "draft",

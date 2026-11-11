@@ -113,6 +113,7 @@ export const CATEGORIES: Category[] = [
       'CodeSnippet',
       'UserAvatar',
       'ActivityFeed',
+      'Charts',
     ],
   },
   {

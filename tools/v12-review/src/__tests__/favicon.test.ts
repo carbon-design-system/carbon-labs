@@ -6,7 +6,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import { faviconSvg } from '../favicon';
+import { FAVICON_THEMES, faviconSvg, iconSecondaryOf } from '../favicon';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
@@ -42,5 +42,26 @@ describe('the favicon', () => {
     expect(svg).not.toContain('class=');
     expect(svg).toContain('width="32"');
     expect(m.getAttribute('class')).toBe('icon');
+  });
+});
+
+describe("the favicon's tones", () => {
+  it('reads each tone from a v12 zone, the only zones the page defines', () => {
+    expect(FAVICON_THEMES).toEqual({ light: 'v12-light', dark: 'v12-dark' });
+  });
+
+  it("reads a zone's own icon-secondary, not the page's", () => {
+    const style = document.createElement('style');
+    style.textContent =
+      ':root{--cds-icon-secondary:#000000}' +
+      '.cds--v12-light{--cds-icon-secondary:#525252}' +
+      '.cds--v12-dark{--cds-icon-secondary:#c6c6c6}';
+    document.head.appendChild(style);
+    try {
+      expect(iconSecondaryOf(FAVICON_THEMES.light)).toBe('#525252');
+      expect(iconSecondaryOf(FAVICON_THEMES.dark)).toBe('#c6c6c6');
+    } finally {
+      style.remove();
+    }
   });
 });

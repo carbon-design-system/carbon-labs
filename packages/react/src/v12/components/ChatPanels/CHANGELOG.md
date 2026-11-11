@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-chat-panels%400.7.0...%40carbon-labs%2Freact-chat-panels%400.8.0) (2026-11-11)
+
+### Bug Fixes
+
+* **v12:** right-to-left arrow keys and overlay slides in chat and toolbar ([#1501](https://github.com/carbon-design-system/carbon-labs/issues/1501)) ([5089696](https://github.com/carbon-design-system/carbon-labs/commit/5089696e2914e904aba852b53045a477eb72dfd4))
+
+
 # [0.7.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-chat-panels%400.6.0...%40carbon-labs%2Freact-chat-panels%400.7.0) (2026-11-11)
 
 **Note:** Version bump only for package @carbon-labs/react-chat-panels

@@ -9,13 +9,17 @@ import React, { useEffect } from 'react';
 import type { ReactNode } from 'react';
 import type { Decorator } from '@storybook/react';
 import { addons } from 'storybook/preview-api';
-import { unstable_Layout as Layout } from '@carbon/react';
 import { FollowKitMotion } from '@carbon-labs/react-icon-motion';
 import { KitDefaults } from '@carbon-labs/react-kit-defaults';
-import { FeedbackMotion, MotionProvider } from '@carbon-labs/v12-motion';
+import {
+  FeedbackMotion,
+  MotionProvider,
+  usePrefersReducedMotion,
+} from '@carbon-labs/v12-motion';
 import {
   EVENTS,
   MOTION_LEVEL,
+  levelOf,
   readGlobals,
   timeScaleOf,
   type V12Parameters,
@@ -28,12 +32,13 @@ import { motionReport } from './motion';
  * Applies the toolbar to a story.
  *
  * - On `<html>`, so what a story portals to the body follows too:
- *   `data-carbon-theme`, `dir`, `data-density` and `data-motion-level` (what carbon-motion's tokens CSS reads).
- * - Around the story: carbon-motion's `MotionProvider` at the forced level
- *   (what `usePrefersReducedMotion` reads), `FeedbackMotion` with the time
- *   scale and the reduced flag, the kit's `KitDefaults` (compact density;
- *   the default leaves each component's own) and Carbon's
- *   `Layout` density, for the parts still drawn by Carbon.
+ *   `data-carbon-theme`, `dir` and `data-motion-level` (what carbon-motion's
+ *   tokens CSS reads).
+ * - Around the story: carbon-motion's `MotionProvider` at the picked level,
+ *   or at the system's when nothing is forced (what
+ *   `usePrefersReducedMotion` reads), `FeedbackMotion` with the time scale
+ *   and the reduced flag, and the kit's `KitDefaults`, the one path density
+ *   and corners take (the default of each leaves a component's own).
  * - The clock, on the whole document (see `applyClock`).
  * - The Motion panel's data, sent over the channel.
  */
@@ -65,11 +70,12 @@ export const withWorkbench: Decorator = (Story, context) => {
 };
 
 /**
- * The picks applied to what it holds: on `<html>` (theme, direction,
- * density, motion level), the clock on the whole document, and the
- * providers (motion level, time scale, the kit's defaults, Carbon's
- * `Layout` density), with the motion icons following the level. The
- * decorator uses it with the toolbar's globals; an app uses it with its own.
+ * The picks applied to what it holds: on `<html>` (theme, direction, motion
+ * level), the clock on the whole document, and the providers (motion level,
+ * time scale, the kit's defaults for density and corners), with the motion
+ * icons following the level. With no motion pick the level is the system's.
+ * The decorator uses it with the toolbar's globals; an app uses it with its
+ * own.
  */
 export function WorkbenchFrame({
   globals,
@@ -78,33 +84,54 @@ export function WorkbenchFrame({
   globals: WorkbenchGlobals;
   children: ReactNode;
 }) {
-  const level = MOTION_LEVEL[globals.reducedMotion];
   const timeScale = timeScaleOf(globals.clock);
 
   useEffect(() => {
     const html = document.documentElement;
     html.setAttribute('data-carbon-theme', globals.theme);
     html.setAttribute('dir', globals.dir);
-    html.setAttribute('data-density', globals.density);
-    html.setAttribute('data-motion-level', level);
-  }, [globals.theme, globals.dir, globals.density, level]);
+  }, [globals.theme, globals.dir]);
 
   useEffect(() => applyClock(timeScale), [timeScale]);
 
   return (
-    <MotionProvider level={level} scope={false}>
-      {/* The motion icons follow the level too: they read their own provider. */}
-      <FollowKitMotion>
-        <FeedbackMotion timeScale={timeScale} reduced={level !== 'full'}>
-          <KitDefaults
-            density={globals.density === 'compact' ? 'compact' : undefined}>
-            <Layout
-              density={globals.density === 'compact' ? 'condensed' : 'normal'}>
-              {children}
-            </Layout>
-          </KitDefaults>
-        </FeedbackMotion>
-      </FollowKitMotion>
+    <MotionProvider level={MOTION_LEVEL[globals.reducedMotion]} scope={false}>
+      <Applied globals={globals} timeScale={timeScale}>
+        {children}
+      </Applied>
     </MotionProvider>
+  );
+}
+
+/** What reads the resolved level: the `<html>` attribute and the providers below. */
+function Applied({
+  globals,
+  timeScale,
+  children,
+}: {
+  globals: WorkbenchGlobals;
+  timeScale: number;
+  children: ReactNode;
+}) {
+  // Under `system` the provider holds no level, so this is the operating
+  // system's setting.
+  const systemReduces = usePrefersReducedMotion();
+  const level = levelOf(globals.reducedMotion, systemReduces);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-motion-level', level);
+  }, [level]);
+
+  return (
+    // The motion icons follow the level too: they read their own provider.
+    <FollowKitMotion>
+      <FeedbackMotion timeScale={timeScale} reduced={level !== 'full'}>
+        <KitDefaults
+          density={globals.density === 'default' ? undefined : globals.density}
+          corners={globals.corners === 'default' ? undefined : globals.corners}>
+          {children}
+        </KitDefaults>
+      </FeedbackMotion>
+    </FollowKitMotion>
   );
 }

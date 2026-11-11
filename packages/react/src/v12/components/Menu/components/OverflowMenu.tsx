@@ -7,60 +7,47 @@
 
 /** @jsxRuntime automatic */
 
-import {
-  useId,
-  type ButtonHTMLAttributes,
-  type ElementType,
-  type ReactNode,
-} from 'react';
-import type { SelectionMoveInfo } from '@carbon-labs/v12-motion';
+import { useId, type ButtonHTMLAttributes, type ElementType } from 'react';
 import { OverflowMenuVertical } from '@carbon-labs/react-motion-icons';
-import { Menu, type MenuMotion, type MenuStyleProps } from './Menu';
+import { Menu, type MenuStyleProps } from './Menu';
 import { menuSizeFor } from './menu-size';
 import { useMenuTrigger } from '@carbon-labs/v12-motion';
-import type { SelectionLoadingProps } from '@carbon-labs/react-selection-kit';
 import { iconSizeFor, useWithTimeScale } from '@carbon-labs/react-props';
+import {
+  useTriggerTooltip,
+  type MenuTriggerProps,
+  type MenuTriggerTooltipProps,
+} from './trigger';
 
 /* ============================================================================
  * OverflowMenu — v11's OverflowMenu (the v12 one, whose children are
  * MenuItems): an icon button that opens a Menu. The trigger is an icon
  * button with the rollover, its fill inset inside its box by the kit's inset;
  * a circle by default, 8px corners with `corners="rounded"`; its
- * motion icon plays on hover.
+ * motion icon plays on hover. Its label is its tooltip and its name
+ * (`aria-labelledby`), as v11's (trigger.ts).
  * ========================================================================== */
 
 export interface OverflowMenuProps
   extends
-    MenuStyleProps,
-    SelectionLoadingProps,
+    MenuTriggerProps,
+    MenuTriggerTooltipProps,
     Omit<
       ButtonHTMLAttributes<HTMLButtonElement>,
       'children' | 'onClick' | 'onKeyDown' | 'onPointerDown' | 'type'
     > {
-  /** MenuItems. */
-  children?: ReactNode;
-  /** The trigger's accessible name and the menu's. Default `Options` (v11). */
+  /** The trigger's tooltip and accessible name, and the menu's. Default `Options` (v11). */
   label?: string;
   /** The trigger's icon — a motion icon. Default OverflowMenuVertical. */
   renderIcon?: ElementType;
   /** The trigger's size, and its menu's (an xs trigger opens an sm menu). Default `md`. */
-  size?: 'xs' | 'sm' | 'md' | 'lg';
+  size?: MenuTriggerProps['size'];
   /** Default `bottom-start` (v12's); `flipped` gives `bottom-end`. */
   menuAlignment?: 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end';
   /** v11's classic flag: align the menu's end with the trigger's. */
   flipped?: boolean;
-  disabled?: boolean;
-  menuTarget?: Element | null;
-  /** The snap starts at the press point (default) or the trigger's center. */
-  openFrom?: 'pointer' | 'trigger';
-  /** The menu's own size, when it differs from the trigger's. */
-  menuSize?: 'xs' | 'sm' | 'md' | 'lg';
-  motion?: Partial<MenuMotion>;
-  /** Slow motion: multiplies the durations. Default 1. Wins over `motion.timeScale`. */
-  timeScale?: number;
-  onMove?: (info: SelectionMoveInfo) => void;
-  onOpen?: () => void;
-  onClose?: () => void;
+  /** The menu's treatment (Menu's `variant`): `inverse` (default), `tonal`, `outlined`, `hero`. */
+  variant?: MenuStyleProps['variant'];
 }
 
 export function OverflowMenu({
@@ -86,7 +73,13 @@ export function OverflowMenu({
   outlinedFill,
   outline,
   shadow,
+  tooltipAlignment,
+  tooltipAutoAlign,
   className,
+  onPointerEnter,
+  onPointerLeave,
+  onFocus,
+  onBlur,
   // The menu's rows are loading (the trigger itself isn't).
   loading,
   skeletonCount,
@@ -102,11 +95,20 @@ export function OverflowMenu({
       timeScale: motion?.timeScale,
     });
   const menuId = `cds-overflow-${useId().replace(/:/g, '')}`;
+  const tip = useTriggerTooltip({
+    label,
+    off: !!disabled || open,
+    align: tooltipAlignment,
+    autoAlign: tooltipAutoAlign,
+    buttonRef: setButton,
+    own: { onPointerEnter, onPointerLeave, onFocus, onBlur },
+    menu: handlers,
+  });
   return (
     <>
       <button
         {...rest}
-        ref={setButton}
+        {...tip.props}
         type="button"
         className={[
           'cds-menu-trigger',
@@ -119,14 +121,16 @@ export function OverflowMenu({
           .filter(Boolean)
           .join(' ')}
         disabled={disabled}
-        aria-label={label}
+        aria-labelledby={
+          rest['aria-labelledby'] ?? tip.props['aria-labelledby']
+        }
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={open ? menuId : undefined}
-        data-motion-icon-frame=""
-        {...handlers}>
+        data-motion-icon-frame="">
         <Icon size={iconSizeFor(size)} aria-hidden="true" />
       </button>
+      {tip.tooltip}
       <Menu
         id={menuId}
         label={label}

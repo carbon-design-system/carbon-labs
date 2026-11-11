@@ -900,7 +900,7 @@
   },
   "V12/Menu": {
     "title": "Menu",
-    "summary": "A floating list of actions and choices, with Carbon's API: `MenuItem`,\n`MenuItemSelectable`, `MenuItemRadioGroup`, `MenuItemGroup` and\n`MenuItemDivider`, and a MenuItem's own MenuItems as a submenu. `MenuButton` and\n`OverflowMenu` open one from a button, as SplitButton does; `x` and `y` place\none at a point, as a context menu. One highlight serves the pointer and the\nkeys, and labels take its color where it covers them. With `inline`, the menu is\ndrawn in place, with no portal, placement, snap or close.",
+    "summary": "A floating list of actions and choices, with Carbon's API: `MenuItem`,\n`MenuItemSelectable`, `MenuItemRadioGroup`, `MenuItemGroup` and\n`MenuItemDivider`, and a MenuItem's own MenuItems as a submenu. Three triggers\nopen one from a button, as Carbon's do, and share one set of trigger props:\n`MenuButton`, a labelled button; `OverflowMenu`, an icon button; and\n`ComboButton`, a primary action with a chevron for related actions. `x` and `y`\nplace one at a point, as a context menu. One highlight serves the pointer and\nthe keys, and labels take its color where it covers them. With `inline`, the\nmenu is drawn in place, with no portal, placement, snap or close.\n\n`ComboButton` has Carbon's ComboButton props, on the Button's look: `kind`\nprimary or secondary, `variant` filled, outlined or tonal, sizes xs to lg.\n`busy` shows a spinner in the action's place while it runs. It is not for two\nequal actions: use two Buttons.",
     "sections": [
       {
         "title": "Corners",
@@ -908,11 +908,11 @@
       },
       {
         "title": "Motion",
-        "text": "- **Open:** the frame grows about its cause: the press that opened it, else the\n  trigger's center, as from the keyboard. `openFrom=\"trigger\"` on a button\n  always starts at its center.\n- **Content:** the list slides out of the frame on y only.\n- **Fade:** it fades up over the first part of the open and out over the last\n  part of the close: 40ms on a clock of 220ms or less, else 80ms.\n  `exitFade={false}` folds back opaque.\n- **Close:** the far edge folds back into the point it grew from, the list\n  still. It is gone on the fold's last frame. Reopened while it leaves, it turns\n  round from where it is.\n- **Highlight:** its first arrival in an open menu grows in from the row's\n  center. Under the pointer it jumps from row to row. The arrow keys glide it,\n  timed by travel. It shrinks back and fades when the pointer leaves the list.\n- **Danger:** on a danger row the highlight turns to the danger button's color,\n  on the glide's clock.\n- **Press:** the highlight insets 1px while a row is held.\n- **Submenu:** one level deep, marked by a chevron. It opens beside its row\n  after 100ms of hover, or on → or Enter, and snaps from the row. ← and Escape\n  go back.\n- **Chevron:** on MenuButton, the chevron turns while the menu shows.\n- **Keyboard:** ↑ and ↓ wrap; Home, End and typeahead move too. Disabled rows\n  are skipped unless they have a `disabledReason`. A radio group's `shortcuts`\n  win over typeahead. A trigger opens on the first row with Enter, Space or ↓,\n  and on the last with ↑.\n- **Cast shadow:** off by default. `shadow` turns it on; it grows and folds with\n  the frame."
+        "text": "- **Open:** the frame grows about its cause: the press that opened it, else the\n  trigger's center, as from the keyboard. `openFrom=\"trigger\"` on a button\n  always starts at its center.\n- **Content:** the list slides out of the frame on y only.\n- **Fade:** it fades up over the first part of the open and out over the last\n  part of the close: 40ms on a clock of 220ms or less, else 80ms.\n  `exitFade={false}` folds back opaque.\n- **Close:** the far edge folds back into the point it grew from, the list\n  still. It is gone on the fold's last frame. Reopened while it leaves, it turns\n  round from where it is.\n- **Highlight:** its first arrival in an open menu grows in from the row's\n  center. Under the pointer it jumps from row to row. The arrow keys glide it,\n  timed by travel. It shrinks back and fades when the pointer leaves the list.\n- **Danger:** on a danger row the highlight turns to the danger button's color,\n  on the glide's clock.\n- **Press:** the highlight insets 1px while a row is held.\n- **Submenu:** one level deep, marked by a chevron. It opens beside its row\n  after 100ms of hover, or on → or Enter, and snaps from the row. ← and Escape\n  go back.\n- **Chevron:** on MenuButton and ComboButton, the chevron turns while the menu\n  shows.\n- **Tooltip:** the icon triggers, OverflowMenu and ComboButton's chevron, show\n  their label in Carbon's tooltip, which is also their name. It snaps in on\n  hover or keyboard focus and closes when the menu opens.\n- **Hover:** on MenuButton and ComboButton, the Button's glow in each cell,\n  clipped to the cell, with no growth.\n- **Press and release:** the Button's pressed color and release circle, clipped\n  to the cell, with no press-in.\n- **Busy:** on ComboButton, out, then in. The label fades out, then the spinner\n  draws on; the reverse as busy ends.\n- **Focus:** keyboard only. Each of ComboButton's cells has its own ring, round\n  outside and square at the seam.\n- **Keyboard:** ↑ and ↓ wrap; Home, End and typeahead move too. Disabled rows\n  are skipped unless they have a `disabledReason`. A radio group's `shortcuts`\n  win over typeahead. A trigger opens on the first row with Enter, Space or ↓,\n  and on the last with ↑.\n- **Cast shadow:** off by default. `shadow` turns it on; it grows and folds with\n  the frame."
       },
       {
         "title": "Reduced motion",
-        "text": "The menu and its submenus are there at once and gone at once: no growth, slide,\nfold or fade. The highlight does not travel: it fades in on the new row as it\nfades out of the old, on half the clock. A menu placed again while open moves at\nonce."
+        "text": "The menu and its submenus are there at once and gone at once: no growth, slide,\nfold or fade. The highlight does not travel: it fades in on the new row as it\nfades out of the old, on half the clock. A menu placed again while open moves at\nonce. On the triggers, the glow and the press show at once, the release circle\nlands at once, and the chevron, the tooltip and the busy swap change at once."
       }
     ],
     "facts": {
@@ -1477,24 +1477,6 @@
     "sections": [],
     "facts": {
       "tests": true,
-      "status": "draft"
-    }
-  },
-  "V12/SplitButton": {
-    "title": "SplitButton",
-    "summary": "A primary action, and beside it a chevron that opens a menu of related actions,\nwith Carbon's ComboButton props. Not for two equal actions: use two Buttons. One\nshell in two cells, on the Button's look: `kind` primary or secondary, `variant`\nfilled, outlined or tonal, sizes xs to lg. `busy` shows a spinner in the\naction's place while it runs.",
-    "sections": [
-      {
-        "title": "Motion",
-        "text": "- **Hover:** the Button's glow in each cell, clipped to the cell, with no\n  growth.\n- **Press and release:** the Button's pressed color and release circle, clipped\n  to the cell, with no press-in.\n- **Chevron:** it turns while the menu shows.\n- **Menu:** the Menu's open and close, from the press point or, with\n  `openFrom=\"trigger\"`, the chevron's center. The menu is at least as wide as\n  the shell.\n- **Busy:** out, then in. The label fades out, then the spinner draws on; the\n  reverse as busy ends.\n- **Focus:** keyboard only. Each cell has its own ring, round outside and square\n  at the seam."
-      },
-      {
-        "title": "Reduced motion",
-        "text": "The glow and the press show at once, and the release circle lands at once. The\nchevron changes at once. The menu is the Menu's: there at once and gone at once.\nBusy swaps at once."
-      }
-    ],
-    "facts": {
-      "tests": false,
       "status": "draft"
     }
   },

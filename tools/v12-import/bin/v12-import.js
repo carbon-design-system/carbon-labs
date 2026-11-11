@@ -28,8 +28,9 @@ const USAGE = `Usage: v12-import <id> --from <source repo> --ref <commit> [optio
        v12-import --styles <a,b> --from <source repo> --ref <commit> [options]
        v12-import --package <id> --from <source repo> --ref <commit> [options]
 
-  <id>              the component's folder in the kit (button, split-button),
-                    or a file at its root (props, for props.ts)
+  <id>              the component's folder in the kit (button,
+                    content-switcher), or a file at its root (props, for
+                    props.ts)
   --styles <a,b>    instead: the kit's shared styles partials (rollover for
                     styles/_rollover.scss) and the partials they use, into
                     the shared styles package

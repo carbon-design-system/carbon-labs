@@ -13,7 +13,7 @@ import { escapeMdx } from './doc.js';
 import { escapeRegExp } from './rewrite.js';
 
 /**
- * A component id in PascalCase: `split-button` is `SplitButton`.
+ * A component id in PascalCase: `content-switcher` is `ContentSwitcher`.
  *
  * @param {string} id The id.
  * @returns {string} The name.

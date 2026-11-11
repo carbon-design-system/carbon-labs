@@ -101,7 +101,14 @@ commitlint):
     shared axis (`frame`, `variant`, `kind`, `size`, `corners`) takes, the
     banned names, and the props Carbon v11 deprecates, read from every component
     a folder exports with the TypeScript checker. Carbon v11's own names and
-    values stay where its namesake component has them.
+    values stay where its namesake component has them;
+  - the departures: every entry in `packages/react/src/v12/departures.json` (the
+    lane's departures from Carbon, one sentence each, with the Carbon behaviour
+    it replaces and where it applies) has its `@carbon-explore` or
+    `@carbon-proposal` marks, an API departure's on each declaration of its
+    props; every mark has an entry there; and every exploration in
+    `explorations.json` is marked somewhere. `yarn v12:departures --write`
+    places the missing marks.
 
   A `// v12-allow <rule>: <why>` comment on the line, or the one above, allows
   one site (a timer's reason starts with `a11y`, `clock` or `hold`); the check
@@ -110,6 +117,11 @@ commitlint):
 - `yarn v12:contract --check`: [the motion contract](./motion-contract.md) is
   current. It counts a folder or tool as a user of a seam export when it imports
   it from the seam or from a lane package that re-exports it;
+- `yarn v12:catalog --check`: the component catalog (`docs/v12/catalog.json`) is
+  current. It lists every v12 component package with its manifest status and
+  motion, each component it exports and each prop as a JSON schema, read from
+  the lane's sources with the TypeScript checker; a recipe or a generator names
+  components and props from it. `yarn v12:catalog` writes it;
 - `yarn v12:test`: every v12 package's tests;
 - the v12 Storybook build.
 

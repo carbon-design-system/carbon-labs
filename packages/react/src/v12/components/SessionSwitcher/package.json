@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-session-switcher",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "publishConfig": {
     "access": "public",
@@ -33,6 +33,10 @@
     "lib",
     "scss",
     "telemetry.yml"
+  ],
+  "sideEffects": [
+    "*.scss",
+    "*.css"
   ],
   "scripts": {
     "build": "node ../../../../tasks/build.js",

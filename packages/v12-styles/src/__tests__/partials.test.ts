@@ -25,9 +25,11 @@ const PARTIALS = [
   'brand',
   'corners',
   'field-fill',
+  'focus',
   'ghost',
   'rollover',
   'skeleton',
+  'state',
   'surface',
   'tertiary',
   'text-pairs',
@@ -132,6 +134,91 @@ describe('@carbon-labs/v12-styles/scss partials', () => {
 
   it('ghost brings the rollover with it', () => {
     expect(code('ghost')).toMatch(/@use 'rollover' as \*;/);
+  });
+});
+
+describe('the shared mixins', () => {
+  /** The CSS a rule with the mixin compiles to, without the surfaces' own rules. */
+  const rule = (module: string, body: string) =>
+    compile(
+      `@use '@carbon-labs/v12-styles/scss/${module}' as m;\n.x { ${body} }`
+    )
+      .split(/\n(?=\S)/)
+      .filter((block) => /^\.x|^@media/.test(block))
+      .join('\n');
+
+  it('focus-visible draws the neutral ring outside, on the keyboard focus', () => {
+    const css = rule('focus', '@include m.focus-visible;');
+    expect(css).toMatch(/\.x:focus \{\s*outline: none;/);
+    expect(css).toMatch(
+      /\.x:focus-visible \{\s*outline: 2px solid var\(--cds-text-primary, #161616\);\s*outline-offset: 2px;/
+    );
+    expect(css).toMatch(
+      /@media \(forced-colors: active\) \{\s*\.x:focus-visible \{\s*outline-color: Highlight;/
+    );
+  });
+
+  it('focus-ring inside a filled control takes the label colour, 4px in', () => {
+    const css = rule('focus', '@include m.focus-ring(true);');
+    expect(css).toContain('outline: 2px solid currentColor;');
+    expect(css).toContain('outline-offset: -4px;');
+  });
+
+  it('focus-within rings a wrapper whose control has the keyboard focus', () => {
+    expect(rule('focus', '@include m.focus-within;')).toContain(
+      '.x:has(:focus-visible) {'
+    );
+  });
+
+  it('the state mixins select by what the state is', () => {
+    const css = rule(
+      'state',
+      `@include m.hover { color: red; }
+       @include m.active { color: red; }
+       @include m.disabled { color: red; }
+       @include m.invalid { color: red; }
+       @include m.invalid(true) { color: red; }
+       @include m.warn { color: red; }
+       @include m.warn(true) { color: red; }`
+    );
+    expect(css).toContain(
+      '.x:hover:not(:is(:disabled, [aria-disabled=true])) {'
+    );
+    expect(css).toContain(
+      '.x:active:not(:is(:disabled, [aria-disabled=true])) {'
+    );
+    expect(css).toContain('.x:is(:disabled, [aria-disabled=true]) {');
+    expect(css).toContain('.x[aria-invalid=true] {');
+    expect(css).toContain('.x:has([aria-invalid=true]) {');
+    expect(css).toContain('.x[data-warn] {');
+    expect(css).toContain('.x:has([data-warn]) {');
+  });
+
+  it('hairline draws round the box as an inset shadow, an edge as a border', () => {
+    expect(rule('surface', '@include m.hairline;')).toMatch(
+      /box-shadow: inset 0 0 0 1px var\(--cds-surface-rule\);[\s\S]*@media \(forced-colors: active\) \{\s*\.x \{\s*outline: 1px solid CanvasText;\s*outline-offset: -1px;/
+    );
+    expect(
+      rule('surface', '@include m.hairline(divider, block-end);')
+    ).toContain('border-block-end: 1px solid var(--cds-surface-divider);');
+  });
+
+  it('rollover hovers a surface while its own action has the keyboard focus', () => {
+    const css = compile(
+      `@use '@carbon-labs/v12-styles/scss/rollover' as *;\n.x { @include rollover; }`
+    );
+    expect(css).toMatch(
+      /\.x:has\(> \[data-rollover-own\]:focus-visible\)::before[^{]*\{\s*--cds-motion-rollover-hover: 1;/
+    );
+  });
+
+  it('hairline refuses a line or an edge it does not have', () => {
+    expect(() => rule('surface', '@include m.hairline(border);')).toThrow(
+      /rule, divider or raised-rule/
+    );
+    expect(() => rule('surface', '@include m.hairline(rule, left);')).toThrow(
+      /one logical edge/
+    );
   });
 });
 

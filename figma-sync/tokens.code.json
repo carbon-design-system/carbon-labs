@@ -1,0 +1,5548 @@
+{
+  "schema": "v12-figma/tokens@1",
+  "side": "code",
+  "source": {
+    "carbonMotion": "0.1.1",
+    "carbonThemes": "11.83.0"
+  },
+  "modes": {
+    "theme": [
+      "white",
+      "g10",
+      "g90",
+      "g100",
+      "v12-light",
+      "v12-dark"
+    ],
+    "density": [
+      "compact",
+      "default",
+      "spacious"
+    ],
+    "shape": [
+      "full",
+      "rounded",
+      "square"
+    ],
+    "motion": [
+      "full"
+    ]
+  },
+  "collections": [
+    "v12 / Theme",
+    "v12 / Proposals",
+    "v12 / Explorations",
+    "v12 / Motion"
+  ],
+  "tokens": [
+    {
+      "css": "--cds-background-brand",
+      "name": "background/brand",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "confirmed",
+      "rule": "fixed",
+      "values": {
+        "white": {
+          "hex": "#0f62fe",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g10": {
+          "hex": "#0f62fe",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g90": {
+          "hex": "#0f62fe",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g100": {
+          "hex": "#0f62fe",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "v12-light": {
+          "hex": "#0f62fe",
+          "alpha": 1,
+          "oklch": [
+            0.5565,
+            0.243,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#0f62fe",
+          "alpha": 1,
+          "oklch": [
+            0.5565,
+            0.243,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Brand background color.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-base",
+      "name": "base",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "confirmed",
+      "rule": "fixed",
+      "values": {
+        "v12-light": {
+          "hex": "#0c0d0f",
+          "alpha": 1,
+          "oklch": [
+            0.16,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#0c0d0f",
+          "alpha": 1,
+          "oklch": [
+            0.16,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Shared dark base color.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-border-strong-01",
+      "name": "border/strong-01",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "confirmed",
+      "rule": "contrast",
+      "values": {
+        "white": {
+          "hex": "#8d8d8d",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g10": {
+          "hex": "#8d8d8d",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g90": {
+          "hex": "#8d8d8d",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g100": {
+          "hex": "#6f6f6f",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "v12-light": {
+          "hex": "#8d8e91",
+          "alpha": 1,
+          "oklch": [
+            0.647,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#626365",
+          "alpha": 1,
+          "oklch": [
+            0.4987,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "STROKE_COLOR"
+      ],
+      "description": "Contextual strong border for surface context 1.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-border-strong-02",
+      "name": "border/strong-02",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "confirmed",
+      "rule": "contrast",
+      "values": {
+        "white": {
+          "hex": "#8d8d8d",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g10": {
+          "hex": "#8d8d8d",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g90": {
+          "hex": "#a8a8a8",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g100": {
+          "hex": "#8d8d8d",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "v12-light": {
+          "hex": "#939597",
+          "alpha": 1,
+          "oklch": [
+            0.6687,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#68696c",
+          "alpha": 1,
+          "oklch": [
+            0.5211,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "STROKE_COLOR"
+      ],
+      "description": "Contextual strong border for surface context 2.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-border-strong-03",
+      "name": "border/strong-03",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "confirmed",
+      "rule": "contrast",
+      "values": {
+        "white": {
+          "hex": "#8d8d8d",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g10": {
+          "hex": "#8d8d8d",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g90": {
+          "hex": "#c6c6c6",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g100": {
+          "hex": "#a8a8a8",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "v12-light": {
+          "hex": "#86878a",
+          "alpha": 1,
+          "oklch": [
+            0.6245,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#5d5e61",
+          "alpha": 1,
+          "oklch": [
+            0.4824,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "STROKE_COLOR"
+      ],
+      "description": "Contextual strong border for surface context 3.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-border-subtle-01",
+      "name": "border/subtle-01",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "confirmed",
+      "rule": "lightness-delta",
+      "values": {
+        "white": {
+          "hex": "#c6c6c6",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g10": {
+          "hex": "#e0e0e0",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g90": {
+          "hex": "#6f6f6f",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g100": {
+          "hex": "#525252",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "v12-light": {
+          "hex": "#d6d7da",
+          "alpha": 1,
+          "oklch": [
+            0.88,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#323335",
+          "alpha": 1,
+          "oklch": [
+            0.32,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "STROKE_COLOR"
+      ],
+      "description": "Contextual subtle border for surface context 1.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-border-subtle-02",
+      "name": "border/subtle-02",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "confirmed",
+      "rule": "lightness-delta",
+      "values": {
+        "white": {
+          "hex": "#e0e0e0",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g10": {
+          "hex": "#c6c6c6",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g90": {
+          "hex": "#8d8d8d",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g100": {
+          "hex": "#6f6f6f",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "v12-light": {
+          "hex": "#e0e1e4",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#3c3d3f",
+          "alpha": 1,
+          "oklch": [
+            0.36,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "STROKE_COLOR"
+      ],
+      "description": "Contextual subtle border for surface context 2.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-border-subtle-03",
+      "name": "border/subtle-03",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "confirmed",
+      "rule": "lightness-delta",
+      "values": {
+        "white": {
+          "hex": "#c6c6c6",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g10": {
+          "hex": "#e0e0e0",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g90": {
+          "hex": "#8d8d8d",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g100": {
+          "hex": "#6f6f6f",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "v12-light": {
+          "hex": "#ccced0",
+          "alpha": 1,
+          "oklch": [
+            0.85,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#28292b",
+          "alpha": 1,
+          "oklch": [
+            0.28,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "STROKE_COLOR"
+      ],
+      "description": "Contextual subtle border for surface context 3.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-field-01",
+      "name": "field/01",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "confirmed",
+      "rule": "lightness-delta",
+      "values": {
+        "white": {
+          "hex": "#f4f4f4",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g10": {
+          "hex": "#ffffff",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g90": {
+          "hex": "#393939",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g100": {
+          "hex": "#262626",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "v12-light": {
+          "hex": "#eaebee",
+          "alpha": 1,
+          "oklch": [
+            0.94,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#0c0d0f",
+          "alpha": 1,
+          "oklch": [
+            0.16,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Contextual field for surface context 1.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-field-02",
+      "name": "field/02",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "confirmed",
+      "rule": "lightness-delta",
+      "values": {
+        "white": {
+          "hex": "#ffffff",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g10": {
+          "hex": "#f4f4f4",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g90": {
+          "hex": "#525252",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g100": {
+          "hex": "#393939",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "v12-light": {
+          "hex": "#f4f5f8",
+          "alpha": 1,
+          "oklch": [
+            0.97,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#151618",
+          "alpha": 1,
+          "oklch": [
+            0.2,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Contextual field for surface context 2.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-field-03",
+      "name": "field/03",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "confirmed",
+      "rule": "lightness-delta",
+      "values": {
+        "white": {
+          "hex": "#f4f4f4",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g10": {
+          "hex": "#ffffff",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g90": {
+          "hex": "#6f6f6f",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g100": {
+          "hex": "#525252",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "v12-light": {
+          "hex": "#e0e1e4",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#050607",
+          "alpha": 1,
+          "oklch": [
+            0.12,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Contextual field for surface context 3.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-icon-helper-01",
+      "name": "icon/helper-01",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "unresolved",
+      "rule": "alias",
+      "values": {
+        "v12-light": {
+          "hex": "#6f7173",
+          "alpha": 1,
+          "oklch": [
+            0.5473,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#7d7f81",
+          "alpha": 1,
+          "oklch": [
+            0.5953,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "description": "Contextual helper icon for surface context 1.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-icon-helper-02",
+      "name": "icon/helper-02",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "unresolved",
+      "rule": "alias",
+      "values": {
+        "v12-light": {
+          "hex": "#757779",
+          "alpha": 1,
+          "oklch": [
+            0.5675,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#848688",
+          "alpha": 1,
+          "oklch": [
+            0.619,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "description": "Contextual helper icon for surface context 2.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-icon-helper-03",
+      "name": "icon/helper-03",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "unresolved",
+      "rule": "alias",
+      "values": {
+        "v12-light": {
+          "hex": "#696b6d",
+          "alpha": 1,
+          "oklch": [
+            0.5262,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#787a7c",
+          "alpha": 1,
+          "oklch": [
+            0.5783,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "description": "Contextual helper icon for surface context 3.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-icon-placeholder-01",
+      "name": "icon/placeholder-01",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "unresolved",
+      "rule": "alias",
+      "values": {
+        "v12-light": {
+          "hex": "#6f7173",
+          "alpha": 1,
+          "oklch": [
+            0.5473,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#7d7f81",
+          "alpha": 1,
+          "oklch": [
+            0.5953,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "description": "Contextual placeholder icon for surface context 1.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-icon-placeholder-02",
+      "name": "icon/placeholder-02",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "unresolved",
+      "rule": "alias",
+      "values": {
+        "v12-light": {
+          "hex": "#757779",
+          "alpha": 1,
+          "oklch": [
+            0.5675,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#848688",
+          "alpha": 1,
+          "oklch": [
+            0.619,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "description": "Contextual placeholder icon for surface context 2.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-icon-placeholder-03",
+      "name": "icon/placeholder-03",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "unresolved",
+      "rule": "alias",
+      "values": {
+        "v12-light": {
+          "hex": "#696b6d",
+          "alpha": 1,
+          "oklch": [
+            0.5262,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#787a7c",
+          "alpha": 1,
+          "oklch": [
+            0.5783,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "description": "Contextual placeholder icon for surface context 3.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-icon-primary",
+      "name": "icon/primary",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "unresolved",
+      "rule": "fixed",
+      "values": {
+        "white": {
+          "hex": "#161616",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g10": {
+          "hex": "#161616",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g90": {
+          "hex": "#f4f4f4",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g100": {
+          "hex": "#f4f4f4",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "v12-light": {
+          "hex": "#1e1f21",
+          "alpha": 1,
+          "oklch": [
+            0.24,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#eaebee",
+          "alpha": 1,
+          "oklch": [
+            0.94,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "description": "Primary icon color.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-icon-secondary",
+      "name": "icon/secondary",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "confirmed",
+      "rule": "fixed",
+      "values": {
+        "white": {
+          "hex": "#525252",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g10": {
+          "hex": "#525252",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g90": {
+          "hex": "#c6c6c6",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g100": {
+          "hex": "#c6c6c6",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "v12-light": {
+          "hex": "#5c5e60",
+          "alpha": 1,
+          "oklch": [
+            0.48,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#a3a5a7",
+          "alpha": 1,
+          "oklch": [
+            0.72,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "description": "Secondary icon color.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-layer-01",
+      "name": "layer/01",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "confirmed",
+      "rule": "fixed",
+      "values": {
+        "white": {
+          "hex": "#f4f4f4",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g10": {
+          "hex": "#ffffff",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g90": {
+          "hex": "#393939",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g100": {
+          "hex": "#262626",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "v12-light": {
+          "hex": "#f4f5f8",
+          "alpha": 1,
+          "oklch": [
+            0.97,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#151618",
+          "alpha": 1,
+          "oklch": [
+            0.2,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Contextual surface for surface context 1.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-layer-02",
+      "name": "layer/02",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "confirmed",
+      "rule": "fixed",
+      "values": {
+        "white": {
+          "hex": "#ffffff",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g10": {
+          "hex": "#f4f4f4",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g90": {
+          "hex": "#525252",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g100": {
+          "hex": "#393939",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "v12-light": {
+          "hex": "#ffffff",
+          "alpha": 1,
+          "oklch": [
+            1,
+            0.004,
+            262
+          ],
+          "gamut": "outside-srgb"
+        },
+        "v12-dark": {
+          "hex": "#1e1f21",
+          "alpha": 1,
+          "oklch": [
+            0.24,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Contextual surface for surface context 2.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-layer-03",
+      "name": "layer/03",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "confirmed",
+      "rule": "fixed",
+      "values": {
+        "white": {
+          "hex": "#f4f4f4",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g10": {
+          "hex": "#ffffff",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g90": {
+          "hex": "#6f6f6f",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g100": {
+          "hex": "#525252",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "v12-light": {
+          "hex": "#eaebee",
+          "alpha": 1,
+          "oklch": [
+            0.94,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#0c0d0f",
+          "alpha": 1,
+          "oklch": [
+            0.16,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Contextual surface for surface context 3.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-layer-accent-01",
+      "name": "layer/accent-01",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "unresolved",
+      "rule": "lightness-delta",
+      "values": {
+        "white": {
+          "hex": "#e0e0e0",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g10": {
+          "hex": "#e0e0e0",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g90": {
+          "hex": "#525252",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g100": {
+          "hex": "#393939",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "v12-light": {
+          "hex": "#e0e1e4",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#050607",
+          "alpha": 1,
+          "oklch": [
+            0.12,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Contextual accent for surface context 1.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-layer-accent-02",
+      "name": "layer/accent-02",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "unresolved",
+      "rule": "lightness-delta",
+      "values": {
+        "white": {
+          "hex": "#e0e0e0",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g10": {
+          "hex": "#e0e0e0",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g90": {
+          "hex": "#6f6f6f",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g100": {
+          "hex": "#525252",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "v12-light": {
+          "hex": "#eaebee",
+          "alpha": 1,
+          "oklch": [
+            0.94,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#0c0d0f",
+          "alpha": 1,
+          "oklch": [
+            0.16,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Contextual accent for surface context 2.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-layer-accent-03",
+      "name": "layer/accent-03",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "unresolved",
+      "rule": "lightness-delta",
+      "values": {
+        "white": {
+          "hex": "#e0e0e0",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g10": {
+          "hex": "#e0e0e0",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g90": {
+          "hex": "#8d8d8d",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g100": {
+          "hex": "#6f6f6f",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "v12-light": {
+          "hex": "#d6d7da",
+          "alpha": 1,
+          "oklch": [
+            0.88,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#010202",
+          "alpha": 1,
+          "oklch": [
+            0.08,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Contextual accent for surface context 3.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-skeleton-background-01",
+      "name": "skeleton/background-01",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "experimental",
+      "rule": "lightness-delta",
+      "values": {
+        "v12-light": {
+          "hex": "#e6e8eb",
+          "alpha": 1,
+          "oklch": [
+            0.93,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#08090b",
+          "alpha": 1,
+          "oklch": [
+            0.14,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Contextual skeleton background for surface context 1.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-skeleton-background-02",
+      "name": "skeleton/background-02",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "experimental",
+      "rule": "lightness-delta",
+      "values": {
+        "v12-light": {
+          "hex": "#f0f2f4",
+          "alpha": 1,
+          "oklch": [
+            0.96,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#111213",
+          "alpha": 1,
+          "oklch": [
+            0.18,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Contextual skeleton background for surface context 2.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-skeleton-background-03",
+      "name": "skeleton/background-03",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "experimental",
+      "rule": "lightness-delta",
+      "values": {
+        "v12-light": {
+          "hex": "#dcdee1",
+          "alpha": 1,
+          "oklch": [
+            0.9,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#030304",
+          "alpha": 1,
+          "oklch": [
+            0.1,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Contextual skeleton background for surface context 3.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-state-active",
+      "name": "state/active",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "experimental",
+      "rule": "interactive-state",
+      "values": {
+        "v12-light": {
+          "hex": "#d6d7da",
+          "alpha": 1,
+          "oklch": [
+            0.88,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#323335",
+          "alpha": 1,
+          "oklch": [
+            0.32,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Interactive active state background.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-state-disabled",
+      "name": "state/disabled",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "experimental",
+      "rule": "interactive-opacity",
+      "values": {
+        "v12-light": {
+          "hex": "#f4f5f8",
+          "alpha": 0.25,
+          "oklch": [
+            0.97,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#151618",
+          "alpha": 0.25,
+          "oklch": [
+            0.2,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Interactive disabled state background.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-state-hover",
+      "name": "state/hover",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "experimental",
+      "rule": "interactive-state",
+      "values": {
+        "v12-light": {
+          "hex": "#eaebee",
+          "alpha": 1,
+          "oklch": [
+            0.94,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#1e1f21",
+          "alpha": 1,
+          "oklch": [
+            0.24,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Interactive hover state background.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-state-selected",
+      "name": "state/selected",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "experimental",
+      "rule": "interactive-state",
+      "values": {
+        "v12-light": {
+          "hex": "#e0e1e4",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#28292b",
+          "alpha": 1,
+          "oklch": [
+            0.28,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Interactive selected state background.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-text-helper-01",
+      "name": "text/helper-01",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "confirmed",
+      "rule": "contrast",
+      "values": {
+        "v12-light": {
+          "hex": "#6f7173",
+          "alpha": 1,
+          "oklch": [
+            0.5473,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#7d7f81",
+          "alpha": 1,
+          "oklch": [
+            0.5953,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "TEXT_FILL"
+      ],
+      "description": "Contextual helper text for surface context 1.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-text-helper-02",
+      "name": "text/helper-02",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "confirmed",
+      "rule": "contrast",
+      "values": {
+        "v12-light": {
+          "hex": "#757779",
+          "alpha": 1,
+          "oklch": [
+            0.5675,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#848688",
+          "alpha": 1,
+          "oklch": [
+            0.619,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "TEXT_FILL"
+      ],
+      "description": "Contextual helper text for surface context 2.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-text-helper-03",
+      "name": "text/helper-03",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "confirmed",
+      "rule": "contrast",
+      "values": {
+        "v12-light": {
+          "hex": "#696b6d",
+          "alpha": 1,
+          "oklch": [
+            0.5262,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#787a7c",
+          "alpha": 1,
+          "oklch": [
+            0.5783,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "TEXT_FILL"
+      ],
+      "description": "Contextual helper text for surface context 3.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-text-placeholder-01",
+      "name": "text/placeholder-01",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "unresolved",
+      "rule": "alias",
+      "values": {
+        "v12-light": {
+          "hex": "#6f7173",
+          "alpha": 1,
+          "oklch": [
+            0.5473,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#7d7f81",
+          "alpha": 1,
+          "oklch": [
+            0.5953,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "TEXT_FILL"
+      ],
+      "description": "Contextual placeholder text for surface context 1.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-text-placeholder-02",
+      "name": "text/placeholder-02",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "unresolved",
+      "rule": "alias",
+      "values": {
+        "v12-light": {
+          "hex": "#757779",
+          "alpha": 1,
+          "oklch": [
+            0.5675,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#848688",
+          "alpha": 1,
+          "oklch": [
+            0.619,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "TEXT_FILL"
+      ],
+      "description": "Contextual placeholder text for surface context 2.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-text-placeholder-03",
+      "name": "text/placeholder-03",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "unresolved",
+      "rule": "alias",
+      "values": {
+        "v12-light": {
+          "hex": "#696b6d",
+          "alpha": 1,
+          "oklch": [
+            0.5262,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#787a7c",
+          "alpha": 1,
+          "oklch": [
+            0.5783,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "TEXT_FILL"
+      ],
+      "description": "Contextual placeholder text for surface context 3.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-text-primary",
+      "name": "text/primary",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "confirmed",
+      "rule": "fixed",
+      "values": {
+        "white": {
+          "hex": "#161616",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g10": {
+          "hex": "#161616",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g90": {
+          "hex": "#f4f4f4",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g100": {
+          "hex": "#f4f4f4",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "v12-light": {
+          "hex": "#1e1f21",
+          "alpha": 1,
+          "oklch": [
+            0.24,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#eaebee",
+          "alpha": 1,
+          "oklch": [
+            0.94,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "TEXT_FILL"
+      ],
+      "description": "Primary text color.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-text-secondary",
+      "name": "text/secondary",
+      "collection": "v12 / Theme",
+      "type": "color",
+      "status": "confirmed",
+      "rule": "fixed",
+      "values": {
+        "white": {
+          "hex": "#525252",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g10": {
+          "hex": "#525252",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g90": {
+          "hex": "#c6c6c6",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "g100": {
+          "hex": "#c6c6c6",
+          "alpha": 1,
+          "origin": "@carbon/themes"
+        },
+        "v12-light": {
+          "hex": "#5c5e60",
+          "alpha": 1,
+          "oklch": [
+            0.48,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#a3a5a7",
+          "alpha": 1,
+          "oklch": [
+            0.72,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "scopes": [
+        "TEXT_FILL"
+      ],
+      "description": "Secondary text color.",
+      "origin": "packages/react/.storybook/v12-themes/themes.json"
+    },
+    {
+      "css": "--cds-chat-input-background",
+      "name": "chat-input/background",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "alias": "--cds-chat-prompt-background"
+        },
+        "g10": {
+          "alias": "--cds-chat-prompt-background"
+        },
+        "g90": {
+          "alias": "--cds-layer-01"
+        },
+        "g100": {
+          "alias": "--cds-layer-01"
+        },
+        "v12-light": {
+          "alias": "--cds-chat-prompt-background"
+        },
+        "v12-dark": {
+          "alias": "--cds-layer-01"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "The composer's fill.",
+      "origin": "packages/react/src/v12/components/ChatInput/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-chat-input-menu-active",
+      "name": "chat-input/menu-active",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#c8ced9",
+          "alpha": 1,
+          "oklch": [
+            0.85,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#c8ced9",
+          "alpha": 1,
+          "oklch": [
+            0.85,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#393d46",
+          "alpha": 1,
+          "oklch": [
+            0.36,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#393d46",
+          "alpha": 1,
+          "oklch": [
+            0.36,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#c8ced9",
+          "alpha": 1,
+          "oklch": [
+            0.85,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#393d46",
+          "alpha": 1,
+          "oklch": [
+            0.36,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "A row being pressed in the composer menus: the active rung on the blue-gray ladder, three steps from the menu surface and one past selected, so a press reads as the same ladder rather than Carbon's neutral between two tints.",
+      "origin": "packages/react/src/v12/components/ChatInput/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-chat-input-menu-hover",
+      "name": "chat-input/menu-hover",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#dce2ec",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#dce2ec",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#252931",
+          "alpha": 1,
+          "oklch": [
+            0.28,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#252931",
+          "alpha": 1,
+          "oklch": [
+            0.28,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#dce2ec",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#252931",
+          "alpha": 1,
+          "oklch": [
+            0.28,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "A hovered row.",
+      "origin": "packages/react/src/v12/components/ChatInput/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-chat-input-menu-selected",
+      "name": "chat-input/menu-selected",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#d2d8e2",
+          "alpha": 1,
+          "oklch": [
+            0.88,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#d2d8e2",
+          "alpha": 1,
+          "oklch": [
+            0.88,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#2e333b",
+          "alpha": 1,
+          "oklch": [
+            0.32,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#2e333b",
+          "alpha": 1,
+          "oklch": [
+            0.32,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#d2d8e2",
+          "alpha": 1,
+          "oklch": [
+            0.88,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#2e333b",
+          "alpha": 1,
+          "oklch": [
+            0.32,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "A selected row in the composer's menus.",
+      "origin": "packages/react/src/v12/components/ChatInput/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-chat-input-menu-selected-text",
+      "name": "chat-input/menu-selected-text",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#014de3",
+          "alpha": 1,
+          "oklch": [
+            0.4937,
+            0.2911,
+            262.43
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g10": {
+          "hex": "#014de3",
+          "alpha": 1,
+          "oklch": [
+            0.4937,
+            0.2911,
+            262.43
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g90": {
+          "hex": "#629bff",
+          "alpha": 1,
+          "oklch": [
+            0.6958,
+            0.1727,
+            260.92
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g100": {
+          "hex": "#629bff",
+          "alpha": 1,
+          "oklch": [
+            0.6958,
+            0.1727,
+            260.92
+          ],
+          "gamut": "outside-srgb"
+        },
+        "v12-light": {
+          "hex": "#014de3",
+          "alpha": 1,
+          "oklch": [
+            0.4937,
+            0.2911,
+            262.43
+          ],
+          "gamut": "outside-srgb"
+        },
+        "v12-dark": {
+          "hex": "#629bff",
+          "alpha": 1,
+          "oklch": [
+            0.6958,
+            0.1727,
+            260.92
+          ],
+          "gamut": "outside-srgb"
+        }
+      },
+      "gamut": "outside-srgb",
+      "scopes": [
+        "TEXT_FILL"
+      ],
+      "description": "The label of a selected menu row: the brand blue solved for contrast on chat-input-menu-selected, the same value as MegaButton's selected text.",
+      "origin": "packages/react/src/v12/components/ChatInput/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-chats-panel-chat-current",
+      "name": "chats-panel/chat-current",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#d2d8e2",
+          "alpha": 1,
+          "oklch": [
+            0.88,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#d2d8e2",
+          "alpha": 1,
+          "oklch": [
+            0.88,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#2e333b",
+          "alpha": 1,
+          "oklch": [
+            0.32,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#2e333b",
+          "alpha": 1,
+          "oklch": [
+            0.32,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#d2d8e2",
+          "alpha": 1,
+          "oklch": [
+            0.88,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#2e333b",
+          "alpha": 1,
+          "oklch": [
+            0.32,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "The chat the person is in.",
+      "origin": "packages/react/src/v12/components/ChatsPanel/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-chats-panel-chat-current-text",
+      "name": "chats-panel/chat-current-text",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#014de3",
+          "alpha": 1,
+          "oklch": [
+            0.4937,
+            0.2911,
+            262.43
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g10": {
+          "hex": "#014de3",
+          "alpha": 1,
+          "oklch": [
+            0.4937,
+            0.2911,
+            262.43
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g90": {
+          "hex": "#629bff",
+          "alpha": 1,
+          "oklch": [
+            0.6958,
+            0.1727,
+            260.92
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g100": {
+          "hex": "#629bff",
+          "alpha": 1,
+          "oklch": [
+            0.6958,
+            0.1727,
+            260.92
+          ],
+          "gamut": "outside-srgb"
+        },
+        "v12-light": {
+          "hex": "#014de3",
+          "alpha": 1,
+          "oklch": [
+            0.4937,
+            0.2911,
+            262.43
+          ],
+          "gamut": "outside-srgb"
+        },
+        "v12-dark": {
+          "hex": "#629bff",
+          "alpha": 1,
+          "oklch": [
+            0.6958,
+            0.1727,
+            260.92
+          ],
+          "gamut": "outside-srgb"
+        }
+      },
+      "gamut": "outside-srgb",
+      "scopes": [
+        "TEXT_FILL"
+      ],
+      "description": "The label of the current row in the overlay: the brand blue solved for contrast on chats-panel-chat-current.",
+      "origin": "packages/react/src/v12/components/ChatsPanel/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-chats-panel-chat-hover",
+      "name": "chats-panel/chat-hover",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#dce2ec",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#dce2ec",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#252931",
+          "alpha": 1,
+          "oklch": [
+            0.28,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#252931",
+          "alpha": 1,
+          "oklch": [
+            0.28,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#dce2ec",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#252931",
+          "alpha": 1,
+          "oklch": [
+            0.28,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "A hovered chat row.",
+      "origin": "packages/react/src/v12/components/ChatsPanel/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-chats-panel-shell-chat-current",
+      "name": "chats-panel/shell-chat-current",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#dce2ec",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#dce2ec",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#252931",
+          "alpha": 1,
+          "oklch": [
+            0.28,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#252931",
+          "alpha": 1,
+          "oklch": [
+            0.28,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#dce2ec",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#252931",
+          "alpha": 1,
+          "oklch": [
+            0.28,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "The current row in the PUSHED panel: two steps from the page, 0.91 light and 0.28 dark.",
+      "origin": "packages/react/src/v12/components/ChatsPanel/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-chats-panel-shell-chat-current-text",
+      "name": "chats-panel/shell-chat-current-text",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#0154ee",
+          "alpha": 1,
+          "oklch": [
+            0.5151,
+            0.2884,
+            262.26
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g10": {
+          "hex": "#0154ee",
+          "alpha": 1,
+          "oklch": [
+            0.5151,
+            0.2884,
+            262.26
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g90": {
+          "hex": "#4f8eff",
+          "alpha": 1,
+          "oklch": [
+            0.6611,
+            0.1942,
+            261.16
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g100": {
+          "hex": "#4f8eff",
+          "alpha": 1,
+          "oklch": [
+            0.6611,
+            0.1942,
+            261.16
+          ],
+          "gamut": "outside-srgb"
+        },
+        "v12-light": {
+          "hex": "#0154ee",
+          "alpha": 1,
+          "oklch": [
+            0.5151,
+            0.2884,
+            262.26
+          ],
+          "gamut": "outside-srgb"
+        },
+        "v12-dark": {
+          "hex": "#4f8eff",
+          "alpha": 1,
+          "oklch": [
+            0.6611,
+            0.1942,
+            261.16
+          ],
+          "gamut": "outside-srgb"
+        }
+      },
+      "gamut": "outside-srgb",
+      "scopes": [
+        "TEXT_FILL"
+      ],
+      "description": "The label of the current row in the PUSHED panel: the brand blue solved for contrast on chats-panel-shell-chat-current.",
+      "origin": "packages/react/src/v12/components/ChatsPanel/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-chats-panel-shell-chat-hover",
+      "name": "chats-panel/shell-chat-hover",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#e5ebf6",
+          "alpha": 1,
+          "oklch": [
+            0.94,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#e5ebf6",
+          "alpha": 1,
+          "oklch": [
+            0.94,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#1b1f27",
+          "alpha": 1,
+          "oklch": [
+            0.24,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#1b1f27",
+          "alpha": 1,
+          "oklch": [
+            0.24,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#e5ebf6",
+          "alpha": 1,
+          "oklch": [
+            0.94,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#1b1f27",
+          "alpha": 1,
+          "oklch": [
+            0.24,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "A hovered row in the PUSHED panel, which is a column of the shell and paints no surface of its own — so its rows rest on the page and hover is one step from it, 0.94 light and 0.24 dark.",
+      "origin": "packages/react/src/v12/components/ChatsPanel/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-code-snippet-syntax-function",
+      "name": "code-snippet/syntax-function",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "alias": "--cds-tag-color-green"
+        },
+        "g10": {
+          "alias": "--cds-tag-color-green"
+        },
+        "g90": {
+          "alias": "--cds-tag-color-green"
+        },
+        "g100": {
+          "alias": "--cds-tag-color-green"
+        },
+        "v12-light": {
+          "alias": "--cds-tag-color-green"
+        },
+        "v12-dark": {
+          "alias": "--cds-tag-color-green"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Calls (require, gulp.task).",
+      "origin": "packages/react/src/v12/components/CodeSnippetAlt/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-code-snippet-syntax-keyword",
+      "name": "code-snippet/syntax-keyword",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "alias": "--cds-tag-color-blue"
+        },
+        "g10": {
+          "alias": "--cds-tag-color-blue"
+        },
+        "g90": {
+          "alias": "--cds-tag-color-blue"
+        },
+        "g100": {
+          "alias": "--cds-tag-color-blue"
+        },
+        "v12-light": {
+          "alias": "--cds-tag-color-blue"
+        },
+        "v12-dark": {
+          "alias": "--cds-tag-color-blue"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Keywords (const, return, def).",
+      "origin": "packages/react/src/v12/components/CodeSnippetAlt/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-code-snippet-syntax-number",
+      "name": "code-snippet/syntax-number",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "alias": "--cds-tag-color-purple"
+        },
+        "g10": {
+          "alias": "--cds-tag-color-purple"
+        },
+        "g90": {
+          "alias": "--cds-tag-color-purple"
+        },
+        "g100": {
+          "alias": "--cds-tag-color-purple"
+        },
+        "v12-light": {
+          "alias": "--cds-tag-color-purple"
+        },
+        "v12-dark": {
+          "alias": "--cds-tag-color-purple"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Numeric literals.",
+      "origin": "packages/react/src/v12/components/CodeSnippetAlt/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-code-snippet-syntax-string",
+      "name": "code-snippet/syntax-string",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#8a3800",
+          "alpha": 1
+        },
+        "g10": {
+          "hex": "#8a3800",
+          "alpha": 1
+        },
+        "g90": {
+          "hex": "#ffd9be",
+          "alpha": 1
+        },
+        "g100": {
+          "hex": "#ffd9be",
+          "alpha": 1
+        },
+        "v12-light": {
+          "hex": "#8a3800",
+          "alpha": 1
+        },
+        "v12-dark": {
+          "hex": "#ffd9be",
+          "alpha": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "String literals.",
+      "origin": "packages/react/src/v12/components/CodeSnippetAlt/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-code-snippet-syntax-variable",
+      "name": "code-snippet/syntax-variable",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "alias": "--cds-tag-color-blue"
+        },
+        "g10": {
+          "alias": "--cds-tag-color-blue"
+        },
+        "g90": {
+          "alias": "--cds-tag-color-blue"
+        },
+        "g100": {
+          "alias": "--cds-tag-color-blue"
+        },
+        "v12-light": {
+          "alias": "--cds-tag-color-blue"
+        },
+        "v12-dark": {
+          "alias": "--cds-tag-color-blue"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Identifiers that are not calls.",
+      "origin": "packages/react/src/v12/components/CodeSnippetAlt/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-file-chip-background",
+      "name": "file-chip/background",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "alias": "--cds-layer-01"
+        },
+        "g10": {
+          "alias": "--cds-layer-01"
+        },
+        "g90": {
+          "alias": "--cds-layer-02"
+        },
+        "g100": {
+          "alias": "--cds-layer-02"
+        },
+        "v12-light": {
+          "alias": "--cds-layer-01"
+        },
+        "v12-dark": {
+          "alias": "--cds-layer-02"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "The chip's fill: one step lighter than the chat input it sits in.",
+      "origin": "packages/react/src/v12/components/FileChip/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-file-chip-video-icon-size",
+      "name": "file-chip/video-icon-size",
+      "collection": "v12 / Proposals",
+      "type": "dimension",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "number": 12,
+          "unit": "px",
+          "css": "0.75rem"
+        },
+        "g10": {
+          "number": 12,
+          "unit": "px",
+          "css": "0.75rem"
+        },
+        "g90": {
+          "number": 12,
+          "unit": "px",
+          "css": "0.75rem"
+        },
+        "g100": {
+          "number": 12,
+          "unit": "px",
+          "css": "0.75rem"
+        },
+        "v12-light": {
+          "number": 12,
+          "unit": "px",
+          "css": "0.75rem"
+        },
+        "v12-dark": {
+          "number": 12,
+          "unit": "px",
+          "css": "0.75rem"
+        }
+      },
+      "scopes": [
+        "WIDTH_HEIGHT"
+      ],
+      "description": "The video glyph on a thumbnail's 16px round $overlay backing.",
+      "origin": "packages/react/src/v12/components/FileChip/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-mega-button-danger-key-command-active",
+      "name": "mega-button/danger-key-command-active",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#c69998",
+          "alpha": 1,
+          "oklch": [
+            0.7242,
+            0.0695,
+            19.57
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#c69998",
+          "alpha": 1,
+          "oklch": [
+            0.7242,
+            0.0695,
+            19.57
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#c69998",
+          "alpha": 1,
+          "oklch": [
+            0.7242,
+            0.0695,
+            19.57
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#c69998",
+          "alpha": 1,
+          "oklch": [
+            0.7242,
+            0.0695,
+            19.57
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#c69998",
+          "alpha": 1,
+          "oklch": [
+            0.7242,
+            0.0695,
+            19.57
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#c69998",
+          "alpha": 1,
+          "oklch": [
+            0.7242,
+            0.0695,
+            19.57
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Key-command hint on the danger active fill.",
+      "origin": "packages/react/src/v12/components/MegaButton/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-mega-button-danger-key-command-hover",
+      "name": "mega-button/danger-key-command-hover",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#e8d3d3",
+          "alpha": 1,
+          "oklch": [
+            0.8829,
+            0.0309,
+            15.02
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#e8d3d3",
+          "alpha": 1,
+          "oklch": [
+            0.8829,
+            0.0309,
+            15.02
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#e8d3d3",
+          "alpha": 1,
+          "oklch": [
+            0.8829,
+            0.0309,
+            15.02
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#e8d3d3",
+          "alpha": 1,
+          "oklch": [
+            0.8829,
+            0.0309,
+            15.02
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#e8d3d3",
+          "alpha": 1,
+          "oklch": [
+            0.8829,
+            0.0309,
+            15.02
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#e8d3d3",
+          "alpha": 1,
+          "oklch": [
+            0.8829,
+            0.0309,
+            15.02
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Key-command hint on the danger hover fill.",
+      "origin": "packages/react/src/v12/components/MegaButton/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-mega-button-danger-text",
+      "name": "mega-button/danger-text",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#d11b26",
+          "alpha": 1,
+          "oklch": [
+            0.5519,
+            0.2385,
+            25.9
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g10": {
+          "hex": "#d11b26",
+          "alpha": 1,
+          "oklch": [
+            0.5519,
+            0.2385,
+            25.9
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g90": {
+          "hex": "#f68b90",
+          "alpha": 1,
+          "oklch": [
+            0.7538,
+            0.1667,
+            18.08
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g100": {
+          "hex": "#f68b90",
+          "alpha": 1,
+          "oklch": [
+            0.7538,
+            0.1667,
+            18.08
+          ],
+          "gamut": "outside-srgb"
+        },
+        "v12-light": {
+          "hex": "#d11b26",
+          "alpha": 1,
+          "oklch": [
+            0.5519,
+            0.2385,
+            25.9
+          ],
+          "gamut": "outside-srgb"
+        },
+        "v12-dark": {
+          "hex": "#f68b90",
+          "alpha": 1,
+          "oklch": [
+            0.7538,
+            0.1667,
+            18.08
+          ],
+          "gamut": "outside-srgb"
+        }
+      },
+      "gamut": "outside-srgb",
+      "scopes": [
+        "TEXT_FILL"
+      ],
+      "description": "Label of a danger secondary button at rest and in focus, solved to 4.5:1 on every surface.",
+      "origin": "packages/react/src/v12/components/MegaButton/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-mega-button-disabled-fill",
+      "name": "mega-button/disabled-fill",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#c5cbd5",
+          "alpha": 1,
+          "oklch": [
+            0.84,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#c5cbd5",
+          "alpha": 1,
+          "oklch": [
+            0.84,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#1b1f27",
+          "alpha": 1,
+          "oklch": [
+            0.24,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#1b1f27",
+          "alpha": 1,
+          "oklch": [
+            0.24,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#c5cbd5",
+          "alpha": 1,
+          "oklch": [
+            0.84,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#1b1f27",
+          "alpha": 1,
+          "oklch": [
+            0.24,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Fill of a disabled primary or danger button.",
+      "origin": "packages/react/src/v12/components/MegaButton/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-mega-button-disabled-text",
+      "name": "mega-button/disabled-text",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#969ca6",
+          "alpha": 1,
+          "oklch": [
+            0.69,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#969ca6",
+          "alpha": 1,
+          "oklch": [
+            0.69,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#434851",
+          "alpha": 1,
+          "oklch": [
+            0.4,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#434851",
+          "alpha": 1,
+          "oklch": [
+            0.4,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#969ca6",
+          "alpha": 1,
+          "oklch": [
+            0.69,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#434851",
+          "alpha": 1,
+          "oklch": [
+            0.4,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "TEXT_FILL"
+      ],
+      "description": "Label of a disabled primary or danger button, on disabled-fill.",
+      "origin": "packages/react/src/v12/components/MegaButton/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-mega-button-interactive-text",
+      "name": "mega-button/interactive-text",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#0043cf",
+          "alpha": 1,
+          "oklch": [
+            0.454,
+            0.2742,
+            262.72
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g10": {
+          "hex": "#0043cf",
+          "alpha": 1,
+          "oklch": [
+            0.454,
+            0.2742,
+            262.72
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g90": {
+          "hex": "#77a9ff",
+          "alpha": 1,
+          "oklch": [
+            0.7361,
+            0.148,
+            260.76
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g100": {
+          "hex": "#77a9ff",
+          "alpha": 1,
+          "oklch": [
+            0.7361,
+            0.148,
+            260.76
+          ],
+          "gamut": "outside-srgb"
+        },
+        "v12-light": {
+          "hex": "#0043cf",
+          "alpha": 1,
+          "oklch": [
+            0.454,
+            0.2742,
+            262.72
+          ],
+          "gamut": "outside-srgb"
+        },
+        "v12-dark": {
+          "hex": "#77a9ff",
+          "alpha": 1,
+          "oklch": [
+            0.7361,
+            0.148,
+            260.76
+          ],
+          "gamut": "outside-srgb"
+        }
+      },
+      "gamut": "outside-srgb",
+      "scopes": [
+        "TEXT_FILL"
+      ],
+      "description": "Blue label and border on a neutral ground when the person acts: secondary, tertiary and ghost on hover and press.",
+      "origin": "packages/react/src/v12/components/MegaButton/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-mega-button-key-command-active",
+      "name": "mega-button/key-command-active",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#92a7c9",
+          "alpha": 1,
+          "oklch": [
+            0.723,
+            0.0592,
+            260.8
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#92a7c9",
+          "alpha": 1,
+          "oklch": [
+            0.723,
+            0.0592,
+            260.8
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#c1cddf",
+          "alpha": 1,
+          "oklch": [
+            0.8437,
+            0.0322,
+            260.02
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#c1cddf",
+          "alpha": 1,
+          "oklch": [
+            0.8437,
+            0.0322,
+            260.02
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#92a7c9",
+          "alpha": 1,
+          "oklch": [
+            0.723,
+            0.0592,
+            260.8
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#c1cddf",
+          "alpha": 1,
+          "oklch": [
+            0.8437,
+            0.0322,
+            260.02
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Key-command hint on the pressed primary fill.",
+      "origin": "packages/react/src/v12/components/MegaButton/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-mega-button-key-command-hover",
+      "name": "mega-button/key-command-hover",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#bcc8dd",
+          "alpha": 1,
+          "oklch": [
+            0.8301,
+            0.0351,
+            260.22
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#bcc8dd",
+          "alpha": 1,
+          "oklch": [
+            0.8301,
+            0.0351,
+            260.22
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#ffffff",
+          "alpha": 1,
+          "oklch": [
+            1,
+            0,
+            253.9
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#ffffff",
+          "alpha": 1,
+          "oklch": [
+            1,
+            0,
+            253.9
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#bcc8dd",
+          "alpha": 1,
+          "oklch": [
+            0.8301,
+            0.0351,
+            260.22
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#ffffff",
+          "alpha": 1,
+          "oklch": [
+            1,
+            0,
+            253.9
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Key-command hint on the primary hover and selected fill.",
+      "origin": "packages/react/src/v12/components/MegaButton/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-mega-button-key-command-neutral",
+      "name": "mega-button/key-command-neutral",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#54565b",
+          "alpha": 1,
+          "oklch": [
+            0.4542,
+            0.008,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#54565b",
+          "alpha": 1,
+          "oklch": [
+            0.4542,
+            0.008,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#a6a9ae",
+          "alpha": 1,
+          "oklch": [
+            0.7335,
+            0.008,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#a6a9ae",
+          "alpha": 1,
+          "oklch": [
+            0.7335,
+            0.008,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#54565b",
+          "alpha": 1,
+          "oklch": [
+            0.4542,
+            0.008,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#a6a9ae",
+          "alpha": 1,
+          "oklch": [
+            0.7335,
+            0.008,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Key-command hint on transparent and tinted kinds (secondary, tertiary, ghost, danger secondary at rest), solved on the darkest tint it meets.",
+      "origin": "packages/react/src/v12/components/MegaButton/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-mega-button-key-command-rest",
+      "name": "mega-button/key-command-rest",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#85888c",
+          "alpha": 1,
+          "oklch": [
+            0.6243,
+            0.008,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#85888c",
+          "alpha": 1,
+          "oklch": [
+            0.6243,
+            0.008,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#67696e",
+          "alpha": 1,
+          "oklch": [
+            0.5211,
+            0.008,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#67696e",
+          "alpha": 1,
+          "oklch": [
+            0.5211,
+            0.008,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#85888c",
+          "alpha": 1,
+          "oklch": [
+            0.6243,
+            0.008,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#67696e",
+          "alpha": 1,
+          "oklch": [
+            0.5211,
+            0.008,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Key-command hint on the resting primary fill: muted, and held to 4.5:1 because it is text.",
+      "origin": "packages/react/src/v12/components/MegaButton/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-mega-button-outline-border",
+      "name": "mega-button/outline-border",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#28292b",
+          "alpha": 1,
+          "oklch": [
+            0.281,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#28292b",
+          "alpha": 1,
+          "oklch": [
+            0.281,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#eaebee",
+          "alpha": 1,
+          "oklch": [
+            0.94,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#eaebee",
+          "alpha": 1,
+          "oklch": [
+            0.94,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#28292b",
+          "alpha": 1,
+          "oklch": [
+            0.281,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#eaebee",
+          "alpha": 1,
+          "oklch": [
+            0.94,
+            0.004,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "STROKE_COLOR"
+      ],
+      "description": "The 1px border of a resting secondary (outline) button.",
+      "origin": "packages/react/src/v12/components/MegaButton/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-mega-button-padding-inline-md",
+      "name": "mega-button/padding-inline-md",
+      "collection": "v12 / Proposals",
+      "type": "dimension",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "number": 20,
+          "unit": "px",
+          "css": "1.25rem"
+        },
+        "g10": {
+          "number": 20,
+          "unit": "px",
+          "css": "1.25rem"
+        },
+        "g90": {
+          "number": 20,
+          "unit": "px",
+          "css": "1.25rem"
+        },
+        "g100": {
+          "number": 20,
+          "unit": "px",
+          "css": "1.25rem"
+        },
+        "v12-light": {
+          "number": 20,
+          "unit": "px",
+          "css": "1.25rem"
+        },
+        "v12-dark": {
+          "number": 20,
+          "unit": "px",
+          "css": "1.25rem"
+        }
+      },
+      "scopes": [
+        "GAP"
+      ],
+      "description": "Inline padding of a 40px (md) MegaButton.",
+      "origin": "packages/react/src/v12/components/MegaButton/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-mega-button-primary-active",
+      "name": "mega-button/primary-active",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#002e9a",
+          "alpha": 1,
+          "oklch": [
+            0.3626,
+            0.2222,
+            262.87
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g10": {
+          "hex": "#002e9a",
+          "alpha": 1,
+          "oklch": [
+            0.3626,
+            0.2222,
+            262.87
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g90": {
+          "hex": "#0046d5",
+          "alpha": 1,
+          "oklch": [
+            0.4651,
+            0.2791,
+            262.65
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g100": {
+          "hex": "#0046d5",
+          "alpha": 1,
+          "oklch": [
+            0.4651,
+            0.2791,
+            262.65
+          ],
+          "gamut": "outside-srgb"
+        },
+        "v12-light": {
+          "hex": "#002e9a",
+          "alpha": 1,
+          "oklch": [
+            0.3626,
+            0.2222,
+            262.87
+          ],
+          "gamut": "outside-srgb"
+        },
+        "v12-dark": {
+          "hex": "#0046d5",
+          "alpha": 1,
+          "oklch": [
+            0.4651,
+            0.2791,
+            262.65
+          ],
+          "gamut": "outside-srgb"
+        }
+      },
+      "gamut": "outside-srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Primary fill while pressed: one step darker on the brand curve than hover, so the white label never flips.",
+      "origin": "packages/react/src/v12/components/MegaButton/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-mega-button-primary-hover",
+      "name": "mega-button/primary-hover",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#0043cf",
+          "alpha": 1,
+          "oklch": [
+            0.454,
+            0.2742,
+            262.72
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g10": {
+          "hex": "#0043cf",
+          "alpha": 1,
+          "oklch": [
+            0.454,
+            0.2742,
+            262.72
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g90": {
+          "hex": "#0f62fe",
+          "alpha": 1,
+          "oklch": [
+            0.5565,
+            0.2605,
+            261.96
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g100": {
+          "hex": "#0f62fe",
+          "alpha": 1,
+          "oklch": [
+            0.5565,
+            0.2605,
+            261.96
+          ],
+          "gamut": "outside-srgb"
+        },
+        "v12-light": {
+          "hex": "#0043cf",
+          "alpha": 1,
+          "oklch": [
+            0.454,
+            0.2742,
+            262.72
+          ],
+          "gamut": "outside-srgb"
+        },
+        "v12-dark": {
+          "hex": "#0f62fe",
+          "alpha": 1,
+          "oklch": [
+            0.5565,
+            0.2605,
+            261.96
+          ],
+          "gamut": "outside-srgb"
+        }
+      },
+      "gamut": "outside-srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Primary fill on hover: blue responds to the person acting.",
+      "origin": "packages/react/src/v12/components/MegaButton/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-mega-button-primary-selected",
+      "name": "mega-button/primary-selected",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#0043cf",
+          "alpha": 1,
+          "oklch": [
+            0.454,
+            0.2742,
+            262.72
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g10": {
+          "hex": "#0043cf",
+          "alpha": 1,
+          "oklch": [
+            0.454,
+            0.2742,
+            262.72
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g90": {
+          "hex": "#0f62fe",
+          "alpha": 1,
+          "oklch": [
+            0.5565,
+            0.2605,
+            261.96
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g100": {
+          "hex": "#0f62fe",
+          "alpha": 1,
+          "oklch": [
+            0.5565,
+            0.2605,
+            261.96
+          ],
+          "gamut": "outside-srgb"
+        },
+        "v12-light": {
+          "hex": "#0043cf",
+          "alpha": 1,
+          "oklch": [
+            0.454,
+            0.2742,
+            262.72
+          ],
+          "gamut": "outside-srgb"
+        },
+        "v12-dark": {
+          "hex": "#0f62fe",
+          "alpha": 1,
+          "oklch": [
+            0.5565,
+            0.2605,
+            261.96
+          ],
+          "gamut": "outside-srgb"
+        }
+      },
+      "gamut": "outside-srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Primary fill when selected (aria-pressed): a selected primary stays blue.",
+      "origin": "packages/react/src/v12/components/MegaButton/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-mega-button-selected-fill",
+      "name": "mega-button/selected-fill",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#dce2ec",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#dce2ec",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#252931",
+          "alpha": 1,
+          "oklch": [
+            0.28,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#252931",
+          "alpha": 1,
+          "oklch": [
+            0.28,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#dce2ec",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#252931",
+          "alpha": 1,
+          "oklch": [
+            0.28,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Selected tint for secondary, tertiary and ghost (aria-pressed): the v12 blue-gray at the surface's selected step.",
+      "origin": "packages/react/src/v12/components/MegaButton/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-mega-button-selected-text",
+      "name": "mega-button/selected-text",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#0154ee",
+          "alpha": 1,
+          "oklch": [
+            0.5151,
+            0.2884,
+            262.26
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g10": {
+          "hex": "#0154ee",
+          "alpha": 1,
+          "oklch": [
+            0.5151,
+            0.2884,
+            262.26
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g90": {
+          "hex": "#4f8eff",
+          "alpha": 1,
+          "oklch": [
+            0.6611,
+            0.1942,
+            261.16
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g100": {
+          "hex": "#4f8eff",
+          "alpha": 1,
+          "oklch": [
+            0.6611,
+            0.1942,
+            261.16
+          ],
+          "gamut": "outside-srgb"
+        },
+        "v12-light": {
+          "hex": "#0154ee",
+          "alpha": 1,
+          "oklch": [
+            0.5151,
+            0.2884,
+            262.26
+          ],
+          "gamut": "outside-srgb"
+        },
+        "v12-dark": {
+          "hex": "#4f8eff",
+          "alpha": 1,
+          "oklch": [
+            0.6611,
+            0.1942,
+            261.16
+          ],
+          "gamut": "outside-srgb"
+        }
+      },
+      "gamut": "outside-srgb",
+      "scopes": [
+        "TEXT_FILL"
+      ],
+      "description": "Label and border on selected-fill, solved to 4.5:1 on it.",
+      "origin": "packages/react/src/v12/components/MegaButton/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-mega-button-tonal-active",
+      "name": "mega-button/tonal-active",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#c8ced9",
+          "alpha": 1,
+          "oklch": [
+            0.85,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#c8ced9",
+          "alpha": 1,
+          "oklch": [
+            0.85,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#393d46",
+          "alpha": 1,
+          "oklch": [
+            0.36,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#393d46",
+          "alpha": 1,
+          "oklch": [
+            0.36,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#c8ced9",
+          "alpha": 1,
+          "oklch": [
+            0.85,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#393d46",
+          "alpha": 1,
+          "oklch": [
+            0.36,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Tertiary fill while pressed: the active state, three lightness steps from its rest.",
+      "origin": "packages/react/src/v12/components/MegaButton/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-mega-button-tonal-hover",
+      "name": "mega-button/tonal-hover",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#dce2ec",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#dce2ec",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#252931",
+          "alpha": 1,
+          "oklch": [
+            0.28,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#252931",
+          "alpha": 1,
+          "oklch": [
+            0.28,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#dce2ec",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#252931",
+          "alpha": 1,
+          "oklch": [
+            0.28,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Tertiary fill on hover; also ghost press.",
+      "origin": "packages/react/src/v12/components/MegaButton/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-mega-button-tonal-rest",
+      "name": "mega-button/tonal-rest",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#e5ebf6",
+          "alpha": 1,
+          "oklch": [
+            0.94,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#e5ebf6",
+          "alpha": 1,
+          "oklch": [
+            0.94,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#1b1f27",
+          "alpha": 1,
+          "oklch": [
+            0.24,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#1b1f27",
+          "alpha": 1,
+          "oklch": [
+            0.24,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#e5ebf6",
+          "alpha": 1,
+          "oklch": [
+            0.94,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#1b1f27",
+          "alpha": 1,
+          "oklch": [
+            0.24,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "Tertiary (tonal) fill at rest; also ghost hover and secondary press.",
+      "origin": "packages/react/src/v12/components/MegaButton/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-mega-button-tonal-text-disabled",
+      "name": "mega-button/tonal-text-disabled",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#cad0db",
+          "alpha": 1,
+          "oklch": [
+            0.856,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#cad0db",
+          "alpha": 1,
+          "oklch": [
+            0.856,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#434851",
+          "alpha": 1,
+          "oklch": [
+            0.4,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#434851",
+          "alpha": 1,
+          "oklch": [
+            0.4,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#cad0db",
+          "alpha": 1,
+          "oklch": [
+            0.856,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#434851",
+          "alpha": 1,
+          "oklch": [
+            0.4,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "TEXT_FILL"
+      ],
+      "description": "Label of a disabled tertiary button, on its own resting fill.",
+      "origin": "packages/react/src/v12/components/MegaButton/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-session-switcher-menu-active",
+      "name": "session-switcher/menu-active",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#c8ced9",
+          "alpha": 1,
+          "oklch": [
+            0.85,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#c8ced9",
+          "alpha": 1,
+          "oklch": [
+            0.85,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#393d46",
+          "alpha": 1,
+          "oklch": [
+            0.36,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#393d46",
+          "alpha": 1,
+          "oklch": [
+            0.36,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#c8ced9",
+          "alpha": 1,
+          "oklch": [
+            0.85,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#393d46",
+          "alpha": 1,
+          "oklch": [
+            0.36,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "A row being pressed in the session menu: the active rung on the blue-gray ladder, three steps from the menu surface and one past selected.",
+      "origin": "packages/react/src/v12/components/SessionSwitcher/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-session-switcher-menu-hover",
+      "name": "session-switcher/menu-hover",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#dce2ec",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#dce2ec",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#252931",
+          "alpha": 1,
+          "oklch": [
+            0.28,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#252931",
+          "alpha": 1,
+          "oklch": [
+            0.28,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#dce2ec",
+          "alpha": 1,
+          "oklch": [
+            0.91,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#252931",
+          "alpha": 1,
+          "oklch": [
+            0.28,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "A hovered row.",
+      "origin": "packages/react/src/v12/components/SessionSwitcher/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-session-switcher-menu-selected",
+      "name": "session-switcher/menu-selected",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#d2d8e2",
+          "alpha": 1,
+          "oklch": [
+            0.88,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g10": {
+          "hex": "#d2d8e2",
+          "alpha": 1,
+          "oklch": [
+            0.88,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g90": {
+          "hex": "#2e333b",
+          "alpha": 1,
+          "oklch": [
+            0.32,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "g100": {
+          "hex": "#2e333b",
+          "alpha": 1,
+          "oklch": [
+            0.32,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-light": {
+          "hex": "#d2d8e2",
+          "alpha": 1,
+          "oklch": [
+            0.88,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        },
+        "v12-dark": {
+          "hex": "#2e333b",
+          "alpha": 1,
+          "oklch": [
+            0.32,
+            0.016,
+            262
+          ],
+          "gamut": "srgb"
+        }
+      },
+      "gamut": "srgb",
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "description": "A selected row in the session menu.",
+      "origin": "packages/react/src/v12/components/SessionSwitcher/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-session-switcher-menu-selected-text",
+      "name": "session-switcher/menu-selected-text",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#014de3",
+          "alpha": 1,
+          "oklch": [
+            0.4937,
+            0.2911,
+            262.43
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g10": {
+          "hex": "#014de3",
+          "alpha": 1,
+          "oklch": [
+            0.4937,
+            0.2911,
+            262.43
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g90": {
+          "hex": "#629bff",
+          "alpha": 1,
+          "oklch": [
+            0.6958,
+            0.1727,
+            260.92
+          ],
+          "gamut": "outside-srgb"
+        },
+        "g100": {
+          "hex": "#629bff",
+          "alpha": 1,
+          "oklch": [
+            0.6958,
+            0.1727,
+            260.92
+          ],
+          "gamut": "outside-srgb"
+        },
+        "v12-light": {
+          "hex": "#014de3",
+          "alpha": 1,
+          "oklch": [
+            0.4937,
+            0.2911,
+            262.43
+          ],
+          "gamut": "outside-srgb"
+        },
+        "v12-dark": {
+          "hex": "#629bff",
+          "alpha": 1,
+          "oklch": [
+            0.6958,
+            0.1727,
+            260.92
+          ],
+          "gamut": "outside-srgb"
+        }
+      },
+      "gamut": "outside-srgb",
+      "scopes": [
+        "TEXT_FILL"
+      ],
+      "description": "The label of a selected session row: the brand blue solved for contrast on session-switcher-menu-selected.",
+      "origin": "packages/react/src/v12/components/SessionSwitcher/proposals/tokens.json"
+    },
+    {
+      "css": "--cds-system-message-icon-alert",
+      "name": "system-message/icon-alert",
+      "collection": "v12 / Proposals",
+      "type": "color",
+      "status": "proposal",
+      "values": {
+        "white": {
+          "hex": "#836700",
+          "alpha": 1
+        },
+        "g10": {
+          "hex": "#836700",
+          "alpha": 1
+        },
+        "g90": {
+          "hex": "#cea400",
+          "alpha": 1
+        },
+        "g100": {
+          "hex": "#cea400",
+          "alpha": 1
+        },
+        "v12-light": {
+          "hex": "#836700",
+          "alpha": 1
+        },
+        "v12-dark": {
+          "hex": "#cea400",
+          "alpha": 1
+        }
+      },
+      "scopes": [
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "description": "The warning glyph on a notice about the conversation.",
+      "origin": "packages/react/src/v12/components/SystemMessage/proposals/tokens.json"
+    },
+    {
+      "css": null,
+      "scss": "$explore-composer-corner",
+      "name": "explore/composer-corner",
+      "collection": "v12 / Explorations",
+      "type": "dimension",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 20,
+          "unit": "px"
+        }
+      },
+      "scopes": [
+        "CORNER_RADIUS"
+      ],
+      "description": "",
+      "origin": "packages/react/src/v12/explorations/explorations.json"
+    },
+    {
+      "css": null,
+      "scss": "$explore-radius-field",
+      "name": "explore/radius-field",
+      "collection": "v12 / Explorations",
+      "type": "dimension",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 6,
+          "unit": "px"
+        }
+      },
+      "scopes": [
+        "CORNER_RADIUS"
+      ],
+      "description": "",
+      "origin": "packages/react/src/v12/explorations/explorations.json"
+    },
+    {
+      "css": "--cds-motion-depth-arrive",
+      "name": "depth/arrive",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 16,
+          "unit": "px"
+        }
+      },
+      "scopes": [],
+      "description": "A surface arrives from this far short of its place (distance.md, 16px).",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-depth-recede-dim",
+      "name": "depth/recede-dim",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 0.72
+        }
+      },
+      "scopes": [],
+      "description": "The brightness() factor a receding surface dims to.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-depth-recede-scale",
+      "name": "depth/recede-scale",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 0.98
+        }
+      },
+      "scopes": [],
+      "description": "A surface stepping back is scaled to this (scale.subtle, 0.98).",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-distance-lg",
+      "name": "distance/lg",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 32,
+          "unit": "px"
+        }
+      },
+      "scopes": [],
+      "description": "32px.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-distance-md",
+      "name": "distance/md",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 16,
+          "unit": "px"
+        }
+      },
+      "scopes": [],
+      "description": "16px.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-distance-nudge",
+      "name": "distance/nudge",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 2,
+          "unit": "px"
+        }
+      },
+      "scopes": [],
+      "description": "2px.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-distance-sm",
+      "name": "distance/sm",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 8,
+          "unit": "px"
+        }
+      },
+      "scopes": [],
+      "description": "8px.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-distance-xl",
+      "name": "distance/xl",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 64,
+          "unit": "px"
+        }
+      },
+      "scopes": [],
+      "description": "64px.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-distance-xs",
+      "name": "distance/xs",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 4,
+          "unit": "px"
+        }
+      },
+      "scopes": [],
+      "description": "4px.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-duration-fast-00",
+      "name": "duration/fast/00",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "approved",
+      "values": {
+        "full": {
+          "number": 40,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "40ms, below fast-01: repeated small changes and the smallest control moves, such as a selector's nudge under 16px.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-duration-fast-01",
+      "name": "duration/fast/01",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "approved",
+      "values": {
+        "full": {
+          "number": 80,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "80ms, in place of Carbon's 70ms.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-duration-fast-02",
+      "name": "duration/fast/02",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "approved",
+      "values": {
+        "full": {
+          "number": 120,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "120ms, in place of Carbon's 110ms.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-duration-frame",
+      "name": "duration/frame",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 16,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "16ms.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-duration-instant",
+      "name": "duration/instant",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 0,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "0ms.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-duration-moderate-01",
+      "name": "duration/moderate/01",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "approved",
+      "values": {
+        "full": {
+          "number": 160,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "160ms, in place of Carbon's 150ms.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-duration-moderate-02",
+      "name": "duration/moderate/02",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "approved",
+      "values": {
+        "full": {
+          "number": 220,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "220ms, in place of Carbon's 240ms.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-duration-moderate-03",
+      "name": "duration/moderate/03",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "approved",
+      "values": {
+        "full": {
+          "number": 300,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "300ms, between moderate-02 and slow-01: travel of 480–900px (large surfaces, most of a page).",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-duration-slow-01",
+      "name": "duration/slow/01",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "promoted",
+      "values": {
+        "full": {
+          "number": 400,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "Large expansion, important system notifications.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-duration-slow-02",
+      "name": "duration/slow/02",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "approved",
+      "values": {
+        "full": {
+          "number": 520,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "520ms, in place of Carbon's 700ms.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-duration-slow-03",
+      "name": "duration/slow/03",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "approved",
+      "values": {
+        "full": {
+          "number": 660,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "660ms, the longest step, after slow-02.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-easing-entrance-expressive",
+      "name": "easing/entrance/expressive",
+      "collection": "v12 / Motion",
+      "type": "string",
+      "status": "approved",
+      "values": {
+        "full": {
+          "string": "cubic-bezier(0, 0, 0, 1)"
+        }
+      },
+      "scopes": [],
+      "description": "Elements entering the page, expressive mode.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-easing-entrance-productive",
+      "name": "easing/entrance/productive",
+      "collection": "v12 / Motion",
+      "type": "string",
+      "status": "approved",
+      "values": {
+        "full": {
+          "string": "cubic-bezier(0, 0, 0.2, 1)"
+        }
+      },
+      "scopes": [],
+      "description": "Elements entering the page, productive mode.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-easing-exit-expressive",
+      "name": "easing/exit/expressive",
+      "collection": "v12 / Motion",
+      "type": "string",
+      "status": "approved",
+      "values": {
+        "full": {
+          "string": "cubic-bezier(0.8, 0, 1, 1)"
+        }
+      },
+      "scopes": [],
+      "description": "Elements leaving the page, expressive mode.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-easing-exit-productive",
+      "name": "easing/exit/productive",
+      "collection": "v12 / Motion",
+      "type": "string",
+      "status": "approved",
+      "values": {
+        "full": {
+          "string": "cubic-bezier(0.4, 0, 1, 1)"
+        }
+      },
+      "scopes": [],
+      "description": "Elements leaving the page, productive mode.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-easing-standard-expressive",
+      "name": "easing/standard/expressive",
+      "collection": "v12 / Motion",
+      "type": "string",
+      "status": "approved",
+      "values": {
+        "full": {
+          "string": "cubic-bezier(0.8, 0, 0, 1)"
+        }
+      },
+      "scopes": [],
+      "description": "Movement within the page, expressive mode.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-easing-standard-productive",
+      "name": "easing/standard/productive",
+      "collection": "v12 / Motion",
+      "type": "string",
+      "status": "approved",
+      "values": {
+        "full": {
+          "string": "cubic-bezier(0.4, 0, 0.2, 1)"
+        }
+      },
+      "scopes": [],
+      "description": "Movement within the page, productive mode.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-pattern-selection-lead-curve",
+      "name": "pattern/selection/lead-curve",
+      "collection": "v12 / Motion",
+      "type": "string",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "string": "cubic-bezier(0.05, 0.7, 0.1, 1)"
+        }
+      },
+      "scopes": [],
+      "description": "The leading edge's curve: how far it runs ahead of standard-productive early in the glide.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-pattern-selection-reach",
+      "name": "pattern/selection/reach",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 4,
+          "unit": "px"
+        }
+      },
+      "scopes": [],
+      "description": "How far a press moves the leading edge toward the pressed item.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-pattern-selection-stretch",
+      "name": "pattern/selection/stretch",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 24,
+          "unit": "px"
+        }
+      },
+      "scopes": [],
+      "description": "How far the selector's leading edge runs ahead mid-glide (0 = rigid).",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-reduce-duration-floor",
+      "name": "reduce/duration-floor",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 1,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "A floor of 1ms, not 0 and not 0.01ms, so transitionend and animation lifecycle callbacks still fire and code that awaits them cannot deadlock.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-scale-emphasis",
+      "name": "scale/emphasis",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 1.02
+        }
+      },
+      "scopes": [],
+      "description": "1.02.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-scale-enter",
+      "name": "scale/enter",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 0.96
+        }
+      },
+      "scopes": [],
+      "description": "0.96.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-scale-press",
+      "name": "scale/press",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 0.97
+        }
+      },
+      "scopes": [],
+      "description": "0.97.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-scale-subtle",
+      "name": "scale/subtle",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 0.98
+        }
+      },
+      "scopes": [],
+      "description": "0.98.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-soft-edge",
+      "name": "soft-edge",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 16,
+          "unit": "px"
+        }
+      },
+      "scopes": [],
+      "description": "The width of the gradient a moving clip edge fades content over, instead of a hard line: the snap's container edges (every floating surface, in and out) and the side nav's group reveal.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-stagger-step-01",
+      "name": "stagger/step/01",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 10,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "10ms between items in a staggered group.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-stagger-step-02",
+      "name": "stagger/step/02",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 20,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "20ms between items in a staggered group.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-stagger-step-03",
+      "name": "stagger/step/03",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 30,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "30ms between items in a staggered group.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-stagger-step-04",
+      "name": "stagger/step/04",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 40,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "40ms between items in a staggered group.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-stagger-step-05",
+      "name": "stagger/step/05",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 50,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "50ms between items in a staggered group.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-stagger-step-06",
+      "name": "stagger/step/06",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 60,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "60ms between items in a staggered group.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-stagger-step-07",
+      "name": "stagger/step/07",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 70,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "70ms between items in a staggered group.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-stagger-step-08",
+      "name": "stagger/step/08",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 80,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "80ms between items in a staggered group.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-stagger-step-09",
+      "name": "stagger/step/09",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 90,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "90ms between items in a staggered group.",
+      "origin": "@carbon-labs/motion-core"
+    },
+    {
+      "css": "--cds-motion-stagger-step-10",
+      "name": "stagger/step/10",
+      "collection": "v12 / Motion",
+      "type": "number",
+      "status": "exploring",
+      "values": {
+        "full": {
+          "number": 100,
+          "unit": "ms"
+        }
+      },
+      "scopes": [],
+      "description": "100ms between items in a staggered group.",
+      "origin": "@carbon-labs/motion-core"
+    }
+  ]
+}

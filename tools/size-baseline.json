@@ -1,0 +1,402 @@
+{
+  "AboutModal": {
+    "raw": 1848,
+    "gzip": 757
+  },
+  "Accordion": {
+    "raw": 4288,
+    "gzip": 1885
+  },
+  "ActivityFeed": {
+    "raw": 14881,
+    "gzip": 5971
+  },
+  "AppShell": {
+    "raw": 20514,
+    "gzip": 7548
+  },
+  "Breadcrumb": {
+    "raw": 3030,
+    "gzip": 1310
+  },
+  "Button": {
+    "raw": 12513,
+    "gzip": 4843
+  },
+  "Card": {
+    "raw": 5295,
+    "gzip": 2029
+  },
+  "Chat": {
+    "raw": 62343,
+    "gzip": 21009
+  },
+  "ChatInput": {
+    "raw": 13615,
+    "gzip": 5106
+  },
+  "ChatPanels": {
+    "raw": 3866,
+    "gzip": 1783
+  },
+  "ChatThread": {
+    "raw": 2118,
+    "gzip": 946
+  },
+  "ChatsPanel": {
+    "raw": 2817,
+    "gzip": 1304
+  },
+  "Checkbox": {
+    "raw": 4761,
+    "gzip": 1910
+  },
+  "CodeSnippet": {
+    "raw": 6832,
+    "gzip": 2980
+  },
+  "CodeSnippetAlt": {
+    "raw": 4560,
+    "gzip": 2168
+  },
+  "ContainedList": {
+    "raw": 7457,
+    "gzip": 3187
+  },
+  "ContentSwitcher": {
+    "raw": 7978,
+    "gzip": 3331
+  },
+  "ContextualBar": {
+    "raw": 18146,
+    "gzip": 6409
+  },
+  "CopyButton": {
+    "raw": 2947,
+    "gzip": 1386
+  },
+  "DataTable": {
+    "raw": 19429,
+    "gzip": 7001
+  },
+  "DatePicker": {
+    "raw": 13123,
+    "gzip": 4758
+  },
+  "DatePickerV2": {
+    "raw": 30887,
+    "gzip": 12007
+  },
+  "DescriptionList": {
+    "raw": 2019,
+    "gzip": 943
+  },
+  "Disclosure": {
+    "raw": 7042,
+    "gzip": 2983
+  },
+  "Dropdown": {
+    "raw": 47128,
+    "gzip": 15495
+  },
+  "DurationBar": {
+    "raw": 790,
+    "gzip": 504
+  },
+  "EasingGraph": {
+    "raw": 3735,
+    "gzip": 1847
+  },
+  "EmptyState": {
+    "raw": 4813,
+    "gzip": 1996
+  },
+  "Feedback": {
+    "raw": 45763,
+    "gzip": 16097
+  },
+  "FileChip": {
+    "raw": 4777,
+    "gzip": 2091
+  },
+  "FileUploader": {
+    "raw": 13166,
+    "gzip": 5110
+  },
+  "FilterPanel": {
+    "raw": 9635,
+    "gzip": 3710
+  },
+  "FormLayout": {
+    "raw": 8204,
+    "gzip": 3325
+  },
+  "FullPageError": {
+    "raw": 4900,
+    "gzip": 2060
+  },
+  "HistoryRail": {
+    "raw": 5012,
+    "gzip": 2266
+  },
+  "IconMotion": {
+    "raw": 313,
+    "gzip": 215
+  },
+  "Illustrations": {
+    "raw": 2509,
+    "gzip": 1355
+  },
+  "InlineEdit": {
+    "raw": 9337,
+    "gzip": 3736
+  },
+  "JobsTray": {
+    "raw": 9222,
+    "gzip": 3565
+  },
+  "JumpTo": {
+    "raw": 11282,
+    "gzip": 4683
+  },
+  "KeyboardShortcut": {
+    "raw": 5236,
+    "gzip": 2116
+  },
+  "KitDefaults": {
+    "raw": 3122,
+    "gzip": 1327
+  },
+  "Link": {
+    "raw": 1526,
+    "gzip": 807
+  },
+  "List": {
+    "raw": 648,
+    "gzip": 299
+  },
+  "ListReflow": {
+    "raw": 4606,
+    "gzip": 2075
+  },
+  "Loading": {
+    "raw": 7797,
+    "gzip": 3211
+  },
+  "MegaButton": {
+    "raw": 3337,
+    "gzip": 1628
+  },
+  "Menu": {
+    "raw": 24647,
+    "gzip": 8962
+  },
+  "Modal": {
+    "raw": 27160,
+    "gzip": 10434
+  },
+  "MotionIcons": {
+    "raw": 95799,
+    "gzip": 31958
+  },
+  "Notification": {
+    "raw": 29272,
+    "gzip": 11104
+  },
+  "NotificationsPanel": {
+    "raw": 17627,
+    "gzip": 6576
+  },
+  "NumberInput": {
+    "raw": 10241,
+    "gzip": 4178
+  },
+  "OptionsTile": {
+    "raw": 7540,
+    "gzip": 3220
+  },
+  "PageHeader": {
+    "raw": 25423,
+    "gzip": 9058
+  },
+  "Pagination": {
+    "raw": 6669,
+    "gzip": 2707
+  },
+  "PaginationNav": {
+    "raw": 9292,
+    "gzip": 3896
+  },
+  "Popover": {
+    "raw": 15342,
+    "gzip": 6261
+  },
+  "Processing": {
+    "raw": 13233,
+    "gzip": 5790
+  },
+  "ProgressBar": {
+    "raw": 7291,
+    "gzip": 3125
+  },
+  "ProgressIndicator": {
+    "raw": 8960,
+    "gzip": 3443
+  },
+  "ProgressRing": {
+    "raw": 8373,
+    "gzip": 3349
+  },
+  "Props": {
+    "raw": 846,
+    "gzip": 457
+  },
+  "RadioButton": {
+    "raw": 4235,
+    "gzip": 1716
+  },
+  "ReasoningTrace": {
+    "raw": 4441,
+    "gzip": 1580
+  },
+  "RecipeRenderer": {
+    "raw": 39032,
+    "gzip": 10102
+  },
+  "Recipes": {
+    "raw": 14489,
+    "gzip": 5566
+  },
+  "RollText": {
+    "raw": 6994,
+    "gzip": 3050
+  },
+  "Scroller": {
+    "raw": 8740,
+    "gzip": 3751
+  },
+  "Search": {
+    "raw": 8617,
+    "gzip": 3528
+  },
+  "Select": {
+    "raw": 6297,
+    "gzip": 2398
+  },
+  "SelectList": {
+    "raw": 7844,
+    "gzip": 3364
+  },
+  "SelectionKit": {
+    "raw": 18242,
+    "gzip": 6992
+  },
+  "SessionSwitcher": {
+    "raw": 1705,
+    "gzip": 849
+  },
+  "ShimmerText": {
+    "raw": 8468,
+    "gzip": 3614
+  },
+  "SideNav": {
+    "raw": 36864,
+    "gzip": 14168
+  },
+  "SidePanel": {
+    "raw": 11264,
+    "gzip": 4482
+  },
+  "Slider": {
+    "raw": 32732,
+    "gzip": 12667
+  },
+  "Snap": {
+    "raw": 696,
+    "gzip": 439
+  },
+  "SplitButton": {
+    "raw": 3145,
+    "gzip": 1496
+  },
+  "StatusIndicator": {
+    "raw": 2618,
+    "gzip": 1262
+  },
+  "StepFlow": {
+    "raw": 6907,
+    "gzip": 2910
+  },
+  "StructuredList": {
+    "raw": 6034,
+    "gzip": 2256
+  },
+  "SystemMessage": {
+    "raw": 964,
+    "gzip": 477
+  },
+  "Tabs": {
+    "raw": 27111,
+    "gzip": 9829
+  },
+  "Tag": {
+    "raw": 7825,
+    "gzip": 3330
+  },
+  "TagSet": {
+    "raw": 12263,
+    "gzip": 5032
+  },
+  "Tearsheet": {
+    "raw": 12301,
+    "gzip": 4911
+  },
+  "TextArea": {
+    "raw": 8612,
+    "gzip": 3218
+  },
+  "TextInput": {
+    "raw": 18183,
+    "gzip": 6507
+  },
+  "ThemeZone": {
+    "raw": 2031,
+    "gzip": 937
+  },
+  "Tile": {
+    "raw": 8776,
+    "gzip": 3191
+  },
+  "TimePicker": {
+    "raw": 3839,
+    "gzip": 1629
+  },
+  "Toggle": {
+    "raw": 4376,
+    "gzip": 1734
+  },
+  "Toggletip": {
+    "raw": 2753,
+    "gzip": 1203
+  },
+  "Toolbar": {
+    "raw": 15998,
+    "gzip": 6221
+  },
+  "Tooltip": {
+    "raw": 12144,
+    "gzip": 4465
+  },
+  "TreeView": {
+    "raw": 14318,
+    "gzip": 5783
+  },
+  "UserAvatar": {
+    "raw": 2144,
+    "gzip": 1083
+  },
+  "Util": {
+    "raw": 12666,
+    "gzip": 5102
+  }
+}

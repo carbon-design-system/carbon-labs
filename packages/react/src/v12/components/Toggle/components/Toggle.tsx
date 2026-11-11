@@ -101,8 +101,10 @@ export interface ToggleProps {
   disabledReason?: string;
   readOnly?: boolean;
   className?: string;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** `full` (default, a pill), `rounded` (8px), `square`. */
   corners?: 'full' | 'rounded' | 'square';
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** The content switcher's looks for the neutral track; `hero`, the blue on track; `status`, a red off and a green on track. Default `inverse`. */
   variant?: ToggleVariant;
   /** The status dot on the track, at the step the knob isn't on. `true` (default) gray; `status` red off, green on; `false` hides it. A colored track (`hero`, `status`) never shows it. */

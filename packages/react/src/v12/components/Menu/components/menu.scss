@@ -67,6 +67,7 @@ $ease: var(--cds-motion-easing-standard-productive);
   z-index: -1;
   border-radius: corners.$in;
   background: var(--cds-surface, #{theme.$layer});
+  // @carbon-explore floating-hairline — A floating surface (a menu, a popover, a modal, a panel) stands on its fill and a 1px hairline, with no cast shadow unless one is asked for. TBD
   box-shadow: inset 0 0 0 1px
     var(--cds-surface-divider, #{theme.$border-subtle-01});
   inset: 0;

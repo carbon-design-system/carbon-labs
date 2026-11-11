@@ -37,6 +37,7 @@ $attached: 0px;
 $full: 999px;
 
 /// An inner part's radius: the outer radius less the part's inset, never below 0.
+// @carbon-explore radius-concentric — An inner part's radius is the outer radius less its inset, never below 0, so nested corners stay concentric. TBD
 @function inner($outer, $inset) {
   @return max(0px, calc(#{$outer} - #{$inset}));
 }

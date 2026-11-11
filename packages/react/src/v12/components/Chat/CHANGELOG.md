@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-chat%400.4.0...%40carbon-labs%2Freact-chat%400.5.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-chat
+
+
+
+
+
+# [0.4.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-chat%400.3.0...%40carbon-labs%2Freact-chat%400.4.0) (2026-11-11)
+
+### Features
+
+* **v12-import:** a departures registry, and the marks it places ([#1477](https://github.com/carbon-design-system/carbon-labs/issues/1477)) ([da48f6d](https://github.com/carbon-design-system/carbon-labs/commit/da48f6d5c0f5a943110ff482d85e80800bde4ea1))
+
+
+# [0.3.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-chat%400.2.0...%40carbon-labs%2Freact-chat%400.3.0) (2026-11-11)
+
+### Bug Fixes
+
+* **v12:** right-to-left keys, refs, group status, Popover aliases, Card ([#1480](https://github.com/carbon-design-system/carbon-labs/issues/1480)) ([60a3ee4](https://github.com/carbon-design-system/carbon-labs/commit/60a3ee495eff11566bfa431020ff4393096eb220))
+
+
+# [0.2.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-chat%400.1.0...%40carbon-labs%2Freact-chat%400.2.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-chat
+
+
+
+
+
 # 0.1.0 (2026-11-10)
 
 ### Features

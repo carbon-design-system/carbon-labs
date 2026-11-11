@@ -8,7 +8,8 @@
 
 // The lane's checks: a manifest row for every component folder, leaks, motion
 // literals and motion from anywhere but the seam, over every v12 folder; and,
-// as warnings, the motion rules and the prop vocabulary. Prints every finding
+// as warnings, the motion rules, the prop vocabulary and the departures
+// registry's marks. Prints every finding
 // and the warnings' count by rule; exits 1 on an error, never on a warning.
 
 import path from 'node:path';

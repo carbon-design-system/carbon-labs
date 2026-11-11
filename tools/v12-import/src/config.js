@@ -14,7 +14,6 @@ export const CONFIG = {
     kitRoot: 'packages/kit/src',
     kitPackage: '@carbon-next/kit',
     docs: 'docs/components',
-    ledger: 'docs/carbon-labs/departures-ledger.md',
     // The content check's list of names that never go in public text.
     names: 'scripts/check-content.mjs',
   },

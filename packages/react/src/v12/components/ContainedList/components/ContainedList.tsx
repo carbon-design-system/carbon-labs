@@ -110,6 +110,7 @@ export interface ContainedListProps extends Omit<
   size?: ContainedListSize;
   /** Slow motion for the filter and the rollover's release. Default 1. */
   timeScale?: number;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** `square` (v11, default) or `rounded` (8px), inside a card or a rounded region. Default: KitDefaults' (a Region's), else `square`. */
   corners?: ContainerCorners;
 }

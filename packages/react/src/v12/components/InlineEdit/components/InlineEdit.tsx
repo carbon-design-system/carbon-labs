@@ -110,6 +110,7 @@ export interface InlineEditProps {
   size?: InlineEditSize;
   /** Fill its container, or hug its value. Default fill. */
   fit?: InlineEditFit;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** The view's and the field's corners. Default rounded. */
   corners?: 'rounded' | 'full' | 'square';
   /** How the view shows the value. Default its text, or the option's label. */

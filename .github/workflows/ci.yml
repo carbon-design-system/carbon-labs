@@ -111,13 +111,19 @@ jobs:
 
   v12:
     # The v12 lane: its checks (leaks, motion literals, motion only through
-    # @carbon-labs/v12-motion), the motion contract, its packages' tests and
-    # the v12 Storybook build.
-    runs-on: ubuntu-latest
+    # @carbon-labs/v12-motion), the motion contract, the component catalog,
+    # the design sync's snapshots, its packages' tests and their size, the v12
+    # Storybook build and the scene tier on it.
+    # Pinned: Playwright has no browser builds for newer Ubuntu releases yet.
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     steps:
       - uses: actions/checkout@v7
+        with:
+          # The scene tier picks its stories from the change: the commit and
+          # its first parent, the base branch's tip for a pull request.
+          fetch-depth: 2
       - name: Use Node.js version from .nvmrc
         uses: actions/setup-node@v7
         with:
@@ -133,10 +139,27 @@ jobs:
         run: yarn v12:check
       - name: Check the motion contract is current
         run: yarn v12:contract --check
+      - name: Check the component catalog is current
+        run: yarn v12:catalog --check
+      - name: Check the design sync's snapshots are current
+        run: yarn v12:figma snapshot --check
       - name: Run the v12 packages' tests
         run: yarn v12:test
+      - name: Check the v12 components' size
+        run: yarn size:check
       - name: Build the v12 Storybook
         run: yarn workspace @carbon-labs/react storybook:build:v12
+      - name: Install the scene tier's browser
+        run: yarn workspace @carbon-labs/v12-scenes playwright install --with-deps chromium
+      - name: Run the scene tier for the components the change touches
+        run: yarn v12:scenes --base HEAD^1
+      - name: Upload the scene tier's results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v12-scenes
+          path: tools/v12-scenes/results
+          retention-days: 14
 
   e2e:
     runs-on: ubuntu-latest

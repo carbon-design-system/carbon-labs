@@ -119,8 +119,10 @@ export interface SplitButtonProps
   tooltipAlignment?: string;
   /** v11's translation hook: the trigger's and the menu's label. */
   translateWithId?: (messageId: SplitButtonTranslationKey) => string;
+  // @carbon-proposal api: button-axes — Button splits the old kinds into `kind` (the role), `variant` (outlined, tonal) and `frame` (ghost, none), so each prop says one thing. TBD
   /** The role: `primary` (default) or `secondary`. */
   kind?: SplitButtonKind;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** The treatment: `filled` (default), the role's fill; `outlined` (v11's tertiary) or `tonal` (the quieter look, the shell's standard surface). */
   variant?: SplitButtonVariant;
   /** The menu's treatment (Menu's `variant`): `inverse` (default), `tonal`, `outlined`. */

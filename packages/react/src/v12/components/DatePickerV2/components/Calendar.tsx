@@ -27,7 +27,6 @@ import {
 import { ChevronLeft, ChevronRight } from '@carbon-labs/react-motion-icons';
 import {
   SELECTION_KIT_MOTION,
-  SelectionFaces,
   SelectionMarker,
   resolveSelectionStyle,
   rolloverItems,
@@ -161,6 +160,10 @@ interface Page {
   key: number;
   month: Date;
 }
+
+/** The month steps' icons, made once: a month change re-renders the header, not them. */
+const PREV_ICON = <ChevronLeft size={16} aria-hidden="true" />;
+const NEXT_ICON = <ChevronRight size={16} aria-hidden="true" />;
 
 export function Calendar(p: CalendarProps) {
   const timeScale = p.timeScale ?? 1;
@@ -384,7 +387,6 @@ export function Calendar(p: CalendarProps) {
     gesture.current = { stop };
   };
 
-  const iconPx = 16;
   return (
     <div
       className="cds-calendar"
@@ -401,7 +403,7 @@ export function Calendar(p: CalendarProps) {
           disabled={!canPrev}
           data-motion-icon-frame=""
           onClick={() => step(-1)}>
-          <ChevronLeft size={iconPx} aria-hidden="true" />
+          {PREV_ICON}
         </button>
         <div className="cds-calendar__title" id={labelId} aria-live="polite">
           <RollText
@@ -449,7 +451,7 @@ export function Calendar(p: CalendarProps) {
           disabled={!canNext}
           data-motion-icon-frame=""
           onClick={() => step(1)}>
-          <ChevronRight size={iconPx} aria-hidden="true" />
+          {NEXT_ICON}
         </button>
       </div>
       <div className="cds-calendar__weekdays" aria-hidden="true">
@@ -886,6 +888,18 @@ const DayCell = memo(
     onDayPointerDown,
     onDayEnter,
   }: DayCellProps) {
+    const face = (
+      <>
+        <span className="sel__text">{d.getDate()}</span>
+        {marks && (
+          <span className="cds-calendar__pips" aria-hidden="true">
+            {marks.slice(0, MAX_PIPS).map((m, i) => (
+              <span key={i} className="cds-calendar__pip" data-kind={m.kind} />
+            ))}
+          </span>
+        )}
+      </>
+    );
     const cell = (
       <div
         id={`${gridId}-${dIso}`}
@@ -915,20 +929,14 @@ const DayCell = memo(
         )}
         {isStill && <span className="cds-calendar__still" aria-hidden="true" />}
         {isToday && <span className="cds-calendar__today" aria-hidden="true" />}
-        <SelectionFaces>
-          <span className="sel__text">{d.getDate()}</span>
-          {marks && (
-            <span className="cds-calendar__pips" aria-hidden="true">
-              {marks.slice(0, MAX_PIPS).map((m, i) => (
-                <span
-                  key={i}
-                  className="cds-calendar__pip"
-                  data-kind={m.kind}
-                />
-              ))}
-            </span>
-          )}
-        </SelectionFaces>
+        {/* The selection kit's two faces (SelectionFaces) as plain markup: a
+            day has no icon for the selected face to animate, so it needs
+            neither the twin's state nor its icon provider, and a month of
+            days mounts one component each, not three. */}
+        <span className="sel__face">{face}</span>
+        <span className="sel__face sel__face--on" aria-hidden="true">
+          {face}
+        </span>
       </div>
     );
     if (!marks) return cell;

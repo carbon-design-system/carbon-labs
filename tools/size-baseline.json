@@ -28,8 +28,8 @@
     "gzip": 2029
   },
   "Chat": {
-    "raw": 62343,
-    "gzip": 21009
+    "raw": 62337,
+    "gzip": 21015
   },
   "ChatInput": {
     "raw": 13615,
@@ -84,8 +84,8 @@
     "gzip": 4758
   },
   "DatePickerV2": {
-    "raw": 30887,
-    "gzip": 12007
+    "raw": 31017,
+    "gzip": 12046
   },
   "DescriptionList": {
     "raw": 2019,
@@ -196,8 +196,8 @@
     "gzip": 10434
   },
   "MotionIcons": {
-    "raw": 95799,
-    "gzip": 31958
+    "raw": 95908,
+    "gzip": 32002
   },
   "Notification": {
     "raw": 29272,
@@ -232,8 +232,8 @@
     "gzip": 6261
   },
   "Processing": {
-    "raw": 13233,
-    "gzip": 5790
+    "raw": 14888,
+    "gzip": 6503
   },
   "ProgressBar": {
     "raw": 7291,
@@ -356,8 +356,8 @@
     "gzip": 3218
   },
   "TextInput": {
-    "raw": 18183,
-    "gzip": 6507
+    "raw": 18250,
+    "gzip": 6529
   },
   "ThemeZone": {
     "raw": 2031,

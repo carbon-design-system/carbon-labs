@@ -225,22 +225,28 @@ export function useAiFill({
       () => {}
     );
   });
+  // The value on every commit; the scroll only from the control's scroll
+  // events, which follow every move (typing, a value set, a clamp). Reading
+  // it on each commit would lay the page out each time (a slider's drag).
+  const scroll = useRef({ left: 0, top: 0 });
   const track = () => {
     const c = controlRef.current;
-    before.current = c
-      ? { value: readValue(c), left: c.scrollLeft, top: c.scrollTop }
-      : null;
+    before.current = c ? { value: readValue(c), ...scroll.current } : null;
   };
   useLayoutEffect(track);
   // Typing that doesn't re-render (an uncontrolled field), and scrolling, move what the swap starts from.
   useEffect(() => {
     const control = controlRef.current;
     if (!control) return;
+    const onScroll = () => {
+      scroll.current = { left: control.scrollLeft, top: control.scrollTop };
+      track();
+    };
     control.addEventListener('input', track);
-    control.addEventListener('scroll', track);
+    control.addEventListener('scroll', onScroll);
     return () => {
       control.removeEventListener('input', track);
-      control.removeEventListener('scroll', track);
+      control.removeEventListener('scroll', onScroll);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- `track` reads refs and `readValue`, a pure reader
   }, [controlRef]);

@@ -18,8 +18,10 @@ import { useFeedbackMotion } from '@carbon-labs/v12-motion';
 import { LOADER_KIT, useKitProps } from '@carbon-labs/react-kit-defaults';
 import { useLoopVisibility } from '@carbon-labs/react-util';
 import {
+  PROCESSING_RINGS,
   canAnimate,
   createProcessingEngine,
+  processingRing,
   type ProcessingEngine,
   type ProcessingMode,
 } from './processingEngine';
@@ -115,6 +117,10 @@ export interface ProcessingHandle {
 }
 
 const DOTS = [0, 1, 2, 3];
+/** Each dot's rings: the pulse is their scale (processingEngine.ts). */
+const RINGS = Array.from({ length: PROCESSING_RINGS }, (_, k) =>
+  processingRing(k)
+);
 
 export const Processing = forwardRef<ProcessingHandle, ProcessingProps>(
   function Processing(
@@ -138,7 +144,7 @@ export const Processing = forwardRef<ProcessingHandle, ProcessingProps>(
     const { reduced, timeScale } = useFeedbackMotion();
     const rootRef = useRef<HTMLDivElement>(null);
     const group = useRef<SVGGElement>(null);
-    const dots = useRef<SVGCircleElement[]>([]);
+    const dots = useRef<SVGGElement[]>([]);
     const engine = useRef<ProcessingEngine | null>(null);
     const scale = useRef(timeScale);
     const onEnd = useRef(onModeEnd);
@@ -221,17 +227,22 @@ export const Processing = forwardRef<ProcessingHandle, ProcessingProps>(
           focusable="false">
           <g ref={group}>
             {DOTS.map((i) => (
-              <circle
+              <g
                 key={i}
                 ref={(el) => {
                   if (el) dots.current[i] = el;
                 }}
-                className="cds-processing__dot"
-                cx={0}
-                cy={0}
-                r="0"
-                strokeWidth="0"
-              />
+                className="cds-processing__dot">
+                {RINGS.map(({ r, stroke }, k) => (
+                  <circle
+                    key={k}
+                    className="cds-processing__ring"
+                    r={r}
+                    strokeWidth={stroke}
+                    opacity={0}
+                  />
+                ))}
+              </g>
             ))}
           </g>
         </svg>

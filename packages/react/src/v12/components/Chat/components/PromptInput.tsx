@@ -246,7 +246,9 @@ export function PromptInput({
     blurTimer.current = window.setTimeout(() => setFocused(false), 0);
   };
 
-  // The field grows with its text, a line at a time, up to `maxRows`.
+  // The field grows with its text, a line at a time, up to `maxRows`. The
+  // text's height is read once: a second read after the write would lay
+  // the page out again on every key.
   useLayoutEffect(() => {
     const el = fieldRef.current;
     if (!el) return;
@@ -255,8 +257,9 @@ export function PromptInput({
     el.style.height = 'auto';
     const max =
       line * maxRows + parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
-    el.style.height = `${Math.min(el.scrollHeight, max)}px`;
-    el.style.overflowY = el.scrollHeight > max ? 'auto' : 'hidden';
+    const content = el.scrollHeight;
+    el.style.height = `${Math.min(content, max)}px`;
+    el.style.overflowY = content > max ? 'auto' : 'hidden';
   }, [text, maxRows]);
 
   const chooseModel = (next: string) => {

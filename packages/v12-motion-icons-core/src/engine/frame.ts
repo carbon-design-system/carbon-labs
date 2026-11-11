@@ -466,12 +466,16 @@ export class FrameController<S extends string = string> {
 
   /** The binding's `level`: a number, or a function read each frame; unset for none. */
   setLevel(level: number | (() => number) | undefined): void {
+    const had = !!this.level;
     this.level =
       typeof level === 'function'
         ? level
         : level === undefined
           ? undefined
           : () => level;
+    if (had !== !!this.level) {
+      this.looper?.levelChanged();
+    }
   }
 
   /** The state's loop on or off to match the state and `moving`; `animated` false ends it at once; `change`: it starts after the change. */

@@ -36,7 +36,7 @@ export interface LoopInput {
   /**
    * The loop follows a live level (0 to 1, the binding's `level`) as the
    * frame's `v`, read each frame: it rises on fast-01 and falls on
-   * moderate-01. With no level, `v` is unset.
+   * moderate-01. With no level it doesn't run: the state holds its still pose.
    */
   level?: boolean;
 }
@@ -112,12 +112,29 @@ export class LoopRunner {
     this.start(change);
   }
 
+  /** The level came or went (FrameController.setLevel): a loop that follows one starts, or eases to its still pose. */
+  levelChanged(): void {
+    if (!this.on || !this.loop.level || skipping()) {
+      return;
+    }
+    this.halt();
+    if (this.stage.level) {
+      this.start(false);
+    } else {
+      this.anims = [this.stage.tween('w', 0, TOGGLE_OUT)];
+    }
+  }
+
   /** The loop from where it is; under skip it doesn't loop: the state's still pose (weight 0), at once. */
   private start(change: boolean): void {
     const { frame } = this.stage;
     if (skipping()) {
       frame.w = 0;
       this.stage.repaint();
+      return;
+    }
+    // A loop that follows a level, with none: nothing to follow, so nothing runs.
+    if (this.loop.level && !this.stage.level) {
       return;
     }
     const wait = change ? (this.loop.delay ?? 0) : 0;
@@ -149,14 +166,12 @@ export class LoopRunner {
     this.visibility();
   }
 
-  /** The frame's `v` after `dt` seconds following the stage's level; unset with no level. */
+  /** The frame's `v` after `dt` seconds following the stage's level. */
   private follow(dt: number): void {
     const { frame, level } = this.stage;
-    if (!level) {
-      delete frame.v;
-      return;
+    if (level) {
+      frame.v = followLevel(frame.v ?? 0, level(), dt);
     }
-    frame.v = followLevel(frame.v ?? 0, level(), dt);
   }
 
   /** Off screen it holds where it is, and carries on from there. */

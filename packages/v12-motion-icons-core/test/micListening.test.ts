@@ -8,7 +8,7 @@
 /**
  * MicrophoneListeningToggle on the engine: the microphone leaves before the
  * pills arrive, the pills land on their still pose, follow a live level
- * (rising faster than they fall, still in silence), breathe with no level,
+ * (rising faster than they fall, still in silence), run nothing with no level,
  * and hold still under reduced motion.
  */
 import { afterEach, describe, expect, it } from 'vitest';
@@ -134,15 +134,35 @@ describe('MicrophoneListeningToggle', () => {
     ctl.destroy();
   });
 
-  it('with no level the pills breathe, seamlessly', async () => {
-    const { ctl, frames } = mount();
+  it('with no level the pills hold still at rest, and nothing runs', async () => {
+    const { ctl, painted, frames, rest } = mount();
     ctl.setMoving(true);
     ctl.setState('listening');
-    await frames(CHANGE + RAMP + CYCLE);
-    const a = (await frames(CYCLE)).map((s) => JSON.stringify(s));
-    const b = (await frames(CYCLE)).map((s) => JSON.stringify(s));
-    expect(b).toEqual(a);
-    expect(new Set(a).size).toBeGreaterThan(20);
+    await frames(CHANGE);
+    expect(JSON.stringify(ctl.shapes())).toBe(rest(1));
+    const n = painted.length;
+    await frames(CYCLE);
+    expect(painted.length).toBe(n);
+    ctl.destroy();
+  });
+
+  it('a level that comes later starts the loop; one that goes eases back to rest', async () => {
+    const { ctl, painted, frames, rest } = mount();
+    ctl.setMoving(true);
+    ctl.setState('listening');
+    await frames(CHANGE);
+    ctl.setLevel(1);
+    const loud = (await frames(RAMP + 200)).at(-1)!;
+    expect(height(loud)).toBeGreaterThan(20);
+    ctl.setLevel(undefined);
+    const seen = await frames(300);
+    // Down over a few frames, not at once.
+    expect(height(seen[0])).toBeGreaterThan(height(seen.at(-1)!));
+    expect(height(seen[0])).toBeGreaterThan(12.5);
+    expect(JSON.stringify(seen.at(-1))).toBe(rest(1));
+    const n = painted.length;
+    await frames(CYCLE);
+    expect(painted.length).toBe(n);
     ctl.destroy();
   });
 

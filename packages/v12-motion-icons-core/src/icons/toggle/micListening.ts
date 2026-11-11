@@ -43,8 +43,8 @@ import { CMicrophone, micOut } from './micVoiceMode';
 // slow-01. With a live level (the binding's `level`, 0 to 1, read each
 // frame, rising on fast-01 and falling on moderate-01) each pill grows with
 // it, the center one to 24 tall and the pair to 16, the pair a little behind
-// the center. In silence they hold at rest. With no level they breathe
-// gently, a ripple out from the center, 1200ms a cycle.
+// the center, swaying a little as they go. In silence, and with no level,
+// they hold still at rest.
 //
 // Off hovers as Microphone; listening holds still on hover. Under reduced
 // motion the change lands at once and the pills hold still at rest.
@@ -79,9 +79,8 @@ const STAGGER = 16 / PILLS;
 const DOT_SHARE = 0.3;
 /** The pair answers the level a little behind the center: this share of a cycle. */
 const RIPPLE = 1 / 6;
-/** With a level, each pill sways this much around it; with none, they breathe to this level. */
+/** Each pill sways this much around the level. */
 const SWAY = 0.15;
-const IDLE = 0.35;
 /** The loop's cycle, and the weight's ease in once the pills land. */
 const CYCLE = 1.2;
 const LOOP_RAMP = motionTokens.duration.slow01 / 1000;
@@ -100,12 +99,12 @@ function pillD(x: number, ow: number, oh: number): string {
     : outer;
 }
 
-/** How far step `k`'s pill reaches toward its loud height: the level, or the idle breath. */
+/** How far step `k`'s pill reaches toward its loud height: none with no level. */
 function reach(k: number, l: number, v: number | undefined): number {
-  const wave = (1 - Math.cos(2 * Math.PI * (l - RIPPLE * k))) / 2;
   if (v === undefined) {
-    return IDLE * wave;
+    return 0;
   }
+  const wave = (1 - Math.cos(2 * Math.PI * (l - RIPPLE * k))) / 2;
   const behind = k ? 0.85 : 1;
   return clamp01(v * behind * (1 + SWAY * (2 * wave - 1)));
 }

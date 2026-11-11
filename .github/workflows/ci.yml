@@ -112,7 +112,8 @@ jobs:
   v12:
     # The v12 lane: its checks (leaks, motion literals, motion only through
     # @carbon-labs/v12-motion), the motion contract, the component catalog,
-    # its packages' tests, the v12 Storybook build and the scene tier on it.
+    # the design sync's snapshots, its packages' tests, the v12 Storybook build
+    # and the scene tier on it.
     # Pinned: Playwright has no browser builds for newer Ubuntu releases yet.
     runs-on: ubuntu-24.04
     permissions:
@@ -140,6 +141,8 @@ jobs:
         run: yarn v12:contract --check
       - name: Check the component catalog is current
         run: yarn v12:catalog --check
+      - name: Check the design sync's snapshots are current
+        run: yarn v12:figma snapshot --check
       - name: Run the v12 packages' tests
         run: yarn v12:test
       - name: Build the v12 Storybook

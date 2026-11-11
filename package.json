@@ -41,6 +41,7 @@
     "v12:check": "yarn workspace @carbon-labs/v12-import check",
     "v12:contract": "yarn workspace @carbon-labs/v12-import contract",
     "v12:catalog": "yarn workspace @carbon-labs/v12-import catalog",
+    "v12:figma": "yarn workspace @carbon-labs/v12-figma figma",
     "v12:scenes": "yarn workspace @carbon-labs/v12-scenes scenes",
     "v12:test": "yarn workspaces foreach -A --include 'packages/react/src/v12/components/*' --include 'packages/v12-*' --include 'tools/v12-*' run test",
     "storybook:build:full": "NODE_OPTIONS='--max-old-space-size=6144' yarn storybook:build && NODE_OPTIONS='--max-old-space-size=6144' yarn storybook:build:v12 && NODE_OPTIONS='--max-old-space-size=6144' yarn workspace @carbon-labs/web-components storybook:build && NODE_OPTIONS='--max-old-space-size=6144' yarn workspace @carbon-labs/web-components storybook:build:v12 && NODE_OPTIONS='--max-old-space-size=6144' yarn workspace @carbon-labs/react storybook:build && NODE_OPTIONS='--max-old-space-size=6144' yarn workspace @carbon-labs/react storybook:build:v12 && cp -r packages/web-components/storybook-static storybook-static/web-components && cp -r packages/react/storybook-static storybook-static/react && cp -r packages/web-components/storybook-static/v12 storybook-static/v12/web-components && cp -r packages/react/storybook-static/v12 storybook-static/v12/react",

@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-text-input",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - TextInput for React (v12)",

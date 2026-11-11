@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-pagination%400.3.0...%40carbon-labs%2Freact-pagination%400.4.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-pagination
+
+
+
+
+
 # [0.3.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-pagination%400.2.0...%40carbon-labs%2Freact-pagination%400.3.0) (2026-11-11)
 
 **Note:** Version bump only for package @carbon-labs/react-pagination

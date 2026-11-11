@@ -166,11 +166,14 @@ export interface BoundaryDesign {
 
 /* ── color ────────────────────────────────────────────────────────────── */
 
-/** The roles each part of a chart draws in. */
+/**
+ * The roles each part of a chart draws in. Text takes `text-primary` or
+ * `text-secondary`, the two that hold 4.5:1 on the page and the card. A
+ * measured series' data colors are the palette's neutrals
+ * (`PALETTE_NEUTRALS`), not roles.
+ */
 export interface ColorDesign {
   measured: ChartColorRole;
-  /** Measured series, darkest first. */
-  measuredRamp: ChartColorRole[];
   projected: ChartColorRole;
   danger: ChartColorRole;
   success: ChartColorRole;
@@ -179,7 +182,6 @@ export interface ColorDesign {
   rule: ChartColorRole;
   axisLabel: ChartColorRole;
   reference: ChartColorRole;
-  measuredMuted: ChartColorRole;
   axisLabelFaint: ChartColorRole;
   axisEnd: ChartColorRole;
   text: {
@@ -190,6 +192,16 @@ export interface ColorDesign {
     eyebrow: ChartColorRole;
     caption: ChartColorRole;
     rule: ChartColorRole;
+  };
+  /**
+   * The tooltip: its fill, text and edge, in the card's own theme (`match`)
+   * or the opposite one (`inverse`).
+   */
+  tooltip: {
+    surface: ChartColorRole;
+    text: ChartColorRole;
+    note: ChartColorRole;
+    edge: ChartColorRole;
   };
 }
 
@@ -612,33 +624,37 @@ export const CHART_DESIGN: ChartDesign = frozen<ChartDesign>({
   },
   color: {
     measured: 'text-primary',
-    measuredRamp: ['text-primary', 'text-helper', 'border-subtle-01'],
     projected: 'interactive',
     danger: 'support-error',
     success: 'support-success',
     warning: 'support-warning',
-    grid: 'border-subtle-00',
+    grid: 'border-subtle-02',
     rule: 'border-strong-01',
-    axisLabel: 'border-strong-01',
+    axisLabel: 'text-secondary',
     reference: 'text-secondary',
-    measuredMuted: 'border-subtle-01',
-    axisLabelFaint: 'border-subtle-00',
+    axisLabelFaint: 'text-secondary',
     axisEnd: 'text-secondary',
     text: {
       primary: 'text-primary',
-      unit: 'border-strong-01',
-      body: 'text-helper',
-      stamp: 'border-strong-01',
-      eyebrow: 'text-helper',
-      caption: 'border-strong-01',
-      rule: 'border-subtle-00',
+      unit: 'text-secondary',
+      body: 'text-secondary',
+      stamp: 'text-secondary',
+      eyebrow: 'text-secondary',
+      caption: 'text-secondary',
+      rule: 'border-subtle-02',
+    },
+    tooltip: {
+      surface: 'background',
+      text: 'text-primary',
+      note: 'text-secondary',
+      edge: 'border-strong-01',
     },
   },
   contrast: { min: 3, fillUnderLine: { light: 0, dark: -1 } },
   solidTone: { rule: 'oklch', strength: 0.45, chroma: 0.65, scale: 1 },
   hover: {
     mode: 'wash',
-    washRole: 'border-subtle-00',
+    washRole: 'border-subtle-02',
     wash: 0.6,
     dim: 0.45,
     slide: 'moderate-02',
@@ -654,7 +670,7 @@ export const CHART_DESIGN: ChartDesign = frozen<ChartDesign>({
     style: { C2: 'l1q' },
     defaultStyle: 'family',
     figma: {
-      bandRole: 'border-subtle-00',
+      bandRole: 'border-subtle-02',
       band: 1,
       dim: 0.28,
       fade: 'moderate-01',
@@ -667,8 +683,8 @@ export const CHART_DESIGN: ChartDesign = frozen<ChartDesign>({
       tagValueSize: 14,
       tagBasisSize: 11,
     },
-    c3: { haloRole: 'layer-hover-01', halo: 28 },
-    rule: { role: 'border-subtle-00', alpha: 0.75, width: 1 },
+    c3: { haloRole: 'state-hover', halo: 28 },
+    rule: { role: 'border-subtle-02', alpha: 0.75, width: 1 },
     pulse: {
       on: false,
       push: 4,

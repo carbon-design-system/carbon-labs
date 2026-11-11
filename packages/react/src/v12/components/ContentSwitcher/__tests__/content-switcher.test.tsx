@@ -53,9 +53,37 @@ describe('ContentSwitcher roles', () => {
     expect(screen.getByRole('tab', { name: 'Grid' })).toBeTruthy();
   });
 
-  // The switches point at no panel: `aria-controls` is not there (the fix is
-  // to give the switcher one; today's markup has none).
-  it('has no `aria-controls` on its switches today', () => {
+  it('points each switch at its panel: aria-controls one way, aria-labelledby the other', () => {
+    render(
+      <>
+        <ContentSwitcher onChange={() => {}}>
+          <Switch name="a" text="A" id="sw-a" aria-controls="panel-a" />
+          <IconSwitch
+            name="b"
+            text="B"
+            id="sw-b"
+            aria-controls="panel-b"
+            renderIcon={() => <svg />}
+          />
+        </ContentSwitcher>
+        <div role="tabpanel" id="panel-a" aria-labelledby="sw-a">
+          Panel A
+        </div>
+        <div role="tabpanel" id="panel-b" aria-labelledby="sw-b" hidden>
+          Panel B
+        </div>
+      </>
+    );
+    for (const name of ['A', 'B']) {
+      const panel = document.getElementById(
+        sw(name).getAttribute('aria-controls')!
+      )!;
+      expect(panel).toHaveAttribute('role', 'tabpanel');
+      expect(panel.getAttribute('aria-labelledby')).toBe(sw(name).id);
+    }
+  });
+
+  it('gives a switch no `aria-controls` when it has no panel', () => {
     render(switcher());
     expect(sw('One')).not.toHaveAttribute('aria-controls');
   });
@@ -148,17 +176,30 @@ describe('ContentSwitcher disabled with a reason', () => {
 describe('ContentSwitcher right to left', () => {
   const rtl = (ui: React.ReactElement) => <div dir="rtl">{ui}</div>;
 
-  // The arrows do not mirror: ArrowRight is always next, so right to left it moves the wrong way.
-  it.fails(
-    'ArrowLeft goes to the next switch, the way the row reads (ArrowRight to the previous)',
-    async () => {
-      const user = userEvent.setup();
-      render(rtl(switcher()));
-      sw('One').focus();
-      await user.keyboard('{ArrowLeft}');
-      expect(sw('Two')).toHaveFocus();
-      await user.keyboard('{ArrowRight}');
-      expect(sw('One')).toHaveFocus();
-    }
-  );
+  it('ArrowLeft goes to the next switch, the way the row reads (ArrowRight to the previous)', async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn();
+    render(rtl(switcher({ onChange })));
+    sw('One').focus();
+    await user.keyboard('{ArrowLeft}');
+    expect(sw('Two')).toHaveFocus();
+    expect(sw('Two')).toHaveAttribute('aria-selected', 'true');
+    expect(onChange).toHaveBeenLastCalledWith(
+      expect.objectContaining({ index: 1, key: 'ArrowLeft' })
+    );
+    await user.keyboard('{ArrowRight}');
+    expect(sw('One')).toHaveFocus();
+  });
+
+  it('skips a disabled switch and wraps the way the row reads', async () => {
+    const user = userEvent.setup();
+    render(rtl(switcher({ selectedIndex: 1 })));
+    sw('Two').focus();
+    await user.keyboard('{ArrowLeft}');
+    expect(sw('Four')).toHaveFocus();
+    await user.keyboard('{ArrowLeft}');
+    expect(sw('One')).toHaveFocus();
+    await user.keyboard('{ArrowRight}');
+    expect(sw('Four')).toHaveFocus();
+  });
 });

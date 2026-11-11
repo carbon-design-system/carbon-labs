@@ -9,8 +9,9 @@ Pick one of two or more options or views. The switches sit in one track, and a
 selector glides between them. `ContentSwitcher` takes Carbon's API:
 `selectedIndex`, `activation`, `size`, `lowContrast`, `onChange` and disabled
 switches. `Switch` is a labelled switch, with an optional icon before the label.
-`IconSwitch` is an icon only, named by its tooltip. `SwitchPanels` swaps the
-content the selection shows.
+`IconSwitch` is an icon only, named by its tooltip. A switch's `aria-controls`
+names the panel it shows; the selection kit's `SelectionPanels` swaps that
+content.
 
 <Canvas of={ContentSwitcherStories.Default} />
 
@@ -38,7 +39,7 @@ content the selection shows.
   its switch's hover.
 - **Tooltip:** on icon switches, the first tooltip snaps in from the pointer.
   While it shows, it jumps from switch to switch. The pointer can move onto it.
-- **Content swap:** `SwitchPanels` swaps out, then in, never overlapping. The
+- **Content swap:** `SelectionPanels` swaps out, then in, never overlapping. The
   old content moves 8px the way the selector goes and fades, on fast-01 and
   exit-productive. The new content follows from 8px behind, on fast-02 and
   entrance-productive. In right to left it still follows the selector on screen.
@@ -49,9 +50,10 @@ content the selection shows.
   each label a bar. The switches take them in order as one reflow along x.
   `skeletonCount` defaults to the switches on screen, else 3.
 - **Keyboard:** ← and → wrap and skip disabled switches; Home and End go to the
-  ends. With `activation="automatic"` they select; with `manual` they move
-  focus, and Enter or Space selects. A disabled switch with a `disabledReason`
-  stays in the arrows' path and shows why in a tooltip.
+  ends. In right to left, ← goes to the next switch and → to the previous. With
+  `activation="automatic"` they select; with `manual` they move focus, and Enter
+  or Space selects. A disabled switch with a `disabledReason` stays in the
+  arrows' path and shows why in a tooltip.
 
 ## Reduced motion
 

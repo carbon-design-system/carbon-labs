@@ -24,6 +24,7 @@ import { easeFn, type Playback } from './animate';
 import { animate, onSkipChange, skipping } from './skip';
 import { LOOP_IN, TOGGLE_OUT } from './timing';
 import type { TweenFn } from './frame';
+import { motionTokens } from '../tokens';
 
 export interface LoopInput {
   /** Seconds a cycle of `l`. */
@@ -32,6 +33,12 @@ export interface LoopInput {
   delay?: number;
   /** Seconds the weight takes to ease in (default half a cycle, LOOP_IN). */
   ramp?: number;
+  /**
+   * The loop follows a live level (0 to 1, the binding's `level`) as the
+   * frame's `v`, read each frame: it rises on fast-01 and falls on
+   * moderate-01. With no level, `v` is unset.
+   */
+  level?: boolean;
 }
 
 /** A loop, with the runner that plays it (only icons with a loop carry it). */
@@ -41,10 +48,23 @@ export interface LoopSpec extends LoopInput {
 
 /** What a loop plays on: a controller (FrameController). */
 export interface LoopStage {
-  readonly frame: { l?: number; w?: number };
+  readonly frame: { l?: number; w?: number; v?: number };
   repaint(): void;
   tween: TweenFn;
   readonly hidden?: boolean;
+  /** The live level the binding gives (a loop with `level`). */
+  readonly level?: () => number;
+}
+
+/** How fast the frame's `v` follows the level: up quickly, down more slowly. */
+const RISE = motionTokens.duration.fast01 / 1000;
+const FALL = motionTokens.duration.moderate01 / 1000;
+
+/** `v` after `dt` seconds following `level` (0 to 1) from `v`. */
+export function followLevel(v: number, level: number, dt: number): number {
+  const to = Number.isFinite(level) ? Math.min(1, Math.max(0, level)) : 0;
+  const tau = to > v ? RISE : FALL;
+  return v + (to - v) * (1 - Math.exp(-Math.max(0, dt) / tau));
 }
 
 /* @__NO_SIDE_EFFECTS__ */
@@ -106,6 +126,7 @@ export class LoopRunner {
     const ease = easeFn(LOOP_IN.ease);
     // The weight first, so the frame `l` paints has this frame's weight. `l` carries on from where it was.
     const l = frame.l ?? 0;
+    let last = l;
     this.anims = [
       animate(frame.w ?? 0, 1, {
         duration: wait + ramp,
@@ -117,11 +138,25 @@ export class LoopRunner {
         repeat: Infinity,
         onUpdate: (v) => {
           frame.l = v;
+          if (this.loop.level) {
+            this.follow((v - last + (v < last ? 1 : 0)) * this.loop.cycle);
+          }
+          last = v;
           this.stage.repaint();
         },
       }),
     ];
     this.visibility();
+  }
+
+  /** The frame's `v` after `dt` seconds following the stage's level; unset with no level. */
+  private follow(dt: number): void {
+    const { frame, level } = this.stage;
+    if (!level) {
+      delete frame.v;
+      return;
+    }
+    frame.v = followLevel(frame.v ?? 0, level(), dt);
   }
 
   /** Off screen it holds where it is, and carries on from there. */

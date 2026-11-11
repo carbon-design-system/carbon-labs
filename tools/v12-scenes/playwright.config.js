@@ -7,7 +7,8 @@
 
 // Run through `bin/scenes.js`, which picks the stories, serves the built
 // Storybook and sets SCENES_URL and SCENES_PLAN. Playwright's bundled
-// Chromium, headless.
+// Chromium, the full browser in its headless mode (`channel: 'chromium'`),
+// not the separate headless shell.
 
 import { defineConfig } from '@playwright/test';
 
@@ -33,6 +34,7 @@ export default defineConfig({
   use: {
     baseURL: process.env.SCENES_URL,
     browserName: 'chromium',
+    channel: 'chromium',
     headless: true,
     viewport: { width: 1440, height: 900 },
     trace: 'on-first-retry',

@@ -222,6 +222,7 @@ export class CommonHeader extends LitElement {
           ? html`
               <cds-custom-header-menu-button
                 id="${APP_SWITCHER_BUTTON_ID}"
+                class="${AUTOMATION_NAMESPACE_PREFIX}__app-switcher-button"
                 button-label-active="Close menu"
                 button-label-inactive="Open menu"></cds-custom-header-menu-button>
             `

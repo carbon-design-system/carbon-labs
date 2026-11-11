@@ -170,8 +170,9 @@ function carbonComponents(ts, checker, file) {
 
 /**
  * A TypeScript program over every lane component folder's index, with the
- * lane's packages resolved to their sources, so it reads the same built or
- * not, and Carbon v11's types beside them.
+ * lane's packages and the repository's other packages resolved to their
+ * sources, so it reads the same built or not, and Carbon v11's types beside
+ * them.
  *
  * @param {string} labs The carbon-labs checkout.
  * @returns {{ ts: object, program: object, checker: object, folders: { folder: string, name: string, index: string }[], carbon: object | undefined }} The program.
@@ -187,11 +188,7 @@ export function laneProgram(labs) {
   for (const d of fs.existsSync(packages) ? fs.readdirSync(packages) : []) {
     const pkg = path.join(packages, d, 'package.json');
     const src = `packages/${d}/src`;
-    if (
-      d.startsWith('v12-') &&
-      fs.existsSync(pkg) &&
-      fs.existsSync(path.join(labs, src, 'index.ts'))
-    ) {
+    if (fs.existsSync(pkg) && fs.existsSync(path.join(labs, src, 'index.ts'))) {
       const { name } = JSON.parse(fs.readFileSync(pkg, 'utf8'));
       paths[name] = [`${src}/index.ts`];
       paths[`${name}/*`] = [`${src}/*`, `${src}/*/index.ts`];

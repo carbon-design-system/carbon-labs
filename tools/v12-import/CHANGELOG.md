@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-import%400.6.0...%40carbon-labs%2Fv12-import%400.7.0) (2026-11-11)
+
+### Features
+
+* **v12-figma:** code snapshots for the design sync ([#1482](https://github.com/carbon-design-system/carbon-labs/issues/1482)) ([70cd785](https://github.com/carbon-design-system/carbon-labs/commit/70cd78518094563f5c495fbcc29a6ed822ab51cb))
+
+
+# [0.6.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-import%400.5.0...%40carbon-labs%2Fv12-import%400.6.0) (2026-11-10)
+
+### Features
+
+* **v12-import:** a generated catalog of the v12 components ([#1472](https://github.com/carbon-design-system/carbon-labs/issues/1472)) ([2f96ab5](https://github.com/carbon-design-system/carbon-labs/commit/2f96ab5362686019ff3157ac3dba0b82cf1a61f4))
+
+
 # [0.5.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-import%400.4.0...%40carbon-labs%2Fv12-import%400.5.0) (2026-11-10)
 
 ### Features

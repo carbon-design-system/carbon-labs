@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.2.0...%40carbon-labs%2Fv12-review%400.3.0) (2026-11-11)
+
+### Features
+
+* **v12-workbench:** show what people see: system motion, kit density ([#1475](https://github.com/carbon-design-system/carbon-labs/issues/1475)) ([5dd351b](https://github.com/carbon-design-system/carbon-labs/commit/5dd351bd22f8cd01fb431f6c6a8bd6a8fc05a5f2))
+
+
 # [0.2.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.1.0...%40carbon-labs%2Fv12-review%400.2.0) (2026-11-10)
 
 ### Features

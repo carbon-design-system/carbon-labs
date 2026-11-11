@@ -12,6 +12,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/about-modal",
+        "status": "unmapped"
       }
     },
     {
@@ -29,6 +33,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/accordion",
+        "status": "unmapped"
       }
     },
     {
@@ -47,6 +55,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/activity-feed",
+        "status": "unmapped"
       }
     },
     {
@@ -77,7 +89,11 @@
             "contextual-bar"
           ]
         }
-      ]
+      ],
+      "figma": {
+        "key": "v12/app-shell",
+        "status": "unmapped"
+      }
     },
     {
       "id": "breadcrumb",
@@ -92,6 +108,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/breadcrumb",
+        "status": "unmapped"
       }
     },
     {
@@ -107,6 +127,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/button",
+        "status": "unmapped"
       }
     },
     {
@@ -123,6 +147,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/card",
+        "status": "unmapped"
       }
     },
     {
@@ -158,6 +186,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "4de90c46ff699ecade477457490e747a986e8a71"
+      },
+      "figma": {
+        "key": "v12/chat",
+        "status": "unmapped"
       }
     },
     {
@@ -172,6 +204,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/checkbox",
+        "status": "unmapped"
       }
     },
     {
@@ -188,6 +224,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/code-snippet",
+        "status": "unmapped"
       }
     },
     {
@@ -214,6 +254,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/contained-list",
+        "status": "unmapped"
       }
     },
     {
@@ -230,6 +274,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      },
+      "figma": {
+        "key": "v12/content-switcher",
+        "status": "unmapped"
       }
     },
     {
@@ -265,6 +313,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/contextual-bar",
+        "status": "unmapped"
       }
     },
     {
@@ -280,6 +332,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/copy-button",
+        "status": "unmapped"
       }
     },
     {
@@ -299,6 +355,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "cc399cae4faca8121f33ee0848418247070756bd"
+      },
+      "figma": {
+        "key": "v12/data-table",
+        "status": "unmapped"
       }
     },
     {
@@ -327,6 +387,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "b213ff86e0edb4632797a8d1c23eb1ad3c8ee1e3"
+      },
+      "figma": {
+        "key": "v12/date-picker",
+        "status": "unmapped"
       }
     },
     {
@@ -339,6 +403,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/description-list",
+        "status": "unmapped"
       }
     },
     {
@@ -363,6 +431,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/disclosure",
+        "status": "unmapped"
       }
     },
     {
@@ -398,6 +470,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      },
+      "figma": {
+        "key": "v12/dropdown",
+        "status": "unmapped"
       }
     },
     {
@@ -410,6 +486,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "db8a7637e319090df402ada3bfc0f4b3e30639d7"
+      },
+      "figma": {
+        "key": "v12/duration-bar",
+        "status": "unmapped"
       }
     },
     {
@@ -426,6 +506,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "16a3b77a85ed09bbe646ee5f368167a23ae328e4"
+      },
+      "figma": {
+        "key": "v12/easing-graph",
+        "status": "unmapped"
       }
     },
     {
@@ -438,6 +522,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/empty-state",
+        "status": "unmapped"
       }
     },
     {
@@ -501,6 +589,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/feedback",
+        "status": "unmapped"
       }
     },
     {
@@ -522,6 +614,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/file-uploader",
+        "status": "unmapped"
       }
     },
     {
@@ -537,6 +633,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "b213ff86e0edb4632797a8d1c23eb1ad3c8ee1e3"
+      },
+      "figma": {
+        "key": "v12/filter-panel",
+        "status": "unmapped"
       }
     },
     {
@@ -567,7 +667,11 @@
             "toggle"
           ]
         }
-      ]
+      ],
+      "figma": {
+        "key": "v12/form-layout",
+        "status": "unmapped"
+      }
     },
     {
       "id": "full-page-error",
@@ -592,6 +696,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/full-page-error",
+        "status": "unmapped"
       }
     },
     {
@@ -607,6 +715,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/icon-motion",
+        "status": "code-only"
       }
     },
     {
@@ -621,6 +733,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "4f2a12b253ef68bbed31f80de38387b67d6fb582"
+      },
+      "figma": {
+        "key": "v12/illustrations",
+        "status": "unmapped"
       }
     },
     {
@@ -644,6 +760,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/inline-edit",
+        "status": "unmapped"
       }
     },
     {
@@ -667,6 +787,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/jobs-tray",
+        "status": "unmapped"
       }
     },
     {
@@ -692,6 +816,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/jump-to",
+        "status": "unmapped"
       }
     },
     {
@@ -741,7 +869,11 @@
             "tearsheet"
           ]
         }
-      ]
+      ],
+      "figma": {
+        "key": "v12/kit-defaults",
+        "status": "code-only"
+      }
     },
     {
       "id": "labs/chat-input",
@@ -752,6 +884,10 @@
       "motion": [],
       "source": {
         "repo": "carbon-labs"
+      },
+      "figma": {
+        "key": "v12/labs/chat-input",
+        "status": "unmapped"
       }
     },
     {
@@ -763,6 +899,10 @@
       "motion": [],
       "source": {
         "repo": "carbon-labs"
+      },
+      "figma": {
+        "key": "v12/labs/chat-panels",
+        "status": "unmapped"
       }
     },
     {
@@ -774,6 +914,10 @@
       "motion": [],
       "source": {
         "repo": "carbon-labs"
+      },
+      "figma": {
+        "key": "v12/labs/chat-thread",
+        "status": "unmapped"
       }
     },
     {
@@ -785,6 +929,10 @@
       "motion": [],
       "source": {
         "repo": "carbon-labs"
+      },
+      "figma": {
+        "key": "v12/labs/chats-panel",
+        "status": "unmapped"
       }
     },
     {
@@ -796,6 +944,10 @@
       "motion": [],
       "source": {
         "repo": "carbon-labs"
+      },
+      "figma": {
+        "key": "v12/labs/code-snippet-alt",
+        "status": "unmapped"
       }
     },
     {
@@ -807,6 +959,10 @@
       "motion": [],
       "source": {
         "repo": "carbon-labs"
+      },
+      "figma": {
+        "key": "v12/labs/date-picker",
+        "status": "unmapped"
       }
     },
     {
@@ -818,6 +974,10 @@
       "motion": [],
       "source": {
         "repo": "carbon-labs"
+      },
+      "figma": {
+        "key": "v12/labs/file-chip",
+        "status": "unmapped"
       }
     },
     {
@@ -829,6 +989,10 @@
       "motion": [],
       "source": {
         "repo": "carbon-labs"
+      },
+      "figma": {
+        "key": "v12/labs/history-rail",
+        "status": "unmapped"
       }
     },
     {
@@ -840,6 +1004,10 @@
       "motion": [],
       "source": {
         "repo": "carbon-labs"
+      },
+      "figma": {
+        "key": "v12/labs/keyboard-shortcut",
+        "status": "unmapped"
       }
     },
     {
@@ -851,6 +1019,10 @@
       "motion": [],
       "source": {
         "repo": "carbon-labs"
+      },
+      "figma": {
+        "key": "v12/labs/mega-button",
+        "status": "unmapped"
       }
     },
     {
@@ -862,6 +1034,10 @@
       "motion": [],
       "source": {
         "repo": "carbon-labs"
+      },
+      "figma": {
+        "key": "v12/labs/reasoning-trace",
+        "status": "unmapped"
       }
     },
     {
@@ -873,6 +1049,10 @@
       "motion": [],
       "source": {
         "repo": "carbon-labs"
+      },
+      "figma": {
+        "key": "v12/labs/recipe-renderer",
+        "status": "unmapped"
       }
     },
     {
@@ -884,6 +1064,10 @@
       "motion": [],
       "source": {
         "repo": "carbon-labs"
+      },
+      "figma": {
+        "key": "v12/labs/session-switcher",
+        "status": "unmapped"
       }
     },
     {
@@ -898,6 +1082,10 @@
       ],
       "source": {
         "repo": "carbon-labs"
+      },
+      "figma": {
+        "key": "v12/labs/split-button",
+        "status": "unmapped"
       }
     },
     {
@@ -909,6 +1097,10 @@
       "motion": [],
       "source": {
         "repo": "carbon-labs"
+      },
+      "figma": {
+        "key": "v12/labs/system-message",
+        "status": "unmapped"
       }
     },
     {
@@ -924,6 +1116,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/link",
+        "status": "unmapped"
       }
     },
     {
@@ -936,6 +1132,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "b82caeebe75f97e76601b460fcbc7eb40898316b"
+      },
+      "figma": {
+        "key": "v12/list",
+        "status": "unmapped"
       }
     },
     {
@@ -959,6 +1159,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/list-reflow",
+        "status": "code-only"
       }
     },
     {
@@ -980,6 +1184,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/loading",
+        "status": "unmapped"
       }
     },
     {
@@ -1017,6 +1225,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      },
+      "figma": {
+        "key": "v12/menu",
+        "status": "unmapped"
       }
     },
     {
@@ -1054,7 +1266,11 @@
             "accordion"
           ]
         }
-      ]
+      ],
+      "figma": {
+        "key": "v12/modal",
+        "status": "unmapped"
+      }
     },
     {
       "id": "notification",
@@ -1091,6 +1307,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/notification",
+        "status": "unmapped"
       }
     },
     {
@@ -1122,6 +1342,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/notifications-panel",
+        "status": "unmapped"
       }
     },
     {
@@ -1142,6 +1366,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      },
+      "figma": {
+        "key": "v12/number-input",
+        "status": "unmapped"
       }
     },
     {
@@ -1162,6 +1390,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/options-tile",
+        "status": "unmapped"
       }
     },
     {
@@ -1174,6 +1406,10 @@
         "repo": "carbon-next",
         "ref": "6f8b71c063976cdba7667b74b6291aacda5d9b7e",
         "path": "packages/motion-icons"
+      },
+      "figma": {
+        "key": "v12/package/motion-icons",
+        "status": "unmapped"
       }
     },
     {
@@ -1186,6 +1422,10 @@
         "repo": "carbon-next",
         "ref": "6f8b71c063976cdba7667b74b6291aacda5d9b7e",
         "path": "packages/motion-icons-core"
+      },
+      "figma": {
+        "key": "v12/package/motion-icons-core",
+        "status": "code-only"
       }
     },
     {
@@ -1198,6 +1438,10 @@
         "repo": "carbon-next",
         "ref": "6f8b71c063976cdba7667b74b6291aacda5d9b7e",
         "path": "packages/motion-icons-wc"
+      },
+      "figma": {
+        "key": "v12/package/motion-icons-wc",
+        "status": "code-only"
       }
     },
     {
@@ -1223,6 +1467,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/page-header",
+        "status": "unmapped"
       }
     },
     {
@@ -1239,6 +1487,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/pagination",
+        "status": "unmapped"
       }
     },
     {
@@ -1254,6 +1506,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      },
+      "figma": {
+        "key": "v12/pagination-nav",
+        "status": "unmapped"
       }
     },
     {
@@ -1282,6 +1538,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/popover",
+        "status": "unmapped"
       }
     },
     {
@@ -1302,6 +1562,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/processing",
+        "status": "unmapped"
       }
     },
     {
@@ -1331,7 +1595,11 @@
             "progress-ring"
           ]
         }
-      ]
+      ],
+      "figma": {
+        "key": "v12/progress-bar",
+        "status": "unmapped"
+      }
     },
     {
       "id": "progress-indicator",
@@ -1354,6 +1622,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/progress-indicator",
+        "status": "unmapped"
       }
     },
     {
@@ -1373,6 +1645,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/progress-ring",
+        "status": "unmapped"
       }
     },
     {
@@ -1385,6 +1661,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/props",
+        "status": "code-only"
       }
     },
     {
@@ -1399,6 +1679,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/radio-button",
+        "status": "unmapped"
       }
     },
     {
@@ -1417,6 +1701,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "4de90c46ff699ecade477457490e747a986e8a71"
+      },
+      "figma": {
+        "key": "v12/recipes",
+        "status": "code-only"
       }
     },
     {
@@ -1434,6 +1722,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/roll-text",
+        "status": "unmapped"
       }
     },
     {
@@ -1452,6 +1744,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/scroller",
+        "status": "unmapped"
       }
     },
     {
@@ -1471,6 +1767,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      },
+      "figma": {
+        "key": "v12/search",
+        "status": "unmapped"
       }
     },
     {
@@ -1488,6 +1788,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      },
+      "figma": {
+        "key": "v12/select",
+        "status": "unmapped"
       }
     },
     {
@@ -1504,6 +1808,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      },
+      "figma": {
+        "key": "v12/select-list",
+        "status": "unmapped"
       }
     },
     {
@@ -1545,6 +1853,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/selection-kit",
+        "status": "code-only"
       }
     },
     {
@@ -1566,6 +1878,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/shimmer-text",
+        "status": "unmapped"
       }
     },
     {
@@ -1604,6 +1920,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      },
+      "figma": {
+        "key": "v12/side-nav",
+        "status": "unmapped"
       }
     },
     {
@@ -1641,6 +1961,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      },
+      "figma": {
+        "key": "v12/side-panel",
+        "status": "unmapped"
       }
     },
     {
@@ -1669,6 +1993,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/slider",
+        "status": "unmapped"
       }
     },
     {
@@ -1687,6 +2015,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "4f2a12b253ef68bbed31f80de38387b67d6fb582"
+      },
+      "figma": {
+        "key": "v12/snap",
+        "status": "code-only"
       }
     },
     {
@@ -1705,6 +2037,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/status-indicator",
+        "status": "unmapped"
       }
     },
     {
@@ -1721,6 +2057,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/step-flow",
+        "status": "unmapped"
       }
     },
     {
@@ -1737,6 +2077,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/structured-list",
+        "status": "unmapped"
       }
     },
     {
@@ -1748,6 +2092,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "b36c1f77a810df54239b9e26f4910a687f78a6fe"
+      },
+      "figma": {
+        "key": "v12/styles/anchor-inset",
+        "status": "code-only"
       }
     },
     {
@@ -1759,6 +2107,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/styles/brand",
+        "status": "code-only"
       }
     },
     {
@@ -1770,6 +2122,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "db8a7637e319090df402ada3bfc0f4b3e30639d7"
+      },
+      "figma": {
+        "key": "v12/styles/cast-shadow",
+        "status": "code-only"
       }
     },
     {
@@ -1781,6 +2137,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "7b223a14059b86d92103693975dd1f774333a11d"
+      },
+      "figma": {
+        "key": "v12/styles/cast-shadow-floating",
+        "status": "code-only"
       }
     },
     {
@@ -1792,6 +2152,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "db8a7637e319090df402ada3bfc0f4b3e30639d7"
+      },
+      "figma": {
+        "key": "v12/styles/container-fade",
+        "status": "code-only"
       }
     },
     {
@@ -1803,6 +2167,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "b36c1f77a810df54239b9e26f4910a687f78a6fe"
+      },
+      "figma": {
+        "key": "v12/styles/corners",
+        "status": "code-only"
       }
     },
     {
@@ -1814,6 +2182,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/styles/field-fill",
+        "status": "code-only"
       }
     },
     {
@@ -1825,6 +2197,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "b36c1f77a810df54239b9e26f4910a687f78a6fe"
+      },
+      "figma": {
+        "key": "v12/styles/ghost",
+        "status": "code-only"
       }
     },
     {
@@ -1836,6 +2212,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "16a3b77a85ed09bbe646ee5f368167a23ae328e4"
+      },
+      "figma": {
+        "key": "v12/styles/hold-weight",
+        "status": "code-only"
       }
     },
     {
@@ -1847,6 +2227,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "16a3b77a85ed09bbe646ee5f368167a23ae328e4"
+      },
+      "figma": {
+        "key": "v12/styles/rollover",
+        "status": "code-only"
       }
     },
     {
@@ -1858,6 +2242,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "db8a7637e319090df402ada3bfc0f4b3e30639d7"
+      },
+      "figma": {
+        "key": "v12/styles/size-classes",
+        "status": "code-only"
       }
     },
     {
@@ -1869,6 +2257,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "b36c1f77a810df54239b9e26f4910a687f78a6fe"
+      },
+      "figma": {
+        "key": "v12/styles/skeleton",
+        "status": "code-only"
       }
     },
     {
@@ -1880,6 +2272,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/styles/surface",
+        "status": "code-only"
       }
     },
     {
@@ -1891,6 +2287,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "b36c1f77a810df54239b9e26f4910a687f78a6fe"
+      },
+      "figma": {
+        "key": "v12/styles/tertiary",
+        "status": "code-only"
       }
     },
     {
@@ -1902,6 +2302,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/styles/text-pairs",
+        "status": "code-only"
       }
     },
     {
@@ -1913,6 +2317,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "b36c1f77a810df54239b9e26f4910a687f78a6fe"
+      },
+      "figma": {
+        "key": "v12/styles/tile-art",
+        "status": "code-only"
       }
     },
     {
@@ -1936,6 +2344,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      },
+      "figma": {
+        "key": "v12/tabs",
+        "status": "unmapped"
       }
     },
     {
@@ -1962,6 +2374,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/tag",
+        "status": "unmapped"
       }
     },
     {
@@ -1983,6 +2399,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/tag-set",
+        "status": "unmapped"
       }
     },
     {
@@ -2017,6 +2437,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      },
+      "figma": {
+        "key": "v12/tearsheet",
+        "status": "unmapped"
       }
     },
     {
@@ -2038,6 +2462,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      },
+      "figma": {
+        "key": "v12/text-area",
+        "status": "unmapped"
       }
     },
     {
@@ -2063,6 +2491,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/text-input",
+        "status": "unmapped"
       }
     },
     {
@@ -2075,6 +2507,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/theme-zone",
+        "status": "code-only"
       }
     },
     {
@@ -2092,6 +2528,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/tile",
+        "status": "unmapped"
       }
     },
     {
@@ -2109,6 +2549,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/time-picker",
+        "status": "unmapped"
       }
     },
     {
@@ -2126,6 +2570,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/toggle",
+        "status": "unmapped"
       }
     },
     {
@@ -2140,6 +2588,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/toggletip",
+        "status": "unmapped"
       }
     },
     {
@@ -2166,6 +2618,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      },
+      "figma": {
+        "key": "v12/toolbar",
+        "status": "unmapped"
       }
     },
     {
@@ -2195,6 +2651,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      },
+      "figma": {
+        "key": "v12/tooltip",
+        "status": "unmapped"
       }
     },
     {
@@ -2210,6 +2670,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "bfc1fee7a8f182f4ffc37451f40bc8af8cdda6bf"
+      },
+      "figma": {
+        "key": "v12/tree-view",
+        "status": "unmapped"
       }
     },
     {
@@ -2225,6 +2689,10 @@
       "source": {
         "repo": "carbon-next",
         "ref": "5643fddba29c1b44b905057d5b777ef0e7b25602"
+      },
+      "figma": {
+        "key": "v12/user-avatar",
+        "status": "unmapped"
       }
     },
     {
@@ -2255,7 +2723,11 @@
             "toggletip"
           ]
         }
-      ]
+      ],
+      "figma": {
+        "key": "v12/util",
+        "status": "code-only"
+      }
     }
   ]
 }

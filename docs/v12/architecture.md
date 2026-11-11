@@ -110,6 +110,11 @@ commitlint):
 - `yarn v12:contract --check`: [the motion contract](./motion-contract.md) is
   current. It counts a folder or tool as a user of a seam export when it imports
   it from the seam or from a lane package that re-exports it;
+- `yarn v12:catalog --check`: the component catalog (`docs/v12/catalog.json`) is
+  current. It lists every v12 component package with its manifest status and
+  motion, each component it exports and each prop as a JSON schema, read from
+  the lane's sources with the TypeScript checker; a recipe or a generator names
+  components and props from it. `yarn v12:catalog` writes it;
 - `yarn v12:test`: every v12 package's tests;
 - the v12 Storybook build.
 

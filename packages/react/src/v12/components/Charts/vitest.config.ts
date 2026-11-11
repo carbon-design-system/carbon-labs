@@ -9,14 +9,19 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   // Lane packages are workspace links; they, and the motion packages
-  // behind the seam, run inline.
+  // behind the seam, run inline. The card's test renders in jsdom (its
+  // file says so); the rest run in node.
   resolve: { preserveSymlinks: true },
   test: {
     environment: 'node',
     include: ['__tests__/**/*.test.{ts,tsx}'],
     server: {
       deps: {
-        inline: [/@carbon-labs\/motion-/, /@carbon-labs\/v12-motion/],
+        inline: [
+          /@carbon-labs\/motion-/,
+          /@carbon-labs\/v12-/,
+          /@carbon-labs\/react-/,
+        ],
       },
     },
   },

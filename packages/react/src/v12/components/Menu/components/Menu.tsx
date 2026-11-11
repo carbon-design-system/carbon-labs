@@ -84,7 +84,10 @@ import {
   type SurfaceAlignment,
 } from '@carbon-labs/v12-motion';
 import type { SurfaceShadowOption } from '@carbon-labs/v12-motion';
-import { useSurfaceShadow } from '@carbon-labs/react-kit-defaults';
+import {
+  useKitDefaults,
+  useSurfaceShadow,
+} from '@carbon-labs/react-kit-defaults';
 import { KitPortal } from '@carbon-labs/react-kit-defaults';
 import { iconSizeFor, useWithTimeScale } from '@carbon-labs/react-props';
 import { useDisabledReason } from '@carbon-labs/react-tooltip';
@@ -94,8 +97,9 @@ const skipped = (row: { disabled: boolean; reason?: string } | undefined) =>
   !!row?.disabled && !row.reason;
 import '@carbon-labs/react-selection-kit/scss/selection-kit.scss';
 import { applyDrawnScale, cssPx, drawnScale } from './drawn-scale';
+import { menuCorners } from './menu-corners';
 import './menu.scss';
-import { isComposing } from '@carbon-labs/react-util';
+import { inlineKey, isComposing } from '@carbon-labs/react-util';
 
 /* ============================================================================
  * Menu — Carbon v11's Menu (and its MenuButton / OverflowMenu triggers) on the
@@ -475,8 +479,15 @@ export const MENU_MOTION: MenuMotion = {
 
 export type MenuStyleProps = Pick<
   SelectionStyleProps,
-  'lowContrast' | 'corners' | 'contour' | 'outlinedFill'
+  'lowContrast' | 'contour' | 'outlinedFill'
 > & {
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
+  /**
+   * `rounded` (default): 8px corners and rows at a field's inset. `full`: a
+   * pill frame and pill rows, half a row's height in. `square`: none. Takes
+   * `KitDefaults corners` when not given.
+   */
+  corners?: SelectionStyleProps['corners'];
   /**
    * The highlight's look: inverse (default), tonal, outlined, or hero: the
    * marker in the kit's brand (IBM blue unless `KitDefaults brand` says
@@ -594,7 +605,7 @@ export function Menu({
   onMove,
   variant,
   lowContrast,
-  corners,
+  corners: cornersProp,
   contour,
   outlinedFill,
   outline = true,
@@ -614,6 +625,7 @@ export function Menu({
   const rows = useMemo(() => readRows(children, '', 0), [children]);
   const reduced = usePrefersReducedMotion();
   const elevation = useSurfaceShadow(shadow);
+  const corners = menuCorners(cornersProp, useKitDefaults().corners);
   const m: SelectionMotion = {
     ...SELECTION_KIT_MOTION,
     drag: false,
@@ -1458,9 +1470,11 @@ function SurfaceBody(p: SurfaceProps & { onExited: () => void }) {
       ctx.requestClose('tab');
       return;
     }
+    // Right to left a submenu opens to the left: ← opens it and → goes back.
+    const across = inlineKey(e.key, e.currentTarget);
     if (
       (e.key === 'Escape' && !isComposing(e)) ||
-      (e.key === 'ArrowLeft' && depth > 0)
+      (across === 'ArrowLeft' && depth > 0)
     ) {
       e.preventDefault();
       p.onEscape();
@@ -1487,7 +1501,7 @@ function SurfaceBody(p: SurfaceProps & { onExited: () => void }) {
       activateRow(row, e as unknown as ReactKeyboardEvent<HTMLElement>, true);
       return;
     }
-    if (e.key === 'ArrowRight' && row?.type === 'item' && row.sub) {
+    if (across === 'ArrowRight' && row?.type === 'item' && row.sub) {
       e.preventDefault();
       openSub(row, 'first');
       return;

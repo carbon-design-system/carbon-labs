@@ -45,9 +45,11 @@ import { cx } from '@carbon-labs/react-util';
  *            into a control inside it: editing a field in another card
  *            shouldn't change the choice. Its controls answer their own
  *            presses, as in every tile
- *   mark     the RadioButton's mark (RadioMark) at the top end: off, a 16px
- *            circle on the strong border; on, the family's inverse fill and
- *            its dot, grown in from its center. Shown on every tile, the empty circles say "choose one"
+ *   mark     the RadioButton's mark (RadioMark) at the top end, the radio
+ *            inside it, so it moves as the RadioButton's: its own hover (a
+ *            wash, 1px out) and press (1px in) over the radio, and its dot
+ *            grown in from its center. Off, a 16px circle on the strong
+ *            border; on, the family's inverse fill and its dot. Shown on every tile, the empty circles say "choose one"
  *            before anything is chosen (the ring alone would make the set
  *            look like plain clickable tiles), and the circle against the
  *            SelectableTile's square says one, not several
@@ -222,36 +224,39 @@ export const RadioTile = forwardRef<HTMLDivElement, RadioTileProps>(
           input.current?.focus({ preventScroll: true });
           choose(value, name, e);
         }}>
+        {/* The RadioButton's circle, its radio inside it: its rollover (hover,
+            grow, press) and the dot's growth, as the RadioButton's own. */}
         <RadioMark
           checked={isChosen}
           disabled={disabled}
-          className="cds-kit-tile__radio"
-        />
-        <input
-          ref={input}
-          id={inputId}
-          type="radio"
-          className="cds-kit-tile__radio-input"
-          // The tile's own choice: the tile keeps its hover over it (styles/_rollover.scss).
-          data-rollover-own=""
-          name={name}
-          value={String(value)}
-          checked={isChosen}
-          disabled={disabled}
-          required={required ?? group?.required}
-          tabIndex={tabIndex}
-          aria-labelledby={ariaLabelledBy ?? contentId}
-          aria-describedby={ariaDescribedBy}
-          onChange={(e) => {
-            if (e.target.checked) choose(value, name, e);
-          }}
-          onKeyDown={(e) => {
-            // Enter chooses too, as Space does (v11's).
-            if (e.key !== 'Enter' || disabled) return;
-            e.preventDefault();
-            if (!isChosen) choose(value, name, e);
-          }}
-        />
+          timeScale={timeScale}
+          className="cds-kit-tile__radio">
+          <input
+            ref={input}
+            id={inputId}
+            type="radio"
+            className="cds-radio__input cds-kit-tile__radio-input"
+            // The tile's own choice: the tile keeps its hover over it (styles/_rollover.scss).
+            data-rollover-own=""
+            name={name}
+            value={String(value)}
+            checked={isChosen}
+            disabled={disabled}
+            required={required ?? group?.required}
+            tabIndex={tabIndex}
+            aria-labelledby={ariaLabelledBy ?? contentId}
+            aria-describedby={ariaDescribedBy}
+            onChange={(e) => {
+              if (e.target.checked) choose(value, name, e);
+            }}
+            onKeyDown={(e) => {
+              // Enter chooses too, as Space does (v11's).
+              if (e.key !== 'Enter' || disabled) return;
+              e.preventDefault();
+              if (!isChosen) choose(value, name, e);
+            }}
+          />
+        </RadioMark>
         <div id={contentId} className="cds-kit-tile__content">
           {children}
         </div>

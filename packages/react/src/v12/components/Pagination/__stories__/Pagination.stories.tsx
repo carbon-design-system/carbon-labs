@@ -71,7 +71,7 @@ const row = {
   flexWrap: 'wrap' as const,
 };
 
-/** A footer for 103 items, ten to a page. Step through the pages: the range and the page number swap, out then in. */
+/** A footer for 103 items, ten to a page. Step through the pages: the range and the page number change at once. */
 export const Default = {
   args: {
     page: 1,
@@ -88,11 +88,27 @@ export const Default = {
     itemsPerPageText: 'Items per page:',
     backwardTextTooltipPosition: 'top',
     forwardTextTooltipPosition: 'top',
+    numberSwap: false,
     timeScale: 1,
   },
   render: (args: PaginationProps) => (
     <div style={frame}>
       <Pagination {...args} />
+    </div>
+  ),
+};
+
+/** `numberSwap`: the range's "11–20" swaps along x and the page number along y, out then in. */
+export const NumberSwap = {
+  render: () => (
+    <div style={frame}>
+      <Pagination
+        numberSwap
+        page={2}
+        pageSize={10}
+        pageSizes={PAGE_SIZES}
+        totalItems={103}
+      />
     </div>
   ),
 };

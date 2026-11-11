@@ -36,6 +36,10 @@ pill, for a host that draws its own control.
   the distance, with the standard-productive curve. Past two views, it first
   moves to one view short of the target, then glides the rest. A reader's own
   wheel, touch, key or press stops the glide where it is.
+- **One event:** while the glide runs, the scroll container carries
+  `data-jump-to-gliding`, and `jumpRemaining(el)` gives what is left of its
+  clock. A part that reacts to the scroll the jump causes, such as PageHeader's
+  collapse, runs on that clock or lands with the glide, never after it.
 - **Stick to end:** with Latest, a view at the end stays there as content grows.
   A reader's own scroll toward the start lets go once it settles.
 - **Keyboard:** Enter or Space on the pill jumps and moves focus to the target,

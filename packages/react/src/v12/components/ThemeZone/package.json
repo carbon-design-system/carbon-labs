@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-theme-zone",
-  "version": "0.2.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - ThemeZone for React (v12)",
@@ -30,6 +30,10 @@
     "scss",
     "telemetry.yml"
   ],
+  "sideEffects": [
+    "*.scss",
+    "*.css"
+  ],
   "scripts": {
     "build": "node ../../../../tasks/build.js",
     "clean": "rimraf es lib scss",
@@ -37,7 +41,6 @@
   },
   "dependencies": {
     "@carbon-labs/react-util": "workspace:*",
-    "@carbon-labs/v12-motion": "workspace:*",
     "@carbon/react": "^1.118.0",
     "@ibm/telemetry-js": "^1.10.2"
   },

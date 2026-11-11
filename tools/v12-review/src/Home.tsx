@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// The home page: its header, then every component by category, each a card
-// (the card is the link) with its name,
-// the first sentence of its summary and tags for what it has (motion, its
-// reduced motion, accessibility notes, tests), and a search that narrows them
-// by name and summary.
+// The home page: its header, then every component by category, each a
+// clickable Tile (one target: the tile is the link) with its name, the first
+// sentence of its summary and tags for what it has (motion, its reduced
+// motion, accessibility notes, tests), and a search that narrows them by name
+// and summary.
 
 import React, { useState } from 'react';
 import { Search } from '@carbon-labs/react-search';
-import { ArrowRight } from '@carbon-labs/react-motion-icons';
 import { Tag } from '@carbon-labs/react-tag';
+import { ClickableTile } from '@carbon-labs/react-tile';
 import { firstSentence, groupsOf, hrefOf, tagsOf } from './model';
 import type { Entry } from './model';
 import { inline } from './markdown';
@@ -81,14 +81,10 @@ export function Home({ groups }: { groups: ReturnType<typeof groupsOf> }) {
 function Card({ entry }: { entry: Entry }) {
   const tags = tagsOf(entry.text);
   return (
-    <a
+    <ClickableTile
       className="v12r-card"
-      href={hrefOf({ page: 'component', slug: entry.slug })}>
-      <span className="v12r-card__title">{entry.title}</span>
-      <span className="v12r-card__summary">
-        {entry.text?.summary ? inline(firstSentence(entry.text.summary)) : null}
-      </span>
-      <span className="v12r-card__foot">
+      href={hrefOf({ page: 'component', slug: entry.slug })}
+      footer={
         <span className="v12r-card__tags">
           {tags.map((t) => (
             <Tag key={t} size="sm" type="gray">
@@ -96,8 +92,11 @@ function Card({ entry }: { entry: Entry }) {
             </Tag>
           ))}
         </span>
-        <ArrowRight size={16} aria-hidden="true" />
+      }>
+      <span className="v12r-card__title">{entry.title}</span>
+      <span className="v12r-card__summary">
+        {entry.text?.summary ? inline(firstSentence(entry.text.summary)) : null}
       </span>
-    </a>
+    </ClickableTile>
   );
 }

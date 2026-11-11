@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-snap",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - Snap for React (v12)",
@@ -29,6 +29,10 @@
     "lib",
     "scss",
     "telemetry.yml"
+  ],
+  "sideEffects": [
+    "*.scss",
+    "*.css"
   ],
   "scripts": {
     "build": "node ../../../../tasks/build.js",

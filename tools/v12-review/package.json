@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/v12-review",
-  "version": "0.3.0",
+  "version": "0.12.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - the v12 review app: every v12 component's stories, motion and props in one app, built from the components themselves",
@@ -33,12 +33,14 @@
     "@carbon-labs/react-number-input": "workspace:*",
     "@carbon-labs/react-page-header": "workspace:*",
     "@carbon-labs/react-popover": "workspace:*",
+    "@carbon-labs/react-scroller": "workspace:*",
     "@carbon-labs/react-search": "workspace:*",
     "@carbon-labs/react-select": "workspace:*",
     "@carbon-labs/react-side-nav": "workspace:*",
     "@carbon-labs/react-tabs": "workspace:*",
     "@carbon-labs/react-tag": "workspace:*",
     "@carbon-labs/react-text-input": "workspace:*",
+    "@carbon-labs/react-tile": "workspace:*",
     "@carbon-labs/react-toggle": "workspace:*",
     "@carbon-labs/react-tooltip": "workspace:*",
     "@carbon-labs/v12-workbench": "workspace:*"

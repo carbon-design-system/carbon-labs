@@ -24,6 +24,11 @@ import {
  *            short of the target first; reduced motion lands at once
  *   window   a container that is the document (`document.scrollingElement`)
  *            is the window: the viewport observes, the layer is the body's
+ *   one      a jump is one event: while it glides, the scroll box carries
+ *            `data-jump-to-gliding`, and `jumpRemaining` gives what is left
+ *            of its clock, so what reacts to the scroll it causes (a page
+ *            header collapsing or expanding) runs on that clock, or lands
+ *            with it, rather than playing after it
  * ========================================================================== */
 
 /** Where the target is from the view. */
@@ -114,6 +119,40 @@ export function landingTop(
     return bottom - view + JUMP_EDGE_PAD;
   }
   return top - JUMP_EDGE_PAD;
+}
+
+/** The scroll box of a jump under way. */
+export const JUMP_GLIDE_ATTR = 'data-jump-to-gliding';
+/** When each gliding box's jump lands (`performance.now()` ms). */
+const glides = new WeakMap<Element, number>();
+
+/**
+ * A jump under way over `el` (in its scroll box, or the box itself): the ms
+ * left until it lands, 0 on its landing frame, or null when no jump moves it.
+ * What reacts to the scroll reads it: a change the jump causes runs on the
+ * jump's clock, or lands with it.
+ */
+export function jumpRemaining(
+  el: Pick<Element, 'closest'> | null | undefined,
+  now = performance.now()
+): number | null {
+  const box = el?.closest(`[${JUMP_GLIDE_ATTR}]`);
+  const ends = box ? glides.get(box) : undefined;
+  return ends === undefined ? null : Math.max(0, ends - now);
+}
+
+type GlideBox = Pick<Element, 'setAttribute' | 'removeAttribute'>;
+
+/** Marks `box` as gliding until `ends` (`performance.now()` ms). */
+export function markJumpGlide(box: GlideBox, ends: number) {
+  glides.set(box as Element, ends);
+  box.setAttribute(JUMP_GLIDE_ATTR, '');
+}
+
+/** `box` glides no more. */
+export function clearJumpGlide(box: GlideBox) {
+  glides.delete(box as Element);
+  box.removeAttribute(JUMP_GLIDE_ATTR);
 }
 
 /** A reader's own move settles this long after its last input or scroll, ms. */
@@ -433,6 +472,27 @@ export function attachJumpTo(
 
   const scrollTo = (top: number) => box.scrollTo({ top, behavior: 'instant' });
 
+  // The jump's clock on the box (`jumpRemaining`). Landed, it reads 0 until
+  // the next frame, which is when the landing's scroll event arrives.
+  let marks = 0;
+  const unmark = () => {
+    marks++;
+    clearJumpGlide(box);
+  };
+  const markGlide = (ms: number) => {
+    marks++;
+    markJumpGlide(box, performance.now() + ms);
+  };
+  const markLanded = () => {
+    markGlide(0);
+    const mine = marks;
+    requestAnimationFrame(() => {
+      if (marks === mine) {
+        unmark();
+      }
+    });
+  };
+
   // A tab stop added for the jump goes again once focus leaves.
   const focusAfter = () => {
     const o = opts();
@@ -462,6 +522,9 @@ export function attachJumpTo(
     stopGlide = null;
     settleJump?.(false);
     settleJump = null;
+    if (glides.has(box)) {
+      unmark();
+    }
   };
 
   const placeHost = () => {
@@ -511,6 +574,7 @@ export function attachJumpTo(
       const live = target === 'end';
       if (o.reduced) {
         scrollTo(landing());
+        markLanded();
         if (live) {
           pinned = true;
         }
@@ -524,6 +588,7 @@ export function attachJumpTo(
       const ms = Math.max(1, glideMs(plan.glide, o.timeScale));
       const fixed = landing();
       const t0 = performance.now();
+      markGlide(ms);
       // A reader's own wheel, touch, key or press stops the glide where it is.
       const stop = () => cancel();
       input.addEventListener('wheel', stop, { passive: true });
@@ -548,6 +613,7 @@ export function attachJumpTo(
         glide = 0;
         stopGlide?.();
         stopGlide = null;
+        markLanded();
         if (live) {
           pinned = true;
         }

@@ -5,7 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useState, type MouseEvent, type ReactNode } from 'react';
+import React, {
+  useRef,
+  useState,
+  type MouseEvent,
+  type ReactNode,
+} from 'react';
+import { JumpTo } from '@carbon-labs/react-jump-to';
+import '@carbon-labs/react-jump-to/scss/jump-to.scss';
 import { Slider } from '@carbon-labs/react-slider';
 import { Button } from '@carbon-labs/react-button';
 import '@carbon-labs/react-selection-kit/scss/selection-kit.scss';
@@ -220,6 +227,29 @@ export const Default = {
       header={(navigation) => <PageHeader {...args} navigation={navigation} />}
     />
   ),
+};
+
+/** With JumpTo's Back to top: scroll down, then jump. The header opens as the glide lands, on its clock, not after it. */
+export const WithJumpTo = {
+  render: function WithJumpToStory() {
+    const box = useRef<HTMLDivElement>(null);
+    return (
+      <div style={{ position: 'relative' }}>
+        <div ref={box} style={scroller}>
+          <PageHeader
+            title="Quarterly review"
+            subtitle="Results and notes for the current quarter."
+            breadcrumbs={BREADCRUMBS}
+            pageActions={PAGE_ACTIONS}
+            tags={TAGS}
+          />
+          <PageBody section="Summary" />
+          <PageBody section="Results" />
+        </div>
+        <JumpTo container={box} preset="top" />
+      </div>
+    );
+  },
 };
 
 /** `frame="ghost"`: no surface of its own, on the ground it sits on. Collapsed, a hairline fades in under the compact row. */

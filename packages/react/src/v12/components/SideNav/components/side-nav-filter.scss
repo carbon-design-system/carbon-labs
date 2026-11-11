@@ -8,6 +8,7 @@
 @use '@carbon/react/scss/theme';
 @use '@carbon/react/scss/spacing' as *;
 @use '@carbon/react/scss/type' as *;
+@use '@carbon-labs/v12-styles/scss/rollover' as *;
 
 /* SideNav's filter (`filter`, filter.tsx): the field is the top of the nav's
  * panel, the track's first child, and it sticks to the top of whatever
@@ -74,6 +75,26 @@
   padding-block-end: $spacing-03;
   /* On the page: the page's field. */
   --cds-field-fill: #{theme.$field};
+}
+
+/* A ghost nav's field is ghost (no fill or hairline at rest) and hovers as
+   its rows do: the rows' rollover (`.sel__item`'s, selection-kit.scss), its
+   matched-lightness tint solved off the page as theirs is (SideNav.tsx), on
+   their corner, with no hover hairline. Focused, the focus edge shows and the
+   tint goes, so what's typed reads on the page. */
+.sidenav--ghost .sidenav__filter .cds-text-input__field {
+  @include rollover($press-inset: 0px);
+  --rollover-hover: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+.sidenav--ghost
+  .sidenav__filter
+  .cds-text-input__field:not([data-focus]):hover::after {
+  --tf-edge: transparent;
+}
+
+.sidenav--ghost .sidenav__filter .cds-text-input__field[data-focus]::before {
+  --cds-motion-rollover-hover: 0;
 }
 
 /* The field's corner is the rows' inner corner (the track's less its inset),

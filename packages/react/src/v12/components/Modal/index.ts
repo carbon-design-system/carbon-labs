@@ -59,4 +59,9 @@ export { ModalSwap } from './components/ModalSwap';
 export type { ModalSwapProps } from './components/ModalSwap';
 
 // The names other v12 packages take from this package's files.
-export { holdPageScale, releasePageScale } from './components/backdrop';
+export {
+  backdropBlur,
+  backdropBlurStyle,
+  holdPageScale,
+  releasePageScale,
+} from './components/backdrop';

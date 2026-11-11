@@ -97,6 +97,7 @@ export interface AccordionProps extends HTMLAttributes<HTMLUListElement> {
   className?: string;
   /** Every item disabled (an item's own `disabled` wins). */
   disabled?: boolean;
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /** `flush` (default): the hairlines and the hover edge to edge. `ghost`: the text 16px in, on the page's text; the hairlines and the hover 8px outside it, inset from the row's edges. Not with `align="start"`. */
   frame?: AccordionFrame;
   /** An `<ol>` rather than a `<ul>`. */
@@ -107,6 +108,7 @@ export interface AccordionProps extends HTMLAttributes<HTMLUListElement> {
   exclusive?: boolean;
   /** The level of each item's heading. Default 3. */
   headingLevel?: 2 | 3 | 4 | 5 | 6;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** `square` (v11, default) or `rounded` (8px), inside a card or a rounded region. Default: KitDefaults' (a Region's), else `square`. */
   corners?: ContainerCorners;
   /** Slow motion: multiplies the opening, the shutting and the headings' rollover. Default: the page's duration tokens (1). */

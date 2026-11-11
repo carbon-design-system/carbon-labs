@@ -548,6 +548,7 @@ export interface SpinnerProps extends Omit<
   size?: SpinnerSize;
   /** The line, px. Default size / 16, at most 2px (`loaderStroke`): 1px at 16px, 2px from 32px. */
   stroke?: number;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** `neutral` (default): the arc in the host's colour. `hero`: the arc in the kit's brand (IBM blue by default; `KitDefaults brand`). Both over the neutral base. Not given: `KitDefaults variant`, else neutral. */
   variant?: SpinnerVariant;
   /**

@@ -55,7 +55,7 @@ import {
   type SelectionSize,
   type TooltipController,
 } from '@carbon-labs/react-selection-kit';
-import { useStableCallback } from '@carbon-labs/react-util';
+import { assignRef, useStableCallback } from '@carbon-labs/react-util';
 import {
   TabLabels,
   TabsContext,
@@ -183,6 +183,7 @@ export interface TabListProps extends HTMLAttributes<HTMLDivElement> {
   'aria-label'?: string;
   /** `Tab` and `IconTab` elements. */
   children?: ReactNode;
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /**
    * What the tabs stand on. `line` (default): the underline on the
    * family's hairline. `inset`: the content switcher's track and selector
@@ -270,7 +271,10 @@ const TabButton = memo(function TabButton({
   return (
     <button
       {...itemRest}
-      ref={(el) => setRef(i, el)}
+      ref={(el) => {
+        setRef(i, el);
+        assignRef(it.ref, el);
+      }}
       type="button"
       role="tab"
       id={tabId(baseId, i)}

@@ -64,10 +64,11 @@ import {
  * a fixed member of the row, such as a pagination nav's "…".
  *
  * A leaving item's copy is placed in its nearest `data-reflow-clip` ancestor
- * inside the root (positioned), else in the root: a part of the row that
- * clips or masks what moves in it (a pagination nav's window of numbers,
- * between soft edges) keeps clipping the copies too, and a copy keeps the
- * styles of the list it sat in.
+ * inside the root, else in the root: a part of the row that clips or masks
+ * what moves in it (a pagination nav's window of numbers, between soft
+ * edges) keeps clipping the copies too, and a copy keeps the styles of the
+ * list it sat in. It is drawn where its item stood whether or not that
+ * host is positioned.
  *
  * Interrupted, the row is read where it is on screen (transforms included),
  * so a new change turns round from there. Reduced motion: nothing travels;
@@ -184,6 +185,19 @@ function copyOf(el: HTMLElement): HTMLElement {
   clone.setAttribute('inert', '');
   clone.dataset.reflowCopy = '';
   return clone;
+}
+
+/**
+ * How far a leaving item's copy landed from where its item stood, as the
+ * move that puts it back: [dx, dy], 0 within half a pixel.
+ */
+export function copyCorrection(
+  stood: Pick<DOMRect, 'left' | 'top'>,
+  landed: Pick<DOMRect, 'left' | 'top'>
+): [number, number] {
+  const dx = stood.left - landed.left;
+  const dy = stood.top - landed.top;
+  return [Math.abs(dx) > 0.5 ? dx : 0, Math.abs(dy) > 0.5 ? dy : 0];
 }
 
 /** What a reflow has running: its animations, its copies, the items it holds in place. */
@@ -354,6 +368,23 @@ function playReflow(
     clone.style.pointerEvents = 'none';
     host.appendChild(clone);
     run.copies.push(clone);
+  }
+  // A copy is placed against its host, but drawn against its containing
+  // block: a host that isn't positioned (a plain flex row) hands it to an
+  // ancestor, and it would show off its place. Read where each landed (one
+  // read for all), then move it by what it missed: it leaves from where
+  // its item stood.
+  const landed = placed.map(({ clone }) => clone.getBoundingClientRect());
+  placed.forEach((p, i) => {
+    const [dx, dy] = copyCorrection(p.box, landed[i]!);
+    if (dx) {
+      p.clone.style.left = `${p.left + dx}px`;
+    }
+    if (dy) {
+      p.clone.style.top = `${p.top + dy}px`;
+    }
+  });
+  for (const { clone } of placed) {
     const fade = clone.animate([{ opacity: 1 }, { opacity: 0 }], {
       duration: exitMs,
       easing: css('exit'),

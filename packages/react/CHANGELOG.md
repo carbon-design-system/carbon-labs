@@ -3,6 +3,90 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.237.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.236.0...%40carbon-labs%2Freact%400.237.0) (2026-11-11)
+
+### Bug Fixes
+
+* **v12:** menu corners, tooltip spacing, pagination swap, reach, jumps, lists ([#1487](https://github.com/carbon-design-system/carbon-labs/issues/1487)) ([c9c9153](https://github.com/carbon-design-system/carbon-labs/commit/c9c91530f21ee611c717c97f4a8a73d9fccd6b9c))
+
+
+# [0.236.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.235.0...%40carbon-labs%2Freact%400.236.0) (2026-11-11)
+
+* fix(shimmer-text)!: one text layer; contextual bar corners (#1486) ([2de89c7](https://github.com/carbon-design-system/carbon-labs/commit/2de89c7b11d78b69ffdcd74d2ca68ac8f455012a)), closes [#1486](https://github.com/carbon-design-system/carbon-labs/issues/1486)
+
+### BREAKING CHANGES
+
+* removed `motion.weight` and `motion.weightAt`, and the
+  exports `SHIMMER_WEIGHT_EM`, `shimmerStroke`, `solveShimmerRest`,
+  `solveShimmerBand`, `ShimmerWeight` and `ShimmerWeightAt`, with
+  `SHIMMER_TEXT.weight`, `restContrast` and `bandContrast`.
+
+  * fix(contextual-bar): keep the inverse bar's corners round
+
+  On inverse, the bar carries the opposite theme's class, and that class
+  paints its element's background: a square box under the rounded
+  surface. While the bar snaps, its clip rounds the box, so the corners
+  looked right in motion and went square at rest. The bar now paints no
+  background, and its fill is the surface's alone, on the corners the
+  clip shares.
+
+  The stories nest what the source page does: the selection's actions are
+  a small toolbar of ghost icon buttons, and the status and unsaved-changes
+  bars take text buttons. Outlined buttons took the bar's 2px corner step
+  and read as boxes.
+
+  * chore: regenerate the design sync's snapshots
+
+
+# [0.235.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.234.0...%40carbon-labs%2Freact%400.235.0) (2026-11-11)
+
+### Bug Fixes
+
+* **react:** v12 surfaces grow from their cause in RTL and fold back ([#1485](https://github.com/carbon-design-system/carbon-labs/issues/1485)) ([d416820](https://github.com/carbon-design-system/carbon-labs/commit/d416820b62baf23869bf65ce41fe28d2dbf895f6))
+
+
+# [0.234.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.233.0...%40carbon-labs%2Freact%400.234.0) (2026-11-11)
+
+### Bug Fixes
+
+* **v12-review:** nav fold, mark, type and scrollers ([#1484](https://github.com/carbon-design-system/carbon-labs/issues/1484)) ([75a5b8b](https://github.com/carbon-design-system/carbon-labs/commit/75a5b8b12536e1f9562b7022514d3060859c3441))
+
+
+# [0.233.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.232.0...%40carbon-labs%2Freact%400.233.0) (2026-11-11)
+
+### Performance Improvements
+
+* **v12:** Processing, TextInput, chat shell, motion icons, DatePickerV2 ([#1481](https://github.com/carbon-design-system/carbon-labs/issues/1481)) ([c7ee5a7](https://github.com/carbon-design-system/carbon-labs/commit/c7ee5a7fb0761b6191561d13ad2e3daf45e008c2))
+
+
+# [0.232.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.231.0...%40carbon-labs%2Freact%400.232.0) (2026-11-11)
+
+### Features
+
+* **v12-import:** make departures.json the only source of departures ([#1478](https://github.com/carbon-design-system/carbon-labs/issues/1478)) ([1829a50](https://github.com/carbon-design-system/carbon-labs/commit/1829a50bea3a61d21206ac435eecc40dad7ffe34))
+
+
+# [0.231.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.230.0...%40carbon-labs%2Freact%400.231.0) (2026-11-11)
+
+### Features
+
+* **v12-import:** a departures registry, and the marks it places ([#1477](https://github.com/carbon-design-system/carbon-labs/issues/1477)) ([da48f6d](https://github.com/carbon-design-system/carbon-labs/commit/da48f6d5c0f5a943110ff482d85e80800bde4ea1))
+
+
+# [0.230.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.229.0...%40carbon-labs%2Freact%400.230.0) (2026-11-11)
+
+### Bug Fixes
+
+* **v12:** right-to-left keys, refs, group status, Popover aliases, Card ([#1480](https://github.com/carbon-design-system/carbon-labs/issues/1480)) ([60a3ee4](https://github.com/carbon-design-system/carbon-labs/commit/60a3ee495eff11566bfa431020ff4393096eb220))
+
+
+# [0.229.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.228.0...%40carbon-labs%2Freact%400.229.0) (2026-11-11)
+
+### Features
+
+* **v12:** shared direction, roving and announcer helpers, style mixins ([#1479](https://github.com/carbon-design-system/carbon-labs/issues/1479)) ([f12c43a](https://github.com/carbon-design-system/carbon-labs/commit/f12c43a834b0eb88ad4840fd0af682c1e2188833))
+
+
 # [0.228.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.227.0...%40carbon-labs%2Freact%400.228.0) (2026-11-11)
 
 **Note:** Version bump only for package @carbon-labs/react

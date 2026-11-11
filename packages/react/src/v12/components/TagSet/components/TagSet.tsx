@@ -719,7 +719,7 @@ export function TagSet({
         align={surfaceAlign(overflowAlign)}
         label={`${overflow.length} more ${overflow.length === 1 ? 'tag' : 'tags'}`}
         timeScale={timeScale}
-        onClose={() => setOpen(false)}
+        onRequestClose={() => setOpen(false)}
         className="cds-tag-set__popover">
         <div className="cds-tag-set__popover-content">
           <ul

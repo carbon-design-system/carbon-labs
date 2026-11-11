@@ -281,10 +281,15 @@
 
 /* Inverse: the page's opposite theme on the bar and everything in it
    (ContextualBar.tsx reads the page's), its background the fill. */
-/* What a surface round it solved (a workspace's fields and tracks) doesn't reach in. */
+/* What a surface round it solved (a workspace's fields and tracks) doesn't reach in.
+   The theme's class paints its element's background, a square box under the
+   rounded surface: the bar paints none, so its fill is the frame's alone, on
+   the frame's corners, the ones the snap's clip takes. */
 .cds-contextual-bar__bar[data-inverse] {
   --cds-field-fill: initial;
   --cds-surface-track: initial;
+
+  background: none;
 }
 
 @each $name, $t,

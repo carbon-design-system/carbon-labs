@@ -94,7 +94,7 @@
       "status": "draft",
       "docs": "v12-card--overview",
       "firstSentence": "A tile with a header, a body, actions and a footer, on `--cds-surface` with 8px corners and 16px in.",
-      "summary": "A tile with a header, a body, actions and a footer, on `--cds-surface` with 8px corners and 16px in. A card has a label, a title and a description, a body, action icons and an overflow menu, and primary and secondary buttons. With `onClick` it is a control, one tab stop; without it, it is a plain surface. `ProductiveCard` is dense, for product UI, with its actions at the top and a ghost primary button. Its `clickZone` sets where a click counts. `ExpressiveCard` holds media to the card's edge, or a pictogram, with its actions at the bottom. `CardSkeleton` is a card while it loads. `decorator` and `slug` are accepted and render nothing.",
+      "summary": "A tile with a header, a body, actions and a footer, on `--cds-surface` with 8px corners and 16px in. A card has a label, a title and a description, a body, action icons and an overflow menu, and primary and secondary buttons. With `onClick` its action is one button over the card, named by the title, and the card's own buttons sit beside it; without it, it is a plain surface. `ProductiveCard` is dense, for product UI, with its actions at the top and a ghost primary button. Its `clickZone` sets where a click counts. `ExpressiveCard` holds media to the card's edge, or a pictogram, with its actions at the bottom. `CardSkeleton` is a card while it loads. `decorator` and `slug` are accepted and render nothing.",
       "sections": [
         "Motion",
         "Reduced motion"
@@ -123,7 +123,7 @@
       "status": "draft",
       "docs": "v12-checkbox--overview",
       "firstSentence": "A box that turns one option on or off.",
-      "summary": "A box that turns one option on or off. A parent of partly checked children shows mixed, a dash. `Checkbox` takes Carbon's props, plus `disabledReason` and `timeScale`. `CheckboxGroup` sets several checkboxes under one legend, stacked or in a row. `CheckboxSkeleton` is the checkbox while it loads.",
+      "summary": "A box that turns one option on or off. A parent of partly checked children shows mixed, a dash. `Checkbox` takes Carbon's props, plus `disabledReason` and `timeScale`. `CheckboxGroup` sets several checkboxes under one legend, stacked or in a row; its `invalid` or `warn` reaches each checkbox in it, with one message under the group. `CheckboxSkeleton` is the checkbox while it loads.",
       "sections": [
         "Motion",
         "Reduced motion"
@@ -760,6 +760,7 @@
       "firstSentence": "A floating list of actions and choices, with Carbon's API: `MenuItem`, `MenuItemSelectable`, `MenuItemRadioGroup`, `MenuItemGroup` and `MenuItemDivider`, and a MenuItem's own MenuItems as a submenu.",
       "summary": "A floating list of actions and choices, with Carbon's API: `MenuItem`, `MenuItemSelectable`, `MenuItemRadioGroup`, `MenuItemGroup` and `MenuItemDivider`, and a MenuItem's own MenuItems as a submenu. `MenuButton` and `OverflowMenu` open one from a button, as SplitButton does; `x` and `y` place one at a point, as a context menu. One highlight serves the pointer and the keys, and labels take its color where it covers them. With `inline`, the menu is drawn in place, with no portal, placement, snap or close.",
       "sections": [
+        "Corners",
         "Motion",
         "Reduced motion"
       ]
@@ -979,7 +980,7 @@
       "status": "draft",
       "docs": "v12-radiobutton--overview",
       "firstSentence": "A circle for choosing one option from a group.",
-      "summary": "A circle for choosing one option from a group. `RadioButton` and `RadioButtonGroup` take Carbon's props, plus `timeScale`. The group holds the choice, its legend and one message line; it is in a row by default. `RadioMark` is the circle and dot alone, for a control that draws a radio it doesn't own. `RadioButtonSkeleton` is the radio button while it loads.",
+      "summary": "A circle for choosing one option from a group. `RadioButton` and `RadioButtonGroup` take Carbon's props, plus `timeScale`. The group holds the choice, its legend and one message line; it is in a row by default. `RadioMark` is the circle and dot alone, for a control that draws a radio it doesn't own. Given its radio as `children`, it is the circle with its motion, for a control that owns one. `RadioButtonSkeleton` is the radio button while it loads.",
       "sections": [
         "Motion",
         "Reduced motion"
@@ -1089,8 +1090,8 @@
       "name": "Shimmer text",
       "status": "draft",
       "docs": "v12-shimmertext--overview",
-      "firstSentence": "A label that shows live work: a band sweeps through words that rest a step quieter and show one weight step heavier under the band.",
-      "summary": "A label that shows live work: a band sweeps through words that rest a step quieter and show one weight step heavier under the band. It runs on the skeleton wave's angle.",
+      "firstSentence": "A label that shows live work: a band in the primary text sweeps through words that rest a step quieter.",
+      "summary": "A label that shows live work: a band in the primary text sweeps through words that rest a step quieter. It runs on the skeleton wave's angle.",
       "sections": [
         "Motion"
       ]
@@ -1103,7 +1104,7 @@
       "status": "draft",
       "docs": "v12-sidenav--overview",
       "firstSentence": "The app's page navigation, on the selection family's look and motion.",
-      "summary": "The app's page navigation, on the selection family's look and motion. It is a `<nav>` of real links, not a tablist: each `SideNavLink` is an `<a href>`, or a router link through `as`, and the current page is `aria-current=\"page\"`. `SideNavGroup` is a collapsible group of links under a header. A group opens when you go to one of its pages and never shuts on its own. With `collapsed`, `defaultCollapsed` or `collapsible`, and an icon on every top-level row, the nav folds to a rail of icons. In an AppShell the shell draws the fold toggle; elsewhere it sits at the nav's foot. `filter` pins a field at the top that narrows the nav to the matching links. Every link and group header is a tab stop.",
+      "summary": "The app's page navigation, on the selection family's look and motion. It is a `<nav>` of real links, not a tablist: each `SideNavLink` is an `<a href>`, or a router link through `as`, and the current page is `aria-current=\"page\"`. `SideNavGroup` is a collapsible group of links under a header. A group opens when you go to one of its pages and never shuts on its own. With `collapsed`, `defaultCollapsed` or `collapsible`, and an icon on every top-level row, the nav folds to a rail of icons. In an AppShell the shell draws the fold toggle; elsewhere it sits at the nav's foot. `filter` pins a field at the top that narrows the nav to the matching links; in a ghost nav the field is ghost too, and hovers as a row does. Every link and group header is a tab stop.",
       "sections": [
         "Motion",
         "Reduced motion"
@@ -1363,7 +1364,7 @@
       "status": "draft",
       "docs": "v12-tooltip--overview",
       "firstSentence": "Short labels and descriptions on hover and keyboard focus.",
-      "summary": "Short labels and descriptions on hover and keyboard focus. `Tooltip`, `IconButton`, `DefinitionTooltip` and `TooltipGroup` take Carbon's props and share one look: the inverse fill, 4px corners and no caret. Escape dismisses a tooltip, and the pointer can move onto it without it leaving. Only one tooltip shows on the page at a time.",
+      "summary": "Short labels and descriptions on hover and keyboard focus. `Tooltip`, `IconButton`, `DefinitionTooltip` and `TooltipGroup` take Carbon's props and share one look: the inverse fill, 4px corners and no caret. Escape dismisses a tooltip, and the pointer can move onto it without it leaving. Only one tooltip shows on the page at a time. A label pads 2px by 8px, on every side and placement. A description or a definition, text worth reading, wraps and pads 8px by 12px.",
       "sections": [
         "Motion",
         "Reduced motion"
@@ -1405,7 +1406,7 @@
       "status": "draft",
       "docs": "v12-util--overview",
       "firstSentence": "The helpers the v12 components share: class names, form state, the page's layer stack and focus, colour parsing, the reduced-motion getter, the visibility a looping motion pauses on, and the ref and `inert` helpers that read the same on React 18 and 19.",
-      "summary": "The helpers the v12 components share: class names, form state, the page's layer stack and focus, colour parsing, the reduced-motion getter, the visibility a looping motion pauses on, and the ref and `inert` helpers that read the same on React 18 and 19.",
+      "summary": "The helpers the v12 components share: class names, form state, the page's layer stack and focus, colour parsing, the reduced-motion getter, the visibility a looping motion pauses on, and the ref and `inert` helpers that read the same on React 18 and 19. The keyboard and screen reader helpers: - `isRtl`, `useDirection` and `inlineKey`: direction, read one way. `inlineKey(e.key, el)` hands back a horizontal arrow as it reads left to right, so one handler serves both directions. - `rovingIndex` and `useRovingTabStop`: a group of controls that is one tab stop, moved through with the arrows (by direction), Home and End. - `useAnnouncer`: a polite and an assertive live region to render, and the `announce` that writes to them.",
       "sections": []
     }
   ]

@@ -128,6 +128,7 @@ $theme-scopes: (
 
 /* The tokens for one hue: the theme's steps through its `--cds-hue-*`, the fill's as they are. */
 @mixin brand($hue, $tones) {
+  // @carbon-proposal token: hero-color — The hero tokens give the brand colour for a line, a fill and its hover and press, and an ink on a page and on a fill; with no brand set, each is its Carbon token. replaces: `$border-interactive`, `$interactive`, `$button-primary` and its hover and active, `$link-primary`, `$link-inverse`. TBD
   --cds-hero: var(--cds-hue-#{$hue});
   --cds-hero-loader: var(--cds-hue-#{$hue}-loader);
   --cds-hero-ink: var(--cds-hue-#{$hue}-ink);
@@ -168,6 +169,7 @@ $theme-scopes: (
 
 /* A brand zone, and any theme scope inside it. */
 @each $hue, $tones in $hues {
+  // @carbon-explore brand-hue — A brand zone turns every hero colour into another IBM hue (purple, magenta, cyan or teal), each from its own Carbon grades, so a product can carry its brand. TBD
   [data-cds-brand='#{$hue}'],
   [data-cds-brand='#{$hue}']
     :is(

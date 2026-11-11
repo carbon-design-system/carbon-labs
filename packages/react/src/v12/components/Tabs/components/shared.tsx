@@ -11,17 +11,22 @@ import {
   Children,
   cloneElement,
   createContext,
+  forwardRef,
   Fragment,
   isValidElement,
   useCallback,
   useContext,
+  useEffect,
   useId,
+  useLayoutEffect,
   useMemo,
+  useRef,
   useState,
   type ElementType,
   type HTMLAttributes,
   type ReactElement,
   type ReactNode,
+  type Ref,
 } from 'react';
 import { distanceTokens } from '@carbon-labs/v12-motion';
 import type { SelectionMoveInfo } from '@carbon-labs/v12-motion';
@@ -36,6 +41,7 @@ import {
   type SelectionStyleProps,
 } from '@carbon-labs/react-selection-kit';
 import { useWithTimeScale } from '@carbon-labs/react-props';
+import { assignRef, elementRef } from '@carbon-labs/react-util';
 import { Scroller } from '@carbon-labs/react-scroller';
 
 /* ============================================================================
@@ -225,10 +231,12 @@ export interface TabProps extends Omit<
   secondaryLabel?: string;
 }
 
-/** A tab. Read by its list; renders nothing on its own. */
-export function Tab(_props: TabProps): null {
-  return null;
-}
+/** A tab. Read by its list, which renders it: its ref is the tab's button. */
+export const Tab = forwardRef<HTMLButtonElement, TabProps>(
+  function Tab(_props, _ref): null {
+    return null;
+  }
+);
 Tab.displayName = 'Tab';
 
 export interface IconTabProps extends Omit<
@@ -256,10 +264,12 @@ export interface IconTabProps extends Omit<
   leaveDelayMs?: number;
 }
 
-/** An icon-only tab with a tooltip (horizontal tabs). Read by `TabList`; renders nothing on its own. */
-export function IconTab(_props: IconTabProps): null {
-  return null;
-}
+/** An icon-only tab with a tooltip (horizontal tabs). Read by `TabList`, which renders it: its ref is the tab's button. */
+export const IconTab = forwardRef<HTMLButtonElement, IconTabProps>(
+  function IconTab(_props, _ref): null {
+    return null;
+  }
+);
 IconTab.displayName = 'IconTab';
 
 /** A motion icon that takes a notification status (motion-icons' status layer: Chat, Notification, …). */
@@ -288,6 +298,8 @@ export interface TabItem {
   badge: boolean;
   disabled: boolean;
   props: Omit<HTMLAttributes<HTMLButtonElement>, 'children'>;
+  /** The `Tab`'s or `IconTab`'s own ref: the button the list renders for it. */
+  ref?: Ref<HTMLButtonElement>;
 }
 
 export function textOf(node: ReactNode): string {
@@ -342,6 +354,7 @@ export function readTabs(children: ReactNode): TabItem[] {
         badge: !!badgeIndicator && !own,
         disabled: !!disabled,
         props,
+        ref: elementRef<HTMLButtonElement>(child),
       });
     } else if (isComponentType(child.type, Tab)) {
       const {
@@ -361,6 +374,7 @@ export function readTabs(children: ReactNode): TabItem[] {
         badge: false,
         disabled: !!disabled,
         props,
+        ref: elementRef<HTMLButtonElement>(child),
       });
     }
   });
@@ -389,6 +403,7 @@ export const sameTab = (a: TabItem, b: TabItem) =>
     a.Icon === b.Icon &&
     a.badge === b.badge &&
     a.disabled === b.disabled &&
+    a.ref === b.ref &&
     sameNode(a.content, b.content) &&
     sameProps(a.props, b.props));
 
@@ -415,10 +430,12 @@ export interface TabPanelProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
 }
 
-/** A panel. Read by `TabPanels`; renders nothing on its own. */
-export function TabPanel(_props: TabPanelProps): null {
-  return null;
-}
+/** A panel. Read by `TabPanels`, which renders it: its ref is the panel. */
+export const TabPanel = forwardRef<HTMLDivElement, TabPanelProps>(
+  function TabPanel(_props, _ref): null {
+    return null;
+  }
+);
 TabPanel.displayName = 'TabPanel';
 
 export interface TabPanelsProps {
@@ -445,6 +462,28 @@ export function TabPanels({
   const panels = Children.toArray(children).filter(
     (c) => isValidElement(c) && isComponentType(c.type, TabPanel)
   ) as ReactElement<TabPanelProps>[];
+  // Each `TabPanel`'s ref, on the panel rendered for it (the selection kit
+  // draws the panels; they are found here by their ids), after every render.
+  const attached = useRef(new Map<Ref<HTMLDivElement>, HTMLElement | null>());
+  useLayoutEffect(() => {
+    const next = new Map<Ref<HTMLDivElement>, HTMLElement | null>();
+    panels.forEach((p, i) => {
+      const ref = elementRef<HTMLDivElement>(p);
+      if (ref) next.set(ref, document.getElementById(panelId(baseId, i)));
+    });
+    for (const ref of attached.current.keys())
+      if (!next.has(ref)) assignRef(ref, null);
+    for (const [ref, el] of next)
+      if (attached.current.get(ref) !== el)
+        assignRef(ref, el as HTMLDivElement | null);
+    attached.current = next;
+  });
+  useEffect(
+    () => () => {
+      for (const ref of attached.current.keys()) assignRef(ref, null);
+    },
+    []
+  );
   return (
     <SelectionPanels
       selectedIndex={selected}

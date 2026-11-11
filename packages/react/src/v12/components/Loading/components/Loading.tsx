@@ -85,6 +85,7 @@ export interface LoadingProps extends Omit<
   id?: string;
   /** The small spinner (16px), for inline use. Default false: the 64px spinner (v11's is 88px). */
   small?: boolean;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** `neutral` (default, `$icon-primary`) or `hero` (the kit's brand, `$interactive` blue by default). Not given: `KitDefaults variant` (the Spinner reads it), else neutral. */
   variant?: SpinnerVariant;
   /** Cover the page with an overlay while active, and hold focus in it. Default true. */

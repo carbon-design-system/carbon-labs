@@ -102,10 +102,14 @@ export const KIT_SHADOW: KitShadow = false;
 
 export interface KitDefaultsValue {
   density?: KitDensity;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   corners?: KitCorners;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   variant?: KitVariant;
+  // @carbon-explore brand-hue — A brand zone turns every hero colour into another IBM hue (purple, magenta, cyan or teal), each from its own Carbon grades, so a product can carry its brand. TBD
   /** The hero hue for the subtree. Default (no provider): IBM blue. */
   brand?: KitBrand;
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /**
    * The default frame of the selection and navigation components inside
    * (the select list, vertical tabs, the side nav, a toolbar's exclusive
@@ -130,6 +134,7 @@ export interface KitDefaultsProps extends KitDefaultsValue {
 
 const KitDefaultsContext = createContext<KitDefaultsValue>({});
 
+// @carbon-explore kit-defaults — A provider sets the brand, corners, variant, frame, shadow and density for a subtree, and a component's own prop always wins over it. TBD
 /** Defaults for the subtree. An inner provider overrides only what it sets. */
 export function KitDefaults({
   density,
@@ -174,6 +179,7 @@ export function BrandZone({
   brand,
   children,
 }: {
+  // @carbon-explore brand-hue — A brand zone turns every hero colour into another IBM hue (purple, magenta, cyan or teal), each from its own Carbon grades, so a product can carry its brand. TBD
   brand: KitBrand;
   children?: ReactNode;
 }) {

@@ -9,6 +9,7 @@
 @use '@carbon/react/scss/type' as *;
 @use '@carbon-labs/v12-styles/scss/rollover' as *;
 @use '@carbon-labs/v12-styles/scss/cast-shadow';
+@use '@carbon-labs/v12-styles/scss/focus';
 @use '@carbon-labs/v12-styles/scss/surface';
 @use '@carbon-labs/v12-styles/scss/text-pairs';
 
@@ -46,6 +47,7 @@ $_pad: 1rem;
    pointer, drawn in on press. */
 .cds-kit-card--clickable {
   @include rollover;
+  // @carbon-explore cast-shadow — An opt-in shadow drawn in layers whose colour is solved for contrast on its backdrop, at three elevations (resting, raised, floating). TBD
   @include cast-shadow.cast-shadow;
   --rollover-rest: #{$_surface};
   /* Fallbacks; the rollover solves the tiles' quiet steps off the surface. */
@@ -63,13 +65,9 @@ $_pad: 1rem;
 
   cursor: pointer;
 
-  &:focus {
-    outline: none;
-  }
-
-  &:focus-visible {
-    outline: 2px solid theme.$text-primary;
-    outline-offset: 2px;
+  /* The keyboard on its action: the kit's ring round the card. */
+  &:has(> .cds-kit-card__action:focus-visible) {
+    @include focus.focus-ring;
   }
 
   /* A control in it hovered or pressed: the card yields (the rollover's
@@ -78,6 +76,25 @@ $_pad: 1rem;
      never take the card's colours (the rollover's tokens are contained). */
   &:has(#{$rollover-nested-engaged}) > [data-cast-layer] {
     opacity: 0;
+  }
+}
+
+/* The card's own action (Card.tsx): one button over the whole card. A
+   pointer passes through it (a press is the card's, so its text can still
+   be selected), and it adds no paint and no box. */
+.cds-kit-card__action {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  border-radius: inherit;
+  margin: 0;
+  appearance: none;
+  background: none;
+  inset: 0;
+  pointer-events: none;
+
+  &:focus {
+    outline: none;
   }
 }
 

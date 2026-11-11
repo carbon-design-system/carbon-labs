@@ -8,10 +8,19 @@
 // The review app's own parts. The shell, the nav and the controls are the
 // components'; this is the page's type, its cards, its stages and tables,
 // all on the theme's tokens.
+@use '@carbon/react/scss/type';
+
 .v12r-shell {
   background: var(--cds-background);
   color: var(--cds-text-primary);
   min-block-size: 100vh;
+}
+
+// The Carbon mark in the header: the lower-contrast tone (the favicon's,
+// favicon.ts).
+.v12r-mark {
+  display: inline-flex;
+  color: var(--cds-icon-secondary);
 }
 
 .v12r-picks {
@@ -58,12 +67,18 @@
 
   p,
   li {
-    font-size: 14px;
-    line-height: 20px;
+    @include type.type-style('body-01');
   }
 }
 
+// Descriptive text (a section's docs, a story's description, a prop's
+// description): body-01, as Carbon sets running text.
 .v12r-prose {
+  p,
+  li {
+    @include type.type-style('body-01');
+  }
+
   p,
   ul {
     margin: 0 0 12px;
@@ -75,13 +90,13 @@
   }
 
   li {
-    margin-block-end: 6px;
+    margin-block-end: 8px;
   }
 
   h4 {
+    @include type.type-style('heading-compact-01');
+
     margin: 16px 0 8px;
-    font-size: 14px;
-    font-weight: 600;
   }
 
   code {
@@ -135,54 +150,17 @@
   list-style: none;
 }
 
-@media screen and (prefers-reduced-motion: reduce) {
-  .v12r-card {
-    display: flex;
-    box-sizing: border-box;
-    flex-direction: column;
-    padding: 16px;
-    border-radius: 8px;
-    background: var(--cds-layer-01);
-    block-size: 100%;
-    color: var(--cds-text-primary);
-    gap: 8px;
-    min-block-size: 168px;
-    text-decoration: none;
-    transition: none;
-
-    &:hover {
-      background: var(--cds-layer-hover-01);
-    }
-
-    &:focus-visible {
-      outline: 2px solid var(--cds-focus);
-      outline-offset: 2px;
-    }
-  }
-}
-
+// Each card is the lane's clickable Tile (Home.tsx): its surface, hover,
+// press, focus ring and reduced motion are the Tile's. Here, only its size
+// and the content's layout.
 .v12r-card {
-  display: flex;
-  box-sizing: border-box;
-  flex-direction: column;
-  padding: 16px;
-  border-radius: 8px;
-  background: var(--cds-layer-01);
   block-size: 100%;
-  color: var(--cds-text-primary);
-  gap: 8px;
   min-block-size: 168px;
-  text-decoration: none;
-  transition: background-color var(--cds-motion-duration-fast-02, 110ms)
-    var(--cds-motion-easing-standard-productive, ease);
 
-  &:hover {
-    background: var(--cds-layer-hover-01);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--cds-focus);
-    outline-offset: 2px;
+  > .cds-kit-tile__content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
 }
 
@@ -208,20 +186,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
-}
-
-.v12r-card__foot {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  color: var(--cds-text-secondary);
-  font-size: 12px;
-  gap: 8px;
-
-  svg {
-    flex: none;
-    fill: currentColor;
-  }
 }
 
 // ── a component's page ──
@@ -290,14 +254,19 @@
 }
 
 .v12r-settings {
-  display: grid;
-  align-content: start;
-  padding: 16px;
   border-radius: 8px;
   background: var(--cds-layer-01);
-  gap: 16px;
   max-block-size: 720px;
-  overflow-y: auto;
+}
+
+// The settings scroll in the kit's Scroller (its viewport), as every
+// scrolling area in the app does.
+.v12r-settings__body {
+  display: grid;
+  box-sizing: border-box;
+  align-content: start;
+  padding: 16px;
+  gap: 16px;
 }
 
 .v12r-frame {
@@ -323,15 +292,13 @@
 }
 
 // ── tables ──
-.v12r-table-wrap {
-  overflow-x: auto;
-}
-
+// A table wider than the page scrolls sideways in the kit's Scroller
+// (`axis="x"`).
 .v12r-table {
+  @include type.type-style('body-01');
+
   border-collapse: collapse;
-  font-size: 14px;
   inline-size: 100%;
-  line-height: 20px;
 
   caption {
     color: var(--cds-text-secondary);
@@ -375,9 +342,23 @@
   font-size: 12px;
 }
 
-// Reduced motion: the card's fill changes at once.
-@media (prefers-reduced-motion: reduce) {
-  .v12r-card {
-    transition: none;
+// The filter's fold (ReviewApp.tsx, `useFilterFold`): as the nav folds, the
+// field's magnifier moves to the strip's search button, the toggle's size and
+// color, on the fold's own clock (`--cds-nav-fold`, 0 open to 1 folded, the
+// shell's). The field's text stays where it is while the column's edge passes
+// over it. Reduced motion: the fold lands at once, so this never runs.
+.v12r-nav .sidenav__filter .cds-search__magnifier {
+  color: color-mix(
+    in srgb,
+    var(--cds-icon-secondary),
+    var(--cds-icon-primary) calc(var(--cds-nav-fold, 0) * 100%)
+  );
+
+  svg {
+    transform: translate(
+        calc(var(--cds-nav-fold, 0) * var(--v12r-fold-dx, 0px)),
+        calc(var(--cds-nav-fold, 0) * var(--v12r-fold-dy, 0px))
+      )
+      scale(calc(1 + var(--cds-nav-fold, 0) * (var(--v12r-fold-scale, 1) - 1)));
   }
 }

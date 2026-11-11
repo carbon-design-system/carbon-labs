@@ -124,6 +124,7 @@ export interface HeaderProps extends Omit<
   linkProps?: Record<string, unknown>;
   /** The global actions: IconButtons, `frame="ghost"`, `size="lg"`, `corners="full"`. */
   actions?: ReactNode;
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /** `flush` (a bar on the quiet surface, a hairline under it) or `ghost` (no surface, no hairline). Default `ghost` in an AppShell (`HEADER_FRAME_AT`), `flush` outside one. */
   frame?: HeaderFrame;
   /** `light`, `dark`, `page` (the theme round it) or `inverse`. Default the frame's (`HEADER_THEME`): flush `dark`, as Carbon's UI shell; ghost `page`. */

@@ -57,7 +57,7 @@ import {
   wrapTab,
 } from '@carbon-labs/react-util';
 import {
-  MODAL_BACKDROP,
+  backdropBlurStyle,
   holdPageScale,
   prewarmBackdrop,
   releasePageScale,
@@ -122,12 +122,6 @@ import './modal.scss';
  * ========================================================================== */
 
 export type ModalSize = 'xs' | 'sm' | 'md' | 'lg';
-
-/** A blur layer's filter (its radius from MODAL_BACKDROP, the one place it is set). */
-const blurStyle = (px: number) => ({
-  backdropFilter: `blur(${px}px)`,
-  WebkitBackdropFilter: `blur(${px}px)`,
-});
 
 /** The modal's motion: the scale and inset its container grows from, its clocks, the overlay's clocks, the shadow's reach. */
 export const MODAL_MOTION = {
@@ -757,7 +751,7 @@ const ModalShell = forwardRef<HTMLDivElement, ShellProps>(function ModalShell(
       {blur === 'even' && (
         <div
           className="cds-modal__blur cds-modal__blur--even"
-          style={blurStyle(MODAL_BACKDROP.even)}
+          style={backdropBlurStyle()}
           aria-hidden="true"
         />
       )}

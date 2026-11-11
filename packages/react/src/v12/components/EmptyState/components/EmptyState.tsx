@@ -96,6 +96,7 @@ export interface EmptyStateProps extends Omit<
   illustration?: string;
   /** The image's alt text. Default: none, as it's decorative. */
   illustrationDescription?: string;
+  // @carbon-proposal api: logical-positions — Placement values are logical, `start` and `end`, so they follow the reading direction. TBD
   /** Where the visual sits beside the text; `start` and `end` mirror right to left. Default `top`. */
   illustrationPosition?: EmptyStateIllustrationPosition;
   /** Products' preset, as its illustration (placeholder line art in the theme's tokens). None: no illustration. */

@@ -7,6 +7,8 @@ reduced motion, clock, direction) applies to everything. The themes are v12
 light (the default) and v12 dark; the header and the side nav stay v12 dark, and
 the theme pick is the workspace's. A v11 theme kept from before is read as the
 v12 theme of its side.
+The side nav folds to a strip of its toggle and a search button, the filter's
+field folding into the button.
 
 It's built from the v12 components themselves (AppShell, Header, SideNav,
 PageHeader, Tabs, Link, Search, Popover, the form controls) and driven by their

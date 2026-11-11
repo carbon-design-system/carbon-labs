@@ -123,8 +123,9 @@ $_rule: var(
   flex-direction: column;
   color: theme.$text-primary;
   inline-size: var(--cds-modal-w);
-  inset-block-start: 0;
-  inset-inline-start: 0;
+  /* Physical: the script sets left and top in client px, in either
+     direction (a logical start inset is the right edge in RTL). */
+  inset: 0 auto auto 0;
   isolation: isolate;
   max-block-size: var(--cds-modal-max-h);
   outline: none;
@@ -203,6 +204,7 @@ $_rule: var(
   z-index: -1;
   border-radius: var(--cds-modal-radius);
   background: $_surface;
+  // @carbon-explore floating-hairline — A floating surface (a menu, a popover, a modal, a panel) stands on its fill and a 1px hairline, with no cast shadow unless one is asked for. TBD
   box-shadow: inset 0 0 0 1px $_rule;
   inset: 0;
 }

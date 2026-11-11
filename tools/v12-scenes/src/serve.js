@@ -51,7 +51,10 @@ export function serve(dir) {
     }
     fs.readFile(file, (err, body) => {
       if (err) {
-        res.writeHead(404).end();
+        // The full Chromium asks for a favicon on every page and logs a 404
+        // as a console error; the built Storybook has none. No content, no
+        // error.
+        res.writeHead(url.pathname === '/favicon.ico' ? 204 : 404).end();
         return;
       }
       res.writeHead(200, {

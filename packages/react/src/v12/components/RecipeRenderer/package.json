@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-recipe-renderer",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "publishConfig": {
     "access": "public",

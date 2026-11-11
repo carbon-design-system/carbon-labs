@@ -61,8 +61,10 @@ export interface MenuButtonProps
   children?: ReactNode;
   /** The role: `primary` (default) or `secondary`. */
   kind?: 'primary' | 'secondary';
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** The treatment: `filled` (default), the role's fill; `outlined` (v11's tertiary) or `tonal` (the shell's quieter look). */
   variant?: 'filled' | 'outlined' | 'tonal';
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /** What it stands on: `inset` (default), its own surface; `ghost`, v11's ghost, no surface of its own. Wins over `variant`. */
   frame?: 'inset' | 'ghost';
   /** The menu's treatment (Menu's `variant`): `inverse` (default), `tonal`, `outlined`; KitDefaults' `variant` when not given. */

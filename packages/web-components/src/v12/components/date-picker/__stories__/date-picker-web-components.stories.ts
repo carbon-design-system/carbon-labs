@@ -8,7 +8,7 @@
 /* eslint-disable jsdoc/require-jsdoc, jsdoc/require-param-description, jsdoc/require-param-type, jsdoc/valid-types */
 
 import { html } from 'lit';
-import { prefix } from '../temp-imports/globals/settings';
+import { tagPrefix } from '../temp-imports/globals/settings';
 import { iconLoader } from '../temp-imports/globals/internal/icon-loader';
 import { INPUT_SIZE } from '../components/date-picker/defs';
 import View16 from '@carbon/icons/es/view/16.js';
@@ -103,7 +103,7 @@ const controls = {
       'Provide the text that is displayed when the control is in warning state.',
   },
   onChange: {
-    action: `${prefix}-date-picker-changed`,
+    action: `${tagPrefix}-date-picker-changed`,
   },
   onInput: {
     action: 'input',
@@ -166,13 +166,13 @@ export const Default = {
     warnText,
   }) => {
     return html`
-      <cds-date-picker
+      <clabs-date-picker
         date-format="${dateFormat}"
         ?disabled="${disabled}"
         max-date="${maxDate}"
         min-date="${minDate}"
         ?readonly="${readonly}">
-        <cds-date-picker-input
+        <clabs-date-picker-input
           kind="${kind === 'range' ? 'from' : kind}"
           label-text="Date Picker label"
           placeholder="${placeholder}"
@@ -181,10 +181,10 @@ export const Default = {
           invalid-text="${invalidText}"
           ?warn="${warn}"
           warn-text="${warnText}">
-        </cds-date-picker-input>
+        </clabs-date-picker-input>
         ${kind === 'range'
           ? html`
-              <cds-date-picker-input
+              <clabs-date-picker-input
                 kind="to"
                 label-text="End date"
                 placeholder="${placeholder}"
@@ -193,10 +193,10 @@ export const Default = {
                 invalid-text="${invalidText}"
                 ?warn="${warn}"
                 warn-text="${warnText}">
-              </cds-date-picker-input>
+              </clabs-date-picker-input>
             `
           : null}
-      </cds-date-picker>
+      </clabs-date-picker>
     `;
   },
 };
@@ -233,13 +233,13 @@ export const RangeWithCalendar = {
     warnText,
   }) => {
     return html`
-      <cds-date-picker
+      <clabs-date-picker
         date-format="${dateFormat}"
         ?disabled="${disabled}"
         max-date="${maxDate}"
         min-date="${minDate}"
         ?readonly="${readonly}">
-        <cds-date-picker-input
+        <clabs-date-picker-input
           kind="from"
           label-text="Start date"
           placeholder="${placeholder}"
@@ -248,8 +248,8 @@ export const RangeWithCalendar = {
           invalid-text="${invalidText}"
           ?warn="${warn}"
           warn-text="${warnText}">
-        </cds-date-picker-input>
-        <cds-date-picker-input
+        </clabs-date-picker-input>
+        <clabs-date-picker-input
           kind="to"
           label-text="End date"
           placeholder="${placeholder}"
@@ -258,8 +258,8 @@ export const RangeWithCalendar = {
           invalid-text="${invalidText}"
           ?warn="${warn}"
           warn-text="${warnText}">
-        </cds-date-picker-input>
-      </cds-date-picker>
+        </clabs-date-picker-input>
+      </clabs-date-picker>
     `;
   },
 };
@@ -297,13 +297,13 @@ export const RangeWithCalendarWithLayer = {
   }) => {
     return html`
       <sb-template-layers>
-        <cds-date-picker
+        <clabs-date-picker
           date-format="${dateFormat}"
           ?disabled="${disabled}"
           max-date="${maxDate}"
           min-date="${minDate}"
           ?readonly="${readonly}">
-          <cds-date-picker-input
+          <clabs-date-picker-input
             kind="from"
             label-text="Start date"
             placeholder="${placeholder}"
@@ -312,8 +312,8 @@ export const RangeWithCalendarWithLayer = {
             invalid-text="${invalidText}"
             ?warn="${warn}"
             warn-text="${warnText}">
-          </cds-date-picker-input>
-          <cds-date-picker-input
+          </clabs-date-picker-input>
+          <clabs-date-picker-input
             kind="to"
             label-text="End date"
             placeholder="${placeholder}"
@@ -322,8 +322,8 @@ export const RangeWithCalendarWithLayer = {
             invalid-text="${invalidText}"
             ?warn="${warn}"
             warn-text="${warnText}">
-          </cds-date-picker-input>
-        </cds-date-picker>
+          </clabs-date-picker-input>
+        </clabs-date-picker>
       </sb-template-layers>
     `;
   },
@@ -361,11 +361,11 @@ export const Simple = {
     warnText,
   }) => {
     return html`
-      <cds-date-picker
+      <clabs-date-picker
         date-format="${dateFormat}"
         max-date="${maxDate}"
         min-date="${minDate}">
-        <cds-date-picker-input
+        <clabs-date-picker-input
           ?disabled="${disabled}"
           label-text="Date Picker label"
           placeholder="${placeholder}"
@@ -375,8 +375,8 @@ export const Simple = {
           invalid-text="${invalidText}"
           ?warn="${warn}"
           warn-text="${warnText}">
-        </cds-date-picker-input>
-      </cds-date-picker>
+        </clabs-date-picker-input>
+      </clabs-date-picker>
     `;
   },
 };
@@ -414,11 +414,11 @@ export const SimpleWithLayer = {
   }) => {
     return html`
       <sb-template-layers>
-        <cds-date-picker
+        <clabs-date-picker
           date-format="${dateFormat}"
           max-date="${maxDate}"
           min-date="${minDate}">
-        <cds-date-picker-input
+        <clabs-date-picker-input
           ?disabled="${disabled}"
           label-text="Date Picker label"
           placeholder="${placeholder}"
@@ -428,7 +428,7 @@ export const SimpleWithLayer = {
           invalid-text="${invalidText}"
           ?warn="${warn}"
           warn-text="${warnText}">
-        </cds-date-picker-input>
+        </clabs-date-picker-input>
       </sb-template-layers>
   `;
   },
@@ -466,13 +466,13 @@ export const SingleWithCalendar = {
     warnText,
   }) => {
     return html`
-      <cds-date-picker
+      <clabs-date-picker
         date-format="${dateFormat}"
         ?disabled="${disabled}"
         max-date="${maxDate}"
         min-date="${minDate}"
         ?readonly="${readonly}">
-        <cds-date-picker-input
+        <clabs-date-picker-input
           kind="single"
           label-text="Date Picker label"
           placeholder="${placeholder}"
@@ -481,8 +481,8 @@ export const SingleWithCalendar = {
           invalid-text="${invalidText}"
           ?warn="${warn}"
           warn-text="${warnText}">
-        </cds-date-picker-input>
-      </cds-date-picker>
+        </clabs-date-picker-input>
+      </clabs-date-picker>
     `;
   },
 };
@@ -520,13 +520,13 @@ export const SingleWithCalendarWithLayer = {
   }) => {
     return html`
       <sb-template-layers>
-        <cds-date-picker
+        <clabs-date-picker
           date-format="${dateFormat}"
           ?disabled="${disabled}"
           max-date="${maxDate}"
           min-date="${minDate}"
           ?readonly="${readonly}">
-          <cds-date-picker-input
+          <clabs-date-picker-input
             kind="single"
             label-text="Date Picker label"
             placeholder="${placeholder}"
@@ -535,8 +535,8 @@ export const SingleWithCalendarWithLayer = {
             invalid-text="${invalidText}"
             ?warn="${warn}"
             warn-text="${warnText}">
-          </cds-date-picker-input>
-        </cds-date-picker>
+          </clabs-date-picker-input>
+        </clabs-date-picker>
       </sb-template-layers>
     `;
   },
@@ -563,10 +563,10 @@ export const Skeleton = {
    * @param root0.range
    */
   render: ({ hideLabel, range }) => html`
-    <cds-date-picker-input-skeleton
+    <clabs-date-picker-input-skeleton
       ?hide-label="${hideLabel}"
       ?range="${range}">
-    </cds-date-picker-input-skeleton>
+    </clabs-date-picker-input-skeleton>
   `,
   decorators: [(story) => html` <div>${story()}</div> `],
   parameters: {
@@ -639,13 +639,13 @@ export const WithAILabel = {
     warnText,
   }) => {
     return html`
-      <cds-date-picker
+      <clabs-date-picker
         date-format="${dateFormat}"
         ?disabled="${disabled}"
         max-date="${maxDate}"
         min-date="${minDate}"
         ?readonly="${readonly}">
-        <cds-date-picker-input
+        <clabs-date-picker-input
           kind="single"
           label-text="Date Picker label"
           placeholder="${placeholder}"
@@ -657,8 +657,8 @@ export const WithAILabel = {
           <cds-ai-label alignment="bottom-left">
             ${content}${actions}</cds-ai-label
           >
-        </cds-date-picker-input>
-      </cds-date-picker>
+        </clabs-date-picker-input>
+      </clabs-date-picker>
     `;
   },
 };

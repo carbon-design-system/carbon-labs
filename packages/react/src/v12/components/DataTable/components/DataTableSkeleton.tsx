@@ -279,6 +279,7 @@ export interface DataTableRevealProps {
   ) => number;
   /** v11's `locale` for the sort. Default `en`. */
   locale?: string;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** `square` or `rounded` (8px, the DataTable's). Default: KitDefaults' (a rounded Region's), else `square`. */
   corners?: ContainerCorners;
   /**

@@ -47,4 +47,67 @@ describe('CheckboxGroup', () => {
     expect(markup).toContain(`id="${id}"`);
     expect(markup).toContain('Pick any');
   });
+
+  /** The `aria-invalid` and class of each checkbox in the markup, in order. */
+  const boxes = (markup: string) =>
+    [
+      ...markup.matchAll(
+        /<div class="cds-checkbox(?: ([^"]*))?"[\s\S]*?<input([^>]*)>/g
+      ),
+    ].map(([, cls, input]) => ({
+      invalid: input.includes('aria-invalid="true"'),
+      warn: !!cls?.includes('cds-checkbox--warn'),
+    }));
+
+  it('puts its invalid state on every checkbox that has none of its own, and says why under the group', () => {
+    const markup = renderToStaticMarkup(
+      <CheckboxGroup
+        legendText="Send me"
+        helperText="Pick one at least"
+        invalid
+        invalidText="Choose a kind of message">
+        <Checkbox id="a" labelText="Weekly summaries" />
+        <Checkbox id="b" labelText="Security alerts" invalid={false} />
+      </CheckboxGroup>
+    );
+    expect(markup).toContain('cds-checkbox-group--invalid');
+    expect(boxes(markup)).toEqual([
+      { invalid: true, warn: false },
+      { invalid: false, warn: false },
+    ]);
+    expect(markup).toContain('Choose a kind of message');
+    const id = /<fieldset[^>]*aria-describedby="([^"]+)"/.exec(markup)?.[1];
+    expect(id).toMatch(/-invalid$/);
+    expect(markup).toContain(`id="${id}"`);
+    // A checkbox with no message of its own points at none.
+    expect(markup).not.toMatch(/<input[^>]*aria-describedby="a-invalid/);
+  });
+
+  it('puts its warning on the checkboxes, and invalid wins over warn', () => {
+    const warned = renderToStaticMarkup(
+      <CheckboxGroup legendText="Send me" warn warnText="Few people pick this">
+        <Checkbox id="a" labelText="Weekly summaries" />
+      </CheckboxGroup>
+    );
+    expect(warned).toContain('cds-checkbox-group--warn');
+    expect(boxes(warned)).toEqual([{ invalid: false, warn: true }]);
+    expect(warned).toContain('Few people pick this');
+
+    const both = renderToStaticMarkup(
+      <CheckboxGroup legendText="Send me" invalid warn>
+        <Checkbox id="a" labelText="Weekly summaries" />
+      </CheckboxGroup>
+    );
+    expect(boxes(both)).toEqual([{ invalid: true, warn: false }]);
+  });
+
+  it('shows no status while disabled or read-only', () => {
+    const markup = renderToStaticMarkup(
+      <CheckboxGroup legendText="Send me" invalid invalidText="Choose" readOnly>
+        <Checkbox id="a" labelText="Weekly summaries" />
+      </CheckboxGroup>
+    );
+    expect(markup).not.toContain('cds-checkbox-group--invalid');
+    expect(boxes(markup)).toEqual([{ invalid: false, warn: false }]);
+  });
 });

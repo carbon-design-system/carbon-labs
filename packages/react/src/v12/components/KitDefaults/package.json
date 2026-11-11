@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-kit-defaults",
-  "version": "0.3.0",
+  "version": "0.6.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - KitDefaults for React (v12)",

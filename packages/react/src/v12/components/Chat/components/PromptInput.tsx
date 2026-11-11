@@ -136,8 +136,10 @@ export interface PromptInputProps extends PromptInputWords {
   /** A notification docked to the field's top edge. */
   notice?: PromptNoticeValue | null;
   onCloseNotice?: () => void;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** `rounded` (8px, default), `full` (a pill), `square`. Default the enclosing ChatShell's. */
   corners?: ChatCorners;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** Stop's fill and the menus' marker (Send and listening take the brand). Default the shell's; `hero` adds the blue selected edge. */
   variant?: ChatVariant | 'hero';
   /** Slow motion for the chips, the notice and dictation's status. Default 1. */
@@ -388,7 +390,7 @@ export function PromptInput({
                 </IconButton>
                 <Popover
                   open={paramsOpen}
-                  onClose={() => setParamsOpen(false)}
+                  onRequestClose={() => setParamsOpen(false)}
                   anchor={paramsButton}
                   label={parametersButtonLabel}
                   align="bottom-start"

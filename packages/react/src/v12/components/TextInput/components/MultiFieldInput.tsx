@@ -32,7 +32,7 @@ import type { FieldVariant } from '@carbon-labs/react-props';
 import './field.scss';
 import './text-input.scss';
 import './multi-field-input.scss';
-import { holdUntilRelease } from '@carbon-labs/react-util';
+import { holdUntilRelease, inlineKey } from '@carbon-labs/react-util';
 
 /* ============================================================================
  * MultiFieldInput — one text field in N segments: a value that is several
@@ -97,6 +97,7 @@ export interface MultiFieldInputProps {
   segments: MultiFieldSegment[];
   /** xs 24 · sm 32 · md 40 (default) · lg 48, as TextInput. */
   size?: TextInputSize;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** The outer ends: `rounded` (8px, default), `full`, `square`. */
   corners?: 'full' | 'rounded' | 'square';
   /** Hide the segments' names (they still name the inputs). */
@@ -113,6 +114,7 @@ export interface MultiFieldInputProps {
   typingPauseMs?: number;
   /** The message line: in the form's gap (default) or in the layout. */
   messagePlacement?: 'gap' | 'flow';
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** `hero`: the blue accent for focus (expressive fields). Default `neutral`. */
   variant?: FieldVariant;
   className?: string;
@@ -205,14 +207,16 @@ export function MultiFieldInput({
     const el = e.currentTarget;
     const caret =
       el.selectionStart === el.selectionEnd ? el.selectionStart : null;
+    // Right to left the next segment is to the left: ← at a value's end goes on.
+    const key = inlineKey(e.key, el);
     if (
-      e.key === 'ArrowRight' &&
+      key === 'ArrowRight' &&
       caret === el.value.length &&
       i < segments.length - 1
     ) {
       e.preventDefault();
       moveTo(i + 1, 'start');
-    } else if (e.key === 'ArrowLeft' && caret === 0 && i > 0) {
+    } else if (key === 'ArrowLeft' && caret === 0 && i > 0) {
       e.preventDefault();
       moveTo(i - 1, 'end');
     }

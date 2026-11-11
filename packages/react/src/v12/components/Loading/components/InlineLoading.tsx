@@ -77,6 +77,7 @@ export interface InlineLoadingProps extends Omit<
   status?: InlineLoadingStatus;
   /** How long `finished` holds before `onSuccess`, ms. Default 1500. */
   successDelay?: number;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** The spinner's `neutral` (default, `$icon-primary`) or `hero` (the kit's brand, IBM blue by default). Not given: `KitDefaults variant`, else neutral. */
   variant?: SpinnerVariant;
 }

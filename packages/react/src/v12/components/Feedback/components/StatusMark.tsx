@@ -146,6 +146,7 @@ export interface StatusMarkProps {
   icon?: ActionIcon;
   /** With `icon`: the action is under way (the icon's spinner). */
   pending?: boolean;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** The pending spinner's `neutral` (default) or `hero` (the kit's brand, IBM blue by default). The status kinds keep their colours. */
   variant?: SpinnerVariant;
   className?: string;

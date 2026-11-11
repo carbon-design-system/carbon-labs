@@ -965,6 +965,7 @@ interface CommonProps extends Omit<
   title?: string;
   subtitle?: ReactNode;
   lowContrast?: boolean;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** The selection family's style — `outlined` | `inverse` | `tonal`. Wins over `lowContrast`. */
   variant?: NotificationVariant;
   statusIconDescription?: string;
@@ -976,6 +977,7 @@ interface CommonProps extends Omit<
   icon?: ActionIcon;
   /** With `icon`, the action is under way (the icon's spinner) until the kind changes. */
   pending?: boolean;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** `rounded` (8px, default) | `full` | `square` — the frame, the buttons, the ring and the count together. */
   corners?: NotificationCorners;
 }

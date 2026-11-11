@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fwc-date-picker%400.16.0...%40carbon-labs%2Fwc-date-picker%400.17.0) (2026-11-11)
+
+* fix(date-picker)!: register clabs- tags instead of cds- tags (#1476) ([fb14b2a](https://github.com/carbon-design-system/carbon-labs/commit/fb14b2ad5ffd390dc23dd8694c18fef3e5ba1456)), closes [#1476](https://github.com/carbon-design-system/carbon-labs/issues/1476)
+
+### BREAKING CHANGES
+
+* the elements are renamed. Update markup, selectors,
+  styles and event listeners.
+  - cds-date-picker is now clabs-date-picker
+  - cds-date-picker-input is now clabs-date-picker-input
+  - cds-date-picker-input-skeleton is now clabs-date-picker-input-skeleton
+  - cds-date-picker-calendar is now clabs-date-picker-calendar
+  - events named cds-date-picker-* are now named clabs-date-picker-*
+
+
 # [0.16.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-date-picker@0.15.0...@carbon-labs/wc-date-picker@0.16.0) (2026-09-18)
 
 **Note:** Version bump only for package @carbon-labs/wc-date-picker

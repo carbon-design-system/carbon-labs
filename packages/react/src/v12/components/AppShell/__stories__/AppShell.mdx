@@ -60,8 +60,12 @@ overlay nav and the panel move as side panels.
   width while the edge passes over it, and the strip swaps in when it lands. The
   clock is the step for the width's travel, on entrance-productive; shrinking,
   one step faster, on exit-productive. Pressed mid-fold, it turns round from the
-  width drawn. `foldTo="overlay"` folds the column away and opens the nav from
-  the menu button.
+  width drawn. The strip is the toggle with an equal inset either side, up to
+  the workspace; `foldToggle="header"` puts the toggle at the column's top,
+  above what the strip shows. The column carries the fold's progress as
+  `--cds-nav-fold`, 0 open to 1 folded, on the same clock, so what is in it can
+  move with the fold. `foldTo="overlay"` folds the column away and opens the nav
+  from the menu button.
 - **Overlay nav:** at compact, the nav is a SidePanel at the start, under the
   header. It snaps in timed by its width, leaves a step shorter, and its content
   rides the opening. The dim fades on the side panel's overlay clocks.

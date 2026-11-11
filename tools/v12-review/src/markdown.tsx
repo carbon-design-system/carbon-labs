@@ -12,6 +12,7 @@
 import React, { Fragment } from 'react';
 import type { ReactNode } from 'react';
 import { Link } from '@carbon-labs/react-link';
+import { Scroller } from '@carbon-labs/react-scroller';
 
 /** A block of a page's text. */
 export type Block =
@@ -139,7 +140,7 @@ export function Blocks({ items }: { items: Block[] }) {
         ) : b.kind === 'h' ? (
           <h4 key={i}>{inline(b.text)}</h4>
         ) : b.kind === 'table' ? (
-          <div key={i} className="v12r-table-wrap">
+          <Scroller key={i} axis="x" className="v12r-table-wrap">
             <table className="v12r-table">
               <thead>
                 <tr>
@@ -160,7 +161,7 @@ export function Blocks({ items }: { items: Block[] }) {
                 ))}
               </tbody>
             </table>
-          </div>
+          </Scroller>
         ) : (
           <ul key={i}>
             {b.items.map((item, j) => (

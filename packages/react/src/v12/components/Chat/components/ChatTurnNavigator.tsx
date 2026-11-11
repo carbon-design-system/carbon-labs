@@ -287,7 +287,7 @@ export function ChatTurnNavigator({
       </IconButton>
       <Popover
         open={open}
-        onClose={() => setOpen(false)}
+        onRequestClose={() => setOpen(false)}
         anchor={button}
         label={label}
         align="bottom-end"

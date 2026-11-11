@@ -27,8 +27,7 @@
   box-sizing: border-box;
   color: theme.$text-primary;
   inline-size: min(22.5rem, calc(100vw - 16px));
-  inset-block-start: 0;
-  inset-inline-start: 0;
+  inset: 0 auto auto 0;
   isolation: isolate;
   outline: none;
 

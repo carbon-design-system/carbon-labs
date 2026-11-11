@@ -180,6 +180,7 @@ export interface ChatMessageProps {
   actions?: ReactNode;
   /** `latest`: the actions show once the reply is complete. `hover` (default): on the turn's hover or focus. */
   actionsShown?: 'latest' | 'hover';
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** The user's bubble: the selection family's look. Default the enclosing ChatShell's (`inverse`). */
   variant?: ChatVariant;
   /** An assistant turn's status row (`TurnStatus`), above the text; with it, the text holds no skeleton lines. */

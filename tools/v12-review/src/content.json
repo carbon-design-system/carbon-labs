@@ -59,7 +59,7 @@
     "sections": [
       {
         "title": "Motion",
-        "text": "Most of the motion is the parts' own: the rail's fold is the SideNav's, and the\noverlay nav and the panel move as side panels.\n\n- **Fold:** with `foldTo=\"hide\"`, the column's width moves to a 56px strip and\n  back in one motion, and main follows its edge. The content holds its open\n  width while the edge passes over it, and the strip swaps in when it lands. The\n  clock is the step for the width's travel, on entrance-productive; shrinking,\n  one step faster, on exit-productive. Pressed mid-fold, it turns round from the\n  width drawn. `foldTo=\"overlay\"` folds the column away and opens the nav from\n  the menu button.\n- **Overlay nav:** at compact, the nav is a SidePanel at the start, under the\n  header. It snaps in timed by its width, leaves a step shorter, and its content\n  rides the opening. The dim fades on the side panel's overlay clocks.\n- **Panel push:** at expanded and large, the panel is SidePanel's `slideIn`:\n  main makes room on the panel's clock.\n- **Class edge:** crossing a size class edge while the panel is open re-places\n  it at once. It is the same panel, with no second entrance, its content and\n  focus kept. Main's room is given or taken at once.\n- **Menu button:** while the overlay is open, the header's menu button is its\n  Close. The Menu icon match-cuts to Close, and the button's name changes with\n  it.\n- **Home link:** the product name has the family's rollover, a glow inset 4px\n  from the bar."
+        "text": "Most of the motion is the parts' own: the rail's fold is the SideNav's, and the\noverlay nav and the panel move as side panels.\n\n- **Fold:** with `foldTo=\"hide\"`, the column's width moves to a 56px strip and\n  back in one motion, and main follows its edge. The content holds its open\n  width while the edge passes over it, and the strip swaps in when it lands. The\n  clock is the step for the width's travel, on entrance-productive; shrinking,\n  one step faster, on exit-productive. Pressed mid-fold, it turns round from the\n  width drawn. The strip is the toggle with an equal inset either side, up to\n  the workspace; `foldToggle=\"header\"` puts the toggle at the column's top,\n  above what the strip shows. The column carries the fold's progress as\n  `--cds-nav-fold`, 0 open to 1 folded, on the same clock, so what is in it can\n  move with the fold. `foldTo=\"overlay\"` folds the column away and opens the nav\n  from the menu button.\n- **Overlay nav:** at compact, the nav is a SidePanel at the start, under the\n  header. It snaps in timed by its width, leaves a step shorter, and its content\n  rides the opening. The dim fades on the side panel's overlay clocks.\n- **Panel push:** at expanded and large, the panel is SidePanel's `slideIn`:\n  main makes room on the panel's clock.\n- **Class edge:** crossing a size class edge while the panel is open re-places\n  it at once. It is the same panel, with no second entrance, its content and\n  focus kept. Main's room is given or taken at once.\n- **Menu button:** while the overlay is open, the header's menu button is its\n  Close. The Menu icon match-cuts to Close, and the button's name changes with\n  it.\n- **Home link:** the product name has the family's rollover, a glow inset 4px\n  from the bar."
       },
       {
         "title": "Reduced motion",
@@ -67,7 +67,7 @@
       }
     ],
     "facts": {
-      "tests": false,
+      "tests": true,
       "status": "draft"
     }
   },
@@ -109,7 +109,7 @@
   },
   "V12/Card": {
     "title": "Card",
-    "summary": "A tile with a header, a body, actions and a footer, on `--cds-surface` with 8px\ncorners and 16px in. A card has a label, a title and a description, a body,\naction icons and an overflow menu, and primary and secondary buttons. With\n`onClick` it is a control, one tab stop; without it, it is a plain surface.\n`ProductiveCard` is dense, for product UI, with its actions at the top and a\nghost primary button. Its `clickZone` sets where a click counts.\n`ExpressiveCard` holds media to the card's edge, or a pictogram, with its\nactions at the bottom. `CardSkeleton` is a card while it loads. `decorator` and\n`slug` are accepted and render nothing.",
+    "summary": "A tile with a header, a body, actions and a footer, on `--cds-surface` with 8px\ncorners and 16px in. A card has a label, a title and a description, a body,\naction icons and an overflow menu, and primary and secondary buttons. With\n`onClick` its action is one button over the card, named by the title, and the\ncard's own buttons sit beside it; without it, it is a plain surface.\n`ProductiveCard` is dense, for product UI, with its actions at the top and a\nghost primary button. Its `clickZone` sets where a click counts.\n`ExpressiveCard` holds media to the card's edge, or a pictogram, with its\nactions at the bottom. `CardSkeleton` is a card while it loads. `decorator` and\n`slug` are accepted and render nothing.",
     "sections": [
       {
         "title": "Motion",
@@ -121,7 +121,7 @@
       }
     ],
     "facts": {
-      "tests": false,
+      "tests": true,
       "status": "draft"
     }
   },
@@ -237,7 +237,7 @@
   },
   "V12/Checkbox": {
     "title": "Checkbox",
-    "summary": "A box that turns one option on or off. A parent of partly checked children shows\nmixed, a dash. `Checkbox` takes Carbon's props, plus `disabledReason` and\n`timeScale`. `CheckboxGroup` sets several checkboxes under one legend, stacked\nor in a row. `CheckboxSkeleton` is the checkbox while it loads.",
+    "summary": "A box that turns one option on or off. A parent of partly checked children shows\nmixed, a dash. `Checkbox` takes Carbon's props, plus `disabledReason` and\n`timeScale`. `CheckboxGroup` sets several checkboxes under one legend, stacked\nor in a row; its `invalid` or `warn` reaches each checkbox in it, with one\nmessage under the group. `CheckboxSkeleton` is the checkbox while it loads.",
     "sections": [
       {
         "title": "Motion",
@@ -545,7 +545,7 @@
       }
     ],
     "facts": {
-      "tests": false,
+      "tests": true,
       "status": "draft"
     }
   },
@@ -1415,7 +1415,7 @@
   },
   "V12/SideNav": {
     "title": "Side nav",
-    "summary": "The app's page navigation, on the selection family's look and motion. It is a\n`<nav>` of real links, not a tablist: each `SideNavLink` is an `<a href>`, or a\nrouter link through `as`, and the current page is `aria-current=\"page\"`.\n`SideNavGroup` is a collapsible group of links under a header. A group opens\nwhen you go to one of its pages and never shuts on its own. With `collapsed`,\n`defaultCollapsed` or `collapsible`, and an icon on every top-level row, the nav\nfolds to a rail of icons. In an AppShell the shell draws the fold toggle;\nelsewhere it sits at the nav's foot. `filter` pins a field at the top that\nnarrows the nav to the matching links. Every link and group header is a tab\nstop.",
+    "summary": "The app's page navigation, on the selection family's look and motion. It is a\n`<nav>` of real links, not a tablist: each `SideNavLink` is an `<a href>`, or a\nrouter link through `as`, and the current page is `aria-current=\"page\"`.\n`SideNavGroup` is a collapsible group of links under a header. A group opens\nwhen you go to one of its pages and never shuts on its own. With `collapsed`,\n`defaultCollapsed` or `collapsible`, and an icon on every top-level row, the nav\nfolds to a rail of icons. In an AppShell the shell draws the fold toggle;\nelsewhere it sits at the nav's foot. `filter` pins a field at the top that\nnarrows the nav to the matching links; in a ghost nav the field is ghost too,\nand hovers as a row does. Every link and group header is a tab stop.",
     "sections": [
       {
         "title": "Motion",
@@ -1588,7 +1588,7 @@
       }
     ],
     "facts": {
-      "tests": false,
+      "tests": true,
       "status": "draft"
     }
   },
@@ -1678,7 +1678,7 @@
       }
     ],
     "facts": {
-      "tests": false,
+      "tests": true,
       "status": "draft"
     }
   },
@@ -1813,7 +1813,7 @@
       }
     ],
     "facts": {
-      "tests": false,
+      "tests": true,
       "status": "draft"
     }
   },
@@ -1837,7 +1837,7 @@
   },
   "V12/Util": {
     "title": "Util",
-    "summary": "The helpers the v12 components share: class names, form state, the page's\nlayer stack and focus, colour parsing, the reduced-motion getter, the\nvisibility a looping motion pauses on, and the ref and `inert` helpers that\nread the same on React 18 and 19.",
+    "summary": "The helpers the v12 components share: class names, form state, the page's\nlayer stack and focus, colour parsing, the reduced-motion getter, the\nvisibility a looping motion pauses on, and the ref and `inert` helpers that\nread the same on React 18 and 19.\n\nThe keyboard and screen reader helpers:\n\n- `isRtl`, `useDirection` and `inlineKey`: direction, read one way.\n  `inlineKey(e.key, el)` hands back a horizontal arrow as it reads left to\n  right, so one handler serves both directions.\n- `rovingIndex` and `useRovingTabStop`: a group of controls that is one tab\n  stop, moved through with the arrows (by direction), Home and End.\n- `useAnnouncer`: a polite and an assertive live region to render, and the\n  `announce` that writes to them.",
     "sections": [],
     "facts": {
       "tests": true,

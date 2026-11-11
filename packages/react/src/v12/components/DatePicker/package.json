@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-date-picker",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -28,6 +28,10 @@
     "lib",
     "scss",
     "telemetry.yml"
+  ],
+  "sideEffects": [
+    "*.scss",
+    "*.css"
   ],
   "scripts": {
     "build": "node ../../../../tasks/build.js",

@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-full-page-error",
-  "version": "0.5.0",
+  "version": "0.11.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - FullPageError for React (v12)",
@@ -29,6 +29,10 @@
     "lib",
     "scss",
     "telemetry.yml"
+  ],
+  "sideEffects": [
+    "*.scss",
+    "*.css"
   ],
   "scripts": {
     "build": "node ../../../../tasks/build.js",

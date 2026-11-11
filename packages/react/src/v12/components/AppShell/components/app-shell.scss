@@ -47,6 +47,18 @@ $_divider: var(--cds-surface-divider, #{theme.$border-subtle-01});
 
 $_header-h: var(--cds-app-header-height);
 
+/* The fold toggle: a ghost lg IconButton. */
+$_fold-toggle: $spacing-09;
+
+/* The fold's progress on the nav column (`foldTo="hide"`, AppShell.tsx): 0
+   open, 1 folded, animated with the column's width on the fold's clock, so
+   what's in the column can move with it. The strip is 1. */
+@property --cds-nav-fold {
+  inherits: true;
+  initial-value: 0;
+  syntax: '<number>';
+}
+
 /* ── Header ─────────────────────────────────────────────────────────────── */
 
 .cds-app-header {
@@ -411,10 +423,15 @@ $_header-h: var(--cds-app-header-height);
   inset-block-end: calc(#{$spacing-05} + var(--cds-motion-soft-edge, 16px));
 }
 
-/* `foldTo="hide"`, folded: the strip the nav leaves, the toggle's room
-   (AppShell's NAV_STRIP_PX): what the caller gives at its top, the toggle at its foot. */
+/* `foldTo="hide"`, folded: the strip the nav leaves (AppShell's NAV_STRIP_PX):
+   the toggle with an equal inset either side, up to the workspace (main has no
+   gap of its own beside it); what the caller gives at its top, under the
+   toggle when that is at the top (`foldToggle="header"`), and the toggle at
+   its foot otherwise. */
 .cds-app-shell__nav-strip {
-  inline-size: 3.5rem;
+  --cds-nav-fold: 1;
+
+  inline-size: calc(#{$_fold-toggle} + 2 * #{$spacing-02});
 
   > .cds-app-shell__nav-strip-head {
     display: flex;
@@ -428,9 +445,23 @@ $_header-h: var(--cds-app-header-height);
     }
   }
 
+  > .cds-app-shell__nav-head + .cds-app-shell__nav-strip-head {
+    padding-block-start: 0;
+  }
+
+  > .cds-app-shell__nav-head[data-fold-toggle] {
+    padding-inline-end: $spacing-02;
+  }
+
   > .cds-app-shell__nav-foot {
     padding-inline-end: $spacing-02;
   }
+}
+
+.cds-app-shell[data-main-frame='inset']
+  > .cds-app-shell__body:has(> .cds-app-shell__nav-strip)
+  > .cds-app-shell__main-col[data-beside-nav] {
+  padding-inline-start: 0;
 }
 
 .cds-app-shell__nav-col[data-nav-mode='rail']

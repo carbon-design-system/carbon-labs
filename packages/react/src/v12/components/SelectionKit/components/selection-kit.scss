@@ -94,6 +94,7 @@ $sel: --cds-motion-selection;
   --sel-inset: 4px;
   --sel-gap: var(--sel-inset);
   --sel-track-radius: 8px;
+  // @carbon-explore radius-concentric — An inner part's radius is the outer radius less its inset, never below 0, so nested corners stay concentric. TBD
   --sel-radius: max(2px, calc(var(--sel-track-radius) - var(--sel-inset)));
   --sel-pad: 16px;
   /* A field's edge inset at this size (`--tf-pad`, text-input.scss: 8 · 12 ·
@@ -293,6 +294,7 @@ $sel: --cds-motion-selection;
   block-size: auto;
 
   > .sel__item {
+    // @carbon-explore row-scale — One row height per size (xs 20, sm 26, md 32, lg 40px) across the menu, the select list, the side nav and the tree view, so lists of a size line up. TBD
     block-size: calc(var(--sel-h) - 2 * var(--sel-inset));
     inline-size: auto;
   }

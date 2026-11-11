@@ -101,6 +101,12 @@ export default {
 };
 
 const stage = { display: 'grid', gap: 16, maxInlineSize: '48rem' };
+/**
+ * A page with no global header above it: the dock's line is the top of the
+ * view, so a bar at the top of the story rests in its place and pushes what
+ * follows, rather than sticking 3rem down over it.
+ */
+const page = { ...stage, ['--cds-contextual-bar-top' as string]: '0px' };
 const controls = {
   display: 'flex',
   gap: 8,
@@ -378,7 +384,7 @@ export const Variants = {
     const [open, setOpen] = useState(true);
     const [kind, setKind] = useState<Kind | null>('info');
     return (
-      <div style={stage}>
+      <div style={page}>
         <div style={controls}>
           <Button
             size="sm"
@@ -438,7 +444,7 @@ export const UnsavedChanges = {
     const [last, setLast] = useState(SAVED);
     const dirty = values.name !== last.name || values.region !== last.region;
     return (
-      <div style={stage}>
+      <div style={page}>
         <ContextualBar label="Unsaved changes" open={dirty}>
           <span>You have unsaved changes.</span>
           <span style={end}>

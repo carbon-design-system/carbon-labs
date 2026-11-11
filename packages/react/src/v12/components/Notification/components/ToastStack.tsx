@@ -201,6 +201,7 @@ export interface ToastStackProps extends Omit<
   children?: ReactNode;
   /** Class for the stack region (place it with CSS). */
   stackClassName?: string;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** Every toast's corner mode, unless a toast sets its own. Default `rounded`. */
   corners?: NotificationCorners;
   /** Each card's cast shadow: `true` (`floating`), an elevation, or `false`. Default: the kit's (`KitDefaults shadow`, none), the card on its fill and status outline. */

@@ -302,8 +302,11 @@ $rollover-nested-engaged: '#{$rollover-nested}:is(:hover, :active)';
     }
   }
 
+  /* Or its own action, a control laid over it (`data-rollover-own`: a
+     card's), has the keyboard's focus: the surface hovers as if focused. */
   &:hover#{$rollover-moved}#{$pseudo},
-  &:focus-visible#{$pseudo} {
+  &:focus-visible#{$pseudo},
+  &:has(> [data-rollover-own]:focus-visible)#{$pseudo} {
     @include _rollover-hover-in($hover-expand);
   }
 
@@ -404,6 +407,7 @@ $rollover-nested-engaged: '#{$rollover-nested}:is(:hover, :active)';
 
   /* By content: a 1px inset ring on the surface's shape at the hover's
      strength (its timing, yield and reduced motion); no glow, press or growth. */
+  // @carbon-explore hover-ring-by-content — A surface holding controls hovers with a 1px inset ring and keeps its fill, so its hover never reads as one of its controls'; a text-only surface keeps the fill. TBD
   &[data-rollover-surface]:not([data-rollover-surface='fill']):is(
       [data-rollover-surface='ring'],
       :has(#{$rollover-controls})

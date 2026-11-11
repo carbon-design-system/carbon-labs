@@ -274,17 +274,6 @@ export function tsconfigJson() {
 }
 
 /**
- * The proposals README: one `api:` line per API proposal.
- *
- * @param {string} name The component's name.
- * @param {string[]} lines The marks' text.
- * @returns {string} The markdown.
- */
-export function proposalsReadme(name, lines) {
-  return `# ${name} proposals\n\n${lines.map((l) => `- ${l}`).join('\n')}\n`;
-}
-
-/**
  * The packages the tool brings whole that are not `react-` ones, inline in
  * tests as the seam is.
  *

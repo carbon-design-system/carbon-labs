@@ -89,16 +89,44 @@ write(
   "export { motionTokens } from '@carbon-labs/motion-core';\nexport const clock = '120ms';\n"
 );
 
+// The design sync's files: a node id and a file key are leaks there, a
+// contrast ratio and a long camelCase name are not.
+write(
+  'figma-sync/tokens.code.json',
+  JSON.stringify(
+    {
+      ratio: 'solved to 4.5:1 on every surface',
+      name: 'aiPopoverShadowOuter01Large',
+      node: '2818:72562',
+      key: 'hQ3fkHFmh8a8n0F9bOZ2lP',
+    },
+    null,
+    2
+  )
+);
+write(
+  'tools/v12-figma/src/ids.js',
+  "// Reads the map's fileKey.\nexport const at = 'I12:34;56:78';\n"
+);
+write(
+  'tools/v12-figma/package.json',
+  JSON.stringify({ name: 'sync', private: true })
+);
+
 afterAll(() => fs.rmSync(tmp, { recursive: true, force: true }));
 
 const dir = 'packages/react/src/v12/components';
 
 describe('the lane check', () => {
-  it('finds a leak, a literal, motion not through the seam, a public package and a folder with no row, and nothing else', () => {
+  it('finds a leak, a literal, motion not through the seam, a public package, a folder with no row and design ids in the sync files, and nothing else', () => {
     const found = checkLane(tmp, { directMotion: [] }).map(
       (f) => `${f.level} ${f.kind} ${f.match}`
     );
     expect(found.sort()).toEqual([
+      'error leak (design file key) hQ3fkHFmh8a8n0F9bOZ2lP',
+      'error leak (design id field) fileKey',
+      'error leak (design node id) 2818:72562',
+      'error leak (design node id) I12:34;56:78',
       'error leak (id) TASK-123',
       'error motion literal 120ms',
       'error motion not through the seam @carbon-labs/motion-core',

@@ -3,6 +3,70 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-filter-panel%400.8.0...%40carbon-labs%2Freact-filter-panel%400.9.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-filter-panel
+
+
+
+
+
+# [0.8.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-filter-panel%400.7.0...%40carbon-labs%2Freact-filter-panel%400.8.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-filter-panel
+
+
+
+
+
+# [0.7.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-filter-panel%400.6.0...%40carbon-labs%2Freact-filter-panel%400.7.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-filter-panel
+
+
+
+
+
+# [0.6.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-filter-panel%400.5.0...%40carbon-labs%2Freact-filter-panel%400.6.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-filter-panel
+
+
+
+
+
+# [0.5.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-filter-panel%400.4.0...%40carbon-labs%2Freact-filter-panel%400.5.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-filter-panel
+
+
+
+
+
+# [0.4.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-filter-panel%400.3.0...%40carbon-labs%2Freact-filter-panel%400.4.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-filter-panel
+
+
+
+
+
+# [0.3.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-filter-panel%400.2.0...%40carbon-labs%2Freact-filter-panel%400.3.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-filter-panel
+
+
+
+
+
+# [0.2.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-filter-panel%400.1.0...%40carbon-labs%2Freact-filter-panel%400.2.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-filter-panel
+
+
+
+
+
 # 0.1.0 (2026-11-10)
 
 ### Features

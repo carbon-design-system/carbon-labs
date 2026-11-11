@@ -15,49 +15,48 @@
 // WEB COMPONENTS SPECIFIC STYLES
 // These styles add :host() selectors and ::slotted() for shadow DOM
 // =============================================================================
-
-:host(#{$prefix}-date-picker) {
+:host(clabs-date-picker) {
   @extend .#{$prefix}--date-picker;
 }
 
-:host(#{$prefix}-date-picker-input),
-:host(#{$prefix}-date-picker-input-skeleton) {
+:host(clabs-date-picker-input),
+:host(clabs-date-picker-input-skeleton) {
   @extend .#{$prefix}--date-picker-container;
 }
 
-:host(#{$prefix}-date-picker-input[warn]:not([invalid])) {
+:host(clabs-date-picker-input[warn]:not([invalid])) {
   @extend .#{$prefix}--date-picker-container--warn;
 }
 
-:host(#{$prefix}-date-picker-input[kind='simple']),
-:host(#{$prefix}-date-picker-input-skeleton[kind='simple']) {
+:host(clabs-date-picker-input[kind='simple']),
+:host(clabs-date-picker-input-skeleton[kind='simple']) {
   @extend .#{$prefix}--date-picker-container--simple;
 }
 
-:host(#{$prefix}-date-picker-input[kind='simple'][short]),
-:host(#{$prefix}-date-picker-input-skeleton[kind='simple'][short]) {
+:host(clabs-date-picker-input[kind='simple'][short]),
+:host(clabs-date-picker-input-skeleton[kind='simple'][short]) {
   @extend .#{$prefix}--date-picker-container--simple;
   @extend .#{$prefix}--date-picker-container--short;
 }
 
-:host(#{$prefix}-date-picker-input[kind='single']),
-:host(#{$prefix}-date-picker-input-skeleton[kind='single']) {
+:host(clabs-date-picker-input[kind='single']),
+:host(clabs-date-picker-input-skeleton[kind='single']) {
   @extend .#{$prefix}--date-picker-container--single;
 }
 
-:host(#{$prefix}-date-picker-input[kind='from']),
-:host(#{$prefix}-date-picker-input-skeleton[kind='from']) {
+:host(clabs-date-picker-input[kind='from']),
+:host(clabs-date-picker-input-skeleton[kind='from']) {
   @extend .#{$prefix}--date-picker-container--from;
 }
 
-:host(#{$prefix}-date-picker-input[kind='from']),
-:host(#{$prefix}-date-picker-input[kind='to']),
-:host(#{$prefix}-date-picker-input-skeleton[kind='from']),
-:host(#{$prefix}-date-picker-input-skeleton[kind='to']) {
+:host(clabs-date-picker-input[kind='from']),
+:host(clabs-date-picker-input[kind='to']),
+:host(clabs-date-picker-input-skeleton[kind='from']),
+:host(clabs-date-picker-input-skeleton[kind='to']) {
   @extend .#{$prefix}--date-picker-container--from;
 }
 
-:host(#{$prefix}-date-picker-input) {
+:host(clabs-date-picker-input) {
   .#{$prefix}--date-picker__icon {
     @extend .#{$prefix}--date-picker__icon;
   }
@@ -84,20 +83,20 @@
   }
 }
 
-:host(#{$prefix}-date-picker-input-skeleton) {
+:host(clabs-date-picker-input-skeleton) {
   @extend .#{$prefix}--date-picker-input-skeleton;
 }
 
-:host(#{$prefix}-date-picker-input-skeleton[range]) {
+:host(clabs-date-picker-input-skeleton[range]) {
   @extend .#{$prefix}--date-picker-input-skeleton--range;
 }
 
-:host(#{$prefix}-date-picker-input[ai-label]) {
+:host(clabs-date-picker-input[ai-label]) {
   @extend .#{$prefix}--date-picker-container--ai-label;
 }
 
 // Calendar component in shadow DOM
-:host(#{$prefix}-date-picker-calendar) {
+:host(clabs-date-picker-calendar) {
   display: block;
   outline: none;
 

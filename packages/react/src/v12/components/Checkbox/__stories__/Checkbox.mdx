@@ -8,7 +8,8 @@ import * as CheckboxStories from './Checkbox.stories.tsx';
 A box that turns one option on or off. A parent of partly checked children shows
 mixed, a dash. `Checkbox` takes Carbon's props, plus `disabledReason` and
 `timeScale`. `CheckboxGroup` sets several checkboxes under one legend, stacked
-or in a row. `CheckboxSkeleton` is the checkbox while it loads.
+or in a row; its `invalid` or `warn` reaches each checkbox in it, with one
+message under the group. `CheckboxSkeleton` is the checkbox while it loads.
 
 <Canvas of={CheckboxStories.Default} />
 

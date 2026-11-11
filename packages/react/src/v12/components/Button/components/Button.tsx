@@ -137,6 +137,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   busy?: boolean;
   children?: ReactNode;
   className?: string;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** The corner. Default 'full' (buttons are pills); 'rounded' (8px) and 'square' (v11's) remain, unadvertised. */
   corners?: ButtonCorners;
   /** The screen-reader message for the danger kinds (v11). */
@@ -154,14 +155,17 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isExpressive?: boolean;
   /** Icon-only ghost: the selected (toggled) look and `aria-pressed` (v11). */
   isSelected?: boolean;
+  // @carbon-proposal api: button-axes — Button splits the old kinds into `kind` (the role), `variant` (outlined, tonal) and `frame` (ghost, none), so each prop says one thing. TBD
   /** The role: `primary` (default), `secondary`, `danger`. */
   kind?: ButtonKind;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /**
    * The treatment: `filled` (default), the role's own fill. `outlined`
    * (v11's tertiary; with `kind="danger"`, danger--tertiary). `tonal`: the
    * quiet fill (the standard surface, its hairline, a `$text-primary` label).
    */
   variant?: ButtonVariant;
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /**
    * What it stands on: `inset` (default), its own rounded surface, the label
    * inset in it. `ghost` (v11's ghost; with `kind="danger"`, danger--ghost):

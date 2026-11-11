@@ -3075,6 +3075,10 @@ __metadata:
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    jsdom: "npm:^26.0.0"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
     react-dom: ^18.2.0 || ^19.0.0
@@ -3150,6 +3154,10 @@ __metadata:
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    jsdom: "npm:^26.0.0"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
   languageName: unknown
@@ -3293,6 +3301,8 @@ __metadata:
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/react": "npm:^16.1.0"
+    jsdom: "npm:^26.0.0"
     vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
@@ -3501,7 +3511,6 @@ __metadata:
     "@carbon-labs/react-copy-button": "workspace:*"
     "@carbon-labs/react-feedback": "workspace:*"
     "@carbon-labs/utilities": "npm:0.28.0"
-    "@carbon-labs/v12-motion": "workspace:*"
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
@@ -3558,7 +3567,6 @@ __metadata:
   dependencies:
     "@carbon-labs/react-slider": "workspace:*"
     "@carbon-labs/utilities": "npm:0.28.0"
-    "@carbon-labs/v12-motion": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
   languageName: unknown
@@ -3575,6 +3583,10 @@ __metadata:
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    jsdom: "npm:^26.0.0"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
   languageName: unknown
@@ -3755,6 +3767,7 @@ __metadata:
   resolution: "@carbon-labs/react-history-rail@workspace:packages/react/src/v12/components/HistoryRail"
   dependencies:
     "@carbon-labs/react-chat-thread": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
     "@testing-library/jest-dom": "npm:^6.0.0"
     "@testing-library/react": "npm:^16.1.0"
     "@testing-library/user-event": "npm:^14.5.2"
@@ -3932,6 +3945,7 @@ __metadata:
     "@carbon-labs/utilities": "npm:0.28.0"
     "@carbon-labs/v12-motion": "workspace:*"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
   languageName: unknown
@@ -3943,7 +3957,6 @@ __metadata:
   dependencies:
     "@carbon-labs/react-util": "workspace:*"
     "@carbon-labs/utilities": "npm:0.28.0"
-    "@carbon-labs/v12-motion": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
   peerDependencies:
@@ -3993,7 +4006,6 @@ __metadata:
     "@carbon-labs/react-button": "workspace:*"
     "@carbon-labs/react-feedback": "workspace:*"
     "@carbon-labs/react-kit-defaults": "workspace:*"
-    "@carbon-labs/react-loading": "workspace:*"
     "@carbon-labs/react-motion-icons": "workspace:*"
     "@carbon-labs/react-popover": "workspace:*"
     "@carbon-labs/react-props": "workspace:*"
@@ -4005,6 +4017,8 @@ __metadata:
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/react": "npm:^16.1.0"
+    jsdom: "npm:^26.0.0"
     vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
@@ -4167,6 +4181,7 @@ __metadata:
     "@carbon-labs/react-app-shell": "workspace:*"
     "@carbon-labs/react-breadcrumb": "workspace:*"
     "@carbon-labs/react-button": "workspace:*"
+    "@carbon-labs/react-jump-to": "workspace:*"
     "@carbon-labs/react-kit-defaults": "workspace:*"
     "@carbon-labs/react-menu": "workspace:*"
     "@carbon-labs/react-motion-icons": "workspace:*"
@@ -4201,6 +4216,7 @@ __metadata:
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
   languageName: unknown
@@ -4220,6 +4236,7 @@ __metadata:
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
   languageName: unknown
@@ -4270,6 +4287,8 @@ __metadata:
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/react": "npm:^16.1.0"
+    jsdom: "npm:^26.0.0"
     vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
@@ -4365,7 +4384,6 @@ __metadata:
   resolution: "@carbon-labs/react-props@workspace:packages/react/src/v12/components/Props"
   dependencies:
     "@carbon-labs/utilities": "npm:0.28.0"
-    "@carbon-labs/v12-motion": "workspace:*"
     "@ibm/telemetry-js": "npm:^1.10.2"
     vitest: "npm:^4.0.0"
   peerDependencies:
@@ -4851,6 +4869,10 @@ __metadata:
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    jsdom: "npm:^26.0.0"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
   languageName: unknown
@@ -4984,6 +5006,10 @@ __metadata:
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    jsdom: "npm:^26.0.0"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
   languageName: unknown
@@ -5007,7 +5033,6 @@ __metadata:
   dependencies:
     "@carbon-labs/react-util": "workspace:*"
     "@carbon-labs/utilities": "npm:0.28.0"
-    "@carbon-labs/v12-motion": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
   peerDependencies:
@@ -5148,6 +5173,10 @@ __metadata:
     "@carbon-labs/v12-motion": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    jsdom: "npm:^26.0.0"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
     react-dom: ^18.2.0 || ^19.0.0
@@ -5189,6 +5218,8 @@ __metadata:
     "@carbon-labs/utilities": "npm:0.28.0"
     "@carbon-labs/v12-motion": "workspace:*"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/react": "npm:^16.1.0"
+    jsdom: "npm:^26.0.0"
     vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
@@ -5385,6 +5416,7 @@ __metadata:
     "@carbon-labs/react-number-input": "workspace:*"
     "@carbon-labs/react-page-header": "workspace:*"
     "@carbon-labs/react-popover": "workspace:*"
+    "@carbon-labs/react-scroller": "workspace:*"
     "@carbon-labs/react-search": "workspace:*"
     "@carbon-labs/react-select": "workspace:*"
     "@carbon-labs/react-side-nav": "workspace:*"
@@ -5408,6 +5440,15 @@ __metadata:
     react: ^18.2.0 || ^19.0.0
     react-dom: ^18.2.0 || ^19.0.0
     storybook: ^9.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/v12-scenes@workspace:tools/v12-scenes":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/v12-scenes@workspace:tools/v12-scenes"
+  dependencies:
+    "@playwright/test": "npm:^1.39.0"
+    vitest: "npm:^4.0.0"
   languageName: unknown
   linkType: soft
 
@@ -15146,6 +15187,7 @@ __metadata:
     chalk: "npm:^5.4.1"
     change-case: "npm:^5.4.4"
     doctoc: "npm:^2.2.1"
+    esbuild: "npm:^0.25.12"
     eslint: "npm:^8.57.0"
     eslint-config-carbon: "npm:^3.11.0"
     fs-extra: "npm:^11.2.0"
@@ -18497,7 +18539,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.18.0 || ^0.19.0 || ^0.20.0 || ^0.21.0 || ^0.22.0 || ^0.23.0 || ^0.24.0 || ^0.25.0":
+"esbuild@npm:^0.18.0 || ^0.19.0 || ^0.20.0 || ^0.21.0 || ^0.22.0 || ^0.23.0 || ^0.24.0 || ^0.25.0, esbuild@npm:^0.25.12":
   version: 0.25.12
   resolution: "esbuild@npm:0.25.12"
   dependencies:

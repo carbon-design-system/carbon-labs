@@ -23,6 +23,7 @@ import { TextInput } from '@carbon-labs/react-text-input';
 import { NumberInput } from '@carbon-labs/react-number-input';
 import { Tab, TabList, Tabs } from '@carbon-labs/react-tabs';
 import { Link } from '@carbon-labs/react-link';
+import { Scroller } from '@carbon-labs/react-scroller';
 import { storyFrameUrl } from '@carbon-labs/v12-workbench';
 import type {
   V12Parameters,
@@ -480,7 +481,11 @@ function Settings({
   onChange: (name: string, value: unknown) => void;
 }) {
   return (
-    <div className="v12r-settings" role="group" aria-label="Settings">
+    <Scroller
+      className="v12r-settings"
+      viewportClassName="v12r-settings__body"
+      viewportProps={{ role: 'group' }}
+      aria-label="Settings">
       {controls.map((c) => {
         const id = `v12r-set-${c.name}`;
         if (c.kind === 'choice')
@@ -539,7 +544,7 @@ function Settings({
           />
         );
       })}
-    </div>
+    </Scroller>
   );
 }
 
@@ -580,7 +585,7 @@ function MotionItems({ v12 }: { v12: V12Parameters }) {
 
 function PropsTable({ rows }: { rows: ReturnType<typeof propsOf> }) {
   return (
-    <div className="v12r-table-wrap">
+    <Scroller axis="x" className="v12r-table-wrap">
       <table className="v12r-table">
         <thead>
           <tr>
@@ -608,6 +613,6 @@ function PropsTable({ rows }: { rows: ReturnType<typeof propsOf> }) {
           ))}
         </tbody>
       </table>
-    </div>
+    </Scroller>
   );
 }

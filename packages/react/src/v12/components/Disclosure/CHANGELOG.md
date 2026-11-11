@@ -3,6 +3,62 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-disclosure%400.10.0...%40carbon-labs%2Freact-disclosure%400.11.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-disclosure
+
+
+
+
+
+# [0.10.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-disclosure%400.9.0...%40carbon-labs%2Freact-disclosure%400.10.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-disclosure
+
+
+
+
+
+# [0.9.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-disclosure%400.8.0...%40carbon-labs%2Freact-disclosure%400.9.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-disclosure
+
+
+
+
+
+# [0.8.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-disclosure%400.7.0...%40carbon-labs%2Freact-disclosure%400.8.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-disclosure
+
+
+
+
+
+# [0.7.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-disclosure%400.6.0...%40carbon-labs%2Freact-disclosure%400.7.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-disclosure
+
+
+
+
+
+# [0.6.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-disclosure%400.5.0...%40carbon-labs%2Freact-disclosure%400.6.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-disclosure
+
+
+
+
+
+# [0.5.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-disclosure%400.4.0...%40carbon-labs%2Freact-disclosure%400.5.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-disclosure
+
+
+
+
+
 # [0.4.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-disclosure%400.3.0...%40carbon-labs%2Freact-disclosure%400.4.0) (2026-11-10)
 
 ### Features

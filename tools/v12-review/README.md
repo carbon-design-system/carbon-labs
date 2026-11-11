@@ -4,7 +4,8 @@ Every v12 component in one app, for reviewing the set: a side nav by category, a
 searchable home, and one page per component with each of its stories, its
 settings, its motion and its props. One set of picks (theme, density, corners,
 reduced motion, clock, direction) applies to everything. The header and the side
-nav stay dark; the theme pick is the workspace's.
+nav stay dark; the theme pick is the workspace's. The side nav folds to a strip
+of its toggle and a search button, the filter's field folding into the button.
 
 It's built from the v12 components themselves (AppShell, Header, SideNav,
 PageHeader, Tabs, Link, Search, Popover, the form controls) and driven by their

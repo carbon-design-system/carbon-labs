@@ -86,7 +86,7 @@ const ToggletipContext = createContext<ToggletipContextValue | null>(null);
 
 export interface ToggletipProps extends Omit<
   PopoverProps,
-  'open' | 'children' | 'anchor' | 'label' | 'onClose'
+  'open' | 'children' | 'anchor' | 'label'
 > {
   /** Open on first render (v11). */
   defaultOpen?: boolean;
@@ -142,7 +142,7 @@ export const Toggletip = forwardRef<HTMLElement, ToggletipProps>(
           align={align}
           as={as}
           autoAlign={autoAlign}
-          highContrast
+          variant="inverse"
           {...rest}
           ref={containerRef}
           open={open}

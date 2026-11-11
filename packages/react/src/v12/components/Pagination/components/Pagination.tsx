@@ -51,7 +51,8 @@ import './pagination.scss';
  *              round (an icon-only control's hover is a circle), in a
  *              TooltipGroup: the first
  *              tooltip snaps in, the next slides over (stillness)
- *   numbers    only what changes with the page swaps, out then in: the
+ *   numbers    change at once by default. With `numberSwap`, only what
+ *              changes with the page swaps, out then in: the
  *              range's "11–20" along x by the page's direction (the rest,
  *              "of 103 items", moves to its new place), the page number
  *              along y (next = up); PageSwap.tsx.
@@ -119,6 +120,11 @@ export interface PaginationProps extends Omit<
   totalItems?: number;
   /** Multiplies the lists' and the scroller's durations (slow motion). Default 1. */
   timeScale?: number;
+  /**
+   * The content swap of the range's "11–20" and the page number, out then
+   * in. Default false: the new numbers are there at once.
+   */
+  numberSwap?: boolean;
 }
 
 const DEFAULT_PAGE_SIZE = 10;
@@ -175,6 +181,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
       size: sizeProp,
       totalItems,
       timeScale = 1,
+      numberSwap = false,
       ...rest
     },
     ref
@@ -308,19 +315,27 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
               />
             )}
             <span className="cds-pagination__text cds-pagination__items-count">
-              <PageSwap {...rangeParts} order={page} timeScale={timeScale} />
+              {numberSwap ? (
+                <PageSwap {...rangeParts} order={page} timeScale={timeScale} />
+              ) : (
+                range
+              )}
             </span>
           </div>
 
           <div className="cds-pagination__right">
             {pagesUnknown ? (
               <span className="cds-pagination__text cds-pagination__page-text">
-                <PageSwap
-                  {...numberParts}
-                  order={page}
-                  axis="y"
-                  timeScale={timeScale}
-                />
+                {numberSwap ? (
+                  <PageSwap
+                    {...numberParts}
+                    order={page}
+                    axis="y"
+                    timeScale={timeScale}
+                  />
+                ) : (
+                  pageText(page)
+                )}
               </span>
             ) : (
               <>
@@ -335,14 +350,18 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
                   corners="full"
                   items={pages}
                   selectedItem={page}
-                  renderSelectedItem={(n) => (
-                    <PageSwap
-                      text={String(n)}
-                      order={n}
-                      axis="y"
-                      timeScale={timeScale}
-                    />
-                  )}
+                  renderSelectedItem={
+                    numberSwap
+                      ? (n) => (
+                          <PageSwap
+                            text={String(n)}
+                            order={n}
+                            axis="y"
+                            timeScale={timeScale}
+                          />
+                        )
+                      : undefined
+                  }
                   disabled={pageInputDisabled || disabled}
                   timeScale={timeScale}
                   onChange={({ selectedItem }) => {

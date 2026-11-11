@@ -564,7 +564,9 @@ function ToolbarOverflow({
         motion={{ timeScale }}
         variant={s.variant === 'hero' ? 'inverse' : s.variant}
         lowContrast={s.lowContrast}
-        corners={s.corners}
+        // A pill toolbar's menu takes Menu's own corners (8px, or the kit's);
+        // a square toolbar keeps a square menu.
+        corners={s.corners === 'full' ? undefined : s.corners}
         contour={s.contour}
         outlinedFill={s.outlinedFill}>
         {items}

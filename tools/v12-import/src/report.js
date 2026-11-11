@@ -191,15 +191,11 @@ export function printPlan(plan, { dryRun, wrote, refused }) {
     '  motion token fallbacks (equal to the token)',
     ...countLines(plan.rewrites.tokenFallbacks ?? {}),
     '',
-    `Marks: ${plan.marks.placed.length} placed, ${plan.marks.unplaced.length} not placed, ${plan.marks.proposals.length} API proposals`,
-    ...plan.marks.placed.map(
-      (m) =>
-        `    ${m.file}:${m.line}  ${m.name}${m.line === m.stated ? '' : ` (ledger says line ${m.stated})`}`
-    ),
+    `Marks: ${plan.marks.placed.length} placed, ${plan.marks.unplaced.length} not placed`,
+    ...plan.marks.placed.map((m) => `    ${m.file}:${m.line}  ${m.name}`),
     ...plan.marks.unplaced.map(
       (m) => `    not placed: ${m.name} (${m.place}): ${m.reason}`
     ),
-    ...plan.marks.proposals.map((p) => `    proposals/README.md: ${p}`),
     '',
     'Dependencies:',
     '  kit (import these first)',

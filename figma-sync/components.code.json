@@ -198,6 +198,7 @@
         "rollover": "at-once"
       },
       "departures": [
+        "explore: corners-prop",
         "explore: radius-concentric",
         "proposal: api: frame-prop"
       ],
@@ -420,7 +421,10 @@
         "menu-button": "at-once"
       },
       "departures": [
-        "explore: surface-step"
+        "explore: corners-prop",
+        "explore: region-surface",
+        "explore: surface-step",
+        "proposal: api: frame-prop"
       ],
       "stateColors": [
         {
@@ -729,6 +733,7 @@
       },
       "departures": [
         "explore: button-secondary-quiet",
+        "explore: corners-prop",
         "explore: tertiary-neutral",
         "proposal: api: button-axes",
         "proposal: api: frame-prop",
@@ -1025,6 +1030,7 @@
         "cast-shadow": "at-once"
       },
       "departures": [
+        "explore: cast-shadow",
         "explore: hover-tint",
         "proposal: api: logical-positions"
       ],
@@ -1192,9 +1198,11 @@
         "marker": "at-once"
       },
       "departures": [
+        "explore: corners-prop",
         "explore: radius-concentric",
         "explore: radius-over",
         "explore: selected-wash",
+        "proposal: api: variant-prop",
         "proposal: token: hero-color",
         "proposal: token: surface-code"
       ],
@@ -1775,7 +1783,9 @@
         "in": "shorter-clock",
         "typing": "at-once"
       },
-      "departures": [],
+      "departures": [
+        "explore: corners-prop"
+      ],
       "stateColors": [
         {
           "file": "packages/react/src/v12/components/ContainedList/components/contained-list.scss",
@@ -2042,7 +2052,9 @@
         "count": "at-once",
         "swap": "at-once"
       },
-      "departures": [],
+      "departures": [
+        "proposal: api: variant-prop"
+      ],
       "stateColors": []
     },
     {
@@ -2235,7 +2247,9 @@
         "reflow": "shorter-clock",
         "sort-icon": "at-once"
       },
-      "departures": [],
+      "departures": [
+        "explore: corners-prop"
+      ],
       "stateColors": [
         {
           "file": "packages/react/src/v12/components/DataTable/components/data-table.scss",
@@ -2453,7 +2467,9 @@
         "content-swap": "at-once",
         "roll": "at-once"
       },
-      "departures": [],
+      "departures": [
+        "explore: corners-prop"
+      ],
       "stateColors": [
         {
           "file": "packages/react/src/v12/components/DatePickerV2/components/date-picker.scss",
@@ -2880,7 +2896,10 @@
         "status-mark": "at-once",
         "late-status": "full"
       },
-      "departures": [],
+      "departures": [
+        "explore: corners-prop",
+        "proposal: api: frame-prop"
+      ],
       "stateColors": [
         {
           "file": "packages/react/src/v12/components/Dropdown/components/dropdown.scss",
@@ -3288,7 +3307,10 @@
         "count"
       ],
       "reduced": {},
-      "departures": [],
+      "departures": [
+        "explore: loader-neutral",
+        "proposal: api: variant-prop"
+      ],
       "stateColors": []
     },
     {
@@ -3755,7 +3777,9 @@
         "mark-snap": "at-once",
         "status-hand-off": "at-once"
       },
-      "departures": [],
+      "departures": [
+        "explore: corners-prop"
+      ],
       "stateColors": [
         {
           "file": "packages/react/src/v12/components/InlineEdit/components/inline-edit.scss",
@@ -4016,7 +4040,13 @@
       ],
       "motion": [],
       "reduced": {},
-      "departures": [],
+      "departures": [
+        "explore: brand-hue",
+        "explore: corners-prop",
+        "explore: kit-defaults",
+        "proposal: api: frame-prop",
+        "proposal: api: variant-prop"
+      ],
       "stateColors": []
     },
     {
@@ -4931,7 +4961,10 @@
         "menu": "at-once",
         "busy": "at-once"
       },
-      "departures": [],
+      "departures": [
+        "proposal: api: button-axes",
+        "proposal: api: variant-prop"
+      ],
       "stateColors": []
     },
     {
@@ -5156,7 +5189,10 @@
         "loading-gate"
       ],
       "reduced": {},
-      "departures": [],
+      "departures": [
+        "explore: loader-neutral",
+        "proposal: api: variant-prop"
+      ],
       "stateColors": [
         {
           "file": "packages/react/src/v12/components/Loading/components/loading.scss",
@@ -5203,6 +5239,7 @@
         "v12-menu--default",
         "v12-menu--with-menu-button",
         "v12-menu--with-overflow-menu",
+        "v12-menu--corners",
         "v12-menu--submenu",
         "v12-menu--selectable",
         "v12-menu--groups-and-dividers",
@@ -5319,7 +5356,11 @@
         "highlight": "shorter-clock",
         "submenu": "at-once"
       },
-      "departures": [],
+      "departures": [
+        "explore: floating-hairline",
+        "proposal: api: frame-prop",
+        "proposal: api: variant-prop"
+      ],
       "stateColors": [
         {
           "file": "packages/react/src/v12/components/Menu/components/menu.scss",
@@ -5449,7 +5490,9 @@
         "page-recede-and-blur": "at-once",
         "content-swap": "at-once"
       },
-      "departures": [],
+      "departures": [
+        "explore: floating-hairline"
+      ],
       "stateColors": [
         {
           "file": "packages/react/src/v12/components/Modal/components/modal.scss",
@@ -5641,6 +5684,7 @@
         "swap": "shorter-clock"
       },
       "departures": [
+        "explore: corners-prop",
         "explore: radius-notification",
         "proposal: api: variant-prop"
       ],
@@ -6063,7 +6107,11 @@
         "tooltip": "at-once",
         "ai-fill": "at-once"
       },
-      "departures": [],
+      "departures": [
+        "explore: corners-prop",
+        "proposal: api: frame-prop",
+        "proposal: api: variant-prop"
+      ],
       "stateColors": []
     },
     {
@@ -6351,6 +6399,7 @@
       "title": "V12/PageHeader",
       "stories": [
         "v12-pageheader--default",
+        "v12-pageheader--with-jump-to",
         "v12-pageheader--ghost",
         "v12-pageheader--collapse-toggle",
         "v12-pageheader--no-fade",
@@ -6424,7 +6473,10 @@
         "ghost-hairline": "at-once",
         "the-room-it-keeps": "at-once"
       },
-      "departures": [],
+      "departures": [
+        "explore: corners-prop",
+        "proposal: api: frame-prop"
+      ],
       "stateColors": []
     },
     {
@@ -6438,6 +6490,7 @@
       "title": "V12/Pagination",
       "stories": [
         "v12-pagination--default",
+        "v12-pagination--number-swap",
         "v12-pagination--controlled",
         "v12-pagination--many-pages",
         "v12-pagination--sizes",
@@ -6496,6 +6549,9 @@
           "figma": "BOOLEAN"
         },
         "isLastPage": {
+          "figma": "BOOLEAN"
+        },
+        "numberSwap": {
           "figma": "BOOLEAN"
         }
       },
@@ -6617,7 +6673,9 @@
         "rollover": "at-once",
         "stillness": "at-once"
       },
-      "departures": [],
+      "departures": [
+        "proposal: api: variant-prop"
+      ],
       "stateColors": []
     },
     {
@@ -6719,8 +6777,11 @@
         "timing-by-size": "at-once"
       },
       "departures": [
+        "explore: corners-prop",
+        "explore: floating-hairline",
         "explore: popover-caret-off",
-        "explore: radius-over"
+        "explore: radius-over",
+        "proposal: api: variant-prop"
       ],
       "stateColors": []
     },
@@ -6758,7 +6819,9 @@
         "interruption"
       ],
       "reduced": {},
-      "departures": [],
+      "departures": [
+        "proposal: api: variant-prop"
+      ],
       "stateColors": []
     },
     {
@@ -6855,7 +6918,11 @@
         "loop-and-value": "at-once",
         "content-swap": "at-once"
       },
-      "departures": [],
+      "departures": [
+        "explore: loader-neutral",
+        "explore: progress-bar-label-row",
+        "proposal: api: variant-prop"
+      ],
       "stateColors": [
         {
           "file": "packages/react/src/v12/components/ProgressBar/components/progress-bar.scss",
@@ -7027,7 +7094,9 @@
         "back-to-active": "at-once",
         "value-removed": "at-once"
       },
-      "departures": [],
+      "departures": [
+        "proposal: api: variant-prop"
+      ],
       "stateColors": []
     },
     {
@@ -7294,7 +7363,9 @@
       "state": [],
       "motion": [],
       "reduced": {},
-      "departures": [],
+      "departures": [
+        "proposal: api: frame-prop"
+      ],
       "stateColors": []
     },
     {
@@ -7542,7 +7613,11 @@
         "rollover": "at-once",
         "outline-ladder": "shorter-clock"
       },
-      "departures": [],
+      "departures": [
+        "explore: corners-prop",
+        "proposal: api: frame-prop",
+        "proposal: api: variant-prop"
+      ],
       "stateColors": []
     },
     {
@@ -7685,7 +7760,11 @@
         "list-snap-in": "shorter-clock",
         "list-snap-out": "at-once"
       },
-      "departures": [],
+      "departures": [
+        "explore: corners-prop",
+        "proposal: api: frame-prop",
+        "proposal: api: variant-prop"
+      ],
       "stateColors": []
     },
     {
@@ -7801,7 +7880,8 @@
       ],
       "reduced": {},
       "departures": [
-        "proposal: api: activation-prop"
+        "proposal: api: activation-prop",
+        "proposal: api: frame-prop"
       ],
       "stateColors": []
     },
@@ -7851,6 +7931,8 @@
       ],
       "reduced": {},
       "departures": [
+        "explore: radius-concentric",
+        "explore: row-scale",
         "explore: track-step",
         "proposal: api: variant-prop"
       ],
@@ -8253,38 +8335,7 @@
       ],
       "reduced": {},
       "departures": [],
-      "stateColors": [
-        {
-          "file": "packages/react/src/v12/components/ShimmerText/components/shimmer-text.scss",
-          "selector": ".cds-shimmer-text.cds-shimmer-text--active",
-          "property": "color",
-          "state": "press",
-          "spaces": [
-            "srgb"
-          ],
-          "expression": "var( --cds-shimmer-rest-color, var( --cds-shimmer-rest-solved, color-mix(in srgb, #{theme.$text-primary} 60%, transparent) ) )",
-          "values": {
-            "white": {
-              "pending": "browser-render"
-            },
-            "g10": {
-              "pending": "browser-render"
-            },
-            "g90": {
-              "pending": "browser-render"
-            },
-            "g100": {
-              "pending": "browser-render"
-            },
-            "v12-light": {
-              "pending": "browser-render"
-            },
-            "v12-dark": {
-              "pending": "browser-render"
-            }
-          }
-        }
-      ]
+      "stateColors": []
     },
     {
       "key": "v12/side-nav",
@@ -8386,12 +8437,44 @@
         "ghost-container": "at-once"
       },
       "departures": [
+        "explore: cast-shadow",
         "proposal: api: frame-prop",
+        "proposal: api: variant-prop",
         "proposal: token: hero-color",
         "proposal: token: surface-quiet",
         "proposal: token: surface-rule"
       ],
       "stateColors": [
+        {
+          "file": "packages/react/src/v12/components/SideNav/components/side-nav-filter.scss",
+          "selector": ".sidenav--ghost .sidenav__filter .cds-text-input__field",
+          "property": "--rollover-hover",
+          "state": "hover",
+          "spaces": [
+            "srgb"
+          ],
+          "expression": "color-mix(in srgb, currentColor 10%, transparent)",
+          "values": {
+            "white": {
+              "pending": "browser-render"
+            },
+            "g10": {
+              "pending": "browser-render"
+            },
+            "g90": {
+              "pending": "browser-render"
+            },
+            "g100": {
+              "pending": "browser-render"
+            },
+            "v12-light": {
+              "pending": "browser-render"
+            },
+            "v12-dark": {
+              "pending": "browser-render"
+            }
+          }
+        },
         {
           "file": "packages/react/src/v12/components/SideNav/components/side-nav.scss",
           "selector": ".sidenav--ghost .sidenav__group-bg",
@@ -8818,7 +8901,10 @@
         "message": "at-once",
         "readout": "at-once"
       },
-      "departures": [],
+      "departures": [
+        "explore: corners-prop",
+        "proposal: api: variant-prop"
+      ],
       "stateColors": [
         {
           "file": "packages/react/src/v12/components/Slider/components/slider.scss",
@@ -9183,7 +9269,9 @@
         "label-swap"
       ],
       "reduced": {},
-      "departures": [],
+      "departures": [
+        "proposal: api: variant-prop"
+      ],
       "stateColors": []
     },
     {
@@ -9336,7 +9424,9 @@
         "radio-mark": "at-once"
       },
       "departures": [
-        "explore: selected-wash"
+        "explore: corners-prop",
+        "explore: selected-wash",
+        "proposal: api: frame-prop"
       ],
       "stateColors": [
         {
@@ -10156,6 +10246,7 @@
         "rollover": "at-once"
       },
       "departures": [
+        "explore: corners-prop",
         "explore: radius-tag-rounded"
       ],
       "stateColors": [
@@ -10777,7 +10868,10 @@
         "ai-fill": "at-once"
       },
       "departures": [
-        "proposal: api: textarea-size"
+        "explore: corners-prop",
+        "proposal: api: frame-prop",
+        "proposal: api: textarea-size",
+        "proposal: api: variant-prop"
       ],
       "stateColors": []
     },
@@ -10925,8 +11019,10 @@
         "ai-fill": "at-once"
       },
       "departures": [
+        "explore: corners-prop",
         "explore: field-inset",
         "explore: radius-field",
+        "proposal: api: frame-prop",
         "proposal: api: variant-prop"
       ],
       "stateColors": [
@@ -11192,7 +11288,9 @@
       ],
       "motion": [],
       "reduced": {},
-      "departures": [],
+      "departures": [
+        "explore: theme-names"
+      ],
       "stateColors": []
     },
     {
@@ -11510,7 +11608,9 @@
         "message-line": "at-once",
         "status-mark": "at-once"
       },
-      "departures": [],
+      "departures": [
+        "explore: corners-prop"
+      ],
       "stateColors": [
         {
           "file": "packages/react/src/v12/components/TimePicker/components/time-picker.scss",
@@ -11655,6 +11755,7 @@
         "state-text": "at-once"
       },
       "departures": [
+        "explore: corners-prop",
         "proposal: api: variant-prop"
       ],
       "stateColors": [
@@ -12191,7 +12292,11 @@
       },
       "departures": [
         "explore: button-secondary-quiet",
+        "explore: corners-prop",
         "explore: tertiary-neutral",
+        "proposal: api: button-axes",
+        "proposal: api: frame-prop",
+        "proposal: api: variant-prop",
         "proposal: token: hero-color"
       ],
       "stateColors": [
@@ -12308,7 +12413,10 @@
         "jump": "at-once",
         "caret": "at-once"
       },
-      "departures": [],
+      "departures": [
+        "explore: row-scale",
+        "proposal: api: variant-prop"
+      ],
       "stateColors": [
         {
           "file": "packages/react/src/v12/components/TreeView/components/tree-view.scss",

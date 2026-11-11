@@ -109,10 +109,13 @@ export interface IconButtonProps extends Omit<
   highContrast?: boolean;
   /** v11: the selected (toggled) look, `$background-selected`. */
   isSelected?: boolean;
+  // @carbon-proposal api: button-axes — Button splits the old kinds into `kind` (the role), `variant` (outlined, tonal) and `frame` (ghost, none), so each prop says one thing. TBD
   /** The role: `primary` (default, v11), `secondary`, `danger`. */
   kind?: IconButtonKind;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** The treatment: `filled` (default), the role's fill; `outlined`, v11's tertiary (with `kind="danger"`, danger--tertiary). */
   variant?: 'filled' | 'outlined';
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /** What it stands on: `inset` (default), its own surface; `ghost`, v11's ghost, no surface of its own (with `kind="danger"`, danger--ghost). Wins over `variant`. */
   frame?: 'inset' | 'ghost';
   /** The tooltip, and the button's accessible name. */
@@ -127,6 +130,7 @@ export interface IconButtonProps extends Omit<
   as?: ElementType;
   /** v11: a count in a badge at the top end (a ghost `lg` button, as v11 draws it); 0 none, over 999 shows 999+. */
   badgeCount?: number;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** `full` (a circle, default), `rounded` (8px), `square` (v11's). */
   corners?: IconButtonCorners;
   target?: string;

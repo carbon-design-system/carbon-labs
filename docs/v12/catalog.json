@@ -3985,6 +3985,13 @@
             "id": {
               "type": "string"
             },
+            "invalid": {
+              "type": "boolean",
+              "description": "The group is in error: each checkbox in it shows it, the message under the group."
+            },
+            "invalidText": {
+              "$ref": "#/$defs/node"
+            },
             "legendText": {
               "$ref": "#/$defs/node",
               "description": "The group's label (a `<legend>`)."
@@ -4016,6 +4023,13 @@
             },
             "readOnly": {
               "type": "boolean"
+            },
+            "warn": {
+              "type": "boolean",
+              "description": "The group has a warning: each checkbox in it shows it, the message under the group."
+            },
+            "warnText": {
+              "$ref": "#/$defs/node"
             }
           }
         },
@@ -11632,6 +11646,14 @@
               "$ref": "#/$defs/node",
               "description": "MenuItem, MenuItemSelectable, MenuItemRadioGroup, MenuItemGroup, MenuItemDivider."
             },
+            "corners": {
+              "enum": [
+                "full",
+                "rounded",
+                "square"
+              ],
+              "description": "`rounded` (default): 8px corners and rows at a field's inset. `full`: a"
+            },
             "exitFade": {
               "type": "boolean",
               "description": "The snap exit's fade on the menu and its submenus (40ms on a short exit, else 80ms). Default true. `false`: it folds back opaque, for a menu that must not show "
@@ -11798,6 +11820,14 @@
             "children": {
               "$ref": "#/$defs/node",
               "description": "MenuItems."
+            },
+            "corners": {
+              "enum": [
+                "full",
+                "rounded",
+                "square"
+              ],
+              "description": "`rounded` (default): 8px corners and rows at a field's inset. `full`: a"
             },
             "disabled": {
               "type": "boolean"
@@ -12124,6 +12154,14 @@
             "children": {
               "$ref": "#/$defs/node",
               "description": "MenuItems."
+            },
+            "corners": {
+              "enum": [
+                "full",
+                "rounded",
+                "square"
+              ],
+              "description": "`rounded` (default): 8px corners and rows at a field's inset. `full`: a"
             },
             "disabled": {
               "type": "boolean"
@@ -21394,6 +21432,10 @@
               "type": "string",
               "description": "Default \"Items per page:\"."
             },
+            "numberSwap": {
+              "type": "boolean",
+              "description": "The content swap of the range's \"11–20\" and the page number, out then"
+            },
             "onBlur": {
               "$ref": "#/$defs/event"
             },
@@ -21697,10 +21739,6 @@
               "type": "boolean",
               "description": "The snap exit's fade (40ms on a short exit, else 80ms). Default true, every snap exit's"
             },
-            "highContrast": {
-              "type": "boolean",
-              "description": "The opposite theme's surface (v11's high contrast)."
-            },
             "id": {
               "type": "string"
             },
@@ -21720,10 +21758,6 @@
             },
             "onClick": {
               "$ref": "#/$defs/event"
-            },
-            "onClose": {
-              "$ref": "#/$defs/event",
-              "description": "The anchored form's close request (as `onRequestClose`)."
             },
             "onFocus": {
               "$ref": "#/$defs/event"
@@ -21781,7 +21815,7 @@
                 "outlined",
                 "tonal"
               ],
-              "description": "The look: `outlined` (default), `tonal` (no hairline), `inverse` (the opposite theme; as `highContrast`)."
+              "description": "The look: `outlined` (default), `tonal` (no hairline), `inverse` (the opposite theme: v11's `highContrast`)."
             }
           }
         },
@@ -24478,7 +24512,7 @@
             "motion": {
               "type": "object",
               "unchecked": "Partial<ShimmerTextMotion>",
-              "description": "Tuning: the length rule's `shortSpeed`, `longSpeed` and `restMs`, the band's `band` width and `weight`, and `weightAt`."
+              "description": "Tuning: the length rule's `shortSpeed`, `longSpeed` and `restMs`, and the band's `band` width."
             },
             "onBlur": {
               "$ref": "#/$defs/event"
@@ -25462,6 +25496,14 @@
             "children": {
               "$ref": "#/$defs/node",
               "description": "MenuItems: the related actions (v11)."
+            },
+            "corners": {
+              "enum": [
+                "full",
+                "rounded",
+                "square"
+              ],
+              "description": "`rounded` (default): 8px corners and rows at a field's inset. `full`: a"
             },
             "disabled": {
               "type": "boolean",
@@ -29917,10 +29959,6 @@
               "type": "boolean",
               "description": "The snap exit's fade (40ms on a short exit, else 80ms). Default true, every snap exit's"
             },
-            "highContrast": {
-              "type": "boolean",
-              "description": "The opposite theme's surface (v11's high contrast)."
-            },
             "id": {
               "type": "string"
             },
@@ -29989,7 +30027,7 @@
                 "outlined",
                 "tonal"
               ],
-              "description": "The look: `outlined` (default), `tonal` (no hairline), `inverse` (the opposite theme; as `highContrast`)."
+              "description": "The look: `outlined` (default), `tonal` (no hairline), `inverse` (the opposite theme: v11's `highContrast`)."
             }
           }
         },

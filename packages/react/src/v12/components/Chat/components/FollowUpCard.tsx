@@ -64,6 +64,7 @@ export interface FollowUpCardProps {
   autoFocus?: boolean;
   /** The rows' control size (the kit's). Default `lg`: 40px rows. */
   size?: SelectionSize;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** The selector's look, the kit's. Default the enclosing ChatShell's (`inverse`). */
   variant?: ChatVariant;
   /** Multiplies every duration (a lab's slow motion). Default 1. */

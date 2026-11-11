@@ -26,5 +26,11 @@ export type {
 export type { JumpBlock, JumpDirection } from './components/engine';
 
 // The names other v12 packages take from this package's files.
-export { attachJumpTo } from './components/engine';
+export {
+  attachJumpTo,
+  clearJumpGlide,
+  JUMP_GLIDE_ATTR,
+  jumpRemaining,
+  markJumpGlide,
+} from './components/engine';
 export type { JumpEngine } from './components/engine';

@@ -41,6 +41,7 @@ import {
 } from '@carbon-labs/react-tooltip';
 import { reflowKey, useListReflow } from '@carbon-labs/react-list-reflow';
 import { PageOverflow } from './PageOverflow';
+import { reachPx, stepTarget } from './step';
 import '@carbon-labs/react-selection-kit/scss/selection-kit.scss';
 import './pagination-nav.scss';
 
@@ -65,7 +66,8 @@ import './pagination-nav.scss';
  *              glides from page to page on the selection's timing (40 / 80 /
  *              120 / 160ms by travel) with its leading edge ahead; the page
  *              label takes its selected weight (600) and color where the
- *              marker covers it. A press on a page reaches toward it
+ *              marker covers it. A press on a page reaches toward it, and
+ *              so does a press on a chevron, toward the page it steps to
  *   window     when the window of numbers shifts, the row reflows as one
  *              strip (the list reflow, `carry`): the numbers that stay
  *              slide to their new places (`animateLayout`, duration by
@@ -187,6 +189,7 @@ export interface PaginationNavProps extends Omit<
 
   /* ── Beyond Carbon's API ─────────────────────────────────────────────── */
 
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** The marker's color: `inverse` (default, neutral) or `hero` (the brand blue). */
   variant?: 'inverse' | 'hero';
   /** Motion dials; omitted keys take the selection kit's. */
@@ -324,10 +327,14 @@ export const PaginationNav = forwardRef<HTMLElement, PaginationNavProps>(
       }));
       if (index !== page) onChange?.(index);
     };
-    const next = () =>
-      page + 1 >= total ? loop && jumpTo(0) : jumpTo(page + 1);
-    const previous = () =>
-      page - 1 < 0 ? loop && jumpTo(total - 1) : jumpTo(page - 1);
+    const next = () => {
+      const i = stepTarget(page, 1, total, loop);
+      if (i >= 0) jumpTo(i);
+    };
+    const previous = () => {
+      const i = stepTarget(page, -1, total, loop);
+      if (i >= 0) jumpTo(i);
+    };
 
     /* ── the row ───────────────────────────────────────────────────────── */
 
@@ -456,6 +463,46 @@ export const PaginationNav = forwardRef<HTMLElement, PaginationNavProps>(
       },
     });
 
+    // A press on a chevron reaches toward the page it steps to, as a press on
+    // that page does; the click picks it and the marker goes on from the
+    // reach. Released off the chevron (no click), it reaches back. A page
+    // behind a "…" isn't in the row: the window's reflow moves the marker.
+    // Only the chevron that reached takes it back (the press on one blurs
+    // the other).
+    const reaching = useRef<1 | -1 | 0>(0);
+    const reachToward = (dir: 1 | -1) => (e: { button: number }) => {
+      if (e.button !== 0) return;
+      const sel = selRef.current;
+      const index = stepTarget(pageRef.current, dir, total, loop);
+      const el = index >= 0 ? pageEls.current.get(index) : undefined;
+      if (!sel || !el || index === pageRef.current) return;
+      const row = pagesInRow();
+      const centers = row.map((it) => {
+        const r = sel.rectOf(it);
+        return (r.l + r.r) / 2;
+      });
+      sel.reach(el, reachPx(mRef.current.reach, centers, row.indexOf(el)));
+      reaching.current = dir;
+    };
+    const reachBack = (dir: 1 | -1) => () => {
+      if (reaching.current !== dir) return;
+      reaching.current = 0;
+      const sel = selRef.current;
+      const el = current();
+      if (sel && el) sel.moveTo(el);
+    };
+    const step = (go: () => void) => () => {
+      reaching.current = 0;
+      go();
+    };
+    const chevron = (dir: 1 | -1) => ({
+      onPointerDown: reachToward(dir),
+      onPointerLeave: reachBack(dir),
+      onPointerCancel: reachBack(dir),
+      onBlur: reachBack(dir),
+      onClick: step(dir === 1 ? next : previous),
+    });
+
     /* ── render ────────────────────────────────────────────────────────── */
 
     // The page buttons' handlers: stable, so the memoized buttons (PageItem)
@@ -560,7 +607,7 @@ export const PaginationNav = forwardRef<HTMLElement, PaginationNavProps>(
                 label={t('carbon.pagination-nav.previous')}
                 disabled={backDisabled}
                 className="cds-pagination-nav__direction"
-                onClick={previous}>
+                {...chevron(-1)}>
                 <CaretLeft aria-hidden="true" />
               </IconButton>
             </li>
@@ -591,7 +638,7 @@ export const PaginationNav = forwardRef<HTMLElement, PaginationNavProps>(
                 label={t('carbon.pagination-nav.next')}
                 disabled={forwardDisabled}
                 className="cds-pagination-nav__direction"
-                onClick={next}>
+                {...chevron(1)}>
                 <CaretRight aria-hidden="true" />
               </IconButton>
             </li>

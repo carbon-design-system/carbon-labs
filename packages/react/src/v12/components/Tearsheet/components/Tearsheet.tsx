@@ -203,6 +203,7 @@ export interface TearsheetProps extends TearsheetNarrowProps {
   headerActions?: ReactNode;
   /** A side column beside the main area (a list of steps, a filter). */
   influencer?: ReactNode;
+  // @carbon-proposal api: logical-positions — Placement values are logical, `start` and `end`, so they follow the reading direction. TBD
   /** Default `start`. */
   influencerPosition?: TearsheetInfluencerPosition;
   /** narrow 16rem, wide 20rem. Default narrow. */

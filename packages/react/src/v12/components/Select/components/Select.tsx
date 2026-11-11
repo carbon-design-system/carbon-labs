@@ -118,10 +118,13 @@ export interface SelectProps
 
   /* ── Beyond Carbon's API ─────────────────────────────────────────────── */
 
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** `rounded` (8px, default), `full` or `square`, as the text input's. */
   corners?: 'full' | 'rounded' | 'square';
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /** `inset` (default) its fill and hairline; `ghost` neither at rest, for a field a header or toolbar frames. */
   frame?: FieldFrame;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** `neutral` (default): a greyscale selected edge. `hero`: blue, for expressive fields. */
   variant?: FieldVariant;
   /** Where the message line sits: `gap` (default) in the form's 32px gap, or `flow` in the layout. */

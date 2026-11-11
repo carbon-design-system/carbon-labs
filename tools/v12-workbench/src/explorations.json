@@ -293,19 +293,19 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/JobsTray/components/jobs-tray.scss",
-      "line": 44,
+      "line": 43,
       "text": "token: surface-quiet — The quiet surface fill: side nav panel, tiles, tables, jobs tray, tabs fade. replaces: `$layer-01`. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/JobsTray/components/jobs-tray.scss",
-      "line": 46,
+      "line": 45,
       "text": "token: surface-rule — The quiet surface's hairline. replaces: `$border-subtle`. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/JobsTray/components/jobs-tray.scss",
-      "line": 63,
+      "line": 62,
       "text": "token: surface-divider — A line inside the surface (table rows, header underline). replaces: `$border-subtle`. TBD"
     }
   ],
@@ -603,7 +603,7 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Popover/components/popover.scss",
-      "line": 84,
+      "line": 85,
       "text": "radius-over — A surface over the page: popover, toggletip, notifications panel, chat shell. TBD"
     }
   ],

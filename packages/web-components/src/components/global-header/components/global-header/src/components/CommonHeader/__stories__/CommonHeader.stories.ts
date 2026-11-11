@@ -564,6 +564,10 @@ const setCustomTheme = () => {
       'burlywood'
     );
     element.style.setProperty('--clabs-global-header-text-color', 'olive');
+    element.style.setProperty(
+      '--clabs-global-header-text-secondary',
+      'goldenrod'
+    );
     element.style.setProperty('--clabs-global-header-icon-color', 'olive');
   }
 };
@@ -580,6 +584,10 @@ const setDefaultTheme = () => {
       'rgba(141, 141, 141, 0.16)'
     );
     element.style.setProperty('--clabs-global-header-text-color', '#f4f4f4');
+    element.style.setProperty(
+      '--clabs-global-header-text-secondary',
+      '#c6c6c6'
+    );
     element.style.setProperty('--clabs-global-header-icon-color', '#f4f4f4');
   }
 };
@@ -612,6 +620,11 @@ export const Theme: Story = {
           <code>--clabs-global-header-text-color</code>&nbsp;&nbsp;
           <div
             style="display:inline-block; width:24px; height:24px; background-color:olive;"></div>
+        </li>
+        <li>
+          <code>--clabs-global-header-text-secondary</code>&nbsp;&nbsp;
+          <div
+            style="display:inline-block; width:24px; height:24px; background-color:goldenrod;"></div>
         </li>
         <li>
           <code>--clabs-global-header-icon-color</code>&nbsp;&nbsp;

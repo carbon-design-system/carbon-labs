@@ -575,6 +575,8 @@ export const PaginationNav = forwardRef<HTMLElement, PaginationNavProps>(
 
     return (
       <nav
+        // The landmark's name unless the caller gives one.
+        aria-label="pagination"
         {...rest}
         ref={setNavRef}
         className={[

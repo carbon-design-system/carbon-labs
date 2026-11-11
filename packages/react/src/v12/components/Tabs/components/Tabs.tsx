@@ -55,7 +55,7 @@ import {
   type SelectionSize,
   type TooltipController,
 } from '@carbon-labs/react-selection-kit';
-import { useStableCallback } from '@carbon-labs/react-util';
+import { assignRef, useStableCallback } from '@carbon-labs/react-util';
 import {
   TabLabels,
   TabsContext,
@@ -270,7 +270,10 @@ const TabButton = memo(function TabButton({
   return (
     <button
       {...itemRest}
-      ref={(el) => setRef(i, el)}
+      ref={(el) => {
+        setRef(i, el);
+        assignRef(it.ref, el);
+      }}
       type="button"
       role="tab"
       id={tabId(baseId, i)}

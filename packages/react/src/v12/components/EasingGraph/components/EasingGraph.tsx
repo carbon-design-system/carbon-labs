@@ -22,7 +22,7 @@ import {
 } from '@carbon-labs/v12-motion';
 import { MultiFieldInput } from '@carbon-labs/react-text-input';
 import './easing-graph.scss';
-import { useReducedGetter } from '@carbon-labs/react-util';
+import { inlineKey, useReducedGetter } from '@carbon-labs/react-util';
 
 /* ============================================================================
  * EasingGraph — a cubic-bezier as a graph: progress (up) over time (across),
@@ -148,7 +148,8 @@ export function EasingGraph({
       ArrowDown: [0, -by],
       ArrowUp: [0, by],
     };
-    const step = d[e.key];
+    // The handles stand at their inline offset, so right to left ← moves x on.
+    const step = d[inlineKey(e.key, e.currentTarget)];
     if (!step) return;
     e.preventDefault();
     set(handle, hx + step[0], hy + step[1]);

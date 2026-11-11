@@ -72,6 +72,7 @@ import {
 } from '@carbon-labs/react-props';
 import './slider.scss';
 import { useFormFieldState } from '@carbon-labs/react-util';
+import { inlineKey } from '@carbon-labs/react-util';
 
 /* ============================================================================
  * Slider — Carbon's Slider (v11's API: one knob or two, the number fields), on
@@ -1242,7 +1243,8 @@ export function Slider({
       const cur = valueOf(h);
       const [lo, hi] = bounds(h);
       const big = step * stepMultiplier;
-      const k = e.key;
+      // Right to left the track runs the other way: ← raises, as on a range input.
+      const k = inlineKey(e.key, e.currentTarget);
       let delta = 0;
       let to: number | null = null;
       if (k === 'ArrowRight' || k === 'ArrowUp')

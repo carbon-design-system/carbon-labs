@@ -101,8 +101,10 @@ export interface RegionProps extends Omit<
 > {
   /** The element. Default `div`. */
   as?: ElementType;
+  // @carbon-explore region-surface — A `Region` names the colour an area stands on (`surface`: page, quiet or raised, with its `outline`), and that sets the default frame of what is inside. TBD
   /** Default `page`. */
   surface?: RegionSurface;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** `square` or `rounded` (the surface's step: 16 raised, else 8). Default the surface's: page square, quiet and raised rounded. */
   corners?: RegionCorners;
   /** The surface's hairline. Default the surface's (`REGION_OUTLINE`): on for quiet and raised. */

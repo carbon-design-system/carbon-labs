@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.9.0...%40carbon-labs%2Fv12-review%400.10.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/v12-review
+
+
+
+
+
+# [0.9.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.8.0...%40carbon-labs%2Fv12-review%400.9.0) (2026-11-11)
+
+### Bug Fixes
+
+* **v12-review:** nav fold, mark, type and scrollers ([#1484](https://github.com/carbon-design-system/carbon-labs/issues/1484)) ([75a5b8b](https://github.com/carbon-design-system/carbon-labs/commit/75a5b8b12536e1f9562b7022514d3060859c3441))
+
+
+# [0.8.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.7.0...%40carbon-labs%2Fv12-review%400.8.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/v12-review
+
+
+
+
+
+# [0.7.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.6.0...%40carbon-labs%2Fv12-review%400.7.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/v12-review
+
+
+
+
+
+# [0.6.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.5.0...%40carbon-labs%2Fv12-review%400.6.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/v12-review
+
+
+
+
+
+# [0.5.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.4.0...%40carbon-labs%2Fv12-review%400.5.0) (2026-11-11)
+
+### Bug Fixes
+
+* **v12:** right-to-left keys, refs, group status, Popover aliases, Card ([#1480](https://github.com/carbon-design-system/carbon-labs/issues/1480)) ([60a3ee4](https://github.com/carbon-design-system/carbon-labs/commit/60a3ee495eff11566bfa431020ff4393096eb220))
+
+
+# [0.4.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.3.0...%40carbon-labs%2Fv12-review%400.4.0) (2026-11-11)
+
+### Features
+
+* **v12:** shared direction, roving and announcer helpers, style mixins ([#1479](https://github.com/carbon-design-system/carbon-labs/issues/1479)) ([f12c43a](https://github.com/carbon-design-system/carbon-labs/commit/f12c43a834b0eb88ad4840fd0af682c1e2188833))
+
+
 # [0.3.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.2.0...%40carbon-labs%2Fv12-review%400.3.0) (2026-11-11)
 
 ### Features

@@ -99,7 +99,7 @@ import '@carbon-labs/react-selection-kit/scss/selection-kit.scss';
 import { applyDrawnScale, cssPx, drawnScale } from './drawn-scale';
 import { menuCorners } from './menu-corners';
 import './menu.scss';
-import { isComposing } from '@carbon-labs/react-util';
+import { inlineKey, isComposing } from '@carbon-labs/react-util';
 
 /* ============================================================================
  * Menu — Carbon v11's Menu (and its MenuButton / OverflowMenu triggers) on the
@@ -481,6 +481,7 @@ export type MenuStyleProps = Pick<
   SelectionStyleProps,
   'lowContrast' | 'contour' | 'outlinedFill'
 > & {
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /**
    * `rounded` (default): 8px corners and rows at a field's inset. `full`: a
    * pill frame and pill rows, half a row's height in. `square`: none. Takes
@@ -1469,9 +1470,11 @@ function SurfaceBody(p: SurfaceProps & { onExited: () => void }) {
       ctx.requestClose('tab');
       return;
     }
+    // Right to left a submenu opens to the left: ← opens it and → goes back.
+    const across = inlineKey(e.key, e.currentTarget);
     if (
       (e.key === 'Escape' && !isComposing(e)) ||
-      (e.key === 'ArrowLeft' && depth > 0)
+      (across === 'ArrowLeft' && depth > 0)
     ) {
       e.preventDefault();
       p.onEscape();
@@ -1498,7 +1501,7 @@ function SurfaceBody(p: SurfaceProps & { onExited: () => void }) {
       activateRow(row, e as unknown as ReactKeyboardEvent<HTMLElement>, true);
       return;
     }
-    if (e.key === 'ArrowRight' && row?.type === 'item' && row.sub) {
+    if (across === 'ArrowRight' && row?.type === 'item' && row.sub) {
       e.preventDefault();
       openSub(row, 'first');
       return;

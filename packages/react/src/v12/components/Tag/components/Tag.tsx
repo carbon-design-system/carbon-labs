@@ -187,6 +187,7 @@ function joinRun(motion: Animation | null, timeScale: number) {
 export interface TagProps extends HTMLAttributes<HTMLSpanElement> {
   type?: TagType;
   size?: TagSize;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** `full` (the pill, default), `rounded` (the tag's own radius, 2px) or `square`. */
   corners?: TagCorners;
   /** Snap in when it appears: `auto` (default) when it arrives on its own into UI already on screen; `true`; `false`. Notification's name for it. */

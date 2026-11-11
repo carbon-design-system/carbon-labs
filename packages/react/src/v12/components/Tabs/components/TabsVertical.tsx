@@ -50,7 +50,7 @@ import {
   SelectionTakenFace,
   type SelectionLoadingProps,
 } from '@carbon-labs/react-selection-kit';
-import { useStableCallback } from '@carbon-labs/react-util';
+import { assignRef, useStableCallback } from '@carbon-labs/react-util';
 import { useDefaultFrame } from '@carbon-labs/react-kit-defaults';
 import {
   TABS_MOTION,
@@ -171,6 +171,7 @@ export interface TabsVerticalProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>, TabsRootProps {
   /** Row height: sm 32 / md 40 / lg 48 / xl 64px (default). */
   size?: VerticalTabsSize;
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /**
    * What the list stands on. `inset` (default; `ghost` in a framed Region): its own track. `ghost`: no
    * track, for tabs inside something that already frames them (a card, a
@@ -331,7 +332,10 @@ const VTabButton = memo(
       <button
         {...itemRest}
         {...rowStructureProps(entryKey, took)}
-        ref={(el) => setRef(i, el)}
+        ref={(el) => {
+          setRef(i, el);
+          assignRef(it.ref, el);
+        }}
         type="button"
         role="tab"
         id={tabId(baseId, i)}

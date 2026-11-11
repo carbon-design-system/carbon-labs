@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-code-snippet%400.7.0...%40carbon-labs%2Freact-code-snippet%400.8.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-code-snippet
+
+
+
+
+
+# [0.7.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-code-snippet%400.6.0...%40carbon-labs%2Freact-code-snippet%400.7.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-code-snippet
+
+
+
+
+
+# [0.6.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-code-snippet%400.5.0...%40carbon-labs%2Freact-code-snippet%400.6.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-code-snippet
+
+
+
+
+
+# [0.5.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-code-snippet%400.4.0...%40carbon-labs%2Freact-code-snippet%400.5.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-code-snippet
+
+
+
+
+
+# [0.4.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-code-snippet%400.3.0...%40carbon-labs%2Freact-code-snippet%400.4.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-code-snippet
+
+
+
+
+
+# [0.3.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-code-snippet%400.2.0...%40carbon-labs%2Freact-code-snippet%400.3.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-code-snippet
+
+
+
+
+
 # [0.2.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-code-snippet%400.1.0...%40carbon-labs%2Freact-code-snippet%400.2.0) (2026-11-10)
 
 ### Features

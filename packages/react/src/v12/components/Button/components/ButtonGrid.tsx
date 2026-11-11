@@ -123,10 +123,13 @@ export interface ButtonGridProps extends Omit<
   children?: ReactNode;
   /** xs 24, sm 32 (default), md 40. */
   size?: ButtonGridSize;
+  // @carbon-proposal api: button-axes — Button splits the old kinds into `kind` (the role), `variant` (outlined, tonal) and `frame` (ghost, none), so each prop says one thing. TBD
   /** The role: `primary` (default) or `secondary`. */
   kind?: ButtonGridKind;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** The treatment: `outlined` (the grid's default: v11's tertiary), `filled` (the role's fill) or `tonal` (the quieter look: grey lines in the kit's standard surface). Setting `kind` keeps it. */
   variant?: ButtonGridVariant;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** The shell's outer corners: full (default), rounded (8px), square. */
   corners?: ShellCorners;
   /** The narrowest a cell gets, px: the grid fits as many columns as this allows. Default 76. */

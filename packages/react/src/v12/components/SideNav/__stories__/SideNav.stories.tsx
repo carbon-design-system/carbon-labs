@@ -413,7 +413,7 @@ export const Rail = {
   },
 };
 
-/** `filter`: a field pinned at the top narrows the nav to the matching pages, by label or keyword. Press `/` to focus it. While there is a query, the nav's changes snap. */
+/** `filter`: a field pinned at the top narrows the nav to the matching pages, by label or keyword. Press `/` to focus it. While there is a query, the nav's changes snap. In a ghost nav (right) the field is ghost too, and hovers as a row does. */
 export const Filter = {
   render: function FilterStory() {
     const [current, setCurrent] = useState('profile');
@@ -421,6 +421,14 @@ export const Filter = {
       <div style={screen}>
         <div style={fixedColumn}>
           <SideNav aria-label="Main" filter={{ labelText: 'Filter pages' }}>
+            {rows(current, setCurrent)}
+          </SideNav>
+        </div>
+        <div style={fixedColumn}>
+          <SideNav
+            aria-label="Main, ghost"
+            frame="ghost"
+            filter={{ labelText: 'Filter pages', shortcut: false }}>
             {rows(current, setCurrent)}
           </SideNav>
         </div>

@@ -206,7 +206,7 @@ export const Anchored = {
           open={open}
           anchor={trigger}
           label="Rename"
-          onClose={() => setOpen(false)}>
+          onRequestClose={() => setOpen(false)}>
           <form
             style={{ display: 'grid', gap: 8, padding: 16, inlineSize: 240 }}
             onSubmit={(e) => {

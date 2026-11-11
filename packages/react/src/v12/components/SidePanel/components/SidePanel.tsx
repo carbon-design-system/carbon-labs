@@ -221,6 +221,7 @@ export interface SidePanelProps {
   /** After it has left. */
   onUnmount?: () => void;
   open: boolean;
+  // @carbon-proposal api: logical-positions — Placement values are logical, `start` and `end`, so they follow the reading direction. TBD
   /** Default `end`. */
   placement?: SidePanelPlacement;
   /** With an overlay: a press on it doesn't close the panel. */
@@ -239,6 +240,7 @@ export interface SidePanelProps {
   scope?: SidePanelScope;
   /** How it leaves. `collapse` (default, every frame): the far edge pulls back to the near one, the content still (no fade by its edge; floating, the containers' fade). `reversed`: the entrance played back. */
   exit?: SidePanelExit;
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /** What it stands on. Default `flush`: attached to the edge, square. `inset`: its own panel in from the edges. `floating`: raised over the page, opening on Snap from the press (or its launcher). */
   frame?: SidePanelFrame;
   /**

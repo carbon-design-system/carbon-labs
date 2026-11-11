@@ -189,6 +189,7 @@ export interface PaginationNavProps extends Omit<
 
   /* ── Beyond Carbon's API ─────────────────────────────────────────────── */
 
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** The marker's color: `inverse` (default, neutral) or `hero` (the brand blue). */
   variant?: 'inverse' | 'hero';
   /** Motion dials; omitted keys take the selection kit's. */

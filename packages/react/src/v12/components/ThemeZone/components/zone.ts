@@ -20,6 +20,7 @@
  * keeps Carbon's names; `data-cds-theme` says the kit's.
  * ========================================================================== */
 
+// @carbon-explore theme-names — The themes are named `light` and `dark`, drawn in Carbon's `white` and `g100`, while the DOM keeps Carbon's classes. TBD
 /** The kit's two themes. */
 export type KitTheme = 'light' | 'dark';
 /** The Carbon theme each draws in. */

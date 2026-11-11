@@ -253,6 +253,8 @@ export const SIDE_NAV_MOTION: SideNavMotion = {
 };
 
 const ITEM = '.sel__item';
+/** A ghost nav's filter field, hovered as a row (side-nav-filter.scss). */
+const FILTER_FIELD = '.sidenav__filter .cds-text-input__field';
 const LINK = '.sidenav__link';
 const HEADER = '.sidenav__header';
 /** The pass's soft edges, px: the selector fades out over this much of a header's row, and back in. */
@@ -1263,8 +1265,10 @@ export interface SideNavProps
   children?: ReactNode;
   /** Row size: `sm` (26px rows) / `md` (32px rows, default) / `lg` (40px rows) — the kit's row scale. Unset, a `KitDefaults` density's: compact sm, default md, spacious lg. */
   size?: SideNavSize;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** `inverse` (default) / `tonal` / `outlined`: the kit's selector styles; `hero` the brand blue, for a nav that is the page's one emphasized control. */
   variant?: SideNavVariant;
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /**
    * `inset` (default; `ghost` in a framed Region): a rounded panel, its rows inset, with a hairline
    * just outside it. `flush`: the column itself, full height, its rows
@@ -1724,6 +1728,18 @@ export function SideNav({
     timeScale: m.timeScale,
     reduced: reducedRef,
     steps: frame === 'ghost' ? ghostSteps : undefined,
+  });
+  // A ghost nav's filter field hovers as its rows do: the same rollover, off the same page, with no press (a
+  // press focuses it). side-nav-filter.scss paints it.
+  useItemRollover(rootRef, {
+    selector: FILTER_FIELD,
+    itemSelector: FILTER_FIELD,
+    press: false,
+    preview: false,
+    timeScale: m.timeScale,
+    reduced: reducedRef,
+    steps: ghostSteps,
+    enabled: frame === 'ghost' && filter !== undefined && filter !== false,
   });
 
   /** The links in order, a shut group's current link standing in for its header (where the selector rests). */

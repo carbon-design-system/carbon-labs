@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-history-rail",
-  "version": "0.2.0",
+  "version": "0.5.0",
   "private": true,
   "publishConfig": {
     "access": "public",
@@ -34,12 +34,17 @@
     "scss",
     "telemetry.yml"
   ],
+  "sideEffects": [
+    "*.scss",
+    "*.css"
+  ],
   "scripts": {
     "build": "node ../../../../tasks/build.js",
     "clean": "rimraf es lib scss",
     "test": "vitest run --config ../../vitest.shared.ts"
   },
   "dependencies": {
+    "@carbon-labs/react-util": "workspace:*",
     "classnames": "^2.3.2",
     "prop-types": "^15.8.1"
   },

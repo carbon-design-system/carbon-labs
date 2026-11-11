@@ -1,0 +1,65 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+/* State styling, by what the state is:
+
+     a native state         its pseudo-class (`:hover`, `:active`, `:disabled`)
+     an ARIA state          its attribute (`[aria-invalid='true']`,
+                            `[aria-disabled='true']`)
+     a state ARIA lacks     a data attribute (`[data-warn]`: a warning)
+
+   Each mixin wraps the rules for the state (`@content`) on the element the
+   mixin is included in. Disabled is either kind of disabled: the native
+   attribute, or `aria-disabled` on a control that stays focusable to explain
+   itself. Hover and active never apply to a disabled control.
+
+   `$within: true` puts invalid and warn on a wrapper whose control carries
+   the state (a field's frame round its input). */
+
+$_disabled: ':is(:disabled, [aria-disabled="true"])';
+
+@mixin hover {
+  &:hover:not(#{$_disabled}) {
+    @content;
+  }
+}
+
+@mixin active {
+  &:active:not(#{$_disabled}) {
+    @content;
+  }
+}
+
+@mixin disabled {
+  &#{$_disabled} {
+    @content;
+  }
+}
+
+@mixin invalid($within: false) {
+  @if $within {
+    &:has([aria-invalid='true']) {
+      @content;
+    }
+  } @else {
+    &[aria-invalid='true'] {
+      @content;
+    }
+  }
+}
+
+@mixin warn($within: false) {
+  @if $within {
+    &:has([data-warn]) {
+      @content;
+    }
+  } @else {
+    &[data-warn] {
+      @content;
+    }
+  }
+}

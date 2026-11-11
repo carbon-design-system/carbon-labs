@@ -147,6 +147,7 @@ $_dp: calc(
   );
 }
 
+// @carbon-explore cast-shadow — An opt-in shadow drawn in layers whose colour is solved for contrast on its backdrop, at three elevations (resting, raised, floating). TBD
 @mixin cast-shadow(
   $layers: (
     ambient,

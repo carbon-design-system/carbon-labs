@@ -31,6 +31,22 @@ import { useLatest } from '@carbon-labs/react-selection-kit';
  *            Not once per captured scroll event, a forced layout each
  * ========================================================================== */
 
+/**
+ * The snap's close: back toward the origin it opened from. Shown open without a snap in, it has
+ * none, so it folds back into its trigger (`source`, the cause the rule gives for no pointer),
+ * the far edge travelling, rather than toward its own center from both sides.
+ */
+export function closeOptions(
+  surface: Pick<SnapSurface, 'origin'>,
+  source?: () => { x: number; y: number } | null
+): { source: { x: number; y: number } } | undefined {
+  if (surface.origin()) {
+    return undefined;
+  }
+  const at = source?.();
+  return at ? { source: at } : undefined;
+}
+
 /** Mounted while open and while it leaves: `exited` (stable) unmounts it. */
 export function useFloatingMount(open: boolean): {
   present: boolean;
@@ -68,6 +84,11 @@ export interface FloatingPresenceOptions {
   enter: () => void;
   /** Closing, before the snap's close: freeze what's on screen. Returning false: nothing leaves (never shown). */
   leave?: () => boolean | void;
+  /**
+   * Its trigger's center, client px: where it folds back to when it was shown open without a snap
+   * in (no origin of its own). Without it, that fold closes toward its own center.
+   */
+  source?: () => { x: number; y: number } | null;
   /** The close has started (a soft edge to play with it). */
   leaving?: () => void;
   /** It has left (the snap's close resolved true, and this close is still the current one). */
@@ -100,7 +121,7 @@ export function useFloatingPresence(
       return;
     }
     let gone = false;
-    const done = surface.close();
+    const done = surface.close(closeOptions(surface, l.source));
     l.leaving?.();
     void done.then((left) => {
       if (left && !gone) {

@@ -39,8 +39,10 @@ import './chat.scss';
  * ========================================================================== */
 
 export interface ChatShellProps {
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** `rounded` (the field's 8px, the shell 16px; default), `full`, `square`. */
   corners?: ChatCorners;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** The chat's look: `inverse` (default), `tonal`, `outlined`. */
   variant?: ChatVariant;
   /** The shell's padding round the prompt and the transcript, px. Default 8. */

@@ -334,8 +334,10 @@ export interface PageHeaderProps extends Omit<
   enableBreadcrumbScroll?: boolean;
   fullWidthGrid?: boolean | 'xl';
   narrowGrid?: boolean;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** `square` (attached to the shell's edge) or `rounded`: 8px in the page, a Region's inner radius in one, `--cds-page-header-radius` in your own. Default the provider's (`full` is `rounded`), else `square`. */
   corners?: PageHeaderCorners;
+  // @carbon-proposal api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD
   /** `flush` (default): its own quiet surface and hairline. `ghost`: none of its own, on the ground it sits on. Content scrolling under it leaves into a soft edge either way. */
   frame?: PageHeaderFrame;
   /** The scroll container it collapses with. Default the nearest one above it, else the window. */

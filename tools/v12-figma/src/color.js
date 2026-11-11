@@ -22,7 +22,7 @@ const GAMUT_EPSILON = 0.0005;
  * @param {number} h Hue, degrees.
  * @returns {[number, number, number]} Linear sRGB.
  */
-export function oklchToLinearSrgb(l, c, h) {
+function oklchToLinearSrgb(l, c, h) {
   const rad = (h * Math.PI) / 180;
   const a = c * Math.cos(rad);
   const b = c * Math.sin(rad);

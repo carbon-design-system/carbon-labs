@@ -33,7 +33,7 @@ export interface MarkGroup {
 export type ExplorationsMap = Record<string, Mark[]>;
 
 /** The committed map. */
-export const explorationsMap = map as ExplorationsMap;
+const explorationsMap = map as ExplorationsMap;
 
 const HEADINGS: Record<MarkKind, string> = {
   explore: 'Explorations',
@@ -41,7 +41,7 @@ const HEADINGS: Record<MarkKind, string> = {
 };
 
 /** The folder every mark's file is under, dropped from what the panel shows. */
-export const COMPONENTS_DIR = 'packages/react/src/v12/components/';
+const COMPONENTS_DIR = 'packages/react/src/v12/components/';
 
 /**
  * A story's marks grouped by kind, explorations first. A kind with no marks

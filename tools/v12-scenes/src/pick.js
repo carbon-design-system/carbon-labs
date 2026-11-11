@@ -17,7 +17,7 @@ import path from 'node:path';
 export const COMPONENTS = 'packages/react/src/v12/components';
 
 /** Changes under these run every story. */
-export const EVERYTHING = [
+const EVERYTHING = [
   /^packages\/react\/\.storybook\//,
   /^packages\/react\/package\.json$/,
   /^packages\/v12-[^/]+\//,

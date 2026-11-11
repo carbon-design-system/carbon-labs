@@ -27,7 +27,7 @@ export const ROOT = resolve(HERE, '../../..');
 export const COMPONENTS = 'packages/react/src/v12/components';
 
 /** Where the map is written. */
-export const CONTENT_PATH = resolve(HERE, '../src/content.json');
+const CONTENT_PATH = resolve(HERE, '../src/content.json');
 
 /** Sections the app draws from the stories themselves, or that only list the page. */
 const LEFT_OUT = /^(props|table of contents)\b/i;
@@ -132,7 +132,7 @@ export function readPage(mdx) {
  * @param {string} path the folder from the root
  * @returns {{ tests: boolean, status: string | null }}
  */
-export function factsOf(folder, manifest, path) {
+function factsOf(folder, manifest, path) {
   return {
     tests: hasTests(folder),
     status: manifest.get(path)?.labsStatus ?? null,

@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-contextual-bar%400.8.0...%40carbon-labs%2Freact-contextual-bar%400.9.0) (2026-11-11)
+
+* fix(shimmer-text)!: one text layer; contextual bar corners (#1486) ([2de89c7](https://github.com/carbon-design-system/carbon-labs/commit/2de89c7b11d78b69ffdcd74d2ca68ac8f455012a)), closes [#1486](https://github.com/carbon-design-system/carbon-labs/issues/1486)
+
+### BREAKING CHANGES
+
+* removed `motion.weight` and `motion.weightAt`, and the
+  exports `SHIMMER_WEIGHT_EM`, `shimmerStroke`, `solveShimmerRest`,
+  `solveShimmerBand`, `ShimmerWeight` and `ShimmerWeightAt`, with
+  `SHIMMER_TEXT.weight`, `restContrast` and `bandContrast`.
+
+  * fix(contextual-bar): keep the inverse bar's corners round
+
+  On inverse, the bar carries the opposite theme's class, and that class
+  paints its element's background: a square box under the rounded
+  surface. While the bar snaps, its clip rounds the box, so the corners
+  looked right in motion and went square at rest. The bar now paints no
+  background, and its fill is the surface's alone, on the corners the
+  clip shares.
+
+  The stories nest what the source page does: the selection's actions are
+  a small toolbar of ghost icon buttons, and the status and unsaved-changes
+  bars take text buttons. Outlined buttons took the bar's 2px corner step
+  and read as boxes.
+
+  * chore: regenerate the design sync's snapshots
+
+
 # [0.8.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-contextual-bar%400.7.0...%40carbon-labs%2Freact-contextual-bar%400.8.0) (2026-11-11)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-pagination",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - Pagination for React (v12)",

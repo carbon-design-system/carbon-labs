@@ -226,6 +226,58 @@ export function scanLeaks(text, names, { code = false } = {}) {
   return leaks.sort((a, b) => a.line - b.line);
 }
 
+// A design file's node id: two numbers joined by a colon, an instance's
+// chained with semicolons. A contrast ratio (`4.5:1`) is not one.
+const NODE_ID = /(?<![\w.:-])I?\d+:\d+(?:;\d+:\d+)*(?![\w:])/g;
+const RATIO = /^\d+:1$/;
+// A design file's key: a run of mixed-case letters and digits as long as a
+// key, that is not a camelCase or PascalCase name.
+const FILE_KEY =
+  /(?<![\w-])(?=[A-Za-z0-9]*\d)(?=[A-Za-z0-9]*[a-z])(?=[A-Za-z0-9]*[A-Z])[A-Za-z0-9]{22,26}(?![\w-])/g;
+const NAME_LIKE = /^[A-Z]?[a-z]{2,}(?:[A-Z][a-z]{2,})*\d*$/;
+// A link's node parameter, and the names the private id map uses.
+const ID_FIELD =
+  /node-id=|\b(?:fileKey|file_key|nodeId|node_id|componentKey|component_key|figma-ids\.json|VariableID|VariableCollectionId)\b/g;
+
+/**
+ * What in a design-sync file identifies a design file: node ids, file keys
+ * and the id map's own field names. The sync's public files hold logical
+ * keys only; ids live in a private id map. Scoped to those files: a colon
+ * between numbers elsewhere is a time or a ratio.
+ *
+ * @param {string} text The text.
+ * @returns {{ kind: string, match: string, line: number }[]} The leaks.
+ */
+export function scanDesignIds(text) {
+  const leaks = [];
+  /**
+   * Records a leak.
+   *
+   * @param {string} kind What it is.
+   * @param {RegExpMatchArray} m The match.
+   */
+  const add = (kind, m) =>
+    leaks.push({
+      kind,
+      match: m[0],
+      line: text.slice(0, m.index).split('\n').length,
+    });
+  for (const m of text.matchAll(NODE_ID)) {
+    if (!RATIO.test(m[0])) {
+      add('design node id', m);
+    }
+  }
+  for (const m of text.matchAll(FILE_KEY)) {
+    if (!NAME_LIKE.test(m[0])) {
+      add('design file key', m);
+    }
+  }
+  for (const m of text.matchAll(ID_FIELD)) {
+    add('design id field', m);
+  }
+  return leaks.sort((a, b) => a.line - b.line);
+}
+
 /**
  * The rows of the first markdown table in a text.
  *

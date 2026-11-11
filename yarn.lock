@@ -5329,6 +5329,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/v12-figma@workspace:tools/v12-figma":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/v12-figma@workspace:tools/v12-figma"
+  dependencies:
+    storybook: "npm:^9.1.2"
+    typescript: "npm:^5.7.2"
+    vitest: "npm:^4.0.0"
+  bin:
+    v12-figma: ./bin/v12-figma.js
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/v12-import@workspace:tools/v12-import":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/v12-import@workspace:tools/v12-import"
@@ -5394,6 +5406,15 @@ __metadata:
     react: ^18.2.0 || ^19.0.0
     react-dom: ^18.2.0 || ^19.0.0
     storybook: ^9.0.0
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/v12-scenes@workspace:tools/v12-scenes":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/v12-scenes@workspace:tools/v12-scenes"
+  dependencies:
+    "@playwright/test": "npm:^1.39.0"
+    vitest: "npm:^4.0.0"
   languageName: unknown
   linkType: soft
 

@@ -6,7 +6,8 @@
  */
 
 import React, { createElement, Fragment, type ComponentType } from 'react';
-import { Theme, unstable_Layout as Layout } from '@carbon/react';
+import { Theme } from '@carbon/react';
+import { KitDefaults } from '@carbon-labs/react-kit-defaults';
 import {
   DENSITIES,
   ZONE_THEMES,
@@ -34,7 +35,7 @@ export interface MatrixOptions<P> {
    * Carbon draws as one: white and g100, both by default.
    */
   themes?: readonly ZoneTheme[];
-  /** The densities across, under each theme; both by default. */
+  /** The densities across, under each theme; all three by default. */
   densities?: readonly Density[];
 }
 
@@ -85,7 +86,7 @@ interface MatrixProps<P> {
 
 /**
  * The grid: a row per state, a column per theme and density. Each cell is
- * its own Carbon theme zone and layout density; the rest of the toolbar
+ * its own Carbon theme zone and kit density; the rest of the toolbar
  * (reduced motion, clock, direction) applies to all of them.
  */
 function Matrix<P extends object>({
@@ -119,16 +120,16 @@ function Matrix<P extends object>({
             <Theme
               key={`${theme}-${density}`}
               theme={theme}
-              data-density={density}
               data-state={state.name}
               style={{
                 padding: 16,
                 background: 'var(--cds-background)',
                 color: 'var(--cds-text-primary)',
               }}>
-              <Layout density={density === 'compact' ? 'condensed' : 'normal'}>
+              <KitDefaults
+                density={density === 'default' ? undefined : density}>
                 {createElement(component, { ...args, ...state.args } as P)}
-              </Layout>
+              </KitDefaults>
             </Theme>
           ))}
         </Fragment>

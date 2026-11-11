@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/v12-import",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - brings kit components and whole packages into the v12 lane",
@@ -18,7 +18,8 @@
     "import": "node ./bin/v12-import.js",
     "test": "vitest run",
     "contract": "node ./bin/contract.js",
-    "check": "node ./bin/check.js"
+    "check": "node ./bin/check.js",
+    "catalog": "node ./bin/catalog.js"
   },
   "devDependencies": {
     "typescript": "^5.2.2",

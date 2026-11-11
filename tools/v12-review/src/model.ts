@@ -184,6 +184,23 @@ export function useRoute(): Route {
 
 const PICKS_KEY = 'v12-review:picks';
 
+/**
+ * The picks kept in this browser, read back: each checked against its list,
+ * a v11 theme as the v12 theme of its side (white and g10 as v12 light, g90
+ * and g100 as v12 dark). None, or unreadable: the defaults, v12 light.
+ *
+ * @param saved What was kept, as stored.
+ * @returns The picks.
+ */
+export function savedPicks(saved: string | null): WorkbenchGlobals {
+  if (!saved) return DEFAULT_GLOBALS;
+  try {
+    return readGlobals(JSON.parse(saved));
+  } catch {
+    return DEFAULT_GLOBALS;
+  }
+}
+
 /** The picks, kept for the next visit in this browser. */
 export function usePicks(): [
   WorkbenchGlobals,
@@ -191,8 +208,7 @@ export function usePicks(): [
 ] {
   const [picks, setPicks] = useState<WorkbenchGlobals>(() => {
     try {
-      const saved = window.localStorage.getItem(PICKS_KEY);
-      return saved ? readGlobals(JSON.parse(saved)) : DEFAULT_GLOBALS;
+      return savedPicks(window.localStorage.getItem(PICKS_KEY));
     } catch {
       return DEFAULT_GLOBALS;
     }

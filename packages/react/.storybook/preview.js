@@ -66,10 +66,18 @@ if (includeV12) {
   require('./v12-themes/_index.scss');
 }
 
-// Carbon's `GlobalTheme` knows only its own four themes: a v12 preview theme
-// is given the Carbon theme it is built on (v12-themes/generate.mjs).
+// Carbon's `GlobalTheme` knows only its own four themes: a v12 theme is given
+// the Carbon theme it is built on (v12-themes/generate.mjs).
 const carbonThemeOf = (theme) =>
   ({ 'v12-light': 'white', 'v12-dark': 'g100' })[theme] ?? theme;
+
+// The v12 Storybook offers only the v12 themes (the workbench's toolbar). A
+// v11 theme in an address from before is the v12 theme of its side, and no
+// theme is v12 light, as the workbench reads them.
+const v12ThemeOf = (theme) =>
+  ({ white: 'v12-light', g10: 'v12-light', g90: 'v12-dark', g100: 'v12-dark' })[
+    theme
+  ] ?? (theme === 'v12-dark' ? 'v12-dark' : 'v12-light');
 import { MDXProvider } from '@mdx-js/react';
 import theme from './theme';
 
@@ -217,7 +225,8 @@ const devTools = {
 };
 
 // The lane's own picks. The v12 build takes theme and text direction from the
-// workbench add-on (tools/v12-workbench), which adds the v12 preview themes.
+// workbench add-on (tools/v12-workbench), whose only themes are v12 light and
+// v12 dark.
 const laneGlobalTypes = {
   dir: {
     name: 'Text direction',
@@ -353,8 +362,11 @@ const decorators = [
     const isMarkdown = context?.kind?.startsWith('MDX Components');
 
     // Carbon MDX only supports the g10 theme
-    if (isMarkdown) {
+    if (isMarkdown && !includeV12) {
       theme = 'g10';
+    }
+    if (includeV12) {
+      theme = v12ThemeOf(theme);
     }
 
     // An app story (the review app) sets the theme and direction itself.

@@ -12,6 +12,7 @@ import {
   hrefOf,
   parseRoute,
   propsOf,
+  savedPicks,
   slugOf,
   storyTitle,
   tagsOf,
@@ -34,6 +35,26 @@ describe('slugs and routes', () => {
     });
     const route = { page: 'component', slug: 'modal', story: 'sizes' } as const;
     expect(parseRoute(hrefOf(route))).toEqual(route);
+  });
+});
+
+describe('the picks kept in this browser', () => {
+  it('start on v12 light', () => {
+    expect(savedPicks(null).theme).toBe('v12-light');
+    expect(savedPicks('not json').theme).toBe('v12-light');
+  });
+
+  it('keep a v12 theme', () => {
+    const picks = savedPicks(JSON.stringify({ theme: 'v12-dark', dir: 'rtl' }));
+    expect(picks).toMatchObject({ theme: 'v12-dark', dir: 'rtl' });
+  });
+
+  it('read a v11 theme as the v12 theme of its side', () => {
+    const theme = (t: string) => savedPicks(JSON.stringify({ theme: t })).theme;
+    expect(theme('white')).toBe('v12-light');
+    expect(theme('g10')).toBe('v12-light');
+    expect(theme('g90')).toBe('v12-dark');
+    expect(theme('g100')).toBe('v12-dark');
   });
 });
 

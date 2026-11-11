@@ -184,6 +184,32 @@ the same way Carbon's own v12 Storybook does. When `STORYBOOK_INCLUDE_V12=true`:
 Carbon Labs does not add feature flags of its own. The standard Storybooks are
 unchanged and keep Carbon's defaults.
 
+### Themes
+
+The v12 Storybook works in the v12 themes only, so everything is reviewed as it
+will integrate: **v12 light** (the default) and **v12 dark**. Carbon's v11
+themes (white, g10, g90, g100) are not offered there. The standard Storybooks
+keep Carbon's four themes.
+
+- **Where they come from:** `packages/react/.storybook/v12-themes`. Until
+  `@carbon/themes` ships them, `generate.mjs` writes `_index.scss` from the
+  proposed v12 tokens (`themes.json`): each theme is Carbon's nearest v11 theme
+  (white, g100) with the v12 tokens laid over it, as a hex value and then as
+  OKLCH where the browser supports it.
+- **On the page:** `data-carbon-theme="v12-light"` or `"v12-dark"` on `<html>`,
+  set from the workbench's toolbar (`tools/v12-workbench`).
+- **On an area:** the zone classes `.cds--v12-light` and `.cds--v12-dark`, as
+  Carbon's `.cds--white` and `.cds--g100` are for v11: the same tokens on a
+  subtree, with its background and text color. `ThemeZone` writes them: on a
+  page in a v12 theme, `light` and `dark` are v12 light and v12 dark, and
+  `inverse` is the other v12 theme (v12 dark inside v12 light, and the reverse).
+  Outside a v12 theme, `ThemeZone` keeps white and g100. The workbench's matrix
+  draws its v12 light and v12 dark columns through these classes.
+- **An old address:** a v11 theme in a saved pick or a URL falls back to the v12
+  theme of its side: white and g10 to v12 light, g90 and g100 to v12 dark.
+- **Carbon's context:** Carbon's `GlobalTheme` and `Theme` know only their own
+  themes, so each v12 theme gives them the theme it is built on (white or g100).
+
 ### Root Storybook Refs
 
 The root Storybook uses Storybook's `refs` feature to link to package

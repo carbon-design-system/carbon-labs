@@ -8,7 +8,7 @@
 import React, { useEffect } from 'react';
 import type { ReactNode } from 'react';
 import type { Decorator } from '@storybook/react';
-import { addons } from 'storybook/preview-api';
+import { addons, useGlobals } from 'storybook/preview-api';
 import { FollowKitMotion } from '@carbon-labs/react-icon-motion';
 import { KitDefaults } from '@carbon-labs/react-kit-defaults';
 import {
@@ -41,11 +41,20 @@ import { motionReport } from './motion';
  *   and corners take (the default of each leaves a component's own).
  * - The clock, on the whole document (see `applyClock`).
  * - The Motion panel's data, sent over the channel.
+ * - A theme not on the toolbar (a v11 one in an address from before) is
+ *   written back as the theme it falls back to, so the toolbar shows it.
  */
 export const withWorkbench: Decorator = (Story, context) => {
   const globals = readGlobals(context.globals);
   const params = context.parameters.v12 as V12Parameters | undefined;
   const declared = JSON.stringify(params ?? null);
+  const [, updateGlobals] = useGlobals();
+  const given = context.globals.theme;
+  const stale = given !== undefined && given !== globals.theme;
+
+  useEffect(() => {
+    if (stale) updateGlobals({ theme: globals.theme });
+  }, [stale, globals.theme, updateGlobals]);
 
   useEffect(() => {
     if (params?.app) return;

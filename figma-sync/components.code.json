@@ -9119,7 +9119,7 @@
           "spaces": [
             "oklch"
           ],
-          "expression": "linear-gradient( to right in oklch, color-mix(in oklch, var(--_g0), var(--_knob) var(--cds-slider-step)) calc(var(--sl-knob-w) / 2), color-mix(in oklch, var(--_g1), var(--_knob) var(--cds-slider-step)) calc(100% - var(--sl-knob-w) / 2) )",
+          "expression": "linear-gradient( var(--_ramp-to) in oklch, color-mix(in oklch, var(--_g0), var(--_knob) var(--cds-slider-step)) calc(var(--sl-knob-w) / 2), color-mix(in oklch, var(--_g1), var(--_knob) var(--cds-slider-step)) calc(100% - var(--sl-knob-w) / 2) )",
           "values": {
             "white": {
               "pending": "browser-render"

@@ -11,6 +11,7 @@
 
 import { act, cleanup, fireEvent, render } from '@testing-library/react';
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
+import { FeedbackMotion, motionTokens } from '@carbon-labs/v12-motion';
 
 /** What the listening toggle was last given: the icon's own motion is the icon's tests'. */
 const icon = vi.hoisted(() => ({
@@ -64,9 +65,19 @@ beforeAll(() => {
     dispatchEvent: () => false,
   })) as typeof window.matchMedia;
 });
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  vi.useRealTimers();
+});
 
 const mic = (c: HTMLElement) => c.querySelector<HTMLButtonElement>('button')!;
+/** The button's accessible name: its tooltip, by `aria-labelledby`. */
+const name = (b: HTMLElement) =>
+  (b.getAttribute('aria-labelledby') ?? '')
+    .split(' ')
+    .map((id) => document.getElementById(id)?.textContent ?? '')
+    .join(' ')
+    .trim();
 const live = (c: HTMLElement) =>
   c.querySelector('.cds-dictation-live')!.textContent;
 
@@ -136,6 +147,92 @@ describe('DictationButton', () => {
     rerender(<DictationButton listening onListeningChange={onChange} />);
     fireEvent.click(mic(container));
     expect(onChange).toHaveBeenLastCalledWith(false);
+  });
+
+  it('connecting stays pressed and named "Stop dictation", on the ghost button; a press cancels', () => {
+    const onChange = vi.fn();
+    const { container } = render(
+      <DictationButton
+        listening={false}
+        connecting
+        onListeningChange={onChange}
+      />
+    );
+    const b = mic(container);
+    expect(b.getAttribute('aria-pressed')).toBe('true');
+    expect(b.getAttribute('aria-busy')).toBe('true');
+    expect(name(b)).toBe('Stop dictation');
+    // Ghost: no fill class while connecting (chat.scss gives it no selected fill).
+    expect(b.classList.contains('cds-dictation--listening')).toBe(false);
+    fireEvent.click(b);
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenLastCalledWith(false);
+  });
+
+  it('fades the fill on the color clock, and holds it on stop until the pills fold back', () => {
+    vi.useFakeTimers();
+    const { container, rerender } = render(
+      <DictationButton listening onListeningChange={() => {}} />
+    );
+    const b = mic(container);
+    expect(b.style.getPropertyValue('--cds-dictation-fill-ms')).toBe(
+      `${motionTokens.duration['fast-01']}ms`
+    );
+    rerender(
+      <DictationButton listening={false} onListeningChange={() => {}} />
+    );
+    // Stopped at once: no longer pressed, named for its action, the icon folding back.
+    expect(b.getAttribute('aria-pressed')).toBe('false');
+    expect(name(b)).toBe('Dictate');
+    expect(icon.props.toggled).toBe(false);
+    // The fill waits for the icon's change back: fast-01, then moderate-01.
+    const fold =
+      motionTokens.duration['fast-01'] + motionTokens.duration['moderate-01'];
+    expect(b.classList.contains('cds-dictation--listening')).toBe(true);
+    act(() => vi.advanceTimersByTime(fold - 1));
+    expect(b.classList.contains('cds-dictation--listening')).toBe(true);
+    act(() => vi.advanceTimersByTime(1));
+    expect(b.classList.contains('cds-dictation--listening')).toBe(false);
+  });
+
+  it('a press during the hold connects on the ghost button at once', () => {
+    vi.useFakeTimers();
+    const { container, rerender } = render(
+      <DictationButton listening onListeningChange={() => {}} />
+    );
+    rerender(
+      <DictationButton listening={false} onListeningChange={() => {}} />
+    );
+    expect(mic(container).classList.contains('cds-dictation--listening')).toBe(
+      true
+    );
+    rerender(
+      <DictationButton
+        listening={false}
+        connecting
+        onListeningChange={() => {}}
+      />
+    );
+    expect(mic(container).classList.contains('cds-dictation--listening')).toBe(
+      false
+    );
+  });
+
+  it('reduced motion: the fill lands at once, on and off', () => {
+    const { container, rerender } = render(
+      <FeedbackMotion reduced>
+        <DictationButton listening onListeningChange={() => {}} />
+      </FeedbackMotion>
+    );
+    const b = mic(container);
+    expect(b.style.getPropertyValue('--cds-dictation-fill-ms')).toBe('0ms');
+    expect(b.classList.contains('cds-dictation--listening')).toBe(true);
+    rerender(
+      <FeedbackMotion reduced>
+        <DictationButton listening={false} onListeningChange={() => {}} />
+      </FeedbackMotion>
+    );
+    expect(b.classList.contains('cds-dictation--listening')).toBe(false);
   });
 
   it('says the state politely as it changes: listening, then stopped', () => {

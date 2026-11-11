@@ -7,7 +7,8 @@
 
 /** @jsxRuntime automatic */
 
-import { useState } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
+import { motionTokens, useFeedbackMotion } from '@carbon-labs/v12-motion';
 import { MicrophoneListeningToggle } from '@carbon-labs/react-motion-icons';
 import { Spinner } from '@carbon-labs/react-feedback';
 import { useBusySwap } from '@carbon-labs/react-loading';
@@ -20,14 +21,16 @@ import './chat.scss';
  *   rest        a ghost IconButton on the rollover
  *   connecting  `connecting`, from the press until the host has the
  *               microphone: the kit's Spinner in the icon's place, out then
- *               in, as a busy Button's (`aria-busy`)
- *   listening   the variant's fill, the glyph in the brand; the microphone
- *               leaves, then three pills open and follow `level`
- *   stop        a press while connecting or listening
+ *               in, as a busy Button's (`aria-busy`); pressed, still ghost
+ *   listening   the variant's fill fades in (fast-01), the glyph in the
+ *               brand; the microphone leaves, then three pills open and
+ *               follow `level`
+ *   stop        a press while connecting or listening; the fill holds while
+ *               the pills fold back (fast-01 then moderate-01), then fades
  *   announce    the state, politely, in a region mounted before it speaks
  *   a11y        a toggle (`aria-pressed`) named by its action
- *   reduced     the swap and the icon's change land at once; the pills hold
- *               still; the spinner is its still dots
+ *   reduced     the swap, the icon's change and the fill land at once; the
+ *               pills hold still; the spinner is its still dots
  * ========================================================================== */
 
 export interface DictationButtonProps {
@@ -68,14 +71,40 @@ export function DictationButton({
   const on = listening || connecting;
   const live = listening && !connecting;
   const swap = useBusySwap(connecting);
+  const { reduced, timeScale } = useFeedbackMotion();
 
   // The region says a change, never the first state: stopped only after listening.
   const [said, setSaid] = useState('');
   const [was, setWas] = useState(live);
+  // Stopped, the fill holds until the pills have folded back.
+  const [holding, setHolding] = useState(false);
   if (live !== was) {
     setWas(live);
     setSaid(live ? dictationListeningText : dictationStoppedText);
+    setHolding(!live && !connecting && !reduced);
   }
+  // A new press connects on the ghost button: the hold ends there.
+  if (holding && connecting) {
+    setHolding(false);
+  }
+  const filled = live || holding;
+
+  useEffect(() => {
+    if (!holding) {
+      return;
+    }
+    // The icon's change back: fast-01, then moderate-01.
+    const fold =
+      (motionTokens.duration['fast-01'] +
+        motionTokens.duration['moderate-01']) *
+      timeScale;
+    const t = setTimeout(() => setHolding(false), fold);
+    return () => clearTimeout(t);
+  }, [holding, timeScale]);
+
+  const fill = reduced
+    ? '0ms'
+    : `${motionTokens.duration['fast-01'] * timeScale}ms`;
 
   return (
     <>
@@ -85,13 +114,16 @@ export function DictationButton({
         size={size}
         corners="full"
         disabled={disabled}
-        // A toggle: `isSelected` is its `aria-pressed`; chat.scss's listening look replaces the selected fill.
+        // A toggle: `isSelected` is its `aria-pressed`; chat.scss keeps it ghost while connecting and
+        // gives listening its own fill.
         isSelected={on}
         aria-busy={connecting || undefined}
-        style={swap.vars}
+        style={
+          { ...swap.vars, '--cds-dictation-fill-ms': fill } as CSSProperties
+        }
         className={[
           'cds-dictation',
-          live && 'cds-dictation--listening',
+          filled && 'cds-dictation--listening',
           swap.restHidden && 'cds-dictation--swapped',
           className,
         ]

@@ -64,7 +64,8 @@ pages.
   in the conversation, not on a control.
 - **Dictation.** The microphone is a toggle. A press asks to listen
   (`onListeningChange`). While the host waits for the microphone, it passes
-  `connecting` and a spinner takes the icon's place. Once it listens, it passes
+  `connecting` and a spinner takes the icon's place; the button is pressed and
+  named "Stop dictation", but not filled. Once it listens, it passes
   `listening`; the button fills and the pills follow `level`, a number from 0 to
   1 or a function read each frame. A press while connecting or listening stops.
   A polite region says "Listening" and "Dictation stopped".
@@ -91,10 +92,11 @@ pages.
   step faster shutting, its content under the 16px soft edge.
 - **Sideways opening:** a file chip opens its space by travel,
   entrance-productive, its content moving with the opening under a soft edge.
-- **Dictation:** connecting, the microphone fades out (fast-01) and the Spinner
-  draws on. Listening, the fill changes at once; the microphone leaves
-  (fast-02), then three dots open into pills (moderate-02) that rise with the
-  level on fast-01 and fall on moderate-01. Stopping plays back a step faster.
+- **Dictation:** connecting, the button stays ghost; the microphone fades out
+  (fast-01) and the Spinner draws on. Listening, the fill fades in (fast-01);
+  the microphone leaves (fast-02), then three dots open into pills (moderate-02)
+  that rise with the level on fast-01 and fall on moderate-01. Stopping plays
+  back a step faster, and the fill fades once the pills have folded.
 - **Rise:** the docked notice rises from behind the field by travel. Its content
   swaps in place; it sinks one step faster.
 - **Jump to a question:** the navigator's popover snaps from its button. A
@@ -109,9 +111,9 @@ pages.
 
 No travel: fades on the reduced clock, moves landing at once. The outs are at
 once, so the working element passes at once, and the first words have no rise. A
-jump to a question has no wash. Dictation's swap and its icon change land at
-once, and the pills hold still. Popovers and panes follow their own reduced
-rules.
+jump to a question has no wash. Dictation's swap, its icon change and its fill
+land at once, and the pills hold still. Popovers and panes follow their own
+reduced rules.
 
 ## Props
 

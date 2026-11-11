@@ -177,9 +177,36 @@ $standard: var(--cds-motion-easing-standard-productive);
 }
 
 /* Dictation (DictationButton): the microphone, a circle like send (`corners="full"`). Listening,
-   it takes the variant's fill as Send ready does, with the glyph in the brand: one blue disc, Send's. */
+   it takes the variant's fill as Send ready does, with the glyph in the brand: one blue disc, Send's.
+   The fill and its edge are registered, so they fade on the kit's color clock (fast-01, standard;
+   at once under reduced motion: `--cds-dictation-fill-ms`, from DictationButton). Stopped, the
+   button keeps the listening class until the pills have folded back, then fades. */
+@property --cds-dictation-fill {
+  inherits: false;
+  initial-value: transparent;
+  syntax: '<color>';
+}
+
+@property --cds-dictation-edge {
+  inherits: false;
+  initial-value: transparent;
+  syntax: '<color>';
+}
+
+/* Ghost at rest and while connecting: pressed (`aria-pressed`), but no selected fill. */
+.cds-prompt .cds-icon-btn.cds-dictation {
+  --rollover-rest: var(--cds-dictation-fill);
+  --rollover-hover: #{theme.$background-hover};
+  --rollover-stroke: var(--cds-dictation-edge);
+
+  transition:
+    --cds-dictation-fill var(--cds-dictation-fill-ms, #{$fast-01}) $standard,
+    --cds-dictation-edge var(--cds-dictation-fill-ms, #{$fast-01}) $standard,
+    color var(--cds-dictation-fill-ms, #{$fast-01}) $standard;
+}
+
 .cds-prompt .cds-icon-btn.cds-dictation--listening {
-  --rollover-rest: #{theme.$layer-selected-inverse};
+  --cds-dictation-fill: #{theme.$layer-selected-inverse};
   --rollover-hover: color-mix(
     in srgb,
     #{theme.$layer-selected-inverse} 88%,
@@ -190,22 +217,23 @@ $standard: var(--cds-motion-easing-standard-productive);
 }
 
 .cds-prompt--tonal .cds-icon-btn.cds-dictation--listening {
-  --rollover-rest: oklch(
+  --cds-dictation-fill: oklch(
     from #{theme.$layer-selected} l var(--tonal-c, c) var(--tonal-h, h)
+  );
+  --cds-dictation-edge: oklch(
+    from #{theme.$border-tile} l var(--tonal-c, c) var(--tonal-h, h)
   );
   --rollover-hover: oklch(
     from #{theme.$layer-selected-hover} l var(--tonal-c, c) var(--tonal-h, h)
   );
-  --rollover-shadow: inset 0 0 0 1px
-    oklch(from #{theme.$border-tile} l var(--tonal-c, c) var(--tonal-h, h));
 
   color: var(--cds-hero-ink-selected, #{theme.$link-primary});
 }
 
 .cds-prompt--outlined .cds-icon-btn.cds-dictation--listening {
-  --rollover-rest: #{theme.$layer};
+  --cds-dictation-fill: #{theme.$layer};
+  --cds-dictation-edge: #{theme.$border-subtle-01};
   --rollover-hover: #{theme.$layer-hover};
-  --rollover-stroke: #{theme.$border-subtle-01};
 
   color: var(--cds-hero-ink-selected, #{theme.$link-primary});
 }

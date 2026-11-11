@@ -151,7 +151,12 @@ describe('ChartCard', () => {
       '.cds-chart-card__delta'
     )!;
     expect(delta.dataset.kind).toBe(expected);
-    expect(delta.style.color).toBe(chartKindColor(expected));
+    // Warning's color is too light for text: the ink, and its mark.
+    const ink = expected === 'warning' ? 'default' : expected;
+    expect(delta.style.color).toBe(chartKindColor(ink));
+    expect(delta.querySelector('.cds-chart-card__delta-mark') !== null).toBe(
+      expected === 'warning'
+    );
   });
 
   it('puts its actions in the foot, the first the primary', () => {

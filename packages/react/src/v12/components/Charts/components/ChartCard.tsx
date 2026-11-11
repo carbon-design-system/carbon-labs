@@ -46,8 +46,9 @@ import './card.scss';
  *
  *   header    the title, and the overflow menu at its end (Card's own)
  *   metric    the big number, its fraction and unit, and the delta: an arrow
- *             and the change, in the delta's kind color. The delta sits at
- *             the row's end, or after the unit (`lg`)
+ *             and the change, in the delta's kind color (warning: the ink
+ *             and its mark). The delta sits at the row's end, or after the
+ *             unit (`lg`)
  *   plot      the chart's slot, at the size's plot height; `md` runs it to
  *             the card's edges. The plot stays left to right
  *   foot      the headline, the description, the status line and a footer
@@ -261,9 +262,21 @@ function MetricRow({
         <span
           className="cds-chart-card__delta"
           data-kind={delta.kind ?? 'default'}
-          style={{ color: chartKindColor(delta.kind) }}
+          // Warning's color is too light for text: the text takes the ink
+          // and the warning mark says the kind, as the status line does.
+          style={{
+            color:
+              delta.kind === 'warning'
+                ? chartKindColor('default')
+                : chartKindColor(delta.kind),
+          }}
           aria-hidden="true"
           data-motion-icon-frame="">
+          {delta.kind === 'warning' ? (
+            <span className="cds-chart-card__delta-mark">
+              <StatusMark kind="warning" size={16} arriveAfter={null} />
+            </span>
+          ) : null}
           <Arrow size={16} className="cds-chart-card__arrow" />
           <RollText text={deltaText} order={up ? delta.value : -delta.value} />
         </span>

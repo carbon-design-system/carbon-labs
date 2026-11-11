@@ -23,7 +23,9 @@ description, a status line, and up to two buttons, the first primary.
 <Canvas of={ChartsStories.Large} />
 
 - **Metric:** the number, its fraction and its unit. The delta takes its
-  `kind`'s color: `success`, `danger`, `warning` or `default`.
+  `kind`'s color: `success`, `danger` or `default`. A `warning` delta keeps
+  the text's color and shows the warning mark, since that color is too light
+  for text.
 - **Theme:** the page's, or `light`, `dark` or `inverse` of its own.
 - **States:** `loading` shows the lane's skeleton; `empty` and `error` show a
   message where the plot goes.

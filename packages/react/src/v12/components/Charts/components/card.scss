@@ -120,6 +120,13 @@
   margin-inline-start: var(--cds-chart-metric-gap);
 }
 
+/* Warning's mark beside the arrow: its color is too light for text alone. */
+.cds-chart-card__delta-mark {
+  display: inline-flex;
+  flex: none;
+  align-self: center;
+}
+
 .cds-chart-card__arrow {
   position: relative;
   flex: none;

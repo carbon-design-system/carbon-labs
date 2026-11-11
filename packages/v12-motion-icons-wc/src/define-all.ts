@@ -459,6 +459,7 @@ import './icons/microphone/index';
 import './icons/microphone-off/index';
 import './icons/microphone-off-toggle/index';
 import './icons/microphone-toggle/index';
+import './icons/microphone-listening-toggle/index';
 import './icons/microphone-voice-mode-toggle/index';
 import './icons/migrate/index';
 import './icons/migrate-alt/index';

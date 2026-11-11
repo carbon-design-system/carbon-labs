@@ -458,6 +458,7 @@ export { ClabsMotionIconMicrophone } from './icons/microphone/microphone';
 export { ClabsMotionIconMicrophoneOff } from './icons/microphone-off/microphone-off';
 export { ClabsMotionIconMicrophoneOffToggle } from './icons/microphone-off-toggle/microphone-off-toggle';
 export { ClabsMotionIconMicrophoneToggle } from './icons/microphone-toggle/microphone-toggle';
+export { ClabsMotionIconMicrophoneListeningToggle } from './icons/microphone-listening-toggle/microphone-listening-toggle';
 export { ClabsMotionIconMicrophoneVoiceModeToggle } from './icons/microphone-voice-mode-toggle/microphone-voice-mode-toggle';
 export { ClabsMotionIconMigrate } from './icons/migrate/migrate';
 export { ClabsMotionIconMigrateAlt } from './icons/migrate-alt/migrate-alt';

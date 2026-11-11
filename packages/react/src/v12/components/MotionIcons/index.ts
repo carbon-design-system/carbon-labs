@@ -532,6 +532,7 @@ export {
   MicrophoneOff,
   MicrophoneOffToggle,
   MicrophoneVoiceModeToggle,
+  MicrophoneListeningToggle,
   Locked,
   LockedToggle,
   Unlocked,

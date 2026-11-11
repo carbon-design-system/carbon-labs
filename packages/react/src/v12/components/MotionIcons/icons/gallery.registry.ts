@@ -1786,6 +1786,14 @@ export const TOGGLES: readonly ToggleRow[] = [
     ends: ['Microphone', 'VoiceMode'],
   },
   {
+    name: 'Microphone \u21c4 Listening',
+    kind: 'swap',
+    toggle: 'MicrophoneListeningToggle',
+    filled: false,
+    start: 'off',
+    ends: ['Microphone', 'Listening'],
+  },
+  {
     name: 'Arrow down \u21c4 Arrow up',
     kind: 'direction',
     toggle: 'ArrowDownToggle',

@@ -31,6 +31,7 @@ const OWN = new Set([
   'filled',
   'variant',
   'muted',
+  'level',
   'status',
   'tone',
   'count',

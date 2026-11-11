@@ -585,6 +585,7 @@ export function makeToggleIcon<S extends string>(
       still = false,
       svgRef: handleRef,
       press,
+      level,
     } = props;
     const attrs = passThrough(props);
     const controlled = controlledOf(props);
@@ -619,6 +620,10 @@ export function makeToggleIcon<S extends string>(
       ctl.setMoving(!still);
       return () => ctl.setMoving(false);
     }, [ctl, still]);
+    // A loop that follows a level reads it each frame.
+    useEffect(() => {
+      if (core.loop?.level) ctl.setLevel(level);
+    }, [ctl, level]);
     // Observed again when `asButton` swaps the svg (`<svg>` ⇄ `<button><svg/></button>`); the loop runs on through it.
     useEffect(() => {
       const el = svg.current;

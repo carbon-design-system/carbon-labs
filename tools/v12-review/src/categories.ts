@@ -130,6 +130,8 @@ export const CATEGORIES: Category[] = [
       'Loading',
       'Processing',
       'ShimmerText',
+      'TurnStatus',
+      'StepList',
       'Feedback',
       'EmptyState',
       'FullPageError',

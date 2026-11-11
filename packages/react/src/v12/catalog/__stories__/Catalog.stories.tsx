@@ -88,13 +88,17 @@ interface Item {
   stories: number;
 }
 
-/** The module of a component's stories: `<Name>/__stories__/<Name>.stories.tsx`, else the folder's first. */
+/**
+ * The module of a component's stories: `<Name>/__stories__/<Name>.stories.tsx`,
+ * else the folder's first, else a `<Name>.stories.tsx` in another's folder.
+ */
 function moduleKey(name: string): string | undefined {
   const keys = storyModules.keys();
   const own = `./${name}/__stories__/${name}.stories.tsx`;
   return keys.includes(own)
     ? own
-    : keys.find((k) => k.startsWith(`./${name}/__stories__/`));
+    : (keys.find((k) => k.startsWith(`./${name}/__stories__/`)) ??
+        keys.find((k) => k.endsWith(`/__stories__/${name}.stories.tsx`)));
 }
 
 /** The index's components: each one's Default story (or its first), its docs and how many stories it has. */

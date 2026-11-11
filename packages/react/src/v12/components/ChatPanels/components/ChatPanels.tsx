@@ -30,6 +30,7 @@ import {
   Workspace,
 } from '@carbon/icons-react';
 import { MegaButton } from '@carbon-labs/react-mega-button';
+import { inertProps } from '@carbon-labs/react-util';
 
 /** The panels a chat surface ships with, in the order its header shows them. */
 export const chatPanelKinds = [
@@ -341,10 +342,6 @@ export const ChatPanelArea = forwardRef<HTMLDivElement, ChatPanelAreaProps>(
     const isOverlay = presented === 'overlay';
     const open = openId !== null;
 
-    // `inert` is a standard attribute the DOM honours, but React 18's JSX
-    // types predate it, so it is built here and spread, as ChatsPanel does.
-    const inert = { inert: '' } as unknown as React.HTMLAttributes<HTMLElement>;
-
     return (
       // The root is not a control: it catches the Escape that bubbles from
       // inside the open panel, as Carbon's HeaderPanel does.
@@ -387,7 +384,7 @@ export const ChatPanelArea = forwardRef<HTMLDivElement, ChatPanelAreaProps>(
           <div
             className={`${block}__panel`}
             data-carbon-surface-state={open ? 'enter' : 'exit'}
-            {...(open ? {} : inert)}>
+            {...inertProps(!open)}>
             <div className={`${block}__panel-inner`}>
               {panels.map((panel) => {
                 const shown = panel.id === openId;

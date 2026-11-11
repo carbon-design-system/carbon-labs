@@ -9,7 +9,18 @@ import { describe, expect, it } from 'vitest';
 import { motionTokens } from '@carbon-labs/v12-motion';
 import { applyClock, clockDraft } from '../clock';
 import { describeMotion, motionReport } from '../motion';
-import { THEMES, ZONE_THEMES, readGlobals, timeScaleOf } from '../constants';
+import {
+  CORNERS,
+  DEFAULT_GLOBALS,
+  DENSITIES,
+  MOTION_LEVEL,
+  REDUCED_MOTION,
+  THEMES,
+  ZONE_THEMES,
+  levelOf,
+  readGlobals,
+  timeScaleOf,
+} from '../constants';
 import { globalTypes } from '../globals';
 import { storyFrameUrl } from '../compare';
 
@@ -41,6 +52,56 @@ describe('the toolbar globals', () => {
     expect(timeScaleOf('1')).toBe(1);
     expect(timeScaleOf('0.25')).toBe(4);
     expect(timeScaleOf('0.1')).toBe(10);
+  });
+});
+
+describe('the density, corners and motion picks', () => {
+  const values = (type: { toolbar: { items: { value: string }[] } }) =>
+    type.toolbar.items.map((i) => i.value);
+
+  it('offer the kit three densities and its corners, and the toolbar matches', () => {
+    expect(DENSITIES).toEqual(['compact', 'default', 'spacious']);
+    expect(CORNERS).toEqual(['default', 'full', 'rounded', 'square']);
+    expect(values(globalTypes.density)).toEqual([...DENSITIES]);
+    expect(values(globalTypes.corners)).toEqual([...CORNERS]);
+    expect(values(globalTypes.reducedMotion)).toEqual([...REDUCED_MOTION]);
+  });
+
+  it('start on the kit own density and corners, and the system motion', () => {
+    expect(DEFAULT_GLOBALS).toMatchObject({
+      density: 'default',
+      corners: 'default',
+      reducedMotion: 'system',
+    });
+    expect(
+      readGlobals({ density: 'spacious', corners: 'square' })
+    ).toMatchObject({ density: 'spacious', corners: 'square' });
+    expect(
+      readGlobals({ density: 'roomy', reducedMotion: 'off' })
+    ).toMatchObject({ density: 'default', reducedMotion: 'system' });
+  });
+
+  it('follow the system with no pick, and force a level with one', () => {
+    expect(MOTION_LEVEL).toEqual({
+      system: 'system',
+      full: 'full',
+      'shorter-clock': 'reduced',
+      'at-once': 'none',
+    });
+  });
+});
+
+describe('the level', () => {
+  it('is the system level when nothing is picked', () => {
+    expect(levelOf('system', true)).toBe('reduced');
+    expect(levelOf('system', false)).toBe('full');
+  });
+
+  it('is the pick when one is made, full included, whatever the system asks', () => {
+    expect(levelOf('full', true)).toBe('full');
+    expect(levelOf('shorter-clock', false)).toBe('reduced');
+    expect(levelOf('at-once', false)).toBe('none');
+    expect(levelOf('at-once', true)).toBe('none');
   });
 });
 

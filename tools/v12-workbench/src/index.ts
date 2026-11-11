@@ -20,6 +20,7 @@ export {
   CLOCKS,
   DEFAULT_GLOBALS,
   MOTION_LEVEL,
+  CORNERS,
   DENSITIES,
   DIRECTIONS,
   REDUCED_MOTION,
@@ -30,6 +31,7 @@ export {
 } from './constants';
 export type {
   Clock,
+  Corners,
   Density,
   Direction,
   ReducedBehaviour,

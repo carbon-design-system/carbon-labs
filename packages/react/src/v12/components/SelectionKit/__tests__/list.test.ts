@@ -6,7 +6,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import { inlineKey } from '../components/direction';
+import { inlineKey } from '@carbon-labs/react-util';
 import {
   selectionItemProps,
   selectionStep,

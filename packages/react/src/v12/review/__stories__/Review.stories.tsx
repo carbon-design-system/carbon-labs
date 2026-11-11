@@ -64,6 +64,10 @@ export default {
   parameters: {
     layout: 'fullscreen',
     v12: { app: true, motion: [], reduced: {}, states: ['rest'] },
+    // The review app is a whole site, not a component: an accessibility scan
+    // after each render blocks the page for seconds. Each component's own
+    // stories keep their checks.
+    a11y: { disable: true },
   },
 };
 

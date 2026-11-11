@@ -267,18 +267,20 @@ $bar: 2px;
 /* Physical placement: the engine's edges are px from the left and top in
    either direction (selection-kit.scss, the header). */
 .cds-progress__marker {
+  /* stylelint-disable-next-line csstools/use-logical -- the engine's edges are physical */
+  left: var(#{$sel}-l, 0px);
   block-size: calc(var(#{$sel}-b, 0px) - var(#{$sel}-t, 0px));
   inline-size: calc(var(#{$sel}-r, 0px) - var(#{$sel}-l, 0px));
   inset-block-start: var(#{$sel}-t, 0px);
-  inset-inline-start: var(#{$sel}-l, 0px);
   transition: opacity var(--cds-motion-duration-fast-01) linear;
 }
 
 .cds-progress__ghost {
+  /* stylelint-disable-next-line csstools/use-logical -- the engine's edges are physical */
+  left: var(#{$sel}-gl, 0px);
   block-size: calc(var(#{$sel}-gb, 0px) - var(#{$sel}-gt, 0px));
   inline-size: calc(var(#{$sel}-gr, 0px) - var(#{$sel}-gl, 0px));
   inset-block-start: var(#{$sel}-gt, 0px);
-  inset-inline-start: var(#{$sel}-gl, 0px);
   opacity: 0;
 }
 

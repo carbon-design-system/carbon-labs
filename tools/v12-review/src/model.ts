@@ -72,22 +72,42 @@ export function slugOf(name: string): string {
     .toLowerCase();
 }
 
-/** The story file of a component: `<Name>/__stories__/<Name>.stories.tsx`, else the folder's first. */
+/**
+ * The story file of a component: `<Name>/__stories__/<Name>.stories.tsx`,
+ * else the folder's first, else a `<Name>.stories.tsx` in another's folder.
+ */
 export function fileOf(keys: string[], name: string): string | undefined {
   const own = `./${name}/__stories__/${name}.stories.tsx`;
   return keys.includes(own)
     ? own
-    : keys.find((k) => k.startsWith(`./${name}/__stories__/`));
+    : (keys.find((k) => k.startsWith(`./${name}/__stories__/`)) ??
+        keys.find((k) => k.endsWith(`/__stories__/${name}.stories.tsx`)));
+}
+
+/**
+ * The components a story file names: its folder, and a component that keeps
+ * its own page in another's folder (a stories file named for it, with a docs
+ * page of its own in `text`).
+ */
+export function namesOf(
+  keys: string[],
+  text: Record<string, unknown> = TEXT
+): Set<string> {
+  const names = new Set<string>();
+  for (const k of keys) {
+    const m = /^\.\/([^/]+)\/__stories__\/([^/]+)\.stories\.tsx$/.exec(k);
+    if (!m) continue;
+    names.add(m[1]);
+    if (m[2] !== m[1] && `V12/${m[2]}` in text) names.add(m[2]);
+  }
+  for (const n of LEFT_OUT) names.delete(n);
+  return names;
 }
 
 /** Every component with a story file, by name. */
 export function entriesOf(files: StoryFiles): Map<string, Entry> {
   const keys = files.keys();
-  const names = new Set(
-    keys
-      .map((k) => /^\.\/([^/]+)\/__stories__\//.exec(k)?.[1])
-      .filter((n): n is string => !!n && !LEFT_OUT.has(n))
-  );
+  const names = namesOf(keys);
   const out = new Map<string, Entry>();
   for (const name of [...names].sort()) {
     const file = fileOf(keys, name);

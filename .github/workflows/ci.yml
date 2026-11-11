@@ -131,6 +131,27 @@ jobs:
           cache: 'yarn'
       - name: Install dependencies
         run: yarn install
+      # The scene tier's browser comes first, so a package mirror that is down
+      # fails the job in minutes, not after the build. The browser is cached
+      # by Playwright's version; its system libraries and fonts come from apt,
+      # tried three times.
+      - name: Find the scene tier's Playwright version
+        id: playwright
+        run: echo "version=$(yarn workspace @carbon-labs/v12-scenes node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+      - name: Cache the scene tier's browser
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}-chromium
+      - name: Install the scene tier's browser
+        timeout-minutes: 15
+        run: |
+          for attempt in 1 2 3; do
+            yarn workspace @carbon-labs/v12-scenes playwright install --with-deps chromium && exit 0
+            echo "Browser install failed (attempt $attempt); retrying."
+            sleep 30
+          done
+          exit 1
       - name: Run build
         run: yarn build
         env:
@@ -149,8 +170,6 @@ jobs:
         run: yarn size:check
       - name: Build the v12 Storybook
         run: yarn workspace @carbon-labs/react storybook:build:v12
-      - name: Install the scene tier's browser
-        run: yarn workspace @carbon-labs/v12-scenes playwright install --with-deps chromium
       - name: Run the scene tier for the components the change touches
         run: yarn v12:scenes --base HEAD^1
       - name: Upload the scene tier's results

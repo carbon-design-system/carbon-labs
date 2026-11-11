@@ -14,8 +14,14 @@ import { collectErrors, openStory } from './story.js';
 
 const plan = JSON.parse(fs.readFileSync(process.env.SCENES_PLAN, 'utf8'));
 
-/** Each theme, and the background token it sets. */
-const THEMES = { white: '#ffffff', g100: '#161616' };
+/**
+ * Each theme, and the background token it may set: Carbon's, or the v12 page
+ * base that `@carbon-labs/v12-styles` puts over it where a story loads them.
+ */
+const THEMES = {
+  white: ['#ffffff', '#fafafa'],
+  g100: ['#161616', '#0b0b0b'],
+};
 
 for (const row of plan.rows) {
   test.describe(row.unit, () => {
@@ -28,7 +34,7 @@ for (const row of plan.rows) {
       });
     }
     for (const id of row.matrix) {
-      for (const [theme, background] of Object.entries(THEMES)) {
+      for (const [theme, backgrounds] of Object.entries(THEMES)) {
         test(`${id} renders in ${theme}`, async ({ page }, testInfo) => {
           const errors = collectErrors(page);
           const shown = await openStory(page, id, { globals: { theme } });
@@ -43,8 +49,8 @@ for (const row of plan.rows) {
               document.querySelector('#storybook-root')?.children.length,
           }));
           expect(applied.theme, 'the theme on <html>').toBe(theme);
-          expect(applied.background, 'the theme background token').toBe(
-            background
+          expect(backgrounds, 'the theme background token').toContain(
+            applied.background
           );
           expect(applied.children, 'something rendered').toBeGreaterThan(0);
           await testInfo.attach(`${id}-${theme}.png`, {

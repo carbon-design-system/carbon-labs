@@ -9,7 +9,6 @@
  * Timing by size: a free-floating surface whose longer side is over
  * `SURFACE_RULE_OVER_PX` takes the surface rule's timing (Axial's default
  * rule, duration by travel); a smaller one keeps the floating rule.
- * Spec: docs/components/README.md, "Timing by size".
  *
  * The shape stays the floating profile's (its scales, exit, content axis,
  * fades); only the clocks and curves change.

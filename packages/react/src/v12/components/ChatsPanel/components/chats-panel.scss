@@ -241,7 +241,7 @@ $block: '#{$prefix}--chats-panel';
 
   // A floating surface is Carbon's layer, on the neutral — not a tint of ours.
   // The blue-gray is an interactive colour; the ladder a surface travels is the
-  // neutral's, "hue and chroma unchanged by the ladder" (themes-regions.md).
+  // neutral's, with hue and chroma unchanged along it.
   // The pushed panel paints nothing at all: it is a column of the shell.
   background-color: $layer;
   inline-size: convert.to-rem(320px);

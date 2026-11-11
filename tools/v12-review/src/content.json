@@ -853,7 +853,7 @@
     "sections": [
       {
         "title": "Motion",
-        "text": "| Pattern | Where | Values |\n| --- | --- | --- |\n| Rollover, link blue | The whole link | A glow of the dimmed colour in the letters under the pointer, fast-02 in, fast-01 out, growing 80% to 100% over moderate-02; press dimmer, flat; the release circle |\n| Colours | Every state | Matched lightness in the blue's own hue; the rest is `link-primary` in every theme |\n| Underline, standalone | On hover | The rollover-text underline layer, fading in over fast-02 and out over fast-01 |\n| Underline, inline | Always | A real text decoration under the letters' paint, so it takes the glow and press with them |\n| Motion icon | `renderIcon` | The icon's hover plays on the link's hover or keyboard focus; it dims with the text, flatly |\n| Slow motion | All | The CSS steps read the duration tokens' variables; the release circle takes `timeScale` |\n| Reduced motion | All | The hover still dims and the press still shows; the release and the hover's return take 1ms |\n\nReduced motion comes from a TooltipMotion `reduced`, else the provider,\nelse the system. See \"reduced\" in props.md."
+        "text": "| Pattern | Where | Values |\n| --- | --- | --- |\n| Rollover, link blue | The whole link | A glow of the dimmed colour in the letters under the pointer, fast-02 in, fast-01 out, growing 80% to 100% over moderate-02; press dimmer, flat; the release circle |\n| Colours | Every state | Matched lightness in the blue's own hue; the rest is `link-primary` in every theme |\n| Underline, standalone | On hover | The rollover-text underline layer, fading in over fast-02 and out over fast-01 |\n| Underline, inline | Always | A real text decoration under the letters' paint, so it takes the glow and press with them |\n| Motion icon | `renderIcon` | The icon's hover plays on the link's hover or keyboard focus; it dims with the text, flatly |\n| Slow motion | All | The CSS steps read the duration tokens' variables; the release circle takes `timeScale` |\n| Reduced motion | All | The hover still dims and the press still shows; the release and the hover's return take 1ms |\n\nReduced motion comes from a TooltipMotion `reduced`, else the provider,\nelse the system."
       }
     ],
     "facts": {
@@ -1244,7 +1244,7 @@
       },
       {
         "title": "The thinking animation",
-        "text": "`ThinkingIndicator` is the processing animation from Carbon2027 - Modelling:\nthree dots settle, ripple, a darker square passes along them, they collapse to a\npoint and spread again. One cycle is four `slow-02` durations (2.8s; the source\nvideo measured 2.6s), on Carbon's standard productive easing. Dots are\n`$interactive`; the square is `$link-primary-hover`. It is decorative, and it\nholds still under reduced motion."
+        "text": "`ThinkingIndicator` is the processing animation an agent shows while it thinks:\nthree dots settle, ripple, a darker square passes along them, they collapse to a\npoint and spread again. One cycle is four `slow-02` durations (2.8s; the\nreference measured 2.6s), on Carbon's standard productive easing. Dots are\n`$interactive`; the square is `$link-primary-hover`. It is decorative, and it\nholds still under reduced motion."
       },
       {
         "title": "Getting started",
@@ -1417,12 +1417,8 @@
   },
   "V12/SessionSwitcher": {
     "title": "SessionSwitcher",
-    "summary": "> **Problem statement:** _Describe the gap this component fills (edit or delete this line)._",
+    "summary": "",
     "sections": [
-      {
-        "title": "Overview",
-        "text": "> **Problem statement:** _Describe the gap this component fills (edit or delete this line)._"
-      },
       {
         "title": "Getting started",
         "text": "Here's a quick example to get you started.\n\n```bash\nyarn add @carbon/react\nyarn add @carbon-labs/react-session-switcher\n```\n\n### JS (via import)\n\n```javascript\n\nfunction App() {\n  return <SessionSwitcher />;\n}\n\n```\n\n### SCSS\n\nIn your styles file import\n\n```\n@use '@carbon/react';\n@use '@carbon-labs/react-session-switcher/scss/session-switcher';\n```"

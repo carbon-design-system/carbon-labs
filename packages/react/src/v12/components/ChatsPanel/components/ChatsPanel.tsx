@@ -316,10 +316,8 @@ export const ChatsPanel = forwardRef<HTMLDivElement, ChatsPanelProps>(
                 ))}
             </div>
           </nav>
-          {/* An outside press still closes the overlay. It used to be a scrim
-              that dimmed the card, which dimmed only part of the surface and
-              is not how this system separates a floating panel: a border and a
-              shadow carry it (themes-regions.md). */}
+          {/* An outside press still closes the overlay. No scrim dims the card:
+              a border and a shadow separate a floating panel. */}
           <div
             className={`${block}__content`}
             onPointerDownCapture={

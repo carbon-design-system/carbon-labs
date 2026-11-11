@@ -679,10 +679,9 @@
       "name": "SessionSwitcher",
       "status": "draft",
       "docs": "v12-sessionswitcher--overview",
-      "firstSentence": "> **Problem statement:** _Describe the gap this component fills (edit or delete this line)._",
-      "summary": "> **Problem statement:** _Describe the gap this component fills (edit or delete this line)._",
+      "firstSentence": "",
+      "summary": "",
       "sections": [
-        "Overview",
         "Getting started"
       ]
     },

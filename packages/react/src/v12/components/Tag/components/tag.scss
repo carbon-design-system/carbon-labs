@@ -308,8 +308,7 @@
 
 /* ── DismissibleTag — `DismissibleTag.tsx` ─────────────────────────────────
    The Tag with a close at its end. A trailing control inside a tag or chip
-   sits on the inset, as a field's clear button does (docs/components/
-   spacing.md): the text in from the start as the Tag's,
+   sits on the inset, as a field's clear button does: the text in from the start as the Tag's,
    the close's glyph as far in from the end (`--_tag-pad`); it hovers and
    presses as a circle centred on its glyph, the tag's height across (a tag
    has no track inset), whatever the tag's corners. Text to glyph is the

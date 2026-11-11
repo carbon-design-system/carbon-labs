@@ -90,9 +90,31 @@ commitlint):
   `@carbon-labs/v12-motion`; no literal duration, easing or transition value
   outside it; every v12 package private until its publishable pull request. A
   finding the tool's config records as known (each file named, with why) is a
-  warning; any other finding fails the check;
+  warning; any other finding fails the check. The same command reports, as
+  warnings only until the lane moves onto what they ask for:
+  - the motion rules: reduced motion read with `matchMedia` past the seam, a
+    curve built by hand, a timer with a literal or padded delay, arithmetic on a
+    duration token, a local helper named like a seam export, and a stylesheet
+    transition or animation that moves something without the seam's clock
+    function;
+  - the prop vocabulary (`tools/v12-import/src/vocab.json`): the values each
+    shared axis (`frame`, `variant`, `kind`, `size`, `corners`) takes, the
+    banned names, and the props Carbon v11 deprecates, read from every component
+    a folder exports with the TypeScript checker. Carbon v11's own names and
+    values stay where its namesake component has them.
+
+  A `// v12-allow <rule>: <why>` comment on the line, or the one above, allows
+  one site (a timer's reason starts with `a11y`, `clock` or `hold`); the check
+  counts them;
+
 - `yarn v12:contract --check`: [the motion contract](./motion-contract.md) is
-  current;
+  current. It counts a folder or tool as a user of a seam export when it imports
+  it from the seam or from a lane package that re-exports it;
+- `yarn v12:catalog --check`: the component catalog (`docs/v12/catalog.json`) is
+  current. It lists every v12 component package with its manifest status and
+  motion, each component it exports and each prop as a JSON schema, read from
+  the lane's sources with the TypeScript checker; a recipe or a generator names
+  components and props from it. `yarn v12:catalog` writes it;
 - `yarn v12:test`: every v12 package's tests;
 - the v12 Storybook build.
 

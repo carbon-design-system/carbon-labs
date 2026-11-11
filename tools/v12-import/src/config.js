@@ -130,6 +130,33 @@ export const CONFIG = {
     spec: '@carbon/styles/scss/motion',
     why: "the chat stack's stylesheets take Carbon v11's motion module until they move onto the seam's Sass module",
   })),
+  // The motion rules' words, which report as warnings (check.js).
+  motionRules: {
+    // Local helpers named like a motion export: they shadow or copy it.
+    seamHelpers: [
+      'stepUp',
+      'stepDown',
+      'toEasing',
+      'evaluateCurve',
+      'easingCss',
+      'clamp',
+    ],
+    // A delay derived from one of these is a motion clock, not a literal.
+    clockSources: ['motionTokens', 'clockMs', 'afterMotion'],
+    // What a timer's allowance names first: `// v12-allow timer: hold <why>`.
+    timerClasses: ['a11y', 'clock', 'hold'],
+    // A delay padded past the clock it waits for: `ms + 50`, `ms * 2 + 250`.
+    paddedDelay: /\+\s*\d|\*\s*2\s*\+/,
+    // Properties whose transition moves something on the page.
+    spatial: [
+      /^(transform|translate|scale|rotate|clip-path)$/,
+      /^(inset|inset-[\w-]+|left|top|right|bottom)$/,
+      /^((min-|max-)?(width|height)|(min-|max-)?(block|inline)-size)$/,
+      /^grid-template-(rows|columns)$/,
+    ],
+    // The seam's Sass functions that carry the reduced-motion scales.
+    clockFunctions: /\bmotion\.(clock|travel)\(/,
+  },
   // Whole packages, brought with `--package <id>`: their tree as it is, each
   // root under the target, with the files that don't travel left out.
   packages: {

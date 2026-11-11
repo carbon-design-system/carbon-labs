@@ -1,0 +1,63 @@
+{
+  "name": "@carbon-labs/react-charts",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Carbon Labs - Charts for React (v12): the chart family's shared base",
+  "labs": {
+    "status": "draft",
+    "title": "V12 charts",
+    "entries": [
+      "plot.ts"
+    ]
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "packages/react/src/v12/components/Charts"
+  },
+  "types": "./es/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./es/index.d.ts",
+      "import": "./es/index.js",
+      "require": "./lib/index.js"
+    },
+    "./plot": {
+      "types": "./es/plot.d.ts",
+      "import": "./es/plot.js",
+      "require": "./lib/plot.js"
+    },
+    "./es/*": "./es/*",
+    "./lib/*": "./lib/*",
+    "./scss/*": "./scss/*"
+  },
+  "files": [
+    "es",
+    "lib",
+    "scss",
+    "telemetry.yml"
+  ],
+  "sideEffects": [
+    "*.scss",
+    "*.css"
+  ],
+  "scripts": {
+    "build": "node ../../../../tasks/build.js",
+    "clean": "rimraf es lib scss",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@carbon-labs/v12-motion": "workspace:*",
+    "@ibm/telemetry-js": "^1.10.2"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@carbon-labs/utilities": "0.28.0",
+    "esbuild": "^0.25.12",
+    "vitest": "^4.0.0"
+  }
+}

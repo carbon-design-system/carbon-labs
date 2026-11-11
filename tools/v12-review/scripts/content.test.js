@@ -5,8 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { readPage } from './content.js';
+import { buildContent, COMPONENTS, readPage } from './content.js';
 
 describe('a docs page read for the app', () => {
   it('keeps the title, the summary and the sections, and drops the JSX and Props', () => {
@@ -86,5 +89,27 @@ describe('a docs page read for the app', () => {
       summary: 'A chip for a file.',
       sections: [{ title: 'Overview', text: 'A chip for a file.' }],
     });
+  });
+});
+
+describe('the map', () => {
+  it('keys a page a component keeps in another folder by its own name', () => {
+    const root = mkdtempSync(join(tmpdir(), 'v12-review-content-'));
+    try {
+      const stories = join(root, COMPONENTS, 'Chat', '__stories__');
+      mkdirSync(stories, { recursive: true });
+      const page = (title) => `# ${title}\n\nWords.\n`;
+      writeFileSync(join(stories, 'Chat.mdx'), page('Chat'));
+      writeFileSync(join(stories, 'Chat.stories.tsx'), '');
+      writeFileSync(join(stories, 'TurnStatus.mdx'), page('Turn status'));
+      writeFileSync(join(stories, 'TurnStatus.stories.tsx'), '');
+      // A further page with no stories file of its own is not a component.
+      writeFileSync(join(stories, 'Notes.mdx'), page('Notes'));
+      const map = buildContent(root);
+      expect(Object.keys(map)).toEqual(['V12/Chat', 'V12/TurnStatus']);
+      expect(map['V12/TurnStatus'].title).toBe('Turn status');
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
   });
 });

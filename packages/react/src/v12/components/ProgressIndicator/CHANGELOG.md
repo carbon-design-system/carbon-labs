@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-progress-indicator%400.13.0...%40carbon-labs%2Freact-progress-indicator%400.14.0) (2026-11-11)
+
+### Bug Fixes
+
+* **v12-selection-kit:** place markers from the left in right to left ([#1495](https://github.com/carbon-design-system/carbon-labs/issues/1495)) ([159cbaa](https://github.com/carbon-design-system/carbon-labs/commit/159cbaa774c4a8a8ff973c7bccb1047c82b2e904))
+
+
+# [0.13.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-progress-indicator%400.12.0...%40carbon-labs%2Freact-progress-indicator%400.13.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-progress-indicator
+
+
+
+
+
 # [0.12.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-progress-indicator%400.11.0...%40carbon-labs%2Freact-progress-indicator%400.12.0) (2026-11-11)
 
 **Note:** Version bump only for package @carbon-labs/react-progress-indicator

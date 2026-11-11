@@ -6,12 +6,13 @@
  */
 
 // Writes the review app's text: from each v12 component's docs page
-// (`__stories__/<Name>.mdx`), its title, the paragraphs under the title (the
-// summary) and each `##` section as Markdown, keyed by the component's story
-// title (`V12/<Name>`), and what the folder has: tests, and the labs status
-// its row in the manifest records. The app runs in the browser and cannot read the docs pages' text, so it reads
-// this map. `--check` writes nothing and exits 1 when the committed map is
-// out of date.
+// (`__stories__/<Name>.mdx`, and a page of its own that a component keeps in
+// another's folder, beside its stories file), its title, the paragraphs under
+// the title (the summary) and each `##` section as Markdown, keyed by the
+// component's story title (`V12/<Name>`), and what the folder has: tests, and
+// the labs status its row in the manifest records. The app runs in the browser
+// and cannot read the docs pages' text, so it reads this map. `--check` writes
+// nothing and exits 1 when the committed map is out of date.
 
 import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
@@ -164,18 +165,34 @@ export function buildContent(root = ROOT) {
   for (const name of readdirSync(dir).sort()) {
     const stories = join(dir, name, '__stories__');
     if (!existsSync(stories)) continue;
-    const mdx = readdirSync(stories)
+    const [mdx, ...more] = readdirSync(stories)
       .filter((f) => f.endsWith('.mdx'))
-      .sort((a, b) =>
-        a === `${name}.mdx` ? -1 : b === `${name}.mdx` ? 1 : 0
-      )[0];
+      .sort((a, b) => (a === `${name}.mdx` ? -1 : b === `${name}.mdx` ? 1 : 0));
     if (!mdx) continue;
+    const facts = factsOf(join(dir, name), manifest, `${COMPONENTS}/${name}`);
     out[`V12/${name}`] = {
       ...readPage(readFileSync(join(stories, mdx), 'utf8')),
-      facts: factsOf(join(dir, name), manifest, `${COMPONENTS}/${name}`),
+      facts,
     };
+    // A component with its own page in another's folder: a further docs page
+    // beside its own stories file (`TurnStatus.mdx`, `TurnStatus.stories.tsx`),
+    // keyed by that name.
+    for (const page of more) {
+      const own = page.replace(/\.mdx$/, '');
+      if (
+        !existsSync(join(stories, `${own}.stories.tsx`)) ||
+        existsSync(join(dir, own))
+      )
+        continue;
+      out[`V12/${own}`] = {
+        ...readPage(readFileSync(join(stories, page), 'utf8')),
+        facts,
+      };
+    }
   }
-  return out;
+  return Object.fromEntries(
+    Object.entries(out).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
+  );
 }
 
 if (

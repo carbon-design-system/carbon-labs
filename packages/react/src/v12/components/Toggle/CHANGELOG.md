@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-toggle%400.12.0...%40carbon-labs%2Freact-toggle%400.13.0) (2026-11-11)
+
+### Bug Fixes
+
+* **react:** mirror the v12 slider and toggle in right to left ([#1498](https://github.com/carbon-design-system/carbon-labs/issues/1498)) ([7dde0e1](https://github.com/carbon-design-system/carbon-labs/commit/7dde0e1bb169d192bdd772f41a7432c7cb1166aa))
+
+
+# [0.12.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-toggle%400.11.0...%40carbon-labs%2Freact-toggle%400.12.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-toggle
+
+
+
+
+
+# [0.11.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-toggle%400.10.0...%40carbon-labs%2Freact-toggle%400.11.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-toggle
+
+
+
+
+
+# [0.10.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-toggle%400.9.0...%40carbon-labs%2Freact-toggle%400.10.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-toggle
+
+
+
+
+
 # [0.9.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-toggle%400.8.0...%40carbon-labs%2Freact-toggle%400.9.0) (2026-11-11)
 
 **Note:** Version bump only for package @carbon-labs/react-toggle

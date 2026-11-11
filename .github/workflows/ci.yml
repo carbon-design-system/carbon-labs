@@ -145,6 +145,8 @@ jobs:
         run: yarn v12:figma snapshot --check
       - name: Run the v12 packages' tests
         run: yarn v12:test
+      - name: Test the size check
+        run: yarn size:test
       - name: Check the v12 components' size
         run: yarn size:check
       - name: Build the v12 Storybook

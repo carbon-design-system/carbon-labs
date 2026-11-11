@@ -3,6 +3,72 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.247.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.246.0...%40carbon-labs%2Freact%400.247.0) (2026-11-11)
+
+### Features
+
+* **v12-charts:** the chart base package and demo data ([#1499](https://github.com/carbon-design-system/carbon-labs/issues/1499)) ([f06c799](https://github.com/carbon-design-system/carbon-labs/commit/f06c799a104acfc7acdf938a77920941c521939c))
+
+
+# [0.246.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.245.0...%40carbon-labs%2Freact%400.246.0) (2026-11-11)
+
+### Bug Fixes
+
+* **react:** mirror the v12 slider and toggle in right to left ([#1498](https://github.com/carbon-design-system/carbon-labs/issues/1498)) ([7dde0e1](https://github.com/carbon-design-system/carbon-labs/commit/7dde0e1bb169d192bdd772f41a7432c7cb1166aa))
+
+
+# [0.245.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.244.0...%40carbon-labs%2Freact%400.245.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.244.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.243.0...%40carbon-labs%2Freact%400.244.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.243.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.242.0...%40carbon-labs%2Freact%400.243.0) (2026-11-11)
+
+### Bug Fixes
+
+* **v12-selection-kit:** place markers from the left in right to left ([#1495](https://github.com/carbon-design-system/carbon-labs/issues/1495)) ([159cbaa](https://github.com/carbon-design-system/carbon-labs/commit/159cbaa774c4a8a8ff973c7bccb1047c82b2e904))
+
+
+# [0.242.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.241.0...%40carbon-labs%2Freact%400.242.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.241.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.240.0...%40carbon-labs%2Freact%400.241.0) (2026-11-11)
+
+### Bug Fixes
+
+* **v12-review:** skip the accessibility scan on the review app story ([#1493](https://github.com/carbon-design-system/carbon-labs/issues/1493)) ([d71dc92](https://github.com/carbon-design-system/carbon-labs/commit/d71dc92a1c0c0ca032798bc4d4c3b6ac517f66c9))
+
+
+# [0.240.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.239.0...%40carbon-labs%2Freact%400.240.0) (2026-11-11)
+
+### Bug Fixes
+
+* **v12-chat:** keep shut chat panels inert on React 19 ([#1491](https://github.com/carbon-design-system/carbon-labs/issues/1491)) ([8b1c2c2](https://github.com/carbon-design-system/carbon-labs/commit/8b1c2c2d81206d7b1538464d466679b6aa60acc4))
+
+
+# [0.239.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.238.0...%40carbon-labs%2Freact%400.239.0) (2026-11-11)
+
+### Features
+
+* **v12:** only the v12 themes, with v12 zones and surface tokens ([#1489](https://github.com/carbon-design-system/carbon-labs/issues/1489)) ([6d03269](https://github.com/carbon-design-system/carbon-labs/commit/6d03269f97e98a9b127da062fe9ee4642154c103)), closes [#f4f4f4](https://github.com/carbon-design-system/carbon-labs/issues/f4f4f4)
+
+
 # [0.238.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.237.0...%40carbon-labs%2Freact%400.238.0) (2026-11-11)
 
 ### Bug Fixes

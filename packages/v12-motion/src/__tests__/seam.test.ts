@@ -84,6 +84,17 @@ describe('@carbon-labs/v12-motion', () => {
     expect(seam.tokens['duration-fast-02']).toBeDefined();
   });
 
+  it('re-exports what the charts need, without the chart packages', () => {
+    expect(seam.chartRevealTokens.front).toBeDefined();
+    expect(typeof seam.lightCastShadow).toBe('function');
+    expect(typeof seam.rolloverVisibleReach).toBe('function');
+    const src = readFileSync(
+      path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../index.ts'),
+      'utf8'
+    );
+    expect(src).not.toMatch(/from '@carbon-labs\/motion-(charts|gpu)/);
+  });
+
   it('gives the selection layer whole at its own subpath', async () => {
     const sub = await import('../selection');
     const layer = await import('@carbon-labs/motion-react/motion/selection');

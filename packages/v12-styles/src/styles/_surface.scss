@@ -5,6 +5,7 @@
 // LICENSE file in the root directory of this source tree.
 //
 
+@use 'sass:list';
 @use '@carbon/react/scss/theme';
 
 /* The kit's standard surface: the side nav's panel fill and hairline,
@@ -280,4 +281,40 @@ html[data-carbon-theme='g100'],
   --cds-surface-secondary-hover: #404040;
   --cds-surface-code: #050505;
   --cds-shell-selected-page: 13.5%;
+}
+
+/* The standard hairline, drawn one way (`hairline`):
+
+     $line   which hairline: `rule` (round a surface, off the page),
+             `divider` (inside a surface) or `raised-rule` (round a surface
+             on the raised fill)
+     $edge   `all`, a line round the box: an inset box shadow, so the box
+             keeps its size and the line follows its corners; or one edge
+             (`block-start`, `block-end`, `inline-start`, `inline-end`), a
+             divider between items: a border on that edge
+
+   Forced colours draw no box shadow, so the line round the box becomes an
+   outline there, drawn inside, in the text colour; an edge's border takes
+   the system colour by itself. */
+@mixin hairline($line: rule, $edge: all) {
+  @if not list.index((rule, divider, raised-rule), $line) {
+    @error 'hairline: $line is rule, divider or raised-rule, not #{$line}';
+  }
+
+  $color: var(--cds-surface-#{$line});
+
+  @if $edge == all {
+    box-shadow: inset 0 0 0 1px $color;
+
+    @media (forced-colors: active) {
+      outline: 1px solid CanvasText;
+      outline-offset: -1px;
+    }
+  } @else if
+    list.index((block-start, block-end, inline-start, inline-end), $edge)
+  {
+    border-#{$edge}: 1px solid $color;
+  } @else {
+    @error 'hairline: $edge is all or one logical edge, not #{$edge}';
+  }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-card",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - Card for React (v12)",
@@ -32,7 +32,8 @@
   ],
   "scripts": {
     "build": "node ../../../../tasks/build.js",
-    "clean": "rimraf es lib scss"
+    "clean": "rimraf es lib scss",
+    "test": "vitest run --config ../../vitest.shared.ts"
   },
   "dependencies": {
     "@carbon-labs/react-button": "workspace:*",
@@ -51,6 +52,10 @@
     "react": "^18.2.0 || ^19.0.0"
   },
   "devDependencies": {
-    "@carbon-labs/utilities": "0.28.0"
+    "@carbon-labs/utilities": "0.28.0",
+    "@testing-library/jest-dom": "^6.0.0",
+    "@testing-library/react": "^16.1.0",
+    "jsdom": "^26.0.0",
+    "vitest": "^4.0.0"
   }
 }

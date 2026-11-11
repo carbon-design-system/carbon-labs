@@ -302,8 +302,11 @@ $rollover-nested-engaged: '#{$rollover-nested}:is(:hover, :active)';
     }
   }
 
+  /* Or its own action, a control laid over it (`data-rollover-own`: a
+     card's), has the keyboard's focus: the surface hovers as if focused. */
   &:hover#{$rollover-moved}#{$pseudo},
-  &:focus-visible#{$pseudo} {
+  &:focus-visible#{$pseudo},
+  &:has(> [data-rollover-own]:focus-visible)#{$pseudo} {
     @include _rollover-hover-in($hover-expand);
   }
 

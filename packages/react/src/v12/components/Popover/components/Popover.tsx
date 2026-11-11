@@ -83,13 +83,13 @@ import './popover.scss';
  *             v11's props — `align` (twelve, and the deprecated names;
  *             default `bottom`, `bottom-start` for a tab tip), `dropShadow`
  *             (default off here; v11: on),
- *             `highContrast`, `isTabTip`, `autoAlign`, `autoAlignBoundary`,
+ *             `isTabTip`, `autoAlign`, `autoAlignBoundary`,
  *             `alignmentAxisOffset`, `backgroundToken`, `border`, `as`,
  *             `onRequestClose` (a click outside, focus leaving, Escape
  *             inside the content). The content is rendered in place (so Tab
  *             goes from the trigger into it, as v11) and drawn in a fixed
  *             layer, corrected for a transformed ancestor
- *   anchored  `<Popover open anchor={el} label onClose>…</Popover>`: the
+ *   anchored  `<Popover open anchor={el} label onRequestClose>…</Popover>`: the
  *             content is portalled with its trigger's theme; it takes focus
  *             (the first control inside, else the panel; `role="dialog"`),
  *             Escape returns focus to the trigger, a press outside or focus
@@ -117,7 +117,7 @@ import './popover.scss';
  *            seam of the fill covers the surface's hairline under it)
  *   look     the floating standard (`--cds-surface`, `--cds-surface-divider`
  *            hairline) in every variant, 16px corners (`corners="square"`:
- *            none); `highContrast` (or `variant="inverse"`): the same surface
+ *            none); `variant="inverse"` (v11's `highContrast`): the same surface
  *            in the opposite theme (white ↔ g100), its contents a
  *            layer up; `border={false}` / `outline={false}` drops the
  *            hairline; `backgroundToken="background"` fills with the page's
@@ -159,8 +159,6 @@ export interface PopoverProps extends Omit<
   className?: string;
   /** The cast shadow. Default off (v11: on); `shadow` wins. */
   dropShadow?: boolean;
-  /** The opposite theme's surface (v11's high contrast). */
-  highContrast?: boolean;
   /** A tab: flush on its trigger, which joins the surface while open. `bottom-start` / `bottom-end`. */
   isTabTip?: boolean;
   /** Asks the host to close it: a click outside, focus leaving, Escape inside the content. */
@@ -170,8 +168,6 @@ export interface PopoverProps extends Omit<
 
   /** The anchored form: the trigger it opens from (portalled, its theme carried, focus returned to it). */
   anchor?: HTMLElement | null;
-  /** The anchored form's close request (as `onRequestClose`). */
-  onClose?: () => void;
   /** The anchored form's accessible name (its `role="dialog"`). */
   label?: string;
   /** The snap's origin, client px: the press that opened it. Default the press on the trigger, else its center. */
@@ -180,7 +176,7 @@ export interface PopoverProps extends Omit<
   /** `rounded` (16px, default) or `square`. */
   corners?: 'rounded' | 'square';
   // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
-  /** The look: `outlined` (default), `tonal` (no hairline), `inverse` (the opposite theme; as `highContrast`). */
+  /** The look: `outlined` (default), `tonal` (no hairline), `inverse` (the opposite theme: v11's `highContrast`). */
   variant?: 'inverse' | 'tonal' | 'outlined';
   /** The hairline. Default on, except `tonal` and `inverse`. */
   outline?: boolean;
@@ -238,7 +234,7 @@ interface Look {
 }
 
 function lookOf(p: PopoverProps): Look {
-  const variant = p.variant ?? (p.highContrast ? 'inverse' : 'outlined');
+  const variant = p.variant ?? 'outlined';
   return {
     variant,
     outline: p.outline ?? p.border ?? variant === 'outlined',
@@ -673,7 +669,6 @@ function PopoverV11(props: PopoverFormProps) {
     backgroundToken: _bg,
     border: _border,
     dropShadow: _dropShadow,
-    highContrast: _hc,
     variant: _variant,
     outline: _outline,
     shadow: _shadow,
@@ -681,7 +676,6 @@ function PopoverV11(props: PopoverFormProps) {
     exitFade: _exitFade,
     label: _label,
     anchor: _anchor,
-    onClose: _onClose,
     onPointerDown,
     ...rest
   } = props;
@@ -884,7 +878,7 @@ function AnchoredBody({
   ...props
 }: PopoverFormProps & { onExited: () => void }) {
   const all = { ...props, open } as PopoverProps;
-  const close = props.onClose ?? props.onRequestClose;
+  const close = props.onRequestClose;
   const ref = useRef<HTMLElement>(null);
   const surfaceRef = useMergedRef(ref, forwardedRef);
   const latest = useLatest({ anchor, close });

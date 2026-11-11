@@ -10,6 +10,7 @@
 import {
   forwardRef,
   useEffect,
+  useId,
   useRef,
   type ElementType,
   type HTMLAttributes,
@@ -50,9 +51,16 @@ import { cx } from '@carbon-labs/react-util';
  *             `two` the header and body, `three` the header. Outside the
  *             zone, a click does nothing and the card shows no hover there;
  *             its actions answer their own presses everywhere
- *   keyboard  a clickable card is one tab stop (`role="button"`, Enter and
- *             Space), its actions the stops after it; the kit's ring 2px
- *             outside
+ *   action    a clickable card's own action is one button laid over the
+ *             whole card (`__action`), named by the title (else the label,
+ *             or the card's `aria-label`) and described by the description;
+ *             the actions in the card are its siblings, never inside it. A
+ *             pointer passes through it, so text in the card can still be
+ *             selected; a press in the zone is the card's click
+ *   keyboard  the action is the card's tab stop (Enter and Space, a
+ *             button's), the actions the stops after it; while it has the
+ *             keyboard's focus the card shows its hover and the kit's ring
+ *             2px outside
  *   actions   `actionIcons`: icon-only ghost buttons, each a motion icon
  *             with its tooltip; `overflowActions`: the kit's OverflowMenu
  *             (`isDelete`: a danger row). ProductiveCard has them at the top
@@ -206,6 +214,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
     hoverSteps,
     shadow,
     timeScale,
+    'aria-label': ariaLabel,
     ...rest
   },
   ref
@@ -218,6 +227,22 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
   const el = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
+  const actionRef = useRef<HTMLButtonElement>(null);
+  const uid = useId().replace(/:/g, '');
+  const ids = {
+    label: `cds-kit-card-label-${uid}`,
+    title: `cds-kit-card-title-${uid}`,
+    description: `cds-kit-card-description-${uid}`,
+  };
+  // The action's name: the card's own, else its title, else its label.
+  const named =
+    ariaLabel != null
+      ? undefined
+      : title != null
+        ? ids.title
+        : label != null
+          ? ids.label
+          : undefined;
 
   useTileRollover(el, !clickable, hoverSteps, timeScale);
   // The kit's cast shadow, lit from the pointer, on a card that's a control (asked for).
@@ -317,8 +342,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
       {...rest}
       ref={mergeRefs(ref, el)}
       data-cast-shadow={cast ? '' : undefined}
-      role={clickable ? 'button' : rest.role}
-      tabIndex={clickable ? 0 : rest.tabIndex}
+      aria-label={clickable ? undefined : ariaLabel}
       className={cx(
         'cds-kit-card',
         productive ? 'cds-kit-card--productive' : 'cds-kit-card--expressive',
@@ -329,24 +353,33 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
         className
       )}
       onClick={(e) => {
-        if (!clickable || !inZone(e.currentTarget, e.target)) return;
+        if (!clickable) return;
+        // The action itself: a key on it, or assistive tech.
+        if (e.target === actionRef.current) {
+          onClick?.(e);
+          return;
+        }
+        if (!inZone(e.currentTarget, e.target)) return;
         // A drag that selected text in it isn't a click on it.
         const sel = window.getSelection();
         if (sel && !sel.isCollapsed && e.currentTarget.contains(sel.anchorNode))
           return;
         onClick?.(e);
       }}
-      onKeyDown={(e) => {
-        if (
-          clickable &&
-          e.target === e.currentTarget &&
-          (e.key === 'Enter' || e.key === ' ')
-        ) {
-          e.preventDefault();
-          onClick?.(e);
-        }
-        onKeyDown?.(e);
-      }}>
+      onKeyDown={onKeyDown}>
+      {clickable ? (
+        // The card's own action, over the whole card: one button, never
+        // round the actions in the card. The surface keeps its hover over it.
+        <button
+          ref={actionRef}
+          type="button"
+          className="cds-kit-card__action"
+          data-rollover-own=""
+          aria-label={ariaLabel}
+          aria-labelledby={named}
+          aria-describedby={description != null ? ids.description : undefined}
+        />
+      ) : null}
       {media != null ? (
         <div className="cds-kit-card__media">{media}</div>
       ) : null}
@@ -359,13 +392,19 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
               </span>
             ) : null}
             {label != null ? (
-              <p className="cds-kit-card__label">{label}</p>
+              <p id={ids.label} className="cds-kit-card__label">
+                {label}
+              </p>
             ) : null}
             {title != null ? (
-              <h3 className="cds-kit-card__title">{title}</h3>
+              <h3 id={ids.title} className="cds-kit-card__title">
+                {title}
+              </h3>
             ) : null}
             {description != null ? (
-              <p className="cds-kit-card__description">{description}</p>
+              <p id={ids.description} className="cds-kit-card__description">
+                {description}
+              </p>
             ) : null}
           </div>
           {placement === 'top' || primaryTop ? (

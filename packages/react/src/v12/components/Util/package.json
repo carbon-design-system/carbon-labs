@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-util",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - Util for React (v12)",
@@ -45,6 +45,8 @@
   },
   "devDependencies": {
     "@carbon-labs/utilities": "0.28.0",
+    "@testing-library/react": "^16.1.0",
+    "jsdom": "^26.0.0",
     "vitest": "^4.0.0"
   }
 }

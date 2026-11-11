@@ -5,7 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+/**
+ * Prefix of Carbon's own custom elements and CSS classes (`cds-button`,
+ * `cds--date-picker`). Used to reference them, never to register elements.
+ */
 const prefix = 'cds';
+
+/**
+ * Prefix of the custom elements, events and ids this package defines.
+ * Distinct from `prefix` so the package never defines a tag Carbon's own
+ * web components define.
+ */
+const tagPrefix = 'clabs';
 
 /**
  * A selector selecting tabbable nodes.
@@ -29,7 +40,7 @@ const selectorTabbable = `
   ${prefix}-table-header-row,
   ${prefix}-table-row,
   ${prefix}-table-toolbar-search,
-  ${prefix}-date-picker-input,
+  ${tagPrefix}-date-picker-input,
   ${prefix}-dropdown,
   ${prefix}-icon-button,
   ${prefix}-input,
@@ -75,4 +86,4 @@ const selectorTabbable = `
 `;
 
 // Because we're going to have a bunch of exports
-export { prefix, selectorTabbable };
+export { prefix, tagPrefix, selectorTabbable };

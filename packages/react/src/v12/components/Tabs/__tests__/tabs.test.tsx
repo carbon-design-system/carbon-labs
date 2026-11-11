@@ -189,19 +189,65 @@ describe('Tabs right to left', () => {
     expect(tab('One')).toHaveAttribute('tabindex', '0');
   });
 
-  // The arrows do not mirror: ArrowRight is always next, so right to left it moves the wrong way.
-  it.fails(
-    'ArrowLeft goes to the next tab, the way the row reads (ArrowRight to the previous)',
-    async () => {
-      const user = userEvent.setup();
-      render(rtl(tabs()));
-      tab('One').focus();
-      await user.keyboard('{ArrowLeft}');
-      expect(tab('Two')).toHaveFocus();
-      await user.keyboard('{ArrowRight}');
-      expect(tab('One')).toHaveFocus();
-    }
-  );
+  it('ArrowLeft goes to the next tab, the way the row reads (ArrowRight to the previous)', async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn();
+    render(rtl(tabs({ onChange })));
+    tab('One').focus();
+    await user.keyboard('{ArrowLeft}');
+    expect(tab('Two')).toHaveFocus();
+    expect(tab('Two')).toHaveAttribute('aria-selected', 'true');
+    expect(onChange).toHaveBeenLastCalledWith({ selectedIndex: 1 });
+    await user.keyboard('{ArrowRight}');
+    expect(tab('One')).toHaveFocus();
+  });
+
+  it('skips a disabled tab and wraps the way the row reads', async () => {
+    const user = userEvent.setup();
+    render(rtl(tabs({ defaultSelectedIndex: 1 })));
+    tab('Two').focus();
+    await user.keyboard('{ArrowLeft}');
+    expect(tab('Four')).toHaveFocus();
+    await user.keyboard('{ArrowLeft}');
+    expect(tab('One')).toHaveFocus();
+    await user.keyboard('{ArrowRight}');
+    expect(tab('Four')).toHaveFocus();
+  });
+
+  it('manual activation: the arrows move focus the way the row reads, and select nothing', async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn();
+    render(rtl(tabs({ onChange }, { activation: 'manual' })));
+    tab('One').focus();
+    await user.keyboard('{ArrowLeft}');
+    expect(tab('Two')).toHaveFocus();
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('vertical tabs keep ArrowDown as next and ArrowUp as previous', async () => {
+    const user = userEvent.setup();
+    render(
+      rtl(
+        <TabsVertical>
+          <TabListVertical aria-label="Sections">
+            <Tab>One</Tab>
+            <Tab>Two</Tab>
+          </TabListVertical>
+          <TabPanels>
+            <TabPanel>Panel one</TabPanel>
+            <TabPanel>Panel two</TabPanel>
+          </TabPanels>
+        </TabsVertical>
+      )
+    );
+    tab('One').focus();
+    await user.keyboard('{ArrowLeft}');
+    expect(tab('One')).toHaveFocus();
+    await user.keyboard('{ArrowDown}');
+    expect(tab('Two')).toHaveFocus();
+    await user.keyboard('{ArrowUp}');
+    expect(tab('One')).toHaveFocus();
+  });
 });
 
 describe('Tabs dismissable', () => {
@@ -231,6 +277,14 @@ describe('TabsVertical', () => {
     </TabsVertical>
   );
 
+  it('joins each tab to its panel, as horizontal tabs do', () => {
+    render(vertical);
+    const controls = tab('One').getAttribute('aria-controls')!;
+    const panel = document.getElementById(controls)!;
+    expect(panel).toHaveAttribute('role', 'tabpanel');
+    expect(panel.getAttribute('aria-labelledby')).toBe(tab('One').id);
+  });
+
   it('is a vertical tablist, with the same roving tab stop', () => {
     render(vertical);
     expect(screen.getByRole('tablist')).toHaveAttribute(
@@ -250,5 +304,30 @@ describe('TabsVertical', () => {
     expect(tab('Three')).toHaveAttribute('aria-selected', 'true');
     await user.keyboard('{ArrowUp}');
     expect(tab('One')).toHaveFocus();
+  });
+
+  it('manual activation: the arrows move focus only; Enter selects', async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn();
+    render(
+      <TabsVertical onChange={onChange}>
+        <TabListVertical aria-label="Sections" activation="manual">
+          <Tab>One</Tab>
+          <Tab>Two</Tab>
+        </TabListVertical>
+        <TabPanels>
+          <TabPanel>Panel one</TabPanel>
+          <TabPanel>Panel two</TabPanel>
+        </TabPanels>
+      </TabsVertical>
+    );
+    tab('One').focus();
+    await user.keyboard('{ArrowDown}');
+    expect(tab('Two')).toHaveFocus();
+    expect(tab('Two')).toHaveAttribute('aria-selected', 'false');
+    expect(onChange).not.toHaveBeenCalled();
+    await user.keyboard('{Enter}');
+    expect(tab('Two')).toHaveAttribute('aria-selected', 'true');
+    expect(onChange).toHaveBeenCalledWith({ selectedIndex: 1 });
   });
 });

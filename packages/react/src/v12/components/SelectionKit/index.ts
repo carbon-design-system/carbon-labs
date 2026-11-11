@@ -21,6 +21,22 @@ export * from '@carbon-labs/v12-motion/selection';
 // The engine re-places on a direction change itself.
 export { useSelectionEngine } from '@carbon-labs/v12-motion';
 export { useDirection } from './components/direction';
+// One selection list model: roles, the roving tab stop, keys, activation, right to left.
+export {
+  useSelectionList,
+  selectionItemProps,
+  selectionStep,
+  selectionTabStop,
+} from './components/list';
+export type {
+  SelectionItemProps,
+  SelectionItemState,
+  SelectionList,
+  SelectionListOptions,
+  SelectionListOrientation,
+  SelectionListRole,
+  SelectionStepOptions,
+} from './components/list';
 // The kit's own resolver and types, with `hero`: they shadow carbon-motion's.
 export { resolveSelectionStyle } from './components/style';
 export type {

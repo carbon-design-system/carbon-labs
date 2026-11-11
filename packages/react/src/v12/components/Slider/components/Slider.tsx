@@ -1617,12 +1617,16 @@ export function Slider({
       aria-valuenow={valueNow(h)}
       aria-valuetext={formatLabel(valueNow(h), undefined)}
       aria-labelledby={twoHandles || labelText == null ? undefined : labelId}
+      // Two knobs take the names their number fields take; one knob with no label takes the
+      // caller's name.
       aria-label={
         twoHandles
           ? h === 'lower'
+            ? (ariaLabelInput ?? 'Lower bound')
+            : (ariaLabelInputUpper ?? 'Upper bound')
+          : labelText == null
             ? ariaLabelInput
-            : ariaLabelInputUpper
-          : undefined
+            : undefined
       }
       aria-disabled={disabled || undefined}
       aria-readonly={readOnly || undefined}
@@ -1800,7 +1804,10 @@ export function Slider({
             <div
               className="cds-slider__meter"
               role={twoHandles ? 'img' : 'meter'}
-              aria-labelledby={labelText != null ? labelId : undefined}
+              // A range is named by its label and its two values together, in `aria-label`.
+              aria-labelledby={
+                !twoHandles && labelText != null ? labelId : undefined
+              }
               aria-label={
                 twoHandles
                   ? `${textOf(labelText) || ariaLabelInput || 'Range'}: ${readoutText}`
@@ -1936,7 +1943,11 @@ export function Slider({
           </span>
         )}
       </div>
-      <div className="cds-slider__row">
+      <div
+        className="cds-slider__row"
+        // The label names the pair: each knob and field of a range carries its own bound's name.
+        role={twoHandles && labelText != null ? 'group' : undefined}
+        aria-labelledby={twoHandles && labelText != null ? labelId : undefined}>
         {twoHandles && fieldFor('lower')}
         {!stepped && rangeLabel(min, minLabel)}
         <div className="cds-slider__bar">

@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/v12-review",
-  "version": "0.13.0",
+  "version": "0.16.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - the v12 review app: every v12 component's stories, motion and props in one app, built from the components themselves",

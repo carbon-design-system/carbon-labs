@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-popover%400.9.0...%40carbon-labs%2Freact-popover%400.10.0) (2026-11-11)
+
+### Bug Fixes
+
+* **react:** v12 surfaces grow from their cause in RTL and fold back ([#1485](https://github.com/carbon-design-system/carbon-labs/issues/1485)) ([d416820](https://github.com/carbon-design-system/carbon-labs/commit/d416820b62baf23869bf65ce41fe28d2dbf895f6))
+
+
 # [0.9.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-popover%400.8.0...%40carbon-labs%2Freact-popover%400.9.0) (2026-11-11)
 
 **Note:** Version bump only for package @carbon-labs/react-popover

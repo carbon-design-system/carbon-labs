@@ -340,7 +340,7 @@ function useFilterFold(input: React.RefObject<HTMLInputElement | null>) {
       const size = parseFloat(icon.getAttribute('width') ?? '') || 16;
       const pad = parseFloat(getComputedStyle(slot).paddingInlineStart) || 0;
       const rtl = getComputedStyle(slot).direction === 'rtl';
-      // The icon's centre, untransformed: its slot puts it `pad` in, centred down.
+      // The icon's center, untransformed: its slot puts it `pad` in, centered down.
       const ox = rtl ? s.width - pad - size / 2 : pad + size / 2;
       const oy = s.height / 2;
       // The strip's search button: under the toggle, its size, in line with it.
@@ -354,7 +354,16 @@ function useFilterFold(input: React.RefObject<HTMLInputElement | null>) {
     place();
     const ro = new ResizeObserver(place);
     ro.observe(search);
-    return () => ro.disconnect();
+    // A direction change moves both ends without resizing the field.
+    const mo = new MutationObserver(place);
+    mo.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['dir'],
+    });
+    return () => {
+      ro.disconnect();
+      mo.disconnect();
+    };
   }, [input]);
 }
 

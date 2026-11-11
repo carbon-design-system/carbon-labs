@@ -9,6 +9,7 @@
 @use '@carbon/react/scss/type' as *;
 @use '@carbon-labs/v12-styles/scss/rollover' as *;
 @use '@carbon-labs/v12-styles/scss/corners';
+@use '@carbon-labs/v12-styles/scss/state';
 @use '@carbon-labs/v12-styles/scss/text-pairs';
 
 /* Checkbox — `Checkbox.tsx` (first pass; its header lists the choices). */
@@ -230,11 +231,15 @@ $color: calc(#{$fast-01} * 4 / 7);
    status ring reaches 1px past the box at rest and 2px on hover, so at 2px
    the two would touch. */
 
-.cds-checkbox--invalid .cds-checkbox__box,
-.cds-checkbox--invalid
-  .cds-checkbox__box:has(> .cds-checkbox__input:is(:checked, :indeterminate)) {
-  --rollover-stroke: #{theme.$support-error};
-  --rollover-ring: #{theme.$support-error};
+/* Error: read from the input's `aria-invalid`, which says it to assistive
+   tech too (the box holds the input). The same specificity as the box's own
+   off and on rules, and after them. */
+.cds-checkbox__box,
+.cds-checkbox__box:has(> .cds-checkbox__input:is(:checked, :indeterminate)) {
+  @include state.invalid(true) {
+    --rollover-stroke: #{theme.$support-error};
+    --rollover-ring: #{theme.$support-error};
+  }
 }
 
 .cds-checkbox--warn .cds-checkbox__box,
@@ -244,7 +249,11 @@ $color: calc(#{$fast-01} * 4 / 7);
   --rollover-ring: #{theme.$support-warning};
 }
 
-.cds-checkbox:is(.cds-checkbox--invalid, .cds-checkbox--warn)
+.cds-checkbox
+  .cds-checkbox__box:has(
+    > .cds-checkbox__input[aria-invalid='true']:focus-visible
+  ),
+.cds-checkbox.cds-checkbox--warn
   .cds-checkbox__box:has(> .cds-checkbox__input:focus-visible) {
   outline-offset: 3px;
 }

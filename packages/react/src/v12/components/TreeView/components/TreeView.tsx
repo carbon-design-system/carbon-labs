@@ -72,6 +72,7 @@ import '@carbon-labs/react-selection-kit/scss/selection-kit.scss';
 import './tree-view.scss';
 import { cx } from '@carbon-labs/react-util';
 import { inertProps } from '@carbon-labs/react-util';
+import { inlineKey } from '@carbon-labs/react-util';
 
 /* ============================================================================
  * TreeView and TreeNode — Carbon v11's, prop for prop, on the kit's look
@@ -458,6 +459,7 @@ export interface TreeViewProps extends Omit<
   onSelect?: (event: TreeEvent, node: TreeNodeInfo) => void;
   /** The active node changed. */
   onActivate?: (activeNodeId?: TreeNodeId) => void;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** The kit's selector style. Default `inverse`. */
   variant?: TreeViewVariant;
   /** Slow motion for the marker and the caret (the bodies follow the token variables). Default 1. */
@@ -883,7 +885,8 @@ export function TreeView({
       setSelected((s) => [...s, ...ids.filter((x) => !s.includes(x))]);
     };
 
-    switch (e.key) {
+    // Right to left a child sits further left: ← opens and goes in, → closes and goes out.
+    switch (inlineKey(e.key, root)) {
       case 'ArrowDown':
         e.preventDefault();
         go(visible[at + 1]);

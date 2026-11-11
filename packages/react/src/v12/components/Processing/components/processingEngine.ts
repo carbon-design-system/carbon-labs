@@ -18,11 +18,12 @@ import { clamp01 } from '@carbon-labs/v12-motion';
  * The Processing engine: the framework-free choreography behind
  * <Processing>, on carbon-motion's tokens.
  *
- * It drives four SVG circles; a view layer (the React component, or a web
- * component later) only renders the markup and forwards calls. Each circle
+ * It drives four dots; a view layer (the React component, or a web
+ * component later) only renders the markup and forwards calls. Each dot
  * sits at 0,0 and is placed by its transform, in polar terms round the
  * drawing's centre: `translate(centre) rotate(angle) translate(radius)
- * scale(presence)`. Its `r` is the pulse.
+ * scale(presence)`. A dot is a group of rings whose scale is the pulse
+ * ("The pulse as a transform"), or one circle whose `r` is.
  *
  *   clock     one page clock for every mark: the loading period's phase on
  *             the document timeline (its grid, as the skeleton wave's), and
@@ -390,6 +391,169 @@ export const canAnimate = () =>
   typeof Element !== 'undefined' &&
   typeof Element.prototype.animate === 'function';
 
+// ─── The pulse as a transform ─────────────────────────────────────────────────
+
+/*
+ * A ring keeps its stroke as it swells, and a scale would swell the stroke
+ * too. So a dot drawn as a group holds PROCESSING_RINGS fixed rings, each at
+ * the peak's outer size: from a solid dot (the rest) to the peak's ring. One
+ * scale moves them all, on the `r` pulse's keyframes and curves, so the
+ * outer edge is exactly the `r` pulse's (`r` and half the stroke); the ring
+ * that shows is the one whose hole is nearest the pulse's at that moment (a
+ * step of opacity), within 0.2 units. Transform and opacity animate off the
+ * main thread: at rest the pulse costs no layout, no style and no script. A
+ * dot drawn as one circle pulses its `r`, as before.
+ */
+const REST = parseFloat(R_REST);
+const PEAK = parseFloat(R_PEAK);
+const HALF_STROKE = parseFloat(SW1) / 2;
+const OUTER = PEAK + HALF_STROKE;
+/** The peak ring's hole, a share of its outer radius. */
+const PEAK_HOLE = (PEAK - HALF_STROKE) / OUTER;
+/** How many rings a dot drawn as a group holds. */
+export const PROCESSING_RINGS = 5;
+const holeOf = (k: number) => (PEAK_HOLE * k) / (PROCESSING_RINGS - 1);
+/** Ring `k`'s circle: its radius and stroke, its outer edge the peak's. */
+export function processingRing(k: number): { r: number; stroke: number } {
+  const stroke = OUTER * (1 - holeOf(k));
+  return { r: fmt(OUTER - stroke / 2), stroke: fmt(stroke) };
+}
+/** The scale that puts the rings' outer edge where a circle of radius `r` has its own. */
+const scaleOf = (r: number) => `scale(${fmt((r + HALF_STROKE) / OUTER)})`;
+/** The `r` at which the pulse's hole is `hole` of its outer radius. */
+const rOfHole = (hole: number) => (HALF_STROKE * (1 + hole)) / (1 - hole);
+/** The first progress at which `ease` reaches `y`. */
+const inverse = (ease: Curve, y: number) => {
+  const N = 200;
+  for (let i = 1; i <= N; i++) {
+    if (ease(i / N) < y) {
+      continue;
+    }
+    let lo = (i - 1) / N;
+    let hi = i / N;
+    for (let k = 0; k < 24; k++) {
+      const mid = (lo + hi) / 2;
+      if (ease(mid) >= y) {
+        hi = mid;
+      } else {
+        lo = mid;
+      }
+    }
+    return hi;
+  }
+  return 1;
+};
+/** Ring `k`'s keyframes over a set: the scale every ring shares, and its own opacity's steps. */
+const ringFrames = (setPeriods: number, k: number) => {
+  const { pulseSwell, pulseSettle } = PROCESSING_MOTION;
+  const swell = pulseSwell / setPeriods;
+  const settle = Math.min(1, (pulseSwell + pulseSettle) / setPeriods);
+  const span = PEAK - REST;
+  // Where the swell, then the settle, passes a hole of `h`.
+  const up = (h: number) =>
+    swell *
+    inverse(curve(PROCESSING_MOTION.entrance), (rOfHole(h) - REST) / span);
+  const down = (h: number) =>
+    swell +
+    (settle - swell) *
+      inverse(curve(PROCESSING_MOTION.settle), (PEAK - rOfHole(h)) / span);
+  const last = PROCESSING_RINGS - 1;
+  const lo = k > 0 ? (holeOf(k - 1) + holeOf(k)) / 2 : null;
+  const hi = k < last ? (holeOf(k) + holeOf(k + 1)) / 2 : null;
+  // Shown while the hole is between `lo` and `hi`: on the swell, then on the settle.
+  const steps: [number, number][] = [];
+  if (lo !== null) {
+    steps.push([up(lo), 1]);
+  }
+  if (hi !== null) {
+    steps.push([up(hi), 0], [down(hi), 1]);
+  }
+  if (lo !== null) {
+    steps.push([down(lo), 0]);
+  }
+  const first = lo === null ? 1 : 0;
+  const scale: Keyframe[] = [
+    { transform: scaleOf(REST), easing: bezier(PROCESSING_MOTION.entrance) },
+    {
+      transform: scaleOf(PEAK),
+      offset: swell,
+      easing: bezier(PROCESSING_MOTION.settle),
+    },
+    { transform: scaleOf(REST), offset: settle },
+    { transform: scaleOf(REST) },
+  ];
+  const opacity: Keyframe[] = [
+    { opacity: first, offset: 0, easing: 'step-end' },
+    ...steps.map(([offset, value]) => ({
+      opacity: value,
+      offset,
+      easing: 'step-end',
+    })),
+    { opacity: first, offset: 1 },
+  ];
+  return { scale, opacity };
+};
+
+/** What the engine does with a dot's pulse: one animation, or a ring group's together. */
+interface Pulse {
+  startTime: CSSNumberish | null;
+  readonly effect: { updateTiming(timing: OptionalEffectTiming): void } | null;
+  onfinish: Animation['onfinish'];
+  cancel(): void;
+}
+/** A dot's rings, or none (a dot drawn as one circle). */
+const ringsOf = (d: SVGElement): SVGElement[] =>
+  d instanceof SVGCircleElement
+    ? []
+    : [...d.querySelectorAll<SVGElement>('circle')];
+/** A dot at rest with no pulse: the rest's radius, or the solid ring at the rest's scale. */
+const restDot = (d: SVGElement) => {
+  const rings = ringsOf(d);
+  if (!rings.length) {
+    d.setAttribute('r', R_REST);
+    d.setAttribute('stroke-width', SW1);
+    return;
+  }
+  rings.forEach((c, k) => {
+    c.style.transform = scaleOf(REST);
+    c.style.opacity = k ? '0' : '1';
+  });
+};
+/** Start a dot's pulse over a set of `setPeriods`, `duration` ms, repeating. */
+const pulseOn = (
+  d: SVGElement,
+  setPeriods: number,
+  duration: number
+): Pulse => {
+  const timing = { duration, iterations: Infinity };
+  const rings = ringsOf(d);
+  if (!rings.length) {
+    return d.animate(pulseFrames(setPeriods), timing);
+  }
+  const all = rings.flatMap((c, k) => {
+    const f = ringFrames(setPeriods, k);
+    return [c.animate(f.scale, timing), c.animate(f.opacity, timing)];
+  });
+  return {
+    get startTime() {
+      return all[0]!.startTime;
+    },
+    set startTime(t) {
+      all.forEach((a) => (a.startTime = t));
+    },
+    effect: {
+      updateTiming: (t) => all.forEach((a) => a.effect?.updateTiming(t)),
+    },
+    get onfinish() {
+      return all[0]!.onfinish;
+    },
+    set onfinish(f) {
+      all[0]!.onfinish = f;
+    },
+    cancel: () => all.forEach((a) => a.cancel()),
+  };
+};
+
 // ─── The page's clock ─────────────────────────────────────────────────────────
 
 /*
@@ -477,7 +641,7 @@ interface Slide {
 
 export function createProcessingEngine(
   _group: SVGGElement,
-  dots: readonly SVGCircleElement[],
+  dots: readonly SVGElement[],
   options: ProcessingEngineOptions = {}
 ): ProcessingEngine {
   const scale = options.timeScale ?? (() => 1);
@@ -535,14 +699,14 @@ export function createProcessingEngine(
   /** For loop = false: once grown in, each dot shrinks after one pulse. */
   let once: 'growing' | 'pulsing' | null = null;
 
-  const pulses: (Animation | null)[] = dots.map(() => null);
+  const pulses: (Pulse | null)[] = dots.map(() => null);
   /**
    * A change of set (into or out of the square): the old pulses run out their set (`retiring`), and the
    * new ones wait for the first set on the new formation's grid at or after its end, `at` (ms). `rest`
    * is the old set's end (periods): where a second change before `at` starts from.
    */
   let handover: { at: number; rest: number } | null = null;
-  const retiring: Animation[] = [];
+  const retiring: Pulse[] = [];
   const pulsePh = dots.map(() => 0);
   const spins: (Animation | null)[] = dots.map(() => null);
   const lastTf = dots.map(() => '');
@@ -638,7 +802,7 @@ export function createProcessingEngine(
     dots[i]!.style.transform = value;
     lastTf[i] = value;
   };
-  const cancel = (a: Animation | null) => {
+  const cancel = (a: Pulse | null) => {
     try {
       a?.cancel();
     } catch {
@@ -652,10 +816,7 @@ export function createProcessingEngine(
     dots.forEach((d, i) => {
       cancel(pulses[i]!);
       const ph = phaseOf(i, t);
-      const a = d.animate(pulseFrames(setPeriods), {
-        duration: cycle(),
-        iterations: Infinity,
-      });
+      const a = pulseOn(d, setPeriods, cycle());
       a.startTime = pulseStart(ph, t);
       pulses[i] = a;
       pulsePh[i] = ph;
@@ -726,10 +887,7 @@ export function createProcessingEngine(
     dots.forEach((d, i) => {
       const ph = phOf(SLOTS[kind][perm[i]!]!);
       slides[i] = { from: ph, to: ph, start: t, dur: 0 };
-      const a = d.animate(pulseFrames(setPeriods), {
-        duration: cycle(),
-        iterations: Infinity,
-      });
+      const a = pulseOn(d, setPeriods, cycle());
       a.startTime = at + ph * period();
       pulses[i] = a;
       pulsePh[i] = ph;
@@ -972,8 +1130,7 @@ export function createProcessingEngine(
     });
     dots.forEach((d, i) => {
       const s = SLOTS[kind][i]!;
-      d.setAttribute('r', R_REST);
-      d.setAttribute('stroke-width', SW1);
+      restDot(d);
       write(i, transform(mod(s.deg + HOME[kind], 360), s.r, s.p * shown));
     });
     visible = target !== 'out';
@@ -1311,8 +1468,7 @@ export function createProcessingEngine(
 
   // Nothing shows until the first run.
   dots.forEach((d, i) => {
-    d.setAttribute('r', R_REST);
-    d.setAttribute('stroke-width', SW1);
+    restDot(d);
     write(i, transform(SLOTS.line[i]!.deg, SLOTS.line[i]!.r, 0));
   });
 

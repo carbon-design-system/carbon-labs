@@ -1,0 +1,1412 @@
+{
+  "schema": "v12-figma/docs@1",
+  "side": "code",
+  "items": [
+    {
+      "key": "v12/about-modal",
+      "id": "about-modal",
+      "title": "V12/AboutModal",
+      "name": "About modal",
+      "status": "draft",
+      "docs": "v12-aboutmodal--overview",
+      "firstSentence": "A small passive modal that says what a product is and which version runs.",
+      "summary": "A small passive modal that says what a product is and which version runs. It shows a logo over the title, the content, a row of links, additional information and a copyright line. One additional information item shows as a block; several show as tabs. It follows `open` and closes itself unless `onClose` returns `false`. The close button, Escape or a press outside closes it, and focus goes back to the launcher.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/accordion",
+      "id": "accordion",
+      "title": "V12/Accordion",
+      "name": "Accordion",
+      "status": "draft",
+      "docs": "v12-accordion--overview",
+      "firstSentence": "Headings that open and shut the content under them.",
+      "summary": "Headings that open and shut the content under them. `Accordion` holds the items. `AccordionItem` is a heading button with a chevron, over the body it opens. `AccordionSkeleton` is the accordion while it loads. They take Carbon's props, plus `exclusive`, `headingLevel`, `corners`, `frame` and `timeScale`. An item's `open` is its initial state, and it is followed whenever it changes; a click toggles it in between. Enter or Space toggles an item; ↑, ↓, Home and End move between the headings.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/activity-feed",
+      "id": "activity-feed",
+      "title": "V12/ActivityFeed",
+      "name": "ActivityFeed",
+      "status": "draft",
+      "docs": "v12-activityfeed--overview",
+      "firstSentence": "Events in time order, newest first, grouped by day.",
+      "summary": "Events in time order, newest first, grouped by day. Each day has a sticky header that never folds. An event is an avatar with initials, who did what, a status, its time and an optional detail behind Show details. An event that asks for an answer can have up to two actions, drawn as small ghost buttons. Today's times are relative; an earlier day shows the clock time. `categories` adds filter tags over the list. While `loading`, skeleton rows stand in for the events. With none, the feed shows an empty state. Give the feed a height: it scrolls inside it.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/app-shell",
+      "id": "app-shell",
+      "title": "V12/AppShell",
+      "name": "App shell",
+      "status": "draft",
+      "docs": "v12-appshell--overview",
+      "firstSentence": "The frame an app sits in: a header, a nav, the page, and an optional side panel.",
+      "summary": "The frame an app sits in: a header, a nav, the page, and an optional side panel. `AppShell` takes the header, the nav (a SideNav) and a `panel`; the page is its children. The shell sizes itself from its own width, not the window's: | Size class | Width | Nav | Panel | | ---------- | -------------- | ----------------------------- | ---------------- | | Compact | under 672px | overlay, from the menu button | full-width sheet | | Medium | 672 to 1055px | rail of icons | covers the page | | Expanded | 1056 to 1311px | column | pushes the page | | Large | 1312px and up | column | pushes the page | - `scope=\"page\"` fixes the header and scrolls the page with the window; `scope=\"container\"` fills its container. - `frame=\"inset\"` puts the page on a rounded workspace, and `headerPlacement=\"nav\"` puts the header at the top of the nav column. - The header and nav are ghost by default, on chrome that is dark in every theme (`chromeTheme`). The page follows the theme; `mainTheme` gives it one of its own, and `inverse` is the opposite of the theme's. - `Header` is the 48px global header, `NavOverlay` the overlay nav alone, and `Region` one area of a screen, with its surface, corners and scroll.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/breadcrumb",
+      "id": "breadcrumb",
+      "title": "V12/Breadcrumb",
+      "name": "Breadcrumb",
+      "status": "draft",
+      "docs": "v12-breadcrumb--overview",
+      "firstSentence": "A trail of links to the levels above the current page.",
+      "summary": "A trail of links to the levels above the current page. A `nav` holds an ordered list of `BreadcrumbItem`s. Each one is a link, plain text, an app's own link element, or an `OverflowMenu` for collapsed levels. The current page is primary text, marked `aria-current`. In a narrow container the crumbs wrap; each crumb stays on one line.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/button",
+      "id": "button",
+      "title": "V12/Button",
+      "name": "Button",
+      "status": "draft",
+      "docs": "v12-button--overview",
+      "firstSentence": "An action's trigger, with Carbon's Button props.",
+      "summary": "An action's trigger, with Carbon's Button props. `kind` is the role: primary, secondary or danger. `variant` is the treatment: filled, outlined or tonal. `frame` is what it stands on: inset, ghost, or none for a text button; it wins over `variant`. Buttons are pills by default. `busy` shows a spinner in the icon's place while an action runs. The package also exports `ButtonSet`, `ButtonSkeleton` and `ButtonGrid`, a set of equal actions in one shell with one Tab stop.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/card",
+      "id": "card",
+      "title": "V12/Card",
+      "name": "Card",
+      "status": "draft",
+      "docs": "v12-card--overview",
+      "firstSentence": "A tile with a header, a body, actions and a footer, on `--cds-surface` with 8px corners and 16px in.",
+      "summary": "A tile with a header, a body, actions and a footer, on `--cds-surface` with 8px corners and 16px in. A card has a label, a title and a description, a body, action icons and an overflow menu, and primary and secondary buttons. With `onClick` its action is one button over the card, named by the title, and the card's own buttons sit beside it; without it, it is a plain surface. `ProductiveCard` is dense, for product UI, with its actions at the top and a ghost primary button. Its `clickZone` sets where a click counts. `ExpressiveCard` holds media to the card's edge, or a pictogram, with its actions at the bottom. `CardSkeleton` is a card while it loads. `decorator` and `slug` are accepted and render nothing.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/chat",
+      "id": "chat",
+      "title": "V12/ChatShell",
+      "name": "Chat shell",
+      "status": "draft",
+      "docs": "v12-chatshell--overview",
+      "firstSentence": "A chat with an assistant: the conversation, the prompt below it, and what docks round the prompt.",
+      "summary": "A chat with an assistant: the conversation, the prompt below it, and what docks round the prompt. Use it as a page of its own, or in a pane beside a page. - `ChatShell` holds the header, the conversation and the prompt. It sets the look of the parts inside (`variant`, `corners`) and caps them at a reading width (`column`). - `ChatTranscript` is the conversation: the turns, and for each reply the line that says what it's doing and the steps it took. - `PromptInput` is the prompt: a field that grows, its footer controls, Stop, attachments and a notice. - `ChatDock` puts a follow-up question (`FollowUpCard`) above the prompt and suggestions (`Suggestions`) below it. - `ChatTurnNavigator` lists the questions in a long chat and scrolls to the one you choose. - `ChatPane` opens the chat beside a page. - `ChatMessage`, `TurnStatus`, `StepList` and `FileChips` are the smaller parts, for building your own.",
+      "sections": [
+        "Working together",
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/checkbox",
+      "id": "checkbox",
+      "title": "V12/Checkbox",
+      "name": "Checkbox",
+      "status": "draft",
+      "docs": "v12-checkbox--overview",
+      "firstSentence": "A box that turns one option on or off.",
+      "summary": "A box that turns one option on or off. A parent of partly checked children shows mixed, a dash. `Checkbox` takes Carbon's props, plus `disabledReason` and `timeScale`. `CheckboxGroup` sets several checkboxes under one legend, stacked or in a row; its `invalid` or `warn` reaches each checkbox in it, with one message under the group. `CheckboxSkeleton` is the checkbox while it loads.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/code-snippet",
+      "id": "code-snippet",
+      "title": "V12/CodeSnippet",
+      "name": "CodeSnippet",
+      "status": "draft",
+      "docs": "v12-codesnippet--overview",
+      "firstSentence": "Carbon's CodeSnippet and CodeSnippetSkeleton, prop for prop.",
+      "summary": "Carbon's CodeSnippet and CodeSnippetSkeleton, prop for prop. The code sits in a quiet well with no outline, set by `--cds-snippet-fill`. `type` is single, inline or multi. Single and multi are a read-only textbox you can tab to, with a copy button after it. Inline is one button round the code. A copy writes `copyText`, or the code's text, to the clipboard, then calls `onClick`. Code that runs past the end has a 16px soft edge there, gone while the code has focus. A multi snippet taller than `maxCollapsedNumberOfRows` rows gets Show more. `loading` draws the snippet as its skeleton; `CodeSnippetSkeleton` is the same. `light` is accepted and not drawn.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/contained-list",
+      "id": "contained-list",
+      "title": "V12/ContainedList",
+      "name": "ContainedList",
+      "status": "draft",
+      "docs": "v12-containedlist--overview",
+      "firstSentence": "A labelled list of items.",
+      "summary": "A labelled list of items. Each `ContainedListItem` is a line of text, with an optional icon before it and an action at its end. An item with `onClick` is a button. `kind` sets the header: `on-page` over a hairline, or `disclosed` for a list inside a disclosure. A `Search` as the header's `action` is the list's search; a `Search` child sits above the items instead. The header stays at the top while the list scrolls. `ContainedListSkeleton` is the list while it loads.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/content-switcher",
+      "id": "content-switcher",
+      "title": "V12/ContentSwitcher",
+      "name": "ContentSwitcher",
+      "status": "draft",
+      "docs": "v12-contentswitcher--overview",
+      "firstSentence": "Pick one of two or more options or views.",
+      "summary": "Pick one of two or more options or views. The switches sit in one track, and a selector glides between them. `ContentSwitcher` takes Carbon's API: `selectedIndex`, `activation`, `size`, `lowContrast`, `onChange` and disabled switches. `Switch` is a labelled switch, with an optional icon before the label. `IconSwitch` is an icon only, named by its tooltip. `SwitchPanels` swaps the content the selection shows.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/contextual-bar",
+      "id": "contextual-bar",
+      "title": "V12/ContextualBar",
+      "name": "Contextual bar",
+      "status": "draft",
+      "docs": "v12-contextualbar--overview",
+      "firstSentence": "A bar that appears while something is true, such as a selection or unsaved changes, and goes when it isn't.",
+      "summary": "A bar that appears while something is true, such as a selection or unsaved changes, and goes when it isn't. It follows `open`, and `label` names its region. `placement=\"inline\"`, the default, sits in the flow and opens room for itself, so the content below glides. `overlay` floats over the content as a pill and never takes room. `toolbar` lies over the first line of its positioned container, in a toolbar row's place. It isn't sticky, takes no room, and hides the row's other children while it is there. Inline and overlay bars are sticky, 8px below `--cds-contextual-bar-top`, 3rem by default. `variant=\"tonal\"`, the default on the page, is a fill one lightness step off its backdrop, with a hairline. `inverse`, the default in an inset workspace, takes the page's opposite theme. `kind` is a status. On tonal it colors the outline, solved to 3:1 against the fill. On inverse it fills the bar, stepped in lightness until the text holds 4.5:1. A tonal bar is info unless `kind` says otherwise, and `null` gives none. What's in it steps up one layer. Filled and outlined controls in it step their corners down from the bar's, and ghost controls hover full round. `ContextualBar.Count` is a number that rolls, and `ContextualBar.Swap` swaps its content out, then in, by `swapKey`.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/copy-button",
+      "id": "copy-button",
+      "title": "V12/CopyButton",
+      "name": "CopyButton",
+      "status": "draft",
+      "docs": "v12-copybutton--overview",
+      "firstSentence": "Carbon's CopyButton, prop for prop, on the kit's IconButton.",
+      "summary": "Carbon's CopyButton, prop for prop, on the kit's IconButton. Its description is the tooltip and the accessible name. A click turns the tooltip's text into the feedback for `feedbackTimeout`, and another click restarts it. It does not write the clipboard: `onClick` does. The feedback is also read out once per copy from a polite live region. The frame is ghost by default; `frame=\"inset\"` gives the button its own surface. `useCopyFeedback` gives the same feedback to other triggers.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/data-table",
+      "id": "data-table",
+      "title": "V12/DataTable",
+      "name": "DataTable",
+      "status": "draft",
+      "docs": "v12-datatable--overview",
+      "firstSentence": "Rows of resources in columns, with Carbon's DataTable API: its render props, its parts and its props.",
+      "summary": "Rows of resources in columns, with Carbon's DataTable API: its render props, its parts and its props. `DataTable` adds `corners`: `square`, the default, or `rounded`, 8px on the outer box. `Table` sits in the kit's Scroller, so a table wider than its container scrolls in place. Before it scrolls, cells kept on one line may wrap so the table fits. `TableSelectRow` and `TableSelectAll` use the kit's Checkbox. Select-all is checked when every selectable row in view is selected, and mixed when some are. A sortable `TableHeader` draws one motion icon for its sort. `TableExpandRow` and `TableExpandedRow` open a row's details. The toolbar, its search and the batch actions bar are Carbon's. `DataTableSkeleton` is the table while it loads. `DataTableReveal` is a table whose body loads.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/date-picker",
+      "id": "date-picker",
+      "title": "V12/DatePickerV2",
+      "name": "Date picker and time picker",
+      "status": "draft",
+      "docs": "v12-datepickerv2--overview",
+      "firstSentence": "A date field that opens the kit's own calendar, simple, single or range, and a time field with native selects.",
+      "summary": "A date field that opens the kit's own calendar, simple, single or range, and a time field with native selects. Parts: `DatePicker`, `DatePickerInput`, `Calendar`, `DatePickerSkeleton`, `TimePicker`, `TimePickerSelect`.",
+      "sections": [
+        "Motion"
+      ]
+    },
+    {
+      "key": "v12/description-list",
+      "id": "description-list",
+      "title": "V12/DescriptionList",
+      "name": "DescriptionList",
+      "status": "draft",
+      "docs": "v12-descriptionlist--overview",
+      "firstSentence": "Terms and their values for a details page.",
+      "summary": "Terms and their values for a details page. The list is one column, two, or by width: two once the list itself is 672px wide, the medium size class. Each `DescriptionListItem` is a term and its value, above it or beside it. A value is text or any node. `copyable` adds the kit's CopyButton after the value, and `span` runs a pair across every column. While `loading`, the terms are drawn and each value is a bar of its line.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/disclosure",
+      "id": "disclosure",
+      "title": "V12/Disclosure",
+      "name": "Disclosure",
+      "status": "draft",
+      "docs": "v12-disclosure--overview",
+      "firstSentence": "A body that opens and shuts under what discloses it.",
+      "summary": "A body that opens and shuts under what discloses it. It is a pair of hooks, not a component: `useDisclosureMoves` on a root and `useDisclosureBody` on each body. The accordion's items, the data table's expandable rows, the expandable tile and the side nav's groups move this way. A body has three parts, each inside the last: `.cds-disclosure__body`, a one-row grid whose height moves; `.cds-disclosure__clip`, which clips under a soft bottom edge while it moves; and `.cds-disclosure__content`, what is disclosed, with its padding inside the clip.",
+      "sections": [
+        "Motion",
+        "Reduced motion",
+        "Hooks"
+      ]
+    },
+    {
+      "key": "v12/dropdown",
+      "id": "dropdown",
+      "title": "V12/Dropdown",
+      "name": "Dropdown",
+      "status": "draft",
+      "docs": "v12-dropdown--overview",
+      "firstSentence": "A field that opens a floating list.",
+      "summary": "A field that opens a floating list. `Dropdown` chooses one option, and `ComboBox` is a Dropdown you can type into, its list filtered as you type. `MultiSelect` chooses many, with a check column and a count tag in the field, and `FilterableMultiSelect` puts its list under the ComboBox's field. They take Carbon's props. The field is the text input's, with its label, status mark and one message line. The list is the Menu's surface, at the field's width, five and a half rows tall; it flips to stay on screen. `type=\"inline\"` puts the label beside a quiet field. The skeletons are the forms while their values load.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/duration-bar",
+      "id": "duration-bar",
+      "title": "V12/DurationBar",
+      "name": "DurationBar",
+      "status": "draft",
+      "docs": "v12-durationbar--overview",
+      "firstSentence": "A duration on a shared scale, drawn by the Slider: the `track` shape at `sm`, its fill the duration, with dots every 100ms, so a column of bars reads as one scale.",
+      "summary": "A duration on a shared scale, drawn by the Slider: the `track` shape at `sm`, its fill the duration, with dots every 100ms, so a column of bars reads as one scale. With `onChange` it is editable: drag the knob, press the track, use the keys (5ms; Shift, 50ms) or type in the number field. Values snap to 5ms and stay within 0 and `max` (default 1000). Without `onChange` it is a fixed value: a bar to the value, no knob and no hover, a meter to assistive tech. `reference` marks a second value, such as the last saved one. `hideNumber` hides the number. There is no disabled state: a duration that can't be edited reads only.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/easing-graph",
+      "id": "easing-graph",
+      "title": "V12/EasingGraph",
+      "name": "EasingGraph",
+      "status": "draft",
+      "docs": "v12-easinggraph--overview",
+      "firstSentence": "A cubic-bezier as a graph: progress up, time across, on a quarter grid with the linear diagonal for reference.",
+      "summary": "A cubic-bezier as a graph: progress up, time across, on a quarter grid with the linear diagonal for reference. The curve is 3px solid, a `reference` curve 3px dotted behind it, the handles' arms 2px dashed. Without `onChange` it is read only, with the four numbers as text. With `onChange`, the two handles drag or take the arrow keys, and the four numbers edit as one field in four segments. Handles stay inside the unit box, so a curve never overshoots. A typed number outside 0 to 1 is flagged and not applied.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/empty-state",
+      "id": "empty-state",
+      "title": "V12/EmptyState",
+      "name": "EmptyState",
+      "status": "draft",
+      "docs": "v12-emptystate--overview",
+      "firstSentence": "What a region shows when it has nothing to show: first use, no results, an error, no access.",
+      "summary": "What a region shows when it has nothing to show: first use, no results, an error, no access. It has a visual, a required `title`, a `subtitle`, an `action` and a `link`, and no words of its own. The visual is your own image, a still 32px `icon`, or the drawing for a `kind`; `EmptyStateArt` is that drawing alone. `context` is the region it sits in, a page, a table's place, a panel or a tile, and sets the size and the alignment. With no context, it is a panel on a framed surface and a page elsewhere. It has no surface of its own.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/feedback",
+      "id": "feedback",
+      "title": "V12/Feedback",
+      "name": "Feedback",
+      "status": "draft",
+      "docs": "v12-feedback--overview",
+      "firstSentence": "The kit's shared feedback parts, which other v12 components build on: - `Spinner`: the loader, in six sizes, neutral or hero.",
+      "summary": "The kit's shared feedback parts, which other v12 components build on: - `Spinner`: the loader, in six sizes, neutral or hero. - `StatusMark`: a status's icon, with the hand-off from pending to a result. - `CountPill`: a count whose changing digits roll. - `SkeletonText`, `SkeletonPlaceholder` and `SkeletonOf`: loading states, pulsing on the skeleton wave; `SkeletonOf` draws a component as its own skeleton.",
+      "sections": [
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/file-uploader",
+      "id": "file-uploader",
+      "title": "V12/FileUploader",
+      "name": "FileUploader",
+      "status": "draft",
+      "docs": "v12-fileuploader--overview",
+      "firstSentence": "Carbon's file uploader, with its props.",
+      "summary": "Carbon's file uploader, with its props. `FileUploader` is a title, a description, an add button and the files it has added, all with one `filenameStatus`; its ref clears them (`clearFiles()`). For an uploader the app builds itself, the parts are `FileUploaderButton`, `FileUploaderDropContainer`, `FileUploaderItem` and `FileUploaderSkeleton`. Each file is an item on the quiet surface with one status slot: a progress mark while it uploads and once it is complete, and a remove button to edit. With `progress`, a known size, the mark is a ring that fills by it; without, it is the Spinner. `arrive={false}` lists a file with no motion, as for files already there on load.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/filter-panel",
+      "id": "filter-panel",
+      "title": "V12/FilterPanel",
+      "name": "Filter panel",
+      "status": "draft",
+      "docs": "v12-filterpanel--overview",
+      "firstSentence": "Narrow a long list.",
+      "summary": "Narrow a long list. Filters opens a side panel with one section per field (status, region, environment and so on). Each option shows how many items it would match. Apply filters the list; the filters in use show as tags above it, where each can be removed. `FilterPanel` is the panel, on the kit's SidePanel; `FilterSummary` is the row of tags.",
+      "sections": [
+        "Motion"
+      ]
+    },
+    {
+      "key": "v12/form-layout",
+      "id": "form-layout",
+      "title": "V12/FormLayout",
+      "name": "Form layout",
+      "status": "draft",
+      "docs": "v12-formlayout--overview",
+      "firstSentence": "One layout for settings, create and edit forms.",
+      "summary": "One layout for settings, create and edit forms. `FormLayout` is the form and its widest: narrow 320px, medium 640px by default, wide 960px or full. `as=\"div\"` puts it inside another form. `FormSection` is a title, a description 8px under it and its fields 24px below, in a fieldset. `FormRow` puts fields side by side from a 480px form, 16px apart, and stacks them under it; `columns` sets how many. Sections are 48px apart and fields 32px, the room a field's message line opens into. A layout's or a section's `disabled` and `readOnly` reach every field in it: the kit's fields read them with `useFormFieldState`, and a disabled section also disables any other control in it. `UnsavedChangesBar` holds Save and Discard at the bottom of its scroll while the form has changes, with `useDirtyForm` to track them. `SavingStatus` shows where a save stands.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/full-page-error",
+      "id": "full-page-error",
+      "title": "V12/FullPageError",
+      "name": "FullPageError",
+      "status": "draft",
+      "docs": "v12-fullpageerror--overview",
+      "firstSentence": "A whole page that says something went wrong: a 403, a 404, or a custom error.",
+      "summary": "A whole page that says something went wrong: a 403, a 404, or a custom error. Its props are the Carbon Products FullPageError's.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/icon-motion",
+      "id": "icon-motion",
+      "title": "V12/IconMotion",
+      "name": "IconMotion",
+      "status": "draft",
+      "docs": "v12-iconmotion--overview",
+      "firstSentence": "Makes the motion icons follow the kit's reduced motion.",
+      "summary": "Makes the motion icons follow the kit's reduced motion. Without it, a motion icon looks only at its own `animated` prop, the nearest `MotionIconProvider` and the OS, so a `MotionProvider level=\"reduced\"` would leave icons moving. - `FollowKitMotion` wraps its children in a `MotionIconProvider` set from the nearest `MotionProvider`'s level, else the OS. Put it inside each `MotionProvider` that sets a level. An icon's own `animated` still wins. - `useIconAnimated()` returns the same boolean, for a component that passes `animated` to an icon it draws.",
+      "sections": [
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/illustrations",
+      "id": "illustrations",
+      "title": "V12/Illustrations",
+      "name": "Illustrations",
+      "status": "draft",
+      "docs": "v12-illustrations--overview",
+      "firstSentence": "Line drawings in isometric projection for empty states and tiles, drawn with hidden lines and no fills.",
+      "summary": "Line drawings in isometric projection for empty states and tiles, drawn with hidden lines and no fills.",
+      "sections": []
+    },
+    {
+      "key": "v12/inline-edit",
+      "id": "inline-edit",
+      "title": "V12/InlineEdit",
+      "name": "InlineEdit",
+      "status": "draft",
+      "docs": "v12-inlineedit--overview",
+      "firstSentence": "A value shown as text that turns into its field in place.",
+      "summary": "A value shown as text that turns into its field in place. The view is the text, a slot for a status mark and an edit button. The field is a text input, a text area or a select, with save and cancel buttons. Press the view or the edit button to open the field. Enter saves; in a text area, Shift+Enter breaks a line. Escape cancels. Focus goes to the field, its text selected, and back to the edit button on save or cancel. `validate` checks the draft on save. A save that returns a promise shows saving, and a rejection reopens the field with its message. Read-only and disabled values show a lock or a crossed pencil, with `reason` in its tooltip.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/jobs-tray",
+      "id": "jobs-tray",
+      "title": "V12/JobsTray",
+      "name": "JobsTray",
+      "status": "draft",
+      "docs": "v12-jobstray--overview",
+      "firstSentence": "Background jobs in a panel from the header, with no Carbon counterpart.",
+      "summary": "Background jobs in a panel from the header, with no Carbon counterpart. Each job has a title, a ProgressBar, a StatusIndicator, and Cancel or Retry. A job is `queued`, `running`, `finished`, `failed` or `cancelled`; its `progress` is 0 to 100, and a running job with none is indeterminate. The host owns `open` and `jobs`. A press outside, or Escape, calls `onClickOutside`, and Escape puts focus back on the trigger. `JobsTrayIndicator` is the trigger's face: put it in the header's IconButton, and name the button with the count and the status (`jobsStatus`, `jobsStatusLabel`).",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/jump-to",
+      "id": "jump-to",
+      "title": "V12/JumpTo",
+      "name": "JumpTo",
+      "status": "draft",
+      "docs": "v12-jumpto--overview",
+      "firstSentence": "A floating pill back to a point in a scrolled container.",
+      "summary": "A floating pill back to a point in a scrolled container. It shows while its target is out of view by more than `threshold`, and hides when the target is back. It sits at the top or the bottom center of the view, with an arrow toward the target. A preset sets the target, the words and where the target lands: Latest (the live edge, counting what arrives), Unread, Top, Selection or Current. The pill is the kit Button, tonal, and takes no room in the layout. A count is announced in a polite live region. `useJumpTo` is the same without the pill, for a host that draws its own control.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/kit-defaults",
+      "id": "kit-defaults",
+      "title": "V12/KitDefaults",
+      "name": "KitDefaults",
+      "status": "draft",
+      "docs": "v12-kitdefaults--overview",
+      "firstSentence": "`KitDefaults` sets `density`, `corners`, `containerCorners`, `variant`, `brand`, `frame` and `shadow` for everything inside it.",
+      "summary": "`KitDefaults` sets `density`, `corners`, `containerCorners`, `variant`, `brand`, `frame` and `shadow` for everything inside it. A component uses them only for a prop it isn't given, so **its own prop always wins**. With no provider, every component keeps its own defaults. Recipes use it per region (a filter bar is usually `compact`); see `../recipes/README.md` (\"Density\"). ```tsx </KitDefaults> ```",
+      "sections": []
+    },
+    {
+      "key": "v12/labs/chat-input",
+      "id": "labs/chat-input",
+      "title": "V12/ChatInput",
+      "name": "ChatInput",
+      "status": "draft",
+      "docs": "v12-chatinput--overview",
+      "firstSentence": "> **Problem statement:** a conversation needs one place to write the next turn: > a prompt that grows as it is written, the files attached to it, what the model > may read, which model and mode answer, and a send that becomes Stop while a > reply is generating.",
+      "summary": "> **Problem statement:** a conversation needs one place to write the next turn: > a prompt that grows as it is written, the files attached to it, what the model > may read, which model and mode answer, and a send that becomes Stop while a > reply is generating. Carbon's `TextArea` is a form field, with a label above > and no actions. `@carbon/ai-chat` has an input, but it is part of a whole chat > application and cannot be used on its own. ChatInput is the composer alone, > standalone React built from Carbon's `Menu`, `Theme` and icons, labs > `MegaButton` for every control and labs `FileChip` for each attachment. Its nearest Carbon neighbours are `TextArea` and the input in `@carbon/ai-chat`. Use `TextArea` for a form field; use `@carbon/ai-chat` for a whole chat application.",
+      "sections": [
+        "Overview",
+        "Behaviour",
+        "Menus",
+        "Explorations",
+        "Proposals",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/chat-panels",
+      "id": "labs/chat-panels",
+      "title": "V12/ChatPanels",
+      "name": "ChatPanels",
+      "status": "draft",
+      "docs": "v12-chatpanels--overview",
+      "firstSentence": "> **Problem statement:** A conversation needs its working material beside it > (what it knows, the code it wrote, the files it was given, its settings and a > canvas to arrange results on) without leaving the conversation to reach any of > it.",
+      "summary": "> **Problem statement:** A conversation needs its working material beside it > (what it knows, the code it wrote, the files it was given, its settings and a > canvas to arrange results on) without leaving the conversation to reach any of > it. `ChatPanels` holds which side panel is open. `ChatPanelToggles` is the row of icon-only toggles in the surface's header, each naming its panel in a tooltip and saying `aria-expanded`. `ChatPanelArea` is the content with the panel opening along its inline end: pushed in a standalone chat, over the card when embedded, and over the content below `md`. Icon-only is a proposal: panel toggles are not on Carbon's icon-only allow-list.",
+      "sections": [
+        "Overview",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/chat-thread",
+      "id": "labs/chat-thread",
+      "title": "V12/ChatThread",
+      "name": "ChatThread",
+      "status": "draft",
+      "docs": "v12-chatthread--overview",
+      "firstSentence": "> **Problem statement:** a chat transcript is not a list of paragraphs.",
+      "summary": "> **Problem statement:** a chat transcript is not a list of paragraphs. A turn > has to say who spoke without an avatar or a label, hold whatever the agent > produced — a reasoning trace, code, a plan — and offer its controls without > reserving a row for them on every turn. Carbon has no chat components, and the > nearest neighbours are a plain `<ol>` and `Button`. ChatThread is the transcript; ChatMessage is one turn in it. The user sits flush right in a bubble at three quarters of the measure; the assistant sits flush left at full measure, with no container, because a reply is the page's content rather than an aside. ### What a turn does not carry A turn has no padding and no footer at rest. The thread sets the gap — `$spacing-08` balanced, `$spacing-07` compact — so a turn used on its own has no orphan margin, and the actions live in that gap rather than in a row of their own. Showing them moves nothing. ### Actions, and the time `actions` takes `ChatMessageAction` children: a small ghost button, icon-only with a tooltip. They appear on hover and on keyboard focus, and they stay in the tab order while unseen, so focus can reveal them. `timestamp` sits beside them. Leave it out when the turn carries a trace or a plan, which already says how long the work took. ### Proposal — icon-only feedback Thumbs up, thumbs down and regenerate are drawn icon-only. Carbon's icon-only allow-list does not include feedback or regenerate, so this is a deliberate proposal rather than a quiet divergence: these three are near-universal in chat, and three labels do not fit under a turn. Each keeps a tooltip and an accessible name.",
+      "sections": [
+        "Overview",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/chats-panel",
+      "id": "labs/chats-panel",
+      "title": "V12/ChatsPanel",
+      "name": "ChatsPanel",
+      "status": "draft",
+      "docs": "v12-chatspanel--overview",
+      "firstSentence": "> **Problem statement:** A chat surface has to let someone reach their other > conversations without losing the one they are in, and the right way to show > that list depends on who owns the screen.",
+      "summary": "> **Problem statement:** A chat surface has to let someone reach their other > conversations without losing the one they are in, and the right way to show > that list depends on who owns the screen. A standalone chat application can > give the list a column of its own and push the conversation aside, because the > layout is the chat's to spend. The same chat embedded in a product cannot: the > product owns the layout, so the list has to borrow the space and give it > straight back. Carbon has `SideNav` for a product's own navigation and `Menu` > for a short list of choices, and neither answers this — a list of > conversations is navigation inside one surface, not navigation of the > application, and it is browsed rather than picked from. ChatsPanel is that > list and the control that reveals it, with `presentation` deciding only > whether it takes space or borrows it.",
+      "sections": [
+        "Overview",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/code-snippet-alt",
+      "id": "labs/code-snippet-alt",
+      "title": "V12/CodeSnippetAlt",
+      "name": "CodeSnippetAlt",
+      "status": "draft",
+      "docs": "v12-codesnippetalt--overview",
+      "firstSentence": "An alternative to [CodeSnippet](?path=/docs/v12-codesnippet--overview), kept side by side for comparison: syntax colours, inline code and a MegaButton copy action.",
+      "summary": "An alternative to [CodeSnippet](?path=/docs/v12-codesnippet--overview), kept side by side for comparison: syntax colours, inline code and a MegaButton copy action. Its exports keep the names `CodeSnippet` and `InlineCode`.",
+      "sections": [
+        "Overview",
+        "Behaviour",
+        "Proposals",
+        "InlineCode",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/date-picker",
+      "id": "labs/date-picker",
+      "title": "V12/DatePicker",
+      "name": "Date picker",
+      "status": null,
+      "docs": "v12-datepicker--overview",
+      "firstSentence": "A date picker is a text field for a date with, in `single` and `range`, a calendar under it.",
+      "summary": "A date picker is a text field for a date with, in `single` and `range`, a calendar under it. `DatePicker` holds the state and the calendar; its children are `DatePickerInput`s, one for `simple` and `single`, two for `range`. Prop names follow Carbon React's `DatePicker`, but this is its own implementation and not every Carbon prop is supported: see [Component API](#component-api). ### Simple date picker `datePickerType=\"simple\"` renders the text field with no calendar and no calendar icon. ### Single date picker `datePickerType=\"single\"` pairs the text field with a calendar. Focusing or clicking the field opens the calendar; choosing a day fills the field. ### Range date picker `datePickerType=\"range\"` takes two `DatePickerInput`s. The first holds the start date and the second the end date. Until the end is chosen, the calendar shades the days between the start and the focused day. ### Skeleton state `DatePickerSkeleton` is the loading placeholder. `range` draws two fields. ### AI label `DatePickerInput` takes an AI label through `decorator`. An `AILabel` is drawn at its `mini` size.",
+      "sections": [
+        "Overview",
+        "Usage",
+        "Motion",
+        "Reduced motion",
+        "Keyboard",
+        "Accessibility",
+        "Known issues",
+        "Component API",
+        "How it is built",
+        "Feedback"
+      ]
+    },
+    {
+      "key": "v12/labs/file-chip",
+      "id": "labs/file-chip",
+      "title": "V12/FileChip",
+      "name": "FileChip",
+      "status": "draft",
+      "docs": "v12-filechip--overview",
+      "firstSentence": "> **Problem statement:** a chat input needs to show each file a person has > attached before they send it: what it is, whether it has uploaded, why it > failed if it did, and a way to take it back out.",
+      "summary": "> **Problem statement:** a chat input needs to show each file a person has > attached before they send it: what it is, whether it has uploaded, why it > failed if it did, and a way to take it back out. Carbon has no part for this. > `FileUploaderItem` belongs to `FileUploader`'s list, reads as a form row and > truncates the extension away. A dismissible `Tag` is a label, with no upload > state and no thumbnail. FileChip is one attached file, standalone, built on > Carbon's `Loading`, `Tooltip` and icons, with a labs `MegaButton` to remove > it. It is the first part of the chat input bar, one step lighter than the > input: `$layer-01` on a white input, `$layer-02` on the dark shell. Its nearest Carbon neighbours are `FileUploaderItem` and the dismissible `Tag`. Use `FileUploaderItem` inside a `FileUploader` form; use a `Tag` for a label that is not a file.",
+      "sections": [
+        "Overview",
+        "Behaviour",
+        "Explorations",
+        "Proposals",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/history-rail",
+      "id": "labs/history-rail",
+      "title": "V12/HistoryRail",
+      "name": "HistoryRail",
+      "status": "draft",
+      "docs": "v12-historyrail--overview",
+      "firstSentence": "> **Problem statement:** an agent's work goes through many iterations, and a > person needs to find one of them — the version before the table was replaced, > the run that failed — without reading the whole conversation again.",
+      "summary": "> **Problem statement:** an agent's work goes through many iterations, and a > person needs to find one of them — the version before the table was replaced, > the run that failed — without reading the whole conversation again. A list of > links costs a line each and buries the shape of the history. Carbon has no > scrubber; the nearest neighbours are `Slider` and a list. HistoryRail is a scrubber: a column of marks down the edge of the panel, one per iteration, with the live one drawn as a square. Moving a pointer down the track or arrowing through it lights the nearest iteration and opens a card saying what changed there. ### One control, not one per mark The whole track takes the pointer and resolves to the nearest iteration. That is what lets the marks sit 14px apart and stay hittable: there is a single 24 x 196 target rather than fourteen small ones, so WCAG 2.2 SC 2.5.8 Target Size is met outright, on a mouse and under a finger alike. A mark is decoration — `aria-hidden`, no focus, no pointer region of its own — and it grows in place when it lights, so nothing ever moves under a pointer in flight. ### What it says The rail is a `slider`: one tab stop, `aria-valuenow` on the position and `aria-valuetext` naming the iteration and what changed. The card repeats those words for the eye, so it is hidden from assistive technology rather than read out twice. Pass `translations.valueText` to change the sentence. ### Current is not the same as selected `current` is the live iteration — the state of the work — and stays put as you scrub. `value` is the one you are looking at. They are usually different, which is the point: you can look back without leaving where you are.",
+      "sections": [
+        "Overview",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/keyboard-shortcut",
+      "id": "labs/keyboard-shortcut",
+      "title": "V12/KeyboardShortcut",
+      "name": "KeyboardShortcut",
+      "status": "draft",
+      "docs": "v12-keyboardshortcut--overview",
+      "firstSentence": "> **Problem statement:** Carbon can show a keyboard shortcut only as a plain > string in `MenuItem`'s `shortcut` prop.",
+      "summary": "> **Problem statement:** Carbon can show a keyboard shortcut only as a plain > string in `MenuItem`'s `shortcut` prop. Every product hand-types its own > glyphs, shows `⌘` to Windows users or `Ctrl` to Mac users, and leaves screen > readers to announce `⌘` as \"place of interest sign\". `KeyboardShortcut` takes > the keys once (`keys={['mod', 'K']}`), shows `⌘K` on macOS and `Ctrl+K` > elsewhere, and names the combination in words (\"Command K\"). Its nearest > Carbon neighbour is `MenuItem.shortcut`, and `kind=\"plain\"` matches it. It only **displays** a shortcut. Like `MenuItem.shortcut`, it never registers or listens for the keys. `kind=\"plain\"` is text only:",
+      "sections": [
+        "Overview",
+        "Platforms",
+        "Accessibility",
+        "On surfaces",
+        "Inside a menu",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/mega-button",
+      "id": "labs/mega-button",
+      "title": "V12/MegaButton",
+      "name": "MegaButton",
+      "status": "draft",
+      "docs": "v12-megabutton--overview",
+      "firstSentence": "> **Problem statement:** products reach for a button with a visible keyboard > shortcut, and for one API across text, icon-and-text and icon-only buttons.",
+      "summary": "> **Problem statement:** products reach for a button with a visible keyboard > shortcut, and for one API across text, icon-and-text and icon-only buttons. > Carbon's `Button` has no key command, trails its only icon, and hands > icon-only to `IconButton`, which has no danger kinds. MegaButton is one button > for all of it, and the place to see, side by side with Carbon's `Button`, > three positions put to Carbon: primary rests neutral and turns blue only when > the person acts; blue responds on every kind; and colour is authored in OKLCH, > each value a lightness on a hue and chroma curve. Its nearest Carbon neighbours are `Button` and `IconButton`. Use those when you need none of the above.",
+      "sections": [
+        "Overview",
+        "How it differs from Carbon's Button",
+        "Proposals",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/reasoning-trace",
+      "id": "labs/reasoning-trace",
+      "title": "V12/ReasoningTrace",
+      "name": "ReasoningTrace",
+      "status": "draft",
+      "docs": "v12-reasoningtrace--overview",
+      "firstSentence": "> **Problem statement:** while an agent works, a person needs to see that it is > working, what it is doing now, and afterwards what it did and how long it > took, without the transcript turning into a log.",
+      "summary": "> **Problem statement:** while an agent works, a person needs to see that it is > working, what it is doing now, and afterwards what it did and how long it > took, without the transcript turning into a log. Carbon has no equivalent: > `Accordion` is a disclosure but not a status, `InlineLoading` is a status but > holds no steps, and `@carbon/ai-chat`'s reasoning steps are part of a whole > chat application. ReasoningTrace is the disclosure alone, standalone React: a > header that says what happened and how long it took, and, when open, the steps > (ReasoningStep) or the code it ran (CodeSnippet). It replaces the library's earlier Trajectory and labs's `Processing` for v12.",
+      "sections": [
+        "Overview",
+        "Anatomy",
+        "Behaviour",
+        "The thinking animation",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/recipe-renderer",
+      "id": "labs/recipe-renderer",
+      "title": "V12/RecipeRenderer",
+      "name": "Recipes",
+      "status": "draft",
+      "docs": "v12-reciperenderer--overview",
+      "firstSentence": "> **Problem statement:** a layout, a flow or a small widget built from Carbon > components is today either prose in a guideline or code someone copies.",
+      "summary": "> **Problem statement:** a layout, a flow or a small widget built from Carbon > components is today either prose in a guideline or code someone copies. A > **recipe** is the same composition written as data, so a person can preview it > here, a tool can check it, and an agent can assemble a screen from it without > anyone writing freeform UI.",
+      "sections": [
+        "Overview",
+        "What a recipe is",
+        "The recipes here",
+        "What a recipe cannot do yet",
+        "Checking a recipe",
+        "Where this goes"
+      ]
+    },
+    {
+      "key": "v12/labs/session-switcher",
+      "id": "labs/session-switcher",
+      "title": "V12/SessionSwitcher",
+      "name": "SessionSwitcher",
+      "status": "draft",
+      "docs": "v12-sessionswitcher--overview",
+      "firstSentence": "> **Problem statement:** _Describe the gap this component fills (edit or delete this line)._",
+      "summary": "> **Problem statement:** _Describe the gap this component fills (edit or delete this line)._",
+      "sections": [
+        "Overview",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/labs/split-button",
+      "id": "labs/split-button",
+      "title": "V12/SplitButton",
+      "name": "SplitButton",
+      "status": "draft",
+      "docs": "v12-splitbutton--overview",
+      "firstSentence": "A primary action, and beside it a chevron that opens a menu of related actions, with Carbon's ComboButton props.",
+      "summary": "A primary action, and beside it a chevron that opens a menu of related actions, with Carbon's ComboButton props. Not for two equal actions: use two Buttons. One shell in two cells, on the Button's look: `kind` primary or secondary, `variant` filled, outlined or tonal, sizes xs to lg. `busy` shows a spinner in the action's place while it runs.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/labs/system-message",
+      "id": "labs/system-message",
+      "title": "V12/SystemMessage",
+      "name": "SystemMessage",
+      "status": "draft",
+      "docs": "v12-systemmessage--overview",
+      "firstSentence": "> **Problem statement:** A transcript needs to say what happened _to_ the > conversation — the model changed, the context was cleared, a new day began — > without that reading as something either party said.",
+      "summary": "> **Problem statement:** A transcript needs to say what happened _to_ the > conversation — the model changed, the context was cleared, a new day began — > without that reading as something either party said. Carbon has no such > object: `InlineNotification` is the nearest and is a different thing, with a > container, a kind and a dismiss affordance that a transcript notice should not > have. `SystemMessage` is the centred, recessive line between turns. It is the companion to `HistoryRail`. The rail is the whole history at a glance, down the edge of the panel; this is the same event in its place in the flow.",
+      "sections": [
+        "Overview",
+        "Severity",
+        "Boundaries",
+        "Getting started"
+      ]
+    },
+    {
+      "key": "v12/link",
+      "id": "link",
+      "title": "V12/Link",
+      "name": "Link",
+      "status": "draft",
+      "docs": "v12-link--overview",
+      "firstSentence": "Carbon's Link, prop for prop, on the rollover's text standard in link blue: the text, an underline and an optional icon after it.",
+      "summary": "Carbon's Link, prop for prop, on the rollover's text standard in link blue: the text, an underline and an optional icon after it.",
+      "sections": [
+        "Motion"
+      ]
+    },
+    {
+      "key": "v12/list",
+      "id": "list",
+      "title": "V12/List",
+      "name": "List",
+      "status": "draft",
+      "docs": "v12-list--overview",
+      "firstSentence": "Carbon's UnorderedList, OrderedList and ListItem: static text lists, their markers one step under their text.",
+      "summary": "Carbon's UnorderedList, OrderedList and ListItem: static text lists, their markers one step under their text.",
+      "sections": [
+        "Motion"
+      ]
+    },
+    {
+      "key": "v12/list-reflow",
+      "id": "list-reflow",
+      "title": "V12/ListReflow",
+      "name": "ListReflow",
+      "status": "draft",
+      "docs": "v12-listreflow--overview",
+      "firstSentence": "A short row whose items come and go (a breadcrumb's trail, the page numbers in a pagination nav), moved as one change: items that leave fade where they stood, the rest slide to their new places.",
+      "summary": "A short row whose items come and go (a breadcrumb's trail, the page numbers in a pagination nav), moved as one change: items that leave fade where they stood, the rest slide to their new places.",
+      "sections": []
+    },
+    {
+      "key": "v12/loading",
+      "id": "loading",
+      "title": "V12/Loading",
+      "name": "Loading",
+      "status": "draft",
+      "docs": "v12-loading--overview",
+      "firstSentence": "`Loading` and `InlineLoading`, with Carbon's props, on the kit's one spinner.",
+      "summary": "`Loading` and `InlineLoading`, with Carbon's props, on the kit's one spinner.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/menu",
+      "id": "menu",
+      "title": "V12/Menu",
+      "name": "Menu",
+      "status": "draft",
+      "docs": "v12-menu--overview",
+      "firstSentence": "A floating list of actions and choices, with Carbon's API: `MenuItem`, `MenuItemSelectable`, `MenuItemRadioGroup`, `MenuItemGroup` and `MenuItemDivider`, and a MenuItem's own MenuItems as a submenu.",
+      "summary": "A floating list of actions and choices, with Carbon's API: `MenuItem`, `MenuItemSelectable`, `MenuItemRadioGroup`, `MenuItemGroup` and `MenuItemDivider`, and a MenuItem's own MenuItems as a submenu. `MenuButton` and `OverflowMenu` open one from a button, as SplitButton does; `x` and `y` place one at a point, as a context menu. One highlight serves the pointer and the keys, and labels take its color where it covers them. With `inline`, the menu is drawn in place, with no portal, placement, snap or close.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/modal",
+      "id": "modal",
+      "title": "V12/Modal",
+      "name": "Modal",
+      "status": "draft",
+      "docs": "v12-modal--overview",
+      "firstSentence": "A centred dialog over a dimmed page, with Carbon's props.",
+      "summary": "A centred dialog over a dimmed page, with Carbon's props. `Modal` is one piece and controlled: every way of closing calls `onRequestClose`, and only `open` closes it. `ComposedModal` is its shell, built from `ModalHeader`, `ModalBody` and `ModalFooter`; it closes itself unless `onClose` returns `false`. A passive modal has no footer. The body scrolls when it overflows, and the footer's primary button can show a loading status.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/notification",
+      "id": "notification",
+      "title": "V12/Notification",
+      "name": "Notification",
+      "status": "draft",
+      "docs": "v12-notification--overview",
+      "firstSentence": "Inline, toast and actionable notifications, and the callout, with Carbon's props: the six kinds, `title`, `subtitle`, `caption`, `lowContrast`, `hideCloseButton`, `role`, a toast's `timeout` and `onClose`.",
+      "summary": "Inline, toast and actionable notifications, and the callout, with Carbon's props: the six kinds, `title`, `subtitle`, `caption`, `lowContrast`, `hideCloseButton`, `role`, a toast's `timeout` and `onClose`. A plain surface whose outline, in the status color, says the kind. `variant` picks outlined, inverse or tonal; by default errors and actionable notifications are inverse, the rest outlined. `ToastStack` is the one place toasts live, and `useToasts` shows and closes them from anywhere inside it. `StaticNotification` is the callout's deprecated name.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/notifications-panel",
+      "id": "notifications-panel",
+      "title": "V12/NotificationsPanel",
+      "name": "NotificationsPanel",
+      "status": "draft",
+      "docs": "v12-notificationspanel--overview",
+      "firstSentence": "Carbon for IBM Products' notifications panel, prop for prop: a floating panel from the header's bell, its notifications grouped into Today, Yesterday and Previous.",
+      "summary": "Carbon for IBM Products' notifications panel, prop for prop: a floating panel from the header's bell, its notifications grouped into Today, Yesterday and Previous. Each row has a status mark, when it came, a title, a description with Read more past two lines, and a link. Unread rows carry a blue dot cut out of the mark, and a semibold title. The header holds Dismiss all, Do not disturb and settings; View all is the foot. The host owns `open` and `data`. A press outside, not on the trigger, or Escape calls `onClickOutside`, and Escape puts focus back on the trigger. `NotificationsBell` is the trigger's icon: pass it the panel's Do not disturb state, and the same state back as `doNotDisturbDefaultToggled`, so the panel opens as it was left.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/number-input",
+      "id": "number-input",
+      "title": "V12/NumberInput",
+      "name": "NumberInput",
+      "status": "draft",
+      "docs": "v12-numberinput--overview",
+      "firstSentence": "A field for a number, with − and + steppers inset at its trailing edge.",
+      "summary": "A field for a number, with − and + steppers inset at its trailing edge. It is the text input's field: its label, outline, status mark and one message line. On a step the number rolls to its next value. `NumberInput` takes Carbon's props, plus `corners`, `frame`, `variant`, `lateErrors`, `typingPauseMs`, `messagePlacement`, `statusBeat`, `timeScale` and the AI fill state. `type=\"text\"` parses and formats the number for a locale. `NumberInputSkeleton` is the field while its value loads.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/options-tile",
+      "id": "options-tile",
+      "title": "V12/OptionsTile",
+      "name": "Options tile",
+      "status": "draft",
+      "docs": "v12-optionstile--overview",
+      "firstSentence": "A tile for one group of settings.",
+      "summary": "A tile for one group of settings. The heading is a button that holds the chevron, the title and a one-line `summary` of what the settings are set to. `enabled` adds a switch over the heading's end that turns the group on or off; `onChange` hears it. The body opens to show the settings, its children. Without children the tile doesn't open, and the heading is plain text. `invalid`, `warn` and `locked` put a status, with its text, in the summary's place, in that order. Open, the summary goes, but a status stays. Locked makes the switch read-only. `open` is the initial state, followed whenever it changes, and `onToggle` hears each toggle. `size` sets the heading: lg 48px (default) or xl 64px.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/package/motion-icons",
+      "id": "package/motion-icons",
+      "title": "V12/Motion Icons/Gallery",
+      "name": "Motion icons",
+      "status": "draft",
+      "docs": "v12-motion-icons-gallery--overview",
+      "firstSentence": "Carbon's UI icons that move: each matches its Carbon icon at rest, size for size.",
+      "summary": "Carbon's UI icons that move: each matches its Carbon icon at rest, size for size. It moves on hover; a toggle switches between two Carbon drawings; some icons take a status mark or play an action.",
+      "sections": [
+        "Motion"
+      ]
+    },
+    {
+      "key": "v12/page-header",
+      "id": "page-header",
+      "title": "V12/PageHeader",
+      "name": "Page header",
+      "status": "draft",
+      "docs": "v12-pageheader--overview",
+      "firstSentence": "The top of a page: a breadcrumb, a title, a subtitle, `children`, tags, page actions, an action bar and tabs (`navigation`).",
+      "summary": "The top of a page: a breadcrumb, a title, a subtitle, `children`, tags, page actions, an action bar and tabs (`navigation`). It sticks to the top of its scroll container, `pageHeaderOffset` below it. Past 16px of scroll it collapses to one 48px row of the breadcrumb, the title, the page actions and the action bar, then the tabs. Back at the top it expands. `collapseHeader` holds it collapsed, and `hasCollapseHeaderToggle` adds a button for it. Its layout follows its own width, not the window's. Below 672px the page actions go under the title, and the collapsed row has no breadcrumb. Each row is split 60/40 between the title or breadcrumb and the actions from 672px up, and 75/25 below. Page actions given as descriptions fold as a set into a \"Page actions\" menu button when they don't fit; a node of your own stays as it is. The action bar gives its trailing items to an overflow menu. The title truncates on one line, with its full text in a tooltip. Its controls sit one size down from the density around it. `frame=\"flush\"`, the default, is the quiet surface and its hairline; `ghost` paints the ground it sits on, with no hairline. `corners=\"rounded\"` rounds it in the page or in a card.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/pagination",
+      "id": "pagination",
+      "title": "V12/Pagination",
+      "name": "Pagination",
+      "status": "draft",
+      "docs": "v12-pagination--overview",
+      "firstSentence": "The footer of a long list or a data table.",
+      "summary": "The footer of a long list or a data table. On the start side are the page size select and the item range. On the end side are the page select, the page count, and back and forward buttons. It takes Carbon's props: `page` (from 1), `pageSize`, `pageSizes`, `totalItems`, `pagesUnknown`, `isLastPage`, the text props, `disabled`, `size` and `onChange`. The selects are the kit's inline Dropdown, one size down from the bar. The buttons are the kit's ghost IconButtons. A new page size goes back to page 1. Reaching the last page moves focus to the back button; reaching the first moves it to the forward button. A bar narrower than its controls scrolls sideways in the kit's Scroller.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/pagination-nav",
+      "id": "pagination-nav",
+      "title": "V12/PaginationNav",
+      "name": "PaginationNav",
+      "status": "draft",
+      "docs": "v12-paginationnav--overview",
+      "firstSentence": "Page numbers between a back and a forward button.",
+      "summary": "Page numbers between a back and a forward button. The first and last pages always show. Between them is a window of numbers, and the pages hidden on each side sit behind a \"…\" that opens a list of them. It takes Carbon's props: `page` (from 0), `totalItems` (the number of pages), `itemsShown` (default 10, at least 4), `loop`, `disableOverflow`, `size` (default lg), `tooltipAlignment`, `tooltipPosition`, `translateWithId` and `onChange(index)`. `variant` sets the marker's color: `inverse`, the default, or `hero`, the brand blue. `motion` takes the selection kit's dials; keys left out take the kit's. `onMove` is called as each glide of the marker starts.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/popover",
+      "id": "popover",
+      "title": "V12/Popover",
+      "name": "Popover",
+      "status": "draft",
+      "docs": "v12-popover--overview",
+      "firstSentence": "A surface opened from a trigger, for content that is not a list of actions: filters, settings, a short form.",
+      "summary": "A surface opened from a trigger, for content that is not a list of actions: filters, settings, a short form. `Popover` and `PopoverContent` take Carbon's props. With `anchor`, the popover is a portalled panel opened from that element instead. There is no caret: the surface sits 4px off its trigger. The content has no padding of its own; the host pads it.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/processing",
+      "id": "processing",
+      "title": "V12/Processing",
+      "name": "Processing",
+      "status": "draft",
+      "docs": "v12-processing--overview",
+      "firstSentence": "The working mark for a turn or a job: three dots that load in and pulse on the loading clock, turn into a triangle while the machine acts and a square while it waits on a person, and shrink out.",
+      "summary": "The working mark for a turn or a job: three dots that load in and pulse on the loading clock, turn into a triangle while the machine acts and a square while it waits on a person, and shrink out.",
+      "sections": [
+        "Motion"
+      ]
+    },
+    {
+      "key": "v12/progress-bar",
+      "id": "progress-bar",
+      "title": "V12/ProgressBar",
+      "name": "ProgressBar",
+      "status": "draft",
+      "docs": "v12-progressbar--overview",
+      "firstSentence": "An amount of work as a line, with Carbon's props: a label, the bar, helper text and a status mark at the bar's end.",
+      "summary": "An amount of work as a line, with Carbon's props: a label, the bar, helper text and a status mark at the bar's end. With no `value` it is indeterminate. It adds `variant` (neutral or hero), `pulse`, `mark` and `motion`.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/progress-indicator",
+      "id": "progress-indicator",
+      "title": "V12/ProgressIndicator",
+      "name": "ProgressIndicator",
+      "status": "draft",
+      "docs": "v12-progressindicator--overview",
+      "firstSentence": "A task's steps on a line, drawn as line tabs.",
+      "summary": "A task's steps on a line, drawn as line tabs. Its props are Carbon's `ProgressIndicator` and `ProgressStep`, plus `reach` from `useProgressReach`. Each step has an icon, a label and an optional secondary label. The current step carries a bar on the line, and a fill runs over the complete steps. `ProgressIndicatorSkeleton` draws it loading.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/progress-ring",
+      "id": "progress-ring",
+      "title": "V12/ProgressRing",
+      "name": "ProgressRing",
+      "status": "draft",
+      "docs": "v12-progressring--overview",
+      "firstSentence": "An amount of work as a ring, for small places such as a file chip, a row or an uploader item.",
+      "summary": "An amount of work as a ring, for small places such as a file chip, a row or an uploader item. It is the Spinner's sibling, with ProgressBar's prop names: the loud arc over the Spinner's quiet base, a label and helper text. It comes in the Spinner's sizes, 16, 20, 24 and 32px, neutral or hero. With no `value` it is the Spinner.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/props",
+      "id": "props",
+      "title": "V12/Props",
+      "name": "Prop vocabulary",
+      "status": "draft",
+      "docs": "v12-props--overview",
+      "firstSentence": "One name for each idea across the v12 components.",
+      "summary": "One name for each idea across the v12 components. Carbon v11's names stay where v11 has them and they fit (`size`, `type` on Tag, `labelText`, `lowContrast`, `invalidText` …). **No aliases:** one name per concept for v12, including v11 names that break the system (Tabs' `contained`, Button's `tertiary` and `ghost` kinds). The earlier names are gone, not accepted; the migration table lists each one. The shared types and the resolutions that are more than `a ?? b` are in `props.ts`, with tests beside it (`props.test.ts`).",
+      "sections": [
+        "motion"
+      ]
+    },
+    {
+      "key": "v12/radio-button",
+      "id": "radio-button",
+      "title": "V12/RadioButton",
+      "name": "RadioButton",
+      "status": "draft",
+      "docs": "v12-radiobutton--overview",
+      "firstSentence": "A circle for choosing one option from a group.",
+      "summary": "A circle for choosing one option from a group. `RadioButton` and `RadioButtonGroup` take Carbon's props, plus `timeScale`. The group holds the choice, its legend and one message line; it is in a row by default. `RadioMark` is the circle and dot alone, for a control that draws a radio it doesn't own. `RadioButtonSkeleton` is the radio button while it loads.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/recipes",
+      "id": "recipes",
+      "title": "V12/Recipes",
+      "name": "Recipes",
+      "status": "draft",
+      "docs": "v12-recipes--overview",
+      "firstSentence": "Screens put together from the parts, each for one job.",
+      "summary": "Screens put together from the parts, each for one job. A recipe fills its regions with the parts a team passes it and owns the rest: the frame, the states and the motion between them.",
+      "sections": [
+        "Assistant",
+        "Resource index",
+        "Create flow",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/roll-text",
+      "id": "roll-text",
+      "title": "V12/RollText",
+      "name": "RollText",
+      "status": "draft",
+      "docs": "v12-rolltext--overview",
+      "firstSentence": "A short text that rolls to its next value, like a counter: only the characters that change move.",
+      "summary": "A short text that rolls to its next value, like a counter: only the characters that change move. For a value that steps through a list, such as a slider's step, a status word or a count's label. The rules for when to use it are below; the mechanics (what stays, what rolls, the clip, the blur) are in the header of `RollText.tsx`.",
+      "sections": []
+    },
+    {
+      "key": "v12/scroller",
+      "id": "scroller",
+      "title": "V12/Scroller",
+      "name": "Scroller",
+      "status": "draft",
+      "docs": "v12-scroller--overview",
+      "firstSentence": "A floating pill per axis in place of the native scrollbar, over native scrolling on a container or the window.",
+      "summary": "A floating pill per axis in place of the native scrollbar, over native scrolling on a container or the window. The pill reads out where you are, and you can drag it or press beside it. Wheel, trackpad, touch and keys scroll natively. Size the root like any box; the viewport inside fills it and scrolls. `WindowScroller` puts the pill on the window's edge and hides the page's own scrollbar while it is mounted. The rest color is `$border-strong`, so it steps with the layer.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/search",
+      "id": "search",
+      "title": "V12/Search",
+      "name": "Search",
+      "status": "draft",
+      "docs": "v12-search--overview",
+      "firstSentence": "Carbon's Search on the text input's field: a magnifier at the start, the input, and a clear button at the end.",
+      "summary": "Carbon's Search on the text input's field: a magnifier at the start, the input, and a clear button at the end. `labelText` is hidden and names the search landmark. The clear button, or Escape with a value, empties the field, calls `onChange` and `onClear`, and puts focus back in the input. It does not show when disabled or read-only. `ExpandableSearch` is its magnifier button until pressed, then grows into the field and takes focus. Emptied and left, or on Escape in an empty field, it closes back into the button; `isExpanded` holds it open. Its open width is `100%`, or `--cds-search-expanded-inline-size`. `SearchSkeleton` is the search while it loads.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/select",
+      "id": "select",
+      "title": "V12/Select",
+      "name": "Select",
+      "status": "draft",
+      "docs": "v12-select--overview",
+      "firstSentence": "Carbon's Select, a native `<select>`, on the kit's text field: a label, the field with a chevron and a status mark at its trailing edge, and one message line.",
+      "summary": "Carbon's Select, a native `<select>`, on the kit's text field: a label, the field with a chevron and a status mark at its trailing edge, and one message line. `Select` takes Carbon's props, and its options are `SelectItem` and `SelectItemGroup`. The select fills the field, so a press anywhere on it opens the list. Where the browser lets the page style the list, it is drawn in the page with the Dropdown's look; elsewhere it is the platform's own. Read-only takes focus but never opens. `inline` puts the label beside a quiet field. `SelectSkeleton` is the select while its value loads.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/select-list",
+      "id": "select-list",
+      "title": "V12/SelectList",
+      "name": "SelectList",
+      "status": "draft",
+      "docs": "v12-selectlist--overview",
+      "firstSentence": "Pick one value from a vertical list of rows.",
+      "summary": "Pick one value from a vertical list of rows. It is the content switcher's vertical sibling, on the selection kit's track, selector and keyboard model. Rows are `SelectItem`s, with an optional icon, secondary text and a trailing accessory; `SelectItemGroup` adds headings and `SelectItemDivider` a line. With no value, nothing is marked.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/selection-kit",
+      "id": "selection-kit",
+      "title": "V12/SelectionKit",
+      "name": "SelectionKit",
+      "status": "draft",
+      "docs": "v12-selectionkit--overview",
+      "firstSentence": "What the v12 selection components (content switcher, tabs, select list, menu) share: the selection engine's hooks, the selector's faces and styles, and `SelectionPanels`, the content a selection switches.",
+      "summary": "What the v12 selection components (content switcher, tabs, select list, menu) share: the selection engine's hooks, the selector's faces and styles, and `SelectionPanels`, the content a selection switches. Each component imports `selection-kit.scss`; the motion comes from the motion package.",
+      "sections": [
+        "SelectionPanels",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/shimmer-text",
+      "id": "shimmer-text",
+      "title": "V12/ShimmerText",
+      "name": "Shimmer text",
+      "status": "draft",
+      "docs": "v12-shimmertext--overview",
+      "firstSentence": "A label that shows live work: a band sweeps through words that rest a step quieter and show one weight step heavier under the band.",
+      "summary": "A label that shows live work: a band sweeps through words that rest a step quieter and show one weight step heavier under the band. It runs on the skeleton wave's angle.",
+      "sections": [
+        "Motion"
+      ]
+    },
+    {
+      "key": "v12/side-nav",
+      "id": "side-nav",
+      "title": "V12/SideNav",
+      "name": "Side nav",
+      "status": "draft",
+      "docs": "v12-sidenav--overview",
+      "firstSentence": "The app's page navigation, on the selection family's look and motion.",
+      "summary": "The app's page navigation, on the selection family's look and motion. It is a `<nav>` of real links, not a tablist: each `SideNavLink` is an `<a href>`, or a router link through `as`, and the current page is `aria-current=\"page\"`. `SideNavGroup` is a collapsible group of links under a header. A group opens when you go to one of its pages and never shuts on its own. With `collapsed`, `defaultCollapsed` or `collapsible`, and an icon on every top-level row, the nav folds to a rail of icons. In an AppShell the shell draws the fold toggle; elsewhere it sits at the nav's foot. `filter` pins a field at the top that narrows the nav to the matching links; in a ghost nav the field is ghost too, and hovers as a row does. Every link and group header is a tab stop.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/side-panel",
+      "id": "side-panel",
+      "title": "V12/SidePanel",
+      "name": "Side panel",
+      "status": "draft",
+      "docs": "v12-sidepanel--overview",
+      "firstSentence": "A panel at the side of the page, for a task beside it.",
+      "summary": "A panel at the side of the page, for a task beside it. It has a top bar with the close button, a title block, an optional toolbar, a scrolling body and up to three footer actions. It is controlled: every way of closing calls `onRequestClose`, and only `open` closes it. `frame` sets what it stands on: flush against the edge, inset 8px from the edges, or floating over the page. With `includeOverlay` the page dims and focus stays in the panel. With `slideIn` the page makes room instead of being covered.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/slider",
+      "id": "slider",
+      "title": "V12/Slider",
+      "name": "Slider",
+      "status": "draft",
+      "docs": "v12-slider--overview",
+      "firstSentence": "A value or a range on a line.",
+      "summary": "A value or a range on a line. `Slider` takes Carbon's API: one knob, or two with `unstable_valueUpper`, the number fields beside it, `invalid` and `warn` with one message line under it. It adds `shape` (line, track or knob), `steps` for a few named stops, `snap` and `ticks`, `fillStyle`, `knobShape`, `status`, `gradient`, `reference`, `ai` and `loading`. `SliderSkeleton` is the slider while it loads, at its own size.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/snap",
+      "id": "snap",
+      "title": "V12/Snap",
+      "name": "Snap",
+      "status": "draft",
+      "docs": "v12-snap--overview",
+      "firstSentence": "The timing for floating surfaces by their size: a large surface takes the surface rule's duration by travel, a small one keeps the floating rule.",
+      "summary": "The timing for floating surfaces by their size: a large surface takes the surface rule's duration by travel, a small one keeps the floating rule.",
+      "sections": []
+    },
+    {
+      "key": "v12/status-indicator",
+      "id": "status-indicator",
+      "title": "V12/StatusIndicator",
+      "name": "StatusIndicator",
+      "status": "draft",
+      "docs": "v12-statusindicator--overview",
+      "firstSentence": "A status as a mark and a label.",
+      "summary": "A status as a mark and a label. Its props are Carbon's IconIndicator's (`kind`, `label`, `size`), plus `labels`, `labelSwap` and `variant`.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/step-flow",
+      "id": "step-flow",
+      "title": "V12/StepFlow",
+      "name": "Step flow",
+      "status": "draft",
+      "docs": "v12-stepflow--overview",
+      "firstSentence": "A create flow in steps: a progress indicator, one step's heading and fields at a time, and Back and Next, with Submit on the last step.",
+      "summary": "A create flow in steps: a progress indicator, one step's heading and fields at a time, and Back and Next, with Submit on the last step. `StepFlow` draws it all in place. `useStepFlow` returns the flow, so its parts can go anywhere: `StepFlowProgress` for the indicator, `StepFlowBody` for the steps, and `StepFlowActions` for the buttons, or `stepFlowActions(flow)` for a tearsheet's `actions`. Back always moves. Next and Submit move only past valid steps; a step's `invalid` holds Next on it, and its `disableSubmit` disables Next or Submit. `onCancel` adds Cancel before Back. Each step is a region named by its heading. Steps stay mounted while hidden, so Back keeps what was entered. Once the old step has gone, focus moves to the new heading and the step is announced, \"Step 2 of 3: Access\" by default.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/structured-list",
+      "id": "structured-list",
+      "title": "V12/StructuredList",
+      "name": "StructuredList",
+      "status": "draft",
+      "docs": "v12-structuredlist--overview",
+      "firstSentence": "Rows of related details in columns, read across.",
+      "summary": "Rows of related details in columns, read across. `StructuredListWrapper` holds a `StructuredListHead` and a `StructuredListBody` of `StructuredListRow`s and `StructuredListCell`s, with the roles of a table. Columns size to their content, with a hairline between rows. With `selection`, each row is a choice: a radio mark in its leading cell, and a marker on the selected row. `isCondensed` gives 8px cells; `isFlush` removes the start padding, but not with `selection`.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/tabs",
+      "id": "tabs",
+      "title": "V12/Tabs",
+      "name": "Tabs",
+      "status": "draft",
+      "docs": "v12-tabs--overview",
+      "firstSentence": "Move between views of one context.",
+      "summary": "Move between views of one context. `Tabs` holds the state for a `TabList` and its `TabPanels`, with Carbon's API: `selectedIndex`, `defaultSelectedIndex`, `onChange` and disabled tabs. Line tabs, the default, ride a 2px underline on a hairline; `frame=\"inset\"` puts them in a track with a selector. A `Tab` takes an icon before its label and a second line. `IconTab` is an icon only, named by its tooltip, with an optional dot for something new. With `dismissable`, tabs close. `TabsVertical` and `TabListVertical` are the vertical form.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/tag",
+      "id": "tag",
+      "title": "V12/Tag",
+      "name": "Tag",
+      "status": "draft",
+      "docs": "v12-tag--overview",
+      "firstSentence": "A short label: a status, a kind, a count.",
+      "summary": "A short label: a status, a kind, a count. `Tag` is Carbon's read-only tag. It is content, not a control, and never answers the pointer. `SelectableTag` is a tag the person turns on and off, on the rollover. `DismissibleTag` is a tag the person can remove, with a close at its end. `TagSkeleton` is a tag while it loads. They take Carbon's props, plus `corners`, `arrive`, `show` and `timeScale` where they apply.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/tag-set",
+      "id": "tag-set",
+      "title": "V12/TagSet",
+      "name": "TagSet",
+      "status": "draft",
+      "docs": "v12-tagset--overview",
+      "firstSentence": "A row of tags that fits its container.",
+      "summary": "A row of tags that fits its container. As many tags show as fit; the rest go into a \"+N\" that opens them in a popover. With more than `allTagsModalSearchThreshold` (10) in the overflow, the popover shows that many and a \"View all tags\" button, which opens a modal of every tag with a search. Each tag is a `label` and the kit Tag's props; one with `onClose` is a DismissibleTag. `maxVisible` caps the row, and `multiline` wraps it instead. `overflowType=\"tag\"` lists the overflow as tags, `default` as text. `TagSetSkeleton` is the set while it loads.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/tearsheet",
+      "id": "tearsheet",
+      "title": "V12/Tearsheet",
+      "name": "Tearsheet",
+      "status": "draft",
+      "docs": "v12-tearsheet--overview",
+      "firstSentence": "A large sheet that rises from the bottom of the page for a task that needs room.",
+      "summary": "A large sheet that rises from the bottom of the page for a task that needs room. It has a header with a label, a title, a description and optional header actions, a navigation row, an influencer column beside a scrolling main area, and up to four footer actions. It follows `open`, and closes itself unless `onClose` returns `false`. A sheet with no actions is passive: it has a close button, and a press outside closes it. Escape closes the topmost sheet. Focus moves in on open, Tab wraps inside, and focus goes back to `launcherButtonRef`, else to what had it, as the sheet starts to leave. The page doesn't scroll while a sheet is open. `TearsheetNarrow` is centred and has no influencer, navigation or header actions. With `warm`, on by default, the sheet mounts hidden, with its content, while its launcher is hovered or focused.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/text-area",
+      "id": "text-area",
+      "title": "V12/TextArea",
+      "name": "TextArea",
+      "status": "draft",
+      "docs": "v12-textarea--overview",
+      "firstSentence": "Carbon's TextArea on the text input's field: the same label row and counter, fill, outline, status mark and message line.",
+      "summary": "Carbon's TextArea on the text input's field: the same label row and counter, fill, outline, status mark and message line. It is `rows` lines tall, 4 by default, and one row is the size's field height. It resizes vertically only; with `cols`, disabled or read-only it does not resize. The status mark sits at the top of the trailing edge, on the first line, and its room is kept, so a status never re-wraps the text. `enableCounter` with `maxCount` shows `count/maxCount` in the label row; `counterMode` counts characters or words. Read-only and disabled beat both statuses, and invalid beats warn. `TextAreaSkeleton` is the text area while it loads.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/text-input",
+      "id": "text-input",
+      "title": "V12/TextInput",
+      "name": "TextInput",
+      "status": "draft",
+      "docs": "v12-textinput--overview",
+      "firstSentence": "A single-line field: a label, the field with its outline and a status mark at its trailing edge, and one message line for helper text, a warning or an error.",
+      "summary": "A single-line field: a label, the field with its outline and a status mark at its trailing edge, and one message line for helper text, a warning or an error. `TextInput` takes Carbon's props. `PasswordInput` adds a toggle that shows and hides the password. `MultiFieldInput` is one field in segments, each with its own value and validation. `TextInputSkeleton` is the field while its value loads. `FieldMessage` and `FieldStatusMark` are the message line and the mark, shared with other fields.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/theme-zone",
+      "id": "theme-zone",
+      "title": "V12/ThemeZone",
+      "name": "Theme zone",
+      "status": "draft",
+      "docs": "v12-themezone--overview",
+      "firstSentence": "An area of the page in a theme of its own, through Carbon's `Theme`: `light` or `dark` (white or g100), `page` (no zone of its own) or `inverse` (the opposite of the theme round it).",
+      "summary": "An area of the page in a theme of its own, through Carbon's `Theme`: `light` or `dark` (white or g100), `page` (no zone of its own) or `inverse` (the opposite of the theme round it).",
+      "sections": []
+    },
+    {
+      "key": "v12/tile",
+      "id": "tile",
+      "title": "V12/Tile",
+      "name": "Tile",
+      "status": "draft",
+      "docs": "v12-tile--overview",
+      "firstSentence": "A surface for content, with 8px corners and 16px in, on `--cds-surface`.",
+      "summary": "A surface for content, with 8px corners and 16px in, on `--cds-surface`. `Tile` is plain and has no hover. `ClickableTile` is a link with `href`, else a button. `SelectableTile` holds a checkbox as its tab stop. `TileGroup` and `RadioTile` choose one of a set. `ExpandableTile` shows `TileAboveTheFoldContent` and opens to show `TileBelowTheFoldContent`. `TileSkeleton` is a tile while it loads. They take Carbon's props, plus `hoverSteps`, `timeScale`, `footer`, `toggleArea` and `onExpandedChange`. `decorator`, `slug`, `light`, `hasRoundedCorners`, `tileMaxHeight` and `tilePadding` are accepted and do nothing.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/time-picker",
+      "id": "time-picker",
+      "title": "V12/TimePicker",
+      "name": "TimePicker",
+      "status": "draft",
+      "docs": "v12-timepicker--overview",
+      "firstSentence": "Carbon's TimePicker on the kit's text field: a short field for the time (`hh:mm`) and its selects beside it, under one label, over one message line.",
+      "summary": "Carbon's TimePicker on the kit's text field: a short field for the time (`hh:mm`) and its selects beside it, under one label, over one message line. `TimePicker` takes Carbon's props, including `warning` and `warningText`. Its children are `TimePickerSelect`s, native `<select>`s for AM / PM or a time zone. They take the picker's size, its `disabled` unless they set their own, and its `readOnly`, which holds their value.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/toggle",
+      "id": "toggle",
+      "title": "V12/Toggle",
+      "name": "Toggle",
+      "status": "draft",
+      "docs": "v12-toggle--overview",
+      "firstSentence": "A switch for a setting.",
+      "summary": "A switch for a setting. It is a track with two stops, and its knob is the selection family's selector. `Toggle` takes Carbon's props: `labelText`, `labelA` and `labelB` for the state text, `size`, `toggled`, `defaultToggled`, `onToggle`, `disabled` and `readOnly`. It adds `corners`, `variant`, `mark`, `disabledReason`, `motion`, `timeScale` and `onMove`. It is a `role=\"switch\"` button, and Space and Enter flip it. `ToggleSkeleton` is the toggle while it loads.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/toggletip",
+      "id": "toggletip",
+      "title": "V12/Toggletip",
+      "name": "Toggletip",
+      "status": "draft",
+      "docs": "v12-toggletip--overview",
+      "firstSentence": "A button that opens a small high-contrast panel on click, for help that holds a link or an action, where a tooltip can't.",
+      "summary": "A button that opens a small high-contrast panel on click, for help that holds a link or an action, where a tooltip can't. The parts take Carbon's props: `Toggletip`, `ToggletipLabel`, `ToggletipButton`, `ToggletipContent` and `ToggletipActions`. It is built on the kit's Popover and takes its props. A click on the button toggles it. Escape closes it and returns focus to the button; a press outside, focus leaving or the window losing focus closes it. The panel is rendered in place, so Tab goes from the button into it.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/toolbar",
+      "id": "toolbar",
+      "title": "V12/Toolbar",
+      "name": "Toolbar",
+      "status": "draft",
+      "docs": "v12-toolbar--overview",
+      "firstSentence": "A row or a column of controls with one tab stop.",
+      "summary": "A row or a column of controls with one tab stop. `ToolbarButton` is an action and `ToolbarToggle` a toggle: a ghost icon button whose label is its tooltip and its name, or a labelled button. `ToolbarToggleGroup` holds toggles that belong together: `single` is a selection track with one choice, `multiple` keeps each toggle's own pressed fill. `ToolbarGroup` keeps controls together, and `ToolbarDivider` draws a hairline between them. In a row, what does not fit moves into a More menu. The arrow keys move between controls, with Home and End; they do not wrap unless `wrap` is set. In a single group, the arrows move focus without choosing, and Enter or Space choose.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/tooltip",
+      "id": "tooltip",
+      "title": "V12/Tooltip",
+      "name": "Tooltip",
+      "status": "draft",
+      "docs": "v12-tooltip--overview",
+      "firstSentence": "Short labels and descriptions on hover and keyboard focus.",
+      "summary": "Short labels and descriptions on hover and keyboard focus. `Tooltip`, `IconButton`, `DefinitionTooltip` and `TooltipGroup` take Carbon's props and share one look: the inverse fill, 4px corners and no caret. Escape dismisses a tooltip, and the pointer can move onto it without it leaving. Only one tooltip shows on the page at a time.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/tree-view",
+      "id": "tree-view",
+      "title": "V12/TreeView",
+      "name": "TreeView",
+      "status": "draft",
+      "docs": "v12-treeview--overview",
+      "firstSentence": "A hierarchy of nodes to open, shut and select.",
+      "summary": "A hierarchy of nodes to open, shut and select. `TreeView` holds `TreeNode`s; a node with child nodes is a parent, and its caret opens and shuts it. One node is selected, under the selection kit's selector. With `multiselect`, every row has a checkbox and there is no selector. `variant` sets the selector's style and `size` the row height. `TreeViewSkeleton` is the tree while it loads.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/user-avatar",
+      "id": "user-avatar",
+      "title": "V12/UserAvatar",
+      "name": "UserAvatar",
+      "status": "draft",
+      "docs": "v12-useravatar--overview",
+      "firstSentence": "A person as their initials, their picture or an icon in a coloured circle, with the props of Carbon for IBM Products' `UserAvatar`.",
+      "summary": "A person as their initials, their picture or an icon in a coloured circle, with the props of Carbon for IBM Products' `UserAvatar`. The initials are the first and last name's first letters, or a single name's first two; with no name it shows the User icon, or `renderIcon`. Sizes are sm 24, md 32 (the default), lg 40 and xl 48px. The twelve colours follow the Carbon theme it sits in; `theme` names one outright. `UserAvatarSkeleton` is its loading state.",
+      "sections": [
+        "Motion",
+        "Reduced motion"
+      ]
+    },
+    {
+      "key": "v12/util",
+      "id": "util",
+      "title": "V12/Util",
+      "name": "Util",
+      "status": "draft",
+      "docs": "v12-util--overview",
+      "firstSentence": "The helpers the v12 components share: class names, form state, the page's layer stack and focus, colour parsing, the reduced-motion getter, the visibility a looping motion pauses on, and the ref and `inert` helpers that read the same on React 18 and 19.",
+      "summary": "The helpers the v12 components share: class names, form state, the page's layer stack and focus, colour parsing, the reduced-motion getter, the visibility a looping motion pauses on, and the ref and `inert` helpers that read the same on React 18 and 19. The keyboard and screen reader helpers: - `isRtl`, `useDirection` and `inlineKey`: direction, read one way. `inlineKey(e.key, el)` hands back a horizontal arrow as it reads left to right, so one handler serves both directions. - `rovingIndex` and `useRovingTabStop`: a group of controls that is one tab stop, moved through with the arrows (by direction), Home and End. - `useAnnouncer`: a polite and an assertive live region to render, and the `announce` that writes to them.",
+      "sections": []
+    }
+  ]
+}

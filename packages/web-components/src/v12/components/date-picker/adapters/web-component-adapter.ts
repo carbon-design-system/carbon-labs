@@ -132,7 +132,7 @@ export class WebComponentAdapter {
 
     // Dispatch custom event
     (this.component as unknown as HTMLElement).dispatchEvent(
-      new CustomEvent('cds-date-picker-state-change', {
+      new CustomEvent('clabs-date-picker-state-change', {
         detail: { transition },
         bubbles: true,
         composed: true,

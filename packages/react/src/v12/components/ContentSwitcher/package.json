@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-content-switcher",
-  "version": "0.3.0",
+  "version": "0.8.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - ContentSwitcher for React (v12)",
@@ -29,6 +29,10 @@
     "lib",
     "scss",
     "telemetry.yml"
+  ],
+  "sideEffects": [
+    "*.scss",
+    "*.css"
   ],
   "scripts": {
     "build": "node ../../../../tasks/build.js",

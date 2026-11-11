@@ -10,4 +10,14 @@ layer stack and focus, colour parsing, the reduced-motion getter, the
 visibility a looping motion pauses on, and the ref and `inert` helpers that
 read the same on React 18 and 19.
 
+The keyboard and screen reader helpers:
+
+- `isRtl`, `useDirection` and `inlineKey`: direction, read one way.
+  `inlineKey(e.key, el)` hands back a horizontal arrow as it reads left to
+  right, so one handler serves both directions.
+- `rovingIndex` and `useRovingTabStop`: a group of controls that is one tab
+  stop, moved through with the arrows (by direction), Home and End.
+- `useAnnouncer`: a polite and an assertive live region to render, and the
+  `announce` that writes to them.
+
 <Canvas of={UtilStories.Default} />

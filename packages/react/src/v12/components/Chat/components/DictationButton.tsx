@@ -147,7 +147,7 @@ export function DictationStatus({
         open={listening}
         align="top-end"
         autoAlign
-        highContrast
+        variant="inverse"
         timeScale={timeScale}
         className="cds-dictation-anchor">
         <PopoverContent className="cds-dictation-status">

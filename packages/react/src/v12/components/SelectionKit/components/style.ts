@@ -30,6 +30,7 @@ import { ghostSteps } from './ghost';
 export type SelectionVariant = 'tonal' | 'inverse' | 'outlined' | 'hero';
 
 export interface SelectionStyleProps extends Omit<KitStyleProps, 'variant'> {
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /**
    * `inverse` (default) the inverse selector; `tonal` a selected-layer
    * selector; `outlined` a hairline selector; `hero` the brand blue, for the

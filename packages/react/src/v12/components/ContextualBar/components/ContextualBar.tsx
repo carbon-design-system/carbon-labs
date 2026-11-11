@@ -203,6 +203,7 @@ export interface ContextualBarProps {
   placement?: ContextualBarPlacement;
   /** How far along its nearest edge it may grow from, either side of the middle: 0.5 (default) anywhere, right across from the press. */
   originBand?: number;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** `tonal`: the quiet fill and hairline. `inverse`: the opposite theme. Default tonal, inverse in an inset workspace. */
   variant?: ContextualBarVariant;
   /** A status: on tonal its outline, on inverse its fill (solved for the text). Default: tonal `info`, inverse none; `null`, none. */

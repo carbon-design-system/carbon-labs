@@ -51,6 +51,7 @@ export interface SelectableTagProps extends Omit<
   /** v11: called with the new selected state. */
   onChange?: (selected: boolean) => void;
   size?: TagSize;
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** `full` (the pill, default), `rounded` (2px) or `square`, as the Tag. */
   corners?: TagCorners;
   /** A tag color: toned off, the colored Tag's fill on. Default neutral. */

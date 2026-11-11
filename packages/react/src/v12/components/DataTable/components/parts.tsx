@@ -382,6 +382,7 @@ function selectAllInView<R, C extends unknown[]>(
 
 /** The kit's DataTable props, beside v11's. */
 export interface DataTableCornersProps {
+  // @carbon-explore corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD
   /** `square` (v11, default) or `rounded`: 8px on the outer box, inside a card or a rounded region. Default: KitDefaults' (a Region's), else `square`. */
   corners?: ContainerCorners;
 }

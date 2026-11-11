@@ -89,53 +89,6 @@ export function readAt(repo, sha, path) {
 }
 
 /**
- * The last commit at or before a commit that changed a path.
- *
- * @param {string} repo The repository.
- * @param {string} sha The commit.
- * @param {string} path The path.
- * @returns {string | null} The commit.
- */
-export function lastChange(repo, sha, path) {
-  const out = git(repo, ['log', '-1', '--format=%H', sha, '--', path]).trim();
-  return out || null;
-}
-
-/**
- * Moves a line number from one commit to another through the diff of a
- * file: null when the line itself changed.
- *
- * @param {string} repo The repository.
- * @param {string} a The commit the line number is from.
- * @param {string} b The commit to move it to.
- * @param {string} path The file.
- * @param {number} line The 1-based line at `a`.
- * @returns {number | null} The line at `b`.
- */
-export function moveLine(repo, a, b, path, line) {
-  if (a === b) {
-    return line;
-  }
-  const out = git(repo, ['diff', '-U0', a, b, '--', path]);
-  let delta = 0;
-  for (const m of out.matchAll(
-    /^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@/gm
-  )) {
-    const oldStart = Number(m[1]);
-    const oldCount = m[2] === undefined ? 1 : Number(m[2]);
-    const newCount = m[4] === undefined ? 1 : Number(m[4]);
-    const before =
-      oldCount === 0 ? oldStart < line : oldStart + oldCount - 1 < line;
-    if (before) {
-      delta += newCount - oldCount;
-    } else if (oldCount > 0 && line >= oldStart) {
-      return null;
-    }
-  }
-  return line + delta;
-}
-
-/**
  * The files under a path at a commit whose text matches a pattern.
  *
  * @param {string} repo The repository.

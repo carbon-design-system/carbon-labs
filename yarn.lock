@@ -5491,6 +5491,7 @@ __metadata:
     "@carbon-labs/react-toggle": "workspace:*"
     "@carbon-labs/react-tooltip": "workspace:*"
     "@carbon-labs/v12-workbench": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
     "@storybook/react": "npm:^9.1.2"
     "@types/node": "npm:^20.17.10"
     "@types/react": "npm:^18.3.12"

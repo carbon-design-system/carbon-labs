@@ -32,6 +32,11 @@ links to the same story in Storybook.
 
 ## How a page is made
 
+A component is a folder of `packages/react/src/v12/components`. A component that
+keeps its code in another's folder gets a page of its own from a stories file
+and a docs page named for it there (`Chat/__stories__/TurnStatus.stories.tsx`
+and `TurnStatus.mdx`).
+
 - **Stories:** each export of the component's stories file, in its own order,
   composed with its args and decorators (`composeStories`). The comment above
   each story is its description.

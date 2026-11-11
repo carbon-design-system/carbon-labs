@@ -57,10 +57,7 @@ import {
   FileChips,
   FollowUpCard,
   PromptInput,
-  StepList,
   Suggestions,
-  TurnStatus,
-  countSteps,
 } from '../index';
 import type {
   ChatCorners,
@@ -70,7 +67,6 @@ import type {
   ChatVariant,
   ChipFile,
   PromptNoticeValue,
-  Step,
   Suggestion,
   TurnStatusValue,
 } from '../index';
@@ -98,8 +94,6 @@ export default {
     Suggestions,
     FollowUpCard,
     ChatPane,
-    TurnStatus,
-    StepList,
   },
   tags: ['alpha'],
   parameters: {
@@ -616,15 +610,21 @@ function Labelled({ label, children }: { label: string; children: ReactNode }) {
   );
 }
 
-/** The time a still example started, ms on the page's clock: far enough back that its words and seconds show. */
-function useShownSince(ago = 9000) {
-  const [since] = useState(() => performance.now() - ago);
-  return since;
-}
-
 /* ── stories ──────────────────────────────────────────────────────────── */
 
 /* ── the demo: the whole chat shell in one product ────────────────────── */
+
+/** A scripted step: one may fail once and wait for Retry, or wait for approval. */
+interface Scripted {
+  id: string;
+  label: string;
+  doneLabel: string;
+  tool?: boolean;
+  detail?: string;
+  ms: number;
+  failsFirst?: string;
+  asks?: string;
+}
 
 /** The rollback's steps: one fails once and waits for Retry; one waits for approval. */
 const ROLLBACK_RUN: Scripted[] = [
@@ -1650,369 +1650,6 @@ export const FollowUp = {
         <p style={captionText} role="status">
           {answer ? `Answer: ${answer}` : 'No answer yet.'}
         </p>
-      </div>
-    );
-  },
-};
-
-/** The stages of a reply's work, scripted: each one's state and words. */
-const STATES: {
-  status: TurnStatusValue;
-  label?: string;
-  ended?: number;
-  error?: string;
-}[] = [
-  { status: 'thinking', label: 'Thinking…' },
-  { status: 'acting', label: 'Searching the deployments' },
-  { status: 'waiting', label: 'Waiting for your approval' },
-  { status: 'done', ended: 6200 },
-  { status: 'stopped', ended: 6200 },
-  { status: 'error', ended: 6200, error: 'Couldn’t reach the deployments.' },
-];
-
-/**
- * The line above a reply that says what it's doing and for how long. When
- * the reply ends, it becomes a one-line summary that opens the reply's
- * steps. Start a turn to watch it.
- */
-export const ReplyStatus = {
-  parameters: {
-    v12: {
-      motion: [
-        'arrival',
-        'stage-words',
-        'seconds',
-        'mark',
-        'summary',
-        'error',
-        'details',
-        'one-working-element',
-      ],
-      reduced: {
-        'stage-words': 'shorter-clock',
-        mark: 'at-once',
-        summary: 'shorter-clock',
-        details: 'at-once',
-      },
-      // TODO reduced: arrival. The doc names the row's plain words, not how the row comes in.
-      // TODO reduced: seconds. Their glide has no travel under reduced motion; the doc does not say whether it lands at once.
-      // TODO reduced: error. The mark's hand-off to the error mark; the doc does not say.
-      // TODO reduced: one-working-element. The mark shrinks out in its slot; the doc does not say.
-      states: [
-        'thinking',
-        'acting',
-        'waiting',
-        'streaming',
-        'done',
-        'stopped',
-        'error',
-      ],
-    },
-  },
-  render: function ReplyStatusStory() {
-    const since = useShownSince();
-    const chat = useScriptedChat();
-    const latest = chat.turns[chat.turns.length - 1];
-    return (
-      <div style={stack}>
-        <div style={row}>
-          <Button
-            size="sm"
-            variant="outlined"
-            disabled={chat.generating}
-            onClick={() => chat.send('Which deployments failed this week?')}>
-            Start a turn
-          </Button>
-          <Button
-            size="sm"
-            variant="outlined"
-            disabled={!chat.generating}
-            onClick={chat.stop}>
-            Stop
-          </Button>
-        </div>
-        {latest?.role === 'assistant' && latest.status ? (
-          <ChatMessage
-            role="assistant"
-            chunks={latest.chunks}
-            done={latest.done}
-            status={<TurnStatus {...latest.status} />}
-          />
-        ) : (
-          <p style={captionText}>Start a turn to see its status.</p>
-        )}
-        <Labelled label="Each state">
-          <div style={{ display: 'grid', gap: 16 }}>
-            {STATES.map((s) => (
-              <TurnStatus
-                key={s.status}
-                status={s.status}
-                label={s.label}
-                startedAt={since}
-                endedAt={s.ended != null ? since + s.ended : undefined}
-                error={s.error}
-                onRetry={() => {}}
-              />
-            ))}
-          </div>
-        </Labelled>
-        <Labelled label="With its steps as details">
-          <TurnStatus
-            status="done"
-            startedAt={since}
-            endedAt={since + 4100}
-            detail={countSteps(STEPS_DONE)}
-            defaultExpanded>
-            <StepList steps={STEPS_DONE} />
-          </TurnStatus>
-        </Labelled>
-      </div>
-    );
-  },
-};
-
-/** The steps a reply takes, scripted: one fails once and waits for Retry; one waits for approval. */
-interface Scripted {
-  id: string;
-  label: string;
-  doneLabel: string;
-  tool?: boolean;
-  detail?: string;
-  ms: number;
-  failsFirst?: string;
-  asks?: string;
-}
-const RUN: Scripted[] = [
-  {
-    id: 'read',
-    tool: true,
-    label: 'Reading the deployments',
-    doneLabel: 'Read the deployments',
-    detail: '42 runs',
-    ms: 1400,
-  },
-  {
-    id: 'logs',
-    tool: true,
-    label: 'Searching the logs',
-    doneLabel: 'Searched the logs',
-    ms: 1200,
-    failsFirst: 'Couldn’t reach the log service',
-  },
-  {
-    id: 'notify',
-    asks: 'Notify the checkout team',
-    label: 'Notifying the checkout team',
-    doneLabel: 'Notified the checkout team',
-    ms: 900,
-  },
-];
-
-/** A scripted run of steps: each joins as it starts. */
-function useRun() {
-  const [steps, setSteps] = useState<Step[]>([]);
-  const timers = useRef<number[]>([]);
-  useEffect(() => {
-    const all = timers;
-    return () => all.current.forEach((t) => window.clearTimeout(t));
-  }, []);
-  const put = (id: string, f: (s: Step | undefined) => Step) =>
-    setSteps((all) => {
-      const i = all.findIndex((s) => s.id === id);
-      return i < 0
-        ? [...all, f(undefined)]
-        : all.map((s, k) => (k === i ? f(s) : s));
-    });
-  const attempt = (i: number, n: number) => {
-    const step = RUN[i];
-    put(step.id, (s) => ({
-      ...s,
-      id: step.id,
-      label: step.label,
-      doneLabel: step.doneLabel,
-      tool: step.tool,
-      status: 'running',
-      detail: undefined,
-      error: undefined,
-      startedAt: performance.now(),
-      endedAt: undefined,
-      attempts: n,
-    }));
-    timers.current.push(
-      window.setTimeout(() => {
-        const endedAt = performance.now();
-        if (step.failsFirst && n === 1) {
-          put(step.id, (s) => ({
-            ...(s as Step),
-            status: 'error',
-            error: step.failsFirst,
-            endedAt,
-          }));
-          return;
-        }
-        put(step.id, (s) => ({
-          ...(s as Step),
-          status: 'done',
-          detail: step.detail,
-          endedAt,
-        }));
-        from(i + 1);
-      }, step.ms)
-    );
-  };
-  const from = (i: number) => {
-    const step = RUN[i];
-    if (!step) {
-      return;
-    }
-    if (step.asks) {
-      put(step.id, () => ({
-        id: step.id,
-        label: step.asks as string,
-        status: 'waiting',
-        detail: 'Needs your approval',
-      }));
-      return;
-    }
-    attempt(i, 1);
-  };
-  const start = () => {
-    timers.current.forEach((t) => window.clearTimeout(t));
-    timers.current = [];
-    setSteps([]);
-    from(0);
-  };
-  const decide = (id: string, approve: boolean) => {
-    const i = RUN.findIndex((s) => s.id === id);
-    if (approve) {
-      attempt(i, 1);
-    } else {
-      put(id, (s) => ({
-        ...(s as Step),
-        status: 'cancelled',
-        detail: 'Skipped',
-        endedAt: performance.now(),
-      }));
-      from(i + 1);
-    }
-  };
-  const shown = steps.map(
-    (s): Step => ({
-      ...s,
-      onRetry:
-        s.status === 'error'
-          ? () =>
-              attempt(
-                RUN.findIndex((r) => r.id === s.id),
-                (s.attempts ?? 1) + 1
-              )
-          : undefined,
-      actions:
-        s.status === 'waiting' ? (
-          <>
-            <Button
-              size="sm"
-              variant="outlined"
-              onClick={() => decide(s.id, true)}>
-              Approve
-            </Button>
-            <Button
-              size="sm"
-              variant="outlined"
-              onClick={() => decide(s.id, false)}>
-              Skip
-            </Button>
-          </>
-        ) : undefined,
-    })
-  );
-  return { steps: shown, start };
-}
-
-/**
- * The steps a reply takes, as they happen. Run them: one fails and waits
- * for Retry, and one waits for your approval. Below, every status.
- */
-export const ReplySteps = {
-  parameters: {
-    v12: {
-      motion: [
-        'status-hand-off',
-        'wind-up',
-        'words',
-        'arrival',
-        'stillness',
-        'collapse',
-        'one-working-element',
-      ],
-      reduced: {
-        'status-hand-off': 'at-once',
-        'wind-up': 'at-once',
-        words: 'shorter-clock',
-        arrival: 'at-once',
-        stillness: 'at-once',
-        collapse: 'at-once',
-        'one-working-element': 'at-once',
-      },
-      states: ['queued', 'running', 'waiting', 'done', 'error', 'cancelled'],
-    },
-  },
-  render: function ReplyStepsStory() {
-    const since = useShownSince();
-    const run = useRun();
-    const all: Step[] = [
-      { id: 'q', label: 'Write the summary', status: 'queued' },
-      {
-        id: 'r',
-        label: 'Reading the deployments',
-        status: 'running',
-        tool: true,
-      },
-      {
-        id: 'w',
-        label: 'Notify the checkout team',
-        status: 'waiting',
-        detail: 'Needs your approval',
-      },
-      {
-        id: 'd',
-        label: 'Searching the logs',
-        doneLabel: 'Searched the logs',
-        status: 'done',
-        tool: true,
-        detail: '12 matches',
-        startedAt: since,
-        endedAt: since + 1240,
-      },
-      {
-        id: 'e',
-        label: 'Querying the config service',
-        status: 'error',
-        tool: true,
-        error: 'Couldn’t reach the service',
-        onRetry: () => {},
-      },
-      { id: 'c', label: 'Draft the rollback plan', status: 'cancelled' },
-    ];
-    return (
-      <div style={stack}>
-        <div style={row}>
-          <Button size="sm" variant="outlined" onClick={run.start}>
-            Run the steps
-          </Button>
-        </div>
-        <StepList steps={run.steps} />
-        <Labelled label="Every status">
-          <StepList label="Every status" steps={all} />
-        </Labelled>
-        <Labelled label="Collapsible, with its counter line">
-          <StepList
-            label="Collapsible steps"
-            steps={STEPS_DONE}
-            collapsible
-            autoCollapse={false}
-          />
-        </Labelled>
       </div>
     );
   },

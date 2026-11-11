@@ -128,8 +128,7 @@ $_split-narrow: minmax(0, 3fr) minmax(0, 1fr);
   --cds-page-header-line: var(--cds-surface-rule);
 }
 
-/* `corners="rounded"`: in the page or a card, by the kit's ladder (Region,
-   docs/components/README.md): 8 in the page; in a quiet or raised Region,
+/* `corners="rounded"`: in the page or a card, by the kit's ladder (Region): 8 in the page; in a quiet or raised Region,
    its inner radius (outer − inset: square once the inset takes it all);
    `--cds-page-header-radius` sets it in a card of your own. Square, the
    default, is v11's: attached to the shell's edge. It doesn't clip (the

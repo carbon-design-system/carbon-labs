@@ -45,8 +45,8 @@ import './feedback.scss';
  *   reduced   a snap either way: the new face at once, no wait, the height
  *             at once
  *   first     the first face is simply there: no entrance
- *   fit       `hug` (default) or `fill`, the kit's `fit` (docs/components/
- *             props.md). `hug`: inline, each face centred and no larger than
+ *   fit       `hug` (default) or `fill`, the kit's `fit`.
+ *             `hug`: inline, each face centred and no larger than
  *             its content, for a mark or a label. `fill`: a block, the
  *             container's width, and each face a block that fills it, for a
  *             region's content (a table, a panel). `hug` swaps in place,

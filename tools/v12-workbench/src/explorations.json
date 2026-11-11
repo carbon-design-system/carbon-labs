@@ -1261,6 +1261,98 @@
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     }
   ],
+  "V12/StepList": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Chat/components/ChatMessage.tsx",
+      "line": 183,
+      "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/ChatShell.tsx",
+      "line": 42,
+      "text": "corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Chat/components/ChatShell.tsx",
+      "line": 45,
+      "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Chat/components/FollowUpCard.tsx",
+      "line": 67,
+      "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/PromptInput.tsx",
+      "line": 139,
+      "text": "corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Chat/components/PromptInput.tsx",
+      "line": 142,
+      "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Chat/components/Suggestions.tsx",
+      "line": 45,
+      "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/chat-surface.scss",
+      "line": 95,
+      "text": "radius-over — A surface over the page: popover, toggletip, notifications panel, chat shell. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/chat-surface.scss",
+      "line": 109,
+      "text": "radius-over — A surface over the page: popover, toggletip, notifications panel, chat shell. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/chat-surface.scss",
+      "line": 111,
+      "text": "selected-wash — A row that is one of many chosen: a wash of the text colour. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/chat-surface.scss",
+      "line": 156,
+      "text": "radius-over — A surface over the page: popover, toggletip, notifications panel, chat shell. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/chat-surface.scss",
+      "line": 255,
+      "text": "radius-concentric — An inner part's radius is the outer radius less its inset, never below 0. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/chat-surface.scss",
+      "line": 325,
+      "text": "radius-concentric — An inner part's radius is the outer radius less its inset, never below 0. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Chat/components/chat.scss",
+      "line": 168,
+      "text": "token: hero-color — The hero tokens: brand colour for a line, a fill, a hover, an ink on a page and on a fill. replaces: `$border-interactive` / `$interactive`, `$button-primary`, `-hover`, `-active`, `$link-primary`, `$link-inverse`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Chat/components/step-list.scss",
+      "line": 189,
+      "text": "token: surface-code — The fill of code: snippet well, inline code. replaces: `$layer-01`. TBD"
+    }
+  ],
   "V12/StructuredList": [
     {
       "kind": "explore",
@@ -1531,6 +1623,98 @@
       "file": "packages/react/src/v12/components/TreeView/components/tree-view.scss",
       "line": 69,
       "text": "row-scale — One row height per size (xs 20, sm 26, md 32, lg 40px) across the menu, the select list, the side nav and the tree view, so lists of a size line up. TBD"
+    }
+  ],
+  "V12/TurnStatus": [
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Chat/components/ChatMessage.tsx",
+      "line": 183,
+      "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/ChatShell.tsx",
+      "line": 42,
+      "text": "corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Chat/components/ChatShell.tsx",
+      "line": 45,
+      "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Chat/components/FollowUpCard.tsx",
+      "line": 67,
+      "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/PromptInput.tsx",
+      "line": 139,
+      "text": "corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Chat/components/PromptInput.tsx",
+      "line": 142,
+      "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Chat/components/Suggestions.tsx",
+      "line": 45,
+      "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/chat-surface.scss",
+      "line": 95,
+      "text": "radius-over — A surface over the page: popover, toggletip, notifications panel, chat shell. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/chat-surface.scss",
+      "line": 109,
+      "text": "radius-over — A surface over the page: popover, toggletip, notifications panel, chat shell. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/chat-surface.scss",
+      "line": 111,
+      "text": "selected-wash — A row that is one of many chosen: a wash of the text colour. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/chat-surface.scss",
+      "line": 156,
+      "text": "radius-over — A surface over the page: popover, toggletip, notifications panel, chat shell. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/chat-surface.scss",
+      "line": 255,
+      "text": "radius-concentric — An inner part's radius is the outer radius less its inset, never below 0. TBD"
+    },
+    {
+      "kind": "explore",
+      "file": "packages/react/src/v12/components/Chat/components/chat-surface.scss",
+      "line": 325,
+      "text": "radius-concentric — An inner part's radius is the outer radius less its inset, never below 0. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Chat/components/chat.scss",
+      "line": 168,
+      "text": "token: hero-color — The hero tokens: brand colour for a line, a fill, a hover, an ink on a page and on a fill. replaces: `$border-interactive` / `$interactive`, `$button-primary`, `-hover`, `-active`, `$link-primary`, `$link-inverse`. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Chat/components/step-list.scss",
+      "line": 189,
+      "text": "token: surface-code — The fill of code: snippet well, inline code. replaces: `$layer-01`. TBD"
     }
   ]
 }

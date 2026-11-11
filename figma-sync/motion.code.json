@@ -1386,6 +1386,12 @@
       "entry": null
     },
     {
+      "name": "lightCastShadow",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
       "name": "registerCastShadow",
       "kind": "function",
       "from": "@carbon-labs/motion-core",
@@ -1579,6 +1585,12 @@
     },
     {
       "name": "parseColor",
+      "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "rolloverVisibleReach",
       "kind": "function",
       "from": "@carbon-labs/motion-core",
       "entry": null
@@ -1950,6 +1962,12 @@
       "entry": null
     },
     {
+      "name": "chartRevealTokens",
+      "kind": "tokens",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
       "name": "contentAfterMs",
       "kind": "function",
       "from": "@carbon-labs/motion-core",
@@ -1970,6 +1988,30 @@
     {
       "name": "softEdgeToken",
       "kind": "function",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "DistanceToken",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "EasingRef",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "MotionMode",
+      "kind": "type",
+      "from": "@carbon-labs/motion-core",
+      "entry": null
+    },
+    {
+      "name": "StaggerStep",
+      "kind": "type",
       "from": "@carbon-labs/motion-core",
       "entry": null
     },

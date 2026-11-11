@@ -11,6 +11,10 @@
 //
 // The list grows with each import: the full set is the union of the motion
 // the carried components reach.
+//
+// Chart motion comes as subpaths, `./charts` and `./gpu`, with the
+// carbon-motion release that publishes those packages, so this entry never
+// loads ECharts.
 
 // Tokens
 export { motionTokens, DURATION_FLOOR_MS } from '@carbon-labs/motion-core';
@@ -86,6 +90,7 @@ export {
   centerCastShadow,
   contrastRatio,
   deriveCastShadowColor,
+  lightCastShadow,
   registerCastShadow,
 } from '@carbon-labs/motion-core';
 export type { CastElevation } from '@carbon-labs/motion-core';
@@ -146,6 +151,7 @@ export {
   lightnessColors,
   lightnessStep,
   parseColor,
+  rolloverVisibleReach,
 } from '@carbon-labs/motion-core';
 export type { LightnessSteps, RGBA } from '@carbon-labs/motion-core';
 
@@ -247,10 +253,17 @@ export {
 // core tokens/tokens
 export {
   DEPTH,
+  chartRevealTokens,
   contentAfterMs,
   distanceTokens,
   reduceTokens,
   softEdgeToken,
+} from '@carbon-labs/motion-core';
+export type {
+  DistanceToken,
+  EasingRef,
+  MotionMode,
+  StaggerStep,
 } from '@carbon-labs/motion-core';
 
 // react primitives/snap-surface

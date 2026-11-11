@@ -5203,6 +5203,7 @@
         "v12-menu--default",
         "v12-menu--with-menu-button",
         "v12-menu--with-overflow-menu",
+        "v12-menu--corners",
         "v12-menu--submenu",
         "v12-menu--selectable",
         "v12-menu--groups-and-dividers",
@@ -6351,6 +6352,7 @@
       "title": "V12/PageHeader",
       "stories": [
         "v12-pageheader--default",
+        "v12-pageheader--with-jump-to",
         "v12-pageheader--ghost",
         "v12-pageheader--collapse-toggle",
         "v12-pageheader--no-fade",
@@ -6438,6 +6440,7 @@
       "title": "V12/Pagination",
       "stories": [
         "v12-pagination--default",
+        "v12-pagination--number-swap",
         "v12-pagination--controlled",
         "v12-pagination--many-pages",
         "v12-pagination--sizes",
@@ -6496,6 +6499,9 @@
           "figma": "BOOLEAN"
         },
         "isLastPage": {
+          "figma": "BOOLEAN"
+        },
+        "numberSwap": {
           "figma": "BOOLEAN"
         }
       },

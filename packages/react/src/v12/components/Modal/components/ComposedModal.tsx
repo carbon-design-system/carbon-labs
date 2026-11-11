@@ -47,6 +47,7 @@ import { KitPortal } from '@carbon-labs/react-kit-defaults';
 import { useLatest } from '@carbon-labs/react-selection-kit';
 import { lockPageScroll } from '@carbon-labs/react-scroller';
 import {
+  assignRef,
   enterLayer,
   floatingOpen,
   isTopLayer,
@@ -413,8 +414,7 @@ const ModalShell = forwardRef<HTMLDivElement, ShellProps>(function ModalShell(
   const setRootRef = useCallback(
     (el: HTMLDivElement | null) => {
       rootRef.current = el;
-      if (typeof ref === 'function') ref(el);
-      else if (ref) ref.current = el;
+      assignRef(ref, el);
     },
     [ref]
   );

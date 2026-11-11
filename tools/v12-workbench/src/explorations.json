@@ -23,7 +23,7 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/AppShell/components/AppShell.tsx",
-      "line": 361,
+      "line": 369,
       "text": "api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD"
     },
     {

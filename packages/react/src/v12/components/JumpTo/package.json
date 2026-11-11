@@ -44,6 +44,7 @@
     "@carbon-labs/react-kit-defaults": "workspace:*",
     "@carbon-labs/react-motion-icons": "workspace:*",
     "@carbon-labs/v12-motion": "workspace:*",
+    "@carbon-labs/v12-styles": "workspace:*",
     "@ibm/telemetry-js": "^1.10.2"
   },
   "peerDependencies": {

@@ -50,6 +50,7 @@
     "@carbon-labs/react-theme-zone": "workspace:*",
     "@carbon-labs/react-util": "workspace:*",
     "@carbon-labs/v12-motion": "workspace:*",
+    "@carbon-labs/v12-styles": "workspace:*",
     "@carbon/react": "^1.118.0",
     "@ibm/telemetry-js": "^1.10.2"
   },

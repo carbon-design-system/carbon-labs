@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-text-area%400.5.0...%40carbon-labs%2Freact-text-area%400.6.0) (2026-11-11)
+
+### Features
+
+* **v12-import:** make departures.json the only source of departures ([#1478](https://github.com/carbon-design-system/carbon-labs/issues/1478)) ([1829a50](https://github.com/carbon-design-system/carbon-labs/commit/1829a50bea3a61d21206ac435eecc40dad7ffe34))
+
+
 # [0.5.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-text-area%400.4.0...%40carbon-labs%2Freact-text-area%400.5.0) (2026-11-11)
 
 ### Features

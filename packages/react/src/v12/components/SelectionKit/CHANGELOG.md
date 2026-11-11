@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-selection-kit%400.8.0...%40carbon-labs%2Freact-selection-kit%400.9.0) (2026-11-11)
+
+### Features
+
+* **v12-import:** make departures.json the only source of departures ([#1478](https://github.com/carbon-design-system/carbon-labs/issues/1478)) ([1829a50](https://github.com/carbon-design-system/carbon-labs/commit/1829a50bea3a61d21206ac435eecc40dad7ffe34))
+
+
 # [0.8.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-selection-kit%400.7.0...%40carbon-labs%2Freact-selection-kit%400.8.0) (2026-11-11)
 
 ### Features

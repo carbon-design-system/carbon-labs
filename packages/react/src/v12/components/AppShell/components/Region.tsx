@@ -20,7 +20,7 @@ import { ThemeZone, type ZoneTheme } from '@carbon-labs/react-theme-zone';
 import './app-shell.scss';
 
 /* ============================================================================
- * Region — one area of a screen (docs/recipes/README.md)
+ * Region — one area of a screen
  * ============================================================================
  *
  *   surface   page: the page's background, nothing of its own; quiet: the
@@ -34,7 +34,7 @@ import './app-shell.scss';
  *             line and the floating menus don't change
  *   corners  the kit's words, `square` or `rounded`; `rounded` is the
  *             region's own radius, the ladder's step for where its surface
- *             is (docs/components/README.md, "Corners"): 16 over the page
+ *             is: 16 over the page
  *             (raised), 8 in the page (page, quiet). Given none, the
  *             surface's: square on the page (attached to an edge), rounded
  *             on quiet and raised. Its children can round concentrically from

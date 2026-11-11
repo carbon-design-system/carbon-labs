@@ -19,6 +19,7 @@ import { usePrefix } from '@carbon/react';
 import { breakpoints } from '@carbon/layout';
 import { OpenPanelLeft, RecentlyViewed } from '@carbon/icons-react';
 import { MegaButton } from '@carbon-labs/react-mega-button';
+import { inertProps } from '@carbon-labs/react-util';
 
 export interface ChatsPanelChat {
   /** Where the chat lives, when the product routes to it. */
@@ -190,14 +191,10 @@ export const ChatsPanel = forwardRef<HTMLDivElement, ChatsPanelProps>(
       }
     };
 
-    // `inert` is a standard attribute the DOM honours, but React 18's JSX
-    // types predate it, so it is built here and spread rather than dropped.
-    // It is what takes the closed panel out of the tab order and the
+    // `inert` is what takes the closed panel out of the tab order and the
     // accessibility tree, now that `hidden` cannot: display:none does not
     // transition, so the panel has to stay in the box while it moves.
-    const closed = open
-      ? {}
-      : ({ inert: '' } as unknown as React.HTMLAttributes<HTMLElement>);
+    const closed = inertProps(!open);
 
     return (
       // The root is not a control: it catches the Escape that bubbles from the
@@ -319,10 +316,8 @@ export const ChatsPanel = forwardRef<HTMLDivElement, ChatsPanelProps>(
                 ))}
             </div>
           </nav>
-          {/* An outside press still closes the overlay. It used to be a scrim
-              that dimmed the card, which dimmed only part of the surface and
-              is not how this system separates a floating panel: a border and a
-              shadow carry it (themes-regions.md). */}
+          {/* An outside press still closes the overlay. No scrim dims the card:
+              a border and a shadow separate a floating panel. */}
           <div
             className={`${block}__content`}
             onPointerDownCapture={

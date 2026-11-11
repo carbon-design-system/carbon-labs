@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-shimmer-text%400.6.0...%40carbon-labs%2Freact-shimmer-text%400.7.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-shimmer-text
+
+
+
+
+
 # [0.6.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-shimmer-text%400.5.0...%40carbon-labs%2Freact-shimmer-text%400.6.0) (2026-11-11)
 
 * fix(shimmer-text)!: one text layer; contextual bar corners (#1486) ([2de89c7](https://github.com/carbon-design-system/carbon-labs/commit/2de89c7b11d78b69ffdcd74d2ca68ac8f455012a)), closes [#1486](https://github.com/carbon-design-system/carbon-labs/issues/1486)

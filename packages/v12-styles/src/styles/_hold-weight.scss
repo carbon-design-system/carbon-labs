@@ -6,8 +6,6 @@
 //
 
 /* ── text keeps its width when its weight rises (the blanket rule) ────────
-   docs/components/README.md,
-   "Text keeps its width when its weight rises".
 
    `@mixin hold-weight-width`: on a label whose weight rises with a state
    (current, selected, highlighted), a hidden copy of its text at the heavier

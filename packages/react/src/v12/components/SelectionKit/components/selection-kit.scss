@@ -578,6 +578,8 @@ $sel: --cds-motion-selection;
 /* Placed from the engine's physical edges (left and top, in either
    direction): see the header. */
 .sel__indicator {
+  /* stylelint-disable-next-line csstools/use-logical -- the engine's edges are physical */
+  left: calc(var(#{$sel}-l, 0px) + var(--sel-press));
   block-size: calc(
     var(#{$sel}-b, 0px) - var(#{$sel}-t, 0px) - 2 * var(--sel-press)
   );
@@ -585,15 +587,15 @@ $sel: --cds-motion-selection;
     var(#{$sel}-r, 0px) - var(#{$sel}-l, 0px) - 2 * var(--sel-press)
   );
   inset-block-start: calc(var(#{$sel}-t, 0px) + var(--sel-press));
-  inset-inline-start: calc(var(#{$sel}-l, 0px) + var(--sel-press));
 }
 
 /* Reduced motion: the old place, fading out while the selector fades in at the new one. */
 .sel__ghost {
+  /* stylelint-disable-next-line csstools/use-logical -- the engine's edges are physical */
+  left: var(#{$sel}-gl, 0px);
   block-size: calc(var(#{$sel}-gb, 0px) - var(#{$sel}-gt, 0px));
   inline-size: calc(var(#{$sel}-gr, 0px) - var(#{$sel}-gl, 0px));
   inset-block-start: var(#{$sel}-gt, 0px);
-  inset-inline-start: var(#{$sel}-gl, 0px);
   opacity: 0;
 }
 

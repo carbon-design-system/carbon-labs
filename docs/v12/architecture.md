@@ -123,6 +123,15 @@ commitlint):
   the lane's sources with the TypeScript checker; a recipe or a generator names
   components and props from it. `yarn v12:catalog` writes it;
 - `yarn v12:test`: every v12 package's tests;
+- `yarn size:check`: each v12 component's own code, bundled, minified and
+  gzipped with React, Carbon, ECharts, zrender and the workspace packages left
+  out, against `tools/size-baseline.json`; growth past 10% or 1 KB fails. A
+  chart family has a second row, what ECharts costs as the family registers it,
+  under a hard limit: the family names the module that registers its ECharts
+  parts and the limit in its `package.json`
+  (`"labs": { "size": { "runtime": { "entry": "src/runtime.ts", "limitKb": 190 } } }`),
+  then runs `yarn size:update` and commits the baseline. The rules are in the
+  header of `tools/check-size.js`;
 - the v12 Storybook build.
 
 Scene specs for states, reduced motion and timing, and accessibility checks,

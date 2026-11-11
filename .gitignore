@@ -40,3 +40,6 @@ agentic.stories.js
 *storybook.log
 test-coverage/
 **/codecept/screenshots
+
+# The scene tier's run output
+tools/v12-scenes/results

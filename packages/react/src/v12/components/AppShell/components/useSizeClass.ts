@@ -9,7 +9,7 @@ import { useLayoutEffect, useState, type RefObject } from 'react';
 import { afterLayout, inLayout } from '@carbon-labs/v12-motion';
 
 /* ============================================================================
- * Size classes (docs/recipes/README.md): the class of an element from its own
+ * Size classes: the class of an element from its own
  * width, not the window's, so a recipe works inside a split pane or a
  * tearsheet. The edges are the 2x Grid's md, lg and xlg breakpoints.
  *

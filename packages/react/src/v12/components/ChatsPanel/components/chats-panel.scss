@@ -241,7 +241,7 @@ $block: '#{$prefix}--chats-panel';
 
   // A floating surface is Carbon's layer, on the neutral — not a tint of ours.
   // The blue-gray is an interactive colour; the ladder a surface travels is the
-  // neutral's, "hue and chroma unchanged by the ladder" (themes-regions.md).
+  // neutral's, with hue and chroma unchanged along it.
   // The pushed panel paints nothing at all: it is a column of the shell.
   background-color: $layer;
   inline-size: convert.to-rem(320px);
@@ -275,6 +275,24 @@ $block: '#{$prefix}--chats-panel';
       ),
     )
   );
+
+  // A translate is physical, and right to left the panel's edge is the right:
+  // the surface's exit is mirrored there.
+  &[data-carbon-surface-state='exit']:dir(rtl) {
+    transform: translateX(100%);
+  }
+}
+
+// So is where it enters from when it is first rendered open, the surface's
+// own starting style.
+@media (prefers-reduced-motion: no-preference) {
+  @starting-style {
+    .#{$block}--overlay .#{$block}__panel:dir(rtl),
+    .#{$block}--overlay
+      .#{$block}__panel[data-carbon-surface-state='enter']:dir(rtl) {
+      transform: translateX(100%);
+    }
+  }
 }
 
 // The panel is read over the scrim, so it stacks after it.

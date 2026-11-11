@@ -437,8 +437,8 @@ export function ApiRows({
 }
 
 /**
- * The pages' plain styles, in one place (a host's stylesheet restyles them:
- * Storybook's carbon-next.scss). Pointer focus draws no ring (the click
+ * The pages' plain styles, in one place (a host's stylesheet restyles them).
+ * Pointer focus draws no ring (the click
  * already says where you are); keyboard focus (`:focus-visible`) draws Carbon's.
  */
 export const KIT_CSS = `

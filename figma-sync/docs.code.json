@@ -1103,7 +1103,7 @@
       "status": "draft",
       "docs": "v12-sidenav--overview",
       "firstSentence": "The app's page navigation, on the selection family's look and motion.",
-      "summary": "The app's page navigation, on the selection family's look and motion. It is a `<nav>` of real links, not a tablist: each `SideNavLink` is an `<a href>`, or a router link through `as`, and the current page is `aria-current=\"page\"`. `SideNavGroup` is a collapsible group of links under a header. A group opens when you go to one of its pages and never shuts on its own. With `collapsed`, `defaultCollapsed` or `collapsible`, and an icon on every top-level row, the nav folds to a rail of icons. In an AppShell the shell draws the fold toggle; elsewhere it sits at the nav's foot. `filter` pins a field at the top that narrows the nav to the matching links. Every link and group header is a tab stop.",
+      "summary": "The app's page navigation, on the selection family's look and motion. It is a `<nav>` of real links, not a tablist: each `SideNavLink` is an `<a href>`, or a router link through `as`, and the current page is `aria-current=\"page\"`. `SideNavGroup` is a collapsible group of links under a header. A group opens when you go to one of its pages and never shuts on its own. With `collapsed`, `defaultCollapsed` or `collapsible`, and an icon on every top-level row, the nav folds to a rail of icons. In an AppShell the shell draws the fold toggle; elsewhere it sits at the nav's foot. `filter` pins a field at the top that narrows the nav to the matching links; in a ghost nav the field is ghost too, and hovers as a row does. Every link and group header is a tab stop.",
       "sections": [
         "Motion",
         "Reduced motion"

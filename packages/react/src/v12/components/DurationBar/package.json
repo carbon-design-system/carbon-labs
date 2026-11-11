@@ -30,13 +30,16 @@
     "scss",
     "telemetry.yml"
   ],
+  "sideEffects": [
+    "*.scss",
+    "*.css"
+  ],
   "scripts": {
     "build": "node ../../../../tasks/build.js",
     "clean": "rimraf es lib scss"
   },
   "dependencies": {
     "@carbon-labs/react-slider": "workspace:*",
-    "@carbon-labs/v12-motion": "workspace:*",
     "@carbon/react": "^1.118.0",
     "@ibm/telemetry-js": "^1.10.2"
   },

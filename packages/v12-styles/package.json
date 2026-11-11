@@ -15,6 +15,7 @@
     "title": "V12 styles"
   },
   "sideEffects": [
+    "*.scss",
     "*.css"
   ],
   "exports": {

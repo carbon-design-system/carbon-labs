@@ -30,6 +30,10 @@
     "scss",
     "telemetry.yml"
   ],
+  "sideEffects": [
+    "*.scss",
+    "*.css"
+  ],
   "scripts": {
     "build": "node ../../../../tasks/build.js",
     "clean": "rimraf es lib scss",
@@ -40,7 +44,6 @@
     "@carbon-labs/react-illustrations": "workspace:*",
     "@carbon-labs/react-kit-defaults": "workspace:*",
     "@carbon-labs/react-link": "workspace:*",
-    "@carbon-labs/v12-motion": "workspace:*",
     "@carbon-labs/v12-styles": "workspace:*",
     "@carbon/react": "^1.118.0",
     "@ibm/telemetry-js": "^1.10.2"
@@ -52,6 +55,7 @@
   "devDependencies": {
     "@carbon-labs/react-app-shell": "workspace:*",
     "@carbon-labs/utilities": "0.28.0",
+    "@carbon-labs/v12-motion": "workspace:*",
     "vitest": "^4.0.0"
   }
 }

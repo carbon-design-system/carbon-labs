@@ -30,6 +30,12 @@
     "scss",
     "telemetry.yml"
   ],
+  "sideEffects": [
+    "./es/components/disclosure.js",
+    "./lib/components/disclosure.js",
+    "*.scss",
+    "*.css"
+  ],
   "scripts": {
     "build": "node ../../../../tasks/build.js",
     "clean": "rimraf es lib scss"

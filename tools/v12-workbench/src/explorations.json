@@ -135,19 +135,19 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Card/components/Card.tsx",
-      "line": 120,
+      "line": 128,
       "text": "api: logical-positions — Placement values are logical, `start` and `end`, so they follow the reading direction. TBD"
     },
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Card/components/card.scss",
-      "line": 49,
+      "line": 50,
       "text": "cast-shadow — An opt-in shadow drawn in layers whose colour is solved for contrast on its backdrop, at three elevations (resting, raised, floating). TBD"
     },
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Card/components/card.scss",
-      "line": 53,
+      "line": 54,
       "text": "hover-tint — Hover and press as a share of the text colour mixed into the fill. TBD"
     }
   ],
@@ -331,7 +331,7 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Checkbox/components/checkbox.scss",
-      "line": 65,
+      "line": 66,
       "text": "hover-tint — Hover and press as a share of the text colour mixed into the fill. TBD"
     }
   ],
@@ -955,13 +955,13 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Popover/components/Popover.tsx",
-      "line": 179,
+      "line": 175,
       "text": "corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Popover/components/Popover.tsx",
-      "line": 182,
+      "line": 178,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
@@ -1229,13 +1229,13 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Slider/components/Slider.tsx",
-      "line": 285,
+      "line": 286,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Slider/components/Slider.tsx",
-      "line": 297,
+      "line": 298,
       "text": "corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD"
     }
   ],
@@ -1523,7 +1523,7 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/TreeView/components/TreeView.tsx",
-      "line": 461,
+      "line": 462,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {

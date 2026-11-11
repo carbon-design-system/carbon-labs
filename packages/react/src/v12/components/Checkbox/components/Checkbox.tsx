@@ -8,6 +8,8 @@
 /** @jsxRuntime automatic */
 
 import {
+  forwardRef,
+  useCallback,
   useEffect,
   useId,
   useLayoutEffect,
@@ -22,7 +24,7 @@ import { FieldMessage } from '@carbon-labs/react-text-input';
 import { joinHandlers, useDisabledReason } from '@carbon-labs/react-tooltip';
 import './checkbox.scss';
 import { useFormFieldState } from '@carbon-labs/react-util';
-import { useReducedGetter } from '@carbon-labs/react-util';
+import { assignRef, useReducedGetter } from '@carbon-labs/react-util';
 
 /* ============================================================================
  * Checkbox — Carbon v11's Checkbox on the selection family's look, with
@@ -105,176 +107,199 @@ export interface CheckboxProps extends Omit<
   timeScale?: number;
 }
 
-export function Checkbox({
-  id,
-  labelText,
-  checked,
-  defaultChecked,
-  indeterminate = false,
-  disabled: ownDisabled = false,
-  disabledReason,
-  readOnly: ownReadOnly = false,
-  hideLabel = false,
-  helperText,
-  invalid = false,
-  invalidText,
-  warn = false,
-  warnText,
-  onChange,
-  onClick,
-  title,
-  className,
-  timeScale,
-  ...rest
-}: CheckboxProps) {
-  // A FormSection's disabled and read-only reach every field in it.
-  const { disabled, readOnly } = useFormFieldState(ownDisabled, ownReadOnly);
-  const input = useRef<HTMLInputElement>(null);
-  const box = useRef<HTMLSpanElement>(null);
-  const rolloverReduced = useReducedGetter();
-  const uid = useId();
-  const ids = {
-    helper: `${id}-helper-${uid}`,
-    warn: `${id}-warn-${uid}`,
-    invalid: `${id}-invalid-${uid}`,
-  };
-  // v11: invalid wins over warn; both off when disabled or read-only.
-  const status =
-    disabled || readOnly ? 'none' : invalid ? 'error' : warn ? 'warn' : 'none';
-  const described =
-    status === 'error'
-      ? ids.invalid
-      : status === 'warn'
-        ? ids.warn
-        : helperText
-          ? ids.helper
-          : undefined;
-  const inert = disabled || readOnly;
-  const reason = useDisabledReason(disabled, disabledReason);
-  const rc = reason.controlProps;
-
-  // The mixed state is a DOM property, not an attribute, and the box draws
-  // it from the DOM (`:indeterminate`). A click clears it, as a click flips
-  // `checked`; so, as React does for `checked`: set from the prop when the
-  // prop changes, and, when the checkbox is controlled, put back after a
-  // click the owner didn't take (the `onChange` below). Uncontrolled, the
-  // click stands: setting it back on every render would redraw the mixed
-  // state over a click the moment anything else re-rendered.
-  const controlled = checked !== undefined;
-  const indeterminateRef = useLatest(indeterminate);
-  useLayoutEffect(() => {
-    if (input.current) input.current.indeterminate = indeterminate;
-  }, [indeterminate]);
-
-  useEffect(() => {
-    const node = box.current;
-    if (!node || inert) return;
-    return attachRollover(node, {
-      selector: '.cds-checkbox__box',
-      // Its own steps (checkbox.scss): matched lightness from a transparent
-      // rest would be the page's gray.
-      colors: 'tokens',
+/** A checkbox; its ref is the input, as Carbon's. */
+export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
+  function Checkbox(
+    {
+      id,
+      labelText,
+      checked,
+      defaultChecked,
+      indeterminate = false,
+      disabled: ownDisabled = false,
+      disabledReason,
+      readOnly: ownReadOnly = false,
+      hideLabel = false,
+      helperText,
+      invalid = false,
+      invalidText,
+      warn = false,
+      warnText,
+      onChange,
+      onClick,
+      title,
+      className,
       timeScale,
-      reduced: rolloverReduced,
-    });
-  }, [inert, timeScale, rolloverReduced]);
+      ...rest
+    }: CheckboxProps,
+    ref
+  ) {
+    // A FormSection's disabled and read-only reach every field in it.
+    const { disabled, readOnly } = useFormFieldState(ownDisabled, ownReadOnly);
+    const input = useRef<HTMLInputElement | null>(null);
+    const inputRef = useCallback(
+      (el: HTMLInputElement | null) => {
+        input.current = el;
+        assignRef(ref, el);
+      },
+      [ref]
+    );
+    const box = useRef<HTMLSpanElement>(null);
+    const rolloverReduced = useReducedGetter();
+    const uid = useId();
+    const ids = {
+      helper: `${id}-helper-${uid}`,
+      warn: `${id}-warn-${uid}`,
+      invalid: `${id}-invalid-${uid}`,
+    };
+    // v11: invalid wins over warn; both off when disabled or read-only.
+    const status =
+      disabled || readOnly
+        ? 'none'
+        : invalid
+          ? 'error'
+          : warn
+            ? 'warn'
+            : 'none';
+    // The message shown: a status's text, else the helper (FieldMessage's rule).
+    const described =
+      status === 'error' && invalidText
+        ? ids.invalid
+        : status === 'warn' && warnText
+          ? ids.warn
+          : helperText
+            ? ids.helper
+            : undefined;
+    const inert = disabled || readOnly;
+    const reason = useDisabledReason(disabled, disabledReason);
+    const rc = reason.controlProps;
 
-  return (
-    <div
-      className={[
-        'cds-checkbox',
-        disabled && 'cds-checkbox--disabled',
-        readOnly && 'cds-checkbox--readonly',
-        status === 'error' && 'cds-checkbox--invalid',
-        status === 'warn' && 'cds-checkbox--warn',
-        className,
-      ]
-        .filter(Boolean)
-        .join(' ')}>
-      <label
-        className="cds-checkbox__row"
-        htmlFor={id}
-        title={title}
-        {...reason.anchorProps}>
-        <span
-          ref={box}
-          className="cds-checkbox__box"
-          aria-disabled={inert || undefined}>
-          <input
-            {...rest}
-            // With a reason it is disabled in a form too: its value isn't submitted.
-            name={reason.active ? undefined : rest.name}
-            ref={input}
-            id={id}
-            type="checkbox"
-            className="cds-checkbox__input"
-            checked={checked}
-            defaultChecked={defaultChecked}
-            // With a reason it stays focusable: aria-disabled, never the attribute.
-            disabled={disabled && !reason.active}
-            aria-disabled={rc['aria-disabled']}
-            aria-readonly={readOnly || undefined}
-            aria-invalid={status === 'error' || undefined}
-            // Its own message, and any description it's given (a tile's).
-            aria-describedby={reason.describedBy(
-              [described, rest['aria-describedby']].filter(Boolean).join(' ') ||
-                undefined
-            )}
-            onFocus={joinHandlers(rc.onFocus, rest.onFocus as never)}
-            onBlur={joinHandlers(rc.onBlur, rest.onBlur as never)}
-            onClick={(e) => {
-              // Read-only: focusable, but a click changes nothing (v11).
-              if (readOnly || reason.active) {
-                e.preventDefault();
-                return;
-              }
-              onClick?.(e);
-            }}
-            onChange={(e) => {
-              if (readOnly || reason.active) return;
-              onChange?.(e, { checked: e.target.checked, id });
-              // Controlled: the prop holds until the owner re-renders with a
-              // new one (the effect above), as React holds `checked`.
-              if (controlled) e.target.indeterminate = indeterminateRef.current;
-            }}
-          />
-          <svg
-            className="cds-checkbox__mark"
-            viewBox="0 0 16 16"
-            aria-hidden="true"
-            focusable="false">
-            <path
-              className="cds-checkbox__check"
-              d="M4.5 8.25 7 10.75l4.5-5"
-              pathLength={1}
+    // The mixed state is a DOM property, not an attribute, and the box draws
+    // it from the DOM (`:indeterminate`). A click clears it, as a click flips
+    // `checked`; so, as React does for `checked`: set from the prop when the
+    // prop changes, and, when the checkbox is controlled, put back after a
+    // click the owner didn't take (the `onChange` below). Uncontrolled, the
+    // click stands: setting it back on every render would redraw the mixed
+    // state over a click the moment anything else re-rendered.
+    const controlled = checked !== undefined;
+    const indeterminateRef = useLatest(indeterminate);
+    useLayoutEffect(() => {
+      if (input.current) input.current.indeterminate = indeterminate;
+    }, [indeterminate]);
+
+    useEffect(() => {
+      const node = box.current;
+      if (!node || inert) return;
+      return attachRollover(node, {
+        selector: '.cds-checkbox__box',
+        // Its own steps (checkbox.scss): matched lightness from a transparent
+        // rest would be the page's gray.
+        colors: 'tokens',
+        timeScale,
+        reduced: rolloverReduced,
+      });
+    }, [inert, timeScale, rolloverReduced]);
+
+    return (
+      <div
+        className={[
+          'cds-checkbox',
+          disabled && 'cds-checkbox--disabled',
+          readOnly && 'cds-checkbox--readonly',
+          status === 'error' && 'cds-checkbox--invalid',
+          status === 'warn' && 'cds-checkbox--warn',
+          className,
+        ]
+          .filter(Boolean)
+          .join(' ')}>
+        <label
+          className="cds-checkbox__row"
+          htmlFor={id}
+          title={title}
+          {...reason.anchorProps}>
+          <span
+            ref={box}
+            className="cds-checkbox__box"
+            aria-disabled={inert || undefined}>
+            <input
+              {...rest}
+              // With a reason it is disabled in a form too: its value isn't submitted.
+              name={reason.active ? undefined : rest.name}
+              ref={inputRef}
+              id={id}
+              type="checkbox"
+              className="cds-checkbox__input"
+              checked={checked}
+              defaultChecked={defaultChecked}
+              // With a reason it stays focusable: aria-disabled, never the attribute.
+              disabled={disabled && !reason.active}
+              aria-disabled={rc['aria-disabled']}
+              aria-readonly={readOnly || undefined}
+              aria-invalid={status === 'error' || undefined}
+              // Its own message, and any description it's given (a tile's).
+              aria-describedby={reason.describedBy(
+                [described, rest['aria-describedby']]
+                  .filter(Boolean)
+                  .join(' ') || undefined
+              )}
+              onFocus={joinHandlers(rc.onFocus, rest.onFocus as never)}
+              onBlur={joinHandlers(rc.onBlur, rest.onBlur as never)}
+              onClick={(e) => {
+                // Read-only: focusable, but a click changes nothing (v11).
+                if (readOnly || reason.active) {
+                  e.preventDefault();
+                  return;
+                }
+                onClick?.(e);
+              }}
+              onChange={(e) => {
+                if (readOnly || reason.active) return;
+                onChange?.(e, { checked: e.target.checked, id });
+                // Controlled: the prop holds until the owner re-renders with a
+                // new one (the effect above), as React holds `checked`.
+                if (controlled)
+                  e.target.indeterminate = indeterminateRef.current;
+              }}
             />
-            <path className="cds-checkbox__dash" d="M4.5 8h7" />
-          </svg>
-        </span>
-        <span
-          className={
-            hideLabel
-              ? 'cds-checkbox__label cds-checkbox__label--hidden'
-              : 'cds-checkbox__label'
-          }>
-          {labelText}
-        </span>
-      </label>
-      {reason.tooltip}
-      {(helperText || invalidText || warnText) && (
-        <FieldMessage
-          status={status}
-          helperText={helperText}
-          warnText={warnText}
-          invalidText={invalidText}
-          helperId={ids.helper}
-          warnId={ids.warn}
-          invalidId={ids.invalid}
-          disabled={disabled}
-          placement="flow"
-          className="cds-checkbox__message"
-        />
-      )}
-    </div>
-  );
-}
+            <svg
+              className="cds-checkbox__mark"
+              viewBox="0 0 16 16"
+              aria-hidden="true"
+              focusable="false">
+              <path
+                className="cds-checkbox__check"
+                d="M4.5 8.25 7 10.75l4.5-5"
+                pathLength={1}
+              />
+              <path className="cds-checkbox__dash" d="M4.5 8h7" />
+            </svg>
+          </span>
+          <span
+            className={
+              hideLabel
+                ? 'cds-checkbox__label cds-checkbox__label--hidden'
+                : 'cds-checkbox__label'
+            }>
+            {labelText}
+          </span>
+        </label>
+        {reason.tooltip}
+        {(helperText || invalidText || warnText) && (
+          <FieldMessage
+            status={status}
+            helperText={helperText}
+            warnText={warnText}
+            invalidText={invalidText}
+            helperId={ids.helper}
+            warnId={ids.warn}
+            invalidId={ids.invalid}
+            disabled={disabled}
+            placement="flow"
+            className="cds-checkbox__message"
+          />
+        )}
+      </div>
+    );
+  }
+);
+Checkbox.displayName = 'Checkbox';

@@ -3985,6 +3985,13 @@
             "id": {
               "type": "string"
             },
+            "invalid": {
+              "type": "boolean",
+              "description": "The group is in error: each checkbox in it shows it, the message under the group."
+            },
+            "invalidText": {
+              "$ref": "#/$defs/node"
+            },
             "legendText": {
               "$ref": "#/$defs/node",
               "description": "The group's label (a `<legend>`)."
@@ -4016,6 +4023,13 @@
             },
             "readOnly": {
               "type": "boolean"
+            },
+            "warn": {
+              "type": "boolean",
+              "description": "The group has a warning: each checkbox in it shows it, the message under the group."
+            },
+            "warnText": {
+              "$ref": "#/$defs/node"
             }
           }
         },
@@ -21697,10 +21711,6 @@
               "type": "boolean",
               "description": "The snap exit's fade (40ms on a short exit, else 80ms). Default true, every snap exit's"
             },
-            "highContrast": {
-              "type": "boolean",
-              "description": "The opposite theme's surface (v11's high contrast)."
-            },
             "id": {
               "type": "string"
             },
@@ -21720,10 +21730,6 @@
             },
             "onClick": {
               "$ref": "#/$defs/event"
-            },
-            "onClose": {
-              "$ref": "#/$defs/event",
-              "description": "The anchored form's close request (as `onRequestClose`)."
             },
             "onFocus": {
               "$ref": "#/$defs/event"
@@ -21781,7 +21787,7 @@
                 "outlined",
                 "tonal"
               ],
-              "description": "The look: `outlined` (default), `tonal` (no hairline), `inverse` (the opposite theme; as `highContrast`)."
+              "description": "The look: `outlined` (default), `tonal` (no hairline), `inverse` (the opposite theme: v11's `highContrast`)."
             }
           }
         },
@@ -29909,10 +29915,6 @@
               "type": "boolean",
               "description": "The snap exit's fade (40ms on a short exit, else 80ms). Default true, every snap exit's"
             },
-            "highContrast": {
-              "type": "boolean",
-              "description": "The opposite theme's surface (v11's high contrast)."
-            },
             "id": {
               "type": "string"
             },
@@ -29981,7 +29983,7 @@
                 "outlined",
                 "tonal"
               ],
-              "description": "The look: `outlined` (default), `tonal` (no hairline), `inverse` (the opposite theme; as `highContrast`)."
+              "description": "The look: `outlined` (default), `tonal` (no hairline), `inverse` (the opposite theme: v11's `highContrast`)."
             }
           }
         },

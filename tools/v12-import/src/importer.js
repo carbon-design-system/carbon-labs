@@ -1476,7 +1476,8 @@ function addTakenExports(plan, { from, sha, id, folder, relSet }) {
 }
 
 /**
- * Adds or replaces an item in the manifest.
+ * Adds or replaces an item in the manifest. A replaced item keeps its
+ * `figma` block: the design sync's mapping is the lane's, not the import's.
  *
  * @param {string} file The manifest file.
  * @param {object} entry The item.
@@ -1487,8 +1488,11 @@ export function recordManifest(file, entry) {
     manifest = JSON.parse(fs.readFileSync(file, 'utf8'));
     manifest.items = manifest.items ?? [];
   }
+  const figma = manifest.items.find((i) => i.id === entry.id)?.figma;
   manifest.items = manifest.items.filter((i) => i.id !== entry.id);
-  manifest.items.push(entry);
+  manifest.items.push(
+    figma && entry.figma === undefined ? { ...entry, figma } : entry
+  );
   manifest.items.sort((a, b) => (a.id < b.id ? -1 : 1));
   fs.writeFileSync(file, `${JSON.stringify(manifest, null, 2)}\n`);
 }

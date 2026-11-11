@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-jump-to%400.9.0...%40carbon-labs%2Freact-jump-to%400.10.0) (2026-11-11)
+
+### Bug Fixes
+
+* **v12:** menu corners, tooltip spacing, pagination swap, reach, jumps, lists ([#1487](https://github.com/carbon-design-system/carbon-labs/issues/1487)) ([c9c9153](https://github.com/carbon-design-system/carbon-labs/commit/c9c91530f21ee611c717c97f4a8a73d9fccd6b9c))
+
+
 # [0.9.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-jump-to%400.8.0...%40carbon-labs%2Freact-jump-to%400.9.0) (2026-11-11)
 
 **Note:** Version bump only for package @carbon-labs/react-jump-to

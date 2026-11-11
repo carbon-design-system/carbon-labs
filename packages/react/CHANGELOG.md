@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.237.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.236.0...%40carbon-labs%2Freact%400.237.0) (2026-11-11)
+
+### Bug Fixes
+
+* **v12:** menu corners, tooltip spacing, pagination swap, reach, jumps, lists ([#1487](https://github.com/carbon-design-system/carbon-labs/issues/1487)) ([c9c9153](https://github.com/carbon-design-system/carbon-labs/commit/c9c91530f21ee611c717c97f4a8a73d9fccd6b9c))
+
+
 # [0.236.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.235.0...%40carbon-labs%2Freact%400.236.0) (2026-11-11)
 
 * fix(shimmer-text)!: one text layer; contextual bar corners (#1486) ([2de89c7](https://github.com/carbon-design-system/carbon-labs/commit/2de89c7b11d78b69ffdcd74d2ca68ac8f455012a)), closes [#1486](https://github.com/carbon-design-system/carbon-labs/issues/1486)

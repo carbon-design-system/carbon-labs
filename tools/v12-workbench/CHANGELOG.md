@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-workbench%400.16.0...%40carbon-labs%2Fv12-workbench%400.17.0) (2026-11-11)
+
+### Bug Fixes
+
+* **v12:** menu corners, tooltip spacing, pagination swap, reach, jumps, lists ([#1487](https://github.com/carbon-design-system/carbon-labs/issues/1487)) ([c9c9153](https://github.com/carbon-design-system/carbon-labs/commit/c9c91530f21ee611c717c97f4a8a73d9fccd6b9c))
+
+
 # [0.16.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-workbench%400.15.0...%40carbon-labs%2Fv12-workbench%400.16.0) (2026-11-11)
 
 ### Bug Fixes

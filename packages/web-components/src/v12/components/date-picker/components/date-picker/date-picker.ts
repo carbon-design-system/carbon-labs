@@ -7,7 +7,7 @@
 
 import { LitElement, html } from 'lit';
 import { property, query } from 'lit/decorators.js';
-import { prefix } from '../../temp-imports/globals/settings';
+import { prefix, tagPrefix } from '../../temp-imports/globals/settings';
 import FormMixin from '../../temp-imports/globals/mixins/form';
 import HostListenerMixin from '../../temp-imports/globals/mixins/host-listener';
 import HostListener from '../../temp-imports/globals/decorators/host-listener';
@@ -52,15 +52,15 @@ enum DATE_PICKER_MODE {
 /**
  * Date picker.
  *
- * @element cds-date-picker
- * @fires cds-date-picker-changed - The custom event fired when the date selection changes.
- * @fires cds-date-picker-error - The custom event fired when an error occurs.
+ * @element clabs-date-picker
+ * @fires clabs-date-picker-changed - The custom event fired when the date selection changes.
+ * @fires clabs-date-picker-error - The custom event fired when an error occurs.
  */
 // @ts-expect-error - Mixin inheritance not fully recognized by TypeScript
-@customElement(`${prefix}-date-picker`)
+@customElement(`${tagPrefix}-date-picker`)
 class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
   /**
-   * The slotted `<cds-date-input kind="from">`.
+   * The slotted `<clabs-date-input kind="from">`.
    */
   private _dateInteractNode: CDSDatePickerInput | null = null;
 
@@ -96,7 +96,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
   private _restoringFocus = false;
 
   /**
-   * @returns The effective date picker mode, determined by the child `<cds-date-picker-input>`.
+   * @returns The effective date picker mode, determined by the child `<clabs-date-picker-input>`.
    */
   private get _mode() {
     const { selectorInputTo } = this.constructor as typeof CDSDatePicker;
@@ -105,14 +105,14 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
       return DATE_PICKER_MODE.RANGE;
     }
     // @ts-expect-error - querySelector from mixin
-    if (this.querySelector(`${prefix}-date-picker-input[kind="single"]`)) {
+    if (this.querySelector(`${tagPrefix}-date-picker-input[kind="single"]`)) {
       return DATE_PICKER_MODE.SINGLE;
     }
     return DATE_PICKER_MODE.SIMPLE;
   }
 
   /**
-   * Handles `${prefix}-date-picker-changed` event on this element.
+   * Handles `${tagPrefix}-date-picker-changed` event on this element.
    *
    * @param {CustomEvent} root0 - The event object
    * @param {object} root0.detail - The event detail
@@ -462,7 +462,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    */
   private _showCalendarPopover() {
     const popover = this.shadowRoot?.querySelector(
-      `#${prefix}-date-picker-calendar-popover`
+      `#${tagPrefix}-date-picker-calendar-popover`
     ) as HTMLElement & { showPopover?: () => void };
     if (popover && typeof popover.showPopover === 'function') {
       try {
@@ -479,7 +479,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    */
   private _hideCalendarPopover() {
     const popover = this.shadowRoot?.querySelector(
-      `#${prefix}-date-picker-calendar-popover`
+      `#${tagPrefix}-date-picker-calendar-popover`
     ) as HTMLElement & { hidePopover?: () => void };
     if (popover && typeof popover.hidePopover === 'function') {
       try {
@@ -677,11 +677,11 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
 
       // Check if the target is the calendar element or within it
       const calendar = this.shadowRoot?.querySelector(
-        'cds-date-picker-calendar'
+        'clabs-date-picker-calendar'
       ) as HTMLElement;
       const isFocusInCalendar =
         target === calendar ||
-        target.closest?.('cds-date-picker-calendar') !== null ||
+        target.closest?.('clabs-date-picker-calendar') !== null ||
         composedPath.includes(calendar);
 
       // Case 0: Tab FROM input while closed -> reopen calendar and keep focus on input
@@ -706,7 +706,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
         event.preventDefault();
         event.stopPropagation();
         const calendarElement = this.shadowRoot?.querySelector(
-          'cds-date-picker-calendar'
+          'clabs-date-picker-calendar'
         ) as any;
         const calendarDiv = calendarElement?.shadowRoot?.querySelector(
           '.cds--date-picker__calendar'
@@ -729,7 +729,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
         event.preventDefault();
         event.stopPropagation(); // Prevent input from handling the event
         const calendarElement = this.shadowRoot?.querySelector(
-          'cds-date-picker-calendar'
+          'clabs-date-picker-calendar'
         ) as any;
         const calendarDiv = calendarElement?.shadowRoot?.querySelector(
           '.cds--date-picker__calendar'
@@ -1062,7 +1062,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
         class="${prefix}--date-picker__calendar-container">
         ${mode !== DATE_PICKER_MODE.SIMPLE && open
           ? html`
-              <cds-date-picker-calendar
+              <clabs-date-picker-calendar
                 .rangeMode="${mode === DATE_PICKER_MODE.RANGE}"
                 .dateFormat="${this.dateFormat || 'm/d/Y'}"
                 .minDate="${this.minDate
@@ -1074,11 +1074,11 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
                 .selectedDates="${selectedDates}"
                 .viewDate="${context?.viewDate || null}"
                 .focusedDate="${context?.focusedDate || null}"
-                @cds-date-picker-calendar-date-select="${this
+                @clabs-date-picker-calendar-date-select="${this
                   ._handleCalendarDateSelect}"
-                @cds-date-picker-calendar-month-change="${this
+                @clabs-date-picker-calendar-month-change="${this
                   ._handleCalendarMonthChange}">
-              </cds-date-picker-calendar>
+              </clabs-date-picker-calendar>
             `
           : ''}
       </div>
@@ -1153,56 +1153,56 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    * A selector that will return the `<input>` to enter starting date.
    */
   static get selectorInputFrom() {
-    return `${prefix}-date-picker-input,${prefix}-date-picker-input[kind="from"]`;
+    return `${tagPrefix}-date-picker-input,${tagPrefix}-date-picker-input[kind="from"]`;
   }
 
   /**
    * A selector that will return the `<input>` to enter end date.
    */
   static get selectorInputTo() {
-    return `${prefix}-date-picker-input[kind="to"]`;
+    return `${tagPrefix}-date-picker-input[kind="to"]`;
   }
 
   /**
    * The name of the custom event when an error occurs.
    */
   static get eventError() {
-    return `${prefix}-date-picker-error`;
+    return `${tagPrefix}-date-picker-error`;
   }
 
   /**
    * The name of the custom event fired when the date selection changes.
    */
   static get eventChange() {
-    return `${prefix}-date-picker-changed`;
+    return `${tagPrefix}-date-picker-changed`;
   }
 
   /**
    * The name of the custom event fired when the calendar icon is clicked.
    */
   static get eventIconClick() {
-    return `${prefix}-date-picker-icon-click`;
+    return `${tagPrefix}-date-picker-icon-click`;
   }
 
   /**
    * The name of the custom event fired when an input receives focus.
    */
   static get eventInputFocus() {
-    return `${prefix}-date-picker-input-focus`;
+    return `${tagPrefix}-date-picker-input-focus`;
   }
 
   /**
    * The name of the custom event fired when an input loses focus.
    */
   static get eventInputBlur() {
-    return `${prefix}-date-picker-input-blur`;
+    return `${tagPrefix}-date-picker-input-blur`;
   }
 
   /**
    * The name of the custom event fired when an input is clicked.
    */
   static get eventInputClick() {
-    return `${prefix}-date-picker-input-click`;
+    return `${tagPrefix}-date-picker-input-click`;
   }
 
   static styles = styles;

@@ -32,7 +32,7 @@ import {
 } from '@carbon-labs/react-props';
 import { useDisabledReason } from '@carbon-labs/react-tooltip';
 import './toggle.scss';
-import { useFormFieldState } from '@carbon-labs/react-util';
+import { isRtl, useFormFieldState } from '@carbon-labs/react-util';
 
 /* ============================================================================
  * Toggle — Carbon v11's Toggle (a switch), on the selection family's motion
@@ -202,18 +202,24 @@ export function Toggle({
     onToggle?.(next, id, e);
   };
 
+  // The gesture takes its stops left to right. Right to left the on stop is
+  // the left one, so the pair is handed over reversed: `atRight` is whether
+  // the knob rests on the right-hand stop.
+  const flipped = () => isRtl(trackRef.current);
+  const atRight = () => onRef.current !== flipped();
   const { onPointerDown } = useStepGesture({
     trackRef,
     selRef,
-    stops: () => stopRefs.current,
-    current: () => (onRef.current ? 1 : 0),
+    stops: () =>
+      flipped() ? [...stopRefs.current].reverse() : stopRefs.current,
+    current: () => (atRight() ? 1 : 0),
     // A press anywhere reaches toward the other side.
-    pressTarget: () => (onRef.current ? 0 : 1),
+    pressTarget: () => (atRight() ? 0 : 1),
     motion: () => mRef.current,
     disabled: () => inert,
     // There is only one way it can go: a press on the knob reaches too.
     reachOnKnob: true,
-    commit: (i) => set(i === 1, null),
+    commit: (i) => set((i === 1) !== flipped(), null),
     onKnobClick: () => set(!onRef.current, null),
   });
 

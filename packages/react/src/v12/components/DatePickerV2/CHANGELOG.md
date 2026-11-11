@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-date-picker-v2%400.12.0...%40carbon-labs%2Freact-date-picker-v2%400.13.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-date-picker-v2
+
+
+
+
+
+# [0.12.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-date-picker-v2%400.11.0...%40carbon-labs%2Freact-date-picker-v2%400.12.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-date-picker-v2
+
+
+
+
+
+# [0.11.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-date-picker-v2%400.10.0...%40carbon-labs%2Freact-date-picker-v2%400.11.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-date-picker-v2
+
+
+
+
+
+# [0.10.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-date-picker-v2%400.9.0...%40carbon-labs%2Freact-date-picker-v2%400.10.0) (2026-11-11)
+
+### Features
+
+* **v12:** only the v12 themes, with v12 zones and surface tokens ([#1489](https://github.com/carbon-design-system/carbon-labs/issues/1489)) ([6d03269](https://github.com/carbon-design-system/carbon-labs/commit/6d03269f97e98a9b127da062fe9ee4642154c103)), closes [#f4f4f4](https://github.com/carbon-design-system/carbon-labs/issues/f4f4f4)
+
+
 # [0.9.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-date-picker-v2%400.8.0...%40carbon-labs%2Freact-date-picker-v2%400.9.0) (2026-11-11)
 
 **Note:** Version bump only for package @carbon-labs/react-date-picker-v2

@@ -64,7 +64,7 @@ import {
 import { ToolbarControl, ToolbarDivider } from './ToolbarButton';
 import '@carbon-labs/react-selection-kit/scss/selection-kit.scss';
 import './toolbar.scss';
-import { useReducedGetter } from '@carbon-labs/react-util';
+import { inlineKey, useReducedGetter } from '@carbon-labs/react-util';
 
 /* ============================================================================
  * Toolbar: a row or column of controls with one tab stop.
@@ -343,7 +343,8 @@ export function Toolbar({
     const list = stops().filter((el) => !el.closest('[data-overflowed]'));
     const i = list.indexOf(stop);
     if (i < 0) return;
-    const next = rovingKey(e.key, i, {
+    // ← / → the way they point: right to left, → is the previous control.
+    const next = rovingKey(inlineKey(e.key, e.currentTarget), i, {
       orientation,
       wrap,
       count: list.length,

@@ -1,0 +1,48 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ChartsStories from './Charts.stories.tsx';
+
+<Meta of={ChartsStories} />
+
+# Charts
+
+The base the v12 chart family is built on. It holds what every chart shares
+and nothing that draws a plot: the data types, the tuning values
+(`CHART_DESIGN`), the motion resolved per motion level, the color roles and
+the series palette's structure, the line constants, the series key, and the
+card's sizes. The root entry loads no chart runtime, so a card without a plot
+stays small. The plot's shared pieces come at `@carbon-labs/react-charts/plot`.
+
+<Canvas of={ChartsStories.Fixtures} />
+
+## The family
+
+Each family is its own package on this base:
+
+- **BarChart:** single, grouped, stacked, range and horizontal bars.
+- **RadialChart:** a ring against a limit, and rings that expand.
+- **AreaChart:** a time series, with a range selector.
+- **DotMatrix:** one value per row and column.
+- **ConeChart:** small multiples, each projected to a range.
+- **StatusCard:** a reading, how fresh it is, and where it is heading.
+
+## Data
+
+A series is measured up to `now` and projected after it. A projected value can
+carry a range (`low`, `high`). Values and axis labels format through `Intl` in
+the chart's `locale`.
+
+## Sizes
+
+- `sm`: 380px.
+- `md`: 405px, the summary card, its plot to the card's edges.
+- `lg`: 640px.
+
+## Reduced motion
+
+At the reduced level every change fades in place on the reduced clock: no
+front, no stagger, no rise. At `none` every change lands at once.
+
+## Demo data
+
+The stories use neutral demo data for every chart, at `sm` and `lg`, and one
+reading later for live updates. It is not part of the package's entry.

@@ -109,11 +109,9 @@ $prefix: 'cds' !default;
 // repeated on every part that sits in it — the transcript, the composer, the
 // traces and the notices all take it from here.
 //
-// 624 is what the Carbon2027_v2 ChatShell frames are BUILT at: the reading
-// column and ChatInput are both 624 wide and share an x. The frame's own
-// annotation says the measure is 760, and the two disagree; the built value is
-// the one that can be measured, so it is the one here, and the disagreement is
-// a question for the design file rather than something to average.
+// 624 is the built width: the reading column and ChatInput are both 624 wide
+// and share an x. A design annotation gives 760; the built value is the one
+// that can be measured, so it is the one here.
 .#{$prefix}--recipe-renderer__measure {
   // Centred, because a capped column against the left edge of a wide shell is
   // just a narrow page.

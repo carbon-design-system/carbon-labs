@@ -1098,6 +1098,47 @@
       ]
     },
     {
+      "key": "v12/charts",
+      "id": "charts",
+      "kind": "component",
+      "status": "draft",
+      "figma": {
+        "status": "code-only"
+      },
+      "title": "V12/Charts",
+      "stories": [
+        "v12-charts--fixtures"
+      ],
+      "docs": "v12-charts--overview",
+      "props": {
+        "dataset": {
+          "figma": "VARIANT",
+          "values": null,
+          "unresolved": "Object.keys(DATASETS)"
+        },
+        "size": {
+          "figma": "VARIANT",
+          "values": [
+            "sm",
+            "lg"
+          ],
+          "surface": true
+        },
+        "live": {
+          "figma": "BOOLEAN"
+        }
+      },
+      "notMapped": [],
+      "state": [
+        "rest",
+        "live-update"
+      ],
+      "motion": [],
+      "reduced": {},
+      "departures": [],
+      "stateColors": []
+    },
+    {
       "key": "v12/chat",
       "id": "chat",
       "kind": "component",
@@ -1106,6 +1147,11 @@
         "status": "unmapped"
       },
       "title": "V12/ChatShell",
+      "titles": [
+        "V12/ChatShell",
+        "V12/StepList",
+        "V12/TurnStatus"
+      ],
       "stories": [
         "v12-chatshell--try-it",
         "v12-chatshell--default",
@@ -1118,8 +1164,19 @@
         "v12-chatshell--attachments",
         "v12-chatshell--prompt-suggestions",
         "v12-chatshell--follow-up",
-        "v12-chatshell--reply-status",
-        "v12-chatshell--reply-steps"
+        "v12-steplist--reply-steps",
+        "v12-steplist--pending",
+        "v12-steplist--running",
+        "v12-steplist--done",
+        "v12-steplist--failed",
+        "v12-steplist--collapsed",
+        "v12-steplist--expanded",
+        "v12-steplist--long-list",
+        "v12-turnstatus--reply-status",
+        "v12-turnstatus--working",
+        "v12-turnstatus--done",
+        "v12-turnstatus--failed",
+        "v12-turnstatus--release"
       ],
       "docs": "v12-chatshell--overview",
       "props": {
@@ -1152,11 +1209,20 @@
         "above",
         "aside",
         "below",
+        "endedAt",
+        "formatAttempts",
+        "formatCount",
+        "formatSummary",
         "header",
         "nav",
+        "onCollapse",
+        "onRetry",
         "overlay",
         "prompt",
         "rail",
+        "startedAt",
+        "status",
+        "steps",
         "timeScale"
       ],
       "state": [
@@ -9015,7 +9081,7 @@
           "spaces": [
             "oklch"
           ],
-          "expression": "linear-gradient( to right in oklch, color-mix(in oklch, var(--_g0), var(--_knob) var(--cds-slider-step)) calc(var(--sl-knob-w) / 2), color-mix(in oklch, var(--_g1), var(--_knob) var(--cds-slider-step)) calc(100% - var(--sl-knob-w) / 2) )",
+          "expression": "linear-gradient( var(--_ramp-to) in oklch, color-mix(in oklch, var(--_g0), var(--_knob) var(--cds-slider-step)) calc(var(--sl-knob-w) / 2), color-mix(in oklch, var(--_g1), var(--_knob) var(--cds-slider-step)) calc(100% - var(--sl-knob-w) / 2) )",
           "values": {
             "white": {
               "pending": "browser-render"

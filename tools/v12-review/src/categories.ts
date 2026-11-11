@@ -106,6 +106,7 @@ export const CATEGORIES: Category[] = [
       'CodeSnippet',
       'UserAvatar',
       'ActivityFeed',
+      'Charts',
     ],
   },
   {
@@ -122,6 +123,8 @@ export const CATEGORIES: Category[] = [
       'Loading',
       'Processing',
       'ShimmerText',
+      'TurnStatus',
+      'StepList',
       'Feedback',
       'EmptyState',
       'FullPageError',

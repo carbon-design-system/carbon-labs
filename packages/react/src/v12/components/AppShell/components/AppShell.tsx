@@ -65,6 +65,7 @@ import { useTheme } from '@carbon/react';
 import {
   inverseTheme,
   KIT_THEME,
+  themeOf,
   themeZoneAt,
   ThemeZone,
   zoneClass,
@@ -140,7 +141,7 @@ import './app-shell.scss';
  *                    workspace's gutter (16) and corners (16), pushing it
  * ========================================================================== */
 
-/** The Carbon theme round the shell (the page's), read before the first paint and on every theme change; null is Carbon's white. */
+/** The theme round the shell (the page's), read before the first paint and on every theme change; null is no zone, the light side. Before it is read, Carbon's context names the side, in the pair the page is in. */
 function useThemeRound(ref: RefObject<HTMLElement | null>) {
   const context = useTheme().theme as string | undefined;
   const [read, setRead] = useState<CarbonThemeName | null | undefined>();
@@ -152,7 +153,14 @@ function useThemeRound(ref: RefObject<HTMLElement | null>) {
     return onThemeChange(el, measure);
   }, [ref]);
   if (read !== undefined) return read;
-  return context === 'white' || context === 'g100' ? context : null;
+  const page =
+    typeof document === 'undefined'
+      ? null
+      : themeZoneAt(document.documentElement);
+  // Carbon's context knows only its own names: white and g100 here.
+  return context === 'white' || context === 'g100'
+    ? themeOf(KIT_THEME[context], page)
+    : page;
 }
 
 /**
@@ -166,7 +174,7 @@ function workspaceTheme(
 ): ZoneTheme {
   if (chromeTheme === 'page') return mainTheme;
   const kit = (theme: CarbonThemeName | null): KitTheme =>
-    KIT_THEME[theme ?? 'white'];
+    theme ? KIT_THEME[theme] : 'light';
   const chrome =
     chromeTheme === 'inverse' ? kit(inverseTheme(round)) : chromeTheme;
   const want =

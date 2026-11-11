@@ -8,8 +8,10 @@
 import { describe, expect, it } from 'vitest';
 import {
   controlsOf,
+  fileOf,
   firstSentence,
   hrefOf,
+  namesOf,
   parseRoute,
   propsOf,
   savedPicks,
@@ -35,6 +37,37 @@ describe('slugs and routes', () => {
     });
     const route = { page: 'component', slug: 'modal', story: 'sizes' } as const;
     expect(parseRoute(hrefOf(route))).toEqual(route);
+  });
+});
+
+describe('the components the story files name', () => {
+  const keys = [
+    './Button/__stories__/Button.stories.tsx',
+    './Chat/__stories__/Chat.stories.tsx',
+    './Chat/__stories__/TurnStatus.stories.tsx',
+    './MotionIcons/__stories__/Gallery.stories.tsx',
+    './Util/__stories__/Util.stories.tsx',
+  ];
+
+  it('names each folder, and a component with a page of its own in another folder', () => {
+    const text = { 'V12/TurnStatus': {} };
+    expect([...namesOf(keys, text)].sort()).toEqual([
+      'Button',
+      'Chat',
+      'MotionIcons',
+      'TurnStatus',
+    ]);
+  });
+
+  it('finds each one its story file', () => {
+    expect(fileOf(keys, 'Chat')).toBe('./Chat/__stories__/Chat.stories.tsx');
+    expect(fileOf(keys, 'MotionIcons')).toBe(
+      './MotionIcons/__stories__/Gallery.stories.tsx'
+    );
+    expect(fileOf(keys, 'TurnStatus')).toBe(
+      './Chat/__stories__/TurnStatus.stories.tsx'
+    );
+    expect(fileOf(keys, 'Missing')).toBeUndefined();
   });
 });
 

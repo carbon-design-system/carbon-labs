@@ -14,9 +14,12 @@ import type { RefObject } from 'react';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
+/** The theme each tone is read from: the v12 pair, the only zones the page defines. */
+export const FAVICON_THEMES = { light: 'v12-light', dark: 'v12-dark' } as const;
+
 /**
  * A theme's `icon-secondary`, read from its class.
- * @param {string} theme The theme's name: `white`, `g100`.
+ * @param {string} theme The theme's name: `v12-light`, `v12-dark`.
  */
 export function iconSecondaryOf(theme: string): string {
   const probe = document.createElement('div');
@@ -62,8 +65,8 @@ export function useMarkFavicon(ref: RefObject<HTMLElement | null>) {
     if (!mark) {
       return;
     }
-    const light = iconSecondaryOf('white');
-    const dark = iconSecondaryOf('g100');
+    const light = iconSecondaryOf(FAVICON_THEMES.light);
+    const dark = iconSecondaryOf(FAVICON_THEMES.dark);
     if (!light || !dark) {
       return;
     }

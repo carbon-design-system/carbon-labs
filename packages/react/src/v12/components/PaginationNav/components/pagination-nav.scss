@@ -15,7 +15,7 @@
  * selected weight and primary text where the marker covers it. Items are
  * square (the row's height), 2px apart, their hover the kit's rollover, full
  * round: a circle (a pill for a long number), as every icon-only or number
- * control's ("Hovers", docs/components/README.md). The nav is the list
+ * control's. The nav is the list
  * reflow's root: numbers leaving are copies placed in it. */
 
 .cds-pagination-nav {
@@ -35,7 +35,7 @@
   /* Full round: a circle on a square number, a pill on a wider one. 999px,
      not half the height: the press shrinks the item and a hover can grow it,
      and a radius pinned to half the rest height flattens the sides of the
-     changed shape ("Hovers", docs/components/README.md). */
+     changed shape. */
   --sel-radius: #{corners.$full};
   --sel-track: transparent;
   --sel-selector: transparent;

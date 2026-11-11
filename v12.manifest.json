@@ -154,6 +154,34 @@
       }
     },
     {
+      "id": "charts",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Charts",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [
+        "DURATION_FLOOR_MS",
+        "DurationToken",
+        "MotionLevel",
+        "STAGGER",
+        "bezierEase",
+        "cubicBezier",
+        "distanceTokens",
+        "motionTokens",
+        "reducedClock",
+        "staggerSteps",
+        "toEasing"
+      ],
+      "source": {
+        "repo": "carbon-next",
+        "ref": "a7bc936cf11fac0bec56bba750b02a1793f15def"
+      },
+      "figma": {
+        "key": "v12/charts",
+        "status": "code-only"
+      }
+    },
+    {
       "id": "chat",
       "kind": "component",
       "path": "packages/react/src/v12/components/Chat",

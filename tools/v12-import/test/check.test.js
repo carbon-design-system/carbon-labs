@@ -159,6 +159,69 @@ describe('the lane check', () => {
       'warning motion not through the seam packages/react/src/v12/components/Widget/components/old.scss:1',
     ]);
   });
+
+  it('holds the chart packages to the seam, and leaves the motion icons alone', () => {
+    const lane = fs.mkdtempSync(path.join(os.tmpdir(), 'v12-check-charts-'));
+    /**
+     * Writes a file in this test's fixture.
+     *
+     * @param {string} rel Its path in the fixture.
+     * @param {string} text Its contents.
+     */
+    const put = (rel, text) => {
+      fs.mkdirSync(path.dirname(path.join(lane, rel)), { recursive: true });
+      fs.writeFileSync(path.join(lane, rel), text);
+    };
+    try {
+      put(
+        'v12.manifest.json',
+        JSON.stringify([
+          {
+            id: 'chart',
+            kind: 'component',
+            path: 'packages/react/src/v12/components/Chart',
+          },
+        ])
+      );
+      put(
+        'packages/react/src/v12/components/Chart/package.json',
+        JSON.stringify({ name: 'chart', private: true })
+      );
+      put(
+        'packages/react/src/v12/components/Chart/src/plot.ts',
+        [
+          "import { revealSeries } from '@carbon-labs/motion-charts';",
+          "import { fill } from '@carbon-labs/motion-gpu/fill';",
+          "import { Icon } from '@carbon-labs/motion-icons-core';",
+          "import { mark } from '@carbon-labs/motion-chartsy';",
+          'export { revealSeries, fill, Icon, mark };',
+          '',
+        ].join('\n')
+      );
+      // The seam itself takes them, through its subpaths.
+      put(
+        'packages/v12-motion/src/charts.ts',
+        "export * from '@carbon-labs/motion-charts';\n"
+      );
+      put(
+        'packages/v12-motion/package.json',
+        JSON.stringify({ name: 'seam', private: true })
+      );
+      const found = checkLane(lane, {
+        directMotion: [],
+        vocabulary: false,
+        departures: false,
+      })
+        .filter((f) => /seam/.test(f.kind))
+        .map((f) => `${f.level} ${f.at} ${f.match}`);
+      expect(found.sort()).toEqual([
+        `error ${dir}/Chart/src/plot.ts:1 @carbon-labs/motion-charts`,
+        `error ${dir}/Chart/src/plot.ts:2 @carbon-labs/motion-gpu/fill`,
+      ]);
+    } finally {
+      fs.rmSync(lane, { recursive: true, force: true });
+    }
+  });
 });
 
 describe('the motion rules', () => {

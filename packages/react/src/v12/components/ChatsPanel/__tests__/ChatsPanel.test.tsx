@@ -155,8 +155,8 @@ describe('ChatsPanel', () => {
 
     it('overlay closes on a press outside it', async () => {
       // No scrim: this system separates a floating panel with a border and a
-      // shadow, not by dimming part of a surface (themes-regions.md). The
-      // dismiss stays; only the dimming went.
+      // shadow, not by dimming part of a surface. The
+      // dismiss stays.
       const { container } = render(
         <ChatsPanel sections={sections} presentation="overlay">
           Hello

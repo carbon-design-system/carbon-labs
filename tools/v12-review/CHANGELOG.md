@@ -3,6 +3,74 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.21.0...%40carbon-labs%2Fv12-review%400.22.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/v12-review
+
+
+
+
+
+# [0.21.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.20.0...%40carbon-labs%2Fv12-review%400.21.0) (2026-11-11)
+
+### Features
+
+* **v12-charts:** the chart base package and demo data ([#1499](https://github.com/carbon-design-system/carbon-labs/issues/1499)) ([f06c799](https://github.com/carbon-design-system/carbon-labs/commit/f06c799a104acfc7acdf938a77920941c521939c))
+
+
+# [0.20.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.19.0...%40carbon-labs%2Fv12-review%400.20.0) (2026-11-11)
+
+### Bug Fixes
+
+* **react:** mirror the v12 slider and toggle in right to left ([#1498](https://github.com/carbon-design-system/carbon-labs/issues/1498)) ([7dde0e1](https://github.com/carbon-design-system/carbon-labs/commit/7dde0e1bb169d192bdd772f41a7432c7cb1166aa))
+
+
+# [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.18.0...%40carbon-labs%2Fv12-review%400.19.0) (2026-11-11)
+
+### Bug Fixes
+
+* **v12-review:** read the favicon's tones from the v12 zones ([#1497](https://github.com/carbon-design-system/carbon-labs/issues/1497)) ([04bf1c1](https://github.com/carbon-design-system/carbon-labs/commit/04bf1c17eda09a6ded13a8da4527b944f22a13da))
+
+
+# [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.17.0...%40carbon-labs%2Fv12-review%400.18.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/v12-review
+
+
+
+
+
+# [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.16.0...%40carbon-labs%2Fv12-review%400.17.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/v12-review
+
+
+
+
+
+# [0.16.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.15.0...%40carbon-labs%2Fv12-review%400.16.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/v12-review
+
+
+
+
+
+# [0.15.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.14.0...%40carbon-labs%2Fv12-review%400.15.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/v12-review
+
+
+
+
+
+# [0.14.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.13.0...%40carbon-labs%2Fv12-review%400.14.0) (2026-11-11)
+
+### Features
+
+* **v12:** only the v12 themes, with v12 zones and surface tokens ([#1489](https://github.com/carbon-design-system/carbon-labs/issues/1489)) ([6d03269](https://github.com/carbon-design-system/carbon-labs/commit/6d03269f97e98a9b127da062fe9ee4642154c103)), closes [#f4f4f4](https://github.com/carbon-design-system/carbon-labs/issues/f4f4f4)
+
+
 # [0.13.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.12.0...%40carbon-labs%2Fv12-review%400.13.0) (2026-11-11)
 
 ### Bug Fixes

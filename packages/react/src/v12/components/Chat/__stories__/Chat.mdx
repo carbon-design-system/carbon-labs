@@ -20,8 +20,10 @@ round the prompt. Use it as a page of its own, or in a pane beside a page.
 - `ChatTurnNavigator` lists the questions in a long chat and scrolls to the one
   you choose.
 - `ChatPane` opens the chat beside a page.
-- `ChatMessage`, `TurnStatus`, `StepList` and `FileChips` are the smaller parts,
-  for building your own.
+- `ChatMessage` and `FileChips` are the smaller parts, for building your own.
+
+A reply's status row and its steps, `TurnStatus` and `StepList`, have their own
+pages.
 
 <Canvas of={ChatStories.TryIt} />
 
@@ -44,10 +46,6 @@ round the prompt. Use it as a page of its own, or in a pane beside a page.
 <Canvas of={ChatStories.PromptSuggestions} />
 
 <Canvas of={ChatStories.FollowUp} />
-
-<Canvas of={ChatStories.ReplyStatus} />
-
-<Canvas of={ChatStories.ReplySteps} />
 
 ## Working together
 
@@ -94,21 +92,13 @@ round the prompt. Use it as a page of its own, or in a pane beside a page.
   the reader scrolls; never a glide.
 - **Selection:** in Suggestions and FollowUpCard, the selector grows in from the
   row's center (fast-02), then the choice is handed on.
-- **Status row:** the mark loads in at once and the row comes in through the
-  shimmer's band. Each stage's words hold at least one loading period, then
-  swap: out, then in through the band. The summary is out, then in.
-- **Steps:** a new step's space opens by travel, its content coming from 8px
-  back. Queued to running, the dashed circle winds up into the spinner; done,
-  the spinner hands off to the status mark in place.
 
 ## Reduced motion
 
 No travel: fades on the reduced clock, moves landing at once. The outs are at
 once, so the working element passes at once, and the first words have no rise. A
 jump to a question has no wash. Popovers and panes follow their own reduced
-rules. The status row's mark is still and its words plain; its swaps are on the
-reduced clock and its details open at once. Steps and their marks land at once,
-and their words swap on the reduced clock.
+rules.
 
 ## Props
 

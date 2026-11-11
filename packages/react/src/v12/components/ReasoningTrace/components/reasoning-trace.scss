@@ -239,8 +239,8 @@ $thinking: '#{$prefix}--thinking-indicator';
 
 // ---- the thinking animation --------------------------------------------------
 
-// Three 2px dots, 4 apart, centred in 16 (Carbon2027 - Modelling's sprite).
-// One cycle is four slow-02 durations, 2.8s; the source video measured 2.6s.
+// Three 2px dots, 4 apart, centred in 16.
+// One cycle is four slow-02 durations, 2.8s; the reference measured 2.6s.
 // The middle spreads from a large dot, the three ripple, a darker square
 // passes start to end, they collapse to a point, and the middle spreads again.
 $-cycle: calc(#{$duration-slow-02} * 4);

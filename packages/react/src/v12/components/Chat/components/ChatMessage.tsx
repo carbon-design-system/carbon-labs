@@ -17,13 +17,13 @@ import {
   ThumbsUpToggle,
 } from '@carbon-labs/react-motion-icons';
 import { AITextReveal } from '@carbon-labs/react-feedback';
-import { useRovingFocus } from '@carbon-labs/react-selection-kit';
 import {
   IconButton,
   TooltipGroup,
   type IconButtonSize,
 } from '@carbon-labs/react-tooltip';
 import { useChatVariant, type ChatVariant } from './context';
+import { useInlineRovingFocus } from './rovingDirection';
 import { inertProps } from '@carbon-labs/react-util';
 import './chat-surface.scss';
 
@@ -94,7 +94,7 @@ export function ChatActions({
   const rate = (r: Exclude<ChatRating, null>) =>
     onRate?.(rating === r ? null : r);
   const ref = useRef<HTMLDivElement>(null);
-  useRovingFocus(ref, { items: '.cds-icon-btn' });
+  useInlineRovingFocus(ref, '.cds-icon-btn');
   return (
     <div
       ref={ref}

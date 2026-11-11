@@ -18,10 +18,9 @@ export interface ThinkingIndicatorProps {
 }
 
 /**
- * The processing animation an agent shows while it thinks (Carbon2027 -
- * Modelling, Processing/Loading): three dots settle, ripple, a darker square
- * passes along them, they collapse to a point and spread again. It is
- * decorative; the label beside it says "Thinking". It replaces labs's
+ * The processing animation an agent shows while it thinks: three dots settle,
+ * ripple, a darker square passes along them, they collapse to a point and
+ * spread again. It is decorative; the label beside it says "Thinking". It replaces labs's
  * Processing for v12, and holds still under reduced motion.
  */
 export function ThinkingIndicator({ className }: ThinkingIndicatorProps) {

@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/v12-scenes",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - the v12 scene tier: the built v12 Storybook's stories in a browser, for the components a change touches",

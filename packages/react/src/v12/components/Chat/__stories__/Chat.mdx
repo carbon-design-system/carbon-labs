@@ -39,6 +39,10 @@ pages.
 
 <Canvas of={ChatStories.Prompt} />
 
+<Canvas of={ChatStories.Dictation} />
+
+<Canvas of={ChatStories.DictationLive} />
+
 <Canvas of={ChatStories.Notice} />
 
 <Canvas of={ChatStories.Attachments} />
@@ -58,6 +62,12 @@ pages.
   conversation. Each question shows its first line and its time, and the marker
   is on the one in view. Alt with ↑ or ↓ steps between questions while focus is
   in the conversation, not on a control.
+- **Dictation.** The microphone is a toggle. A press asks to listen
+  (`onListeningChange`). While the host waits for the microphone, it passes
+  `connecting` and a spinner takes the icon's place. Once it listens, it passes
+  `listening`; the button fills and the pills follow `level`, a number from 0 to
+  1 or a function read each frame. A press while connecting or listening stops.
+  A polite region says "Listening" and "Dictation stopped".
 - **Custom parts.** `useChatVariant` gives a part of your own the shell's
   `variant`.
 
@@ -81,8 +91,10 @@ pages.
   step faster shutting, its content under the 16px soft edge.
 - **Sideways opening:** a file chip opens its space by travel,
   entrance-productive, its content moving with the opening under a soft edge.
-- **Status:** dictation's status is a Popover over the prompt in the opposite
-  theme, snapping from its edge above the microphone and folding back into it.
+- **Dictation:** connecting, the microphone fades out (fast-01) and the Spinner
+  draws on. Listening, the fill changes at once; the microphone leaves
+  (fast-02), then three dots open into pills (moderate-02) that rise with the
+  level on fast-01 and fall on moderate-01. Stopping plays back a step faster.
 - **Rise:** the docked notice rises from behind the field by travel. Its content
   swaps in place; it sinks one step faster.
 - **Jump to a question:** the navigator's popover snaps from its button. A
@@ -97,7 +109,8 @@ pages.
 
 No travel: fades on the reduced clock, moves landing at once. The outs are at
 once, so the working element passes at once, and the first words have no rise. A
-jump to a question has no wash. Popovers and panes follow their own reduced
+jump to a question has no wash. Dictation's swap and its icon change land at
+once, and the pills hold still. Popovers and panes follow their own reduced
 rules.
 
 ## Props

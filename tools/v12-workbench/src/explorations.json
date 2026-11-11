@@ -225,13 +225,13 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Chat/components/PromptInput.tsx",
-      "line": 139,
+      "line": 143,
       "text": "corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Chat/components/PromptInput.tsx",
-      "line": 142,
+      "line": 146,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
@@ -1293,13 +1293,13 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Chat/components/PromptInput.tsx",
-      "line": 139,
+      "line": 143,
       "text": "corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Chat/components/PromptInput.tsx",
-      "line": 142,
+      "line": 146,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
@@ -1657,13 +1657,13 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Chat/components/PromptInput.tsx",
-      "line": 139,
+      "line": 143,
       "text": "corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Chat/components/PromptInput.tsx",
-      "line": 142,
+      "line": 146,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {

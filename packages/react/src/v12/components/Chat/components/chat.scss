@@ -210,6 +210,41 @@ $standard: var(--cds-motion-easing-standard-productive);
   color: var(--cds-hero-ink-selected, #{theme.$link-primary});
 }
 
+/* Connecting: the kit's Spinner in the icon's place, as a busy Button's (button.scss): its base the
+   button's own color, faint; the icon fades out first and back after (useBusySwap's clocks, 0 under
+   reduced motion). */
+.cds-dictation > .cds-dictation__icon,
+.cds-dictation > .cds-dictation__spinner {
+  grid-area: 1 / 1;
+}
+
+.cds-dictation__icon {
+  display: block;
+}
+
+.cds-dictation__spinner {
+  --cds-spinner-base: color-mix(in srgb, currentColor 30%, transparent);
+}
+
+.cds-dictation > .cds-dictation__icon {
+  transition: opacity var(--cds-busy-in, 0ms) var(--cds-busy-entrance, linear);
+}
+
+.cds-dictation--swapped > .cds-dictation__icon {
+  opacity: 0;
+  transition: opacity var(--cds-busy-out, 0ms) var(--cds-busy-exit, linear);
+}
+
+/* What it says for a screen reader: the state only. */
+.cds-dictation-live {
+  position: absolute;
+  overflow: hidden;
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
 /* ── attachments (FileChips) ─────────────────────────────────────────── */
 
 /* The row: the kit's TagSet owns the chips' look; this box is only what the row's opening and
@@ -331,58 +366,6 @@ $_pn-status: (
 
 .cds-prompt-notice__content--inverse .cds-prompt-notice__close {
   color: theme.$icon-inverse;
-}
-
-/* Dictation's status (DictationStatus): the Popover's anchor, no size, on the prompt's top edge at
-   the microphone's end, so the status sits over the prompt, never over the text. */
-.cds-prompt {
-  position: relative;
-}
-
-.cds-prompt > .cds-dictation-anchor {
-  position: absolute;
-  display: block;
-  block-size: 0;
-  inline-size: 0;
-  inset-block-start: 0;
-  inset-inline-end: var(--dictation-end, 0px);
-}
-
-/* The status's words for a screen reader: the state only. */
-.cds-dictation-live {
-  position: absolute;
-  overflow: hidden;
-  block-size: 1px;
-  clip-path: inset(50%);
-  inline-size: 1px;
-  white-space: nowrap;
-}
-
-/* The Popover's content, in the opposite theme, as a toggletip's; the time over the state. */
-.cds-dictation-status__body {
-  @include type-style('body-compact-01');
-
-  display: grid;
-  padding: 12px 16px;
-  min-inline-size: 9rem;
-  row-gap: 4px;
-}
-
-.cds-dictation-status__time {
-  font-variant-numeric: tabular-nums;
-}
-
-.cds-dictation-status__text {
-  display: grid;
-  color: theme.$text-secondary;
-
-  > span {
-    grid-area: 1 / 1;
-  }
-
-  > span:not([data-shown]) {
-    visibility: hidden;
-  }
 }
 
 /* ── the shell (ChatShell) ───────────────────────────────────────────── */

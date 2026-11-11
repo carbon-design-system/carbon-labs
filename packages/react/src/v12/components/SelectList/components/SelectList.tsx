@@ -30,18 +30,19 @@ import {
   SELECTION_KIT_MOTION,
   SelectionFaces,
   SelectionMarker,
-  createTypeahead,
   resolveSelectionStyle,
   useDefaultFrame,
   rolloverItems,
-  rovingKey,
   useIconPixelSnap,
   useItemRollover,
   useLatest,
   useSelectedWeight,
   useSelectionEngine,
   useSelectionGesture,
+  useSelectionList,
   sameNode,
+  type SelectionItemProps,
+  type SelectionItemState,
   type SelectionMotion,
   type SelectionStyleProps,
   isComponentType,
@@ -67,6 +68,7 @@ import './select-list.scss';
  *   drag      the selector follows the pointer and lands on the nearest row
  *   none      no value marks nothing; the first pick grows the selector in
  *   keyboard  arrows, Home, End and typeahead; `activation` automatic or manual
+ *             (the kit's list model, `useSelectionList`, as a listbox)
  *   loading   placeholder rows in the rows' own box, taken as one reflow
  *   reduced   the selection kit's
  *
@@ -286,6 +288,8 @@ interface SelectRowProps {
   selected: boolean;
   /** The list's tab stop. */
   tabStop: boolean;
+  /** Stable: the list model's attributes for an option. */
+  itemProps: (index: number, state: SelectionItemState) => SelectionItemProps;
   /** `start` / `end`: the row at the track's edge. */
   edge?: string;
   /** Loading: the placeholder key the row took over, its takeover number and label. */
@@ -306,6 +310,7 @@ const SelectRow = memo(
     r,
     selected: isSel,
     tabStop,
+    itemProps,
     edge,
     entryKey,
     took,
@@ -319,12 +324,9 @@ const SelectRow = memo(
         {...rowStructureProps(entryKey, took)}
         ref={(el) => setRef(r.index, el)}
         type="button"
-        role="option"
-        aria-selected={isSel}
+        {...itemProps(r.index, { selected: isSel, tabStop })}
         aria-disabled={r.disabled || undefined}
-        tabIndex={tabStop ? 0 : -1}
         disabled={r.disabled}
-        data-index={r.index}
         data-edge={edge}
         // The whole row is its icon's hover frame: hovering (or focusing)
         // anywhere on it plays a motion icon.
@@ -360,6 +362,7 @@ const SelectRow = memo(
   (a, b) =>
     a.selected === b.selected &&
     a.tabStop === b.tabStop &&
+    a.itemProps === b.itemProps &&
     a.edge === b.edge &&
     a.entryKey === b.entryKey &&
     a.took === b.took &&
@@ -467,7 +470,6 @@ export function SelectList({
   const selectedRef = useLatest(selected);
   const rowsRef = useLatest(rows);
   const onChangeRef = useLatest(onChange);
-  const [typeahead] = useState(() => createTypeahead());
 
   /* ── the selection ──────────────────────────────────────────────────── */
 
@@ -567,38 +569,28 @@ export function SelectList({
 
   /* ── keyboard ────────────────────────────────────────────────────────── */
 
+  // The listbox's contract, its tab stop (the selected row, or the first
+  // enabled one) and its keys: arrows, Home, End and typeahead.
+  const list = useSelectionList({
+    role: 'listbox',
+    selected,
+    count: rows.length,
+    isDisabled: (i) => !!rows[i]?.disabled,
+    wrap,
+    activation,
+    labels: () => rows.map((r) => r.label),
+    focus: (i) => itemRefs.current[i]?.focus(),
+    select: (i, key) => commit(i, key),
+  });
+
   const onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>) => {
     const btn = (e.target as Element).closest<HTMLButtonElement>(ITEM);
     if (!btn) return;
-    const from = Number(btn.dataset.index);
-    const isDisabled = (i: number) => !!rowsRef.current[i]?.disabled;
-    let next = rovingKey(e.key, from, {
-      orientation: 'vertical',
-      wrap,
-      count: rowsRef.current.length,
-      isDisabled,
-    });
-    if (next == null && !e.ctrlKey && !e.metaKey && !e.altKey) {
-      next = typeahead(
-        e.key,
-        from,
-        rowsRef.current.map((r) => r.label),
-        isDisabled
-      );
-    }
-    if (next == null) return;
-    e.preventDefault();
-    itemRefs.current[next]?.focus();
-    if (activation !== 'manual') commit(next, e.key);
+    list.onKeyDown(e, Number(btn.dataset.index));
   };
 
   /* ── render ──────────────────────────────────────────────────────────── */
 
-  // The tab stop: the selected row, or the first enabled one.
-  const tabStop =
-    selected >= 0 && !rows[selected]?.disabled
-      ? selected
-      : rows.findIndex((r) => !r.disabled);
   const edges = edgeRows(entries);
   // Placeholders after the rows: the last real row isn't at the track's end.
   if (load.standing.length) edges.last = -1;
@@ -622,7 +614,8 @@ export function SelectList({
         key={entry?.key ?? r.key}
         r={r}
         selected={isSel}
-        tabStop={r.index === tabStop}
+        tabStop={r.index === list.tabStop}
+        itemProps={list.itemProps}
         edge={
           [r.index === edges.first && 'start', r.index === edges.last && 'end']
             .filter(Boolean)
@@ -721,9 +714,8 @@ export function SelectList({
             }
           : rest.style
       }
-      role="listbox"
+      {...list.listProps}
       aria-label={rest['aria-label'] ?? label}
-      aria-orientation="vertical"
       aria-busy={load.busy || undefined}
       onPointerDown={(e) => gestureDown(e, ITEM)}
       onKeyDown={onKeyDown}>

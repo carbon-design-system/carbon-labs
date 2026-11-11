@@ -41,7 +41,7 @@ import {
 import { ThemeZone, type ZoneTheme } from '@carbon-labs/react-theme-zone';
 import './app-shell.scss';
 import { assignRef } from '@carbon-labs/react-util';
-import { useReducedGetter } from '@carbon-labs/react-util';
+import { isRtl, useReducedGetter } from '@carbon-labs/react-util';
 
 /* ============================================================================
  * Header — the kit's global header
@@ -267,9 +267,12 @@ export function Header({
         .forEach((el) => {
           w[Number(el.dataset.actionIndex)] = outerWidth(el);
         });
+      // What the name takes, from the bar's inline start: its left edge, or
+      // its right right to left.
+      const b = bar.getBoundingClientRect();
+      const h = home.getBoundingClientRect();
       const room =
-        bar.clientWidth -
-        (home.getBoundingClientRect().right - bar.getBoundingClientRect().left);
+        bar.clientWidth - (isRtl(bar) ? b.right - h.left : h.right - b.left);
       let fit = 0;
       let used = 0;
       for (let i = n - 1; i >= 0; i--) {

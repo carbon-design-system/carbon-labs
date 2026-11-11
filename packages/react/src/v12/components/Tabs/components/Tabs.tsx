@@ -172,7 +172,7 @@ export interface TabListProps extends HTMLAttributes<HTMLDivElement> {
   fit?: 'hug' | 'fill';
   /** Icon tabs' icon: `default` 16px, `lg` 20px (and the lg size, unless `size` is given). */
   iconSize?: 'default' | 'lg';
-  /** Spread onto the scroll buttons. */
+  /** Spread onto the scroll buttons, as v11's: left onto the previous (the right one, right to left), right onto the next. */
   leftOverflowButtonProps?: HTMLAttributes<HTMLButtonElement>;
   rightOverflowButtonProps?: HTMLAttributes<HTMLButtonElement>;
   /** @deprecated in v11 for `Layer`; accepted and ignored. */

@@ -16,7 +16,7 @@ import {
 } from 'react';
 import { Theme } from '@carbon/react';
 import { useThemeZone, zoneAttrs } from './useThemeZone';
-import type { ZoneTheme } from './zone';
+import { BASE_THEME, type CarbonThemeName, type ZoneTheme } from './zone';
 
 export interface ThemeZoneProps extends HTMLAttributes<HTMLElement> {
   /** `light`, `dark`, `page` (the page's own: no zone) or `inverse` (the opposite of the theme round it). */
@@ -25,19 +25,35 @@ export interface ThemeZoneProps extends HTMLAttributes<HTMLElement> {
   as?: ElementType;
 }
 
-/** The zone's element under Carbon's `<Theme>`, which passes no ref on: the ref comes as `elementRef`. */
+/** The zone's element under Carbon's `<Theme>`, which passes no ref on: the ref comes as `elementRef`. Carbon's
+ * `<Theme>` knows only its own themes, so a v12 zone is drawn by the theme it is built on (its context, its layer)
+ * and its class is swapped for the v12 one. */
 function ZoneElement({
   element: As,
   elementRef,
+  zone,
+  className,
   ...rest
 }: HTMLAttributes<HTMLElement> & {
   element: ElementType;
   elementRef: Ref<HTMLElement>;
+  zone: CarbonThemeName;
 }) {
-  return createElement(As, { ...rest, ref: elementRef });
+  const base = `cds--${BASE_THEME[zone]}`;
+  const own = `cds--${zone}`;
+  const classes =
+    base === own
+      ? className
+      : (className ?? '')
+          .split(' ')
+          .filter((c) => c && c !== base)
+          .concat(own)
+          .join(' ');
+  return createElement(As, { ...rest, className: classes, ref: elementRef });
 }
 
-/** An area in a theme of its own, through Carbon's `<Theme>` (its class, its tokens, its context). */
+/** An area in a theme of its own, through Carbon's `<Theme>` (its class, its tokens, its context): white and g100, or
+ * v12 light and v12 dark on a page in a v12 theme. */
 export const ThemeZone = forwardRef<HTMLElement, ThemeZoneProps>(
   function ThemeZone({ theme, as = 'div', children, ...rest }, forwarded) {
     const ref = useRef<HTMLElement | null>(null);
@@ -56,7 +72,8 @@ export const ThemeZone = forwardRef<HTMLElement, ThemeZoneProps>(
         as={ZoneElement}
         element={as}
         elementRef={ref}
-        theme={zone}
+        zone={zone}
+        theme={BASE_THEME[zone]}
         {...rest}
         {...zoneAttrs(theme, zone)}>
         {children}

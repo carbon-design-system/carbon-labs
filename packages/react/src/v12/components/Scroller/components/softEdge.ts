@@ -197,7 +197,7 @@ const covers = (r: DOMRect, pts: [number, number][]) =>
 const docListeners = new Set<() => void>();
 let docObserver: MutationObserver | null = null;
 // A class on the root or the body counts only when it changes a Carbon theme class (not a modal's open class).
-const THEME_CLASS = /(?:^|\s)cds--(?:white|g100)(?=\s|$)/g;
+const THEME_CLASS = /(?:^|\s)cds--(?:white|g100|v12-light|v12-dark)(?=\s|$)/g;
 const themeClasses = (cls: string | null) =>
   (cls?.match(THEME_CLASS) ?? [])
     .map((c) => c.trim())

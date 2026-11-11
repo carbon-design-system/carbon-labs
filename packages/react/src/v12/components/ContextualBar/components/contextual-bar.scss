@@ -291,8 +291,11 @@
   $base in ('dark' themes.$g100 #0b0b0b, 'light' themes.$white #fafafa)
 {
   /* Over the theme class the bar also carries (`invert`): one rule, whatever order the chunks load in;
-     its base the page bases' (styles/_surface.scss). */
-  .cds-contextual-bar__bar[data-inverse='#{$name}'][class] {
+     its base the page bases' (styles/_surface.scss). A v12 zone's class is the theme itself: no rule over it. */
+  .cds-contextual-bar__bar[data-inverse='#{$name}'][class]:not(
+      .cds--v12-light,
+      .cds--v12-dark
+    ) {
     @include theme.theme($t);
     --cds-background: #{$base};
 

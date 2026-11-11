@@ -6,8 +6,11 @@ import * as ThemeZoneStories from './ThemeZone.stories.tsx';
 # Theme zone
 
 An area of the page in a theme of its own, through Carbon's `Theme`: `light` or
-`dark` (white or g100), `page` (no zone of its own) or `inverse` (the opposite
-of the theme round it).
+`dark`, `page` (no zone of its own) or `inverse` (the opposite of the theme
+round it). On a page in a v12 theme, `light` and `dark` are v12 light and v12
+dark (the zone classes `cds--v12-light` and `cds--v12-dark`), and `inverse`
+inside v12 light is v12 dark, and the reverse. Elsewhere they are white and g100
+(`cds--white`, `cds--g100`).
 
 <Canvas of={ThemeZoneStories.Default} />
 

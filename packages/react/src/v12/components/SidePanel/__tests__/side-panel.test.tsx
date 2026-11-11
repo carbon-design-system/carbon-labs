@@ -231,6 +231,49 @@ describe('SidePanel', () => {
       expect(onNavigationBack).toHaveBeenCalledTimes(1);
     });
 
+    it('hands focus to the close button when the back button leaves with it', () => {
+      function Steps() {
+        const [step, setStep] = useState(2);
+        return (
+          <SidePanel
+            open
+            title="Details"
+            currentStep={step}
+            onNavigationBack={() => setStep((s) => s - 1)}
+          />
+        );
+      }
+      render(<Steps />);
+      const back = screen.getByRole('button', { name: 'Back' });
+      back.focus();
+      // Still past the first step: the button stays, and keeps the focus.
+      fireEvent.click(back);
+      expect(document.activeElement).toBe(back);
+      fireEvent.click(back);
+      expect(screen.queryByRole('button', { name: 'Back' })).toBeNull();
+      expect(document.activeElement).toBe(
+        screen.getByRole('button', { name: 'Close' })
+      );
+    });
+
+    it('leaves focus where it is when the back button leaves without it', () => {
+      function Steps() {
+        const [step, setStep] = useState(1);
+        return (
+          <>
+            <button onClick={() => setStep(0)}>Start over</button>
+            <SidePanel open title="Details" currentStep={step} />
+          </>
+        );
+      }
+      render(<Steps />);
+      const again = screen.getByRole('button', { name: 'Start over' });
+      again.focus();
+      fireEvent.click(again);
+      expect(screen.queryByRole('button', { name: 'Back' })).toBeNull();
+      expect(document.activeElement).toBe(again);
+    });
+
     it('closes through its close button', () => {
       const onRequestClose = vi.fn();
       render(

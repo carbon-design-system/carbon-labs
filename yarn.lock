@@ -3199,6 +3199,7 @@ __metadata:
   dependencies:
     "@carbon-labs/react-file-chip": "workspace:*"
     "@carbon-labs/react-mega-button": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
     "@testing-library/jest-dom": "npm:^6.0.0"
     "@testing-library/react": "npm:^16.1.0"
     "@testing-library/user-event": "npm:^14.5.2"
@@ -3683,6 +3684,7 @@ __metadata:
   resolution: "@carbon-labs/react-file-chip@workspace:packages/react/src/v12/components/FileChip"
   dependencies:
     "@carbon-labs/react-mega-button": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
     "@testing-library/jest-dom": "npm:^6.0.0"
     "@testing-library/react": "npm:^16.1.0"
     "@testing-library/user-event": "npm:^14.5.2"

@@ -7,7 +7,7 @@
 
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
-import { prefix } from '../../temp-imports/globals/settings';
+import { prefix, tagPrefix } from '../../temp-imports/globals/settings';
 import { DATE_PICKER_INPUT_KIND } from './defs';
 // @ts-ignore
 import styles from './date-picker.scss?inline';
@@ -16,7 +16,7 @@ import { carbonElement as customElement } from '../../temp-imports/globals/decor
 /**
  * Skeleton version of the input box for date picker.
  */
-@customElement(`${prefix}-date-picker-input-skeleton`)
+@customElement(`${tagPrefix}-date-picker-input-skeleton`)
 class CDSDatePickerInputSkeleton extends LitElement {
   /**
    * Specify whether the label should be hidden, or not

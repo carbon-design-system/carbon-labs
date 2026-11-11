@@ -1089,8 +1089,8 @@
       "name": "Shimmer text",
       "status": "draft",
       "docs": "v12-shimmertext--overview",
-      "firstSentence": "A label that shows live work: a band sweeps through words that rest a step quieter and show one weight step heavier under the band.",
-      "summary": "A label that shows live work: a band sweeps through words that rest a step quieter and show one weight step heavier under the band. It runs on the skeleton wave's angle.",
+      "firstSentence": "A label that shows live work: a band in the primary text sweeps through words that rest a step quieter.",
+      "summary": "A label that shows live work: a band in the primary text sweeps through words that rest a step quieter. It runs on the skeleton wave's angle.",
       "sections": [
         "Motion"
       ]

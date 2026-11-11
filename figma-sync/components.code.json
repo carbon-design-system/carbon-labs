@@ -31,7 +31,7 @@
     },
     "resolvedFrom": "figma-sync/state-colors.resolved.json",
     "resolved": 0,
-    "pending": 786
+    "pending": 780
   },
   "items": [
     {
@@ -8253,38 +8253,7 @@
       ],
       "reduced": {},
       "departures": [],
-      "stateColors": [
-        {
-          "file": "packages/react/src/v12/components/ShimmerText/components/shimmer-text.scss",
-          "selector": ".cds-shimmer-text.cds-shimmer-text--active",
-          "property": "color",
-          "state": "press",
-          "spaces": [
-            "srgb"
-          ],
-          "expression": "var( --cds-shimmer-rest-color, var( --cds-shimmer-rest-solved, color-mix(in srgb, #{theme.$text-primary} 60%, transparent) ) )",
-          "values": {
-            "white": {
-              "pending": "browser-render"
-            },
-            "g10": {
-              "pending": "browser-render"
-            },
-            "g90": {
-              "pending": "browser-render"
-            },
-            "g100": {
-              "pending": "browser-render"
-            },
-            "v12-light": {
-              "pending": "browser-render"
-            },
-            "v12-dark": {
-              "pending": "browser-render"
-            }
-          }
-        }
-      ]
+      "stateColors": []
     },
     {
       "key": "v12/side-nav",

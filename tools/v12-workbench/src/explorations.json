@@ -833,7 +833,7 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Menu/components/Menu.tsx",
-      "line": 480,
+      "line": 484,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
@@ -919,13 +919,13 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/PageHeader/components/PageHeader.tsx",
-      "line": 336,
+      "line": 337,
       "text": "corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/PageHeader/components/PageHeader.tsx",
-      "line": 339,
+      "line": 340,
       "text": "api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD"
     }
   ],
@@ -947,7 +947,7 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/PaginationNav/components/PaginationNav.tsx",
-      "line": 190,
+      "line": 192,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     }
   ],

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-side-nav%400.12.0...%40carbon-labs%2Freact-side-nav%400.13.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-side-nav
+
+
+
+
+
 # [0.12.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-side-nav%400.11.0...%40carbon-labs%2Freact-side-nav%400.12.0) (2026-11-11)
 
 ### Features

@@ -1107,7 +1107,8 @@
       },
       "title": "V12/Charts",
       "stories": [
-        "v12-charts--fixtures"
+        "v12-charts--fixtures",
+        "v12-charts--palette"
       ],
       "docs": "v12-charts--overview",
       "props": {

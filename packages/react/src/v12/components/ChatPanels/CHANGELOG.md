@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-chat-panels%400.6.0...%40carbon-labs%2Freact-chat-panels%400.7.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-chat-panels
+
+
+
+
+
+# [0.6.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-chat-panels%400.5.0...%40carbon-labs%2Freact-chat-panels%400.6.0) (2026-11-11)
+
+### Bug Fixes
+
+* **v12-chat:** keep shut chat panels inert on React 19 ([#1491](https://github.com/carbon-design-system/carbon-labs/issues/1491)) ([8b1c2c2](https://github.com/carbon-design-system/carbon-labs/commit/8b1c2c2d81206d7b1538464d466679b6aa60acc4))
+
+
+# [0.5.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-chat-panels%400.4.0...%40carbon-labs%2Freact-chat-panels%400.5.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/react-chat-panels
+
+
+
+
+
 # [0.4.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-chat-panels%400.3.0...%40carbon-labs%2Freact-chat-panels%400.4.0) (2026-11-11)
 
 **Note:** Version bump only for package @carbon-labs/react-chat-panels

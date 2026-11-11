@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.23.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-workbench%400.22.0...%40carbon-labs%2Fv12-workbench%400.23.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/v12-workbench
+
+
+
+
+
+# [0.22.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-workbench%400.21.0...%40carbon-labs%2Fv12-workbench%400.22.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/v12-workbench
+
+
+
+
+
+# [0.21.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-workbench%400.20.0...%40carbon-labs%2Fv12-workbench%400.21.0) (2026-11-11)
+
+**Note:** Version bump only for package @carbon-labs/v12-workbench
+
+
+
+
+
+# [0.20.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-workbench%400.19.0...%40carbon-labs%2Fv12-workbench%400.20.0) (2026-11-11)
+
+### Bug Fixes
+
+* **v12-chat:** keep shut chat panels inert on React 19 ([#1491](https://github.com/carbon-design-system/carbon-labs/issues/1491)) ([8b1c2c2](https://github.com/carbon-design-system/carbon-labs/commit/8b1c2c2d81206d7b1538464d466679b6aa60acc4))
+
+
+# [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-workbench%400.18.0...%40carbon-labs%2Fv12-workbench%400.19.0) (2026-11-11)
+
+### Features
+
+* **v12:** only the v12 themes, with v12 zones and surface tokens ([#1489](https://github.com/carbon-design-system/carbon-labs/issues/1489)) ([6d03269](https://github.com/carbon-design-system/carbon-labs/commit/6d03269f97e98a9b127da062fe9ee4642154c103)), closes [#f4f4f4](https://github.com/carbon-design-system/carbon-labs/issues/f4f4f4)
+
+
 # [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-workbench%400.17.0...%40carbon-labs%2Fv12-workbench%400.18.0) (2026-11-11)
 
 ### Bug Fixes

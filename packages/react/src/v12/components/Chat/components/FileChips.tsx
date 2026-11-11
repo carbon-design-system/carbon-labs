@@ -19,9 +19,11 @@ import {
 } from '@carbon-labs/v12-motion';
 import { useFeedbackMotion } from '@carbon-labs/v12-motion';
 import { Document } from '@carbon-labs/react-motion-icons';
-import { useLatest, useRovingFocus } from '@carbon-labs/react-selection-kit';
+import { useLatest } from '@carbon-labs/react-selection-kit';
 import { disclosureArrival } from '@carbon-labs/react-disclosure';
 import { TagSet, type TagSetTag } from '@carbon-labs/react-tag-set';
+import { isRtl } from '@carbon-labs/react-util';
+import { useInlineRovingFocus } from './rovingDirection';
 import './chat.scss';
 
 /* ============================================================================
@@ -95,27 +97,29 @@ function openChip(
     { duration: ms, easing: ease('entrance') }
   );
   const arrive = disclosureArrival(el, ms, { timeScale });
-  el.animate(
-    [{ transform: `translateX(${-arrive.distance}px)` }, { transform: 'none' }],
-    {
-      duration: arrive.duration,
-      delay: arrive.delay,
-      easing: arrive.easing,
-      fill: 'backwards',
-    }
-  );
+  // The space opens toward the inline end, so the content comes from the start side: the left,
+  // or the right in a right-to-left row (a translate is physical).
+  const rtl = isRtl(el);
+  const from = rtl ? arrive.distance : -arrive.distance;
+  el.animate([{ transform: `translateX(${from}px)` }, { transform: 'none' }], {
+    duration: arrive.duration,
+    delay: arrive.delay,
+    easing: arrive.easing,
+    fill: 'backwards',
+  });
   const offset = (t: number) =>
-    -arrive.distance *
+    from *
     (1 - fn(Math.min(1, Math.max(0, (t - arrive.delay) / arrive.duration))));
   const total = Math.max(ms, arrive.delay + arrive.duration);
   playSoftEdge(el, total, { w, h: el.offsetHeight }, (q) => {
     const t = q * total;
     // The chip's part of the opened space (the gap opens first).
     const shown = Math.max(0, (w + gap) * fn(Math.min(1, t / ms)) - gap);
+    // The soft edge is the opening's far side: the chip's shown part runs from its inline start.
     return [
       {
-        side: 'right',
-        pos: shown - offset(t),
+        side: rtl ? 'left' : 'right',
+        pos: rtl ? w - shown - offset(t) : shown - offset(t),
         d: Math.min(w - shown, shown),
         extent: w,
       },
@@ -267,7 +271,7 @@ export function FileChips({
   }, [files]);
 
   // One tab stop, ← / → between the chips' closes, Home / End.
-  useRovingFocus(rowRef, { items: `${CHIP} button` });
+  useInlineRovingFocus(rowRef, `${CHIP} button`);
 
   if (!present) return null;
   const tags: TagSetTag[] = files.map((f) => ({

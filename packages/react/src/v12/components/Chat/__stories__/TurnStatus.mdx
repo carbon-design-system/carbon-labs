@@ -1,0 +1,56 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TurnStatusStories from './TurnStatus.stories.tsx';
+
+<Meta of={TurnStatusStories} />
+
+# Turn status
+
+A live status row for work the machine does: the working mark, the stage's words
+and the elapsed seconds while it works, then a one-line summary that opens its
+details. Use it above a reply, a job, a long action or an agent's run. The
+stages (`status`, `label`) are the host's real ones and the time is real time
+(`startedAt`, `endedAt`), with no percentage.
+
+Screen readers hear one polite announcement per settled stage, never the
+seconds; the mark is hidden from them. `useTurnRelease(startedAt)` holds a
+host's words until the row has collapsed.
+
+<Canvas of={TurnStatusStories.ReplyStatus} />
+
+<Canvas of={TurnStatusStories.Working} />
+
+<Canvas of={TurnStatusStories.Done} />
+
+<Canvas of={TurnStatusStories.Failed} />
+
+<Canvas of={TurnStatusStories.Release} />
+
+## Motion
+
+- **Arrival:** the mark loads in at once and the row comes in through the
+  shimmer's band, not a fade. A row first seen settled is simply there.
+- **Stage words:** after one loading period, and on each change: out, then in
+  through the band. Each label holds at least one period; a burst lands on the
+  latest.
+- **Seconds:** after three periods, in through the band. They change at once,
+  with no counting, and glide by travel when the words before them change width.
+- **Mark:** thinking pulses, acting turns a triangle, waiting a square. Acting
+  to thinking wiggles once.
+- **Summary:** out, then in. The mark shrinks out, the words leave and the
+  details shut; then the summary comes in and `onCollapse` releases the host's
+  words.
+- **Error:** the mark shrinks out, then the error mark arrives by the status
+  hand-off, with the cause and Retry.
+- **Details:** the disclosure's: open while it works, shut as part of the out,
+  opened from the summary.
+- **One working element:** with `working` false, the mark shrinks out in its
+  slot and the words still.
+
+## Reduced motion
+
+The mark is still and the words plain. The swaps run on the reduced clock; the
+mark and the details change at once.
+
+## Props
+
+<ArgTypes of={TurnStatusStories} />

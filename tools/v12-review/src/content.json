@@ -125,9 +125,39 @@
       "status": "draft"
     }
   },
+  "V12/Charts": {
+    "title": "Charts",
+    "summary": "The base the v12 chart family is built on. It holds what every chart shares\nand nothing that draws a plot: the data types, the tuning values\n(`CHART_DESIGN`), the motion resolved per motion level, the color roles and\nthe series palette's structure, the line constants, the series key, and the\ncard's sizes. The root entry loads no chart runtime, so a card without a plot\nstays small. The plot's shared pieces come at `@carbon-labs/react-charts/plot`.",
+    "sections": [
+      {
+        "title": "The family",
+        "text": "Each family is its own package on this base:\n\n- **BarChart:** single, grouped, stacked, range and horizontal bars.\n- **RadialChart:** a ring against a limit, and rings that expand.\n- **AreaChart:** a time series, with a range selector.\n- **DotMatrix:** one value per row and column.\n- **ConeChart:** small multiples, each projected to a range.\n- **StatusCard:** a reading, how fresh it is, and where it is heading."
+      },
+      {
+        "title": "Data",
+        "text": "A series is measured up to `now` and projected after it. A projected value can\ncarry a range (`low`, `high`). Values and axis labels format through `Intl` in\nthe chart's `locale`."
+      },
+      {
+        "title": "Sizes",
+        "text": "- `sm`: 380px.\n- `md`: 405px, the summary card, its plot to the card's edges.\n- `lg`: 640px."
+      },
+      {
+        "title": "Reduced motion",
+        "text": "At the reduced level every change fades in place on the reduced clock: no\nfront, no stagger, no rise. At `none` every change lands at once."
+      },
+      {
+        "title": "Demo data",
+        "text": "The stories use neutral demo data for every chart, at `sm` and `lg`, and one\nreading later for live updates. It is not part of the package's entry."
+      }
+    ],
+    "facts": {
+      "tests": true,
+      "status": "draft"
+    }
+  },
   "V12/Chat": {
     "title": "Chat shell",
-    "summary": "A chat with an assistant: the conversation, the prompt below it, and what docks\nround the prompt. Use it as a page of its own, or in a pane beside a page.\n\n- `ChatShell` holds the header, the conversation and the prompt. It sets the\n  look of the parts inside (`variant`, `corners`) and caps them at a reading\n  width (`column`).\n- `ChatTranscript` is the conversation: the turns, and for each reply the line\n  that says what it's doing and the steps it took.\n- `PromptInput` is the prompt: a field that grows, its footer controls, Stop,\n  attachments and a notice.\n- `ChatDock` puts a follow-up question (`FollowUpCard`) above the prompt and\n  suggestions (`Suggestions`) below it.\n- `ChatTurnNavigator` lists the questions in a long chat and scrolls to the one\n  you choose.\n- `ChatPane` opens the chat beside a page.\n- `ChatMessage`, `TurnStatus`, `StepList` and `FileChips` are the smaller parts,\n  for building your own.",
+    "summary": "A chat with an assistant: the conversation, the prompt below it, and what docks\nround the prompt. Use it as a page of its own, or in a pane beside a page.\n\n- `ChatShell` holds the header, the conversation and the prompt. It sets the\n  look of the parts inside (`variant`, `corners`) and caps them at a reading\n  width (`column`).\n- `ChatTranscript` is the conversation: the turns, and for each reply the line\n  that says what it's doing and the steps it took.\n- `PromptInput` is the prompt: a field that grows, its footer controls, Stop,\n  attachments and a notice.\n- `ChatDock` puts a follow-up question (`FollowUpCard`) above the prompt and\n  suggestions (`Suggestions`) below it.\n- `ChatTurnNavigator` lists the questions in a long chat and scrolls to the one\n  you choose.\n- `ChatPane` opens the chat beside a page.\n- `ChatMessage` and `FileChips` are the smaller parts, for building your own.\n\nA reply's status row and its steps, `TurnStatus` and `StepList`, have their own\npages.",
     "sections": [
       {
         "title": "Working together",
@@ -135,11 +165,11 @@
       },
       {
         "title": "Motion",
-        "text": "- **Content swap in a layout move:** in ChatDock's slots, what leaves plays the\n  swap's out toward the prompt (fast-02, exit-productive, 16px). Then every\n  changing slot resizes on one clock by the larger travel, standard-productive.\n  Then what arrives plays the swap's in (moderate-01, entrance-productive).\n- **Arrival:** new turns slide the column up by what they push it, by travel,\n  standard-productive. A person's turn fades up in place (fast-02).\n- **Pinned scroll:** a reader at the bottom stays there; one who scrolled up is\n  never moved.\n- **Streaming:** a reply's first words rise 4px as they land (fast-02,\n  entrance-productive); then each sentence fades up in place.\n- **History:** replies done as the conversation mounts are there, still: no\n  stream and no wait for the summary.\n- **Send to Stop:** the arrow swaps out, then the square in. The Spinner turns\n  round it only while the reply is out of sight.\n- **Width move:** ChatPane's width moves by travel on standard-expressive, one\n  step faster shutting, its content under the 16px soft edge.\n- **Sideways opening:** a file chip opens its space by travel,\n  entrance-productive, its content moving with the opening under a soft edge.\n- **Status:** dictation's status is a Popover over the prompt in the opposite\n  theme, snapping from its edge above the microphone and folding back into it.\n- **Rise:** the docked notice rises from behind the field by travel. Its content\n  swaps in place; it sinks one step faster.\n- **Jump to a question:** the navigator's popover snaps from its button. A\n  choice closes it, then the conversation glides to the question and focuses it;\n  a wash fades in (fast-02) and out (slow-01).\n- **Marker:** in the navigator's list, on the turn in view, moving in place as\n  the reader scrolls; never a glide.\n- **Selection:** in Suggestions and FollowUpCard, the selector grows in from the\n  row's center (fast-02), then the choice is handed on.\n- **Status row:** the mark loads in at once and the row comes in through the\n  shimmer's band. Each stage's words hold at least one loading period, then\n  swap: out, then in through the band. The summary is out, then in.\n- **Steps:** a new step's space opens by travel, its content coming from 8px\n  back. Queued to running, the dashed circle winds up into the spinner; done,\n  the spinner hands off to the status mark in place."
+        "text": "- **Content swap in a layout move:** in ChatDock's slots, what leaves plays the\n  swap's out toward the prompt (fast-02, exit-productive, 16px). Then every\n  changing slot resizes on one clock by the larger travel, standard-productive.\n  Then what arrives plays the swap's in (moderate-01, entrance-productive).\n- **Arrival:** new turns slide the column up by what they push it, by travel,\n  standard-productive. A person's turn fades up in place (fast-02).\n- **Pinned scroll:** a reader at the bottom stays there; one who scrolled up is\n  never moved.\n- **Streaming:** a reply's first words rise 4px as they land (fast-02,\n  entrance-productive); then each sentence fades up in place.\n- **History:** replies done as the conversation mounts are there, still: no\n  stream and no wait for the summary.\n- **Send to Stop:** the arrow swaps out, then the square in. The Spinner turns\n  round it only while the reply is out of sight.\n- **Width move:** ChatPane's width moves by travel on standard-expressive, one\n  step faster shutting, its content under the 16px soft edge.\n- **Sideways opening:** a file chip opens its space by travel,\n  entrance-productive, its content moving with the opening under a soft edge.\n- **Status:** dictation's status is a Popover over the prompt in the opposite\n  theme, snapping from its edge above the microphone and folding back into it.\n- **Rise:** the docked notice rises from behind the field by travel. Its content\n  swaps in place; it sinks one step faster.\n- **Jump to a question:** the navigator's popover snaps from its button. A\n  choice closes it, then the conversation glides to the question and focuses it;\n  a wash fades in (fast-02) and out (slow-01).\n- **Marker:** in the navigator's list, on the turn in view, moving in place as\n  the reader scrolls; never a glide.\n- **Selection:** in Suggestions and FollowUpCard, the selector grows in from the\n  row's center (fast-02), then the choice is handed on."
       },
       {
         "title": "Reduced motion",
-        "text": "No travel: fades on the reduced clock, moves landing at once. The outs are at\nonce, so the working element passes at once, and the first words have no rise. A\njump to a question has no wash. Popovers and panes follow their own reduced\nrules. The status row's mark is still and its words plain; its swaps are on the\nreduced clock and its details open at once. Steps and their marks land at once,\nand their words swap on the reduced clock."
+        "text": "No travel: fades on the reduced clock, moves landing at once. The outs are at\nonce, so the working element passes at once, and the first words have no rise. A\njump to a question has no wash. Popovers and panes follow their own reduced\nrules."
       }
     ],
     "facts": {
@@ -1530,6 +1560,24 @@
       "status": "draft"
     }
   },
+  "V12/StepList": {
+    "title": "Step list",
+    "summary": "The steps the machine takes, as they happen: one row per step with its status\nmark, its words and its time, joined by a rule. Use it for a reply's steps, an\nagent's workflow or a job's stages. A step is queued, running, waiting, done,\nfailed or cancelled; a tool call with `input` or `output` opens to show them.\n`collapsible` adds a counter line that opens and shuts the rows.\n\nScreen readers hear an ordered list named by `label`, each mark named by its\nstatus, and one polite announcement per settled step. Every word is its own\nprop.",
+    "sections": [
+      {
+        "title": "Motion",
+        "text": "- **Status hand-off:** running to done, failed or waiting changes the mark in\n  place: the spinner shrinks 4px, the disc grows from under it and the glyph\n  draws on, with no fades.\n- **Wind-up:** queued to running, the dashed circle shrinks to the spinner's\n  size while turning, exit-productive; the spinner takes its place on that\n  frame.\n- **Words:** out, then in through the shimmer's band. The trailing words' place\n  glides to its width by travel.\n- **Arrival:** a new step's space opens by travel, its content coming from 8px\n  back; the rule above grows down with it.\n- **Stillness:** a change inside the last one's swap lands at once at its latest\n  state; several at once land together.\n- **Collapse:** the counter line opens and shuts the rows by the disclosure; its\n  count changes at once and its chevron glides by travel. A finished list shuts\n  one loading period after its last step ends; a failure or a wait opens it.\n- **One working element:** with `workingStep`, only that running step shows its\n  spinner and shimmer; the others keep the dashed circle, still."
+      },
+      {
+        "title": "Reduced motion",
+        "text": "Rows and marks land at once and the labels are plain; the words swap on the\nreduced clock."
+      }
+    ],
+    "facts": {
+      "tests": true,
+      "status": "draft"
+    }
+  },
   "V12/StructuredList": {
     "title": "StructuredList",
     "summary": "Rows of related details in columns, read across. `StructuredListWrapper` holds a\n`StructuredListHead` and a `StructuredListBody` of `StructuredListRow`s and\n`StructuredListCell`s, with the roles of a table. Columns size to their content,\nwith a hairline between rows. With `selection`, each row is a choice: a radio\nmark in its leading cell, and a marker on the selected row. `isCondensed` gives\n8px cells; `isFlush` removes the start padding, but not with `selection`.",
@@ -1741,7 +1789,7 @@
       }
     ],
     "facts": {
-      "tests": false,
+      "tests": true,
       "status": "draft"
     }
   },
@@ -1810,6 +1858,24 @@
       {
         "title": "Reduced motion",
         "text": "No travel. A parent opens or shuts at once, its children fading in. A glide\nbecomes a fade: the selector fades in at the new node while a ghost fades at the\nold. A jump puts it on the new row at once. The caret turns at once."
+      }
+    ],
+    "facts": {
+      "tests": true,
+      "status": "draft"
+    }
+  },
+  "V12/TurnStatus": {
+    "title": "Turn status",
+    "summary": "A live status row for work the machine does: the working mark, the stage's words\nand the elapsed seconds while it works, then a one-line summary that opens its\ndetails. Use it above a reply, a job, a long action or an agent's run. The\nstages (`status`, `label`) are the host's real ones and the time is real time\n(`startedAt`, `endedAt`), with no percentage.\n\nScreen readers hear one polite announcement per settled stage, never the\nseconds; the mark is hidden from them. `useTurnRelease(startedAt)` holds a\nhost's words until the row has collapsed.",
+    "sections": [
+      {
+        "title": "Motion",
+        "text": "- **Arrival:** the mark loads in at once and the row comes in through the\n  shimmer's band, not a fade. A row first seen settled is simply there.\n- **Stage words:** after one loading period, and on each change: out, then in\n  through the band. Each label holds at least one period; a burst lands on the\n  latest.\n- **Seconds:** after three periods, in through the band. They change at once,\n  with no counting, and glide by travel when the words before them change width.\n- **Mark:** thinking pulses, acting turns a triangle, waiting a square. Acting\n  to thinking wiggles once.\n- **Summary:** out, then in. The mark shrinks out, the words leave and the\n  details shut; then the summary comes in and `onCollapse` releases the host's\n  words.\n- **Error:** the mark shrinks out, then the error mark arrives by the status\n  hand-off, with the cause and Retry.\n- **Details:** the disclosure's: open while it works, shut as part of the out,\n  opened from the summary.\n- **One working element:** with `working` false, the mark shrinks out in its\n  slot and the words still."
+      },
+      {
+        "title": "Reduced motion",
+        "text": "The mark is still and the words plain. The swaps run on the reduced clock; the\nmark and the details change at once."
       }
     ],
     "facts": {

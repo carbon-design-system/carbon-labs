@@ -54,6 +54,18 @@ describe('ChatPanels', () => {
     expect(screen.queryByRole('region')).toBeNull();
   });
 
+  // Shut, the panel stays in the box while it moves, so `inert` is what
+  // keeps it out of the tab order.
+  it('is inert while shut, and not while open', async () => {
+    const { container } = setup();
+    const panel = container.querySelector('[data-carbon-surface-state]');
+    expect(panel).toHaveAttribute('inert');
+    await userEvent.click(toggle('Code'));
+    expect(panel).not.toHaveAttribute('inert');
+    await userEvent.click(toggle('Code'));
+    expect(panel).toHaveAttribute('inert');
+  });
+
   // A toggle names the panel it controls, so a screen reader can move to it.
   it('points each toggle at its own panel', async () => {
     setup();

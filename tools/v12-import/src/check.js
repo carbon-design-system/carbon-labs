@@ -35,9 +35,11 @@ const SYNC_DIRS = ['tools/v12-figma', 'figma-sync'];
 // Built output, and the changelog the release writes (dated, by design).
 const SKIP =
   /(^|\/)(node_modules|es|lib|dist|scss|storybook-static)(\/|$)|(^|\/)CHANGELOG\.md$/;
-// Motion from anywhere but the seam.
+// Motion from anywhere but the seam: carbon-motion's packages by their
+// published names (the motion icons are their own packages, not motion) and
+// their source names, and Carbon v11's motion.
 const DIRECT_MOTION =
-  /^(?:@carbon-labs\/motion-(?:core|react)|@carbon-motion\/[\w-]+|@carbon\/motion|@carbon\/styles\/scss\/motion)(?:\/|$)/;
+  /^(?:@carbon-labs\/motion-(?:core|react|charts|gpu)|@carbon-motion\/[\w-]+|@carbon\/motion|@carbon\/styles\/scss\/motion)(?:\/|$)/;
 
 /**
  * The language the import's checks read a file as.

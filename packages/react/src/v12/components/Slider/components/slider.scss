@@ -126,10 +126,25 @@ $standard: var(--cds-motion-easing-standard-productive);
   /* The hover's growth and a pointer press's size, per side (negative grows). */
   --_grow: -2px;
   --_pressed: -1px;
+  /* A mark placed at a value from the inline start is centered on it by half its own width,
+     back toward the start. */
+  --_center: -50%;
+  /* A ramp runs from min to max. */
+  --_ramp-to: to right;
 
   display: flex;
   flex-direction: column;
   min-inline-size: 0;
+}
+
+/* Right to left the track runs from the right: min is the right-hand end. What is placed from
+   the inline start (the spots, the ticks, the labels, the meter) follows by itself, but a
+   translate is physical, so the centering goes the other way. What reads the engine's edges
+   (px from the track's left in either direction: the knobs, the fill) is placed from the left,
+   and each rule that says which end is the start has its right-to-left twin beside it. */
+.cds-slider:dir(rtl) {
+  --_center: 50%;
+  --_ramp-to: to left;
 }
 
 .cds-slider--sm {
@@ -312,6 +327,13 @@ $standard: var(--cds-motion-easing-standard-productive);
   transition: none;
 }
 
+/* A press's aim: the script places it in px from the track's left, where the pointer is. */
+:is(.cds-slider__aim--lower, .cds-slider__aim--upper) {
+  /* stylelint-disable-next-line csstools/use-logical -- the pointer's place is physical */
+  left: 0;
+  inset-inline-start: auto;
+}
+
 .cds-slider__line,
 .cds-slider__fill {
   position: absolute;
@@ -338,7 +360,7 @@ $standard: var(--cds-motion-easing-standard-productive);
       (100% - var(--sl-knob-w) - 2 * var(--sl-inset)) * var(--cds-slider-p)
   );
   pointer-events: none;
-  translate: -50% -50%;
+  translate: var(--_center) -50%;
 }
 
 /* `reference`: a second value (the last set value, a baseline) as a mark across the line, as the
@@ -360,7 +382,7 @@ $standard: var(--cds-motion-easing-standard-productive);
       (100% - var(--sl-knob-w) - 2 * var(--sl-inset)) * var(--cds-slider-p)
   );
   pointer-events: none;
-  translate: -50% -50%;
+  translate: var(--_center) -50%;
 }
 
 /* The track variant (the step slider's look): 3px; the line variant's is 2px. */
@@ -410,6 +432,25 @@ $standard: var(--cds-motion-easing-standard-productive);
   --_b: calc(
     (var(--cds-motion-selection-l, 0px) + var(--cds-motion-selection-r, 0px)) /
       2 + var(--cds-slider-lean-upper)
+  );
+}
+
+/* Right to left: from the knob's live center to the line's start at the right; a range's lower
+   knob is the right-hand one. */
+.cds-slider--single:dir(rtl) .cds-slider__fill {
+  --_a: calc(
+    (var(--cds-lo-l) + var(--cds-lo-r)) / 2 + var(--cds-slider-lean-lower)
+  );
+  --_b: calc(100% - var(--sl-knob-w) / 2);
+}
+
+.cds-slider--range:dir(rtl) .cds-slider__fill {
+  --_a: calc(
+    (var(--cds-motion-selection-l, 0px) + var(--cds-motion-selection-r, 0px)) /
+      2 + var(--cds-slider-lean-upper)
+  );
+  --_b: calc(
+    (var(--cds-lo-l) + var(--cds-lo-r)) / 2 + var(--cds-slider-lean-lower)
   );
 }
 
@@ -490,7 +531,7 @@ $standard: var(--cds-motion-easing-standard-productive);
    chroma move: darker on a light theme, lighter on a dark one, the ramp's hues where they were. */
 @mixin gradient-ramp {
   background: linear-gradient(
-    to right in oklch,
+    var(--_ramp-to) in oklch,
     color-mix(in oklch, var(--_g0), var(--_knob) var(--cds-slider-step))
       calc(var(--sl-knob-w) / 2),
     color-mix(in oklch, var(--_g1), var(--_knob) var(--cds-slider-step))
@@ -521,6 +562,20 @@ $standard: var(--cds-motion-easing-standard-productive);
     to right,
     transparent calc(var(--_x) - var(--_e)),
     #000000 var(--_x)
+  );
+}
+
+/* Right to left the knob is the fill's left end: the reveal runs rightward from it. */
+.cds-slider--single:dir(rtl) .cds-slider__fill--wipe {
+  --_x: calc(
+    var(--_a) - var(--_e) + (var(--_b) - var(--_a) + var(--_e)) *
+      var(--cds-slider-wipe)
+  );
+
+  mask-image: linear-gradient(
+    to right,
+    #000000 var(--_x),
+    transparent calc(var(--_x) + var(--_e))
   );
 }
 
@@ -598,6 +653,8 @@ $standard: var(--cds-motion-easing-standard-productive);
 .cds-slider__knob {
   position: absolute;
   z-index: 2;
+  /* stylelint-disable-next-line csstools/use-logical -- the engine's edges are physical */
+  left: 0;
   box-sizing: border-box;
   border-radius: corners.$full;
   background: var(--_knob);
@@ -610,7 +667,6 @@ $standard: var(--cds-motion-easing-standard-productive);
       2 * var(--cds-slider-press) + 2 * var(--cds-slider-merge)
   );
   inset-block-start: 0;
-  inset-inline-start: 0;
   outline: none;
   pointer-events: auto;
   transition:
@@ -698,10 +754,11 @@ $standard: var(--cds-motion-easing-standard-productive);
    the filter has both exactly, the fill in the green channel. */
 .cds-slider__blob {
   position: absolute;
+  /* stylelint-disable-next-line csstools/use-logical -- the engine's edges are physical */
+  left: 0;
   border-radius: corners.$full;
   background: #ff0000;
   inset-block-start: 0;
-  inset-inline-start: 0;
 
   transition:
     --cds-slider-press $fast-01 $standard,
@@ -801,6 +858,8 @@ $standard: var(--cds-motion-easing-standard-productive);
   position: absolute;
   /* Under the knobs: it shows only past the knob, above and below. */
   z-index: 1;
+  /* stylelint-disable-next-line csstools/use-logical -- the engine's edges are physical */
+  left: 0;
   background: var(--_knob);
   block-size: calc(
     var(--cds-motion-selection-b, 0px) - var(--cds-motion-selection-t, 0px) +
@@ -808,7 +867,6 @@ $standard: var(--cds-motion-easing-standard-productive);
   );
   inline-size: 2px;
   inset-block-start: 0;
-  inset-inline-start: 0;
   pointer-events: none;
   scale: 1 0;
   transition: scale $fast-01 var(--cds-motion-easing-exit-productive);
@@ -845,12 +903,13 @@ $standard: var(--cds-motion-easing-standard-productive);
 .cds-slider__lens {
   position: absolute;
   z-index: 4;
+  /* stylelint-disable-next-line csstools/use-logical -- the engine's edges are physical */
+  left: 0;
   overflow: hidden;
   border-radius: 50%;
   block-size: calc(var(--cds-lo-b) - var(--cds-lo-t) - 2px);
   inline-size: calc(var(--cds-lo-r) - var(--cds-lo-l) - 2px);
   inset-block-start: 0;
-  inset-inline-start: 0;
   pointer-events: none;
   /* The lower circle, 1px in (so the lens stays inside both knobs through a hover or a press). */
   translate: calc(var(--cds-lo-l) + 1px) calc(var(--cds-lo-t) + 1px);
@@ -865,6 +924,8 @@ $standard: var(--cds-motion-easing-standard-productive);
 /* The upper circle, 1px in, placed relative to the lower: clipped by it, the intersection. */
 .cds-slider__lens-in {
   position: absolute;
+  /* stylelint-disable-next-line csstools/use-logical -- the engine's edges are physical */
+  left: 0;
   border-radius: 50%;
   /* Overlapping circles take the joined pill's fill. */
   background: var(--_surface);
@@ -877,7 +938,6 @@ $standard: var(--cds-motion-easing-standard-productive);
       2px
   );
   inset-block-start: 0;
-  inset-inline-start: 0;
   translate: calc(var(--cds-motion-selection-l, 0px) - var(--cds-lo-l))
     calc(var(--cds-motion-selection-t, 0px) - var(--cds-lo-t));
 }
@@ -897,7 +957,7 @@ $standard: var(--cds-motion-easing-standard-productive);
   inline-size: max(100%, var(--_hit), var(--sl-knob-w) - 2 * var(--_grow));
   inset-block-start: 50%;
   inset-inline-start: 50%;
-  translate: -50% -50%;
+  translate: var(--_center) -50%;
 }
 
 /* Two knobs: the one in hand is drawn over the other (`data-active`, Slider.tsx), which it pushes
@@ -1042,7 +1102,7 @@ $standard: var(--cds-motion-easing-standard-productive);
 
 .cds-slider--knob-triangle .cds-slider__knob--lower .cds-slider__hit {
   inset-inline: auto 1px;
-  translate: 50% -50%;
+  translate: calc(-1 * var(--_center)) -50%;
 }
 
 .cds-slider--knob-triangle .cds-slider__knob--upper .cds-slider__hit {
@@ -1077,6 +1137,35 @@ $standard: var(--cds-motion-easing-standard-productive);
   &::after {
     clip-path: polygon(100% 0, 0 50%, 100% 100%);
     inset-inline-end: 0;
+  }
+}
+
+/* Right to left the lower knob is the right-hand one: the two boxes trade halves (the stem and
+   the triangle follow by their inline insets), and each triangle still points in at its stem. */
+.cds-slider--knob-triangle:dir(rtl) .cds-slider__knob--lower {
+  translate: calc(
+      (
+          var(--cds-motion-selection-l, 0px) +
+            var(--cds-motion-selection-r, 0px)
+        ) /
+        2 - 1px + var(--_lean)
+    )
+    calc(var(--cds-motion-selection-t, 0px) + var(--cds-slider-press));
+
+  &::after {
+    clip-path: polygon(100% 0, 0 50%, 100% 100%);
+  }
+}
+
+.cds-slider--knob-triangle:dir(rtl) .cds-slider__knob--upper {
+  translate: calc(
+      var(--cds-motion-selection-l, 0px) + var(--cds-slider-press) +
+        var(--_lean, 0px) - var(--cds-slider-merge)
+    )
+    calc(var(--cds-motion-selection-t, 0px) + var(--cds-slider-press));
+
+  &::after {
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
   }
 }
 
@@ -1161,6 +1250,18 @@ $standard: var(--cds-motion-easing-standard-productive);
 
   .cds-slider__knob--upper:focus-visible {
     clip-path: inset(-12px -12px -12px 50%);
+  }
+}
+
+/* Right to left the lower knob's side of the seam is the right. */
+.cds-slider[data-merged]:dir(rtl)
+  .cds-slider__track:not([data-input='pointer']) {
+  .cds-slider__knob--lower:focus-visible {
+    clip-path: inset(-12px -12px -12px 50%);
+  }
+
+  .cds-slider__knob--upper:focus-visible {
+    clip-path: inset(-12px 50% -12px -12px);
   }
 }
 
@@ -1269,7 +1370,7 @@ $standard: var(--cds-motion-easing-standard-productive);
   inline-size: calc(var(--sl-h) / 2);
   inset-block-start: calc(var(--sl-h) / 4);
   inset-inline-start: knob-at(var(--cds-slider-p));
-  translate: -50% 0;
+  translate: var(--_center) 0;
 }
 
 /* The reference, as the interactive one's (2px; 3px on the track): `$icon-secondary` on the empty
@@ -1280,7 +1381,7 @@ $standard: var(--cds-motion-easing-standard-productive);
   inline-size: 2px;
   inset-block: calc((var(--sl-h) - var(--_bar)) / 2);
   inset-inline-start: knob-at(var(--cds-slider-p));
-  translate: -50% 0;
+  translate: var(--_center) 0;
 
   .cds-slider--track & {
     inline-size: 3px;
@@ -1358,7 +1459,7 @@ $standard: var(--cds-motion-easing-standard-productive);
       (100% - var(--sl-knob-w) - 2 * var(--sl-inset)) * var(--cds-slider-p)
   );
   transition: color $fast-02 $standard;
-  translate: -50% 0;
+  translate: var(--_center) 0;
   white-space: nowrap;
 
   &[data-current] {
@@ -1497,6 +1598,27 @@ $standard: var(--cds-motion-easing-standard-productive);
     var(--cds-motion-selection-r, 0px) + var(--sl-inset) +
       var(--cds-slider-lean-upper)
   );
+}
+
+/* Right to left the track starts at the right: the fill wraps the knob's left edge and runs to
+   the right-hand end; a range's, from the upper knob's left edge to the lower's right. */
+.cds-slider--track.cds-slider--single:dir(rtl) .cds-slider__fill {
+  --_a: max(
+    0px,
+    calc(var(--cds-lo-l) - var(--sl-inset) + var(--cds-slider-lean-lower))
+  );
+  --_b: 100%;
+}
+
+.cds-slider--track.cds-slider--range:dir(rtl) .cds-slider__fill {
+  --_a: max(
+    0px,
+    calc(
+      var(--cds-motion-selection-l, 0px) - var(--sl-inset) +
+        var(--cds-slider-lean-upper)
+    )
+  );
+  --_b: calc(var(--cds-lo-r) + var(--sl-inset) + var(--cds-slider-lean-lower));
 }
 
 .cds-slider--track .cds-slider__knob {
@@ -1736,6 +1858,20 @@ $standard: var(--cds-motion-easing-standard-productive);
   inline-size: 100%;
   inset: 0;
   pointer-events: none;
+}
+
+/* Right to left the fill is the knob's right: clipped a pixel inside its left end. */
+.cds-slider__dots:dir(rtl) {
+  clip-path: inset(
+    0 0 0
+      max(
+        0px,
+        calc(
+          var(--cds-lo-l) - var(--sl-inset) + var(--cds-slider-lean-lower) + 1px
+        )
+      )
+      round var(--sl-radius)
+  );
 }
 
 /* Disabled: the fill a step off the track (opaque: the knob's stroke is in this color, and a

@@ -101,6 +101,23 @@
       ]
     },
     {
+      "key": "v12/charts",
+      "id": "charts",
+      "title": "V12/Charts",
+      "name": "Charts",
+      "status": "draft",
+      "docs": "v12-charts--overview",
+      "firstSentence": "The base the v12 chart family is built on.",
+      "summary": "The base the v12 chart family is built on. It holds what every chart shares and nothing that draws a plot: the data types, the tuning values (`CHART_DESIGN`), the motion resolved per motion level, the color roles and the series palette's structure, the line constants, the series key, and the card's sizes. The root entry loads no chart runtime, so a card without a plot stays small. The plot's shared pieces come at `@carbon-labs/react-charts/plot`.",
+      "sections": [
+        "The family",
+        "Data",
+        "Sizes",
+        "Reduced motion",
+        "Demo data"
+      ]
+    },
+    {
       "key": "v12/chat",
       "id": "chat",
       "title": "V12/ChatShell",
@@ -108,7 +125,7 @@
       "status": "draft",
       "docs": "v12-chatshell--overview",
       "firstSentence": "A chat with an assistant: the conversation, the prompt below it, and what docks round the prompt.",
-      "summary": "A chat with an assistant: the conversation, the prompt below it, and what docks round the prompt. Use it as a page of its own, or in a pane beside a page. - `ChatShell` holds the header, the conversation and the prompt. It sets the look of the parts inside (`variant`, `corners`) and caps them at a reading width (`column`). - `ChatTranscript` is the conversation: the turns, and for each reply the line that says what it's doing and the steps it took. - `PromptInput` is the prompt: a field that grows, its footer controls, Stop, attachments and a notice. - `ChatDock` puts a follow-up question (`FollowUpCard`) above the prompt and suggestions (`Suggestions`) below it. - `ChatTurnNavigator` lists the questions in a long chat and scrolls to the one you choose. - `ChatPane` opens the chat beside a page. - `ChatMessage`, `TurnStatus`, `StepList` and `FileChips` are the smaller parts, for building your own.",
+      "summary": "A chat with an assistant: the conversation, the prompt below it, and what docks round the prompt. Use it as a page of its own, or in a pane beside a page. - `ChatShell` holds the header, the conversation and the prompt. It sets the look of the parts inside (`variant`, `corners`) and caps them at a reading width (`column`). - `ChatTranscript` is the conversation: the turns, and for each reply the line that says what it's doing and the steps it took. - `PromptInput` is the prompt: a field that grows, its footer controls, Stop, attachments and a notice. - `ChatDock` puts a follow-up question (`FollowUpCard`) above the prompt and suggestions (`Suggestions`) below it. - `ChatTurnNavigator` lists the questions in a long chat and scrolls to the one you choose. - `ChatPane` opens the chat beside a page. - `ChatMessage` and `FileChips` are the smaller parts, for building your own. A reply's status row and its steps, `TurnStatus` and `StepList`, have their own pages.",
       "sections": [
         "Working together",
         "Motion",

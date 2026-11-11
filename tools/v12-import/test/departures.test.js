@@ -11,12 +11,14 @@ import path from 'node:path';
 import { afterAll, describe, expect, it } from 'vitest';
 import {
   departureFindings,
+  importPlacements,
+  insertMarks,
   markOn,
   planDepartures,
   REGISTRY,
   registryMarkText,
   writeDepartures,
-} from '../src/ledger.js';
+} from '../src/departures.js';
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'v12-departures-'));
 const WIDGET = 'packages/react/src/v12/components/Widget';
@@ -101,14 +103,17 @@ write(
     '  /* var(--cds-surface) in a comment is not a use */',
     '  background: var(--cds-surface);',
     '  // @carbon-explore stray — no entry has it. TBD',
-    '  // @carbon-proposal api: local-one — its folder records it. TBD',
+    '  // @carbon-proposal api: local-one — only a folder recorded it. TBD',
     '  color: red;',
     '}',
     '',
   ].join('\n')
 );
-write(`${WIDGET}/proposals/README.md`, '- api: local-one — recorded. TBD\n');
 write('packages/v12-styles/src/index.ts', 'export {};\n');
+write(
+  'packages/react/src/v12/explorations/explorations.json',
+  JSON.stringify({ explorations: [{ name: 'tried-one' }, { name: 'stray' }] })
+);
 
 afterAll(() => fs.rmSync(root, { recursive: true, force: true }));
 
@@ -131,7 +136,7 @@ describe('the departures registry', () => {
     expect(markOn('  //   // @carbon-explore example — in prose')).toBe(null);
   });
 
-  it('warns on each missing mark, each unmarkable place and each unknown mark', () => {
+  it('warns on each missing mark, each unmarkable place, each unknown mark and each unmarked exploration', () => {
     const found = departureFindings(root).map(
       (f) => `${f.kind} ${f.at.replace(`${WIDGET}/`, '')} ${f.match}`
     );
@@ -142,6 +147,8 @@ describe('the departures registry', () => {
       'departure: no mark components/Widget.tsx:5 theme-names',
       `departure: nothing to mark ${WIDGET} lost-one: no code line holds "no such text"`,
       'departure: mark without an entry components/widget.scss:4 stray',
+      'departure: mark without an entry components/widget.scss:5 local-one',
+      'departure: exploration without a mark packages/react/src/v12/explorations/explorations.json tried-one',
     ]);
   });
 
@@ -174,5 +181,44 @@ describe('the departures registry', () => {
       'departure: mark off its places',
       'departure: mark of the other kind',
     ]);
+  });
+});
+
+describe('an import', () => {
+  it("places an entry's marks above its props and its uses", () => {
+    const text = [
+      'export interface WidgetProps {',
+      '  /** What it stands on. */',
+      "  frame?: 'ghost' | 'inset';",
+      '}',
+      '',
+    ].join('\n');
+    const scss = '.w {\n  background: var(--cds-surface);\n}\n';
+    const plan = importPlacements(
+      [
+        { file: 'components/Widget.tsx', text },
+        { file: 'components/widget.scss', text: scss },
+      ],
+      [
+        frame,
+        quiet,
+        lost,
+        { ...names, appliesTo: [{ in: 'Other', uses: ['x'] }] },
+      ],
+      'Widget'
+    );
+    expect(
+      plan.placements.map((p) => `${p.entry.id} ${p.file}:${p.line}`)
+    ).toEqual([
+      'frame-prop components/Widget.tsx:2',
+      'surface-quiet components/widget.scss:2',
+    ]);
+    expect(plan.missing.map((m) => m.entry.id)).toEqual(['lost-one']);
+    expect(
+      insertMarks(
+        text,
+        plan.placements.filter((p) => p.file === 'components/Widget.tsx')
+      ).split('\n')[1]
+    ).toBe(`  // ${registryMarkText(frame)}`);
   });
 });

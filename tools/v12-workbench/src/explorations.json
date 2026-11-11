@@ -17,12 +17,6 @@
       "file": "packages/react/src/v12/components/Accordion/components/accordion.scss",
       "line": 204,
       "text": "radius-concentric — An inner part's radius is the outer radius less its inset, never below 0. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/Accordion/proposals/README.md",
-      "line": 3,
-      "text": "api: frame-prop — What a component stands on is `frame`. TBD"
     }
   ],
   "V12/AppShell": [
@@ -135,24 +129,6 @@
       "file": "packages/react/src/v12/components/Button/components/button.scss",
       "line": 282,
       "text": "tertiary-neutral — The outlined Button in a neutral ink on light themes. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/Button/proposals/README.md",
-      "line": 3,
-      "text": "api: frame-prop — What a component stands on is `frame`. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/Button/proposals/README.md",
-      "line": 4,
-      "text": "api: variant-prop — The colour treatment is `variant`. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/Button/proposals/README.md",
-      "line": 5,
-      "text": "api: button-axes — Button splits v11's kinds into `kind` (role), `variant` (`outlined`, `tonal`) and `frame` (`ghost`, `none`). TBD"
     }
   ],
   "V12/Card": [
@@ -173,12 +149,6 @@
       "file": "packages/react/src/v12/components/Card/components/card.scss",
       "line": 54,
       "text": "hover-tint — Hover and press as a share of the text colour mixed into the fill. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/Card/proposals/README.md",
-      "line": 3,
-      "text": "api: logical-positions — Placement values are logical. TBD"
     }
   ],
   "V12/ChatInput": [
@@ -225,12 +195,6 @@
       "file": "packages/react/src/v12/components/ChatPanels/components/ChatPanels.tsx",
       "line": 258,
       "text": "api: chat-panel-toggle-icon-only — a panel toggle is icon-only with a tooltip; Carbon's icon-only allow-list does not name panel toggles. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/ChatPanels/proposals/README.md",
-      "line": 6,
-      "text": "`api: chat-panel-toggle-icon-only` — the panel toggles in a surface's header are icon-only with a tooltip, each saying `aria-expanded` and naming its panel with `aria-controls`. Carbon's icon-only allow-list does not name panel toggles, so this proposes adding them to it, as feedback and Regenerate on a reply are proposed."
     }
   ],
   "V12/ChatShell": [
@@ -417,12 +381,6 @@
       "file": "packages/react/src/v12/components/ContentSwitcher/components/ContentSwitcher.tsx",
       "line": 181,
       "text": "api: activation-prop — One keyboard word, `activation` (automatic or manual), on every selection list: the arrows select, or only move focus. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/ContentSwitcher/proposals/README.md",
-      "line": 3,
-      "text": "api: activation-prop — One keyboard word for selection lists. TBD"
     }
   ],
   "V12/ContextualBar": [
@@ -529,12 +487,6 @@
       "file": "packages/react/src/v12/components/EmptyState/components/EmptyState.tsx",
       "line": 99,
       "text": "api: logical-positions — Placement values are logical, `start` and `end`, so they follow the reading direction. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/EmptyState/proposals/README.md",
-      "line": 3,
-      "text": "api: logical-positions — Placement values are logical. TBD"
     }
   ],
   "V12/Feedback": [
@@ -623,12 +575,6 @@
       "file": "packages/react/src/v12/components/KeyboardShortcut/proposals/README.md",
       "line": 6,
       "text": "api: menu-item-shortcut-node — widen `MenuItem`'s `shortcut?: string` to `string | ReactElement` (propTypes `oneOfType([string, element])`) so `KeyboardShortcut` can be its hint and the menu item is named \"Copy Command C\". `MenuItem` already renders `{shortcut}` in its `__shortcut` div, so nothing else changes. A separate core change at graduation. Callout: `__stories__/KeyboardShortcut.stories.tsx`. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/KeyboardShortcut/proposals/README.md",
-      "line": 13,
-      "text": "mixin: keycap-slashed-zero — Carbon's type styles have no slashed-zero option; a keycap's `0` must not read as the letter `O`. The keycap sets `font-variant-numeric: slashed-zero` on top of `label-01`; where the font has no slashed zero the browser draws a plain zero, which is the fallback. At graduation: a `type-style` option or a `$slashed-zero` mixin in `@carbon/styles`, or removal. Callout: `components/keyboard-shortcut.scss`. TBD"
     }
   ],
   "V12/KitDefaults": [
@@ -881,36 +827,6 @@
       "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
       "line": 485,
       "text": "token: mega-button-tonal-text-disabled — its label, on that tint. replaces: text-disabled. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/MegaButton/proposals/README.md",
-      "line": 6,
-      "text": "`api: mega-button-kinds` — Carbon's `secondary` is the fill and its `tertiary` the outline; MegaButton swaps them on purpose (the outline reads better beside a neutral primary) and has two red kinds, `danger` and `danger--secondary`."
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/MegaButton/proposals/README.md",
-      "line": 9,
-      "text": "`api: mega-button-key-command` — a visible key command on a button, shown with KeyboardShortcut and announced through `aria-keyshortcuts`. Carbon's Button has none."
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/MegaButton/proposals/README.md",
-      "line": 12,
-      "text": "`api: mega-button-icon-position` — the one icon may lead or trail the label. Carbon's Button only trails it."
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/MegaButton/proposals/README.md",
-      "line": 14,
-      "text": "`api: mega-button-danger-icon-only` — the two danger kinds are allowed icon-only. Carbon's IconButton has no danger kinds."
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/MegaButton/proposals/README.md",
-      "line": 16,
-      "text": "`api: mega-button-hide-tooltip` — an icon-only button can leave out its own tooltip when its group draws one shared tooltip (ChatInput's actions), so neighbours never show two at once. The label still names it, through `aria-label`. Carbon's IconButton always draws its own."
     }
   ],
   "V12/Menu": [
@@ -977,12 +893,6 @@
       "file": "packages/react/src/v12/components/Notification/components/notification.scss",
       "line": 153,
       "text": "radius-notification — Inline notification corner. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/Notification/proposals/README.md",
-      "line": 3,
-      "text": "api: variant-prop — The colour treatment is `variant`. TBD"
     }
   ],
   "V12/NumberInput": [
@@ -1141,12 +1051,6 @@
       "file": "packages/react/src/v12/components/RadioButton/components/radio-button.scss",
       "line": 70,
       "text": "hover-tint — Hover and press as a share of the text colour mixed into the fill. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/RadioButton/proposals/README.md",
-      "line": 3,
-      "text": "api: logical-positions — Placement values are logical. TBD"
     }
   ],
   "V12/Recipes": [
@@ -1209,12 +1113,6 @@
       "file": "packages/react/src/v12/components/SelectList/components/SelectList.tsx",
       "line": 159,
       "text": "api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/SelectList/proposals/README.md",
-      "line": 3,
-      "text": "api: activation-prop — One keyboard word for selection lists. TBD"
     }
   ],
   "V12/SelectionKit": [
@@ -1241,12 +1139,6 @@
       "file": "packages/react/src/v12/components/SelectionKit/components/style.ts",
       "line": 33,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/SelectionKit/proposals/README.md",
-      "line": 3,
-      "text": "api: variant-prop — The colour treatment is `variant`. TBD"
     }
   ],
   "V12/SessionSwitcher": [
@@ -1311,12 +1203,6 @@
       "file": "packages/react/src/v12/components/SideNav/components/side-nav.scss",
       "line": 497,
       "text": "cast-shadow — An opt-in shadow drawn in layers whose colour is solved for contrast on its backdrop, at three elevations (resting, raised, floating). TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/SideNav/proposals/README.md",
-      "line": 3,
-      "text": "api: frame-prop — What a component stands on is `frame`. TBD"
     }
   ],
   "V12/SidePanel": [
@@ -1337,18 +1223,6 @@
       "file": "packages/react/src/v12/components/SidePanel/components/side-panel.scss",
       "line": 244,
       "text": "radius-concentric — An inner part's radius is the outer radius less its inset, never below 0. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/SidePanel/proposals/README.md",
-      "line": 3,
-      "text": "api: frame-prop — What a component stands on is `frame`. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/SidePanel/proposals/README.md",
-      "line": 4,
-      "text": "api: logical-positions — Placement values are logical. TBD"
     }
   ],
   "V12/Slider": [
@@ -1451,12 +1325,6 @@
       "file": "packages/react/src/v12/components/Tabs/components/vertical-tabs.scss",
       "line": 127,
       "text": "token: hero-color — The hero tokens: brand colour for a line, a fill, a hover, an ink on a page and on a fill. replaces: `$border-interactive` / `$interactive`, `$button-primary`, `-hover`, `-active`, `$link-primary`, `$link-inverse`. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/Tabs/proposals/README.md",
-      "line": 3,
-      "text": "api: frame-prop — What a component stands on is `frame`. TBD"
     }
   ],
   "V12/Tag": [
@@ -1497,12 +1365,6 @@
       "file": "packages/react/src/v12/components/Tearsheet/components/tearsheet.scss",
       "line": 222,
       "text": "token: surface-raised — One contrast step up from the fill: data table header and zebra. replaces: `$layer-accent-01`. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/Tearsheet/proposals/README.md",
-      "line": 3,
-      "text": "api: logical-positions — Placement values are logical. TBD"
     }
   ],
   "V12/TextArea": [
@@ -1529,12 +1391,6 @@
       "file": "packages/react/src/v12/components/TextArea/components/TextArea.tsx",
       "line": 136,
       "text": "api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/TextArea/proposals/README.md",
-      "line": 3,
-      "text": "api: textarea-size — TextArea takes the field family's `size` (xs 24 to lg 48). TBD"
     }
   ],
   "V12/TextInput": [
@@ -1579,12 +1435,6 @@
       "file": "packages/react/src/v12/components/TextInput/components/text-input.scss",
       "line": 61,
       "text": "field-inset — A field's edge inset by size. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/TextInput/proposals/README.md",
-      "line": 3,
-      "text": "api: variant-prop — The colour treatment is `variant`. TBD"
     }
   ],
   "V12/ThemeZone": [
@@ -1623,12 +1473,6 @@
       "file": "packages/react/src/v12/components/Toggle/components/Toggle.tsx",
       "line": 107,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/Toggle/proposals/README.md",
-      "line": 3,
-      "text": "api: variant-prop — The colour treatment is `variant`. TBD"
     }
   ],
   "V12/Tooltip": [

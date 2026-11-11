@@ -98,17 +98,6 @@ A small surface with a close button. Page: \`#/components/widget\`. Code:
 
 1. Should it slide? See OQ-001.
 `,
-  'docs/carbon-labs/departures-ledger.md': `# Departures ledger
-
-## Entries
-
-| Name | Kind | Domain | What it is | Our value | Carbon fallback | Used in | Source | Chat stack / harness |
-|---|---|---|---|---|---|---|---|---|
-| \`widget-fill\` | explore | color | The widget's quiet fill | \`--cn-surface\` | \`$layer-01\` | \`widget/widget.scss:5\`; \`card/card.scss:3\` | doc | none |
-| \`widget-axes\` | proposal | api | The widget's size axis | \`size\` | none | \`widget/\` | doc | none |
-
-## Counts
-`,
   'scripts/check-content.mjs': `export const NAMES = ['Zed'];\n`,
 };
 
@@ -276,7 +265,48 @@ describe('rewrites', () => {
 });
 
 describe('marks', () => {
-  it('marks the ledger rows that name the component', () => {
+  it('marks the registry entries that apply to the component', () => {
+    const registry = path.join(labs, 'packages/react/src/v12/departures.json');
+    fs.mkdirSync(path.dirname(registry), { recursive: true });
+    fs.writeFileSync(
+      registry,
+      JSON.stringify({
+        departures: [
+          {
+            id: 'widget-fill',
+            axis: 'color',
+            status: 'explore',
+            what: "The widget's quiet fill.",
+            replaces: '`$layer-01`',
+            appliesTo: [{ in: 'Widget', uses: ['var(--cds-surface'] }],
+          },
+          {
+            id: 'widget-axes',
+            axis: 'api',
+            status: 'proposal',
+            what: "The widget's size axis.",
+            replaces: 'none',
+            appliesTo: [{ in: 'Widget', uses: ['export function Widget'] }],
+          },
+          {
+            id: 'widget-elsewhere',
+            axis: 'other',
+            status: 'explore',
+            what: 'Another folder.',
+            replaces: 'none',
+            appliesTo: [{ in: 'Gadget', uses: ['size'] }],
+          },
+          {
+            id: 'widget-lost',
+            axis: 'other',
+            status: 'explore',
+            what: 'Nowhere.',
+            replaces: 'none',
+            appliesTo: [{ in: 'Widget', uses: ['no such text'] }],
+          },
+        ],
+      })
+    );
     const plan = planImport({ id: 'widget', from: source, ref: base, labs });
     const scss = output(plan, 'components/widget.scss').split('\n');
     const at = scss.findIndex((l) => l.includes('@carbon-explore widget-fill'));
@@ -284,10 +314,17 @@ describe('marks', () => {
       "  // @carbon-explore widget-fill — The widget's quiet fill. TBD"
     );
     expect(scss[at + 1]).toContain('background: var(--cds-surface');
-    expect(plan.marks.proposals).toEqual([
-      "api: widget-axes — The widget's size axis. TBD",
+    const tsx = output(plan, 'components/Widget.tsx');
+    expect(tsx).toContain(
+      "// @carbon-proposal api: widget-axes — The widget's size axis. TBD"
+    );
+    expect(plan.marks.placed.map((m) => m.name).sort()).toEqual([
+      'widget-axes',
+      'widget-fill',
     ]);
-    expect(output(plan, 'proposals/README.md')).toContain('api: widget-axes');
+    expect(plan.marks.unplaced.map((m) => m.name)).toEqual(['widget-lost']);
+    expect(output(plan, 'proposals/README.md')).toBeUndefined();
+    fs.rmSync(registry);
   });
 });
 

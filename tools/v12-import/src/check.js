@@ -14,7 +14,7 @@
 // Rules that report as warnings only, until the lane moves onto what they
 // ask for: how motion is reduced, timed and eased (the motion rules below),
 // the shared prop vocabulary (vocab.js), and the departures registry's marks
-// (ledger.js). A `// v12-allow <rule>: <why>` comment on the line, or the one
+// (departures.js). A `// v12-allow <rule>: <why>` comment on the line, or the one
 // above, allows one site; the check counts those.
 //
 // The design sync's tool and snapshots are checked for leaks too, and for
@@ -26,7 +26,7 @@ import path from 'node:path';
 import { CONFIG } from './config.js';
 import { scanDesignIds, scanLeaks } from './doc.js';
 import { motionLiterals } from './importer.js';
-import { departureFindings } from './ledger.js';
+import { departureFindings } from './departures.js';
 import { laneProgram, vocabFindings } from './vocab.js';
 
 const SEAM_DIR = 'packages/v12-motion';

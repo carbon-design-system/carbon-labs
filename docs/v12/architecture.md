@@ -106,9 +106,9 @@ commitlint):
     lane's departures from Carbon, one sentence each, with the Carbon behaviour
     it replaces and where it applies) has its `@carbon-explore` or
     `@carbon-proposal` marks, an API departure's on each declaration of its
-    props; and every mark has an entry there, in `explorations.json`, or in its
-    folder's `proposals/`. `yarn v12:departures --write` places the missing
-    marks.
+    props; every mark has an entry there; and every exploration in
+    `explorations.json` is marked somewhere. `yarn v12:departures --write`
+    places the missing marks.
 
   A `// v12-allow <rule>: <why>` comment on the line, or the one above, allows
   one site (a timer's reason starts with `a11y`, `clock` or `hold`); the check

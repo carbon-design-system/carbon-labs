@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.18.0...%40carbon-labs%2Fv12-review%400.19.0) (2026-11-11)
+
+### Bug Fixes
+
+* **v12-review:** read the favicon's tones from the v12 zones ([#1497](https://github.com/carbon-design-system/carbon-labs/issues/1497)) ([04bf1c1](https://github.com/carbon-design-system/carbon-labs/commit/04bf1c17eda09a6ded13a8da4527b944f22a13da))
+
+
 # [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.17.0...%40carbon-labs%2Fv12-review%400.18.0) (2026-11-11)
 
 **Note:** Version bump only for package @carbon-labs/v12-review

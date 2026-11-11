@@ -5333,6 +5333,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/v12-figma@workspace:tools/v12-figma":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/v12-figma@workspace:tools/v12-figma"
+  dependencies:
+    storybook: "npm:^9.1.2"
+    typescript: "npm:^5.7.2"
+    vitest: "npm:^4.0.0"
+  bin:
+    v12-figma: ./bin/v12-figma.js
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/v12-import@workspace:tools/v12-import":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/v12-import@workspace:tools/v12-import"

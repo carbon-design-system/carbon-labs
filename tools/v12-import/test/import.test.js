@@ -20,6 +20,7 @@ import {
   laneName,
   laneReaches,
   planImport,
+  recordManifest,
 } from '../src/importer.js';
 import { vitestConfig } from '../src/layout.js';
 import {
@@ -1453,5 +1454,29 @@ describe('importedOnly', () => {
     ]);
     expect(importedOnly(lane, root, path.join(root, 'none.json')).size).toBe(2);
     fs.rmSync(root, { recursive: true, force: true });
+  });
+});
+
+describe('recordManifest', () => {
+  it("keeps a replaced item's figma block", () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'v12-manifest-'));
+    const file = path.join(dir, 'v12.manifest.json');
+    const figma = { key: 'v12/widget', status: 'unmapped' };
+    fs.writeFileSync(
+      file,
+      JSON.stringify({ items: [{ id: 'widget', kind: 'component', figma }] })
+    );
+    recordManifest(file, {
+      id: 'widget',
+      kind: 'component',
+      labsStatus: 'draft',
+    });
+    recordManifest(file, { id: 'other', kind: 'component' });
+    const { items } = JSON.parse(fs.readFileSync(file, 'utf8'));
+    expect(items).toEqual([
+      { id: 'other', kind: 'component' },
+      { id: 'widget', kind: 'component', labsStatus: 'draft', figma },
+    ]);
+    fs.rmSync(dir, { recursive: true, force: true });
   });
 });

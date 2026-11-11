@@ -2720,6 +2720,30 @@
       ]
     },
     {
+      "key": "v12/charts",
+      "id": "charts",
+      "title": "V12/Charts",
+      "declared": true,
+      "items": [],
+      "states": [
+        "rest",
+        "live-update"
+      ],
+      "seam": [
+        "DURATION_FLOOR_MS",
+        "DurationToken",
+        "MotionLevel",
+        "STAGGER",
+        "bezierEase",
+        "cubicBezier",
+        "distanceTokens",
+        "motionTokens",
+        "reducedClock",
+        "staggerSteps",
+        "toEasing"
+      ]
+    },
+    {
       "key": "v12/chat",
       "id": "chat",
       "title": "V12/ChatShell",

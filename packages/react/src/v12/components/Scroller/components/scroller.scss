@@ -322,12 +322,14 @@ html[data-scroller-window] body::-webkit-scrollbar {
 }
 
 .cds-scroller__rail--x > .cds-scroller__pill {
+  /* Physical: the engine's offset runs from the left in either direction. */
+  /* stylelint-disable-next-line csstools/use-logical -- the engine's offset is physical */
+  right: auto;
+  left: 0;
   block-size: var(--_t);
   inline-size: var(--scroller-length, 0px);
   inset-block-end: var(--_gap);
-  /* Physical: the engine's offset runs from the left in either direction. */
   inset-block-start: auto;
-  inset-inline: 0 auto;
   scale: 1 var(--scroller-arrive, 0.9);
   transform: translate3d(var(--scroller-offset, 0px), 0, 0);
   transition:

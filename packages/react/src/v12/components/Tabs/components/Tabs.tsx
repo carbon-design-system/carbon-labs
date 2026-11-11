@@ -34,6 +34,7 @@ import {
 } from '@carbon-labs/react-selection-kit';
 import {
   inertProps,
+  useDirection,
   useReducedGetter,
   useStableCallback,
 } from '@carbon-labs/react-util';
@@ -561,13 +562,16 @@ export function TabList({
     });
   }, [m.timeScale, rolloverReduced, wrapRef]);
 
+  // Previous is toward the inline start: the right, right to left.
+  const rtl = useDirection(wrapRef) === 'rtl';
+
   /** A scroll button: a page of tabs that way, less what the buttons and edges cover. */
   const scrollPage = (dir: 1 | -1) => {
     const sc = scrollerRef.current;
     if (!sc) return;
     const page = Math.max(sc.clientWidth - 2 * edgePad(wrapRef.current), 48);
     sc.scrollBy({
-      left: dir * page,
+      left: (rtl ? -dir : dir) * page,
       behavior: reducedRef.current ? 'auto' : 'smooth',
     });
   };
@@ -606,14 +610,15 @@ export function TabList({
     dir: 1 | -1,
     props?: HTMLAttributes<HTMLButtonElement>
   ) => {
-    const Icon = dir < 0 ? ChevronLeft : ChevronRight;
+    const left = rtl ? dir > 0 : dir < 0;
+    const Icon = left ? ChevronLeft : ChevronRight;
     return (
       <button
         type="button"
         // As v11's: out of the tab order and hidden from assistive tech — the arrows reach every tab.
         tabIndex={-1}
         aria-hidden="true"
-        aria-label={dir < 0 ? 'Scroll left' : 'Scroll right'}
+        aria-label={left ? 'Scroll left' : 'Scroll right'}
         data-motion-icon-frame=""
         {...props}
         className={[

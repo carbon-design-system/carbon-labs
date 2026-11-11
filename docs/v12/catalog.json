@@ -4808,6 +4808,10 @@
               ],
               "description": "Where the tooltip sits. Default `top` (v11's IconButton)."
             },
+            "aria-controls": {
+              "type": "string",
+              "description": "The id of the panel this switch shows."
+            },
             "children": {
               "$ref": "#/$defs/node",
               "description": "The icon — a motion icon plays on the switch's hover. Drawn at the switcher's icon size."
@@ -4818,6 +4822,10 @@
             "disabledReason": {
               "type": "string",
               "description": "Why it's disabled: the arrow keys still reach it, and it shows this in a tooltip."
+            },
+            "id": {
+              "type": "string",
+              "description": "The switch's id: a panel's `aria-labelledby` names it."
             },
             "name": {
               "anyOf": [
@@ -4843,6 +4851,10 @@
           "name": "Switch",
           "required": [],
           "props": {
+            "aria-controls": {
+              "type": "string",
+              "description": "The id of the panel this switch shows."
+            },
             "children": {
               "$ref": "#/$defs/node"
             },
@@ -4852,6 +4864,10 @@
             "disabledReason": {
               "type": "string",
               "description": "Why it's disabled: the arrow keys still reach it, and it shows this in a tooltip."
+            },
+            "id": {
+              "type": "string",
+              "description": "The switch's id: a panel's `aria-labelledby` names it."
             },
             "name": {
               "anyOf": [
@@ -4871,56 +4887,6 @@
             "text": {
               "type": "string",
               "description": "The label. `children` wins when both are given (as in v11)."
-            }
-          }
-        },
-        {
-          "name": "SwitchPanels",
-          "required": [
-            "children",
-            "selectedIndex"
-          ],
-          "props": {
-            "axis": {
-              "enum": [
-                "x",
-                "y"
-              ],
-              "description": "The list's axis: the content swaps along it. Default `x`."
-            },
-            "children": {
-              "$ref": "#/$defs/node",
-              "description": "One child per switch."
-            },
-            "distance": {
-              "type": "number",
-              "description": "How far each piece travels, px. Default the content swap's (`CONTENT_SWAP.distance`, sm 8px)."
-            },
-            "fit": {
-              "enum": [
-                "content",
-                "largest"
-              ],
-              "description": "`content` (default): the container resizes to each panel. `largest`: it holds the largest panel's size."
-            },
-            "panelProps": {
-              "$ref": "#/$defs/event",
-              "description": "Extra attributes for each panel's wrapper — an id, `aria-labelledby`, a"
-            },
-            "selectedIndex": {
-              "type": "number",
-              "description": "The panel to show — the switcher's selected index."
-            },
-            "timeScale": {
-              "type": "number",
-              "description": "Multiplies the durations (slow motion)."
-            },
-            "travel": {
-              "enum": [
-                "against",
-                "with"
-              ],
-              "description": "Which way the content travels, relative to the selection's move on screen."
             }
           }
         }

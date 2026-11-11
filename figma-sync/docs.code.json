@@ -182,7 +182,7 @@
       "status": "draft",
       "docs": "v12-contentswitcher--overview",
       "firstSentence": "Pick one of two or more options or views.",
-      "summary": "Pick one of two or more options or views. The switches sit in one track, and a selector glides between them. `ContentSwitcher` takes Carbon's API: `selectedIndex`, `activation`, `size`, `lowContrast`, `onChange` and disabled switches. `Switch` is a labelled switch, with an optional icon before the label. `IconSwitch` is an icon only, named by its tooltip. `SwitchPanels` swaps the content the selection shows.",
+      "summary": "Pick one of two or more options or views. The switches sit in one track, and a selector glides between them. `ContentSwitcher` takes Carbon's API: `selectedIndex`, `activation`, `size`, `lowContrast`, `onChange` and disabled switches. `Switch` is a labelled switch, with an optional icon before the label. `IconSwitch` is an icon only, named by its tooltip. A switch's `aria-controls` names the panel it shows; the selection kit's `SelectionPanels` swaps that content.",
       "sections": [
         "Motion",
         "Reduced motion"
@@ -1092,9 +1092,10 @@
       "name": "SelectionKit",
       "status": "draft",
       "docs": "v12-selectionkit--overview",
-      "firstSentence": "What the v12 selection components (content switcher, tabs, select list, menu) share: the selection engine's hooks, the selector's faces and styles, and `SelectionPanels`, the content a selection switches.",
-      "summary": "What the v12 selection components (content switcher, tabs, select list, menu) share: the selection engine's hooks, the selector's faces and styles, and `SelectionPanels`, the content a selection switches. Each component imports `selection-kit.scss`; the motion comes from the motion package.",
+      "firstSentence": "What the v12 selection components (content switcher, tabs, select list, menu) share: the selection engine's hooks, the selector's faces and styles, the list model (`useSelectionList`), and `SelectionPanels`, the content a selection switches.",
+      "summary": "What the v12 selection components (content switcher, tabs, select list, menu) share: the selection engine's hooks, the selector's faces and styles, the list model (`useSelectionList`), and `SelectionPanels`, the content a selection switches. Each component imports `selection-kit.scss`; the motion comes from the motion package.",
       "sections": [
+        "useSelectionList",
         "SelectionPanels",
         "Reduced motion"
       ]

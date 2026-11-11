@@ -68,8 +68,8 @@
     "gzip": 3187
   },
   "ContentSwitcher": {
-    "raw": 7978,
-    "gzip": 3331
+    "raw": 8092,
+    "gzip": 3358
   },
   "ContextualBar": {
     "raw": 18327,
@@ -288,12 +288,12 @@
     "gzip": 2398
   },
   "SelectList": {
-    "raw": 7844,
-    "gzip": 3364
+    "raw": 7667,
+    "gzip": 3256
   },
   "SelectionKit": {
-    "raw": 18242,
-    "gzip": 6992
+    "raw": 19940,
+    "gzip": 7633
   },
   "SessionSwitcher": {
     "raw": 1705,
@@ -340,8 +340,8 @@
     "gzip": 477
   },
   "Tabs": {
-    "raw": 27111,
-    "gzip": 9829
+    "raw": 24247,
+    "gzip": 9333
   },
   "Tag": {
     "raw": 7825,

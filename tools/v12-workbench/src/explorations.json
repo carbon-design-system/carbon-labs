@@ -379,7 +379,7 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/ContentSwitcher/components/ContentSwitcher.tsx",
-      "line": 181,
+      "line": 191,
       "text": "api: activation-prop — One keyboard word, `activation` (automatic or manual), on every selection list: the arrows select, or only move focus. TBD"
     }
   ],
@@ -1105,13 +1105,13 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/SelectList/components/SelectList.tsx",
-      "line": 152,
+      "line": 154,
       "text": "api: activation-prop — One keyboard word, `activation` (automatic or manual), on every selection list: the arrows select, or only move focus. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/SelectList/components/SelectList.tsx",
-      "line": 159,
+      "line": 161,
       "text": "api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD"
     }
   ],
@@ -1385,13 +1385,13 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Tabs/components/Tabs.tsx",
-      "line": 186,
+      "line": 163,
       "text": "api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Tabs/components/TabsVertical.tsx",
-      "line": 174,
+      "line": 146,
       "text": "api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD"
     },
     {

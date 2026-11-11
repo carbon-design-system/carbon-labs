@@ -12,8 +12,8 @@
     "gzip": 5971
   },
   "AppShell": {
-    "raw": 20514,
-    "gzip": 7548
+    "raw": 20963,
+    "gzip": 7666
   },
   "Breadcrumb": {
     "raw": 3030,
@@ -68,8 +68,8 @@
     "gzip": 3331
   },
   "ContextualBar": {
-    "raw": 18146,
-    "gzip": 6409
+    "raw": 18258,
+    "gzip": 6453
   },
   "CopyButton": {
     "raw": 2947,
@@ -228,8 +228,8 @@
     "gzip": 3896
   },
   "Popover": {
-    "raw": 15342,
-    "gzip": 6261
+    "raw": 15550,
+    "gzip": 6329
   },
   "Processing": {
     "raw": 14888,
@@ -296,12 +296,12 @@
     "gzip": 849
   },
   "ShimmerText": {
-    "raw": 8468,
-    "gzip": 3614
+    "raw": 6159,
+    "gzip": 2696
   },
   "SideNav": {
-    "raw": 36864,
-    "gzip": 14168
+    "raw": 37048,
+    "gzip": 14232
   },
   "SidePanel": {
     "raw": 11264,

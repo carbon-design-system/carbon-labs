@@ -8,6 +8,21 @@
 import React, { useState, type ReactNode } from 'react';
 import { Button } from '@carbon-labs/react-button';
 import { Checkbox } from '@carbon-labs/react-checkbox';
+import {
+  Close,
+  Copy,
+  Download,
+  Edit,
+  Information,
+  Launch,
+  Share,
+  TrashCan,
+} from '@carbon-labs/react-motion-icons';
+import {
+  Toolbar as ActionToolbar,
+  ToolbarButton,
+  ToolbarDivider,
+} from '@carbon-labs/react-toolbar';
 import { Search } from '@carbon-labs/react-search';
 import { Select, SelectItem } from '@carbon-labs/react-select';
 import { TextInput } from '@carbon-labs/react-text-input';
@@ -124,7 +139,12 @@ const toolbarRow = {
   minBlockSize: 48,
   paddingInline: 16,
 };
-const group = { display: 'inline-flex', gap: 8, flexWrap: 'wrap' as const };
+/** The actions, at the row's end. */
+const end = {
+  display: 'flex',
+  alignItems: 'center',
+  marginInlineStart: 'auto',
+};
 
 const FILES = [
   'Annual report',
@@ -184,7 +204,7 @@ function Rows({
   );
 }
 
-/** What the bar shows for a selection: a rolling count, then one item's actions or many items'. */
+/** What the bar shows for a selection: a rolling count, then a toolbar of ghost actions, one item's or many items'. */
 function SelectionActions({
   count,
   onClear,
@@ -198,33 +218,36 @@ function SelectionActions({
         value={count}
         label={(n) => (n === 1 ? 'item selected' : 'items selected')}
       />
-      <ContextualBar.Swap swapKey={count === 1 ? 'one' : 'many'}>
-        {count === 1 ? (
-          <span style={group}>
-            <Button size="sm" variant="outlined">
-              Rename
-            </Button>
-            <Button size="sm" variant="outlined">
-              Share
-            </Button>
-            <Button size="sm" variant="outlined">
-              Delete
-            </Button>
-          </span>
-        ) : (
-          <span style={group}>
-            <Button size="sm" variant="outlined">
-              Share
-            </Button>
-            <Button size="sm" variant="outlined">
-              Delete
-            </Button>
-          </span>
-        )}
-      </ContextualBar.Swap>
-      <Button size="sm" variant="outlined" onClick={onClear}>
-        Cancel
-      </Button>
+      <span style={end}>
+        <ActionToolbar aria-label="Selection actions" size="sm" overflow="none">
+          <ContextualBar.Swap swapKey={count === 1 ? 'one' : 'many'}>
+            {count === 1 ? (
+              <>
+                <ToolbarButton label="Open" renderIcon={Launch} />
+                <ToolbarButton label="Rename" renderIcon={Edit} />
+                <ToolbarButton label="Details" renderIcon={Information} />
+              </>
+            ) : (
+              <>
+                <ToolbarButton label="Copy" renderIcon={Copy} />
+                <ToolbarButton label="Share" renderIcon={Share} />
+              </>
+            )}
+          </ContextualBar.Swap>
+          <ToolbarButton label="Download" renderIcon={Download} />
+          <ToolbarButton
+            label="Delete"
+            renderIcon={TrashCan}
+            onClick={onClear}
+          />
+          <ToolbarDivider />
+          <ToolbarButton
+            label="Clear selection"
+            renderIcon={Close}
+            onClick={onClear}
+          />
+        </ActionToolbar>
+      </span>
     </>
   );
 }
@@ -398,12 +421,9 @@ export const Variants = {
               variant={variant}
               kind={kind}>
               <span>3 changes waiting for review</span>
-              <span style={group}>
-                <Button size="sm" variant="outlined">
-                  Review
-                </Button>
-                <Button size="sm" variant="outlined">
-                  Dismiss
+              <span style={end}>
+                <Button size="sm" frame="none">
+                  Undo
                 </Button>
               </span>
             </ContextualBar>
@@ -427,17 +447,11 @@ export const UnsavedChanges = {
       <div style={page}>
         <ContextualBar label="Unsaved changes" open={dirty}>
           <span>You have unsaved changes.</span>
-          <span style={group}>
-            <Button
-              size="sm"
-              variant="outlined"
-              onClick={() => setValues(last)}>
+          <span style={end}>
+            <Button size="sm" frame="none" onClick={() => setValues(last)}>
               Discard
             </Button>
-            <Button
-              size="sm"
-              variant="outlined"
-              onClick={() => setLast(values)}>
+            <Button size="sm" frame="none" onClick={() => setLast(values)}>
               Save
             </Button>
           </span>

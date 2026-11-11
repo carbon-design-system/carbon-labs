@@ -188,8 +188,8 @@
     "gzip": 1628
   },
   "Menu": {
-    "raw": 24714,
-    "gzip": 8989
+    "raw": 29266,
+    "gzip": 10373
   },
   "Modal": {
     "raw": 27180,
@@ -314,10 +314,6 @@
   "Snap": {
     "raw": 696,
     "gzip": 439
-  },
-  "SplitButton": {
-    "raw": 3137,
-    "gzip": 1489
   },
   "StatusIndicator": {
     "raw": 2618,

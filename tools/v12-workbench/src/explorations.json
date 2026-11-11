@@ -387,7 +387,7 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/ContextualBar/components/ContextualBar.tsx",
-      "line": 206,
+      "line": 210,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     }
   ],
@@ -505,7 +505,7 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Feedback/components/_loader-color.scss",
-      "line": 48,
+      "line": 50,
       "text": "loader-neutral — Loaders (the spinner, the ring and the bar) draw in the neutral ink over a gray base by default, and take the brand colour only when asked, so waiting never competes with the action. TBD"
     }
   ],
@@ -859,7 +859,7 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Modal/components/modal.scss",
-      "line": 203,
+      "line": 207,
       "text": "floating-hairline — A floating surface (a menu, a popover, a modal, a panel) stands on its fill and a 1px hairline, with no cast shadow unless one is asked for. TBD"
     }
   ],
@@ -1183,25 +1183,25 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/SideNav/components/side-nav.scss",
-      "line": 33,
+      "line": 35,
       "text": "token: surface-quiet — The quiet surface fill: side nav panel, tiles, tables, jobs tray, tabs fade. replaces: `$layer-01`. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/SideNav/components/side-nav.scss",
-      "line": 35,
+      "line": 37,
       "text": "token: surface-rule — The quiet surface's hairline. replaces: `$border-subtle`. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/SideNav/components/side-nav.scss",
-      "line": 109,
+      "line": 111,
       "text": "token: hero-color — The hero tokens: brand colour for a line, a fill, a hover, an ink on a page and on a fill. replaces: `$border-interactive` / `$interactive`, `$button-primary`, `-hover`, `-active`, `$link-primary`, `$link-inverse`. TBD"
     },
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/SideNav/components/side-nav.scss",
-      "line": 497,
+      "line": 499,
       "text": "cast-shadow — An opt-in shadow drawn in layers whose colour is solved for contrast on its backdrop, at three elevations (resting, raised, floating). TBD"
     }
   ],
@@ -1441,7 +1441,7 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/ThemeZone/components/zone.ts",
-      "line": 23,
+      "line": 26,
       "text": "theme-names — The themes are named `light` and `dark`, drawn in Carbon's `white` and `g100`, while the DOM keeps Carbon's classes. TBD"
     }
   ],

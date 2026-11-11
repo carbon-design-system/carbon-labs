@@ -19,13 +19,24 @@ export const EVENTS = {
 } as const;
 
 /**
- * The toolbar's picks, in the order they are shown: Carbon's white and g100,
- * then the v12 light and dark previews (the React Storybook's `v12-themes`),
- * which apply on `<html>` only.
+ * The toolbar's themes: v12 light and v12 dark (the React Storybook's
+ * `v12-themes`), on `<html>` and, as a zone class each (`cds--v12-light`,
+ * `cds--v12-dark`), on an area of their own: the matrix's columns. The v12
+ * surfaces offer no v11 theme.
  */
-export const THEMES = ['white', 'g100', 'v12-light', 'v12-dark'] as const;
-/** The themes Carbon's `Theme` draws as a zone of their own: the matrix's. */
-export const ZONE_THEMES = ['white', 'g100'] as const;
+export const THEMES = ['v12-light', 'v12-dark'] as const;
+/** The themes the matrix draws, each as a zone of its own: both v12 themes. */
+export const ZONE_THEMES = THEMES;
+/**
+ * A v11 theme, saved or in an address from before, read as the v12 theme of
+ * its side: white and g10 as v12 light, g90 and g100 as v12 dark.
+ */
+export const V11_THEMES: Readonly<Record<string, Theme>> = {
+  white: 'v12-light',
+  g10: 'v12-light',
+  g90: 'v12-dark',
+  g100: 'v12-dark',
+};
 /** The kit's three densities (`KitDefaults` `density`). */
 export const DENSITIES = ['compact', 'default', 'spacious'] as const;
 /**
@@ -65,7 +76,7 @@ export interface WorkbenchGlobals {
 }
 
 export const DEFAULT_GLOBALS: WorkbenchGlobals = {
-  theme: 'white',
+  theme: 'v12-light',
   density: 'default',
   corners: 'default',
   reducedMotion: 'system',
@@ -121,7 +132,8 @@ export interface V12Parameters {
 
 /**
  * The toolbar's picks from a story's globals, each checked against its list
- * so a stale or hand-typed URL falls back to the default.
+ * so a stale or hand-typed URL falls back to the default. A v11 theme falls
+ * back to the v12 theme of its side (`V11_THEMES`).
  *
  * @param globals The story context's globals.
  * @returns The six picks.
@@ -135,7 +147,13 @@ export function readGlobals(
     fallback: T
   ): T => (list.includes(String(value) as T) ? (String(value) as T) : fallback);
   return {
-    theme: pick(THEMES, globals.theme, DEFAULT_GLOBALS.theme),
+    theme: pick(
+      THEMES,
+      Object.hasOwn(V11_THEMES, String(globals.theme))
+        ? V11_THEMES[String(globals.theme)]
+        : globals.theme,
+      DEFAULT_GLOBALS.theme
+    ),
     density: pick(DENSITIES, globals.density, DEFAULT_GLOBALS.density),
     corners: pick(CORNERS, globals.corners, DEFAULT_GLOBALS.corners),
     reducedMotion: pick(

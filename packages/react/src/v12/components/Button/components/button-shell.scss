@@ -135,12 +135,16 @@
 
 :root,
 [data-carbon-theme='white'],
-.cds--white {
+.cds--white,
+[data-carbon-theme='v12-light'],
+.cds--v12-light {
   --cds-shell-selected: 16%;
 }
 
 [data-carbon-theme='g100'],
-.cds--g100 {
+.cds--g100,
+[data-carbon-theme='v12-dark'],
+.cds--v12-dark {
   --cds-shell-selected: 11.5%;
 }
 

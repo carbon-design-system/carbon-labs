@@ -16,9 +16,16 @@ export default defineConfig({
     globals: true,
     include: ['src/**/__tests__/**/*.test.ts'],
     // The seam too, so its import of carbon-motion goes through the same
-    // resolver and not Node's.
+    // resolver and not Node's. The kit's packages (the matrix's KitDefaults)
+    // too, so their stylesheet imports go through the bundler.
     server: {
-      deps: { inline: [/@carbon-labs\/motion-/, /@carbon-labs\/v12-motion/] },
+      deps: {
+        inline: [
+          /@carbon-labs\/motion-/,
+          /@carbon-labs\/v12-motion/,
+          /@carbon-labs\/react-/,
+        ],
+      },
     },
   },
 });

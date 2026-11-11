@@ -115,7 +115,8 @@
 
 /* v11's colors: its tag tokens (`--cds-tag-*`), white's values as the
    fallback. Carbon's zones (`<Theme>`) emit them per theme; the app's dark
-   mode (`[data-carbon-theme='g100']`, styles/index.scss) gets them here. */
+   mode (`[data-carbon-theme='g100']`, styles/index.scss) and the v12 dark page
+   get them here. */
 /* The keys quoted: bare, `red` and the rest are Sass colours, not names. */
 @each $color
   in (
@@ -147,7 +148,8 @@
   color: theme.$text-inverse;
 }
 
-[data-carbon-theme='g100'] {
+[data-carbon-theme='g100'],
+[data-carbon-theme='v12-dark'] {
   @each $key,
     $value in component-tokens.get-tokens(tag-tokens.$tag-tokens, themes.$g100)
   {

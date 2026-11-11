@@ -125,6 +125,40 @@
   --cds-surface-secondary-hover: #464646;
 }
 
+/* The v12 themes (v12 light and dark, on the page or as a zone class), solved as white's and g100's are,
+   off their own page and text, in their own neutral (a v12 gray: OKLCH chroma 0.004, hue 262). Light keeps
+   its own `$layer-01` for the fill, and its field the white one layer up (v12 light's `$field-02` is its
+   `$layer-01`); dark's field is its raised step. */
+[data-carbon-theme='v12-light'],
+.cds--v12-light {
+  --cds-surface: #f4f5f8;
+  --cds-surface-rule: #dbdcdf;
+  --cds-surface-raised: #e9eaed;
+  --cds-surface-lift: #ffffff;
+  --cds-surface-up: #f4f5f8;
+  --cds-surface-lift-field: #ffffff;
+  --cds-surface-divider: #dbdcdf;
+  --cds-surface-field: #ffffff;
+  --cds-surface-code: #edeff2;
+  --cds-surface-secondary: #d7d7d7;
+  --cds-surface-secondary-hover: #c7c8c8;
+}
+
+[data-carbon-theme='v12-dark'],
+.cds--v12-dark {
+  --cds-surface: #1c1d1f;
+  --cds-surface-rule: #2d2e31;
+  --cds-surface-raised: #242527;
+  --cds-surface-lift: #242527;
+  --cds-surface-up: #161616;
+  --cds-surface-lift-field: #242527;
+  --cds-surface-divider: #2d2e31;
+  --cds-surface-field: #242527;
+  --cds-surface-code: #0e0e10;
+  --cds-surface-secondary: #3a3a3b;
+  --cds-surface-secondary-hover: #464647;
+}
+
 /* `--cds-surface-raised-rule`: the hairline of a surface drawn on the raised fill (a modal on the
    dark themes), the rule moved by the fill's own step. The light themes keep the rule. */
 :root,
@@ -138,10 +172,22 @@
   --cds-surface-raised-rule: #373737;
 }
 
+[data-carbon-theme='v12-light'],
+.cds--v12-light {
+  --cds-surface-raised-rule: var(--cds-surface-rule);
+}
+
+[data-carbon-theme='v12-dark'],
+.cds--v12-dark {
+  --cds-surface-raised-rule: #363739;
+}
+
 :root,
 [data-carbon-theme],
 .cds--white,
-.cds--g100 {
+.cds--g100,
+.cds--v12-light,
+.cds--v12-dark {
   --cds-panel: var(--cds-surface);
   --cds-rule: var(--cds-surface-rule);
   // @carbon-explore selected-wash — A row that is one of many chosen takes a 10% wash of the text colour, so it reads on any surface without a fill of its own. TBD
@@ -151,7 +197,9 @@
 /* The secondary's step off what it sits on (`--cds-surface-secondary`, above): a share of the text. */
 :root,
 [data-carbon-theme='white'],
-.cds--white {
+.cds--white,
+[data-carbon-theme='v12-light'],
+.cds--v12-light {
   --cds-secondary-share: 18%;
   --cds-secondary-hover-share: 24.75%;
 }
@@ -160,17 +208,23 @@
    surface to `--cds-surface-raised` in each theme. */
 :root,
 [data-carbon-theme='white'],
-.cds--white {
+.cds--white,
+[data-carbon-theme='v12-light'],
+.cds--v12-light {
   --cds-track-share: 5%;
 }
 
 [data-carbon-theme='g100'],
-.cds--g100 {
+.cds--g100,
+[data-carbon-theme='v12-dark'],
+.cds--v12-dark {
   --cds-track-share: 3.75%;
 }
 
 [data-carbon-theme='g100'],
-.cds--g100 {
+.cds--g100,
+[data-carbon-theme='v12-dark'],
+.cds--v12-dark {
   --cds-secondary-share: 17%;
   --cds-secondary-hover-share: 22.75%;
 }
@@ -193,7 +247,14 @@
 
 /* A theme scope inside a surface (an inset of the other theme) is a page: it drops the outer
    surface's track and field fill, solved in the outer theme. Zero specificity, so a surface wins. */
-:where([data-carbon-theme], [data-theme-zone], .cds--white, .cds--g100) {
+:where(
+  [data-carbon-theme],
+  [data-theme-zone],
+  .cds--white,
+  .cds--g100,
+  .cds--v12-light,
+  .cds--v12-dark
+) {
   --cds-surface-track: initial;
   --cds-field-fill: initial;
   --cds-table-fill: initial;
@@ -245,12 +306,16 @@
 /* Which way a step off a surface goes (a hover, a raised row): darker on the light themes, lighter on the dark. */
 :root,
 [data-carbon-theme='white'],
-.cds--white {
+.cds--white,
+[data-carbon-theme='v12-light'],
+.cds--v12-light {
   --cds-step-dir: -1;
 }
 
 [data-carbon-theme='g100'],
-.cds--g100 {
+.cds--g100,
+[data-carbon-theme='v12-dark'],
+.cds--v12-dark {
   --cds-step-dir: 1;
 }
 

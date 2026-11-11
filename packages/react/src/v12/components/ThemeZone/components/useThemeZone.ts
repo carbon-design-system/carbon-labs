@@ -9,32 +9,41 @@ import { useLayoutEffect, useState, type RefObject } from 'react';
 import { useTheme } from '@carbon/react';
 import { onThemeChange } from '@carbon-labs/react-util';
 import {
-  CARBON_THEME,
   KIT_THEME,
   inverseTheme,
+  themeOf,
   themeZoneAt,
   type CarbonThemeName,
   type ZoneTheme,
 } from './zone';
 
-/** The Carbon theme an area draws in: the given one; null for `page`; for `inverse`, the opposite
- * of the zone round `ref`'s element, read before the first paint and on every theme change round it. */
+/** The theme round an area before it can be read: Carbon's context (white or g100), in the pair the page is in. */
+function guessRound(context: string | undefined): CarbonThemeName | null {
+  const page =
+    typeof document === 'undefined'
+      ? null
+      : themeZoneAt(document.documentElement);
+  const named =
+    context === 'white' || context === 'g100' ? KIT_THEME[context] : null;
+  return named ? themeOf(named, page) : page;
+}
+
+/** The Carbon theme an area draws in: null for `page`; for `light` and `dark`, that theme in the pair round `ref`'s
+ * element (v12's on a v12 page, else white and g100); for `inverse`, the opposite of the zone round it. Read before
+ * the first paint and on every theme change round it. */
 export function useThemeZone(
   theme: ZoneTheme,
   ref: RefObject<HTMLElement | null>
 ): CarbonThemeName | null {
   const context = useTheme().theme as string | undefined;
-  const guess = inverseTheme(
-    context === 'white' || context === 'g100' ? context : null
-  );
-  const [read, setRead] = useState<CarbonThemeName | null>(null);
-  const inverse = theme === 'inverse';
+  const [read, setRead] = useState<CarbonThemeName | null | undefined>();
+  const zoned = theme !== 'page';
   useLayoutEffect(() => {
     const el = ref.current;
-    if (!inverse || !el) {
+    if (!zoned || !el) {
       return;
     }
-    const measure = () => setRead(inverseTheme(themeZoneAt(el.parentElement)));
+    const measure = () => setRead(themeZoneAt(el.parentElement));
     measure();
     // A theme changed round it (the page's, a lab stage's): read it again.
     let raf = 0;
@@ -51,14 +60,12 @@ export function useThemeZone(
       off();
       cancelAnimationFrame(raf);
     };
-  }, [inverse, ref]);
-  if (theme === 'page') {
+  }, [zoned, ref]);
+  if (!zoned) {
     return null;
   }
-  if (inverse) {
-    return read ?? guess;
-  }
-  return CARBON_THEME[theme];
+  const round = read === undefined ? guessRound(context) : read;
+  return theme === 'inverse' ? inverseTheme(round) : themeOf(theme, round);
 }
 
 /** A zone's attributes, for the element that carries Carbon's `<Theme>`: the theme asked for and the kit's theme it resolves to. */

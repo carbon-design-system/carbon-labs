@@ -6,7 +6,7 @@
  */
 
 import React, { createElement, Fragment, type ComponentType } from 'react';
-import { Theme } from '@carbon/react';
+import { Layer, ThemeContext } from '@carbon/react';
 import { KitDefaults } from '@carbon-labs/react-kit-defaults';
 import {
   DENSITIES,
@@ -31,8 +31,8 @@ export interface MatrixOptions<P> {
    */
   states?: ReadonlyArray<string | MatrixState<P>>;
   /**
-   * The themes across. Each cell is a Carbon `Theme` zone, so only the themes
-   * Carbon draws as one: white and g100, both by default.
+   * The themes across: v12 light and v12 dark, both by default. Each cell is
+   * a zone of its theme (`cds--v12-light`, `cds--v12-dark`).
    */
   themes?: readonly ZoneTheme[];
   /** The densities across, under each theme; all three by default. */
@@ -52,9 +52,53 @@ export const PROP_STATES = [
 ];
 
 const THEME_LABEL: Record<ZoneTheme, string> = {
-  white: 'White',
-  g100: 'Gray 100',
+  'v12-light': 'v12 light',
+  'v12-dark': 'v12 dark',
 };
+
+/** What each v12 theme is to the kit (`data-cds-theme`), and the Carbon theme it is built on, for Carbon's context. */
+const KIT: Record<ZoneTheme, 'light' | 'dark'> = {
+  'v12-light': 'light',
+  'v12-dark': 'dark',
+};
+const BASE: Record<ZoneTheme, 'white' | 'g100'> = {
+  'v12-light': 'white',
+  'v12-dark': 'g100',
+};
+
+/**
+ * A cell: a zone of its v12 theme, as ThemeZone draws one. Its class sets the
+ * theme's tokens on what it holds; Carbon's context and first layer are the
+ * theme it is built on, since Carbon's `Theme` knows only its own.
+ */
+function Zone({
+  theme,
+  state,
+  children,
+}: {
+  theme: ZoneTheme;
+  state: string;
+  children: React.ReactNode;
+}) {
+  const context = { theme: BASE[theme], isDark: KIT[theme] === 'dark' };
+  return (
+    <ThemeContext.Provider value={context}>
+      <Layer
+        level={0}
+        className={`cds--${theme}`}
+        data-theme-zone={KIT[theme]}
+        data-cds-theme={KIT[theme]}
+        data-state={state}
+        style={{
+          padding: 16,
+          background: 'var(--cds-background)',
+          color: 'var(--cds-text-primary)',
+        }}>
+        {children}
+      </Layer>
+    </ThemeContext.Provider>
+  );
+}
 
 const label: React.CSSProperties = {
   padding: '8px 16px',
@@ -86,7 +130,7 @@ interface MatrixProps<P> {
 
 /**
  * The grid: a row per state, a column per theme and density. Each cell is
- * its own Carbon theme zone and kit density; the rest of the toolbar
+ * its own v12 theme zone and kit density; the rest of the toolbar
  * (reduced motion, clock, direction) applies to all of them.
  */
 function Matrix<P extends object>({
@@ -117,20 +161,12 @@ function Matrix<P extends object>({
         <Fragment key={state.name}>
           <div style={label}>{state.name}</div>
           {columns.map(({ theme, density }) => (
-            <Theme
-              key={`${theme}-${density}`}
-              theme={theme}
-              data-state={state.name}
-              style={{
-                padding: 16,
-                background: 'var(--cds-background)',
-                color: 'var(--cds-text-primary)',
-              }}>
+            <Zone key={`${theme}-${density}`} theme={theme} state={state.name}>
               <KitDefaults
                 density={density === 'default' ? undefined : density}>
                 {createElement(component, { ...args, ...state.args } as P)}
               </KitDefaults>
-            </Theme>
+            </Zone>
           ))}
         </Fragment>
       ))}

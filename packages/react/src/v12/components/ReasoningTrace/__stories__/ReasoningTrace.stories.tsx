@@ -21,15 +21,14 @@ import './ReasoningTrace.stories.scss';
 import codeProposals from '../../CodeSnippetAlt/proposals/tokens.json';
 import mdx from './ReasoningTrace.mdx';
 
+// The proposals keep a value per Carbon theme; the page is on a v12 one.
 type CarbonTheme = 'white' | 'g10' | 'g90' | 'g100';
-type Theme = CarbonTheme | 'v12-light' | 'v12-dark';
+type Theme = 'v12-light' | 'v12-dark';
 type TokenFile = Record<string, Record<string, unknown>>;
 
+// Each v12 theme reads the proposals' values for the Carbon theme it is
+// built on.
 const proposalTheme: Record<Theme, CarbonTheme> = {
-  white: 'white',
-  g10: 'g10',
-  g90: 'g90',
-  g100: 'g100',
   'v12-light': 'white',
   'v12-dark': 'g100',
 };
@@ -60,7 +59,8 @@ function declarations(file: TokenFile, theme: CarbonTheme): string {
 }
 
 const withPage: Decorator = (Story, context) => {
-  const theme = (context.globals.theme ?? 'white') as Theme;
+  const theme: Theme =
+    context.globals.theme === 'v12-dark' ? 'v12-dark' : 'v12-light';
   const scope = 'reasoning-trace-story-proposals';
   return (
     <div className={`reasoning-trace-story__page ${scope}`}>

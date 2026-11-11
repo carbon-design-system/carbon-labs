@@ -54,9 +54,13 @@ import { ghostSteps } from '@carbon-labs/react-selection-kit';
 import { parseCssColor } from '@carbon-labs/react-util';
 import { onThemeChange } from '@carbon-labs/react-util';
 import {
+  KIT_THEME,
   inverseTheme,
+  isV12Theme,
+  themeOf,
   themeZoneAt,
   writeZone,
+  type KitTheme,
 } from '@carbon-labs/react-theme-zone';
 import { snapEntranceContentMs } from '@carbon-labs/react-side-panel';
 import { AppShellWorkspaceContext } from '@carbon-labs/react-app-shell';
@@ -465,8 +469,7 @@ function invert(bar: HTMLElement, variant: ContextualBarVariant) {
   const theme =
     variant === 'inverse' ? inverseTheme(themeZoneAt(bar.parentElement)) : null;
   writeZone(bar, theme);
-  const side =
-    theme === 'g100' ? 'dark' : theme === 'white' ? 'light' : undefined;
+  const side = theme ? KIT_THEME[theme] : undefined;
   if (side) bar.dataset.inverse = side;
   else delete bar.dataset.inverse;
 }
@@ -523,11 +526,17 @@ function tone(
     // A status far too light (or dark) for the inverse text — warning's yellow under light
     // text — takes the other text instead, so it keeps its own color rather than going muddy.
     if (contrastRatio(support, text) < FLIP_BELOW) {
-      const was = bar.dataset.inverse;
-      bar.dataset.inverse = was === 'dark' ? 'light' : 'dark';
+      const was = bar.dataset.inverse === 'light' ? 'light' : 'dark';
+      // A v12 zone's class is its theme (no rule over it, contextual-bar.scss): it flips too.
+      const zone = themeZoneAt(bar);
+      const flip = (side: KitTheme) => {
+        bar.dataset.inverse = side;
+        if (isV12Theme(zone)) writeZone(bar, themeOf(side, zone));
+      };
+      flip(was === 'dark' ? 'light' : 'dark');
       const other = cssHex(getComputedStyle(bar).color);
       if (other && contrastRatio(support, other) >= TEXT_CONTRAST) text = other;
-      else bar.dataset.inverse = was;
+      else flip(was);
     }
     const fill = solveStatusColor(support, text, TEXT_CONTRAST);
     bar.style.setProperty('--cds-contextual-bar-fill', fill);

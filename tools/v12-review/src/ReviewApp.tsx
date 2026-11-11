@@ -13,8 +13,9 @@
 // settings, its motion and its props).
 // The picks (theme, density, corners, motion, clock, direction) are
 // the workbench's, applied by its WorkbenchFrame, and kept in this browser.
-// The header and the nav stay dark; the theme pick is the workspace's, and
-// the page's, so what the stories portal to the body follows it too.
+// The header and the nav stay dark (v12 dark); the theme pick, v12 light or
+// v12 dark, is the workspace's, and the page's, so what the stories portal to
+// the body follows it too.
 // Folded, the nav is a strip of its toggle and a search button: the filter's
 // field folds into the button, its magnifier moving to the button's place,
 // size and color on the fold's clock (`--cds-nav-fold`, review.scss).
@@ -84,10 +85,10 @@ export function ReviewApp({ stories }: ReviewAppProps) {
   return (
     <WorkbenchFrame globals={picks}>
       <AppShell
-        className="v12r-shell cds--g100"
+        className="v12r-shell cds--v12-dark"
         scope="page"
         frame="inset"
-        mainTheme={picks.theme === 'g100' ? 'dark' : 'light'}
+        mainTheme={picks.theme === 'v12-dark' ? 'dark' : 'light'}
         layout={LAYOUT}
         foldTo="hide"
         foldToggle="header"
@@ -288,16 +289,18 @@ function ReviewHeader({
             corners="full"
             align="bottom-end"
             label={
-              picks.theme === 'white'
-                ? 'Switch to dark theme'
-                : 'Switch to light theme'
+              picks.theme === 'v12-light'
+                ? 'Switch to v12 dark'
+                : 'Switch to v12 light'
             }
             onClick={() =>
-              onPicks({ theme: picks.theme === 'white' ? 'g100' : 'white' })
+              onPicks({
+                theme: picks.theme === 'v12-light' ? 'v12-dark' : 'v12-light',
+              })
             }>
             <AsleepAwakeToggle
               size={20}
-              toggled={picks.theme === 'g100'}
+              toggled={picks.theme === 'v12-dark'}
               asButton={false}
             />
           </IconButton>

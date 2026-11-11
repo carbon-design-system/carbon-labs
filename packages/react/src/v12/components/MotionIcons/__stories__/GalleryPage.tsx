@@ -120,7 +120,7 @@ export function PageHeader({ lede }: { lede: React.ReactNode }) {
   );
 }
 
-/** theme: white, g10, g90, g100 (when the host can switch it). */
+/** theme: v12 light or v12 dark (when the host can switch it). */
 export function ThemeField() {
   const { theme } = useGalleryUI();
   if (!theme) return null;

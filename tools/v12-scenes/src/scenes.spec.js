@@ -6,22 +6,16 @@
  */
 
 // The scene tier: every picked story loads with no console error and no page
-// error; each picked `Matrix` story renders in white and in g100.
+// error; each picked `Matrix` story renders in v12 light and in v12 dark.
 
 import fs from 'node:fs';
 import { test, expect } from '@playwright/test';
-import { collectErrors, openStory } from './story.js';
+import { collectErrors, lightnessOf, openStory } from './story.js';
 
 const plan = JSON.parse(fs.readFileSync(process.env.SCENES_PLAN, 'utf8'));
 
-/**
- * Each theme, and the background token it may set: Carbon's, or the v12 page
- * base that `@carbon-labs/v12-styles` puts over it where a story loads them.
- */
-const THEMES = {
-  white: ['#ffffff', '#fafafa'],
-  g100: ['#161616', '#0b0b0b'],
-};
+/** Each theme v12 runs on, and the side its background is on. */
+const THEMES = { 'v12-light': 'light', 'v12-dark': 'dark' };
 
 for (const row of plan.rows) {
   test.describe(row.unit, () => {
@@ -34,7 +28,7 @@ for (const row of plan.rows) {
       });
     }
     for (const id of row.matrix) {
-      for (const [theme, backgrounds] of Object.entries(THEMES)) {
+      for (const [theme, side] of Object.entries(THEMES)) {
         test(`${id} renders in ${theme}`, async ({ page }, testInfo) => {
           const errors = collectErrors(page);
           const shown = await openStory(page, id, { globals: { theme } });
@@ -43,15 +37,19 @@ for (const row of plan.rows) {
             theme: document.documentElement.getAttribute('data-carbon-theme'),
             background: getComputedStyle(document.documentElement)
               .getPropertyValue('--cds-background')
-              .trim()
-              .toLowerCase(),
+              .trim(),
             children:
               document.querySelector('#storybook-root')?.children.length,
           }));
           expect(applied.theme, 'the theme on <html>').toBe(theme);
-          expect(backgrounds, 'the theme background token').toContain(
-            applied.background
-          );
+          // The token's value differs with what a story loads (the theme's
+          // own background, or the kit's page base), so check its side.
+          const lightness = lightnessOf(applied.background);
+          expect(lightness, 'the theme background token').not.toBeNull();
+          expect(
+            lightness > 0.5 ? 'light' : 'dark',
+            `the side of the background ${applied.background}`
+          ).toBe(side);
           expect(applied.children, 'something rendered').toBeGreaterThan(0);
           await testInfo.attach(`${id}-${theme}.png`, {
             body: await page.screenshot({ fullPage: true }),

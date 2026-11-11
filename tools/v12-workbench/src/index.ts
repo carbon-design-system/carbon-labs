@@ -25,6 +25,7 @@ export {
   DIRECTIONS,
   REDUCED_MOTION,
   THEMES,
+  V11_THEMES,
   ZONE_THEMES,
   readGlobals,
   timeScaleOf,

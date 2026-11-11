@@ -16,6 +16,7 @@ import {
   MOTION_LEVEL,
   REDUCED_MOTION,
   THEMES,
+  V11_THEMES,
   ZONE_THEMES,
   levelOf,
   readGlobals,
@@ -26,26 +27,38 @@ import { storyFrameUrl } from '../compare';
 
 describe('the toolbar globals', () => {
   it('fall back to the defaults when a value is not on the list', () => {
-    const picks = readGlobals({ theme: 'g90', clock: '2', dir: 'rtl' });
-    expect(picks.theme).toBe('white');
+    const picks = readGlobals({ theme: 'sepia', clock: '2', dir: 'rtl' });
+    expect(picks.theme).toBe('v12-light');
     expect(picks.clock).toBe('1');
     expect(picks.dir).toBe('rtl');
   });
 
-  it('offer white and g100, then the v12 light and dark previews', () => {
-    expect(THEMES).toEqual(['white', 'g100', 'v12-light', 'v12-dark']);
+  it('offer only v12 light and v12 dark, and start on v12 light', () => {
+    expect(THEMES).toEqual(['v12-light', 'v12-dark']);
     expect(globalTypes.theme.toolbar.items).toEqual([
-      { value: 'white', title: 'White' },
-      { value: 'g100', title: 'Gray 100' },
-      { value: 'v12-light', title: 'v12 light (preview)' },
-      { value: 'v12-dark', title: 'v12 dark (preview)' },
+      { value: 'v12-light', title: 'v12 light' },
+      { value: 'v12-dark', title: 'v12 dark' },
     ]);
+    expect(DEFAULT_GLOBALS.theme).toBe('v12-light');
     expect(readGlobals({ theme: 'v12-dark' }).theme).toBe('v12-dark');
-    expect(readGlobals({}).theme).toBe('white');
+    expect(readGlobals({}).theme).toBe('v12-light');
   });
 
-  it('keep the matrix to the themes Carbon draws as a zone', () => {
-    expect(ZONE_THEMES).toEqual(['white', 'g100']);
+  it('read a v11 theme as the v12 theme of its side', () => {
+    expect(V11_THEMES).toEqual({
+      white: 'v12-light',
+      g10: 'v12-light',
+      g90: 'v12-dark',
+      g100: 'v12-dark',
+    });
+    for (const [v11, v12] of Object.entries(V11_THEMES)) {
+      expect(readGlobals({ theme: v11 }).theme).toBe(v12);
+    }
+    expect(readGlobals({ theme: 'toString' }).theme).toBe('v12-light');
+  });
+
+  it('draw the matrix in both v12 themes', () => {
+    expect(ZONE_THEMES).toEqual(['v12-light', 'v12-dark']);
   });
 
   it('turn the clock into a time scale', () => {
@@ -169,11 +182,11 @@ describe('the motion panel data', () => {
 describe('the compare frame', () => {
   it('carries the current globals to the other story', () => {
     const url = new URL(
-      storyFrameUrl('v12-x--y', { theme: 'g100', clock: '0.25', skip: {} })
+      storyFrameUrl('v12-x--y', { theme: 'v12-dark', clock: '0.25', skip: {} })
     );
     expect(url.pathname.endsWith('/iframe.html')).toBe(true);
     expect(url.searchParams.get('id')).toBe('v12-x--y');
-    expect(url.searchParams.get('globals')).toBe('theme:g100;clock:0.25');
+    expect(url.searchParams.get('globals')).toBe('theme:v12-dark;clock:0.25');
   });
 
   it("writes a boolean in Storybook's URL form", () => {

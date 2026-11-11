@@ -24,6 +24,38 @@ export function storyPath(id, globals = {}) {
 }
 
 /**
+ * How light a color token's value is, 0 to 1, for the forms the themes write:
+ * `oklch()` (its lightness), a hex color or `rgb()` (its relative luminance,
+ * gamma encoded, which is enough to tell a light page from a dark one).
+ *
+ * @param {string} color A custom property's value.
+ * @returns {number | null} The lightness, or null when the form is unknown.
+ */
+export function lightnessOf(color) {
+  const value = color.trim().toLowerCase();
+  const oklch = /^oklch\(\s*([\d.]+)(%?)/.exec(value);
+  if (oklch) {
+    return oklch[2] ? Number(oklch[1]) / 100 : Number(oklch[1]);
+  }
+  let rgb = null;
+  const hex = /^#([0-9a-f]{3}|[0-9a-f]{6})$/.exec(value);
+  if (hex) {
+    const digits =
+      hex[1].length === 3 ? [...hex[1]].map((d) => d + d).join('') : hex[1];
+    rgb = [0, 2, 4].map((i) => parseInt(digits.slice(i, i + 2), 16));
+  }
+  const fn = /^rgba?\(\s*([\d.]+)[\s,]+([\d.]+)[\s,]+([\d.]+)/.exec(value);
+  if (fn) {
+    rgb = fn.slice(1, 4).map(Number);
+  }
+  if (!rgb) {
+    return null;
+  }
+  const [r, g, b] = rgb.map((channel) => channel / 255);
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+/**
  * Records console errors and uncaught page errors from the moment it is
  * called.
  *

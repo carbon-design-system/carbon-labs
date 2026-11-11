@@ -11,7 +11,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { pickUnits, planOf, readLane, unitOf } from '../src/pick.js';
-import { storyPath } from '../src/story.js';
+import { lightnessOf, storyPath } from '../src/story.js';
 
 const C = 'packages/react/src/v12/components';
 
@@ -171,9 +171,21 @@ describe('unitOf and storyPath', () => {
   });
 
   it('puts globals in the frame address', () => {
-    expect(storyPath('v12-tabs--matrix', { theme: 'g100' })).toBe(
-      '/iframe.html?id=v12-tabs--matrix&viewMode=story&globals=theme%3Ag100'
+    expect(storyPath('v12-tabs--matrix', { theme: 'v12-dark' })).toBe(
+      '/iframe.html?id=v12-tabs--matrix&viewMode=story&globals=theme%3Av12-dark'
     );
+  });
+
+  it('tells a light background from a dark one, in each form a theme writes', () => {
+    expect(lightnessOf('oklch(98.51% 0.004 262deg)')).toBeCloseTo(0.9851);
+    expect(lightnessOf('oklch(0.1496 0.004 262)')).toBeCloseTo(0.1496);
+    expect(lightnessOf('#f9fafd')).toBeGreaterThan(0.5);
+    expect(lightnessOf('#FFF')).toBeCloseTo(1);
+    expect(lightnessOf('#0a0b0d')).toBeLessThan(0.5);
+    expect(lightnessOf('rgb(22, 22, 22)')).toBeLessThan(0.5);
+    expect(lightnessOf('rgb(255 255 255)')).toBeCloseTo(1);
+    expect(lightnessOf('')).toBe(null);
+    expect(lightnessOf('var(--other)')).toBe(null);
   });
 });
 

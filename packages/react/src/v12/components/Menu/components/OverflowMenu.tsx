@@ -46,6 +46,7 @@ export interface OverflowMenuProps
   menuAlignment?: 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end';
   /** v11's classic flag: align the menu's end with the trigger's. */
   flipped?: boolean;
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** The menu's treatment (Menu's `variant`): `inverse` (default), `tonal`, `outlined`, `hero`. */
   variant?: MenuStyleProps['variant'];
 }

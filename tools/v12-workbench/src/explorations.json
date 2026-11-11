@@ -833,7 +833,7 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Menu/components/Menu.tsx",
-      "line": 484,
+      "line": 490,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
@@ -847,6 +847,12 @@
       "file": "packages/react/src/v12/components/Menu/components/MenuButton.tsx",
       "line": 67,
       "text": "api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Menu/components/OverflowMenu.tsx",
+      "line": 49,
+      "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
       "kind": "explore",

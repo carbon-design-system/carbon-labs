@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-contained-list",
-  "version": "0.9.0",
+  "version": "0.11.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - ContainedList for React (v12)",

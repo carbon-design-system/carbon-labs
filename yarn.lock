@@ -3198,6 +3198,7 @@ __metadata:
   resolution: "@carbon-labs/react-chat-panels@workspace:packages/react/src/v12/components/ChatPanels"
   dependencies:
     "@carbon-labs/react-mega-button": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
     "@carbon/layout": "npm:^11.61.0"
     "@testing-library/jest-dom": "npm:^6.0.0"
     "@testing-library/react": "npm:^16.1.0"
@@ -3272,6 +3273,7 @@ __metadata:
   resolution: "@carbon-labs/react-chats-panel@workspace:packages/react/src/v12/components/ChatsPanel"
   dependencies:
     "@carbon-labs/react-mega-button": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
     "@carbon/layout": "npm:^11.61.0"
     "@testing-library/jest-dom": "npm:^6.0.0"
     "@testing-library/react": "npm:^16.1.0"

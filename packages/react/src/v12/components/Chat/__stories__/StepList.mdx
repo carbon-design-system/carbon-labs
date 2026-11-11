@@ -1,0 +1,61 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as StepListStories from './StepList.stories.tsx';
+
+<Meta of={StepListStories} />
+
+# Step list
+
+The steps the machine takes, as they happen: one row per step with its status
+mark, its words and its time, joined by a rule. Use it for a reply's steps, an
+agent's workflow or a job's stages. A step is queued, running, waiting, done,
+failed or cancelled; a tool call with `input` or `output` opens to show them.
+`collapsible` adds a counter line that opens and shuts the rows.
+
+Screen readers hear an ordered list named by `label`, each mark named by its
+status, and one polite announcement per settled step. Every word is its own
+prop.
+
+<Canvas of={StepListStories.ReplySteps} />
+
+<Canvas of={StepListStories.Pending} />
+
+<Canvas of={StepListStories.Running} />
+
+<Canvas of={StepListStories.Done} />
+
+<Canvas of={StepListStories.Failed} />
+
+<Canvas of={StepListStories.Collapsed} />
+
+<Canvas of={StepListStories.Expanded} />
+
+<Canvas of={StepListStories.LongList} />
+
+## Motion
+
+- **Status hand-off:** running to done, failed or waiting changes the mark in
+  place: the spinner shrinks 4px, the disc grows from under it and the glyph
+  draws on, with no fades.
+- **Wind-up:** queued to running, the dashed circle shrinks to the spinner's
+  size while turning, exit-productive; the spinner takes its place on that
+  frame.
+- **Words:** out, then in through the shimmer's band. The trailing words' place
+  glides to its width by travel.
+- **Arrival:** a new step's space opens by travel, its content coming from 8px
+  back; the rule above grows down with it.
+- **Stillness:** a change inside the last one's swap lands at once at its latest
+  state; several at once land together.
+- **Collapse:** the counter line opens and shuts the rows by the disclosure; its
+  count changes at once and its chevron glides by travel. A finished list shuts
+  one loading period after its last step ends; a failure or a wait opens it.
+- **One working element:** with `workingStep`, only that running step shows its
+  spinner and shimmer; the others keep the dashed circle, still.
+
+## Reduced motion
+
+Rows and marks land at once and the labels are plain; the words swap on the
+reduced clock.
+
+## Props
+
+<ArgTypes of={StepListStories} />

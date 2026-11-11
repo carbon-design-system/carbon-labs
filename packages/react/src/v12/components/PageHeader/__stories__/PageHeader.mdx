@@ -32,6 +32,8 @@ rounds it in the page or in a card.
 
 <Canvas of={PageHeaderStories.Widths} />
 
+<Canvas of={PageHeaderStories.WithJumpTo} />
+
 ## Motion
 
 - **Collapse and expand:** one layout transaction. The header's height leads,
@@ -67,6 +69,10 @@ rounds it in the page or in a card.
 - **Interruption:** a turn mid-move goes on from where everything is. An edge
   the scroll crosses mid-move is answered when the move lands. A resize across
   672px changes the layout at once.
+- **A jump's scroll:** when JumpTo's glide carries the scroll across an edge,
+  the collapse or expand is part of the jump. It runs on what is left of the
+  glide's clock, so both land together. An edge crossed as the glide lands, such
+  as the top on Back to top, lands at once, with no motion after the jump.
 - `timeScale` multiplies the clock.
 
 ## Reduced motion

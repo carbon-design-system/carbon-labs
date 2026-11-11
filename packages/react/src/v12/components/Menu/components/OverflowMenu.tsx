@@ -148,8 +148,9 @@ export function OverflowMenu({
         onMove={onMove}
         variant={variant}
         lowContrast={lowContrast}
-        // A menu from a pill is a pill: full by default, as its trigger.
-        corners={corners ?? 'full'}
+        // Its menu is 8px whatever the trigger's shape: a pill only when
+        // `corners` (or KitDefaults') asks for one.
+        corners={corners}
         contour={contour}
         outlinedFill={outlinedFill}
         outline={outline}

@@ -55,6 +55,7 @@ import {
   type KitDensity,
 } from '@carbon-labs/react-kit-defaults';
 import { Button } from '@carbon-labs/react-button';
+import { jumpRemaining } from '@carbon-labs/react-jump-to';
 import { MenuButton, MenuItem, OverflowMenu } from '@carbon-labs/react-menu';
 import type { ButtonLookProps } from '@carbon-labs/react-props';
 import {
@@ -511,6 +512,21 @@ function underEdge(
   };
 }
 
+/**
+ * A jump's scroll moving the header (JumpTo's glide, `jumpRemaining`): the
+ * clock a change it causes runs on, so the jump and the change are one
+ * motion. What is left of the glide; 0, at once, when it has landed or too
+ * little is left to read as a move. Null when no jump moves it: its own clock.
+ */
+export function jumpClock(
+  header: Pick<Element, 'closest'>,
+  now?: number
+): number | null {
+  const left = jumpRemaining(header, now);
+  if (left === null) return null;
+  return left < DURATION_FLOOR_MS ? 0 : left;
+}
+
 /** The nearest scroll container above `el`, or null (the window). */
 function scrollerOf(el: HTMLElement): HTMLElement | null {
   for (let p = el.parentElement; p; p = p.parentElement) {
@@ -942,6 +958,8 @@ export const PageHeader = forwardRef<HTMLElement, PageHeaderProps>(
     const timeScaleRef = useLatest(timeScale);
     const onChangeRef = useLatest(onCollapsedChange);
     const pending = useRef<Snapshot | null>(null);
+    /** The clock a jump set for the change under way (`jumpClock`), else null: its own. */
+    const jumpMs = useRef<number | null>(null);
     const running = useRef<Animation[]>([]);
     const resizing = useRef<Animation | null>(null);
     /** The copies of what leaves (the details, buttons), until the move lands. */
@@ -1095,13 +1113,20 @@ export const PageHeader = forwardRef<HTMLElement, PageHeaderProps>(
     );
     /** An edge the scroll crossed while it moved, answered once it lands (the scroll's effect sets it). */
     const recheck = useRef<(() => void) | null>(null);
-    /** Collapse or expand: the parts' boxes as they are now, then the change. `keep`: a scroll's (see `keptRoom`). */
+    /**
+     * Collapse or expand: the parts' boxes as they are now, then the change.
+     * `keep`: a scroll's (see `keptRoom`). `clock`: what is left of the jump
+     * whose scroll caused it (`jumpClock`): it runs on that, or lands at once.
+     */
     const change = useCallback(
-      (next: boolean, keep = false) => {
+      (next: boolean, keep = false, clock: number | null = null) => {
         if (next === collapsedRef.current) return;
         const header = el.current;
+        jumpMs.current = clock;
         pending.current =
-          header && !reducedRef.current ? snapshot(header, next, true) : null;
+          header && !reducedRef.current && (clock === null || clock > 0)
+            ? snapshot(header, next, true)
+            : null;
         if (header) {
           const kept = keptNow(header);
           const before =
@@ -1316,7 +1341,14 @@ export const PageHeader = forwardRef<HTMLElement, PageHeaderProps>(
           ? keptRoom(header, collapsed && asked.keep, asked.before, asked.kept)
           : null;
       if (!snap || !header) {
-        if (header) delete header.dataset.moving;
+        if (header) {
+          delete header.dataset.moving;
+          // Landed with a jump: nothing of the change plays after it, the
+          // breadcrumb slash's fade included.
+          if (jumpMs.current === 0)
+            for (const a of header.getAnimations({ subtree: true })) a.finish();
+        }
+        jumpMs.current = null;
         return;
       }
       const now = snapshot(header, false);
@@ -1378,7 +1410,11 @@ export const PageHeader = forwardRef<HTMLElement, PageHeaderProps>(
       let token = durationStepForDistance(far);
       if (collapsing) token = stepDown(token);
       const k = timeScaleRef.current;
-      const ms = Math.max(DURATION_FLOOR_MS, motionTokens.duration[token] * k);
+      // A jump's scroll caused it: the jump's clock, landing with it.
+      const ms =
+        jumpMs.current ??
+        Math.max(DURATION_FLOOR_MS, motionTokens.duration[token] * k);
+      jumpMs.current = null;
       const easing = bezier('standard-productive');
       // The lead: the header's height. Content below follows it.
       header.dataset.moving = '';
@@ -1745,8 +1781,10 @@ export const PageHeader = forwardRef<HTMLElement, PageHeaderProps>(
         // Collapsing on the scroll, it keeps the room it gives up (`keptRoom`),
         // so the page's height and its scroll don't change: a short page can
         // collapse too, rather than stay expanded with the content sliding under it.
-        if (zone === 'past' && !collapsedRef.current) change(true, true);
-        else if (zone === 'top' && collapsedRef.current) change(false);
+        const clock = jumpClock(header);
+        if (zone === 'past' && !collapsedRef.current) change(true, true, clock);
+        else if (zone === 'top' && collapsedRef.current)
+          change(false, false, clock);
       };
       const onScroll = () => {
         const y = read();

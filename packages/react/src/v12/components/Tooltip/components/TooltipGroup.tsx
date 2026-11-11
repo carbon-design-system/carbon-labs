@@ -56,7 +56,7 @@ import { TOOLTIP_LEAVE_LABEL_MS } from './delays';
  * `useTooltipTrigger` (it reads the group from context). The group's `align`,
  * `autoAlign` and delays apply unless a trigger sets its own `align`. It
  * renders no element of its own: the shared tooltip is a sibling after the
- * children (fixed, out of flow), so it takes the children's `<Theme>` scope.
+ * children (fixed, out of flow), so it takes the children's theme zone.
  * ========================================================================== */
 
 export interface TooltipGroupProps {

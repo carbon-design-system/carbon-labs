@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.234.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.233.0...%40carbon-labs%2Freact%400.234.0) (2026-11-11)
+
+### Bug Fixes
+
+* **v12-review:** nav fold, mark, type and scrollers ([#1484](https://github.com/carbon-design-system/carbon-labs/issues/1484)) ([75a5b8b](https://github.com/carbon-design-system/carbon-labs/commit/75a5b8b12536e1f9562b7022514d3060859c3441))
+
+
 # [0.233.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.232.0...%40carbon-labs%2Freact%400.233.0) (2026-11-11)
 
 ### Performance Improvements

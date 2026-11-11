@@ -619,7 +619,7 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/RadioButton/components/radio-button.scss",
-      "line": 70,
+      "line": 71,
       "text": "hover-tint — Hover and press as a share of the text colour mixed into the fill. TBD"
     },
     {

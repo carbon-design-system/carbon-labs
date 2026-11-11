@@ -11,7 +11,7 @@
 // page, under its ghost PageHeader, is the home (every component by
 // category, searchable) or one component (each of its stories, its
 // settings, its motion and its props).
-// The picks (theme, density, reduced motion, clock, direction) are
+// The picks (theme, density, corners, motion, clock, direction) are
 // the workbench's, applied by its WorkbenchFrame, and kept in this browser.
 // The header and the nav stay dark; the theme pick is the workspace's, and
 // the page's, so what the stories portal to the body follows it too.
@@ -130,15 +130,27 @@ const PICKS: {
     key: 'density',
     label: 'Density',
     options: [
-      ['default', 'Default'],
       ['compact', 'Compact'],
+      ['default', 'Default'],
+      ['spacious', 'Spacious'],
+    ],
+  },
+  {
+    key: 'corners',
+    label: 'Corners',
+    options: [
+      ['default', 'Own'],
+      ['full', 'Full'],
+      ['rounded', 'Rounded'],
+      ['square', 'Square'],
     ],
   },
   {
     key: 'reducedMotion',
-    label: 'Reduced motion',
+    label: 'Motion',
     options: [
-      ['off', 'Off'],
+      ['system', 'System'],
+      ['full', 'Full'],
       ['shorter-clock', 'Shorter'],
       ['at-once', 'At once'],
     ],
@@ -194,7 +206,7 @@ function ReviewHeader({
               size="lg"
               corners="full"
               align="bottom-end"
-              label="Density, motion, clock and direction"
+              label="Density, corners, motion, clock and direction"
               aria-expanded={open}
               onClick={() => {
                 if (!open) {

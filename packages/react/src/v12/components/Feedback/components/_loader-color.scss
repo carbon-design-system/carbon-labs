@@ -44,13 +44,17 @@
 
 :root,
 [data-carbon-theme='white'],
-.cds--white {
+.cds--white,
+[data-carbon-theme='v12-light'],
+.cds--v12-light {
   --cds-loader-neutral-base: #{c.$gray-20-hover};
   --cds-loader-neutral-glint: #{c.$white};
 }
 
 [data-carbon-theme='g100'],
-.cds--g100 {
+.cds--g100,
+[data-carbon-theme='v12-dark'],
+.cds--v12-dark {
   --cds-loader-neutral-base: #{c.$gray-80};
   --cds-loader-neutral-glint: #{c.$gray-100};
 }

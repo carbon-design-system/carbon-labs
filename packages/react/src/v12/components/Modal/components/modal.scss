@@ -43,14 +43,18 @@ $_field-step: color-mix(
 
 :root,
 [data-carbon-theme='white'],
-.cds--white {
+.cds--white,
+[data-carbon-theme='v12-light'],
+.cds--v12-light {
   --cds-modal-fill: var(--cds-surface, #{theme.$layer-01});
   --cds-modal-rule: var(--cds-surface-rule, #{theme.$border-subtle-01});
   --cds-modal-field: var(--cds-surface-field, #{theme.$field-02});
 }
 
 [data-carbon-theme='g100'],
-.cds--g100 {
+.cds--g100,
+[data-carbon-theme='v12-dark'],
+.cds--v12-dark {
   --cds-modal-fill: var(--cds-surface-raised, #262626);
   --cds-modal-rule: var(--cds-surface-raised-rule);
   --cds-modal-field: #{$_field-step};

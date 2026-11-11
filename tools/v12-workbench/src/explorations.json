@@ -681,19 +681,19 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/SideNav/components/side-nav.scss",
-      "line": 33,
+      "line": 35,
       "text": "token: surface-quiet — The quiet surface fill: side nav panel, tiles, tables, jobs tray, tabs fade. replaces: `$layer-01`. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/SideNav/components/side-nav.scss",
-      "line": 35,
+      "line": 37,
       "text": "token: surface-rule — The quiet surface's hairline. replaces: `$border-subtle`. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/SideNav/components/side-nav.scss",
-      "line": 109,
+      "line": 111,
       "text": "token: hero-color — The hero tokens: brand colour for a line, a fill, a hover, an ink on a page and on a fill. replaces: `$border-interactive` / `$interactive`, `$button-primary`, `-hover`, `-active`, `$link-primary`, `$link-inverse`. TBD"
     },
     {

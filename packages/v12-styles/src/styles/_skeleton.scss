@@ -39,7 +39,8 @@
     --skeleton-peak: 0.4;
     --skeleton-trough: 0.15;
 
-    [data-carbon-theme='g100'] & {
+    [data-carbon-theme='g100'] &,
+    [data-carbon-theme='v12-dark'] & {
       --skeleton-fill: var(--skeleton-ai-fill, #{c.$blue-50});
     }
   } @else {
@@ -47,7 +48,8 @@
     --skeleton-peak: var(--skeleton-neutral-peak, 0.3);
     --skeleton-trough: 0.15;
 
-    [data-carbon-theme='g100'] & {
+    [data-carbon-theme='g100'] &,
+    [data-carbon-theme='v12-dark'] & {
       --skeleton-peak: var(--skeleton-neutral-peak, 0.25);
     }
   }
@@ -75,15 +77,18 @@
   }
 }
 
-/* The theme values for Carbon <Theme> zones (`.cds--white` … `.cds--g100`),
+/* The theme values for Carbon <Theme> zones (`.cds--white` … `.cds--g100`, and
+ * the v12 zones `.cds--v12-light`, `.cds--v12-dark`),
  * emitted once by a stylesheet that uses the mixin inside such zones. */
 @mixin skeleton-theme-zones {
-  .cds--white {
+  .cds--white,
+  .cds--v12-light {
     --skeleton-ai-fill: #{c.$blue-20};
     --skeleton-neutral-peak: 0.3;
   }
 
-  .cds--g100 {
+  .cds--g100,
+  .cds--v12-dark {
     --skeleton-ai-fill: #{c.$blue-50};
     --skeleton-neutral-peak: 0.25;
   }

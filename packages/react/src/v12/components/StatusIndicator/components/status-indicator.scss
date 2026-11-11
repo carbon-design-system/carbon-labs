@@ -63,12 +63,16 @@
    (Carbon's yellow outline) keeps its shape at 3:1. Dark themes need none. */
 :root,
 [data-carbon-theme='white'],
-.cds--white {
+.cds--white,
+[data-carbon-theme='v12-light'],
+.cds--v12-light {
   --cds-status-warning-edge: #{c.$yellow-60};
 }
 
 [data-carbon-theme='g100'],
-.cds--g100 {
+.cds--g100,
+[data-carbon-theme='v12-dark'],
+.cds--v12-dark {
   --cds-status-warning-edge: transparent;
 }
 

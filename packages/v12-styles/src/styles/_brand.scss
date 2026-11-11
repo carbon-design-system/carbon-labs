@@ -120,8 +120,10 @@ $steps: (
 );
 
 $theme-scopes: (
-  'white': ":root, [data-carbon-theme='white'], .cds--white",
-  'g100': "[data-carbon-theme='g100'], .cds--g100",
+  'white':
+    ":root, [data-carbon-theme='white'], .cds--white, [data-carbon-theme='v12-light'], .cds--v12-light",
+  'g100':
+    "[data-carbon-theme='g100'], .cds--g100, [data-carbon-theme='v12-dark'], .cds--v12-dark",
 );
 
 /* The tokens for one hue: the theme's steps through its `--cds-hue-*`, the fill's as they are. */
@@ -167,7 +169,14 @@ $theme-scopes: (
 /* A brand zone, and any theme scope inside it. */
 @each $hue, $tones in $hues {
   [data-cds-brand='#{$hue}'],
-  [data-cds-brand='#{$hue}'] :is([data-carbon-theme], .cds--white, .cds--g100) {
+  [data-cds-brand='#{$hue}']
+    :is(
+      [data-carbon-theme],
+      .cds--white,
+      .cds--g100,
+      .cds--v12-light,
+      .cds--v12-dark
+    ) {
     @include brand($hue, $tones);
   }
 }

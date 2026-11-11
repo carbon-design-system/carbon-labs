@@ -29,7 +29,9 @@
 :root,
 [data-carbon-theme],
 .cds--white,
-.cds--g100 {
+.cds--g100,
+.cds--v12-light,
+.cds--v12-dark {
   // @carbon-proposal token: surface-quiet — The quiet surface fill: side nav panel, tiles, tables, jobs tray, tabs fade. replaces: `$layer-01`. TBD
   --sidenav-panel: var(--cds-surface);
   // @carbon-proposal token: surface-rule — The quiet surface's hairline. replaces: `$border-subtle`. TBD

@@ -1,0 +1,32 @@
+{
+  "name": "@carbon-labs/v12-figma",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Carbon Labs - the code side of the v12 design sync: tokens, components, motion and docs as snapshots a design file is checked against",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "tools/v12-figma"
+  },
+  "labs": {
+    "status": "draft",
+    "title": "V12 design sync"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "bin": "./bin/v12-figma.js",
+  "scripts": {
+    "figma": "node ./bin/v12-figma.js",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "storybook": "^9.1.2",
+    "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "vitest": "^4.0.0"
+  }
+}

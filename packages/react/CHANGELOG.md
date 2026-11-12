@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.253.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.252.0...%40carbon-labs%2Freact%400.253.0) (2026-11-12)
+
+### Bug Fixes
+
+* **menu:** declare the loading package ComboButton imports ([#1508](https://github.com/carbon-design-system/carbon-labs/issues/1508)) ([a916417](https://github.com/carbon-design-system/carbon-labs/commit/a9164171b1df515a90f8d91be736dabbda8bb172))
+
+
 # [0.252.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.251.0...%40carbon-labs%2Freact%400.252.0) (2026-11-12)
 
 ### Bug Fixes

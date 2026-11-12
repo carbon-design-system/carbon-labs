@@ -832,21 +832,39 @@
   "V12/Menu": [
     {
       "kind": "proposal",
+      "file": "packages/react/src/v12/components/Menu/components/ComboButton.tsx",
+      "line": 121,
+      "text": "api: button-axes — Button splits the old kinds into `kind` (the role), `variant` (outlined, tonal) and `frame` (ghost, none), so each prop says one thing. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Menu/components/ComboButton.tsx",
+      "line": 124,
+      "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
+    },
+    {
+      "kind": "proposal",
       "file": "packages/react/src/v12/components/Menu/components/Menu.tsx",
-      "line": 484,
+      "line": 490,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Menu/components/MenuButton.tsx",
-      "line": 64,
+      "line": 50,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Menu/components/MenuButton.tsx",
-      "line": 67,
+      "line": 53,
       "text": "api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Menu/components/OverflowMenu.tsx",
+      "line": 49,
+      "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
       "kind": "explore",
@@ -1237,20 +1255,6 @@
       "file": "packages/react/src/v12/components/Slider/components/Slider.tsx",
       "line": 298,
       "text": "corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD"
-    }
-  ],
-  "V12/SplitButton": [
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/SplitButton/components/SplitButton.tsx",
-      "line": 122,
-      "text": "api: button-axes — Button splits the old kinds into `kind` (the role), `variant` (outlined, tonal) and `frame` (ghost, none), so each prop says one thing. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/SplitButton/components/SplitButton.tsx",
-      "line": 125,
-      "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     }
   ],
   "V12/StatusIndicator": [

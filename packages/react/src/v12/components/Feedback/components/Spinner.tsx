@@ -32,7 +32,7 @@ import './spinner.scss';
 /* ============================================================================
  * Spinner — the kit's one circular indeterminate mark. Loading,
  * InlineLoading (through the status mark's pending kind), the busy Button
- * and SplitButton, the modal's busy
+ * and ComboButton, the modal's busy
  * primary button, the file uploader (through ProgressRing) and the chat
  * prompt's Stop ring all draw this one.
  *

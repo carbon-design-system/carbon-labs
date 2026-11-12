@@ -22,14 +22,7 @@ export const CATEGORIES: Category[] = [
     id: 'actions',
     title: 'Actions',
     summary: 'Buttons and the controls that act.',
-    names: [
-      'Button',
-      'SplitButton',
-      'CopyButton',
-      'Link',
-      'Toolbar',
-      'ContextualBar',
-    ],
+    names: ['Button', 'CopyButton', 'Link', 'Toolbar', 'ContextualBar'],
   },
   {
     id: 'inputs',

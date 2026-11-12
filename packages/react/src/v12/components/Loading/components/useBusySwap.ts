@@ -13,7 +13,7 @@ import { SPINNER_MOTION, spinnerMs } from '@carbon-labs/react-feedback';
 /* ============================================================================
  * useBusySwap — a control's busy state as the spinner's start and stop: out,
  * then in. For the busy
- * Button and SplitButton: what rests in the spinner's place (the icon, or a
+ * Button and ComboButton: what rests in the spinner's place (the icon, or a
  * label-only button's label) and the spinner take turns.
  *
  *   busy on   the rest leaves (fade only, `fast-01`, exit), then the spinner

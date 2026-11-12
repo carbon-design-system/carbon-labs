@@ -46,7 +46,7 @@ import { holdUntilRelease, inlineKey } from '@carbon-labs/react-util';
  *             its two outer ends
  *   seams     the kit's rule for a divided control:
  *             the field has a hairline outline, so its seams are that
- *             hairline cut through it, no gap, as the neutral SplitButton's;
+ *             hairline cut through it, no gap, as the neutral ComboButton's;
  *             disabled (the fill alone, no outline), 2px knockouts, as the
  *             filled buttons. A segment's state
  *             outline covers the seam beside it; a selected one, whole

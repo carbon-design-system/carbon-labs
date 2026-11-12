@@ -23,7 +23,7 @@ import { useReducedGetter } from '@carbon-labs/react-util';
  * ============================================================================
  *
  * One button shell divided into cells, rounded only at its outer corners.
- * Three components sit on it: SplitButton (two cells), MenuButton (one) and
+ * Three components sit on it: ComboButton (two cells), MenuButton (one) and
  * ButtonGrid (many, wrapping into rows). Nothing grows or presses in. The
  * seams follow the kit's rule for a divided control: a 1px knockout on the filled
  * looks (primary, secondary), a 1px line in the outline's colour on the

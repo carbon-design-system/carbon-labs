@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { bezierEase, motionTokens } from '@carbon-labs/v12-motion';
 import {
   DITHER,
@@ -15,6 +15,7 @@ import {
   OUT_DOT,
   OUT_EASE,
   OUT_SWEEP,
+  attachTwinkleWave,
   phaseLength,
   presenceAt,
   presenceDelay,
@@ -216,5 +217,117 @@ describe('the shimmer', () => {
       }
     }
     expect(Math.sqrt(sq / n)).toBeLessThan((2 * Math.PI) / 2400 / Math.SQRT2);
+  });
+});
+
+describe('the AI dots, right to left', () => {
+  // The track's start is its right edge: the fill runs from the knob to there.
+  const WIDTH = KNOB_X;
+  const X = 24 * PITCH;
+  const rtl = (on: boolean): PresencePhase => ({
+    on,
+    t0: 0,
+    x: X,
+    ts: 1,
+    start: WIDTH,
+    prev: null,
+  });
+  // The same change left to right, seen in a mirror.
+  const mirrored = (on: boolean): PresencePhase => ({
+    on,
+    t0: 0,
+    x: WIDTH - X,
+    ts: 1,
+    prev: null,
+  });
+
+  it('comes in from the knob toward the right-hand start', () => {
+    const p = rtl(true);
+    const near = presenceDelay(p, X + PITCH, 25, 2);
+    const far = presenceDelay(p, WIDTH, COLS, 2);
+    const past = presenceDelay(p, X - 10 * PITCH, 14, 2);
+    expect(near).toBeLessThan(0.1 * IN_SWEEP);
+    expect(far).toBeGreaterThan(0.85 * IN_SWEEP);
+    // A dot past the knob (outside the fill) is among the first.
+    expect(past).toBeLessThan(0.1 * IN_SWEEP);
+  });
+
+  it('leaves from the right-hand start toward the knob', () => {
+    const p = rtl(false);
+    const atStart = presenceDelay(p, WIDTH, COLS, 2);
+    const atKnob = presenceDelay(p, X + PITCH, 25, 2);
+    expect(atStart).toBeLessThan(0.1 * OUT_SWEEP);
+    // The dither softens the front by up to 8% of the sweep.
+    expect(atKnob).toBeGreaterThan(0.75 * OUT_SWEEP);
+  });
+
+  it('is the left-to-right sweep in a mirror, dot for dot', () => {
+    for (const on of [true, false]) {
+      for (const { bx, col } of dots) {
+        for (const t of [0, 120, 300, 520, 900]) {
+          expect(presenceAt(rtl(on), WIDTH - bx, col, 2, t)).toBeCloseTo(
+            presenceAt(mirrored(on), bx, col, 2, t),
+            9
+          );
+        }
+      }
+    }
+  });
+
+  it('leaves the left-to-right sweep as it was when no start is given', () => {
+    const p = phase(true);
+    for (const { bx, col } of dots) {
+      expect(presenceDelay({ ...p, start: 0 }, bx, col, 2)).toBe(
+        presenceDelay(p, bx, col, 2)
+      );
+    }
+  });
+
+  describe('on the canvas', () => {
+    afterEach(() => vi.restoreAllMocks());
+
+    /** A canvas whose context records the radius each dot is drawn with. */
+    const canvasOf = (width: number) => {
+      const drawn: number[] = [];
+      const ctx = {
+        globalAlpha: 1,
+        arc: (_x: number, _y: number, r: number) => {
+          drawn.push(r);
+        },
+        clearRect: () => {},
+      };
+      const canvas = {
+        offsetWidth: width,
+        offsetHeight: 24,
+        getContext: () => ctx,
+      } as unknown as HTMLCanvasElement;
+      return { canvas, ctx, drawn };
+    };
+    /** The radius a dot at `x` is drawn with at `t` ms, when its own is 1. */
+    const radiusAt = (isRtl: boolean, x: number, t: number) => {
+      const clock = vi.spyOn(performance, 'now').mockReturnValue(0);
+      const { canvas, ctx, drawn } = canvasOf(WIDTH);
+      const wave = attachTwinkleWave(canvas, {
+        source: () => null,
+        timeScale: () => 1,
+        rtl: () => isRtl,
+      });
+      wave.present(true, X);
+      clock.mockReturnValue(t);
+      ctx.clearRect();
+      ctx.arc(x, 12, 1);
+      wave.undo();
+      return drawn[0]!;
+    };
+
+    it('reads the start from the direction: the canvas\u2019s right edge, right to left', () => {
+      const t = 0.6 * IN_DOT;
+      // Right to left the dots by the knob's right are well in, those at the right edge not yet.
+      expect(radiusAt(true, X + PITCH, t)).toBeGreaterThan(0.5);
+      expect(radiusAt(true, WIDTH - PITCH, t)).toBe(0);
+      // Left to right the same instant has the knob's left in, the left edge not yet.
+      expect(radiusAt(false, X - PITCH, t)).toBeGreaterThan(0.5);
+      expect(radiusAt(false, 0, t)).toBe(0);
+    });
   });
 });

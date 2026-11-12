@@ -528,9 +528,11 @@ $standard: var(--cds-motion-easing-standard-productive);
 /* Its hover and press (fillStyle contrast and both): each end mixes `--cds-slider-step` toward the
    knob's color in OKLCH, as the plain fill steps toward it. The knob is achromatic, so each end
    keeps its hue (an achromatic color's hue is powerless in the mix) and only its lightness and
-   chroma move: darker on a light theme, lighter on a dark one, the ramp's hues where they were. */
+   chroma move: darker on a light theme, lighter on a dark one, the ramp's hues where they were.
+   The image alone, never the shorthand: the knob's ring sets its size, position and origin
+   beside it, and a shorthand after them would reset them. */
 @mixin gradient-ramp {
-  background: linear-gradient(
+  background-image: linear-gradient(
     var(--_ramp-to) in oklch,
     color-mix(in oklch, var(--_g0), var(--_knob) var(--cds-slider-step))
       calc(var(--sl-knob-w) / 2),
@@ -541,6 +543,7 @@ $standard: var(--cds-motion-easing-standard-productive);
 
 :is(.cds-slider--gradient-red-green, .cds-slider--gradient-cold-warm)
   .cds-slider__fill:not([data-tone]) {
+  background-color: transparent;
   @include gradient-ramp;
 }
 

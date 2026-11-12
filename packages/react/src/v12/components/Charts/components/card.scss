@@ -69,6 +69,13 @@
   @include visually-hidden;
 }
 
+/* The big number and its fraction, held left to right as one number. */
+.cds-chart-card__number {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--cds-chart-metric-gap);
+}
+
 .cds-chart-card__value,
 .cds-chart-card__fraction {
   color: var(--cds-chart-color-primary);

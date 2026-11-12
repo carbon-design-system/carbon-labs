@@ -124,6 +124,24 @@ describe('ChartCard', () => {
     }
   });
 
+  it('keeps the number and its fraction in order in right to left', () => {
+    document.documentElement.dir = 'rtl';
+    try {
+      renderCard({});
+      const card = screen.getByRole('group', { name: 'Requests' });
+      const number = card.querySelector('.cds-chart-card__number')!;
+      expect(number.getAttribute('dir')).toBe('ltr');
+      // The whole part first, then the fraction, inside the one run.
+      expect(
+        [...number.children].map((el) => el.className.split('__')[1])
+      ).toEqual(['value', 'fraction']);
+      // The unit stays outside it, so it follows the page.
+      expect(number.querySelector('.cds-chart-card__unit')).toBeNull();
+    } finally {
+      document.documentElement.removeAttribute('dir');
+    }
+  });
+
   it('names its overflow menu', () => {
     renderCard({
       overflowActions: [{ id: 'export', itemText: 'Export data' }],

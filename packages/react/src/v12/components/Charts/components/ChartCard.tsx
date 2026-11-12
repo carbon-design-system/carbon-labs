@@ -243,14 +243,17 @@ function MetricRow({
       <span className="cds-chart-card__spoken">{spoken}</span>
       {text ? (
         <>
-          <span className="cds-chart-card__value" aria-hidden="true">
-            <RollText text={text.whole} order={metric!.value} />
-          </span>
-          {text.fraction ? (
-            <span className="cds-chart-card__fraction" aria-hidden="true">
-              <RollText text={text.fraction} order={metric!.value} />
+          {/* One number: its parts keep their order in right to left. */}
+          <span className="cds-chart-card__number" dir="ltr">
+            <span className="cds-chart-card__value" aria-hidden="true">
+              <RollText text={text.whole} order={metric!.value} />
             </span>
-          ) : null}
+            {text.fraction ? (
+              <span className="cds-chart-card__fraction" aria-hidden="true">
+                <RollText text={text.fraction} order={metric!.value} />
+              </span>
+            ) : null}
+          </span>
           {metric?.unit ? (
             <span className="cds-chart-card__unit" aria-hidden="true">
               {metric.unit}

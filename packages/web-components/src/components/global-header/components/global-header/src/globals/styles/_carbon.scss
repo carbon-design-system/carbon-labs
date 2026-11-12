@@ -17,6 +17,7 @@ clabs-global-header-hybrid-ipaas {
   --clabs-global-header-background-color: var(--cds-background);
   --clabs-global-header-background-hover: var(--cds-background-hover);
   --clabs-global-header-text-color: var(--cds-text-primary);
+  --clabs-global-header-text-secondary: var(--cds-text-secondary);
   --clabs-global-header-icon-color: var(--cds-icon-primary);
   @include theme.theme(themes.$g100);
 }

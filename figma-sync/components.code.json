@@ -4924,117 +4924,6 @@
       "stateColors": []
     },
     {
-      "key": "v12/labs/split-button",
-      "id": "labs/split-button",
-      "kind": "component",
-      "status": "draft",
-      "figma": {
-        "status": "unmapped"
-      },
-      "title": "V12/SplitButton",
-      "stories": [
-        "v12-splitbutton--default",
-        "v12-splitbutton--looks",
-        "v12-splitbutton--sizes",
-        "v12-splitbutton--busy"
-      ],
-      "docs": "v12-splitbutton--overview",
-      "props": {
-        "kind": {
-          "figma": "VARIANT",
-          "values": [
-            "primary",
-            "secondary"
-          ],
-          "surface": true
-        },
-        "variant": {
-          "figma": "VARIANT",
-          "values": [
-            "filled",
-            "outlined",
-            "tonal"
-          ],
-          "surface": true
-        },
-        "size": {
-          "figma": "VARIANT",
-          "values": [
-            "xs",
-            "sm",
-            "md",
-            "lg"
-          ],
-          "surface": true
-        },
-        "corners": {
-          "figma": "VARIANT",
-          "values": [
-            "rounded",
-            "full",
-            "square"
-          ],
-          "surface": true
-        },
-        "menuAlignment": {
-          "figma": "VARIANT",
-          "values": [
-            "top-start",
-            "top-end",
-            "bottom-start",
-            "bottom-end"
-          ]
-        },
-        "children": {
-          "figma": "SLOT"
-        },
-        "label": {
-          "figma": "TEXT"
-        },
-        "disabled": {
-          "figma": "BOOLEAN",
-          "surface": true
-        },
-        "busy": {
-          "figma": "BOOLEAN"
-        }
-      },
-      "notMapped": [
-        "menuTarget",
-        "motion",
-        "timeScale"
-      ],
-      "state": [
-        "rest",
-        "hover",
-        "press",
-        "focus",
-        "open",
-        "disabled",
-        "busy"
-      ],
-      "motion": [
-        "hover",
-        "press-and-release",
-        "chevron",
-        "menu",
-        "busy",
-        "focus"
-      ],
-      "reduced": {
-        "hover": "at-once",
-        "press-and-release": "at-once",
-        "chevron": "at-once",
-        "menu": "at-once",
-        "busy": "at-once"
-      },
-      "departures": [
-        "proposal: api: button-axes",
-        "proposal: api: variant-prop"
-      ],
-      "stateColors": []
-    },
-    {
       "key": "v12/labs/system-message",
       "id": "labs/system-message",
       "kind": "component",
@@ -5307,6 +5196,10 @@
         "v12-menu--with-menu-button",
         "v12-menu--with-overflow-menu",
         "v12-menu--corners",
+        "v12-menu--with-combo-button",
+        "v12-menu--combo-button-looks",
+        "v12-menu--combo-button-sizes",
+        "v12-menu--combo-button-busy",
         "v12-menu--submenu",
         "v12-menu--selectable",
         "v12-menu--groups-and-dividers",
@@ -5375,6 +5268,14 @@
         "children": {
           "figma": "SLOT"
         },
+        "kind": {
+          "figma": "VARIANT",
+          "values": [
+            "primary",
+            "secondary"
+          ],
+          "surface": true
+        },
         "label": {
           "figma": "TEXT"
         },
@@ -5385,6 +5286,13 @@
           "figma": "BOOLEAN"
         },
         "exitFade": {
+          "figma": "BOOLEAN"
+        },
+        "disabled": {
+          "figma": "BOOLEAN",
+          "surface": true
+        },
+        "busy": {
           "figma": "BOOLEAN"
         }
       },
@@ -5402,7 +5310,9 @@
       "state": [
         "closed",
         "open",
-        "loading"
+        "loading",
+        "disabled",
+        "busy"
       ],
       "motion": [
         "open",
@@ -5413,7 +5323,12 @@
         "danger",
         "press",
         "submenu",
-        "chevron"
+        "chevron",
+        "tooltip",
+        "hover",
+        "press-and-release",
+        "busy",
+        "focus"
       ],
       "reduced": {
         "open": "at-once",
@@ -5421,10 +5336,16 @@
         "fade": "at-once",
         "close": "at-once",
         "highlight": "shorter-clock",
-        "submenu": "at-once"
+        "submenu": "at-once",
+        "chevron": "at-once",
+        "tooltip": "at-once",
+        "hover": "at-once",
+        "press-and-release": "at-once",
+        "busy": "at-once"
       },
       "departures": [
         "explore: floating-hairline",
+        "proposal: api: button-axes",
         "proposal: api: frame-prop",
         "proposal: api: variant-prop"
       ],

@@ -717,10 +717,6 @@
           "props": ["variant"]
         },
         {
-          "in": "SplitButton",
-          "props": ["variant"]
-        },
-        {
           "in": "StatusIndicator",
           "props": ["variant"]
         },
@@ -758,7 +754,7 @@
           "props": ["kind"]
         },
         {
-          "in": "SplitButton",
+          "in": "packages/react/src/v12/components/Menu/components/ComboButton.tsx",
           "props": ["kind"]
         },
         {

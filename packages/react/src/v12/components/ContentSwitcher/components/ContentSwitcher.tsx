@@ -34,7 +34,6 @@ import {
   resolveSelectionStyle,
   sameNode,
   rolloverItems,
-  rovingKey,
   useIconPixelSnap,
   useItemRollover,
   useLandingHold,
@@ -42,6 +41,9 @@ import {
   useSelectedWeight,
   useSelectionEngine,
   useSelectionGesture,
+  useSelectionList,
+  type SelectionItemProps,
+  type SelectionItemState,
   type SelectionMotion,
   type LandingHold,
   type SelectionStyleProps,
@@ -69,7 +71,9 @@ import { isComposing } from '@carbon-labs/react-util';
  * `selectedIndex`, `activation` ('automatic' | 'manual'), `size`,
  * `lowContrast`, `onChange({ index, name, text, key })`, disabled switches,
  * icon-only switches with a tooltip, `role="tablist"` / `role="tab"` with a
- * roving tab stop, and ← / → that wrap.
+ * roving tab stop (the kit's `useSelectionList`), and ← / → that wrap and
+ * follow the reading direction. A switch takes an `id` and the
+ * `aria-controls` of the panel it shows, as v11's passes them on.
  *
  * The kit adds:
  *
@@ -96,7 +100,8 @@ import { isComposing } from '@carbon-labs/react-util';
  *   keyboard    Home / End; arrows skip disabled switches
  *   size        `xs` (24px) beside v11's sm / md / lg; `fit="fill"` for v11's
  *               equal widths, `hug` (default) to size by label
- *   panels      `SwitchPanels`: the content swap, travelling with the selector
+ *   panels      the kit's `SelectionPanels`: the content swap, traveling with
+ *               the selector; each switch's `aria-controls` names its panel
  *   loading     `loading`: the switches are loading — placeholder switches
  *               in the switch's own box, the label a bar (`skeletonCount`,
  *               default the switches on screen, else 3; `skeletonLabels`;
@@ -104,9 +109,6 @@ import { isComposing } from '@carbon-labs/react-util';
  *               taken in order as one reflow along x (the kit's
  *               `useSelectionLoading`, the loading standard's structure tier)
  * ========================================================================== */
-
-export { SelectionPanels as SwitchPanels } from '@carbon-labs/react-selection-kit';
-export type { SelectionPanelsProps as SwitchPanelsProps } from '@carbon-labs/react-selection-kit';
 
 export interface SwitchEventHandlersParams {
   index?: number;
@@ -131,9 +133,13 @@ export interface SwitchProps {
   disabledReason?: string;
   children?: ReactNode;
   className?: string;
+  /** The switch's id: a panel's `aria-labelledby` names it. */
+  id?: string;
+  /** The id of the panel this switch shows. */
+  'aria-controls'?: string;
 }
 
-/** A labelled switch. Read by `ContentSwitcher`; renders nothing on its own. */
+/** A labeled switch. Read by `ContentSwitcher`; renders nothing on its own. */
 export function Switch(_props: SwitchProps): null {
   return null;
 }
@@ -153,6 +159,10 @@ export interface IconSwitchProps {
   className?: string;
   /** Where the tooltip sits. Default `top` (v11's IconButton). */
   align?: 'top' | 'bottom';
+  /** The switch's id: a panel's `aria-labelledby` names it. */
+  id?: string;
+  /** The id of the panel this switch shows. */
+  'aria-controls'?: string;
 }
 
 /** An icon-only switch with a tooltip. Read by `ContentSwitcher`; renders nothing on its own. */
@@ -204,6 +214,8 @@ interface Item {
   content: ReactNode;
   className?: string;
   align: 'top' | 'bottom';
+  id?: string;
+  controls?: string;
 }
 
 function readItems(children: ReactNode): Item[] {
@@ -228,6 +240,8 @@ function readItems(children: ReactNode): Item[] {
         content,
         className: p.className,
         align: p.align ?? 'top',
+        id: p.id,
+        controls: p['aria-controls'],
       });
     } else if (isComponentType(child.type, Switch)) {
       const p = child.props as SwitchProps;
@@ -242,6 +256,8 @@ function readItems(children: ReactNode): Item[] {
         content: p.children ?? p.text,
         className: p.className,
         align: 'top',
+        id: p.id,
+        controls: p['aria-controls'],
       });
     }
   });
@@ -254,6 +270,10 @@ interface SwitchItemProps {
   it: Item;
   index: number;
   selected: boolean;
+  /** The list's one tab stop. */
+  tabStop: boolean;
+  /** Stable: the list model's attributes for a switch. */
+  itemProps: (index: number, state: SelectionItemState) => SelectionItemProps;
   /** Loading: the placeholder key the switch took over, and its takeover number. */
   entryKey?: string;
   took?: number;
@@ -277,6 +297,8 @@ const SwitchItem = memo(function SwitchItem({
   it,
   index: i,
   selected: isSel,
+  tabStop,
+  itemProps,
   entryKey,
   took,
   takenLabel,
@@ -304,10 +326,13 @@ const SwitchItem = memo(function SwitchItem({
         reason.anchorProps.ref?.(el);
       }}
       type="button"
-      role="tab"
-      aria-selected={isSel}
+      {...itemProps(i, {
+        selected: isSel,
+        tabStop,
+        id: it.id,
+        controls: it.controls,
+      })}
       aria-label={it.kind === 'icon' ? it.text : undefined}
-      tabIndex={isSel ? 0 : -1}
       disabled={it.disabled && !reason.active}
       aria-disabled={reason.controlProps['aria-disabled']}
       aria-describedby={reason.describedBy()}
@@ -315,7 +340,6 @@ const SwitchItem = memo(function SwitchItem({
       onPointerLeave={reason.anchorProps.onPointerLeave}
       onFocus={reason.controlProps.onFocus}
       onBlur={reason.controlProps.onBlur}
-      data-index={i}
       // The whole switch is its icon's hover frame: hovering (or focusing)
       // anywhere on it plays a motion icon.
       {...(it.kind === 'icon' || it.Icon
@@ -365,6 +389,8 @@ const sameItem = (a: Item, b: Item) =>
     a.reason === b.reason &&
     a.className === b.className &&
     a.align === b.align &&
+    a.id === b.id &&
+    a.controls === b.controls &&
     a.Icon === b.Icon &&
     sameNode(a.content, b.content));
 
@@ -372,6 +398,8 @@ function sameSwitch(a: SwitchItemProps, b: SwitchItemProps): boolean {
   return (
     a.index === b.index &&
     a.selected === b.selected &&
+    a.tabStop === b.tabStop &&
+    a.itemProps === b.itemProps &&
     a.entryKey === b.entryKey &&
     a.took === b.took &&
     a.takenLabel === b.takenLabel &&
@@ -560,23 +588,25 @@ export function ContentSwitcher({
 
   /* ── keyboard ────────────────────────────────────────────────────────── */
 
+  // The tablist's contract, its tab stop and its keys (right to left included).
+  const list = useSelectionList({
+    role: 'tablist',
+    selected,
+    count: items.length,
+    // A switch that says why it's off stays in the arrow keys' path.
+    isDisabled: (i) => !!items[i]?.disabled && !items[i]?.reason,
+    activation,
+    focus: (i) => itemRefs.current[i]?.focus(),
+    // Its focus only just arrived: only a resting pointer's hover is held.
+    select: (i, key) => commit(i, key, 'hover'),
+  });
+
   const onKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>) => {
     const btn = (e.target as Element).closest<HTMLButtonElement>(ITEM);
     if (!btn) return;
     if (e.key === 'Escape' && !isComposing(e))
       return tipRef.current?.hide(true);
-    const next = rovingKey(e.key, Number(btn.dataset.index), {
-      orientation: 'horizontal',
-      count: itemsRef.current.length,
-      // A switch that says why it's off stays in the arrow keys' path.
-      isDisabled: (i) =>
-        !!itemsRef.current[i]?.disabled && !itemsRef.current[i]?.reason,
-    });
-    if (next == null) return;
-    e.preventDefault();
-    itemRefs.current[next]?.focus();
-    // Its focus only just arrived: only a resting pointer's hover is held.
-    if (activation !== 'manual') commit(next, e.key, 'hover');
+    list.onKeyDown(e, Number(btn.dataset.index));
   };
 
   /* ── the tooltip (icon switches) ─────────────────────────────────────── */
@@ -667,7 +697,7 @@ export function ContentSwitcher({
             }
           : rest.style
       }
-      role="tablist"
+      {...list.listProps}
       aria-busy={load.busy || undefined}
       onPointerDown={(e) => {
         grabbed.current = !!(e.target as Element).closest(
@@ -694,6 +724,8 @@ export function ContentSwitcher({
             it={it}
             index={i}
             selected={i === selected}
+            tabStop={i === list.tabStop}
+            itemProps={list.itemProps}
             entryKey={entry?.key}
             took={took}
             takenLabel={took !== undefined ? load.labelFor(i) : undefined}

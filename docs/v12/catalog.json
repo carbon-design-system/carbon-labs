@@ -4808,6 +4808,10 @@
               ],
               "description": "Where the tooltip sits. Default `top` (v11's IconButton)."
             },
+            "aria-controls": {
+              "type": "string",
+              "description": "The id of the panel this switch shows."
+            },
             "children": {
               "$ref": "#/$defs/node",
               "description": "The icon — a motion icon plays on the switch's hover. Drawn at the switcher's icon size."
@@ -4818,6 +4822,10 @@
             "disabledReason": {
               "type": "string",
               "description": "Why it's disabled: the arrow keys still reach it, and it shows this in a tooltip."
+            },
+            "id": {
+              "type": "string",
+              "description": "The switch's id: a panel's `aria-labelledby` names it."
             },
             "name": {
               "anyOf": [
@@ -4843,6 +4851,10 @@
           "name": "Switch",
           "required": [],
           "props": {
+            "aria-controls": {
+              "type": "string",
+              "description": "The id of the panel this switch shows."
+            },
             "children": {
               "$ref": "#/$defs/node"
             },
@@ -4852,6 +4864,10 @@
             "disabledReason": {
               "type": "string",
               "description": "Why it's disabled: the arrow keys still reach it, and it shows this in a tooltip."
+            },
+            "id": {
+              "type": "string",
+              "description": "The switch's id: a panel's `aria-labelledby` names it."
             },
             "name": {
               "anyOf": [
@@ -4871,56 +4887,6 @@
             "text": {
               "type": "string",
               "description": "The label. `children` wins when both are given (as in v11)."
-            }
-          }
-        },
-        {
-          "name": "SwitchPanels",
-          "required": [
-            "children",
-            "selectedIndex"
-          ],
-          "props": {
-            "axis": {
-              "enum": [
-                "x",
-                "y"
-              ],
-              "description": "The list's axis: the content swaps along it. Default `x`."
-            },
-            "children": {
-              "$ref": "#/$defs/node",
-              "description": "One child per switch."
-            },
-            "distance": {
-              "type": "number",
-              "description": "How far each piece travels, px. Default the content swap's (`CONTENT_SWAP.distance`, sm 8px)."
-            },
-            "fit": {
-              "enum": [
-                "content",
-                "largest"
-              ],
-              "description": "`content` (default): the container resizes to each panel. `largest`: it holds the largest panel's size."
-            },
-            "panelProps": {
-              "$ref": "#/$defs/event",
-              "description": "Extra attributes for each panel's wrapper — an id, `aria-labelledby`, a"
-            },
-            "selectedIndex": {
-              "type": "number",
-              "description": "The panel to show — the switcher's selected index."
-            },
-            "timeScale": {
-              "type": "number",
-              "description": "Multiplies the durations (slow motion)."
-            },
-            "travel": {
-              "enum": [
-                "against",
-                "with"
-              ],
-              "description": "Which way the content travels, relative to the selection's move on screen."
             }
           }
         }
@@ -11635,7 +11601,9 @@
         "SurfaceShadowOption",
         "anchorInset",
         "attachFloatingCastShadow",
+        "chain",
         "cubicBezier",
+        "mergeRefs",
         "originCause",
         "placeAtPoint",
         "placeBesideRow",
@@ -11647,9 +11615,234 @@
         "toEasing",
         "useMenuTrigger",
         "usePrefersReducedMotion",
-        "useSnapSurface"
+        "useSnapSurface",
+        "useTooltipTrigger"
       ],
       "components": [
+        {
+          "name": "ComboButton",
+          "required": [
+            "children",
+            "label"
+          ],
+          "props": {
+            "aria-describedby": {
+              "type": "string",
+              "description": "Identifies the element (or elements) that describes the object."
+            },
+            "aria-label": {
+              "type": "string",
+              "description": "Defines a string value that labels the current element."
+            },
+            "aria-labelledby": {
+              "type": "string",
+              "description": "Identifies the element (or elements) that labels the current element."
+            },
+            "busy": {
+              "type": "boolean",
+              "description": "The action is running: its spinner, no presses, the chevron disabled."
+            },
+            "children": {
+              "$ref": "#/$defs/node",
+              "description": "MenuItems: the related actions (v11)."
+            },
+            "corners": {
+              "enum": [
+                "full",
+                "rounded",
+                "square"
+              ],
+              "description": "`rounded` (default): 8px corners and rows at a field's inset. `full`: a"
+            },
+            "disabled": {
+              "type": "boolean"
+            },
+            "id": {
+              "type": "string"
+            },
+            "kind": {
+              "enum": [
+                "primary",
+                "secondary"
+              ],
+              "description": "The role: `primary` (default) or `secondary`."
+            },
+            "label": {
+              "type": "string",
+              "description": "The primary action's label (v11)."
+            },
+            "loading": {
+              "type": "boolean",
+              "description": "The options are loading: placeholder rows where they'll be (the loading standard's structure tier)."
+            },
+            "menuAlignment": {
+              "enum": [
+                "bottom",
+                "bottom-end",
+                "bottom-start",
+                "top",
+                "top-end",
+                "top-start"
+              ],
+              "description": "Where the menu opens, against the whole shell (never narrower than it). Default `bottom-start`."
+            },
+            "menuSize": {
+              "enum": [
+                "lg",
+                "md",
+                "sm",
+                "xs"
+              ],
+              "description": "The menu's own size, when it differs from the trigger's."
+            },
+            "menuTarget": {
+              "type": "object",
+              "unchecked": "Element",
+              "description": "Where the menu is portalled."
+            },
+            "menuVariant": {
+              "enum": [
+                "hero",
+                "inverse",
+                "outlined",
+                "tonal"
+              ],
+              "description": "The menu's treatment (Menu's `variant`): `inverse` (default), `tonal`, `outlined`."
+            },
+            "motion": {
+              "type": "object",
+              "unchecked": "Partial<MenuMotion>"
+            },
+            "onBlur": {
+              "$ref": "#/$defs/event"
+            },
+            "onChange": {
+              "$ref": "#/$defs/event"
+            },
+            "onClick": {
+              "$ref": "#/$defs/event",
+              "description": "The primary action (v11)."
+            },
+            "onClose": {
+              "$ref": "#/$defs/event",
+              "description": "The menu closed."
+            },
+            "onFocus": {
+              "$ref": "#/$defs/event"
+            },
+            "onKeyDown": {
+              "$ref": "#/$defs/event"
+            },
+            "onMove": {
+              "$ref": "#/$defs/event"
+            },
+            "onOpen": {
+              "$ref": "#/$defs/event",
+              "description": "The menu opened."
+            },
+            "onSubmit": {
+              "$ref": "#/$defs/event"
+            },
+            "openFrom": {
+              "enum": [
+                "pointer",
+                "trigger"
+              ],
+              "description": "The menu's snap starts at the press point (default) or the trigger's center."
+            },
+            "outline": {
+              "type": "boolean",
+              "description": "The surface's hairline, `--cds-surface-divider`. Default true; false for a surface set off by its layer."
+            },
+            "shadow": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "const": "resting"
+                },
+                {
+                  "const": "raised"
+                },
+                {
+                  "const": "floating"
+                }
+              ],
+              "description": "The cast shadow under the surface and its submenus: `true` the `floating` elevation, or name one; `false` none. Default: the kit's (`KitDefaults shadow`, none)."
+            },
+            "size": {
+              "enum": [
+                "lg",
+                "md",
+                "sm",
+                "xs"
+              ],
+              "description": "xs 24, sm 32, md 40, lg 48 (default, v11's). Also the menu's, but an xs shell opens an sm menu."
+            },
+            "skeletonCount": {
+              "type": "number",
+              "description": "How many placeholder rows. Default the rows on screen when it loads again, else the component's typical count."
+            },
+            "skeletonIcon": {
+              "type": "boolean",
+              "description": "The rows will have a leading icon: its slot, under the label's one bar (an icon-only row: a block)."
+            },
+            "skeletonLabels": {
+              "type": "array",
+              "unchecked": "readonly string[]",
+              "description": "The expected labels, for the placeholders' widths in the rows' own type (cycled). Default typical labels."
+            },
+            "timeScale": {
+              "type": "number",
+              "description": "Slow motion: multiplies the durations. Default 1. Wins over `motion.timeScale`."
+            },
+            "tooltipAlignment": {
+              "enum": [
+                "bottom",
+                "bottom-end",
+                "bottom-left",
+                "bottom-right",
+                "bottom-start",
+                "left",
+                "left-bottom",
+                "left-end",
+                "left-start",
+                "left-top",
+                "right",
+                "right-bottom",
+                "right-end",
+                "right-start",
+                "right-top",
+                "top",
+                "top-end",
+                "top-left",
+                "top-right",
+                "top-start"
+              ],
+              "description": "Where the trigger's tooltip shows. Default `top`."
+            },
+            "tooltipAutoAlign": {
+              "type": "boolean",
+              "description": "Flip the tooltip to stay in view."
+            },
+            "translateWithId": {
+              "$ref": "#/$defs/event",
+              "description": "v11's translation hook: the chevron's tooltip and name, and the menu's label."
+            },
+            "variant": {
+              "enum": [
+                "filled",
+                "outlined",
+                "tonal"
+              ],
+              "description": "The treatment: `filled` (default), the role's fill; `outlined` (v11's tertiary) or `tonal` (the quieter look, the shell's standard surface)."
+            }
+          }
+        },
         {
           "name": "Menu",
           "required": [
@@ -11884,7 +12077,7 @@
                 "top-end",
                 "top-start"
               ],
-              "description": "Default `bottom-start`."
+              "description": "Where the menu opens against the trigger. Default `bottom-start`."
             },
             "menuSize": {
               "enum": [
@@ -11893,7 +12086,7 @@
                 "sm",
                 "xs"
               ],
-              "description": "The menu's own size, when it differs from the button's."
+              "description": "The menu's own size, when it differs from the trigger's."
             },
             "menuTarget": {
               "type": "object",
@@ -11919,11 +12112,19 @@
             "onChange": {
               "$ref": "#/$defs/event"
             },
+            "onClose": {
+              "$ref": "#/$defs/event",
+              "description": "The menu closed."
+            },
             "onFocus": {
               "$ref": "#/$defs/event"
             },
             "onMove": {
               "$ref": "#/$defs/event"
+            },
+            "onOpen": {
+              "$ref": "#/$defs/event",
+              "description": "The menu opened."
             },
             "onSubmit": {
               "$ref": "#/$defs/event"
@@ -11933,7 +12134,7 @@
                 "pointer",
                 "trigger"
               ],
-              "description": "The snap starts at the press point (default) or the button's center."
+              "description": "The menu's snap starts at the press point (default) or the trigger's center."
             },
             "outline": {
               "type": "boolean",
@@ -12194,7 +12395,7 @@
             },
             "label": {
               "type": "string",
-              "description": "The trigger's accessible name and the menu's. Default `Options` (v11)."
+              "description": "The trigger's tooltip and accessible name, and the menu's. Default `Options` (v11)."
             },
             "loading": {
               "type": "boolean",
@@ -12220,7 +12421,8 @@
             },
             "menuTarget": {
               "type": "object",
-              "unchecked": "Element"
+              "unchecked": "Element",
+              "description": "Where the menu is portalled."
             },
             "motion": {
               "type": "object",
@@ -12233,7 +12435,8 @@
               "$ref": "#/$defs/event"
             },
             "onClose": {
-              "$ref": "#/$defs/event"
+              "$ref": "#/$defs/event",
+              "description": "The menu closed."
             },
             "onFocus": {
               "$ref": "#/$defs/event"
@@ -12242,7 +12445,8 @@
               "$ref": "#/$defs/event"
             },
             "onOpen": {
-              "$ref": "#/$defs/event"
+              "$ref": "#/$defs/event",
+              "description": "The menu opened."
             },
             "onSubmit": {
               "$ref": "#/$defs/event"
@@ -12252,7 +12456,7 @@
                 "pointer",
                 "trigger"
               ],
-              "description": "The snap starts at the press point (default) or the trigger's center."
+              "description": "The menu's snap starts at the press point (default) or the trigger's center."
             },
             "outline": {
               "type": "boolean",
@@ -12308,6 +12512,35 @@
               "type": "number",
               "description": "Slow motion: multiplies the durations. Default 1. Wins over `motion.timeScale`."
             },
+            "tooltipAlignment": {
+              "enum": [
+                "bottom",
+                "bottom-end",
+                "bottom-left",
+                "bottom-right",
+                "bottom-start",
+                "left",
+                "left-bottom",
+                "left-end",
+                "left-start",
+                "left-top",
+                "right",
+                "right-bottom",
+                "right-end",
+                "right-start",
+                "right-top",
+                "top",
+                "top-end",
+                "top-left",
+                "top-right",
+                "top-start"
+              ],
+              "description": "Where the trigger's tooltip shows. Default `top`."
+            },
+            "tooltipAutoAlign": {
+              "type": "boolean",
+              "description": "Flip the tooltip to stay in view."
+            },
             "variant": {
               "enum": [
                 "hero",
@@ -12315,7 +12548,7 @@
                 "outlined",
                 "tonal"
               ],
-              "description": "The highlight's look: inverse (default), tonal, outlined, or hero: the"
+              "description": "The menu's treatment (Menu's `variant`): `inverse` (default), `tonal`, `outlined`, `hero`."
             }
           }
         }
@@ -25480,191 +25713,6 @@
         "snapEaseCss"
       ],
       "components": []
-    },
-    {
-      "name": "@carbon-labs/react-split-button",
-      "folder": "SplitButton",
-      "labsStatus": "draft",
-      "motion": [
-        "SelectionMoveInfo",
-        "useMenuTrigger"
-      ],
-      "components": [
-        {
-          "name": "SplitButton",
-          "required": [
-            "label"
-          ],
-          "props": {
-            "aria-describedby": {
-              "type": "string",
-              "description": "Identifies the element (or elements) that describes the object."
-            },
-            "aria-label": {
-              "type": "string",
-              "description": "Defines a string value that labels the current element."
-            },
-            "aria-labelledby": {
-              "type": "string",
-              "description": "Identifies the element (or elements) that labels the current element."
-            },
-            "busy": {
-              "type": "boolean",
-              "description": "The action is running: its spinner, no presses, the chevron disabled."
-            },
-            "children": {
-              "$ref": "#/$defs/node",
-              "description": "MenuItems: the related actions (v11)."
-            },
-            "corners": {
-              "enum": [
-                "full",
-                "rounded",
-                "square"
-              ],
-              "description": "`rounded` (default): 8px corners and rows at a field's inset. `full`: a"
-            },
-            "disabled": {
-              "type": "boolean",
-              "description": "Both cells (v11)."
-            },
-            "id": {
-              "type": "string"
-            },
-            "kind": {
-              "enum": [
-                "primary",
-                "secondary"
-              ],
-              "description": "The role: `primary` (default) or `secondary`."
-            },
-            "label": {
-              "type": "string",
-              "description": "The primary action's label (v11)."
-            },
-            "menuAlignment": {
-              "enum": [
-                "bottom",
-                "bottom-end",
-                "bottom-start",
-                "top",
-                "top-end",
-                "top-start"
-              ],
-              "description": "Where the menu opens, against the whole shell (never narrower than it). Default `bottom-start`."
-            },
-            "menuSize": {
-              "enum": [
-                "lg",
-                "md",
-                "sm",
-                "xs"
-              ],
-              "description": "The menu's own size, when it differs from the shell's."
-            },
-            "menuTarget": {
-              "type": "object",
-              "unchecked": "Element",
-              "description": "Where the menu is portalled."
-            },
-            "menuVariant": {
-              "enum": [
-                "hero",
-                "inverse",
-                "outlined",
-                "tonal"
-              ],
-              "description": "The menu's treatment (Menu's `variant`): `inverse` (default), `tonal`, `outlined`."
-            },
-            "motion": {
-              "type": "object",
-              "unchecked": "Partial<MenuMotion>"
-            },
-            "onBlur": {
-              "$ref": "#/$defs/event"
-            },
-            "onChange": {
-              "$ref": "#/$defs/event"
-            },
-            "onClick": {
-              "$ref": "#/$defs/event",
-              "description": "The primary action (v11)."
-            },
-            "onFocus": {
-              "$ref": "#/$defs/event"
-            },
-            "onKeyDown": {
-              "$ref": "#/$defs/event"
-            },
-            "onMove": {
-              "$ref": "#/$defs/event"
-            },
-            "onSubmit": {
-              "$ref": "#/$defs/event"
-            },
-            "openFrom": {
-              "enum": [
-                "pointer",
-                "trigger"
-              ],
-              "description": "The menu's snap starts at the press point (default) or the chevron's center."
-            },
-            "outline": {
-              "type": "boolean",
-              "description": "The surface's hairline, `--cds-surface-divider`. Default true; false for a surface set off by its layer."
-            },
-            "shadow": {
-              "anyOf": [
-                {
-                  "type": "boolean"
-                },
-                {
-                  "type": "boolean"
-                },
-                {
-                  "const": "resting"
-                },
-                {
-                  "const": "raised"
-                },
-                {
-                  "const": "floating"
-                }
-              ],
-              "description": "The cast shadow under the surface and its submenus: `true` the `floating` elevation, or name one; `false` none. Default: the kit's (`KitDefaults shadow`, none)."
-            },
-            "size": {
-              "enum": [
-                "lg",
-                "md",
-                "sm",
-                "xs"
-              ],
-              "description": "xs 24, sm 32, md 40, lg 48 (default, v11's). Also the menu's, but an xs shell opens an sm menu."
-            },
-            "timeScale": {
-              "type": "number",
-              "description": "Slow motion: multiplies the durations. Default 1. Wins over `motion.timeScale`."
-            },
-            "tooltipAlignment": {
-              "type": "string",
-              "description": "v11's trigger tooltip: accepted; the trigger is named by its label instead."
-            },
-            "translateWithId": {
-              "$ref": "#/$defs/event",
-              "description": "v11's translation hook: the trigger's and the menu's label."
-            },
-            "variant": {
-              "enum": [
-                "filled",
-                "outlined",
-                "tonal"
-              ],
-              "description": "The treatment: `filled` (default), the role's fill; `outlined` (v11's tertiary) or `tonal` (the quieter look, the shell's standard surface)."
-            }
-          }
-        }
-      ]
     },
     {
       "name": "@carbon-labs/react-status-indicator",

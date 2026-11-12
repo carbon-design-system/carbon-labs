@@ -14,7 +14,7 @@
 @use '@carbon-labs/react-selection-kit/scss/plex-var';
 
 /* The button shell — `shell.ts`. One button shape divided into cells, rounded
- * only at its outer corners: SplitButton, MenuButton and ButtonGrid sit on it.
+ * only at its outer corners: ComboButton, MenuButton and ButtonGrid sit on it.
  *
  * Its seams follow the kit's one rule for a control divided into segments,
  * at the outline's 1px
@@ -53,7 +53,7 @@
   --shell-seam-pad: min(var(--shell-pill), 16px);
   /* Between a label and its chevron: the Button pill's gap (8px at xs and sm, 12px at md and lg). */
   --shell-icon-gap: 8px;
-  /* The chevron cell's insets (SplitButton): on a pill the icon sits where the Button pill's icon
+  /* The chevron cell's insets (ComboButton): on a pill the icon sits where the Button pill's icon
      does, its far edge the pill's inset from the shell's end, the pill's gap from the seam;
      centred in a square cell otherwise, below. */
   --shell-chev-start: var(--shell-icon-gap);
@@ -334,7 +334,7 @@
 
 /* ── the cells' roles ────────────────────────────────────────────────── */
 
-/* A label (SplitButton's action): the pill's inset at a rounded end, at most 16px at a seam. */
+/* A label (ComboButton's action): the pill's inset at a rounded end, at most 16px at a seam. */
 .cds-btn-shell .cds-btn-cell--label {
   padding-inline-end: calc(
     var(--shell-pill) + (var(--shell-seam-pad) - var(--shell-pill)) *
@@ -346,7 +346,7 @@
   );
 }
 
-/* The chevron (SplitButton's trigger): on a pill, the pill's gap from the seam and the pill's inset
+/* The chevron (ComboButton's trigger): on a pill, the pill's gap from the seam and the pill's inset
    to the end (xs 36, sm 40, md 48, lg 52 wide); square, as wide as the shell is tall, otherwise. */
 .cds-btn-shell .cds-btn-cell--chevron {
   padding-block: 0;
@@ -437,7 +437,7 @@
   }
 }
 
-/* Busy (SplitButton's action): the label kept for assistive tech, the kit's
+/* Busy (ComboButton's action): the label kept for assistive tech, the kit's
    Spinner in its place, so the width holds; no hover or press (aria-disabled).
    Out, then in: the label fades out before the spinner draws on, and back
    after it closes (useBusySwap's clocks, as the Button's). */

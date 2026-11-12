@@ -6,7 +6,7 @@
  */
 
 import { Button } from '@carbon-labs/react-button';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Checkbox } from '@carbon-labs/react-checkbox';
 import '@carbon-labs/react-selection-kit/scss/selection-kit.scss';
 import { useMenuTrigger } from '@carbon-labs/v12-motion';
@@ -22,6 +22,7 @@ import {
   TrashCan,
 } from '@carbon-labs/react-motion-icons';
 import {
+  ComboButton,
   Menu,
   MenuButton,
   MenuItem,
@@ -31,7 +32,7 @@ import {
   MenuItemSelectable,
   OverflowMenu,
 } from '../index';
-import type { MenuAlignment, MenuProps } from '../index';
+import type { ComboButtonProps, MenuAlignment, MenuProps } from '../index';
 import mdx from './Menu.mdx';
 
 const ALIGNMENTS: MenuAlignment[] = [
@@ -54,6 +55,7 @@ export default {
     MenuItemDivider,
     MenuButton,
     OverflowMenu,
+    ComboButton,
   },
   tags: ['alpha'],
   parameters: {
@@ -71,6 +73,11 @@ export default {
         'press',
         'submenu',
         'chevron',
+        'tooltip',
+        'hover',
+        'press-and-release',
+        'busy',
+        'focus',
       ],
       reduced: {
         open: 'at-once',
@@ -79,8 +86,13 @@ export default {
         close: 'at-once',
         highlight: 'shorter-clock',
         submenu: 'at-once',
+        chevron: 'at-once',
+        tooltip: 'at-once',
+        hover: 'at-once',
+        'press-and-release': 'at-once',
+        busy: 'at-once',
       },
-      states: ['closed', 'open', 'loading'],
+      states: ['closed', 'open', 'loading', 'disabled', 'busy'],
     },
   },
   argTypes: {
@@ -200,7 +212,7 @@ export const WithMenuButton = {
   ),
 };
 
-/** OverflowMenu: an icon button that opens a menu. `flipped` aligns the menu's end with the trigger's. */
+/** OverflowMenu: an icon button that opens a menu. Its label is its tooltip. `flipped` aligns the menu's end with the trigger's. */
 export const WithOverflowMenu = {
   render: () => (
     <div style={stage}>
@@ -243,6 +255,94 @@ export const Corners = {
       </MenuButton>
     </div>
   ),
+};
+
+/** ComboButton: a primary action, and a chevron that opens a menu of related actions. ↓, Enter or Space on the chevron open the menu on its first row, ↑ on its last. */
+export const WithComboButton = {
+  args: {
+    label: 'Save',
+    kind: 'primary',
+    variant: 'filled',
+    size: 'lg',
+    disabled: false,
+    busy: false,
+  },
+  argTypes: {
+    kind: { control: 'inline-radio', options: ['primary', 'secondary'] },
+    variant: {
+      control: 'inline-radio',
+      options: ['filled', 'outlined', 'tonal'],
+    },
+  },
+  render: (args: ComboButtonProps) => (
+    <div style={stage}>
+      <ComboButton {...args}>
+        <MenuItem label="Save as draft" />
+        <MenuItem label="Save and close" />
+        <MenuItem label="Save a copy" />
+      </ComboButton>
+    </div>
+  ),
+};
+
+/** ComboButton's looks: primary and secondary, filled, outlined and tonal. The seam between the cells follows the look. */
+export const ComboButtonLooks = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 8 }}>
+      {(['primary', 'secondary'] as const).map((kind) => (
+        <div key={kind} style={{ ...stage, padding: '16px 120px' }}>
+          {(['filled', 'outlined', 'tonal'] as const).map((variant) => (
+            <ComboButton
+              key={variant}
+              label="Save"
+              kind={kind}
+              variant={variant}
+              size="md">
+              <MenuItem label="Save as draft" />
+              <MenuItem label="Save and close" />
+            </ComboButton>
+          ))}
+        </div>
+      ))}
+    </div>
+  ),
+};
+
+/** ComboButton's sizes: xs 24, sm 32, md 40 and lg 48. An xs button opens an sm menu. */
+export const ComboButtonSizes = {
+  render: () => (
+    <div style={stage}>
+      {(['xs', 'sm', 'md', 'lg'] as const).map((size) => (
+        <ComboButton key={size} label="Save" size={size}>
+          <MenuItem label="Save as draft" />
+          <MenuItem label="Save and close" />
+        </ComboButton>
+      ))}
+    </div>
+  ),
+};
+
+/** Click Save: the action shows a spinner while it runs, and the chevron is disabled. */
+export const ComboButtonBusy = {
+  render: function ComboButtonBusyStory() {
+    const [busy, setBusy] = useState(false);
+    useEffect(() => {
+      if (!busy) {
+        return;
+      }
+      const t = window.setTimeout(() => setBusy(false), 1500);
+      return () => window.clearTimeout(t);
+    }, [busy]);
+    return (
+      <div style={stage}>
+        <ComboButton label="Save" busy={busy} onClick={() => setBusy(true)}>
+          <MenuItem label="Save as draft" />
+          <MenuItem label="Save and close" />
+          <MenuItem label="Save a copy" />
+        </ComboButton>
+      </div>
+    );
+  },
 };
 
 /** A MenuItem with MenuItems inside opens a submenu, one level deep: on hover, →, or Enter. ← and Escape go back. */

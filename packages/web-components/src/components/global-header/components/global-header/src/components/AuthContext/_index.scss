@@ -122,7 +122,7 @@
 .automation--header__popover__profile__header__email {
   @include type-style('label-01');
 
-  color: $gray-30;
+  color: var(--clabs-global-header-text-secondary);
 }
 
 .#{$automation-prefix}instance_details {
@@ -132,7 +132,7 @@
 .#{$automation-prefix}title-bar__label {
   @include type-style('label-01');
 
-  color: $gray-30;
+  color: var(--clabs-global-header-text-secondary);
   margin-block-end: $spacing-02;
 }
 

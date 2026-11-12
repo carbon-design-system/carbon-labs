@@ -411,7 +411,7 @@
    reduced motion). */
 /* Its quiet base is the button's own colour, faint, so it reads on every
    kind's fill (a grey token would muddy the primary's blue). Also the
-   SplitButton's action and the modal's busy button. */
+   ComboButton's action and the modal's busy button. */
 .cds-btn__spinner {
   --cds-spinner-base: color-mix(in srgb, currentColor 30%, transparent);
 }

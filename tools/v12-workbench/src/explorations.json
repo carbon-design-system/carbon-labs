@@ -379,7 +379,7 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/ContentSwitcher/components/ContentSwitcher.tsx",
-      "line": 181,
+      "line": 191,
       "text": "api: activation-prop — One keyboard word, `activation` (automatic or manual), on every selection list: the arrows select, or only move focus. TBD"
     }
   ],
@@ -832,21 +832,39 @@
   "V12/Menu": [
     {
       "kind": "proposal",
+      "file": "packages/react/src/v12/components/Menu/components/ComboButton.tsx",
+      "line": 121,
+      "text": "api: button-axes — Button splits the old kinds into `kind` (the role), `variant` (outlined, tonal) and `frame` (ghost, none), so each prop says one thing. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Menu/components/ComboButton.tsx",
+      "line": 124,
+      "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
+    },
+    {
+      "kind": "proposal",
       "file": "packages/react/src/v12/components/Menu/components/Menu.tsx",
-      "line": 484,
+      "line": 490,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Menu/components/MenuButton.tsx",
-      "line": 64,
+      "line": 50,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Menu/components/MenuButton.tsx",
-      "line": 67,
+      "line": 53,
       "text": "api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Menu/components/OverflowMenu.tsx",
+      "line": 49,
+      "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
       "kind": "explore",
@@ -1105,13 +1123,13 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/SelectList/components/SelectList.tsx",
-      "line": 152,
+      "line": 154,
       "text": "api: activation-prop — One keyboard word, `activation` (automatic or manual), on every selection list: the arrows select, or only move focus. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/SelectList/components/SelectList.tsx",
-      "line": 159,
+      "line": 161,
       "text": "api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD"
     }
   ],
@@ -1237,20 +1255,6 @@
       "file": "packages/react/src/v12/components/Slider/components/Slider.tsx",
       "line": 298,
       "text": "corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD"
-    }
-  ],
-  "V12/SplitButton": [
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/SplitButton/components/SplitButton.tsx",
-      "line": 122,
-      "text": "api: button-axes — Button splits the old kinds into `kind` (the role), `variant` (outlined, tonal) and `frame` (ghost, none), so each prop says one thing. TBD"
-    },
-    {
-      "kind": "proposal",
-      "file": "packages/react/src/v12/components/SplitButton/components/SplitButton.tsx",
-      "line": 125,
-      "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     }
   ],
   "V12/StatusIndicator": [
@@ -1385,13 +1389,13 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Tabs/components/Tabs.tsx",
-      "line": 186,
+      "line": 163,
       "text": "api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Tabs/components/TabsVertical.tsx",
-      "line": 174,
+      "line": 146,
       "text": "api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD"
     },
     {

@@ -21,7 +21,7 @@
  *
  * The seams follow the kit's rule for a divided control: the field has a hairline
  * outline, so its seams are that hairline cut through it, no gap
- * (`--hairline`), as the neutral SplitButton's; a field with no outline
+ * (`--hairline`), as the neutral ComboButton's; a field with no outline
  * (disabled: the fill alone) is cut by 2px knockouts (`--knockout`), as the
  * filled buttons are. */
 
@@ -142,7 +142,7 @@ $entrance: var(--cds-motion-easing-entrance-productive);
   }
 }
 
-/* Hairline: the neutral SplitButton's cut, in the field. The segments abut; each draws
+/* Hairline: the neutral ComboButton's cut, in the field. The segments abut; each draws
    the seam on its end and below sides where they lie on another segment, an inset line inside its
    own box (it meets the outline square), so the seam is one whole 1px line; there's no outline
    down a cut side. The seam is the field's own quiet inside line: one step past the fill toward

@@ -17,7 +17,7 @@
                   so the dark themes keep Carbon's colour.
 
    The Button, the icon-only Button (IconButton) and the button shell's
-   tertiary (SplitButton, MenuButton, ButtonGrid) read it. `danger--tertiary`
+   tertiary (ComboButton, MenuButton, ButtonGrid) read it. `danger--tertiary`
    stays red. Set on the theme scopes themselves, as `--cds-surface`
    (styles/_surface.scss), so the nearest theme wins. */
 

@@ -8,14 +8,15 @@
 import React, { useState, type SVGProps } from 'react';
 import '@carbon-labs/react-selection-kit/scss/selection-kit.scss';
 import { Checkbox } from '@carbon-labs/react-checkbox';
-import { ContentSwitcher, IconSwitch, Switch, SwitchPanels } from '../index';
+import { SelectionPanels } from '@carbon-labs/react-selection-kit';
+import { ContentSwitcher, IconSwitch, Switch } from '../index';
 import type { ContentSwitcherProps } from '../index';
 import mdx from './ContentSwitcher.mdx';
 
 export default {
   title: 'V12/ContentSwitcher',
   component: ContentSwitcher,
-  subcomponents: { Switch, IconSwitch, SwitchPanels },
+  subcomponents: { Switch, IconSwitch },
   tags: ['alpha'],
   parameters: {
     docs: {
@@ -210,10 +211,15 @@ const REPORTS = [
   { name: 'alerts', text: 'Alerts', body: 'No alerts in the last 30 days.' },
 ];
 
-/** Controlled, with `SwitchPanels`: the old panel goes, then the new one follows, the way the selector moved. */
+/**
+ * Controlled, with the kit's `SelectionPanels`: the old panel goes, then the
+ * new one follows, the way the selector moved. Each switch names its panel
+ * (`aria-controls`), and each panel its switch (`aria-labelledby`).
+ */
 export const Panels = {
   render: function PanelsStory() {
     const [selected, setSelected] = useState(0);
+    const id = (kind: string, name: string) => `report-${kind}-${name}`;
     return (
       <div style={{ display: 'grid', gap: 16, maxInlineSize: 480 }}>
         <ContentSwitcher
@@ -221,16 +227,27 @@ export const Panels = {
           selectedIndex={selected}
           onChange={({ index }) => index != null && setSelected(index)}>
           {REPORTS.map((r) => (
-            <Switch key={r.name} name={r.name} text={r.text} />
+            <Switch
+              key={r.name}
+              name={r.name}
+              text={r.text}
+              id={id('switch', r.name)}
+              aria-controls={id('panel', r.name)}
+            />
           ))}
         </ContentSwitcher>
-        <SwitchPanels selectedIndex={selected}>
+        <SelectionPanels
+          selectedIndex={selected}
+          panelProps={(i) => ({
+            id: id('panel', REPORTS[i].name),
+            'aria-labelledby': id('switch', REPORTS[i].name),
+          })}>
           {REPORTS.map((r) => (
             <p key={r.name} style={{ margin: 0 }}>
               {r.body}
             </p>
           ))}
-        </SwitchPanels>
+        </SelectionPanels>
         <p style={{ margin: 0 }}>Showing: {REPORTS[selected].text}</p>
       </div>
     );

@@ -35,11 +35,23 @@ describe('EasingGraph keys by direction', () => {
     expect(x1(onChange)).toBeCloseTo(0.19);
   });
 
-  it('moves a handle on with the left arrow, right to left', () => {
+  it('moves a handle on with the right arrow, right to left too: time runs left to right', () => {
     const { handle, onChange } = graph('rtl');
-    fireEvent.keyDown(handle, { key: 'ArrowLeft' });
-    expect(x1(onChange)).toBeCloseTo(0.21);
     fireEvent.keyDown(handle, { key: 'ArrowRight' });
+    expect(x1(onChange)).toBeCloseTo(0.21);
+    fireEvent.keyDown(handle, { key: 'ArrowLeft' });
     expect(x1(onChange)).toBeCloseTo(0.19);
+  });
+});
+
+describe('EasingGraph in right to left', () => {
+  it('keeps the plot and its handles left to right', () => {
+    const { handle } = graph('rtl');
+    const stage = handle.parentElement!;
+    expect(stage.getAttribute('dir')).toBe('ltr');
+    expect(stage.querySelector('svg')).not.toBeNull();
+    // From the left: x1 0.2 is 8 + 0.2 × 144 = 36.8 of 160.
+    expect(handle.style.left).toBe('23%');
+    expect(handle.style.insetInlineStart).toBe('');
   });
 });

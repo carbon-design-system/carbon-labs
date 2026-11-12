@@ -25,7 +25,8 @@ const leaveDelayMs = 300;
 
 interface Tip {
   label: string;
-  start: number;
+  /** From the group's left, in either direction. */
+  left: number;
   size: number;
 }
 
@@ -61,9 +62,10 @@ export function ActionGroup({ label, className, children }: ActionGroupProps) {
   useEffect(() => () => clearTimeout(timer.current), []);
 
   // Position written to the element: labs lint forbids a style prop.
+  // Physical: `offsetLeft` runs from the left in either direction.
   useLayoutEffect(() => {
     if (tipRef.current && tip) {
-      tipRef.current.style.insetInlineStart = `${tip.start}px`;
+      tipRef.current.style.left = `${tip.left}px`;
       tipRef.current.style.inlineSize = `${tip.size}px`;
     }
   }, [tip]);
@@ -71,7 +73,7 @@ export function ActionGroup({ label, className, children }: ActionGroupProps) {
   function tipFor(button: HTMLButtonElement): Tip | null {
     const name = button.getAttribute('aria-label');
     return name
-      ? { label: name, start: button.offsetLeft, size: button.offsetWidth }
+      ? { label: name, left: button.offsetLeft, size: button.offsetWidth }
       : null;
   }
 

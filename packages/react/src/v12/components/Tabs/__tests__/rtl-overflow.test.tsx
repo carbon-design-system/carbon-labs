@@ -96,3 +96,38 @@ describe('Tabs scroll buttons', () => {
     expect(press('next')).toBeLessThan(0);
   });
 });
+
+describe('Tabs scroll buttons’ props', () => {
+  // As v11's: `left` goes on the previous button, at the inline start, and
+  // `right` on the next, in either direction.
+  it.each(['ltr', 'rtl'] as const)(
+    '%s: left on previous, right on next',
+    (dir) => {
+      const { container } = render(
+        <div dir={dir}>
+          <Tabs>
+            <TabList
+              aria-label="Sections"
+              leftOverflowButtonProps={{ className: 'is-left' }}
+              rightOverflowButtonProps={{ className: 'is-right' }}>
+              <Tab>One</Tab>
+              <Tab>Two</Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>Panel one</TabPanel>
+              <TabPanel>Panel two</TabPanel>
+            </TabPanels>
+          </Tabs>
+        </div>
+      );
+      const prev = container.querySelector('.tabs__scroll--prev')!;
+      const next = container.querySelector('.tabs__scroll--next')!;
+      expect(prev.classList.contains('is-left')).toBe(true);
+      expect(next.classList.contains('is-right')).toBe(true);
+      // Named for the side it is on, as v11's are.
+      expect(prev.getAttribute('aria-label')).toBe(
+        dir === 'rtl' ? 'Scroll right' : 'Scroll left'
+      );
+    }
+  );
+});

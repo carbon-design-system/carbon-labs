@@ -167,25 +167,25 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
-      "line": 254,
+      "line": 255,
       "text": "token: chat-input-menu-hover — Carbon's menu hover is a neutral, not a step on the selected ladder. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
-      "line": 264,
+      "line": 265,
       "text": "token: chat-input-menu-selected — Carbon's Menu has no selected tint; the checkmark stays. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
-      "line": 269,
+      "line": 270,
       "text": "token: chat-input-menu-selected-text — the brand label solved on the selected tint. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
-      "line": 280,
+      "line": 281,
       "text": "token: chat-input-menu-active — Carbon's menu press is a neutral, not a step on the selected ladder. replaces: layer-active-01. TBD"
     }
   ],

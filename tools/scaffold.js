@@ -15,6 +15,11 @@ import {
   isSourceFile,
 } from './create/src/utils/license.js';
 import { parseOwners } from './create/src/utils/owners.js';
+import {
+  getComponentsDir,
+  getV12StorybookGroup,
+  validateLane,
+} from './create/src/utils/lane.js';
 
 const PACKAGE_DIR = {
   react: 'packages/react',
@@ -25,7 +30,8 @@ function readOptions(argv) {
   const options = {
     type: 'react',
     owners: [],
-    storybookGroup: 'Components',
+    storybookGroup: undefined,
+    v12: false,
   };
 
   for (let index = 0; index < argv.length; index++) {
@@ -44,8 +50,14 @@ function readOptions(argv) {
     } else if (arg === '--group') {
       options.storybookGroup = next;
       index++;
+    } else if (arg === '--v12') {
+      options.v12 = true;
     }
   }
+
+  options.storybookGroup =
+    getV12StorybookGroup({ v12: options.v12, group: options.storybookGroup }) ??
+    'Components';
 
   return options;
 }
@@ -71,13 +83,13 @@ async function run() {
   if (!packageDir) {
     throw new Error('Unknown --type. Use "react" or "web-component".');
   }
+  validateLane(options);
 
   const repoRoot = process.cwd();
   const componentDir = resolve(
     repoRoot,
     packageDir,
-    'src',
-    'components',
+    getComponentsDir(options),
     options.name
   );
 

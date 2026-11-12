@@ -55,43 +55,43 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Button/components/Button.tsx",
-      "line": 140,
+      "line": 141,
       "text": "corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Button/components/Button.tsx",
-      "line": 158,
+      "line": 159,
       "text": "api: button-axes — Button splits the old kinds into `kind` (the role), `variant` (outlined, tonal) and `frame` (ghost, none), so each prop says one thing. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Button/components/Button.tsx",
-      "line": 161,
+      "line": 162,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Button/components/Button.tsx",
-      "line": 168,
+      "line": 169,
       "text": "api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Button/components/ButtonGrid.tsx",
-      "line": 126,
+      "line": 127,
       "text": "api: button-axes — Button splits the old kinds into `kind` (the role), `variant` (outlined, tonal) and `frame` (ghost, none), so each prop says one thing. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Button/components/ButtonGrid.tsx",
-      "line": 129,
+      "line": 130,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Button/components/ButtonGrid.tsx",
-      "line": 132,
+      "line": 133,
       "text": "corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD"
     },
     {
@@ -833,13 +833,13 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Menu/components/ComboButton.tsx",
-      "line": 121,
+      "line": 122,
       "text": "api: button-axes — Button splits the old kinds into `kind` (the role), `variant` (outlined, tonal) and `frame` (ghost, none), so each prop says one thing. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Menu/components/ComboButton.tsx",
-      "line": 124,
+      "line": 125,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
@@ -1453,7 +1453,7 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Tearsheet/components/Tearsheet.tsx",
-      "line": 206,
+      "line": 207,
       "text": "api: logical-positions — Placement values are logical, `start` and `end`, so they follow the reading direction. TBD"
     },
     {

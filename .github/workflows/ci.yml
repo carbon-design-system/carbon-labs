@@ -35,7 +35,12 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'yarn'
       - name: Install dependencies
-        run: yarn install
+        run: |
+          for attempt in 1 2 3; do
+            yarn install && exit 0
+            echo "::warning::yarn install failed on attempt $attempt"
+          done
+          exit 1
       - name: Run build
         run: yarn build
         env:
@@ -55,7 +60,12 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'yarn'
       - name: Install dependencies
-        run: yarn install
+        run: |
+          for attempt in 1 2 3; do
+            yarn install --mode=skip-build && exit 0
+            echo "::warning::yarn install failed on attempt $attempt"
+          done
+          exit 1
       - name: Check formatting of project files (staged)
         if: ${{ github.event_name == 'pull_request' }}
         run: yarn format:diff
@@ -73,7 +83,12 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'yarn'
       - name: Install dependencies
-        run: yarn install
+        run: |
+          for attempt in 1 2 3; do
+            yarn install --mode=skip-build && exit 0
+            echo "::warning::yarn install failed on attempt $attempt"
+          done
+          exit 1
       - name: Lint
         run: yarn lint && yarn lint:styles
 
@@ -87,7 +102,12 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'yarn'
       - name: Install dependencies
-        run: yarn install
+        run: |
+          for attempt in 1 2 3; do
+            yarn install --mode=skip-build && exit 0
+            echo "::warning::yarn install failed on attempt $attempt"
+          done
+          exit 1
       - name: License check
         run: yarn lint:license
 
@@ -101,7 +121,12 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'yarn'
       - name: Install dependencies
-        run: yarn install
+        run: |
+          for attempt in 1 2 3; do
+            yarn install && exit 0
+            echo "::warning::yarn install failed on attempt $attempt"
+          done
+          exit 1
       - name: Run build
         run: yarn build
         env:
@@ -130,7 +155,12 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'yarn'
       - name: Install dependencies
-        run: yarn install
+        run: |
+          for attempt in 1 2 3; do
+            yarn install && exit 0
+            echo "::warning::yarn install failed on attempt $attempt"
+          done
+          exit 1
       # The scene tier's browser comes first, so a package mirror that is down
       # fails the job in minutes, not after the build. The browser is cached
       # by Playwright's version; its system libraries and fonts come from apt,
@@ -192,7 +222,12 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'yarn'
       - name: Install dependencies
-        run: yarn install
+        run: |
+          for attempt in 1 2 3; do
+            yarn install && exit 0
+            echo "::warning::yarn install failed on attempt $attempt"
+          done
+          exit 1
       - name: Run build
         run: yarn build
         env:

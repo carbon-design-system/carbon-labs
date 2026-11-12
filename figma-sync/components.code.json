@@ -9076,7 +9076,7 @@
         {
           "file": "packages/react/src/v12/components/Slider/components/slider.scss",
           "selector": "@mixin gradient-ramp",
-          "property": "background",
+          "property": "background-image",
           "state": null,
           "spaces": [
             "oklch"

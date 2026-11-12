@@ -43,6 +43,7 @@
     "@carbon-labs/react-button": "workspace:*",
     "@carbon-labs/react-feedback": "workspace:*",
     "@carbon-labs/react-kit-defaults": "workspace:*",
+    "@carbon-labs/react-loading": "workspace:*",
     "@carbon-labs/react-motion-icons": "workspace:*",
     "@carbon-labs/react-popover": "workspace:*",
     "@carbon-labs/react-props": "workspace:*",

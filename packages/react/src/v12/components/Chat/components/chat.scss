@@ -177,9 +177,36 @@ $standard: var(--cds-motion-easing-standard-productive);
 }
 
 /* Dictation (DictationButton): the microphone, a circle like send (`corners="full"`). Listening,
-   it takes the variant's fill as Send ready does, with the glyph in the brand: one blue disc, Send's. */
+   it takes the variant's fill as Send ready does, with the glyph in the brand: one blue disc, Send's.
+   The fill and its edge are registered, so they fade on the kit's color clock (fast-01, standard;
+   at once under reduced motion: `--cds-dictation-fill-ms`, from DictationButton). Stopped, the
+   button keeps the listening class until the pills have folded back, then fades. */
+@property --cds-dictation-fill {
+  inherits: false;
+  initial-value: transparent;
+  syntax: '<color>';
+}
+
+@property --cds-dictation-edge {
+  inherits: false;
+  initial-value: transparent;
+  syntax: '<color>';
+}
+
+/* Ghost at rest and while connecting: pressed (`aria-pressed`), but no selected fill. */
+.cds-prompt .cds-icon-btn.cds-dictation {
+  --rollover-rest: var(--cds-dictation-fill);
+  --rollover-hover: #{theme.$background-hover};
+  --rollover-stroke: var(--cds-dictation-edge);
+
+  transition:
+    --cds-dictation-fill var(--cds-dictation-fill-ms, #{$fast-01}) $standard,
+    --cds-dictation-edge var(--cds-dictation-fill-ms, #{$fast-01}) $standard,
+    color var(--cds-dictation-fill-ms, #{$fast-01}) $standard;
+}
+
 .cds-prompt .cds-icon-btn.cds-dictation--listening {
-  --rollover-rest: #{theme.$layer-selected-inverse};
+  --cds-dictation-fill: #{theme.$layer-selected-inverse};
   --rollover-hover: color-mix(
     in srgb,
     #{theme.$layer-selected-inverse} 88%,
@@ -190,24 +217,60 @@ $standard: var(--cds-motion-easing-standard-productive);
 }
 
 .cds-prompt--tonal .cds-icon-btn.cds-dictation--listening {
-  --rollover-rest: oklch(
+  --cds-dictation-fill: oklch(
     from #{theme.$layer-selected} l var(--tonal-c, c) var(--tonal-h, h)
+  );
+  --cds-dictation-edge: oklch(
+    from #{theme.$border-tile} l var(--tonal-c, c) var(--tonal-h, h)
   );
   --rollover-hover: oklch(
     from #{theme.$layer-selected-hover} l var(--tonal-c, c) var(--tonal-h, h)
   );
-  --rollover-shadow: inset 0 0 0 1px
-    oklch(from #{theme.$border-tile} l var(--tonal-c, c) var(--tonal-h, h));
 
   color: var(--cds-hero-ink-selected, #{theme.$link-primary});
 }
 
 .cds-prompt--outlined .cds-icon-btn.cds-dictation--listening {
-  --rollover-rest: #{theme.$layer};
+  --cds-dictation-fill: #{theme.$layer};
+  --cds-dictation-edge: #{theme.$border-subtle-01};
   --rollover-hover: #{theme.$layer-hover};
-  --rollover-stroke: #{theme.$border-subtle-01};
 
   color: var(--cds-hero-ink-selected, #{theme.$link-primary});
+}
+
+/* Connecting: the kit's Spinner in the icon's place, as a busy Button's (button.scss): its base the
+   button's own color, faint; the icon fades out first and back after (useBusySwap's clocks, 0 under
+   reduced motion). */
+.cds-dictation > .cds-dictation__icon,
+.cds-dictation > .cds-dictation__spinner {
+  grid-area: 1 / 1;
+}
+
+.cds-dictation__icon {
+  display: block;
+}
+
+.cds-dictation__spinner {
+  --cds-spinner-base: color-mix(in srgb, currentColor 30%, transparent);
+}
+
+.cds-dictation > .cds-dictation__icon {
+  transition: opacity var(--cds-busy-in, 0ms) var(--cds-busy-entrance, linear);
+}
+
+.cds-dictation--swapped > .cds-dictation__icon {
+  opacity: 0;
+  transition: opacity var(--cds-busy-out, 0ms) var(--cds-busy-exit, linear);
+}
+
+/* What it says for a screen reader: the state only. */
+.cds-dictation-live {
+  position: absolute;
+  overflow: hidden;
+  block-size: 1px;
+  clip-path: inset(50%);
+  inline-size: 1px;
+  white-space: nowrap;
 }
 
 /* ── attachments (FileChips) ─────────────────────────────────────────── */
@@ -331,58 +394,6 @@ $_pn-status: (
 
 .cds-prompt-notice__content--inverse .cds-prompt-notice__close {
   color: theme.$icon-inverse;
-}
-
-/* Dictation's status (DictationStatus): the Popover's anchor, no size, on the prompt's top edge at
-   the microphone's end, so the status sits over the prompt, never over the text. */
-.cds-prompt {
-  position: relative;
-}
-
-.cds-prompt > .cds-dictation-anchor {
-  position: absolute;
-  display: block;
-  block-size: 0;
-  inline-size: 0;
-  inset-block-start: 0;
-  inset-inline-end: var(--dictation-end, 0px);
-}
-
-/* The status's words for a screen reader: the state only. */
-.cds-dictation-live {
-  position: absolute;
-  overflow: hidden;
-  block-size: 1px;
-  clip-path: inset(50%);
-  inline-size: 1px;
-  white-space: nowrap;
-}
-
-/* The Popover's content, in the opposite theme, as a toggletip's; the time over the state. */
-.cds-dictation-status__body {
-  @include type-style('body-compact-01');
-
-  display: grid;
-  padding: 12px 16px;
-  min-inline-size: 9rem;
-  row-gap: 4px;
-}
-
-.cds-dictation-status__time {
-  font-variant-numeric: tabular-nums;
-}
-
-.cds-dictation-status__text {
-  display: grid;
-  color: theme.$text-secondary;
-
-  > span {
-    grid-area: 1 / 1;
-  }
-
-  > span:not([data-shown]) {
-    visibility: hidden;
-  }
 }
 
 /* ── the shell (ChatShell) ───────────────────────────────────────────── */

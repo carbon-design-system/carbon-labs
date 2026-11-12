@@ -45,6 +45,7 @@
     "@carbon-labs/react-disclosure": "workspace:*",
     "@carbon-labs/react-feedback": "workspace:*",
     "@carbon-labs/react-jump-to": "workspace:*",
+    "@carbon-labs/react-loading": "workspace:*",
     "@carbon-labs/react-menu": "workspace:*",
     "@carbon-labs/react-motion-icons": "workspace:*",
     "@carbon-labs/react-notification": "workspace:*",

@@ -94,6 +94,7 @@ export abstract class ToggleIconElement<
     disableToggle: { type: Boolean, attribute: 'disable-toggle' },
     asButton: { type: Boolean, attribute: 'as-button', reflect: true },
     disabled: { type: Boolean, reflect: true },
+    level: { type: Number },
   };
 
   static readonly eventBeforeChange = `${prefix}-icon-beingchanged`;
@@ -104,7 +105,7 @@ export abstract class ToggleIconElement<
   /** Mute from any state, and back to the state it left (icons with a mute state). */
   declare muted: boolean;
   /** The state to come back to from mute: the last other state shown. */
-  private level?: S;
+  private unmuted?: S;
   /**
    * Draw Carbon's filled icons. Three-way, as the React prop: unset is the
    * icon's default (outline, but filled for the checkbox toggles), `filled`
@@ -115,6 +116,12 @@ export abstract class ToggleIconElement<
   declare disableToggle: boolean;
   declare asButton: boolean;
   declare disabled: boolean;
+  /**
+   * The input level, 0 to 1: what a listening state follows
+   * (microphone-listening-toggle). The `level` attribute takes a number; the
+   * property also takes a function, read each frame. Other icons ignore it.
+   */
+  declare level?: number | (() => number);
 
   declare protected controller?: FrameController<S> & Controller;
 
@@ -238,7 +245,8 @@ export abstract class ToggleIconElement<
       this.drawSize,
       this.current()
     ) as FrameController<S> & Controller;
-    // A looping state loops while the icon moves.
+    // A looping state loops while the icon moves, and one that follows a level reads it.
+    c.setLevel(this.level);
     c.setMoving(this.isAnimated);
     return c;
   }
@@ -289,15 +297,15 @@ export abstract class ToggleIconElement<
         this.muted !== (shown === mute)
       ) {
         if (this.muted) {
-          this.level = shown;
+          this.unmuted = shown;
         }
         this.value = this.muted
           ? mute
-          : (this.level ?? states.find((s) => s !== mute) ?? mute);
+          : (this.unmuted ?? states.find((s) => s !== mute) ?? mute);
       }
       const now = this.current();
       if (now !== mute) {
-        this.level = now;
+        this.unmuted = now;
       }
       this.muted = now === mute;
     }
@@ -343,6 +351,9 @@ export abstract class ToggleIconElement<
       this.value !== c.state
     ) {
       c.setState(this.value, this.isAnimated);
+    }
+    if (changed.has('level')) {
+      this.controller?.setLevel(this.level);
     }
     if (
       (['asButton', 'value', 'muted', 'disabled', ...NAMING] as const).some(

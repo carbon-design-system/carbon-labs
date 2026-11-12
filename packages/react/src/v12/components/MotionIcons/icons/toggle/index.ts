@@ -36,6 +36,7 @@ export { MicrophoneToggle } from './MicrophoneToggle';
 export { MicrophoneOff } from './MicrophoneOff';
 export { MicrophoneOffToggle } from './MicrophoneOffToggle';
 export { MicrophoneVoiceModeToggle } from './micVoiceMode';
+export { MicrophoneListeningToggle } from './micListening';
 export { Locked } from './Locked';
 export { LockedToggle } from './LockedToggle';
 export { Unlocked } from './Unlocked';

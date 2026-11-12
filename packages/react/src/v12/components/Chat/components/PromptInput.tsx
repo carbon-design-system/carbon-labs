@@ -42,7 +42,7 @@ import {
   type ChatCorners,
   type ChatVariant,
 } from './context';
-import { DictationButton, DictationStatus } from './DictationButton';
+import { DictationButton } from './DictationButton';
 import { FileChips, type ChipFile, type FileChipsWords } from './FileChips';
 import { PromptNotice, type PromptNoticeValue } from './PromptNotice';
 import { useChatRollover } from './rollover';
@@ -81,9 +81,9 @@ export interface PromptInputWords extends FileChipsWords {
   /** The microphone, off and on. Default "Dictate", "Stop dictation". */
   dictateButtonLabel?: string;
   stopDictationButtonLabel?: string;
-  /** Dictation's status, before its first second and after. Default "Ready when you are.", "Listening". */
-  dictationReadyText?: string;
+  /** Announced as dictation starts and stops. Default "Listening", "Dictation stopped". */
   dictationListeningText?: string;
+  dictationStoppedText?: string;
   /** The docked notice's close. Default "Close notification". */
   closeNoticeButtonLabel?: string;
 }
@@ -125,9 +125,13 @@ export interface PromptInputProps extends PromptInputWords {
   stopRing?: boolean;
   /** Show the microphone. Default true. */
   voice?: boolean;
-  /** Dictation is on (controlled). */
+  /** Dictation is listening (controlled). */
   listening?: boolean;
   onListeningChange?: (listening: boolean) => void;
+  /** Dictation was asked for and waits for the microphone: the spinner in its place. */
+  connecting?: boolean;
+  /** The microphone's level, 0 to 1, or a function read each frame: what the listening pills follow. */
+  level?: number | (() => number);
   /** The field grows to this many lines, then scrolls. Default 8. */
   maxRows?: number;
   /** Attachments, above the text. */
@@ -142,7 +146,7 @@ export interface PromptInputProps extends PromptInputWords {
   // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /** Stop's fill and the menus' marker (Send and listening take the brand). Default the shell's; `hero` adds the blue selected edge. */
   variant?: ChatVariant | 'hero';
-  /** Slow motion for the chips, the notice and dictation's status. Default 1. */
+  /** Slow motion for the chips and the notice. Default 1. */
   timeScale?: number;
   disabled?: boolean;
   className?: string;
@@ -162,8 +166,8 @@ export function PromptInput({
   stopButtonLabel = 'Stop generating',
   dictateButtonLabel,
   stopDictationButtonLabel,
-  dictationReadyText,
   dictationListeningText,
+  dictationStoppedText,
   closeNoticeButtonLabel,
   attachmentsLabel,
   removeFileButtonLabel,
@@ -188,6 +192,8 @@ export function PromptInput({
   voice = true,
   listening: listeningProp,
   onListeningChange,
+  connecting = false,
+  level,
   maxRows = 8,
   files,
   onRemoveFile,
@@ -226,8 +232,6 @@ export function PromptInput({
   // The parameters draw in a portal: the rollover takes its reduced motion from this prompt there too.
   const paramsRef = useRef<HTMLDivElement>(null);
   useChatRollover(rootRef, paramsRef);
-  const microphone = () =>
-    rootRef.current?.querySelector<HTMLElement>('.cds-dictation') ?? null;
   useLayoutEffect(
     () => (variant === 'tonal' ? watchTonal(rootRef.current) : undefined),
     [variant]
@@ -301,16 +305,6 @@ export function PromptInput({
       ]
         .filter(Boolean)
         .join(' ')}>
-      {voice && (
-        <DictationStatus
-          listening={listening}
-          prompt={rootRef}
-          microphone={microphone}
-          dictationReadyText={dictationReadyText}
-          dictationListeningText={dictationListeningText}
-          timeScale={timeScale}
-        />
-      )}
       <PromptNotice
         notice={notice}
         onClose={onCloseNotice}
@@ -453,8 +447,12 @@ export function PromptInput({
               <DictationButton
                 dictateButtonLabel={dictateButtonLabel}
                 stopDictationButtonLabel={stopDictationButtonLabel}
+                dictationListeningText={dictationListeningText}
+                dictationStoppedText={dictationStoppedText}
                 listening={listening}
                 onListeningChange={setListening}
+                connecting={connecting}
+                level={level}
                 disabled={disabled}
                 className="cds-prompt__tool"
               />

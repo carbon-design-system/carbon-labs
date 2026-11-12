@@ -7,24 +7,30 @@
 
 /** @jsxRuntime automatic */
 
-import { useEffect, useLayoutEffect, useState, type RefObject } from 'react';
-import { MicrophoneVoiceModeToggle } from '@carbon-labs/react-motion-icons';
-import { Popover, PopoverContent } from '@carbon-labs/react-popover';
+import { useEffect, useState, type CSSProperties } from 'react';
+import { motionTokens, useFeedbackMotion } from '@carbon-labs/v12-motion';
+import { MicrophoneListeningToggle } from '@carbon-labs/react-motion-icons';
+import { Spinner } from '@carbon-labs/react-feedback';
+import { useBusySwap } from '@carbon-labs/react-loading';
 import { IconButton, type IconButtonSize } from '@carbon-labs/react-tooltip';
 import './chat.scss';
 
 /* ============================================================================
- * DictationButton: the prompt's microphone.
+ * DictationButton: the prompt's microphone, a toggle.
  *
- *   rest       a ghost IconButton on the rollover
- *   listening  the variant's fill with a brand glyph; the microphone turns
- *              into voice mode's bars, whose loop ripples while it listens
- *   status     DictationStatus: the kit's Popover in the opposite theme, as a
- *              toggletip, over the prompt's top edge, its end at the
- *              microphone's; it snaps from that point and folds back into it
- *   announce   the state alone, politely, in a region mounted before it speaks
- *   a11y       a toggle (`aria-pressed`) named by its action
- *   reduced    the motion icon holds still; the status is there and gone at once
+ *   rest        a ghost IconButton on the rollover
+ *   connecting  `connecting`, from the press until the host has the
+ *               microphone: the kit's Spinner in the icon's place, out then
+ *               in, as a busy Button's (`aria-busy`); pressed, still ghost
+ *   listening   the variant's fill fades in (fast-01), the glyph in the
+ *               brand; the microphone leaves, then three pills open and
+ *               follow `level`
+ *   stop        a press while connecting or listening; the fill holds while
+ *               the pills fold back (fast-01 then moderate-01), then fades
+ *   announce    the state, politely, in a region mounted before it speaks
+ *   a11y        a toggle (`aria-pressed`) named by its action
+ *   reduced     the swap, the icon's change and the fill land at once; the
+ *               pills hold still; the spinner is its still dots
  * ========================================================================== */
 
 export interface DictationButtonProps {
@@ -32,8 +38,18 @@ export interface DictationButtonProps {
   dictateButtonLabel?: string;
   /** Default "Stop dictation". */
   stopDictationButtonLabel?: string;
+  /** Announced as listening starts. Default "Listening". */
+  dictationListeningText?: string;
+  /** Announced as it stops. Default "Dictation stopped". */
+  dictationStoppedText?: string;
+  /** Listening has started (controlled). */
   listening: boolean;
+  /** A press: `true` to start, `false` to stop, or to cancel while connecting. */
   onListeningChange: (listening: boolean) => void;
+  /** Pressed, waiting for the microphone: the spinner. Wins over `listening`. */
+  connecting?: boolean;
+  /** The input level, 0 to 1, or a function read each frame: what the pills follow. */
+  level?: number | (() => number);
   size?: IconButtonSize;
   disabled?: boolean;
   className?: string;
@@ -42,138 +58,105 @@ export interface DictationButtonProps {
 export function DictationButton({
   dictateButtonLabel = 'Dictate',
   stopDictationButtonLabel = 'Stop dictation',
+  dictationListeningText = 'Listening',
+  dictationStoppedText = 'Dictation stopped',
   listening,
   onListeningChange,
+  connecting = false,
+  level,
   size = 'sm',
   disabled,
   className,
 }: DictationButtonProps) {
-  return (
-    <IconButton
-      label={listening ? stopDictationButtonLabel : dictateButtonLabel}
-      frame="ghost"
-      size={size}
-      corners="full"
-      disabled={disabled}
-      // A toggle: `isSelected` is its `aria-pressed`; chat.scss's listening look replaces the selected fill.
-      isSelected={listening}
-      className={[
-        'cds-dictation',
-        listening && 'cds-dictation--listening',
-        className,
-      ]
-        .filter(Boolean)
-        .join(' ')}
-      onClick={() => onListeningChange(!listening)}>
-      <MicrophoneVoiceModeToggle size={16} toggled={listening} disableToggle />
-    </IconButton>
-  );
-}
-DictationButton.displayName = 'DictationButton';
+  const on = listening || connecting;
+  const live = listening && !connecting;
+  const swap = useBusySwap(connecting);
+  const { reduced, timeScale } = useFeedbackMotion();
 
-export interface DictationStatusProps {
-  listening: boolean;
-  /** The prompt it sits over, and its microphone (where its end lines up and it snaps from). */
-  prompt: RefObject<HTMLElement | null>;
-  microphone: () => HTMLElement | null;
-  /** Before the first second. Default "Ready when you are." */
-  dictationReadyText?: string;
-  /** After it. Default "Listening". */
-  dictationListeningText?: string;
-  /** Slow motion for the snap. Default 1. */
-  timeScale?: number;
-}
-
-const clock = (s: number) =>
-  `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
-/** Puts the status's anchor at the microphone's end, as it starts listening: a write to the DOM, no render. */
-function DictationAnchor({
-  listening,
-  prompt,
-  microphone,
-}: Pick<DictationStatusProps, 'listening' | 'prompt' | 'microphone'>) {
-  useLayoutEffect(() => {
-    const root = prompt.current;
-    const anchor = root?.querySelector<HTMLElement>(
-      ':scope > .cds-dictation-anchor'
-    );
-    const m = microphone()?.getBoundingClientRect();
-    if (!listening || !root || !anchor || !m) return;
-    const p = root.getBoundingClientRect();
-    const end =
-      getComputedStyle(root).direction === 'rtl'
-        ? m.left - p.left
-        : p.right - m.right;
-    anchor.style.setProperty('--dictation-end', `${Math.max(0, end)}px`);
-    // As it starts listening only.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [listening]);
-  return null;
-}
-
-/** Dictation's status over the prompt: a zero-size anchor on its top edge, at the microphone's end. Inside the prompt's root. */
-export function DictationStatus({
-  listening,
-  prompt,
-  microphone,
-  dictationReadyText = 'Ready when you are.',
-  dictationListeningText = 'Listening',
-  timeScale = 1,
-}: DictationStatusProps) {
-  const [seconds, setSeconds] = useState(0);
-  // A new dictation starts the clock again.
-  const [was, setWas] = useState(listening);
-  if (listening !== was) {
-    setWas(listening);
-    if (listening) setSeconds(0);
+  // The region says a change, never the first state: stopped only after listening.
+  const [said, setSaid] = useState('');
+  const [was, setWas] = useState(live);
+  // Stopped, the fill holds until the pills have folded back.
+  const [holding, setHolding] = useState(false);
+  if (live !== was) {
+    setWas(live);
+    setSaid(live ? dictationListeningText : dictationStoppedText);
+    setHolding(!live && !connecting && !reduced);
   }
-  // The time listening: a clock, not motion.
-  useEffect(() => {
-    if (!listening) return;
-    const t = window.setInterval(() => setSeconds((s) => s + 1), 1000);
-    return () => window.clearInterval(t);
-  }, [listening]);
+  // A new press connects on the ghost button: the hold ends there.
+  if (holding && connecting) {
+    setHolding(false);
+  }
+  const filled = live || holding;
 
-  const state = seconds < 1 ? dictationReadyText : dictationListeningText;
+  useEffect(() => {
+    if (!holding) {
+      return;
+    }
+    // The icon's change back: fast-01, then moderate-01.
+    const fold =
+      (motionTokens.duration['fast-01'] +
+        motionTokens.duration['moderate-01']) *
+      timeScale;
+    const t = setTimeout(() => setHolding(false), fold);
+    return () => clearTimeout(t);
+  }, [holding, timeScale]);
+
+  const fill = reduced
+    ? '0ms'
+    : `${motionTokens.duration['fast-01'] * timeScale}ms`;
+
   return (
     <>
-      {/* Before the Popover, so its anchor is in place as the Popover places itself. */}
-      <DictationAnchor
-        listening={listening}
-        prompt={prompt}
-        microphone={microphone}
-      />
-      <Popover
-        open={listening}
-        align="top-end"
-        autoAlign
-        variant="inverse"
-        timeScale={timeScale}
-        className="cds-dictation-anchor">
-        <PopoverContent className="cds-dictation-status">
-          {/* Seen, not read: the region below says the state, without the ticking time. */}
-          <span className="cds-dictation-status__body" aria-hidden="true">
-            <span className="cds-dictation-status__time">{clock(seconds)}</span>
-            {/* Both states in one cell, the other hidden: its width holds, so its end stays at the microphone's. */}
-            <span className="cds-dictation-status__text">
-              <span data-shown={seconds < 1 || undefined}>
-                {dictationReadyText}
-              </span>
-              <span data-shown={seconds >= 1 || undefined}>
-                {dictationListeningText}
-              </span>
-            </span>
-          </span>
-        </PopoverContent>
-      </Popover>
+      <IconButton
+        label={on ? stopDictationButtonLabel : dictateButtonLabel}
+        frame="ghost"
+        size={size}
+        corners="full"
+        disabled={disabled}
+        // A toggle: `isSelected` is its `aria-pressed`; chat.scss keeps it ghost while connecting and
+        // gives listening its own fill.
+        isSelected={on}
+        aria-busy={connecting || undefined}
+        style={
+          { ...swap.vars, '--cds-dictation-fill-ms': fill } as CSSProperties
+        }
+        className={[
+          'cds-dictation',
+          filled && 'cds-dictation--listening',
+          swap.restHidden && 'cds-dictation--swapped',
+          className,
+        ]
+          .filter(Boolean)
+          .join(' ')}
+        onClick={() => onListeningChange(!on)}>
+        {/* Toggled once listening: hidden under the spinner, the microphone has left by the time it shows.
+            The fade is on a wrapper: the icon writes its own transition. */}
+        <span className="cds-dictation__icon">
+          <MicrophoneListeningToggle
+            size={16}
+            toggled={live}
+            disableToggle
+            level={level}
+          />
+        </span>
+        {swap.spinner && (
+          <Spinner
+            className="cds-dictation__spinner"
+            size={16}
+            variant="neutral"
+            active={swap.spinning}
+          />
+        )}
+      </IconButton>
       <span
         className="cds-dictation-live"
         role="status"
         aria-live="polite"
         aria-atomic="true">
-        {listening ? state : ''}
+        {said}
       </span>
     </>
   );
 }
-DictationStatus.displayName = 'DictationStatus';
+DictationButton.displayName = 'DictationButton';

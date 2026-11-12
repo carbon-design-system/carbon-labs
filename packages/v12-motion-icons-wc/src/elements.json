@@ -4500,6 +4500,16 @@
   "description": "Microphone ⇄ Microphone off. `filled` picks Carbon's filled drawings."
  },
  {
+  "tag": "clabs-motion-icon-microphone-listening-toggle",
+  "className": "ClabsMotionIconMicrophoneListeningToggle",
+  "name": "MicrophoneListeningToggle",
+  "kind": "toggle",
+  "spec": "MicrophoneListeningToggleSpec",
+  "module": "icons/toggle/micListening",
+  "dir": "microphone-listening-toggle",
+  "description": "Microphone ⇄ listening: Carbon's microphone (`off`) and three outlined pills (`listening`, toggled). The microphone shrinks to a dot, then three dots open into pills that rise and fall with the voice (`level`)."
+ },
+ {
   "tag": "clabs-motion-icon-microphone-toggle",
   "className": "ClabsMotionIconMicrophoneToggle",
   "name": "MicrophoneToggle",

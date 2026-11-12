@@ -1099,24 +1099,6 @@
       }
     },
     {
-      "id": "labs/split-button",
-      "kind": "component",
-      "path": "packages/react/src/v12/components/SplitButton",
-      "labsStatus": "draft",
-      "publishable": false,
-      "motion": [
-        "SelectionMoveInfo",
-        "useMenuTrigger"
-      ],
-      "source": {
-        "repo": "carbon-labs"
-      },
-      "figma": {
-        "key": "v12/labs/split-button",
-        "status": "unmapped"
-      }
-    },
-    {
       "id": "labs/system-message",
       "kind": "component",
       "path": "packages/react/src/v12/components/SystemMessage",
@@ -1236,7 +1218,9 @@
         "SurfaceShadowOption",
         "anchorInset",
         "attachFloatingCastShadow",
+        "chain",
         "cubicBezier",
+        "mergeRefs",
         "originCause",
         "placeAtPoint",
         "placeBesideRow",
@@ -1248,7 +1232,8 @@
         "toEasing",
         "useMenuTrigger",
         "usePrefersReducedMotion",
-        "useSnapSurface"
+        "useSnapSurface",
+        "useTooltipTrigger"
       ],
       "source": {
         "repo": "carbon-next",

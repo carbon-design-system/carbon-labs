@@ -50,6 +50,20 @@ export function isRtl(el: Element): boolean {
   }
 }
 
+/**
+ * An arrow key in reading order: ArrowLeft and ArrowRight swap when `rtl`,
+ * so ArrowRight always means "next" to a horizontal list. Other keys pass.
+ */
+export function inlineKey(key: string, rtl: boolean): string {
+  if (!rtl) {
+    return key;
+  }
+  if (key === 'ArrowLeft') {
+    return 'ArrowRight';
+  }
+  return key === 'ArrowRight' ? 'ArrowLeft' : key;
+}
+
 /** The root's resolved direction, kept current when a `dir` attribute changes anywhere on the page. */
 export function useDirection(rootRef: RefObject<HTMLElement | null>): Dir {
   const [dir, setDir] = useState<Dir>('ltr');

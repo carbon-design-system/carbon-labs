@@ -6,11 +6,25 @@ import * as SelectionKitStories from './SelectionKit.stories.tsx';
 # SelectionKit
 
 What the v12 selection components (content switcher, tabs, select list, menu)
-share: the selection engine's hooks, the selector's faces and styles, and
-`SelectionPanels`, the content a selection switches. Each component imports
-`selection-kit.scss`; the motion comes from the motion package.
+share: the selection engine's hooks, the selector's faces and styles, the list
+model (`useSelectionList`), and `SelectionPanels`, the content a selection
+switches. Each component imports `selection-kit.scss`; the motion comes from the
+motion package.
 
 <Canvas of={SelectionKitStories.Panels} />
+
+## useSelectionList
+
+- **Roles:** one ARIA contract per role. A `tablist` of `tab`s, each joined to
+  its panel by `aria-controls`; a `radiogroup` of `radio`s; a `listbox` of
+  `option`s.
+- **Tab stop:** one, on the selected item, or the first enabled item when there
+  is none.
+- **Keys:** the arrows along the list, Home and End, and typeahead when the list
+  gives labels. With `automatic` activation a key selects; with `manual` it
+  moves focus, and Enter or Space selects.
+- **Right to left:** on a horizontal list, ← goes to the next item and → to the
+  previous. A vertical list's keys do not change.
 
 ## SelectionPanels
 

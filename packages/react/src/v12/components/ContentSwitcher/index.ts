@@ -10,7 +10,6 @@ export {
   Switch,
   IconSwitch,
   SWITCHER_MOTION,
-  SwitchPanels,
 } from './components/ContentSwitcher';
 export type {
   ContentSwitcherProps,
@@ -18,5 +17,4 @@ export type {
   IconSwitchProps,
   SwitcherMotion,
   SwitchEventHandlersParams,
-  SwitchPanelsProps,
 } from './components/ContentSwitcher';

@@ -1332,7 +1332,7 @@ export const DatePicker = () => null;
     );
     const plan = planImport({ id: 'date-picker', from: source, ref, labs });
     expect(laneFolder('date-picker')).toBe('DatePickerV2');
-    expect(laneFolder('split-button')).toBe('SplitButton');
+    expect(laneFolder('content-switcher')).toBe('ContentSwitcher');
     expect(plan.target).toBe('packages/react/src/v12/components/DatePickerV2');
     expect(JSON.parse(output(plan, 'package.json')).name).toBe(
       '@carbon-labs/react-date-picker-v2'

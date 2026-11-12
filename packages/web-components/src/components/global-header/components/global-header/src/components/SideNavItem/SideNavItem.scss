@@ -76,9 +76,9 @@
 
 // needed as @carbon/web-components 2.21.0 does not handle the style change for hover
 .ibm-automation-cds--side-nav__link:hover {
-  background-color: $gray-100-hover;
+  background-color: var(--clabs-global-header-background-hover);
 
   &::part(title) {
-    color: $white;
+    color: var(--clabs-global-header-text-color);
   }
 }

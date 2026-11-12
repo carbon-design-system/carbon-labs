@@ -7,15 +7,30 @@ import * as MenuStories from './Menu.stories.tsx';
 
 A floating list of actions and choices, with Carbon's API: `MenuItem`,
 `MenuItemSelectable`, `MenuItemRadioGroup`, `MenuItemGroup` and
-`MenuItemDivider`, and a MenuItem's own MenuItems as a submenu. `MenuButton` and
-`OverflowMenu` open one from a button, as SplitButton does; `x` and `y` place
-one at a point, as a context menu. One highlight serves the pointer and the
-keys, and labels take its color where it covers them. With `inline`, the menu is
-drawn in place, with no portal, placement, snap or close.
+`MenuItemDivider`, and a MenuItem's own MenuItems as a submenu. Three triggers
+open one from a button, as Carbon's do, and share one set of trigger props:
+`MenuButton`, a labelled button; `OverflowMenu`, an icon button; and
+`ComboButton`, a primary action with a chevron for related actions. `x` and `y`
+place one at a point, as a context menu. One highlight serves the pointer and
+the keys, and labels take its color where it covers them. With `inline`, the
+menu is drawn in place, with no portal, placement, snap or close.
+
+`ComboButton` has Carbon's ComboButton props, on the Button's look: `kind`
+primary or secondary, `variant` filled, outlined or tonal, sizes xs to lg.
+`busy` shows a spinner in the action's place while it runs. It is not for two
+equal actions: use two Buttons.
 
 <Canvas of={MenuStories.Default} />
 
 <Canvas of={MenuStories.WithMenuButton} />
+
+<Canvas of={MenuStories.WithOverflowMenu} />
+
+<Canvas of={MenuStories.WithComboButton} />
+
+<Canvas of={MenuStories.ComboButtonLooks} />
+
+<Canvas of={MenuStories.ComboButtonBusy} />
 
 ## Corners
 
@@ -54,7 +69,19 @@ draws the pill, its rows half a row's height in. `corners="square"` has none.
 - **Submenu:** one level deep, marked by a chevron. It opens beside its row
   after 100ms of hover, or on → or Enter, and snaps from the row. ← and Escape
   go back.
-- **Chevron:** on MenuButton, the chevron turns while the menu shows.
+- **Chevron:** on MenuButton and ComboButton, the chevron turns while the menu
+  shows.
+- **Tooltip:** the icon triggers, OverflowMenu and ComboButton's chevron, show
+  their label in Carbon's tooltip, which is also their name. It snaps in on
+  hover or keyboard focus and closes when the menu opens.
+- **Hover:** on MenuButton and ComboButton, the Button's glow in each cell,
+  clipped to the cell, with no growth.
+- **Press and release:** the Button's pressed color and release circle, clipped
+  to the cell, with no press-in.
+- **Busy:** on ComboButton, out, then in. The label fades out, then the spinner
+  draws on; the reverse as busy ends.
+- **Focus:** keyboard only. Each of ComboButton's cells has its own ring, round
+  outside and square at the seam.
 - **Keyboard:** ↑ and ↓ wrap; Home, End and typeahead move too. Disabled rows
   are skipped unless they have a `disabledReason`. A radio group's `shortcuts`
   win over typeahead. A trigger opens on the first row with Enter, Space or ↓,
@@ -67,7 +94,8 @@ draws the pill, its rows half a row's height in. `corners="square"` has none.
 The menu and its submenus are there at once and gone at once: no growth, slide,
 fold or fade. The highlight does not travel: it fades in on the new row as it
 fades out of the old, on half the clock. A menu placed again while open moves at
-once.
+once. On the triggers, the glow and the press show at once, the release circle
+lands at once, and the chevron, the tooltip and the busy swap change at once.
 
 ## Props
 

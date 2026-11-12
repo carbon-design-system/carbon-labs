@@ -481,13 +481,13 @@ export type MenuStyleProps = Pick<
   SelectionStyleProps,
   'lowContrast' | 'contour' | 'outlinedFill'
 > & {
-  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /**
    * `rounded` (default): 8px corners and rows at a field's inset. `full`: a
    * pill frame and pill rows, half a row's height in. `square`: none. Takes
    * `KitDefaults corners` when not given.
    */
   corners?: SelectionStyleProps['corners'];
+  // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
   /**
    * The highlight's look: inverse (default), tonal, outlined, or hero: the
    * marker in the kit's brand (IBM blue unless `KitDefaults brand` says

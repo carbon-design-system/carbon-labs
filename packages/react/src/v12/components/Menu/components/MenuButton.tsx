@@ -7,23 +7,11 @@
 
 /** @jsxRuntime automatic */
 
-import {
-  useId,
-  useRef,
-  type ButtonHTMLAttributes,
-  type ReactNode,
-} from 'react';
-import type { SelectionMoveInfo } from '@carbon-labs/v12-motion';
+import { useId, useRef, type ButtonHTMLAttributes } from 'react';
 import { ChevronDownToggle } from '@carbon-labs/react-motion-icons';
-import {
-  Menu,
-  type MenuAlignment,
-  type MenuMotion,
-  type MenuStyleProps,
-} from './Menu';
+import { Menu, type MenuStyleProps } from './Menu';
 import { menuSizeFor } from './menu-size';
 import { useMenuTrigger } from '@carbon-labs/v12-motion';
-import type { SelectionLoadingProps } from '@carbon-labs/react-selection-kit';
 import {
   cellClasses,
   shellClasses,
@@ -32,13 +20,14 @@ import {
 } from '@carbon-labs/react-button';
 import { resolveButtonLook, useWithTimeScale } from '@carbon-labs/react-props';
 import { MENU_BUTTON_KIT, useKitProps } from '@carbon-labs/react-kit-defaults';
+import type { MenuTriggerProps } from './trigger';
 
 /* ============================================================================
  * MenuButton — v11's MenuButton: a labelled button that only opens a Menu,
  * its chevron turning while the menu shows (motion-icons' ChevronDownToggle).
  *
  * On the button shell (`../button/shell.ts`), one cell: the same
- * visual language as SplitButton's chevron cell — the Button's looks
+ * visual language as ComboButton's chevron cell — the Button's looks
  * (`kind` primary · secondary, `variant` outlined · tonal, `frame` ghost; the
  * menu's own treatment is `menuVariant`) and sizes (xs 24 … lg 48), its
  * rollover (no growth or press-in), its keyboard-only ring, the
@@ -50,15 +39,12 @@ import { MENU_BUTTON_KIT, useKitProps } from '@carbon-labs/react-kit-defaults';
 
 export interface MenuButtonProps
   extends
-    Omit<MenuStyleProps, 'variant'>,
-    SelectionLoadingProps,
+    MenuTriggerProps,
     Omit<
       ButtonHTMLAttributes<HTMLButtonElement>,
       'children' | 'onClick' | 'onKeyDown' | 'onPointerDown' | 'type'
     > {
   label: string;
-  /** MenuItems. */
-  children?: ReactNode;
   /** The role: `primary` (default) or `secondary`. */
   kind?: 'primary' | 'secondary';
   // @carbon-proposal api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD
@@ -70,20 +56,7 @@ export interface MenuButtonProps
   /** The menu's treatment (Menu's `variant`): `inverse` (default), `tonal`, `outlined`; KitDefaults' `variant` when not given. */
   menuVariant?: MenuStyleProps['variant'];
   /** The button's size, and its menu's (an xs button opens an sm menu). Default `lg`. */
-  size?: 'xs' | 'sm' | 'md' | 'lg';
-  /** Default `bottom-start`. */
-  menuAlignment?: MenuAlignment;
-  disabled?: boolean;
-  /** Where the menu is portalled. */
-  menuTarget?: Element | null;
-  /** The snap starts at the press point (default) or the button's center. */
-  openFrom?: 'pointer' | 'trigger';
-  /** The menu's own size, when it differs from the button's. */
-  menuSize?: 'xs' | 'sm' | 'md' | 'lg';
-  motion?: Partial<MenuMotion>;
-  /** Slow motion: multiplies the durations. Default 1. Wins over `motion.timeScale`. */
-  timeScale?: number;
-  onMove?: (info: SelectionMoveInfo) => void;
+  size?: MenuTriggerProps['size'];
 }
 
 export function MenuButton({
@@ -99,6 +72,8 @@ export function MenuButton({
   motion: motionProp,
   timeScale,
   onMove,
+  onOpen,
+  onClose,
   variant,
   frame,
   menuVariant: menuVariantProp,
@@ -175,7 +150,11 @@ export function MenuButton({
         id={menuId}
         label={label}
         open={open}
-        onClose={() => setOpen(false)}
+        onOpen={onOpen}
+        onClose={() => {
+          setOpen(false);
+          onClose?.();
+        }}
         anchor={button}
         menuAlignment={menuAlignment}
         fitAnchor

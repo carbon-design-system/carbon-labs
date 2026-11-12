@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
@@ -12,8 +13,13 @@ export default defineConfig({
   // behind the seam, run inline.
   resolve: { preserveSymlinks: true },
   test: {
-    environment: 'node',
+    // The triggers' tests render React (the lane's shared jsdom setup).
+    environment: 'jsdom',
+    globals: true,
     include: ['__tests__/**/*.test.{ts,tsx}'],
+    setupFiles: [
+      fileURLToPath(new URL('../../vitest.setup.ts', import.meta.url)),
+    ],
     server: {
       deps: {
         inline: [

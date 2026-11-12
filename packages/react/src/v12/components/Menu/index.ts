@@ -28,6 +28,23 @@ export { MenuButton } from './components/MenuButton';
 export type { MenuButtonProps } from './components/MenuButton';
 export { OverflowMenu } from './components/OverflowMenu';
 export type { OverflowMenuProps } from './components/OverflowMenu';
+export {
+  ComboButton,
+  ComboButtonKinds,
+  ComboButtonSizes,
+  ComboButtonVariants,
+} from './components/ComboButton';
+export type {
+  ComboButtonKind,
+  ComboButtonProps,
+  ComboButtonSize,
+  ComboButtonTranslationKey,
+  ComboButtonVariant,
+} from './components/ComboButton';
+export type {
+  MenuTriggerProps,
+  MenuTriggerTooltipProps,
+} from './components/trigger';
 
 // The names other v12 packages take from this package's files.
 export { menuSizeFor } from './components/menu-size';

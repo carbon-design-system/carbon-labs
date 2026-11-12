@@ -17,6 +17,7 @@
   --cds-background: var(--clabs-global-header-background-color);
   --cds-background-hover: var(--clabs-global-header-background-hover);
   --cds-text-primary: var(--clabs-global-header-text-color);
+  --cds-text-secondary: var(--clabs-global-header-text-secondary);
   --cds-icon-primary: var(--clabs-global-header-icon-color);
 }
 
@@ -47,4 +48,16 @@
 
 .#{automation.$namespace-prefix}__side-nav-items {
   overflow: auto;
+}
+
+.#{automation.$namespace-prefix}__app-switcher-button::part(button) {
+  background-color: transparent;
+
+  &:hover {
+    background-color: var(--clabs-global-header-background-hover);
+  }
+
+  &:active {
+    background-color: var(--cds-background-active);
+  }
 }

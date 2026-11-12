@@ -22,6 +22,7 @@ import { attachRollover } from '@carbon-labs/v12-motion';
 import { iconSizeFor } from '@carbon-labs/react-props';
 import './link.scss';
 import { TooltipMotionContext } from '@carbon-labs/v12-motion';
+import { assignRef } from '@carbon-labs/react-util';
 import { useReducedGetter } from '@carbon-labs/react-util';
 
 /* ============================================================================
@@ -105,8 +106,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   const setRef = useCallback(
     (el: HTMLElement | null) => {
       elRef.current = el;
-      if (typeof ref === 'function') ref(el as HTMLAnchorElement | null);
-      else if (ref) ref.current = el as HTMLAnchorElement | null;
+      assignRef(ref, el as HTMLAnchorElement | null);
     },
     [ref]
   );

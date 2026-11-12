@@ -188,7 +188,7 @@ export function seamTokens(labs) {
  * @param {string} labs The carbon-labs checkout.
  * @returns {Map<string, string>} The seam subpath, by the module it forwards.
  */
-export function seamSubpaths(labs) {
+function seamSubpaths(labs) {
   const subpaths = new Map();
   const file = path.join(labs, CONFIG.seam.packageJson);
   let pkg;

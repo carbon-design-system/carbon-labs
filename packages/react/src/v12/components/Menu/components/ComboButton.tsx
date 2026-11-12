@@ -19,6 +19,7 @@ import {
   type MouseEvent,
   type ReactNode,
 } from 'react';
+import { assignRef } from '@carbon-labs/react-util';
 import { useMenuTrigger } from '@carbon-labs/v12-motion';
 import { ChevronDownToggle } from '@carbon-labs/react-motion-icons';
 import {
@@ -192,8 +193,7 @@ export const ComboButton = forwardRef<HTMLDivElement, ComboButtonProps>(
       (el: HTMLDivElement | null) => {
         shellRef.current = el;
         setAnchorEl(el);
-        if (typeof ref === 'function') ref(el);
-        else if (ref) ref.current = el;
+        assignRef(ref, el);
       },
       [ref]
     );

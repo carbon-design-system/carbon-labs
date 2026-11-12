@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-selection-kit%400.18.0...%40carbon-labs%2Freact-selection-kit%400.19.0) (2026-11-12)
+
+**Note:** Version bump only for package @carbon-labs/react-selection-kit
+
+
+
+
+
 # [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-selection-kit%400.17.0...%40carbon-labs%2Freact-selection-kit%400.18.0) (2026-11-12)
 
 **Note:** Version bump only for package @carbon-labs/react-selection-kit

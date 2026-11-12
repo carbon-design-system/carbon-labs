@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-jump-to%400.16.0...%40carbon-labs%2Freact-jump-to%400.17.0) (2026-11-12)
+
+### Bug Fixes
+
+* **react:** place v12 pieces a script positions from the left ([#1509](https://github.com/carbon-design-system/carbon-labs/issues/1509)) ([8549041](https://github.com/carbon-design-system/carbon-labs/commit/854904164a35b5e2fca0d92731f320ff68b3f745))
+
+
 # [0.16.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-jump-to%400.15.0...%40carbon-labs%2Freact-jump-to%400.16.0) (2026-11-12)
 
 **Note:** Version bump only for package @carbon-labs/react-jump-to

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.252.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.251.0...%40carbon-labs%2Freact%400.252.0) (2026-11-12)
+
+### Bug Fixes
+
+* **react:** mirror the v12 slider's dots sweep, size its ring ([#1511](https://github.com/carbon-design-system/carbon-labs/issues/1511)) ([9c64098](https://github.com/carbon-design-system/carbon-labs/commit/9c64098c1b8b633506885217afc134c9a920ed2c))
+* **react:** place v12 pieces a script positions from the left ([#1509](https://github.com/carbon-design-system/carbon-labs/issues/1509)) ([8549041](https://github.com/carbon-design-system/carbon-labs/commit/854904164a35b5e2fca0d92731f320ff68b3f745))
+
+
 # [0.251.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.250.0...%40carbon-labs%2Freact%400.251.0) (2026-11-12)
 
 * feat(menu)!: move SplitButton into Menu as ComboButton (#1504) ([fd01143](https://github.com/carbon-design-system/carbon-labs/commit/fd0114342c8a5daadfba3b353a2582a012b90aa9)), closes [#1504](https://github.com/carbon-design-system/carbon-labs/issues/1504)

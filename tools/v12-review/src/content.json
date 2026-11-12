@@ -13,7 +13,7 @@
       }
     ],
     "facts": {
-      "tests": false,
+      "tests": true,
       "status": "draft"
     }
   },
@@ -964,7 +964,7 @@
       }
     ],
     "facts": {
-      "tests": false,
+      "tests": true,
       "status": "draft"
     }
   },
@@ -996,7 +996,7 @@
       }
     ],
     "facts": {
-      "tests": false,
+      "tests": true,
       "status": "draft"
     }
   },
@@ -1222,7 +1222,7 @@
       }
     ],
     "facts": {
-      "tests": false,
+      "tests": true,
       "status": "draft"
     }
   },

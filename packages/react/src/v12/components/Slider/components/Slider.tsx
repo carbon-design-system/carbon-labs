@@ -144,7 +144,7 @@ import { inlineKey, isRtl } from '@carbon-labs/react-util';
  *            the slider's box, the default, or flush), and
  *            `ai`: the projection texture on the fill (carbon-motion's
  *            `dotField`), twinkling and shimmering; on the special step, in
- *            from the knob, out left to right (`twinkleWave.ts`).
+ *            from the knob, out from the track's start (`twinkleWave.ts`).
  *            `knob`: the track's knob, stops and base, no fill
  *   fields   the kit's TextInput: sync, clamping and correction on blur or
  *            Enter; one message line under the slider (FieldMessage)
@@ -1522,6 +1522,7 @@ export function Slider({
           : null;
       },
       timeScale: () => texture.current.timeScale,
+      rtl,
     });
     presence.current = tw;
     field.current = f;
@@ -1550,8 +1551,8 @@ export function Slider({
     lastLower.current = lower;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lower]);
-  // The dots follow the special step: in from the knob when it lands there, out left to right
-  // otherwise. The field holds the state at once; `twinkleWave.ts` draws the change.
+  // The dots follow the special step: in from the knob when it lands there, out from the track's
+  // start otherwise. The field holds the state at once; `twinkleWave.ts` draws the change.
   const syncedField = useRef<DotField | null>(null);
   useLayoutEffect(() => {
     const f = field.current;

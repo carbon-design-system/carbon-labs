@@ -18,15 +18,17 @@ import {
  *
  *   presence  the special step's dots come and go; the field holds the state
  *             at once and this draws the change:
- *             - in: from the knob leftward, each dot growing and fading in on
- *               the entrance curve over `IN_DOT`, its start along an
- *               `IN_SWEEP` from the knob to the track's start, softly
- *               dithered, with no overshoot
- *             - out: left to right, each dot shrinking and fading on the exit
- *               curve over `OUT_DOT`, its start along an `OUT_SWEEP` on the
- *               entrance curve, so the front sets off at once and slows
- *               through the full dots near the knob; the field then lets go
- *             A change mid-way starts each dot from where it is.
+ *             - in: from the knob toward the track's start, each dot growing
+ *               and fading in on the entrance curve over `IN_DOT`, its start
+ *               along an `IN_SWEEP` from the knob to the track's start,
+ *               softly dithered, with no overshoot
+ *             - out: from the track's start to the knob, each dot shrinking
+ *               and fading on the exit curve over `OUT_DOT`, its start along
+ *               an `OUT_SWEEP` on the entrance curve, so the front sets off
+ *               at once and slows through the full dots near the knob; the
+ *               field then lets go
+ *             A change mid-way starts each dot from where it is. The track's
+ *             start is its left; right to left, its right (`start`).
  *   shimmer   while they are there, every dot swells and brightens, then
  *             shrinks and dims, on top of the field's own twinkle: three slow
  *             sines of its own (`PERIODS`, each ±15% by dot), phases hashed
@@ -98,12 +100,14 @@ export function shimmerAt(col: number, row: number, t: number): number {
   return Math.max(-1, Math.min(1, s));
 }
 
-/** One presence change: in (`on`) or out, from `t0`, over the track from 0 to `x` (the knob's center). */
+/** One presence change: in (`on`) or out, from `t0`, over the track from its start to `x` (the knob's center). */
 export interface PresencePhase {
   on: boolean;
   t0: number;
   x: number;
   ts: number;
+  /** The track's start, px from its left: 0, or right to left its width (the fill is then the knob's right). */
+  start?: number;
   /** The change before it, while this one is under way: each dot starts from where that one had it. */
   prev: PresencePhase | null;
 }
@@ -136,9 +140,12 @@ export function presenceDelay(
   col: number,
   row: number
 ): number {
-  const span = Math.max(1, p.x);
-  // In: from the knob leftward (those under or past it first). Out: from the track's start rightward.
-  const along = p.on ? (p.x - bx) / span : bx / span;
+  const edge = p.start ?? 0;
+  const span = Math.max(1, Math.abs(p.x - edge));
+  // Which way the knob is from the track's start: rightward, or right to left leftward.
+  const way = edge <= p.x ? 1 : -1;
+  // In: from the knob toward the track's start (those under or past it first). Out: from the start to the knob.
+  const along = (way * (p.on ? p.x - bx : bx - edge)) / span;
   const start = lookup(p.on ? IN_TABLE : OUT_TABLE, along);
   const sweep = p.on ? IN_SWEEP : OUT_SWEEP;
   return (
@@ -175,10 +182,12 @@ export interface TwinkleWaveOptions {
   /** Since when the dots are there (`performance.now()` ms); null while the shimmer is off. */
   source: () => { since: number } | null;
   timeScale: () => number;
+  /** Whether the track runs right to left: its start is then the canvas's right edge. */
+  rtl?: () => boolean;
 }
 
 export interface TwinkleWave {
-  /** The dots come in (`on`) or go, over the track from 0 to `x` (the knob's center, px), from now;
+  /** The dots come in (`on`) or go, over the track from its start to `x` (the knob's center, px), from now;
    *  `instant`: at once. Returns the change's length, ms. */
   present(on: boolean, x: number, instant?: boolean): number;
   /** Puts the canvas's context back. */
@@ -285,7 +294,14 @@ export function attachTwinkleWave(
         phase = null;
         return 0;
       }
-      phase = { on, t0: performance.now(), x, ts: o.timeScale(), prev: phase };
+      phase = {
+        on,
+        t0: performance.now(),
+        x,
+        ts: o.timeScale(),
+        start: o.rtl?.() ? canvas.offsetWidth : 0,
+        prev: phase,
+      };
       // At most a few changes back (a quick back-and-forth); older ones have long settled.
       let depth = 0;
       for (let p: PresencePhase | null = phase; p; p = p.prev) {

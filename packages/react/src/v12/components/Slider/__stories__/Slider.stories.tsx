@@ -654,7 +654,7 @@ const MODES: SliderStep[] = [
   { label: 'Auto' },
 ];
 
-/** `ai` on the track: dots on the fill. On an `ai` slider with more than two steps the last is the special step: there the dots come in from the knob, and leave left to right. */
+/** `ai` on the track: dots on the fill. On an `ai` slider with more than two steps the last is the special step: there the dots come in from the knob, and leave from the track's start. */
 export const Ai = {
   render: function AiStory() {
     const [value, setValue] = useState(2);

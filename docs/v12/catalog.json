@@ -26620,7 +26620,7 @@
             "leftOverflowButtonProps": {
               "type": "object",
               "unchecked": "HTMLAttributes<HTMLButtonElement>",
-              "description": "Spread onto the scroll buttons."
+              "description": "Spread onto the scroll buttons, as v11's: left onto the previous (the right one, right to left), right onto the next."
             },
             "light": {
               "type": "boolean"

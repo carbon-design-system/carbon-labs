@@ -144,7 +144,7 @@ import { inlineKey, isRtl } from '@carbon-labs/react-util';
  *            the slider's box, the default, or flush), and
  *            `ai`: the projection texture on the fill (carbon-motion's
  *            `dotField`), twinkling and shimmering; on the special step, in
- *            from the knob, out left to right (`twinkleWave.ts`).
+ *            from the knob, out from the track's start (`twinkleWave.ts`).
  *            `knob`: the track's knob, stops and base, no fill
  *   fields   the kit's TextInput: sync, clamping and correction on blur or
  *            Enter; one message line under the slider (FieldMessage)
@@ -1522,6 +1522,7 @@ export function Slider({
           : null;
       },
       timeScale: () => texture.current.timeScale,
+      rtl,
     });
     presence.current = tw;
     field.current = f;
@@ -1550,8 +1551,8 @@ export function Slider({
     lastLower.current = lower;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lower]);
-  // The dots follow the special step: in from the knob when it lands there, out left to right
-  // otherwise. The field holds the state at once; `twinkleWave.ts` draws the change.
+  // The dots follow the special step: in from the knob when it lands there, out from the track's
+  // start otherwise. The field holds the state at once; `twinkleWave.ts` draws the change.
   const syncedField = useRef<DotField | null>(null);
   useLayoutEffect(() => {
     const f = field.current;
@@ -1616,12 +1617,16 @@ export function Slider({
       aria-valuenow={valueNow(h)}
       aria-valuetext={formatLabel(valueNow(h), undefined)}
       aria-labelledby={twoHandles || labelText == null ? undefined : labelId}
+      // Two knobs take the names their number fields take; one knob with no label takes the
+      // caller's name.
       aria-label={
         twoHandles
           ? h === 'lower'
+            ? (ariaLabelInput ?? 'Lower bound')
+            : (ariaLabelInputUpper ?? 'Upper bound')
+          : labelText == null
             ? ariaLabelInput
-            : ariaLabelInputUpper
-          : undefined
+            : undefined
       }
       aria-disabled={disabled || undefined}
       aria-readonly={readOnly || undefined}
@@ -1799,7 +1804,10 @@ export function Slider({
             <div
               className="cds-slider__meter"
               role={twoHandles ? 'img' : 'meter'}
-              aria-labelledby={labelText != null ? labelId : undefined}
+              // A range is named by its label and its two values together, in `aria-label`.
+              aria-labelledby={
+                !twoHandles && labelText != null ? labelId : undefined
+              }
               aria-label={
                 twoHandles
                   ? `${textOf(labelText) || ariaLabelInput || 'Range'}: ${readoutText}`
@@ -1935,7 +1943,11 @@ export function Slider({
           </span>
         )}
       </div>
-      <div className="cds-slider__row">
+      <div
+        className="cds-slider__row"
+        // The label names the pair: each knob and field of a range carries its own bound's name.
+        role={twoHandles && labelText != null ? 'group' : undefined}
+        aria-labelledby={twoHandles && labelText != null ? labelId : undefined}>
         {twoHandles && fieldFor('lower')}
         {!stepped && rangeLabel(min, minLabel)}
         <div className="cds-slider__bar">

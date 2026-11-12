@@ -1530,6 +1530,10 @@ export const MOTION_ICONS: Record<string, IconLoader> = {
     import('./icons/microphone-off-toggle/microphone-off-toggle').then(
       (m) => m.ClabsMotionIconMicrophoneOffToggle
     ),
+  'microphone-listening-toggle': () =>
+    import('./icons/microphone-listening-toggle/microphone-listening-toggle').then(
+      (m) => m.ClabsMotionIconMicrophoneListeningToggle
+    ),
   'microphone-toggle': () =>
     import('./icons/microphone-toggle/microphone-toggle').then(
       (m) => m.ClabsMotionIconMicrophoneToggle

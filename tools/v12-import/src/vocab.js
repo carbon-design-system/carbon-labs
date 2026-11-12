@@ -23,7 +23,7 @@ const COMPONENTS = 'packages/react/src/v12/components';
  *
  * @returns {object} The vocabulary.
  */
-export function readVocab() {
+function readVocab() {
   return JSON.parse(
     fs.readFileSync(new URL('./vocab.json', import.meta.url), 'utf8')
   );
@@ -66,7 +66,7 @@ function laneFolders(labs) {
  * @param {object} type The type.
  * @returns {{ values: (string | number)[], other: string[] }} Its parts.
  */
-export function partsOf(ts, checker, type) {
+function partsOf(ts, checker, type) {
   const values = [];
   const other = [];
   let booleans = 0;

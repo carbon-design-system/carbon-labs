@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-card",
-  "version": "0.16.0",
+  "version": "0.18.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - Card for React (v12)",
@@ -59,6 +59,7 @@
     "@carbon-labs/utilities": "0.28.0",
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
     "jsdom": "^26.0.0",
     "vitest": "^4.0.0"
   }

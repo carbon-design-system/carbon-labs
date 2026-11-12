@@ -31,6 +31,7 @@ import {
   StopFilledAlt,
 } from '@carbon/icons-react';
 import { MegaButton } from '@carbon-labs/react-mega-button';
+import { assignRef } from '@carbon-labs/react-util';
 import { useAutoGrow } from '../internal/useAutoGrow';
 import { useMeasuredHeight } from '../internal/useMeasuredHeight';
 import { useInverseTheme, type CarbonTheme } from '../internal/useInverseTheme';
@@ -236,11 +237,7 @@ export const ChatInput = forwardRef<HTMLDivElement, ChatInputProps>(
     const settingsRef = useRef<HTMLButtonElement | null>(null);
     const setRootRef = (node: HTMLDivElement | null) => {
       rootRef.current = node;
-      if (typeof ref === 'function') {
-        ref(node);
-      } else if (ref) {
-        ref.current = node;
-      }
+      assignRef(ref, node);
     };
 
     const [uncontrolled, setUncontrolled] = useState(defaultValue);

@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/v12-figma",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - the code side of the v12 design sync: tokens, components, motion and docs as snapshots a design file is checked against",

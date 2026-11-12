@@ -314,6 +314,8 @@ export interface ToggleIconProps<
   /** With `asButton`: the button is disabled (no tab stop, no toggling, no hover). */
   disabled?: boolean;
   filled?: boolean;
+  /** The input level, 0 to 1, or a function read each frame (a listening state follows it). */
+  level?: number | (() => number);
 }
 export type StateIconProps<S extends string> = Omit<
   ToggleIconProps<S>,

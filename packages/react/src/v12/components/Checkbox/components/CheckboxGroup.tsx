@@ -94,7 +94,8 @@ export function CheckboxGroup({
         : helperText
           ? helperId
           : rest['aria-describedby'];
-  // The group's status reaches each Checkbox that sets none of its own (v11).
+  // The group's status and its read-only state reach each Checkbox that sets none of its own
+  // (v11).
   const boxes = Children.map(children, (child) => {
     if (!isValidElement(child) || child.type !== Checkbox) return child;
     const own = child.props as CheckboxProps;
@@ -103,6 +104,7 @@ export function CheckboxGroup({
       set.invalid = status === 'error';
     if (warn !== undefined && own.warn === undefined)
       set.warn = status === 'warn';
+    if (readOnly && own.readOnly === undefined) set.readOnly = true;
     return Object.keys(set).length
       ? cloneElement(child as ReactElement<CheckboxProps>, set)
       : child;
@@ -118,7 +120,6 @@ export function CheckboxGroup({
         className
       )}
       disabled={disabled}
-      aria-readonly={readOnly || undefined}
       aria-describedby={described}>
       <legend className="cds-checkbox-group__legend">{legendText}</legend>
       <div className="cds-checkbox-group__boxes">{boxes}</div>

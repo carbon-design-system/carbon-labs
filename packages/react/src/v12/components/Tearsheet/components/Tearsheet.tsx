@@ -74,6 +74,7 @@ import {
   usePressOutside,
   wrapTab,
 } from '@carbon-labs/react-util';
+import { assignRef } from '@carbon-labs/react-util';
 import { inertProps } from '@carbon-labs/react-util';
 import '@carbon-labs/react-modal/scss/modal.scss';
 import './tearsheet.scss';
@@ -610,8 +611,7 @@ const TearsheetShell = forwardRef<
   const setRef = useCallback(
     (el: HTMLDivElement | null) => {
       surfaceRef.current = el;
-      if (typeof ref === 'function') ref(el);
-      else if (ref) ref.current = el;
+      assignRef(ref, el);
     },
     [ref]
   );

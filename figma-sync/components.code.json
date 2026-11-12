@@ -31,7 +31,7 @@
     },
     "resolvedFrom": "figma-sync/state-colors.resolved.json",
     "resolved": 0,
-    "pending": 786
+    "pending": 792
   },
   "items": [
     {
@@ -1108,12 +1108,7 @@
       "title": "V12/Charts",
       "stories": [
         "v12-charts--fixtures",
-        "v12-charts--small",
-        "v12-charts--medium",
-        "v12-charts--large",
-        "v12-charts--loading",
-        "v12-charts--empty",
-        "v12-charts--load-error"
+        "v12-charts--palette"
       ],
       "docs": "v12-charts--overview",
       "props": {
@@ -1126,28 +1121,9 @@
           "figma": "VARIANT",
           "values": [
             "sm",
-            "md",
             "lg"
           ],
           "surface": true
-        },
-        "state": {
-          "figma": "VARIANT",
-          "values": [
-            "ready",
-            "loading",
-            "empty",
-            "error"
-          ]
-        },
-        "theme": {
-          "figma": "VARIANT",
-          "values": [
-            "page",
-            "light",
-            "dark",
-            "inverse"
-          ]
         },
         "live": {
           "figma": "BOOLEAN"
@@ -1156,21 +1132,10 @@
       "notMapped": [],
       "state": [
         "rest",
-        "live-update",
-        "loading",
-        "empty",
-        "error"
+        "live-update"
       ],
-      "motion": [
-        "duration-moderate-01",
-        "easing-standard-productive",
-        "easing-entrance-productive"
-      ],
-      "reduced": {
-        "duration-moderate-01": "at-once",
-        "easing-standard-productive": "at-once",
-        "easing-entrance-productive": "at-once"
-      },
+      "motion": [],
+      "reduced": {},
       "departures": [],
       "stateColors": []
     },
@@ -1196,6 +1161,8 @@
         "v12-chatshell--pane",
         "v12-chatshell--variants",
         "v12-chatshell--prompt",
+        "v12-chatshell--dictation",
+        "v12-chatshell--dictation-live",
         "v12-chatshell--notice",
         "v12-chatshell--attachments",
         "v12-chatshell--prompt-suggestions",
@@ -1282,7 +1249,7 @@
         "send-to-stop",
         "width-move",
         "sideways-opening",
-        "status",
+        "dictation",
         "rise",
         "jump-to-a-question",
         "marker",
@@ -1294,7 +1261,7 @@
         "history": "at-once",
         "width-move": "at-once",
         "sideways-opening": "at-once",
-        "status": "at-once",
+        "dictation": "at-once",
         "rise": "at-once",
         "jump-to-a-question": "at-once",
         "marker": "at-once"
@@ -1468,6 +1435,36 @@
             "srgb"
           ],
           "expression": "color-mix( in srgb, #{theme.$layer-selected-inverse} 88%, #{theme.$text-inverse} )",
+          "values": {
+            "white": {
+              "pending": "browser-render"
+            },
+            "g10": {
+              "pending": "browser-render"
+            },
+            "g90": {
+              "pending": "browser-render"
+            },
+            "g100": {
+              "pending": "browser-render"
+            },
+            "v12-light": {
+              "pending": "browser-render"
+            },
+            "v12-dark": {
+              "pending": "browser-render"
+            }
+          }
+        },
+        {
+          "file": "packages/react/src/v12/components/Chat/components/chat.scss",
+          "selector": ".cds-dictation__spinner",
+          "property": "--cds-spinner-base",
+          "state": null,
+          "spaces": [
+            "srgb"
+          ],
+          "expression": "color-mix(in srgb, currentColor 30%, transparent)",
           "values": {
             "white": {
               "pending": "browser-render"
@@ -9112,7 +9109,7 @@
         {
           "file": "packages/react/src/v12/components/Slider/components/slider.scss",
           "selector": "@mixin gradient-ramp",
-          "property": "background",
+          "property": "background-image",
           "state": null,
           "spaces": [
             "oklch"

@@ -848,6 +848,24 @@ const SidePanelShell = forwardRef<
   const requestClose = (e: SyntheticEvent | Event) =>
     latest.current.onRequestClose?.(e);
 
+  // The Back button is there past the first step only. Leaving with focus on it, it hands the
+  // focus to the close button (else the panel). A ref is let go before its element is removed,
+  // focus still on it; a button that only rendered again takes its ref back.
+  const backEl = useRef<HTMLElement | null>(null);
+  const backLeftFocused = useRef(false);
+  const setBack = useCallback((el: HTMLElement | null) => {
+    backLeftFocused.current =
+      !el && !!backEl.current && backEl.current === document.activeElement;
+    backEl.current = el;
+  }, []);
+  const hasBack = currentStep > 0;
+  useLayoutEffect(() => {
+    if (hasBack || !backLeftFocused.current) return;
+    backLeftFocused.current = false;
+    const el = surfaceRef.current;
+    (el?.querySelector<HTMLElement>('[data-layer-close]') ?? el)?.focus();
+  }, [hasBack]);
+
   useLayerKeys({
     open,
     token: token,
@@ -975,6 +993,7 @@ const SidePanelShell = forwardRef<
               <div className="cds-side-panel__bar">
                 {stepped && (
                   <IconButton
+                    ref={setBack}
                     frame="ghost"
                     size="md"
                     corners="full"

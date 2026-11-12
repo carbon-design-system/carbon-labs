@@ -22,7 +22,7 @@ import {
 } from '@carbon-labs/v12-motion';
 import { MultiFieldInput } from '@carbon-labs/react-text-input';
 import './easing-graph.scss';
-import { inlineKey, useReducedGetter } from '@carbon-labs/react-util';
+import { useReducedGetter } from '@carbon-labs/react-util';
 
 /* ============================================================================
  * EasingGraph — a cubic-bezier as a graph: progress (up) over time (across),
@@ -49,6 +49,9 @@ import { inlineKey, useReducedGetter } from '@carbon-labs/react-util';
  *            holds while the handle follows it
  *   keys     arrows move a handle 0.01 (Shift, 0.1): left and right its x,
  *            up and down its y
+ *   rtl      the plot is a time axis: it runs left to right in a
+ *            right-to-left page too, handles and keys with it; only the
+ *            numbers follow the page
  * ========================================================================== */
 
 export interface EasingGraphProps {
@@ -148,8 +151,8 @@ export function EasingGraph({
       ArrowDown: [0, -by],
       ArrowUp: [0, by],
     };
-    // The handles stand at their inline offset, so right to left ← moves x on.
-    const step = d[inlineKey(e.key, e.currentTarget)];
+    // The graph runs left to right in either direction: → moves x on.
+    const step = d[e.key];
     if (!step) return;
     e.preventDefault();
     set(handle, hx + step[0], hy + step[1]);
@@ -171,7 +174,9 @@ export function EasingGraph({
       ]
         .filter(Boolean)
         .join(' ')}>
-      <div className="cds-easing-graph__stage">
+      {/* Time runs left to right, as CSS's own x does, in either direction:
+          the plot and its handles are not mirrored (the numbers are). */}
+      <div className="cds-easing-graph__stage" dir="ltr">
         <svg
           ref={svg}
           className="cds-easing-graph__plot"
@@ -226,7 +231,7 @@ export function EasingGraph({
         ].map(([hx, hy], i) => {
           const h = i as 0 | 1;
           const at = {
-            insetInlineStart: `${(X(hx!) / W) * 100}%`,
+            left: `${(X(hx!) / W) * 100}%`,
             insetBlockStart: `${(Y(hy!) / H) * 100}%`,
           };
           return editable ? (

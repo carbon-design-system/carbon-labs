@@ -53,7 +53,7 @@ export function firstSentence(text) {
  * @param {string} name Its CSS name without `--cds-`.
  * @returns {string[]} The scopes.
  */
-export function scopesFor(type, name) {
+function scopesFor(type, name) {
   if (type === 'color') {
     if (/(^|-)(text|label)(-|$)/.test(name)) {
       return ['TEXT_FILL'];

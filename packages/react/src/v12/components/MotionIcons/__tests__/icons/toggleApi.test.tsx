@@ -143,6 +143,8 @@ describe('deprecated toggle aliases', () => {
 //   a Carbon icon or the family prefix of several (Volume: VolumeDown, VolumeUp).
 // - A swap whose start icon's name is held by that icon's own outline ⇄ filled
 //   toggle names both ends (TWO_ENDED).
+// - A swap to a drawing of its own, with no Carbon icon, names its start icon
+//   and the state it draws (OWN_END: Microphone ⇄ listening).
 // Drawings are props, so no name says Filled or Solid.
 
 /** Swaps named for both ends, with those ends' Carbon icons. */
@@ -152,6 +154,10 @@ const TWO_ENDED: Record<string, [string, string]> = {
   AsleepAwake: ['Asleep', 'Sun'],
   LockedUnlocked: ['Locked', 'Unlocked'],
   MicrophoneVoiceMode: ['Microphone', 'VoiceMode'],
+};
+/** Swaps to a drawing of their own: the start's Carbon icon, then the state. */
+const OWN_END: Record<string, string> = {
+  MicrophoneListening: 'Microphone',
 };
 const startsAFamily = (stem: string) =>
   [...CARBON].some(
@@ -178,6 +184,10 @@ function followsRule(name: string): string | null {
       return `two-ended, but ${ends[0]}Toggle is free: use it`;
     return null;
   }
+  const start = OWN_END[stem];
+  if (start) {
+    return CARBON.has(start) ? null : 'its start is not a Carbon icon';
+  }
   return 'its base is not a Carbon icon';
 }
 
@@ -190,7 +200,7 @@ describe('the naming rule', () => {
     expect(
       PUBLIC_TOGGLES.filter((n) => followsRule(n) !== null && !(n in ALIASES))
     ).toEqual([]);
-    expect(CURRENT.length).toBe(122);
+    expect(CURRENT.length).toBe(123);
   });
 });
 

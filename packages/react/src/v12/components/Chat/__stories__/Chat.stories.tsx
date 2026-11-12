@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from '@carbon-labs/react-button';
 import { ContentSwitcher, Switch } from '@carbon-labs/react-content-switcher';
 import { PageHeader } from '@carbon-labs/react-page-header';
@@ -66,6 +66,7 @@ import type {
   ChatTurn,
   ChatVariant,
   ChipFile,
+  PromptInputProps,
   PromptNoticeValue,
   Suggestion,
   TurnStatusValue,
@@ -110,7 +111,7 @@ export default {
         'send-to-stop',
         'width-move',
         'sideways-opening',
-        'status',
+        'dictation',
         'rise',
         'jump-to-a-question',
         'marker',
@@ -122,7 +123,7 @@ export default {
         history: 'at-once',
         'width-move': 'at-once',
         'sideways-opening': 'at-once',
-        status: 'at-once',
+        dictation: 'at-once',
         rise: 'at-once',
         'jump-to-a-question': 'at-once',
         marker: 'at-once',
@@ -609,6 +610,145 @@ function Labelled({ label, children }: { label: string; children: ReactNode }) {
     </div>
   );
 }
+
+/* ── dictation: a pretend microphone, and a real one ─────────────────── */
+
+/** How long the pretend microphone takes to connect, ms. */
+const CONNECT_MS = 600;
+
+/** PromptInput's dictation props, as a host passes them. */
+type DictationProps = Required<
+  Pick<
+    PromptInputProps,
+    'listening' | 'onListeningChange' | 'connecting' | 'level'
+  >
+>;
+
+/** A smooth random walk, 0 to 1, stepped each frame while `on`: a stand-in for a voice. */
+function useRandomWalk(on: boolean) {
+  const level = useRef(0);
+  useEffect(() => {
+    level.current = 0;
+    if (!on) return;
+    let frame = 0;
+    let speed = 0;
+    const step = () => {
+      // The speed wanders and drags; the level bounces off either end.
+      speed = (speed + (Math.random() - 0.5) * 0.02) * 0.94;
+      const next = level.current + speed;
+      if (next < 0 || next > 1) speed = -speed / 2;
+      level.current = Math.min(1, Math.max(0, next));
+      frame = requestAnimationFrame(step);
+    };
+    frame = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(frame);
+  }, [on]);
+  return useCallback(() => level.current, []);
+}
+
+/** A pretend microphone: it connects after `connectMs`, then its level is `hold`, or the random walk. */
+function useSimulatedDictation(connectMs: number, hold?: number) {
+  const [connecting, setConnecting] = useState(false);
+  const [listening, setListening] = useState(false);
+  const timer = useRef(0);
+  useEffect(() => () => window.clearTimeout(timer.current), []);
+  const walk = useRandomWalk(listening && hold === undefined);
+  const props: DictationProps = {
+    listening,
+    connecting,
+    level: hold ?? walk,
+    onListeningChange: (on) => {
+      window.clearTimeout(timer.current);
+      setListening(false);
+      setConnecting(on);
+      if (on) {
+        timer.current = window.setTimeout(() => {
+          setConnecting(false);
+          setListening(true);
+        }, connectMs);
+      }
+    },
+  };
+  return props;
+}
+
+/** The browser's microphone: asked for on the press, its level read from an AnalyserNode, its tracks stopped on stop. */
+function useMicrophoneDictation() {
+  const [connecting, setConnecting] = useState(false);
+  const [listening, setListening] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const level = useRef(0);
+  const release = useRef<() => void>(() => {});
+  // Each press is a new request; a stop makes the one still waiting stale.
+  const request = useRef(0);
+  useEffect(() => () => release.current(), []);
+
+  const stop = () => {
+    request.current += 1;
+    release.current();
+    release.current = () => {};
+    level.current = 0;
+    setConnecting(false);
+    setListening(false);
+  };
+  const start = async () => {
+    const id = ++request.current;
+    setError(null);
+    setConnecting(true);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+      });
+      if (id !== request.current) {
+        stream.getTracks().forEach((t) => t.stop());
+        return;
+      }
+      const audio = new AudioContext();
+      void audio.resume();
+      const analyser = audio.createAnalyser();
+      analyser.fftSize = 1024;
+      audio.createMediaStreamSource(stream).connect(analyser);
+      const samples = new Float32Array(analyser.fftSize);
+      let frame = 0;
+      const read = () => {
+        analyser.getFloatTimeDomainData(samples);
+        let sum = 0;
+        for (const x of samples) sum += x * x;
+        const rms = Math.sqrt(sum / samples.length);
+        // A room's hum sits under 0.01 RMS and a raised voice near 0.2: that span, 0 to 1.
+        const next = Math.min(1, Math.max(0, rms - 0.01) * 5);
+        level.current += (next - level.current) * 0.3;
+        frame = requestAnimationFrame(read);
+      };
+      frame = requestAnimationFrame(read);
+      release.current = () => {
+        cancelAnimationFrame(frame);
+        stream.getTracks().forEach((t) => t.stop());
+        void audio.close();
+      };
+      setConnecting(false);
+      setListening(true);
+    } catch {
+      if (id !== request.current) return;
+      setConnecting(false);
+      setError(
+        'No microphone. Check the browser’s permission, then try again.'
+      );
+    }
+  };
+  const read = useCallback(() => level.current, []);
+  const props: DictationProps = {
+    listening,
+    connecting,
+    level: read,
+    onListeningChange: (on) => (on ? void start() : stop()),
+  };
+  return { props, error };
+}
+
+/** What the microphone is doing, in words. */
+const dictationState = ({ connecting, listening }: DictationProps) =>
+  connecting ? 'Connecting' : listening ? 'Listening' : 'At rest';
 
 /* ── stories ──────────────────────────────────────────────────────────── */
 
@@ -1487,15 +1627,14 @@ export const Prompt = {
   render: function PromptStory() {
     const [sent, setSent] = useState<string | null>(null);
     const [generating, setGenerating] = useState(false);
-    const [listening, setListening] = useState(false);
+    const dictation = useSimulatedDictation(CONNECT_MS);
     return (
       <div style={stack}>
         <PromptInput
           addMenu={ADD_MENU}
           models={MODELS}
           defaultModel="Balanced 2"
-          listening={listening}
-          onListeningChange={setListening}
+          {...dictation}
           generating={generating}
           onStop={() => setGenerating(false)}
           onSubmit={(text) => {
@@ -1521,6 +1660,75 @@ export const Prompt = {
         <Labelled label="Disabled">
           <PromptInput label="Prompt, disabled" disabled models={MODELS} />
         </Labelled>
+      </div>
+    );
+  },
+};
+
+/** The level to show: the random walk, or held. */
+const LEVELS = [
+  ['walk', 'Random walk'],
+  ['0', '0'],
+  ['0.5', '0.5'],
+  ['1', '1'],
+] as const;
+
+/**
+ * Dictation with a pretend microphone. A press connects for a moment, with
+ * the spinner, then listens: the button fills and its pills follow the level,
+ * here a random walk or held at 0, 0.5 or 1. Press again to stop.
+ */
+export const Dictation = {
+  render: function DictationStory() {
+    const [hold, setHold] = useState(0);
+    const level = LEVELS[hold][0];
+    const dictation = useSimulatedDictation(
+      CONNECT_MS,
+      level === 'walk' ? undefined : Number(level)
+    );
+    return (
+      <div style={stack}>
+        <ContentSwitcher
+          aria-label="Level"
+          size="sm"
+          selectedIndex={hold}
+          onChange={({ index }) => setHold(index ?? 0)}>
+          {LEVELS.map(([value, text]) => (
+            <Switch key={value} name={value} text={text} />
+          ))}
+        </ContentSwitcher>
+        <PromptInput models={MODELS} defaultModel="Balanced 2" {...dictation} />
+        <p style={captionText}>{dictationState(dictation)}</p>
+        <Labelled label="Variants: tonal and outlined">
+          <div style={{ display: 'grid', gap: 16 }}>
+            {(['tonal', 'outlined'] as const).map((variant) => (
+              <PromptInput
+                key={variant}
+                label={`Prompt, ${variant}`}
+                variant={variant}
+                {...dictation}
+              />
+            ))}
+          </div>
+        </Labelled>
+      </div>
+    );
+  },
+};
+
+/**
+ * Dictation with the browser's microphone. A press asks for it; the spinner
+ * shows until it's allowed. Listening, the pills follow your voice. Nothing is
+ * recorded or sent, and a stop turns the microphone off.
+ */
+export const DictationLive = {
+  name: 'Dictation, live microphone',
+  render: function DictationLiveStory() {
+    const { props, error } = useMicrophoneDictation();
+    return (
+      <div style={stack}>
+        <PromptInput models={MODELS} defaultModel="Balanced 2" {...props} />
+        <p style={captionText}>{error ?? dictationState(props)}</p>
       </div>
     );
   },

@@ -230,7 +230,7 @@ const list = (set) =>
  * @param {string} labs The carbon-labs checkout.
  * @returns {Promise<string>} The Markdown.
  */
-export async function buildContract(labs) {
+async function buildContract(labs) {
   const seam = path.join(labs, SEAM, 'src');
   const exports = [
     ...seamExports(

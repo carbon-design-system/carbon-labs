@@ -2991,6 +2991,11 @@ __metadata:
     "@carbon-labs/v12-motion": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
+    jsdom: "npm:^26.0.0"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
   languageName: unknown
@@ -3077,6 +3082,7 @@ __metadata:
     "@ibm/telemetry-js": "npm:^1.10.2"
     "@testing-library/jest-dom": "npm:^6.0.0"
     "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
     jsdom: "npm:^26.0.0"
     vitest: "npm:^4.0.0"
   peerDependencies:
@@ -3100,6 +3106,10 @@ __metadata:
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    jsdom: "npm:^26.0.0"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
   languageName: unknown
@@ -3156,6 +3166,7 @@ __metadata:
     "@ibm/telemetry-js": "npm:^1.10.2"
     "@testing-library/jest-dom": "npm:^6.0.0"
     "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
     jsdom: "npm:^26.0.0"
     vitest: "npm:^4.0.0"
   peerDependencies:
@@ -3202,6 +3213,7 @@ __metadata:
   dependencies:
     "@carbon-labs/react-file-chip": "workspace:*"
     "@carbon-labs/react-mega-button": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
     "@testing-library/jest-dom": "npm:^6.0.0"
     "@testing-library/react": "npm:^16.1.0"
     "@testing-library/user-event": "npm:^14.5.2"
@@ -3232,6 +3244,7 @@ __metadata:
     prop-types: "npm:^15.8.1"
     vitest: "npm:^4.0.0"
   peerDependencies:
+    "@carbon/icons-react": ^11.0.0
     "@carbon/react": ^1.95.0
     react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
     react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
@@ -3268,6 +3281,7 @@ __metadata:
     "@carbon-labs/react-disclosure": "workspace:*"
     "@carbon-labs/react-feedback": "workspace:*"
     "@carbon-labs/react-jump-to": "workspace:*"
+    "@carbon-labs/react-loading": "workspace:*"
     "@carbon-labs/react-menu": "workspace:*"
     "@carbon-labs/react-motion-icons": "workspace:*"
     "@carbon-labs/react-notification": "workspace:*"
@@ -3307,6 +3321,7 @@ __metadata:
     prop-types: "npm:^15.8.1"
     vitest: "npm:^4.0.0"
   peerDependencies:
+    "@carbon/icons-react": ^11.0.0
     "@carbon/react": ^1.95.0
     react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
     react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
@@ -3447,6 +3462,7 @@ __metadata:
     "@carbon-labs/react-util": "workspace:*"
     "@carbon-labs/utilities": "npm:0.28.0"
     "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
     vitest: "npm:^4.0.0"
@@ -3515,6 +3531,10 @@ __metadata:
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
+    jsdom: "npm:^26.0.0"
     vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
@@ -3585,6 +3605,7 @@ __metadata:
     "@carbon-labs/react-util": "workspace:*"
     "@carbon-labs/utilities": "npm:0.28.0"
     "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
   peerDependencies:
@@ -3678,6 +3699,7 @@ __metadata:
   resolution: "@carbon-labs/react-file-chip@workspace:packages/react/src/v12/components/FileChip"
   dependencies:
     "@carbon-labs/react-mega-button": "workspace:*"
+    "@carbon-labs/react-util": "workspace:*"
     "@testing-library/jest-dom": "npm:^6.0.0"
     "@testing-library/react": "npm:^16.1.0"
     "@testing-library/user-event": "npm:^14.5.2"
@@ -3894,6 +3916,7 @@ __metadata:
     "@carbon-labs/react-util": "workspace:*"
     "@carbon-labs/utilities": "npm:0.28.0"
     "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
     vitest: "npm:^4.0.0"
@@ -3912,6 +3935,7 @@ __metadata:
     "@carbon-labs/react-motion-icons": "workspace:*"
     "@carbon-labs/utilities": "npm:0.28.0"
     "@carbon-labs/v12-motion": "workspace:*"
+    "@carbon-labs/v12-styles": "workspace:*"
     "@ibm/telemetry-js": "npm:^1.10.2"
     vitest: "npm:^4.0.0"
   peerDependencies:
@@ -4037,6 +4061,7 @@ __metadata:
     "@carbon-labs/react-button": "workspace:*"
     "@carbon-labs/react-feedback": "workspace:*"
     "@carbon-labs/react-kit-defaults": "workspace:*"
+    "@carbon-labs/react-loading": "workspace:*"
     "@carbon-labs/react-motion-icons": "workspace:*"
     "@carbon-labs/react-popover": "workspace:*"
     "@carbon-labs/react-props": "workspace:*"
@@ -4075,6 +4100,11 @@ __metadata:
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
+    jsdom: "npm:^26.0.0"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
     react-dom: ^18.2.0 || ^19.0.0
@@ -4129,6 +4159,11 @@ __metadata:
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
+    jsdom: "npm:^26.0.0"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
   languageName: unknown
@@ -4156,6 +4191,11 @@ __metadata:
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
+    jsdom: "npm:^26.0.0"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
   languageName: unknown
@@ -4320,7 +4360,9 @@ __metadata:
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/jest-dom": "npm:^6.0.0"
     "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
     jsdom: "npm:^26.0.0"
     vitest: "npm:^4.0.0"
   peerDependencies:
@@ -4436,6 +4478,11 @@ __metadata:
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
+    jsdom: "npm:^26.0.0"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
   languageName: unknown
@@ -4673,6 +4720,7 @@ __metadata:
     prop-types: "npm:^15.8.1"
     vitest: "npm:^4.0.0"
   peerDependencies:
+    "@carbon/icons-react": ^11.0.0
     "@carbon/react": ^1.95.0
     react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
     react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
@@ -4739,6 +4787,10 @@ __metadata:
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
+    jsdom: "npm:^26.0.0"
     vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
@@ -4976,6 +5028,10 @@ __metadata:
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
+    jsdom: "npm:^26.0.0"
     vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
@@ -5122,6 +5178,11 @@ __metadata:
     "@carbon-labs/v12-motion": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
+    jsdom: "npm:^26.0.0"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
   languageName: unknown
@@ -5140,6 +5201,11 @@ __metadata:
     "@carbon-labs/v12-styles": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
+    jsdom: "npm:^26.0.0"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
   languageName: unknown
@@ -5158,6 +5224,11 @@ __metadata:
     "@carbon-labs/v12-motion": "workspace:*"
     "@carbon/react": "npm:^1.118.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
+    jsdom: "npm:^26.0.0"
+    vitest: "npm:^4.0.0"
   peerDependencies:
     react: ^18.2.0 || ^19.0.0
   languageName: unknown
@@ -5452,6 +5523,7 @@ __metadata:
     "@carbon-labs/react-toggle": "workspace:*"
     "@carbon-labs/react-tooltip": "workspace:*"
     "@carbon-labs/v12-workbench": "workspace:*"
+    "@carbon/react": "npm:^1.118.0"
     "@storybook/react": "npm:^9.1.2"
     "@types/node": "npm:^20.17.10"
     "@types/react": "npm:^18.3.12"

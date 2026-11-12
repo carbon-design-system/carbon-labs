@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.206.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fweb-components%400.205.0...%40carbon-labs%2Fweb-components%400.206.0) (2026-11-12)
+
+### Bug Fixes
+
+* **global-header:** remove domain from storybook url ([#1517](https://github.com/carbon-design-system/carbon-labs/issues/1517)) ([0190a00](https://github.com/carbon-design-system/carbon-labs/commit/0190a00532a3a1d1ab69c0130a030e1c2a61f298))
+
+
 # [0.205.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fweb-components%400.204.0...%40carbon-labs%2Fweb-components%400.205.0) (2026-11-12)
 
 **Note:** Version bump only for package @carbon-labs/web-components

@@ -7,12 +7,24 @@
 
 import React from 'react';
 import {
+  CHART_DESIGN,
+  CHART_THEMES,
   ChartCard,
+  PALETTE_NEUTRALS,
+  chartRoleOklch,
   formatChartNumber,
+  oklchToHex,
+  paletteColor,
+  paletteRatios,
+  paletteSlots,
+  paletteSmallSlot,
   type ChartCardOverflowAction,
+  type ChartColorRole,
   type ChartPoint,
   type ChartSize,
   type ChartState,
+  type ChartTheme,
+  type PaletteColorName,
 } from '../index';
 import {
   CHART_FIXTURES,
@@ -207,3 +219,180 @@ export const Empty = { args: { state: 'empty' } };
 
 /** The data couldn't be read: a message in the plot's place. */
 export const LoadError = { args: { state: 'error' } };
+
+/** One swatch: its color, name and contrast against the page and the card. */
+interface Swatch {
+  name: string;
+  color: string;
+}
+
+/**
+ * A row of swatches, each with its ratio on the page and on the card.
+ *
+ * @param props The row's label, its swatches, the theme and the ratio they need.
+ * @returns The row.
+ */
+function SwatchRow({
+  label,
+  swatches,
+  theme,
+  min,
+}: {
+  label: string;
+  swatches: Swatch[];
+  theme: ChartTheme;
+  min: number;
+}) {
+  return (
+    <section style={{ marginBlockEnd: 16 }}>
+      <h4
+        style={{
+          margin: '0 0 8px',
+          fontSize: 12,
+          fontWeight: 400,
+          color: 'var(--cds-text-secondary)',
+        }}>
+        {label} ({min}:1)
+      </h4>
+      <ul
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: 12,
+          margin: 0,
+          padding: 0,
+          listStyle: 'none',
+        }}>
+        {swatches.map(({ name, color }) => {
+          const r = paletteRatios(color, theme);
+          return (
+            <li key={name} style={{ inlineSize: 88, fontSize: 11 }}>
+              <span
+                aria-hidden="true"
+                style={{
+                  display: 'block',
+                  blockSize: 32,
+                  borderRadius: 4,
+                  background: color,
+                }}
+              />
+              <span style={{ display: 'block', marginBlockStart: 4 }}>
+                {name}
+              </span>
+              <span
+                style={{
+                  display: 'block',
+                  color: 'var(--cds-text-secondary)',
+                }}>
+                {color}
+              </span>
+              <span
+                style={{
+                  display: 'block',
+                  color:
+                    r.min >= min
+                      ? 'var(--cds-text-secondary)'
+                      : 'var(--cds-support-error)',
+                }}>
+                {r.page.toFixed(2)} · {r.card.toFixed(2)}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+}
+
+const named = (names: readonly PaletteColorName[]): Swatch[] =>
+  names.map((name) => ({ name, color: paletteColor(name) }));
+
+const roles = (list: ChartColorRole[], theme: ChartTheme): Swatch[] =>
+  list.map((name) => ({
+    name,
+    color: oklchToHex(chartRoleOklch(name, theme)),
+  }));
+
+/**
+ * A theme's palette on its page, inside a card.
+ *
+ * @param props The theme.
+ * @returns The panel.
+ */
+function PalettePanel({ theme }: { theme: ChartTheme }) {
+  const slots = paletteSlots(theme, 10);
+  const c = CHART_DESIGN.color;
+  return (
+    <div
+      className={`cds--v12-${theme}`}
+      style={{
+        padding: 24,
+        background: oklchToHex(chartRoleOklch('background', theme)),
+        color: 'var(--cds-text-primary)',
+      }}>
+      <h3 style={{ margin: '0 0 16px', fontSize: 14, fontWeight: 600 }}>
+        {theme === 'light' ? 'Light' : 'Dark'}: page · card
+      </h3>
+      <div
+        style={{
+          padding: 24,
+          borderRadius: 16,
+          background: oklchToHex(chartRoleOklch('surface', theme)),
+        }}>
+        <SwatchRow
+          label="Series, large marks"
+          swatches={named(slots.map((s) => s.token))}
+          theme={theme}
+          min={3}
+        />
+        <SwatchRow
+          label="Series, small marks"
+          swatches={named(slots.map((s) => paletteSmallSlot(s, theme).token))}
+          theme={theme}
+          min={4.5}
+        />
+        <SwatchRow
+          label="Measured ramp"
+          swatches={named(PALETTE_NEUTRALS[theme].measured)}
+          theme={theme}
+          min={3}
+        />
+        <SwatchRow
+          label="Single series and status"
+          swatches={roles(
+            [c.measured, c.projected, c.danger, c.success, c.warning],
+            theme
+          )}
+          theme={theme}
+          min={3}
+        />
+        <SwatchRow
+          label="Text"
+          swatches={roles(['text-primary', 'text-secondary'], theme)}
+          theme={theme}
+          min={4.5}
+        />
+      </div>
+    </div>
+  );
+}
+
+/** The series palette, the measured ramp and the text on both v12 themes, each swatch with its ratio on the page and on the card. */
+export const Palette = {
+  argTypes: {
+    dataset: { table: { disable: true } },
+    size: { table: { disable: true } },
+    state: { table: { disable: true } },
+    theme: { table: { disable: true } },
+    live: { table: { disable: true } },
+  },
+  render: function PaletteStory() {
+    return (
+      <div style={{ display: 'grid', gap: 16 }}>
+        {CHART_THEMES.map((theme) => (
+          <PalettePanel key={theme} theme={theme} />
+        ))}
+      </div>
+    );
+  },
+};

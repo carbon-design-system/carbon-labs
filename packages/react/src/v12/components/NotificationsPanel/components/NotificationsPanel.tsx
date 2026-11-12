@@ -1281,7 +1281,8 @@ function PanelRow({
           size="xs"
           corners="full"
           align="left"
-          label={dismissLabel}
+          // Named with its row, so one row's button reads apart from the next's.
+          label={n.title ? `${dismissLabel} ${n.title}` : dismissLabel}
           className="cds-npanel__dismiss"
           timeScale={timeScale}
           onClick={(e) => {

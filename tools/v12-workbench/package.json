@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/v12-workbench",
-  "version": "0.25.0",
+  "version": "0.26.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - the v12 workbench, a Storybook add-on for reviewing components and their motion",

@@ -19,6 +19,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Loading, Tooltip, usePrefix } from '@carbon/react';
 import { MegaButton } from '@carbon-labs/react-mega-button';
+import { assignRef } from '@carbon-labs/react-util';
 import {
   CheckmarkFilled,
   Close,
@@ -298,11 +299,7 @@ export const FileChip = forwardRef<HTMLDivElement, FileChipProps>(
     const rootRef = useRef<HTMLDivElement | null>(null);
     function setRefs(node: HTMLDivElement | null) {
       rootRef.current = node;
-      if (typeof ref === 'function') {
-        ref(node);
-      } else if (ref) {
-        ref.current = node;
-      }
+      assignRef(ref, node);
     }
     const onSuccessEndRef = useRef(onSuccessEnd);
     onSuccessEndRef.current = onSuccessEnd;

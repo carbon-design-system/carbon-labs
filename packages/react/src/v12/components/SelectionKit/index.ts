@@ -20,7 +20,7 @@ setSelectionFont(loadPlexVar);
 export * from '@carbon-labs/v12-motion/selection';
 // The engine re-places on a direction change itself.
 export { useSelectionEngine } from '@carbon-labs/v12-motion';
-export { useDirection } from './components/direction';
+export { useDirection } from '@carbon-labs/react-util';
 // One selection list model: roles, the roving tab stop, keys, activation, right to left.
 export {
   useSelectionList,
@@ -101,4 +101,4 @@ export { mixedCheckbox, mixedState, mixedToggleTo } from './components/mixed';
 export type { MixedState } from './components/mixed';
 
 // The names other v12 packages take from this package's files.
-export { isRtl } from './components/direction';
+export { isRtl } from '@carbon-labs/react-util';

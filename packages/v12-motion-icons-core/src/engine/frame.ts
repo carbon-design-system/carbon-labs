@@ -461,6 +461,23 @@ export class FrameController<S extends string = string> {
     this.syncLoop(moving, false);
   }
 
+  /** The live level a loop with `level` follows (loop.ts): read each frame. */
+  level?: () => number;
+
+  /** The binding's `level`: a number, or a function read each frame; unset for none. */
+  setLevel(level: number | (() => number) | undefined): void {
+    const had = !!this.level;
+    this.level =
+      typeof level === 'function'
+        ? level
+        : level === undefined
+          ? undefined
+          : () => level;
+    if (had !== !!this.level) {
+      this.looper?.levelChanged();
+    }
+  }
+
   /** The state's loop on or off to match the state and `moving`; `animated` false ends it at once; `change`: it starts after the change. */
   private syncLoop(animated: boolean, change: boolean): void {
     const loop = this.spec.loop;

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-date-picker-v2%400.16.0...%40carbon-labs%2Freact-date-picker-v2%400.17.0) (2026-11-12)
+
+**Note:** Version bump only for package @carbon-labs/react-date-picker-v2
+
+
+
+
+
+# [0.16.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-date-picker-v2%400.15.0...%40carbon-labs%2Freact-date-picker-v2%400.16.0) (2026-11-12)
+
+**Note:** Version bump only for package @carbon-labs/react-date-picker-v2
+
+
+
+
+
 # [0.15.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-date-picker-v2%400.14.0...%40carbon-labs%2Freact-date-picker-v2%400.15.0) (2026-11-12)
 
 **Note:** Version bump only for package @carbon-labs/react-date-picker-v2

@@ -127,11 +127,15 @@
   },
   "V12/Charts": {
     "title": "Charts",
-    "summary": "The base the v12 chart family is built on. It holds what every chart shares\nand nothing that draws a plot: the data types, the tuning values\n(`CHART_DESIGN`), the motion resolved per motion level, the color roles and\nthe series palette's structure, the line constants, the series key, and the\ncard's sizes. The root entry loads no chart runtime, so a card without a plot\nstays small. The plot's shared pieces come at `@carbon-labs/react-charts/plot`.",
+    "summary": "The base the v12 chart family is built on. It holds what every chart shares\nand nothing that draws a plot: the data types, the tuning values\n(`CHART_DESIGN`), the motion resolved per motion level, the color roles and\nthe series palette, the line constants, the series key, and the card's sizes.\nThe root entry loads no chart runtime, so a card without a plot stays small.\nThe plot's shared pieces come at `@carbon-labs/react-charts/plot`.",
     "sections": [
       {
         "title": "The family",
         "text": "Each family is its own package on this base:\n\n- **BarChart:** single, grouped, stacked, range and horizontal bars.\n- **RadialChart:** a ring against a limit, and rings that expand.\n- **AreaChart:** a time series, with a range selector.\n- **DotMatrix:** one value per row and column.\n- **ConeChart:** small multiples, each projected to a range.\n- **StatusCard:** a reading, how fresh it is, and where it is heading."
+      },
+      {
+        "title": "Color",
+        "text": "A chart's frame (text, lines, surfaces, focus, status) reads the v12 theme's\ntokens. Text is `text-primary` or `text-secondary`, the two that hold 4.5:1 on\nthe page and the card; axis labels are `text-secondary`. The data colors are\nthe palette: Carbon's color steps for series, and the v12 neutral for measured\nseries. They are stored in OKLCH and drawn in sRGB.\n\n- **Large marks** (bars, arcs, areas) hold 3:1 against the page and the card.\n- **Small marks** (texture dots, lines of 3px or less) hold 4.5:1; a step that\n  falls short moves away from the card until it holds.\n- A chart that shows status leaves magenta out."
       },
       {
         "title": "Data",

@@ -108,9 +108,10 @@
       "status": "draft",
       "docs": "v12-charts--overview",
       "firstSentence": "The base the v12 chart family is built on.",
-      "summary": "The base the v12 chart family is built on. It holds what every chart shares and nothing that draws a plot: the data types, the tuning values (`CHART_DESIGN`), the motion resolved per motion level, the color roles and the series palette's structure, the line constants, the series key, and the card's sizes. The root entry loads no chart runtime, so a card without a plot stays small. The plot's shared pieces come at `@carbon-labs/react-charts/plot`.",
+      "summary": "The base the v12 chart family is built on. It holds what every chart shares and nothing that draws a plot: the data types, the tuning values (`CHART_DESIGN`), the motion resolved per motion level, the color roles and the series palette, the line constants, the series key, and the card's sizes. The root entry loads no chart runtime, so a card without a plot stays small. The plot's shared pieces come at `@carbon-labs/react-charts/plot`.",
       "sections": [
         "The family",
+        "Color",
         "Data",
         "Sizes",
         "Reduced motion",

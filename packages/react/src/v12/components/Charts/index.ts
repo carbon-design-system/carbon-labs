@@ -7,10 +7,17 @@
 
 // The chart family's base: the shared types, the tuning values, the motion,
 // the color roles on the v12 tokens, the palette and its color math, the
-// line constants, the series key and the card's sizes. Nothing here loads the plot's runtime; the plot's
+// line constants, the series key, the card's sizes and the card itself.
+// Nothing here loads the plot's runtime; the plot's
 // shared pieces are at `./plot`.
 
 export { CHART_SIZES, chartCardVars, chartKindColor } from './components/card';
+export {
+  ChartCard,
+  type ChartCardAction,
+  type ChartCardOverflowAction,
+  type ChartCardProps,
+} from './components/ChartCard';
 export {
   CHART_COLOR_READS,
   CHART_COLOR_ROLE_NAMES,

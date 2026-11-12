@@ -9,20 +9,20 @@ import React from 'react';
 import {
   CHART_DESIGN,
   CHART_THEMES,
+  ChartCard,
   PALETTE_NEUTRALS,
-  chartCardVars,
-  chartKindColor,
   chartRoleOklch,
   formatChartNumber,
-  formatDelta,
-  formatMetric,
   oklchToHex,
   paletteColor,
   paletteRatios,
   paletteSlots,
   paletteSmallSlot,
+  type ChartCardOverflowAction,
   type ChartColorRole,
   type ChartPoint,
+  type ChartSize,
+  type ChartState,
   type ChartTheme,
   type PaletteColorName,
 } from '../index';
@@ -44,6 +44,15 @@ const DATASETS = Object.fromEntries(
 ) as Record<string, ChartFixtureSet<unknown>>;
 const NAMES = Object.keys(DATASETS);
 
+/** The bars' dataset: its large card has actions. */
+const BARS = `${CHART_FIXTURES.bar.single.title} (${CHART_FIXTURES.bar.single.chart})`;
+
+/** The overflow menu every story's card has. */
+const OVERFLOW: ChartCardOverflowAction[] = [
+  { id: 'export', itemText: 'Export data' },
+  { id: 'hide', itemText: 'Hide card' },
+];
+
 /**
  * Every point in a dataset.
  *
@@ -62,174 +71,154 @@ function pointsOf(data: unknown): ChartPoint[] {
   return [];
 }
 
-interface PreviewArgs {
+/**
+ * Where the plot will be: the data's extent, until each family draws its
+ * own.
+ *
+ * @param props The fixture.
+ * @returns The stand-in.
+ */
+function PlotStandIn({ fixture }: { fixture: ChartFixture<unknown> }) {
+  const { format } = fixture;
+  const points = pointsOf(fixture.data);
+  const measured = points.filter((p) => p.basis !== 'projected');
+  const projected = points.filter((p) => p.basis === 'projected');
+  const ys = points.map((p) => p.y);
+  const n = (v: number) => formatChartNumber(v, format.value, format.locale);
+  return (
+    <dl
+      style={{
+        boxSizing: 'border-box',
+        height: '100%',
+        margin: 0,
+        display: 'grid',
+        gridTemplateColumns: 'auto 1fr',
+        alignContent: 'center',
+        gap: '4px 16px',
+        fontSize: 'var(--cds-chart-stamp)',
+        color: 'var(--cds-chart-color-stamp)',
+        border: '1px dashed var(--cds-border-subtle-01)',
+        paddingInline: 16,
+      }}>
+      <dt>Measured</dt>
+      <dd style={{ margin: 0 }}>{measured.length} values</dd>
+      <dt>Projected</dt>
+      <dd style={{ margin: 0 }}>{projected.length} values</dd>
+      {ys.length ? (
+        <>
+          <dt>From</dt>
+          <dd style={{ margin: 0 }}>{n(Math.min(...ys))}</dd>
+          <dt>To</dt>
+          <dd style={{ margin: 0 }}>{n(Math.max(...ys))}</dd>
+        </>
+      ) : null}
+    </dl>
+  );
+}
+
+interface CardArgs {
   dataset: string;
-  size: 'sm' | 'lg';
+  size: ChartSize;
+  state: ChartState;
+  theme: 'page' | 'light' | 'dark' | 'inverse';
   live: boolean;
 }
 
 /**
- * A card's text and its data's extent, at the card's size: what a chart
- * takes, before the plot is drawn.
+ * A dataset's card at a size: `md`, the summary card, takes the `sm` text.
  *
- * @param props The fixture.
- * @returns The preview.
+ * @param args The story's args.
+ * @returns The card.
  */
-function FixturePreview({
-  fixture,
-  size,
-}: {
-  fixture: ChartFixture<unknown>;
-  size: 'sm' | 'lg';
-}) {
+function FixtureCard({ dataset, size, state, theme, live }: CardArgs) {
+  const set = DATASETS[dataset] ?? DATASETS[NAMES[0]];
+  const fixture = (live ? set.next : set.sizes)[size === 'lg' ? 'lg' : 'sm'];
   const { card, format } = fixture;
-  const points = pointsOf(fixture.data);
-  const measured = points.filter((p) => p.basis !== 'projected');
-  const projectedPoints = points.filter((p) => p.basis === 'projected');
-  const ys = points.map((p) => p.y);
-  const t = CHART_DESIGN.type[size];
   return (
-    <article
-      aria-label={card.eyebrow}
-      style={{
-        ...chartCardVars(size),
-        boxSizing: 'border-box',
-        width: 'var(--cds-chart-width)',
-        maxWidth: '100%',
-        padding:
-          'var(--cds-chart-pad-top) var(--cds-chart-pad-x) var(--cds-chart-pad-bottom)',
-        borderRadius: 'var(--cds-chart-radius)',
-        background: 'var(--cds-surface, var(--cds-layer-01))',
-        color: 'var(--cds-chart-color-primary)',
-      }}>
-      <p
-        style={{
-          margin: 0,
-          fontSize: 'var(--cds-chart-eyebrow)',
-          color: 'var(--cds-chart-color-eyebrow)',
-        }}>
-        {card.eyebrow}
-      </p>
-      <p
-        style={{
-          margin: 'var(--cds-chart-eyebrow-gap) 0 0',
-          display: 'flex',
-          alignItems: 'baseline',
-          gap: 'var(--cds-chart-metric-gap)',
-        }}>
-        <span
-          style={{
-            fontSize: 'var(--cds-chart-hero)',
-            lineHeight: 'var(--cds-chart-hero-line)',
-            fontWeight: 600,
-          }}>
-          {formatMetric(card.metric, format)}
-        </span>
-        <span
-          style={{
-            fontSize: 'var(--cds-chart-unit)',
-            color: 'var(--cds-chart-color-unit)',
-          }}>
-          {card.metric.unit}
-        </span>
-        {card.delta ? (
-          <span
-            style={{
-              marginInlineStart: t.unitInk === 'primary' ? 0 : 'auto',
-              color: chartKindColor(card.delta.kind),
-            }}>
-            {card.delta.direction === 'up' ? '↑' : '↓'}{' '}
-            {formatDelta(card.delta, format.locale)}
-          </span>
-        ) : null}
-      </p>
-      <dl
-        style={{
-          margin:
-            'var(--cds-chart-gap-above-plot) 0 var(--cds-chart-gap-below-plot)',
-          minHeight: 'var(--cds-chart-plot-height)',
-          display: 'grid',
-          gridTemplateColumns: 'auto 1fr',
-          alignContent: 'center',
-          gap: '4px 16px',
-          fontSize: 'var(--cds-chart-stamp)',
-          color: 'var(--cds-chart-color-stamp)',
-          border: '1px dashed var(--cds-border-subtle-01)',
-          paddingInline: 16,
-        }}>
-        <dt>Measured</dt>
-        <dd style={{ margin: 0 }}>{measured.length} values</dd>
-        <dt>Projected</dt>
-        <dd style={{ margin: 0 }}>{projectedPoints.length} values</dd>
-        <dt>From</dt>
-        <dd style={{ margin: 0 }}>
-          {formatChartNumber(Math.min(...ys), format.value, format.locale)}
-        </dd>
-        <dt>To</dt>
-        <dd style={{ margin: 0 }}>
-          {formatChartNumber(Math.max(...ys), format.value, format.locale)}
-        </dd>
-      </dl>
-      <h3
-        style={{
-          margin: 0,
-          fontSize: 'var(--cds-chart-headline)',
-          lineHeight: 'var(--cds-chart-headline-line)',
-          fontWeight: t.headlineWeight,
-        }}>
-        {card.headline}
-      </h3>
-      <p
-        style={{
-          margin: 'var(--cds-chart-text-gap) 0 0',
-          fontSize: 'var(--cds-chart-body)',
-          lineHeight: 'var(--cds-chart-body-line)',
-          color: 'var(--cds-chart-color-body)',
-        }}>
-        {card.body}
-      </p>
-      <p
-        style={{
-          margin: 'var(--cds-chart-foot-gap) 0 0',
-          fontSize: 'var(--cds-chart-stamp)',
-          color: chartKindColor(card.status.kind),
-        }}>
-        {card.status.label}
-        {card.status.stamp ? ` · ${card.status.stamp}` : ''}
-      </p>
-    </article>
+    <ChartCard
+      title={card.eyebrow}
+      metric={card.metric}
+      delta={card.delta}
+      format={format}
+      headline={card.headline}
+      description={card.body}
+      status={card.status}
+      actions={card.actions?.map((label) => ({ label }))}
+      overflowActions={OVERFLOW}
+      overflowAriaLabel={`${card.eyebrow} options`}
+      size={size}
+      state={state}
+      theme={theme}>
+      <PlotStandIn fixture={fixture} />
+    </ChartCard>
   );
 }
 
 export default {
   title: 'V12/Charts',
+  component: ChartCard,
   tags: ['alpha'],
   parameters: {
     docs: {
       page: mdx,
     },
     v12: {
-      motion: [],
-      reduced: {},
-      states: ['rest', 'live-update'],
+      motion: [
+        'duration-moderate-01',
+        'easing-standard-productive',
+        'easing-entrance-productive',
+      ],
+      reduced: {
+        'duration-moderate-01': 'at-once',
+        'easing-standard-productive': 'at-once',
+        'easing-entrance-productive': 'at-once',
+      },
+      states: ['rest', 'live-update', 'loading', 'empty', 'error'],
     },
   },
   argTypes: {
     dataset: { control: 'select', options: NAMES },
-    size: { control: 'inline-radio', options: ['sm', 'lg'] },
+    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    state: {
+      control: 'inline-radio',
+      options: ['ready', 'loading', 'empty', 'error'],
+    },
+    theme: {
+      control: 'inline-radio',
+      options: ['page', 'light', 'dark', 'inverse'],
+    },
     live: { control: 'boolean', name: 'live update' },
   },
+  args: {
+    dataset: NAMES[0],
+    size: 'sm',
+    state: 'ready',
+    theme: 'page',
+    live: false,
+  },
+  render: (args: CardArgs) => <FixtureCard {...args} />,
 };
 
-/** A dataset's card text and the extent of its data, at one size; "live update" swaps in the next reading. */
-export const Fixtures = {
-  args: { dataset: NAMES[0], size: 'sm', live: false },
-  render: function FixturesStory(args: PreviewArgs) {
-    const set = DATASETS[args.dataset] ?? DATASETS[NAMES[0]];
-    const fixture = (args.live ? set.next : set.sizes)[args.size];
-    return <FixturePreview fixture={fixture} size={args.size} />;
-  },
-};
+/** A dataset's card and the extent of its data; "live update" swaps in the next reading. */
+export const Fixtures = {};
+
+/** The 380 card. */
+export const Small = { args: { size: 'sm' } };
+
+/** The 405 summary card: its plot runs to the card's edges. */
+export const Medium = { args: { size: 'md' } };
+
+/** The 640 card: the delta follows the unit, the actions in its foot. */
+export const Large = { args: { size: 'lg', dataset: BARS } };
+
+/** Loading: the lane's skeleton, the plot as a block. */
+export const Loading = { args: { state: 'loading' } };
+
+/** No data: a message in the plot's place. */
+export const Empty = { args: { state: 'empty' } };
+
+/** The data couldn't be read: a message in the plot's place. */
+export const LoadError = { args: { state: 'error' } };
 
 /** One swatch: its color, name and contrast against the page and the card. */
 interface Swatch {
@@ -393,6 +382,8 @@ export const Palette = {
   argTypes: {
     dataset: { table: { disable: true } },
     size: { table: { disable: true } },
+    state: { table: { disable: true } },
+    theme: { table: { disable: true } },
     live: { table: { disable: true } },
   },
   render: function PaletteStory() {

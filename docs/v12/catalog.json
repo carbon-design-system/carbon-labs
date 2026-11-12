@@ -2362,7 +2362,131 @@
         "staggerSteps",
         "toEasing"
       ],
-      "components": []
+      "components": [
+        {
+          "name": "ChartCard",
+          "required": [
+            "title"
+          ],
+          "props": {
+            "actions": {
+              "type": "array",
+              "unchecked": "readonly ChartCardAction[]",
+              "description": "Buttons in the card's foot: the first is the primary, the second the secondary."
+            },
+            "aria-describedby": {
+              "type": "string",
+              "description": "Identifies the element (or elements) that describes the object."
+            },
+            "aria-label": {
+              "type": "string",
+              "description": "Defines a string value that labels the current element."
+            },
+            "aria-labelledby": {
+              "type": "string",
+              "description": "Identifies the element (or elements) that labels the current element."
+            },
+            "children": {
+              "$ref": "#/$defs/node",
+              "description": "The plot."
+            },
+            "delta": {
+              "type": "object",
+              "unchecked": "ChartDelta",
+              "description": "The change beside the big number."
+            },
+            "description": {
+              "$ref": "#/$defs/node",
+              "description": "More about it, under the headline."
+            },
+            "emptyText": {
+              "type": "string",
+              "description": "What the plot's place says when there is no data."
+            },
+            "errorText": {
+              "type": "string",
+              "description": "What the plot's place says when the data couldn't be read."
+            },
+            "footer": {
+              "$ref": "#/$defs/node",
+              "description": "After the status line."
+            },
+            "format": {
+              "type": "object",
+              "unchecked": "ChartFormat",
+              "description": "How the metric is written, and in which locale."
+            },
+            "headline": {
+              "$ref": "#/$defs/node",
+              "description": "A sentence under the plot that says what the data shows."
+            },
+            "id": {
+              "type": "string"
+            },
+            "metric": {
+              "type": "object",
+              "unchecked": "ChartMetric",
+              "description": "The big number."
+            },
+            "onBlur": {
+              "$ref": "#/$defs/event"
+            },
+            "onChange": {
+              "$ref": "#/$defs/event"
+            },
+            "onFocus": {
+              "$ref": "#/$defs/event"
+            },
+            "onSubmit": {
+              "$ref": "#/$defs/event"
+            },
+            "overflowActions": {
+              "type": "array",
+              "unchecked": "readonly CardOverflowAction[]",
+              "description": "The overflow menu's items; none, no menu."
+            },
+            "overflowAriaLabel": {
+              "type": "string",
+              "description": "The overflow menu's name. Default \"Options\"."
+            },
+            "size": {
+              "enum": [
+                "lg",
+                "md",
+                "sm"
+              ],
+              "description": "`sm` 380, `md` the 405 summary card, `lg` 640. Default `sm`."
+            },
+            "state": {
+              "enum": [
+                "empty",
+                "error",
+                "loading",
+                "ready"
+              ],
+              "description": "What the card shows: its data, a skeleton, its empty state or its error. Default `ready`."
+            },
+            "status": {
+              "type": "object",
+              "unchecked": "ChartStatus",
+              "description": "The status line: a kind, a label and when the data was read."
+            },
+            "theme": {
+              "enum": [
+                "dark",
+                "inverse",
+                "light",
+                "page"
+              ],
+              "description": "The card's own theme: `page` (default), `light`, `dark` or `inverse`."
+            },
+            "title": {
+              "type": "string",
+              "description": "The card's title, at its top. It names the card."
+            }
+          }
+        }
+      ]
     },
     {
       "name": "@carbon-labs/react-chat",

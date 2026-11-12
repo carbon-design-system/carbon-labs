@@ -1,0 +1,227 @@
+//
+// Copyright IBM Corp. 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/utilities/visually-hidden' as *;
+
+/* ChartCard (ChartCard.tsx) on the lane's Card. Every size, gap, type step
+   and text color is a `--cds-chart-*` property that `chartCardVars` writes
+   for the card's size, so nothing here is a number of its own. */
+
+/* A theme of its own: the zone takes no box; its tokens still inherit. */
+.cds-chart-card-zone {
+  display: contents;
+}
+
+.cds-chart-card {
+  border-radius: var(--cds-chart-radius);
+  color: var(--cds-chart-color-primary);
+  inline-size: var(--cds-chart-width);
+  max-inline-size: 100%;
+
+  p {
+    margin: 0;
+  }
+
+  > .cds-kit-card__main {
+    padding: var(--cds-chart-pad-top) var(--cds-chart-pad-x)
+      var(--cds-chart-pad-bottom);
+    gap: 0;
+  }
+
+  /* The title: the card's small line at its top. */
+  .cds-kit-card__title {
+    color: var(--cds-chart-color-eyebrow);
+    font-size: var(--cds-chart-eyebrow);
+    font-weight: 400;
+    letter-spacing: var(--cds-chart-eyebrow-tracking);
+    line-height: var(--cds-chart-stamp-line);
+  }
+
+  .cds-kit-card__body {
+    display: flex;
+    flex-direction: column;
+    margin-block-start: var(--cds-chart-eyebrow-gap);
+  }
+
+  .cds-kit-card__footer {
+    margin-block-start: var(--cds-chart-foot-gap);
+  }
+}
+
+/* ── metric ───────────────────────────────────────────────────────────── */
+
+.cds-chart-card__metric {
+  position: relative;
+  display: flex;
+  /* A card narrower than its size wraps the delta under the number. */
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--cds-chart-metric-gap);
+  min-inline-size: 0;
+}
+
+.cds-chart-card__spoken {
+  @include visually-hidden;
+}
+
+/* The big number and its fraction, held left to right as one number. */
+.cds-chart-card__number {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--cds-chart-metric-gap);
+}
+
+.cds-chart-card__value,
+.cds-chart-card__fraction {
+  color: var(--cds-chart-color-primary);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.cds-chart-card__value {
+  font-size: var(--cds-chart-hero);
+  letter-spacing: var(--cds-chart-hero-tracking);
+  line-height: var(--cds-chart-hero-line);
+}
+
+.cds-chart-card__fraction {
+  font-size: var(--cds-chart-fraction);
+  letter-spacing: var(--cds-chart-fraction-tracking);
+  line-height: var(--cds-chart-fraction-line);
+}
+
+.cds-chart-card__unit {
+  color: var(--cds-chart-color-unit);
+  font-size: var(--cds-chart-unit);
+  letter-spacing: var(--cds-chart-unit-tracking);
+  line-height: var(--cds-chart-unit-line);
+  white-space: nowrap;
+}
+
+/* The delta: the arrow at the text's size, sitting on its figures. */
+.cds-chart-card__delta {
+  --cds-chart-arrow: calc(1em * 20 / 22);
+
+  display: inline-flex;
+  align-items: baseline;
+  font-size: var(--cds-chart-delta);
+  font-variant-numeric: tabular-nums;
+  gap: calc(1em * 5.5 / 22);
+  letter-spacing: var(--cds-chart-delta-tracking);
+  line-height: var(--cds-chart-delta-line);
+  white-space: nowrap;
+}
+
+/* At the row's end, or after the unit at twice the row's gap. */
+.cds-chart-card__metric--end .cds-chart-card__delta {
+  margin-inline-start: auto;
+}
+
+.cds-chart-card__metric:not(.cds-chart-card__metric--end)
+  .cds-chart-card__delta {
+  margin-inline-start: var(--cds-chart-metric-gap);
+}
+
+/* Warning's mark beside the arrow: its color is too light for text alone. */
+.cds-chart-card__delta-mark {
+  display: inline-flex;
+  flex: none;
+  align-self: center;
+}
+
+.cds-chart-card__arrow {
+  position: relative;
+  flex: none;
+  block-size: var(--cds-chart-arrow);
+  inline-size: var(--cds-chart-arrow);
+  inset-block-start: calc(var(--cds-chart-arrow) / 2 - 0.349em);
+}
+
+/* ── plot ─────────────────────────────────────────────────────────────── */
+
+.cds-chart-card__plot {
+  position: relative;
+  flex: none;
+  block-size: var(--cds-chart-plot-height);
+  inline-size: 100%;
+  margin-block: var(--cds-chart-gap-above-plot) var(--cds-chart-gap-below-plot);
+}
+
+/* The summary card's plot runs to the card's edges. */
+.cds-chart-card--bleed .cds-chart-card__plot {
+  inline-size: auto;
+  margin-inline: calc(-1 * var(--cds-chart-pad-x));
+}
+
+.cds-chart-card__plot--message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: var(--cds-chart-pad-x);
+}
+
+.cds-chart-card__message {
+  color: var(--cds-chart-color-body);
+  font-size: var(--cds-chart-body);
+  letter-spacing: var(--cds-chart-body-tracking);
+  line-height: var(--cds-chart-body-line);
+  text-align: center;
+}
+
+/* ── foot ─────────────────────────────────────────────────────────────── */
+
+.cds-chart-card__foot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cds-chart-foot-gap);
+}
+
+.cds-chart-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cds-chart-text-gap);
+}
+
+.cds-chart-card__headline {
+  color: var(--cds-chart-color-primary);
+  font-family: font-family('serif');
+  font-size: var(--cds-chart-headline);
+  font-weight: var(--cds-chart-headline-weight);
+  letter-spacing: var(--cds-chart-headline-tracking);
+  line-height: var(--cds-chart-headline-line);
+}
+
+.cds-chart-card__description {
+  color: var(--cds-chart-color-body);
+  font-size: var(--cds-chart-body);
+  letter-spacing: var(--cds-chart-body-tracking);
+  line-height: var(--cds-chart-body-line);
+}
+
+.cds-chart-card__status {
+  display: flex;
+  align-items: center;
+  color: var(--cds-chart-color-stamp);
+  font-size: var(--cds-chart-stamp);
+  gap: var(--cds-chart-status-gap);
+  letter-spacing: var(--cds-chart-stamp-tracking);
+  line-height: var(--cds-chart-stamp-line);
+}
+
+.cds-chart-card__status-mark {
+  display: inline-flex;
+  flex: none;
+}
+
+.cds-chart-card__status-label {
+  font-weight: 500;
+}
+
+.cds-chart-card__stamp {
+  margin-inline-start: var(--cds-chart-status-gap);
+}

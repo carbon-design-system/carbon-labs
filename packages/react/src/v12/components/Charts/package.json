@@ -49,7 +49,15 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@carbon-labs/react-card": "workspace:*",
+    "@carbon-labs/react-feedback": "workspace:*",
+    "@carbon-labs/react-motion-icons": "workspace:*",
+    "@carbon-labs/react-roll-text": "workspace:*",
+    "@carbon-labs/react-theme-zone": "workspace:*",
+    "@carbon-labs/react-util": "workspace:*",
     "@carbon-labs/v12-motion": "workspace:*",
+    "@carbon-labs/v12-styles": "workspace:*",
+    "@carbon/react": "^1.118.0",
     "@ibm/telemetry-js": "^1.10.2"
   },
   "peerDependencies": {
@@ -57,7 +65,9 @@
   },
   "devDependencies": {
     "@carbon-labs/utilities": "0.28.0",
+    "@testing-library/react": "^16.1.0",
     "esbuild": "^0.25.12",
+    "jsdom": "^26.0.0",
     "vitest": "^4.0.0"
   }
 }

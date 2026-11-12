@@ -19,8 +19,7 @@ describe('SessionExpiryModal Component', () => {
       </clabs-global-header-session-expiry-modal>`
     );
     expect(el.shadowRoot).not.to.be.null;
-    expect(el.shadowRoot?.querySelector('cds-custom-inline-notification')).to
-      .exist;
+    expect(el.shadowRoot?.querySelector('.cds--inline-notification')).to.exist;
   });
 
   it('does not render component when open is false', async () => {
@@ -30,7 +29,7 @@ describe('SessionExpiryModal Component', () => {
     );
     expect(el.shadowRoot).not.to.be.null;
     expect(
-      el.shadowRoot?.querySelectorAll('cds-custom-inline-notification').length
+      el.shadowRoot?.querySelectorAll('.cds--inline-notification').length
     ).to.equal(0);
   });
 
@@ -40,8 +39,7 @@ describe('SessionExpiryModal Component', () => {
       </clabs-global-header-session-expiry-modal>`
     );
     expect(el.shadowRoot).not.to.be.null;
-    expect(el.shadowRoot?.querySelector('cds-custom-inline-notification')).to
-      .exist;
+    expect(el.shadowRoot?.querySelector('.cds--inline-notification')).to.exist;
     el.open = false;
     await el.updateComplete;
     // no CSS transitions in test environment so transitionend never fires automatically —
@@ -49,7 +47,7 @@ describe('SessionExpiryModal Component', () => {
     el.dispatchEvent(new Event('transitionend'));
     await el.updateComplete;
     expect(
-      el.shadowRoot?.querySelectorAll('cds-custom-inline-notification').length
+      el.shadowRoot?.querySelectorAll('.cds--inline-notification').length
     ).to.equal(0);
   });
 
@@ -60,14 +58,15 @@ describe('SessionExpiryModal Component', () => {
         totalSeconds="${120}"></clabs-global-header-session-expiry-modal>`
     );
     expect(el.shadowRoot).not.to.be.null;
-    const notification = el.shadowRoot?.querySelector(
-      'cds-custom-inline-notification'
+    const title = el.shadowRoot?.querySelector(
+      '.cds--inline-notification__title'
     );
-    expect((notification as any)?.title).to.contain('Session expiry');
-    expect((notification as any)?.subtitle).to.contain(
-      'You will be logged out'
+    const subtitle = el.shadowRoot?.querySelector(
+      '.cds--inline-notification__subtitle'
     );
-    expect((notification as any)?.subtitle).to.contain('2 minutes');
+    expect(title?.textContent).to.contain('Session expiry');
+    expect(subtitle?.textContent).to.contain('You will be logged out');
+    expect(subtitle?.textContent).to.contain('2 minutes');
   });
 
   it('renders component with expiry in minutes and seconds', async () => {
@@ -76,10 +75,10 @@ describe('SessionExpiryModal Component', () => {
         open
         totalSeconds="${125}"></clabs-global-header-session-expiry-modal>`
     );
-    const notification = el.shadowRoot?.querySelector(
-      'cds-custom-inline-notification'
+    const subtitle = el.shadowRoot?.querySelector(
+      '.cds--inline-notification__subtitle'
     );
-    expect((notification as any)?.subtitle).to.contain('2 minutes 5 seconds');
+    expect(subtitle?.textContent).to.contain('2 minutes 5 seconds');
   });
 
   it('renders component with expiry in seconds only', async () => {
@@ -88,10 +87,10 @@ describe('SessionExpiryModal Component', () => {
         open
         totalSeconds="${30}"></clabs-global-header-session-expiry-modal>`
     );
-    const notification = el.shadowRoot?.querySelector(
-      'cds-custom-inline-notification'
+    const subtitle = el.shadowRoot?.querySelector(
+      '.cds--inline-notification__subtitle'
     );
-    expect((notification as any)?.subtitle).to.contain('30 seconds');
+    expect(subtitle?.textContent).to.contain('30 seconds');
   });
 
   describe('countdown', () => {
@@ -115,16 +114,16 @@ describe('SessionExpiryModal Component', () => {
           open
           totalSeconds="${125}"></clabs-global-header-session-expiry-modal>`
       );
-      let notification = el.shadowRoot?.querySelector(
-        'cds-custom-inline-notification'
+      let subtitle = el.shadowRoot?.querySelector(
+        '.cds--inline-notification__subtitle'
       );
-      expect((notification as any)?.subtitle).to.contain('2 minutes 5 seconds');
+      expect(subtitle?.textContent).to.contain('2 minutes 5 seconds');
       clock.tick(1000);
       await el.updateComplete;
-      notification = el.shadowRoot?.querySelector(
-        'cds-custom-inline-notification'
+      subtitle = el.shadowRoot?.querySelector(
+        '.cds--inline-notification__subtitle'
       );
-      expect((notification as any)?.subtitle).to.contain('2 minutes 4 seconds');
+      expect(subtitle?.textContent).to.contain('2 minutes 4 seconds');
     });
 
     it('stops at 0 seconds and does not cycle back', async () => {
@@ -135,19 +134,19 @@ describe('SessionExpiryModal Component', () => {
       );
       clock.tick(2000);
       await el.updateComplete;
-      let notification = el.shadowRoot?.querySelector(
-        'cds-custom-inline-notification'
+      let subtitle = el.shadowRoot?.querySelector(
+        '.cds--inline-notification__subtitle'
       );
-      expect((notification as any)?.subtitle).to.contain('in 0 seconds');
+      expect(subtitle?.textContent).to.contain('in 0 seconds');
       expect(clock.countTimers()).to.equal(0);
 
       clock.tick(5000);
       await el.updateComplete;
-      notification = el.shadowRoot?.querySelector(
-        'cds-custom-inline-notification'
+      subtitle = el.shadowRoot?.querySelector(
+        '.cds--inline-notification__subtitle'
       );
-      expect((notification as any)?.subtitle).to.contain('in 0 seconds');
-      expect((notification as any)?.subtitle).to.not.contain('59');
+      expect(subtitle?.textContent).to.contain('in 0 seconds');
+      expect(subtitle?.textContent).to.not.contain('59');
     });
   });
 });

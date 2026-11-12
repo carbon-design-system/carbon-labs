@@ -11,7 +11,6 @@
 import { LitElement, css, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities';
-import '@carbon/web-components/es-custom/components/notification/inline-notification.js';
 
 import styles from './_index.scss?inline';
 
@@ -102,19 +101,33 @@ export class SessionExpiryModal extends LitElement {
       return html``;
     }
     return html`
-      <cds-custom-inline-notification
-        kind="warning"
-        .title="${'Session expiry'}"
-        .subtitle="${'You will be logged out in ' +
-        this.expiryTime +
-        ' due to inactivity.'}"
+      <div
+        class="cds--inline-notification cds--inline-notification--warning cds--inline-notification--low-contrast cds--inline-notification--hide-close-button"
         role="status"
-        ?low-contrast="${true}"
-        ?hide-close-button="${true}"
-        ?open="${true}"
-        aria-label="close"
-        status-icon-description="notification">
-      </cds-custom-inline-notification>
+        aria-label="close">
+        <div class="cds--inline-notification__details">
+          <svg
+            focusable="false"
+            preserveAspectRatio="xMidYMid meet"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            aria-label="notification"
+            aria-hidden="true"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            class="cds--inline-notification__icon">
+            <path
+              d="M10,1c-5,0-9,4-9,9s4,9,9,9s9-4,9-9S15,1,10,1z M9.2,5h1.5v7H9.2V5z M10,16c-0.6,0-1-0.4-1-1s0.4-1,1-1s1,0.4,1,1S10.6,16,10,16z"></path>
+          </svg>
+          <div class="cds--inline-notification__text-wrapper">
+            <p class="cds--inline-notification__title">Session expiry</p>
+            <div class="cds--inline-notification__subtitle">
+              You will be logged out in ${this.expiryTime} due to inactivity.
+            </div>
+          </div>
+        </div>
+      </div>
     `;
   }
 }

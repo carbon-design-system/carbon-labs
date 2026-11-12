@@ -8,11 +8,35 @@ import * as ChartsStories from './Charts.stories.tsx';
 The base the v12 chart family is built on. It holds what every chart shares
 and nothing that draws a plot: the data types, the tuning values
 (`CHART_DESIGN`), the motion resolved per motion level, the color roles and
-the series palette's structure, the line constants, the series key, and the
-card's sizes. The root entry loads no chart runtime, so a card without a plot
-stays small. The plot's shared pieces come at `@carbon-labs/react-charts/plot`.
+the series palette, the line constants, the series key, and the card's sizes.
+The root entry loads no chart runtime, so a card without a plot stays small.
+The plot's shared pieces come at `@carbon-labs/react-charts/plot`.
 
 <Canvas of={ChartsStories.Fixtures} />
+
+## The chart card
+
+`ChartCard` is the card every chart sits in, on the lane's Card: a title and
+its overflow menu, the metric and its delta, the plot, a headline and
+description, a status line, and up to two buttons, the first primary.
+
+<Canvas of={ChartsStories.Large} />
+
+- **Metric:** the number, its fraction and its unit. The delta takes its
+  `kind`'s color: `success`, `danger` or `default`. A `warning` delta keeps
+  the text's color and shows the warning mark, since that color is too light
+  for text.
+- **Theme:** the page's, or `light`, `dark` or `inverse` of its own.
+- **States:** `loading` shows the lane's skeleton; `empty` and `error` show a
+  message where the plot goes.
+- **Accessibility:** a group named by its title. The metric and delta read as
+  one line, "12.4K requests, up 8%". The overflow menu has a name.
+- **Right to left:** the header, metric and foot mirror; the plot stays left
+  to right.
+- **Motion:** a new value rolls only the characters that change. Under reduced
+  motion it lands at once.
+
+<Canvas of={ChartsStories.Loading} />
 
 ## The family
 
@@ -24,6 +48,21 @@ Each family is its own package on this base:
 - **DotMatrix:** one value per row and column.
 - **ConeChart:** small multiples, each projected to a range.
 - **StatusCard:** a reading, how fresh it is, and where it is heading.
+
+## Color
+
+A chart's frame (text, lines, surfaces, focus, status) reads the v12 theme's
+tokens. Text is `text-primary` or `text-secondary`, the two that hold 4.5:1 on
+the page and the card; axis labels are `text-secondary`. The data colors are
+the palette: Carbon's color steps for series, and the v12 neutral for measured
+series. They are stored in OKLCH and drawn in sRGB.
+
+- **Large marks** (bars, arcs, areas) hold 3:1 against the page and the card.
+- **Small marks** (texture dots, lines of 3px or less) hold 4.5:1; a step that
+  falls short moves away from the card until it holds.
+- A chart that shows status leaves magenta out.
+
+<Canvas of={ChartsStories.Palette} />
 
 ## Data
 

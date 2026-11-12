@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-import%400.11.0...%40carbon-labs%2Fv12-import%400.12.0) (2026-11-12)
+
+**Note:** Version bump only for package @carbon-labs/v12-import
+
+
+
+
+
 # [0.11.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-import%400.10.0...%40carbon-labs%2Fv12-import%400.11.0) (2026-11-12)
 
 * feat(menu)!: move SplitButton into Menu as ComboButton (#1504) ([fd01143](https://github.com/carbon-design-system/carbon-labs/commit/fd0114342c8a5daadfba3b353a2582a012b90aa9)), closes [#1504](https://github.com/carbon-design-system/carbon-labs/issues/1504)

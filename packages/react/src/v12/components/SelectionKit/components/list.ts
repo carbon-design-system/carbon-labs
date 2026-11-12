@@ -8,7 +8,7 @@
 import { useCallback, useState, type KeyboardEvent } from 'react';
 import { createTypeahead, rovingKey } from '@carbon-labs/v12-motion/selection';
 import type { KeyboardMode } from '@carbon-labs/react-props';
-import { inlineKey, isRtl } from './direction';
+import { inlineKey, isRtl } from '@carbon-labs/react-util';
 
 /* ============================================================================
  * One selection list model: the collection behind the content switcher, tabs

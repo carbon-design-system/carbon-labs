@@ -126,17 +126,18 @@
 }
 
 .tabs__scroller {
-  --tabs-fade-s: 0px;
-  --tabs-fade-e: 0px;
-
-  overflow: auto hidden;
-  mask-image: linear-gradient(
-    to right,
+  // The stops, from the inline start to the inline end.
+  $fade: (
     transparent calc(var(--tabs-fade-s) - var(--tabs-edge)),
     #000000 var(--tabs-fade-s),
     #000000 calc(100% - var(--tabs-fade-e)),
     transparent calc(100% - var(--tabs-fade-e) + var(--tabs-edge))
   );
+  --tabs-fade-s: 0px;
+  --tabs-fade-e: 0px;
+
+  overflow: auto hidden;
+  mask-image: linear-gradient(to right, $fade);
   overscroll-behavior-x: contain;
   scrollbar-width: none;
   transition:
@@ -147,6 +148,11 @@
 
   &::-webkit-scrollbar {
     display: none;
+  }
+
+  /* The start's fade is at the right, right to left. */
+  &:dir(rtl) {
+    mask-image: linear-gradient(to left, $fade);
   }
 
   .tabs[data-overflow-start] > & {
@@ -348,15 +354,16 @@
 
   position: absolute;
   z-index: 2;
+  /* stylelint-disable-next-line csstools/use-logical -- the icon's cut is physical */
+  left: calc(
+    50% - var(--sel-icon) / 2 + var(--tabs-pip-x) - var(--sel-icon) / 8
+  );
   border-radius: 50%;
   background: theme.$support-error;
   block-size: calc(var(--sel-icon) / 4);
   inline-size: calc(var(--sel-icon) / 4);
   inset-block-start: calc(
     50% - var(--sel-icon) / 2 + var(--tabs-pip-y) - var(--sel-icon) / 8
-  );
-  inset-inline-start: calc(
-    50% - var(--sel-icon) / 2 + var(--tabs-pip-x) - var(--sel-icon) / 8
   );
   pointer-events: none;
 }

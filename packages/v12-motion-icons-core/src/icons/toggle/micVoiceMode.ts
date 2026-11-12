@@ -70,7 +70,7 @@ import { MIC_ART } from './micOffArt';
 // A future live level (0–1) would drive each bar's dip: quiet bars low, loud
 // ones at voice-mode's height.
 
-const CMicrophone = /* @__PURE__ */ carbonArt(Microphone32);
+export const CMicrophone = /* @__PURE__ */ carbonArt(Microphone32);
 const CVoiceMode = /* @__PURE__ */ carbonArt(VoiceMode32);
 /**
  * The eases: Carbon's productive exit, standard and entrance (EXIT, STANDARD, ENTRANCE; icons use the
@@ -268,6 +268,17 @@ function bars(f: number, l: number, w: number): string {
   }).join('');
 }
 
+/**
+ * The microphone at hover h, leaving at frame f of the reference (0 to 12):
+ * Carbon's microphone at f 0, a dot of radius 2 about (16, 18) at f 11, gone
+ * at f 12. Microphone ⇄ listening leaves the same way.
+ */
+export function micOut(h: number, f: number): { stand: string; pill: string } {
+  return f >= CUT * FRAMES
+    ? { stand: '', pill: '' }
+    : { stand: f < 11 ? standD(h, f) : '', pill: pillAt(h, f) };
+}
+
 /** Microphone ⇄ voice mode at hover h, change p (linear), loop time l and weight w. */
 function shapes({ h, p, l = 0, w = 0 }: ToggleFrameIn): Shapes {
   const f = p * FRAMES;
@@ -278,9 +289,10 @@ function shapes({ h, p, l = 0, w = 0 }: ToggleFrameIn): Shapes {
       bars: { d: bars(f, l, w) },
     };
   }
+  const mic = micOut(h, f);
   return {
-    stand: { d: f < 11 ? standD(h, f) : '' },
-    pill: { d: pillAt(h, f), ...EVENODD },
+    stand: { d: mic.stand },
+    pill: { d: mic.pill, ...EVENODD },
     bars: { d: '' },
   };
 }

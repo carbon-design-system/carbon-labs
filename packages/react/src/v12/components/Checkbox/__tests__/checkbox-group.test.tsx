@@ -110,4 +110,25 @@ describe('CheckboxGroup', () => {
     expect(markup).not.toContain('cds-checkbox-group--invalid');
     expect(boxes(markup)).toEqual([{ invalid: false, warn: false }]);
   });
+
+  it('makes every checkbox that sets no read-only of its own read-only, and puts no aria-readonly on the fieldset', () => {
+    const markup = renderToStaticMarkup(
+      <CheckboxGroup legendText="Send me" readOnly>
+        <Checkbox id="a" labelText="Weekly summaries" />
+        <Checkbox id="b" labelText="Security alerts" readOnly={false} />
+      </CheckboxGroup>
+    );
+    expect(markup).not.toMatch(/<fieldset[^>]*aria-readonly/);
+    const readOnly = [...markup.matchAll(/<input([^>]*)>/g)].map(([, input]) =>
+      input.includes('aria-readonly="true"')
+    );
+    expect(readOnly).toEqual([true, false]);
+
+    const plain = renderToStaticMarkup(
+      <CheckboxGroup legendText="Send me">
+        <Checkbox id="a" labelText="Weekly summaries" />
+      </CheckboxGroup>
+    );
+    expect(plain).not.toContain('aria-readonly');
+  });
 });

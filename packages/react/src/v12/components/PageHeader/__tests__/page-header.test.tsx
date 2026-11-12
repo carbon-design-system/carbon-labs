@@ -119,3 +119,13 @@ describe('PageHeader frame', () => {
     );
   });
 });
+
+describe('PageHeader element', () => {
+  it('takes no name: a header inside main has no role to name', () => {
+    const markup = renderToStaticMarkup(<PageHeader title="Atlas" />);
+    const header = /^<header\b[^>]*>/.exec(markup)?.[0] ?? '';
+    expect(header).not.toBe('');
+    expect(header).not.toContain('aria-labelledby');
+    expect(markup).toMatch(/<h1 id="page-header-title-[^"]*"/);
+  });
+});

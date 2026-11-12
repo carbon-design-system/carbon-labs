@@ -424,6 +424,9 @@ function TrayBody({
 
   /* ── render ──────────────────────────────────────────────────────────── */
 
+  // A button that goes with what it does (Clear finished, a job's Cancel) hands its focus to the
+  // tray first.
+  const holdFocus = () => ref.current?.focus({ preventScroll: true });
   const finished = entries.some((e) => !e.leaving && !jobActive(e.job));
   const label = (s: JobStatus) => statusLabels?.[s] ?? JOB_STATUS[s].label;
   const labels = statusLabels
@@ -446,7 +449,10 @@ function TrayBody({
             <Button
               frame="ghost"
               size="sm"
-              onClick={onClearFinished}
+              onClick={() => {
+                holdFocus();
+                onClearFinished();
+              }}
               timeScale={timeScale}>
               {clearFinishedLabel}
             </Button>
@@ -472,7 +478,13 @@ function TrayBody({
                   labels={labels}
                   cancelLabel={cancelLabel}
                   retryLabel={retryLabel}
-                  onCancel={onCancel}
+                  onCancel={
+                    onCancel &&
+                    ((j) => {
+                      holdFocus();
+                      onCancel(j);
+                    })
+                  }
                   onRetry={onRetry}
                   timeScale={timeScale}
                 />

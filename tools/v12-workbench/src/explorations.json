@@ -47,7 +47,7 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/AppShell/components/app-shell.scss",
-      "line": 518,
+      "line": 519,
       "text": "surface-step — Surfaces stepped up in elevation: the outlined selector's lift, a workspace's content, a field on it. TBD"
     }
   ],
@@ -55,43 +55,43 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Button/components/Button.tsx",
-      "line": 140,
+      "line": 141,
       "text": "corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Button/components/Button.tsx",
-      "line": 158,
+      "line": 159,
       "text": "api: button-axes — Button splits the old kinds into `kind` (the role), `variant` (outlined, tonal) and `frame` (ghost, none), so each prop says one thing. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Button/components/Button.tsx",
-      "line": 161,
+      "line": 162,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Button/components/Button.tsx",
-      "line": 168,
+      "line": 169,
       "text": "api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Button/components/ButtonGrid.tsx",
-      "line": 126,
+      "line": 127,
       "text": "api: button-axes — Button splits the old kinds into `kind` (the role), `variant` (outlined, tonal) and `frame` (ghost, none), so each prop says one thing. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Button/components/ButtonGrid.tsx",
-      "line": 129,
+      "line": 130,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Button/components/ButtonGrid.tsx",
-      "line": 132,
+      "line": 133,
       "text": "corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD"
     },
     {
@@ -167,25 +167,25 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
-      "line": 254,
+      "line": 255,
       "text": "token: chat-input-menu-hover — Carbon's menu hover is a neutral, not a step on the selected ladder. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
-      "line": 264,
+      "line": 265,
       "text": "token: chat-input-menu-selected — Carbon's Menu has no selected tint; the checkmark stays. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
-      "line": 269,
+      "line": 270,
       "text": "token: chat-input-menu-selected-text — the brand label solved on the selected tint. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
-      "line": 280,
+      "line": 281,
       "text": "token: chat-input-menu-active — Carbon's menu press is a neutral, not a step on the selected ladder. replaces: layer-active-01. TBD"
     }
   ],
@@ -225,13 +225,13 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Chat/components/PromptInput.tsx",
-      "line": 139,
+      "line": 143,
       "text": "corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Chat/components/PromptInput.tsx",
-      "line": 142,
+      "line": 146,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
@@ -833,13 +833,13 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Menu/components/ComboButton.tsx",
-      "line": 121,
+      "line": 122,
       "text": "api: button-axes — Button splits the old kinds into `kind` (the role), `variant` (outlined, tonal) and `frame` (ghost, none), so each prop says one thing. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Menu/components/ComboButton.tsx",
-      "line": 124,
+      "line": 125,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
@@ -1031,7 +1031,7 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/ProgressBar/components/progress-bar.scss",
-      "line": 422,
+      "line": 426,
       "text": "progress-bar-label-row — The status icon sits at the bar's end in every type, and a hidden label still keeps its row, so the bar never grows or shrinks as it finishes or fails. TBD"
     }
   ],
@@ -1293,13 +1293,13 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Chat/components/PromptInput.tsx",
-      "line": 139,
+      "line": 143,
       "text": "corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Chat/components/PromptInput.tsx",
-      "line": 142,
+      "line": 146,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {
@@ -1389,7 +1389,7 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Tabs/components/Tabs.tsx",
-      "line": 163,
+      "line": 164,
       "text": "api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD"
     },
     {
@@ -1401,13 +1401,13 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Tabs/components/tabs.scss",
-      "line": 184,
+      "line": 190,
       "text": "token: surface-rule — The quiet surface's hairline. replaces: `$border-subtle`. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Tabs/components/tabs.scss",
-      "line": 209,
+      "line": 215,
       "text": "token: hero-color — The hero tokens: brand colour for a line, a fill, a hover, an ink on a page and on a fill. replaces: `$border-interactive` / `$interactive`, `$button-primary`, `-hover`, `-active`, `$link-primary`, `$link-inverse`. TBD"
     },
     {
@@ -1453,7 +1453,7 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Tearsheet/components/Tearsheet.tsx",
-      "line": 206,
+      "line": 207,
       "text": "api: logical-positions — Placement values are logical, `start` and `end`, so they follow the reading direction. TBD"
     },
     {
@@ -1657,13 +1657,13 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Chat/components/PromptInput.tsx",
-      "line": 139,
+      "line": 143,
       "text": "corners-prop — Corner mode is one `corners` prop (full, rounded or square) that a provider can set for a subtree, where `rounded` is the component's own radius. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Chat/components/PromptInput.tsx",
-      "line": 142,
+      "line": 146,
       "text": "api: variant-prop — The colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure. TBD"
     },
     {

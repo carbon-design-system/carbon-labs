@@ -832,7 +832,7 @@ function sorted(o) {
  * @param {Record<string, string>} deps.devDependencies The dev dependencies.
  * @returns {string} The JSON.
  */
-export function packageJsonFor(spec, { dependencies, peers, devDependencies }) {
+function packageJsonFor(spec, { dependencies, peers, devDependencies }) {
   const pkg = CONFIG.package;
   const base = {
     name: spec.name,
@@ -950,7 +950,7 @@ export function packageJsonFor(spec, { dependencies, peers, devDependencies }) {
  * @param {object} spec The package's config.
  * @returns {string} The JSON.
  */
-export function tsconfigFor(spec) {
+function tsconfigFor(spec) {
   // A core package compiles with tsc alone, as the seam does; a lane package
   // takes the lane's base, which its build reads.
   const json = {

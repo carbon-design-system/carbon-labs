@@ -157,7 +157,7 @@ const INTERNAL_URL =
  * @param {string} src The script.
  * @returns {string} The comments, in place.
  */
-export function commentsOnly(src) {
+function commentsOnly(src) {
   let out = '';
   let i = 0;
   const blank = (s) => s.replace(/[^\n]/g, ' ');

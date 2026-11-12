@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-chat",
-  "version": "0.19.0",
+  "version": "0.21.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - Chat for React (v12)",
@@ -45,6 +45,7 @@
     "@carbon-labs/react-disclosure": "workspace:*",
     "@carbon-labs/react-feedback": "workspace:*",
     "@carbon-labs/react-jump-to": "workspace:*",
+    "@carbon-labs/react-loading": "workspace:*",
     "@carbon-labs/react-menu": "workspace:*",
     "@carbon-labs/react-motion-icons": "workspace:*",
     "@carbon-labs/react-notification": "workspace:*",

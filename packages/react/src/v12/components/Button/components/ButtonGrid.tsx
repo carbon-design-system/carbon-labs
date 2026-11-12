@@ -24,6 +24,7 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from 'react';
+import { assignRef } from '@carbon-labs/react-util';
 import {
   loadPlexVar,
   rovingKey,
@@ -277,8 +278,7 @@ export const ButtonGrid = forwardRef<HTMLDivElement, ButtonGridProps>(
         {...rest}
         ref={(el) => {
           rootRef.current = el;
-          if (typeof ref === 'function') ref(el);
-          else if (ref) ref.current = el;
+          assignRef(ref, el);
         }}
         role="toolbar"
         aria-label={rest['aria-labelledby'] ? undefined : label}

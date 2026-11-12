@@ -465,8 +465,9 @@ $_deck-ease: var(--cds-motion-easing-entrance-productive);
    gathers. */
 .fb-deck > .fb-deck__shadow {
   position: absolute;
+  /* stylelint-disable-next-line csstools/use-logical -- the script places it in px from the deck's left */
+  left: 0;
   inset-block-start: 0;
-  inset-inline-start: 0;
   pointer-events: none;
 
   > .cast-floating__frame {

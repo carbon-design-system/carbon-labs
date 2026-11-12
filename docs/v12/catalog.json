@@ -2362,7 +2362,131 @@
         "staggerSteps",
         "toEasing"
       ],
-      "components": []
+      "components": [
+        {
+          "name": "ChartCard",
+          "required": [
+            "title"
+          ],
+          "props": {
+            "actions": {
+              "type": "array",
+              "unchecked": "readonly ChartCardAction[]",
+              "description": "Buttons in the card's foot: the first is the primary, the second the secondary."
+            },
+            "aria-describedby": {
+              "type": "string",
+              "description": "Identifies the element (or elements) that describes the object."
+            },
+            "aria-label": {
+              "type": "string",
+              "description": "Defines a string value that labels the current element."
+            },
+            "aria-labelledby": {
+              "type": "string",
+              "description": "Identifies the element (or elements) that labels the current element."
+            },
+            "children": {
+              "$ref": "#/$defs/node",
+              "description": "The plot."
+            },
+            "delta": {
+              "type": "object",
+              "unchecked": "ChartDelta",
+              "description": "The change beside the big number."
+            },
+            "description": {
+              "$ref": "#/$defs/node",
+              "description": "More about it, under the headline."
+            },
+            "emptyText": {
+              "type": "string",
+              "description": "What the plot's place says when there is no data."
+            },
+            "errorText": {
+              "type": "string",
+              "description": "What the plot's place says when the data couldn't be read."
+            },
+            "footer": {
+              "$ref": "#/$defs/node",
+              "description": "After the status line."
+            },
+            "format": {
+              "type": "object",
+              "unchecked": "ChartFormat",
+              "description": "How the metric is written, and in which locale."
+            },
+            "headline": {
+              "$ref": "#/$defs/node",
+              "description": "A sentence under the plot that says what the data shows."
+            },
+            "id": {
+              "type": "string"
+            },
+            "metric": {
+              "type": "object",
+              "unchecked": "ChartMetric",
+              "description": "The big number."
+            },
+            "onBlur": {
+              "$ref": "#/$defs/event"
+            },
+            "onChange": {
+              "$ref": "#/$defs/event"
+            },
+            "onFocus": {
+              "$ref": "#/$defs/event"
+            },
+            "onSubmit": {
+              "$ref": "#/$defs/event"
+            },
+            "overflowActions": {
+              "type": "array",
+              "unchecked": "readonly CardOverflowAction[]",
+              "description": "The overflow menu's items; none, no menu."
+            },
+            "overflowAriaLabel": {
+              "type": "string",
+              "description": "The overflow menu's name. Default \"Options\"."
+            },
+            "size": {
+              "enum": [
+                "lg",
+                "md",
+                "sm"
+              ],
+              "description": "`sm` 380, `md` the 405 summary card, `lg` 640. Default `sm`."
+            },
+            "state": {
+              "enum": [
+                "empty",
+                "error",
+                "loading",
+                "ready"
+              ],
+              "description": "What the card shows: its data, a skeleton, its empty state or its error. Default `ready`."
+            },
+            "status": {
+              "type": "object",
+              "unchecked": "ChartStatus",
+              "description": "The status line: a kind, a label and when the data was read."
+            },
+            "theme": {
+              "enum": [
+                "dark",
+                "inverse",
+                "light",
+                "page"
+              ],
+              "description": "The card's own theme: `page` (default), `light`, `dark` or `inverse`."
+            },
+            "title": {
+              "type": "string",
+              "description": "The card's title, at its top. It names the card."
+            }
+          }
+        }
+      ]
     },
     {
       "name": "@carbon-labs/react-chat",
@@ -2883,6 +3007,10 @@
               "type": "string",
               "description": "The docked notice's close. Default \"Close notification\"."
             },
+            "connecting": {
+              "type": "boolean",
+              "description": "Dictation was asked for and waits for the microphone: the spinner in its place."
+            },
             "corners": {
               "enum": [
                 "full",
@@ -2902,11 +3030,11 @@
               "description": "The microphone, off and on. Default \"Dictate\", \"Stop dictation\"."
             },
             "dictationListeningText": {
-              "type": "string"
-            },
-            "dictationReadyText": {
               "type": "string",
-              "description": "Dictation's status, before its first second and after. Default \"Ready when you are.\", \"Listening\"."
+              "description": "Announced as dictation starts and stops. Default \"Listening\", \"Dictation stopped\"."
+            },
+            "dictationStoppedText": {
+              "type": "string"
             },
             "disabled": {
               "type": "boolean"
@@ -2928,9 +3056,20 @@
               "type": "string",
               "description": "The field's accessible name. Default \"Prompt\"."
             },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The microphone's level, 0 to 1, or a function read each frame: what the listening pills follow."
+            },
             "listening": {
               "type": "boolean",
-              "description": "Dictation is on (controlled)."
+              "description": "Dictation is listening (controlled)."
             },
             "maxRows": {
               "type": "number",
@@ -3046,7 +3185,7 @@
             },
             "timeScale": {
               "type": "number",
-              "description": "Slow motion for the chips, the notice and dictation's status. Default 1."
+              "description": "Slow motion for the chips and the notice. Default 1."
             },
             "tools": {
               "$ref": "#/$defs/node",
@@ -13450,6 +13589,17 @@
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
             },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame: what a listening state follows (MicrophoneListeningToggle). Other icons ignore it."
+            },
             "onBlur": {
               "$ref": "#/$defs/event"
             },
@@ -13664,6 +13814,17 @@
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
             },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame: what a listening state follows (MicrophoneListeningToggle). Other icons ignore it."
+            },
             "onBlur": {
               "$ref": "#/$defs/event"
             },
@@ -13770,6 +13931,17 @@
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
             },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame: what a listening state follows (MicrophoneListeningToggle). Other icons ignore it."
+            },
             "onBlur": {
               "$ref": "#/$defs/event"
             },
@@ -13871,6 +14043,17 @@
                 "up"
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
+            },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame: what a listening state follows (MicrophoneListeningToggle). Other icons ignore it."
             },
             "onBlur": {
               "$ref": "#/$defs/event"
@@ -13977,6 +14160,17 @@
                 "right"
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
+            },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame: what a listening state follows (MicrophoneListeningToggle). Other icons ignore it."
             },
             "onBlur": {
               "$ref": "#/$defs/event"
@@ -14112,6 +14306,23 @@
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
             },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame (a listening state follows it)."
+            },
             "onBlur": {
               "$ref": "#/$defs/event"
             },
@@ -14213,6 +14424,17 @@
                 "on"
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
+            },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame: what a listening state follows (MicrophoneListeningToggle). Other icons ignore it."
             },
             "onBlur": {
               "$ref": "#/$defs/event"
@@ -14392,6 +14614,17 @@
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
             },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame: what a listening state follows (MicrophoneListeningToggle). Other icons ignore it."
+            },
             "onBlur": {
               "$ref": "#/$defs/event"
             },
@@ -14529,6 +14762,23 @@
                 "open"
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
+            },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame (a listening state follows it)."
             },
             "onBlur": {
               "$ref": "#/$defs/event"
@@ -14995,6 +15245,17 @@
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
             },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame: what a listening state follows (MicrophoneListeningToggle). Other icons ignore it."
+            },
             "onBlur": {
               "$ref": "#/$defs/event"
             },
@@ -15194,6 +15455,23 @@
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
             },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame (a listening state follows it)."
+            },
             "onBlur": {
               "$ref": "#/$defs/event"
             },
@@ -15288,6 +15566,23 @@
                 "unchecked"
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
+            },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame (a listening state follows it)."
             },
             "onBlur": {
               "$ref": "#/$defs/event"
@@ -15661,6 +15956,17 @@
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
             },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame: what a listening state follows (MicrophoneListeningToggle). Other icons ignore it."
+            },
             "onBlur": {
               "$ref": "#/$defs/event"
             },
@@ -16006,6 +16312,17 @@
                 "copy"
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
+            },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame: what a listening state follows (MicrophoneListeningToggle). Other icons ignore it."
             },
             "onBlur": {
               "$ref": "#/$defs/event"
@@ -16569,6 +16886,23 @@
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
             },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame (a listening state follows it)."
+            },
             "onBlur": {
               "$ref": "#/$defs/event"
             },
@@ -16987,6 +17321,17 @@
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
             },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame: what a listening state follows (MicrophoneListeningToggle). Other icons ignore it."
+            },
             "onBlur": {
               "$ref": "#/$defs/event"
             },
@@ -17108,6 +17453,17 @@
                 "list"
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
+            },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame: what a listening state follows (MicrophoneListeningToggle). Other icons ignore it."
             },
             "onBlur": {
               "$ref": "#/$defs/event"
@@ -17242,6 +17598,23 @@
                 "unlocked"
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
+            },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame (a listening state follows it)."
             },
             "onBlur": {
               "$ref": "#/$defs/event"
@@ -17381,6 +17754,17 @@
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
             },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame: what a listening state follows (MicrophoneListeningToggle). Other icons ignore it."
+            },
             "onBlur": {
               "$ref": "#/$defs/event"
             },
@@ -17455,23 +17839,7 @@
           "sameAs": "Accessibility"
         },
         {
-          "name": "MicrophoneOff",
-          "sameAs": "Accessibility"
-        },
-        {
-          "name": "MicrophoneOffFilledToggle",
-          "sameAs": "FlashOffFilledToggle"
-        },
-        {
-          "name": "MicrophoneOffToggle",
-          "sameAs": "FlashOffFilledToggle"
-        },
-        {
-          "name": "MicrophoneToggle",
-          "sameAs": "AsleepToggle"
-        },
-        {
-          "name": "MicrophoneVoiceModeToggle",
+          "name": "MicrophoneListeningToggle",
           "required": [],
           "props": {
             "animated": {
@@ -17514,6 +17882,17 @@
                 "off"
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
+            },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame: what a listening state follows (MicrophoneListeningToggle). Other icons ignore it."
             },
             "onBlur": {
               "$ref": "#/$defs/event"
@@ -17571,6 +17950,26 @@
               "description": "Controlled state, by name (`'on'`/`'off'`, `'play'`/`'pause'`, …). When"
             }
           }
+        },
+        {
+          "name": "MicrophoneOff",
+          "sameAs": "Accessibility"
+        },
+        {
+          "name": "MicrophoneOffFilledToggle",
+          "sameAs": "FlashOffFilledToggle"
+        },
+        {
+          "name": "MicrophoneOffToggle",
+          "sameAs": "FlashOffFilledToggle"
+        },
+        {
+          "name": "MicrophoneToggle",
+          "sameAs": "AsleepToggle"
+        },
+        {
+          "name": "MicrophoneVoiceModeToggle",
+          "sameAs": "MicrophoneListeningToggle"
         },
         {
           "name": "Migrate",
@@ -17752,6 +18151,23 @@
                 "on"
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
+            },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame (a listening state follows it)."
             },
             "onBlur": {
               "$ref": "#/$defs/event"
@@ -18101,6 +18517,23 @@
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
             },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame (a listening state follows it)."
+            },
             "onBlur": {
               "$ref": "#/$defs/event"
             },
@@ -18283,6 +18716,17 @@
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
             },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame: what a listening state follows (MicrophoneListeningToggle). Other icons ignore it."
+            },
             "onBlur": {
               "$ref": "#/$defs/event"
             },
@@ -18414,6 +18858,23 @@
                 "stop"
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
+            },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame (a listening state follows it)."
             },
             "onBlur": {
               "$ref": "#/$defs/event"
@@ -18670,6 +19131,17 @@
                 "expand"
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
+            },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame: what a listening state follows (MicrophoneListeningToggle). Other icons ignore it."
             },
             "onBlur": {
               "$ref": "#/$defs/event"
@@ -19011,6 +19483,17 @@
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
             },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame: what a listening state follows (MicrophoneListeningToggle). Other icons ignore it."
+            },
             "onBlur": {
               "$ref": "#/$defs/event"
             },
@@ -19185,6 +19668,17 @@
                 "none"
               ],
               "description": "Uncontrolled initial state. Ignored when `value` or `toggled` is provided."
+            },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame: what a listening state follows (MicrophoneListeningToggle). Other icons ignore it."
             },
             "onBlur": {
               "$ref": "#/$defs/event"
@@ -19866,6 +20360,17 @@
                 "quiet",
                 "up"
               ]
+            },
+            "level": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/$defs/event"
+                }
+              ],
+              "description": "The input level, 0 to 1, or a function read each frame (a listening state follows it)."
             },
             "muted": {
               "type": "boolean",
@@ -26620,7 +27125,7 @@
             "leftOverflowButtonProps": {
               "type": "object",
               "unchecked": "HTMLAttributes<HTMLButtonElement>",
-              "description": "Spread onto the scroll buttons."
+              "description": "Spread onto the scroll buttons, as v11's: left onto the previous (the right one, right to left), right onto the next."
             },
             "light": {
               "type": "boolean"

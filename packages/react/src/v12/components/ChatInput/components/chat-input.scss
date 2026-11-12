@@ -216,7 +216,8 @@ $block: '#{$prefix}--chat-input';
 // ---- the actions' shared tooltip --------------------------------------------
 
 // Carbon's Popover with Carbon's tooltip classes, as a 32px box over the
-// button it names; ActionGroup sets its start and size.
+// button it names; ActionGroup sets its left and size (physical: it measures
+// `offsetLeft`, from the left in either direction).
 .#{$block}__actions .#{$block}__tip {
   position: absolute;
   inset-block: 0;
@@ -235,7 +236,7 @@ $block: '#{$prefix}--chat-input';
 
 // Moving between buttons, it slides rather than reappearing.
 .#{$block}__tip--sliding {
-  transition: inset-inline-start $duration-fast-02 motion(standard, productive);
+  transition: left $duration-fast-02 motion(standard, productive);
 }
 
 // Carbon's Menu focuses its first row when it opens (the menu-button

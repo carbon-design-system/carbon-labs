@@ -195,4 +195,6 @@ export interface ToggleIconProps<
    * toggles, whose default follows Carbon's Checkbox: filled).
    */
   filled?: boolean;
+  /** The input level, 0 to 1, or a function read each frame: what a listening state follows (MicrophoneListeningToggle). Other icons ignore it. */
+  level?: number | (() => number);
 }

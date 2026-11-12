@@ -91,7 +91,7 @@ export function registryMarkText(entry) {
  * @param {{ in: string }} place The place.
  * @returns {string} The folder or file.
  */
-export function placeRoot(place) {
+function placeRoot(place) {
   return place.in.includes('/') ? place.in : `${COMPONENTS}/${place.in}`;
 }
 
@@ -131,7 +131,7 @@ function sourcesIn(labs, root) {
  * @param {string} labs The carbon-labs checkout.
  * @returns {{ kind: string, sub: string | null, name: string, file: string, line: number }[]} The marks.
  */
-export function laneMarks(labs) {
+function laneMarks(labs) {
   const roots = [];
   const components = path.join(labs, COMPONENTS);
   for (const d of fs.existsSync(components)
@@ -235,7 +235,7 @@ function markAt(lines, k, file) {
  * @param {ReturnType<typeof laneProgram>} [lane] The program, when already made.
  * @returns {{ prop: string, file: string, line: number, start: number }[]} The declarations: the line of the prop, and of its doc comment when it has one.
  */
-export function propDeclarations(labs, lane = laneProgram(labs)) {
+function propDeclarations(labs, lane = laneProgram(labs)) {
   const { ts, program, checker, folders } = lane;
   const seen = new Map();
   for (const f of folders) {

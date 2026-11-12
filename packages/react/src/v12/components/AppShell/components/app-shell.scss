@@ -402,7 +402,8 @@ $_fold-toggle: $spacing-09;
 
 .cds-jump-to.cds-app-shell__top,
 .cast-floating:has(+ .cds-app-shell__top) {
-  inset-inline-start: var(--cds-app-shell-workspace-mid, 50%);
+  /* stylelint-disable-next-line csstools/use-logical -- the script measures the middle in client px */
+  left: var(--cds-app-shell-workspace-mid, 50%);
 }
 
 .cds-jump-to--top.cds-app-shell__top,

@@ -24,6 +24,7 @@ import { easeFn, type Playback } from './animate';
 import { animate, onSkipChange, skipping } from './skip';
 import { LOOP_IN, TOGGLE_OUT } from './timing';
 import type { TweenFn } from './frame';
+import { motionTokens } from '../tokens';
 
 export interface LoopInput {
   /** Seconds a cycle of `l`. */
@@ -32,6 +33,12 @@ export interface LoopInput {
   delay?: number;
   /** Seconds the weight takes to ease in (default half a cycle, LOOP_IN). */
   ramp?: number;
+  /**
+   * The loop follows a live level (0 to 1, the binding's `level`) as the
+   * frame's `v`, read each frame: it rises on fast-01 and falls on
+   * moderate-01. With no level it doesn't run: the state holds its still pose.
+   */
+  level?: boolean;
 }
 
 /** A loop, with the runner that plays it (only icons with a loop carry it). */
@@ -41,10 +48,23 @@ export interface LoopSpec extends LoopInput {
 
 /** What a loop plays on: a controller (FrameController). */
 export interface LoopStage {
-  readonly frame: { l?: number; w?: number };
+  readonly frame: { l?: number; w?: number; v?: number };
   repaint(): void;
   tween: TweenFn;
   readonly hidden?: boolean;
+  /** The live level the binding gives (a loop with `level`). */
+  readonly level?: () => number;
+}
+
+/** How fast the frame's `v` follows the level: up quickly, down more slowly. */
+const RISE = motionTokens.duration.fast01 / 1000;
+const FALL = motionTokens.duration.moderate01 / 1000;
+
+/** `v` after `dt` seconds following `level` (0 to 1) from `v`. */
+export function followLevel(v: number, level: number, dt: number): number {
+  const to = Number.isFinite(level) ? Math.min(1, Math.max(0, level)) : 0;
+  const tau = to > v ? RISE : FALL;
+  return v + (to - v) * (1 - Math.exp(-Math.max(0, dt) / tau));
 }
 
 /* @__NO_SIDE_EFFECTS__ */
@@ -92,6 +112,19 @@ export class LoopRunner {
     this.start(change);
   }
 
+  /** The level came or went (FrameController.setLevel): a loop that follows one starts, or eases to its still pose. */
+  levelChanged(): void {
+    if (!this.on || !this.loop.level || skipping()) {
+      return;
+    }
+    this.halt();
+    if (this.stage.level) {
+      this.start(false);
+    } else {
+      this.anims = [this.stage.tween('w', 0, TOGGLE_OUT)];
+    }
+  }
+
   /** The loop from where it is; under skip it doesn't loop: the state's still pose (weight 0), at once. */
   private start(change: boolean): void {
     const { frame } = this.stage;
@@ -100,12 +133,17 @@ export class LoopRunner {
       this.stage.repaint();
       return;
     }
+    // A loop that follows a level, with none: nothing to follow, so nothing runs.
+    if (this.loop.level && !this.stage.level) {
+      return;
+    }
     const wait = change ? (this.loop.delay ?? 0) : 0;
     const ramp = this.loop.ramp ?? this.loop.cycle * LOOP_IN.share;
     const k = wait / (wait + ramp);
     const ease = easeFn(LOOP_IN.ease);
     // The weight first, so the frame `l` paints has this frame's weight. `l` carries on from where it was.
     const l = frame.l ?? 0;
+    let last = l;
     this.anims = [
       animate(frame.w ?? 0, 1, {
         duration: wait + ramp,
@@ -117,11 +155,23 @@ export class LoopRunner {
         repeat: Infinity,
         onUpdate: (v) => {
           frame.l = v;
+          if (this.loop.level) {
+            this.follow((v - last + (v < last ? 1 : 0)) * this.loop.cycle);
+          }
+          last = v;
           this.stage.repaint();
         },
       }),
     ];
     this.visibility();
+  }
+
+  /** The frame's `v` after `dt` seconds following the stage's level. */
+  private follow(dt: number): void {
+    const { frame, level } = this.stage;
+    if (level) {
+      frame.v = followLevel(frame.v ?? 0, level(), dt);
+    }
   }
 
   /** Off screen it holds where it is, and carries on from there. */

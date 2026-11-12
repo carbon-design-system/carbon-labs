@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "@carbon-labs/react-mega-button": "workspace:*",
+    "@carbon-labs/react-util": "workspace:*",
     "classnames": "^2.3.2",
     "prop-types": "^15.8.1"
   },

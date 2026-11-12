@@ -258,8 +258,11 @@ export const DatePickerInput = forwardRef<
           aria-readonly={readOnly || undefined}
           aria-haspopup={host && calendar ? 'dialog' : undefined}
           aria-expanded={host && calendar ? host.open : undefined}
+          // The open calendar's dialog: the surface takes the calendar's id with this suffix.
           aria-controls={
-            host && calendar && host.open ? host.calendarId : undefined
+            host && calendar && host.open
+              ? `${host.calendarId}-dialog`
+              : undefined
           }
           value={host ? host.text(slot) : own}
           onChange={(e) => {

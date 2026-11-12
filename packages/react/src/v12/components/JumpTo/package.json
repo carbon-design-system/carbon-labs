@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-jump-to",
-  "version": "0.16.0",
+  "version": "0.17.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - JumpTo for React (v12)",
@@ -44,6 +44,7 @@
     "@carbon-labs/react-kit-defaults": "workspace:*",
     "@carbon-labs/react-motion-icons": "workspace:*",
     "@carbon-labs/v12-motion": "workspace:*",
+    "@carbon-labs/v12-styles": "workspace:*",
     "@ibm/telemetry-js": "^1.10.2"
   },
   "peerDependencies": {

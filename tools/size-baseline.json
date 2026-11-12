@@ -8,36 +8,36 @@
     "gzip": 1885
   },
   "ActivityFeed": {
-    "raw": 14881,
-    "gzip": 5971
+    "raw": 14651,
+    "gzip": 5870
   },
   "AppShell": {
-    "raw": 21055,
-    "gzip": 7702
+    "raw": 21103,
+    "gzip": 7730
   },
   "Breadcrumb": {
     "raw": 3030,
     "gzip": 1310
   },
   "Button": {
-    "raw": 12513,
-    "gzip": 4843
+    "raw": 12549,
+    "gzip": 4837
   },
   "Card": {
     "raw": 5295,
     "gzip": 2029
   },
   "Charts": {
-    "raw": 15978,
-    "gzip": 5991
+    "raw": 28195,
+    "gzip": 10532
   },
   "Chat": {
-    "raw": 63077,
-    "gzip": 21309
+    "raw": 62514,
+    "gzip": 21189
   },
   "ChatInput": {
-    "raw": 13615,
-    "gzip": 5106
+    "raw": 13617,
+    "gzip": 5100
   },
   "ChatPanels": {
     "raw": 3905,
@@ -52,8 +52,8 @@
     "gzip": 1313
   },
   "Checkbox": {
-    "raw": 4761,
-    "gzip": 1910
+    "raw": 4775,
+    "gzip": 1919
   },
   "CodeSnippet": {
     "raw": 6832,
@@ -88,8 +88,8 @@
     "gzip": 4758
   },
   "DatePickerV2": {
-    "raw": 31017,
-    "gzip": 12046
+    "raw": 31029,
+    "gzip": 12053
   },
   "DescriptionList": {
     "raw": 2019,
@@ -108,8 +108,8 @@
     "gzip": 504
   },
   "EasingGraph": {
-    "raw": 3735,
-    "gzip": 1847
+    "raw": 3699,
+    "gzip": 1834
   },
   "EmptyState": {
     "raw": 4813,
@@ -120,7 +120,7 @@
     "gzip": 16097
   },
   "FileChip": {
-    "raw": 4777,
+    "raw": 4795,
     "gzip": 2091
   },
   "FileUploader": {
@@ -156,8 +156,8 @@
     "gzip": 3736
   },
   "JobsTray": {
-    "raw": 9222,
-    "gzip": 3565
+    "raw": 9296,
+    "gzip": 3591
   },
   "JumpTo": {
     "raw": 11802,
@@ -172,8 +172,8 @@
     "gzip": 1327
   },
   "Link": {
-    "raw": 1526,
-    "gzip": 807
+    "raw": 1542,
+    "gzip": 799
   },
   "List": {
     "raw": 648,
@@ -192,24 +192,24 @@
     "gzip": 1628
   },
   "Menu": {
-    "raw": 29266,
-    "gzip": 10373
+    "raw": 29284,
+    "gzip": 10368
   },
   "Modal": {
-    "raw": 27180,
-    "gzip": 10456
+    "raw": 27161,
+    "gzip": 10445
   },
   "MotionIcons": {
-    "raw": 95908,
-    "gzip": 32002
+    "raw": 96128,
+    "gzip": 32071
   },
   "Notification": {
     "raw": 29272,
     "gzip": 11104
   },
   "NotificationsPanel": {
-    "raw": 17627,
-    "gzip": 6576
+    "raw": 17653,
+    "gzip": 6592
   },
   "NumberInput": {
     "raw": 10241,
@@ -220,16 +220,16 @@
     "gzip": 3220
   },
   "PageHeader": {
-    "raw": 25736,
-    "gzip": 9159
+    "raw": 25693,
+    "gzip": 9147
   },
   "Pagination": {
     "raw": 6708,
     "gzip": 2728
   },
   "PaginationNav": {
-    "raw": 10022,
-    "gzip": 4182
+    "raw": 10048,
+    "gzip": 4185
   },
   "Popover": {
     "raw": 15550,
@@ -292,8 +292,8 @@
     "gzip": 3256
   },
   "SelectionKit": {
-    "raw": 19940,
-    "gzip": 7633
+    "raw": 19406,
+    "gzip": 7415
   },
   "SessionSwitcher": {
     "raw": 1705,
@@ -304,16 +304,16 @@
     "gzip": 2696
   },
   "SideNav": {
-    "raw": 37048,
-    "gzip": 14232
+    "raw": 37052,
+    "gzip": 14247
   },
   "SidePanel": {
-    "raw": 11264,
-    "gzip": 4482
+    "raw": 11516,
+    "gzip": 4574
   },
   "Slider": {
-    "raw": 32807,
-    "gzip": 12696
+    "raw": 32999,
+    "gzip": 12764
   },
   "Snap": {
     "raw": 696,
@@ -336,20 +336,20 @@
     "gzip": 477
   },
   "Tabs": {
-    "raw": 24247,
-    "gzip": 9333
+    "raw": 24301,
+    "gzip": 9366
   },
   "Tag": {
     "raw": 7825,
     "gzip": 3330
   },
   "TagSet": {
-    "raw": 12263,
-    "gzip": 5032
+    "raw": 12279,
+    "gzip": 5037
   },
   "Tearsheet": {
-    "raw": 12221,
-    "gzip": 4867
+    "raw": 12238,
+    "gzip": 4866
   },
   "TextArea": {
     "raw": 8612,
@@ -376,8 +376,8 @@
     "gzip": 1784
   },
   "Toggletip": {
-    "raw": 2753,
-    "gzip": 1203
+    "raw": 2879,
+    "gzip": 1208
   },
   "Toolbar": {
     "raw": 16060,

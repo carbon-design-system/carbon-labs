@@ -550,14 +550,10 @@ export function useTabList(who: string, o: TabListOptions) {
     const update = () => {
       if (axis === 'x') {
         const max = sc.scrollWidth - sc.clientWidth;
-        wrap.toggleAttribute(
-          'data-overflow-start',
-          max > 1 && sc.scrollLeft > 1
-        );
-        wrap.toggleAttribute(
-          'data-overflow-end',
-          max > 1 && sc.scrollLeft < max - 1
-        );
+        // From the inline start: right to left, scrollLeft runs from 0 down to -max.
+        const at = Math.abs(sc.scrollLeft);
+        wrap.toggleAttribute('data-overflow-start', max > 1 && at > 1);
+        wrap.toggleAttribute('data-overflow-end', max > 1 && at < max - 1);
       } else {
         wrap.toggleAttribute('data-overflow-top', sc.scrollTop > 1);
         wrap.toggleAttribute(

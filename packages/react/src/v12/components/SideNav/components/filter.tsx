@@ -27,7 +27,7 @@ import { Search, type SearchSize } from '@carbon-labs/react-search';
 import type { FieldFrame } from '@carbon-labs/react-props';
 import { useLatest } from '@carbon-labs/react-selection-kit';
 import './side-nav-filter.scss';
-import { isComposing } from '@carbon-labs/react-util';
+import { assignRef, isComposing } from '@carbon-labs/react-util';
 
 /* ============================================================================
  * SideNav's filter (`filter`): a field pinned at the top of the nav's panel
@@ -270,11 +270,6 @@ function typing(target: EventTarget | null): boolean {
   );
 }
 
-function assign<T>(ref: Ref<T> | undefined, value: T | null) {
-  if (typeof ref === 'function') ref(value);
-  else if (ref) (ref as { current: T | null }).current = value;
-}
-
 /** The nav's row size → the field's: the row's own height, near enough (26 → 24, 32 → 32, 40 → 40). */
 const FIELD_SIZE: Record<'sm' | 'md' | 'lg', SearchSize> = {
   sm: 'xs',
@@ -442,7 +437,7 @@ export function useSideNavFilter(
   const setInput = useCallback(
     (el: HTMLInputElement | null) => {
       inputRef.current = el;
-      assign(callerInputRef, el);
+      assignRef(callerInputRef, el);
     },
     [callerInputRef]
   );

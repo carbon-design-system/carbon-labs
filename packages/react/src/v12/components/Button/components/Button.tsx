@@ -27,6 +27,7 @@ import {
 } from '@carbon-labs/react-tooltip';
 import { joinHandlers } from '@carbon-labs/react-tooltip';
 import { CONTROL_KIT, useKitProps } from '@carbon-labs/react-kit-defaults';
+import { assignRef } from '@carbon-labs/react-util';
 import { quietSteps } from '@carbon-labs/react-util';
 import {
   resolveButtonLook,
@@ -276,8 +277,7 @@ export const Button = forwardRef<HTMLElement, ButtonProps>(
     const setRef = useCallback(
       (el: HTMLElement | null) => {
         elRef.current = el;
-        if (typeof ref === 'function') ref(el);
-        else if (ref) ref.current = el;
+        assignRef(ref, el);
       },
       [ref]
     );

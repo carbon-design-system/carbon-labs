@@ -1237,8 +1237,9 @@ export const PageHeader = forwardRef<HTMLElement, PageHeaderProps>(
         node.setAttribute('aria-hidden', 'true');
         node.inert = true;
         node.classList.add('cds-page-header__ghost');
+        // Physical: the rect is measured from the header's left in either direction.
         Object.assign(node.style, {
-          insetInlineStart: `${rect.left}px`,
+          left: `${rect.left}px`,
           insetBlockStart: `${rect.top}px`,
           inlineSize: `${rect.width}px`,
           blockSize: `${rect.height}px`,
@@ -1990,7 +1991,6 @@ export const PageHeader = forwardRef<HTMLElement, PageHeaderProps>(
               )
             : undefined
         }
-        aria-labelledby={titleText ? titleId : undefined}
         style={{
           ...style,
           ['--cds-page-header-offset' as string]: `${pageHeaderOffset}px`,

@@ -20,6 +20,7 @@ import {
   type ElementType,
   type HTMLAttributes,
   type KeyboardEvent as ReactKeyboardEvent,
+  type MouseEvent as ReactMouseEvent,
   type ReactNode,
 } from 'react';
 import { attachRollover } from '@carbon-labs/v12-motion';
@@ -205,7 +206,17 @@ export const ToggletipButton = forwardRef<
   if (as) {
     const As = as;
     return (
-      <As {...rest} className={classes} onClick={ctx?.toggle}>
+      <As
+        aria-expanded={ctx?.open ?? false}
+        aria-controls={ctx?.id}
+        aria-describedby={ctx?.open ? ctx.id : undefined}
+        aria-label={label}
+        {...rest}
+        className={classes}
+        onClick={(e: ReactMouseEvent<HTMLButtonElement>) => {
+          ctx?.toggle();
+          rest.onClick?.(e);
+        }}>
         {icon}
       </As>
     );

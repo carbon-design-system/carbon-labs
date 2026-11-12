@@ -103,7 +103,7 @@ import type { SurfaceShadowOption } from '@carbon-labs/v12-motion';
 import '@carbon-labs/react-selection-kit/scss/selection-kit.scss';
 import './side-nav.scss';
 import { clamp01 } from '@carbon-labs/v12-motion';
-import { inertProps } from '@carbon-labs/react-util';
+import { inertProps, inlineKey } from '@carbon-labs/react-util';
 import { IN_DEVELOPMENT } from '@carbon-labs/react-util';
 
 /* ============================================================================
@@ -2399,6 +2399,8 @@ function SideNavLinkRow<C extends ElementType = 'a'>({
 
   const disabledProps = disabled
     ? {
+        // An anchor with no `href` has no role: it stays a link, a disabled one.
+        role: 'link',
         'aria-disabled': true,
         href: undefined,
         to: undefined,
@@ -2882,7 +2884,12 @@ export function SideNavGroup({
         }}
         onClick={onHeaderClick}
         onKeyDown={(e) => {
-          if (railish && e.key === 'ArrowRight' && !flyoutOpen) {
+          // Toward the inline end, where the flyout opens: the left arrow, right to left.
+          if (
+            railish &&
+            inlineKey(e.key, e.currentTarget) === 'ArrowRight' &&
+            !flyoutOpen
+          ) {
             e.preventDefault();
             flyout(null);
           }

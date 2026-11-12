@@ -1991,7 +1991,6 @@ export const PageHeader = forwardRef<HTMLElement, PageHeaderProps>(
               )
             : undefined
         }
-        aria-labelledby={titleText ? titleId : undefined}
         style={{
           ...style,
           ['--cds-page-header-offset' as string]: `${pageHeaderOffset}px`,

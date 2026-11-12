@@ -805,7 +805,14 @@ function AllTags({
   const elements: ReactElement[] = matches.map((t) => {
     const i = tags.indexOf(t);
     const key = t.id ?? String(i);
-    return renderTag(t, { key, size, timeScale, 'data-cds-key': key });
+    // Each tag is an item of the list below.
+    return renderTag(t, {
+      key,
+      size,
+      timeScale,
+      role: 'listitem',
+      'data-cds-key': key,
+    });
   });
   const stagger = useStagger({ count: Math.max(1, elements.length), size: 32 });
   const shown = useFilterPresence(rootRef, boxRef, elements, {
@@ -844,6 +851,7 @@ interface TagExtra {
   size: TagSize;
   timeScale?: number;
   className?: string;
+  role?: 'listitem';
   [data: `data-${string}`]: string | number;
 }
 

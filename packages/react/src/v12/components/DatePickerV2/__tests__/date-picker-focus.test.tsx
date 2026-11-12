@@ -262,3 +262,24 @@ describe('DatePickerV2 focus restoration', () => {
     });
   });
 });
+
+describe('DatePickerV2 field and calendar', () => {
+  it('points aria-controls at the open dialog, and at nothing while closed', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <DatePicker datePickerType="single">
+        <DatePickerInput id="controls-date" labelText="Date input" />
+      </DatePicker>
+    );
+
+    const dateInput = screen.getByLabelText('Date input');
+    expect(dateInput.hasAttribute('aria-controls')).toBe(false);
+
+    await user.click(dateInput);
+
+    const dialog = calendar();
+    expect(dialog).toBeTruthy();
+    expect(dateInput.getAttribute('aria-controls')).toBe(dialog?.id);
+  });
+});

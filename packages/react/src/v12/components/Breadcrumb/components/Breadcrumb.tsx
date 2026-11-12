@@ -258,7 +258,7 @@ export const BreadcrumbItem = forwardRef<HTMLLIElement, BreadcrumbItemProps>(
     } else if (child) {
       const own = (child.props.className as string | undefined) ?? '';
       content = cloneElement(child, {
-        'aria-current': ariaCurrent,
+        'aria-current': aria,
         className: [
           current ? 'cds-breadcrumb__current' : 'cds-breadcrumb__link',
           own,

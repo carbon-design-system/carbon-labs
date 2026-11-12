@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.21.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-full-page-error%400.20.0...%40carbon-labs%2Freact-full-page-error%400.21.0) (2026-11-12)
+
+**Note:** Version bump only for package @carbon-labs/react-full-page-error
+
+
+
+
+
 # [0.20.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-full-page-error%400.19.0...%40carbon-labs%2Freact-full-page-error%400.20.0) (2026-11-11)
 
 **Note:** Version bump only for package @carbon-labs/react-full-page-error

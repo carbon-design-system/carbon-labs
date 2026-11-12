@@ -43,7 +43,8 @@
     "@carbon-labs/react-tile": "workspace:*",
     "@carbon-labs/react-toggle": "workspace:*",
     "@carbon-labs/react-tooltip": "workspace:*",
-    "@carbon-labs/v12-workbench": "workspace:*"
+    "@carbon-labs/v12-workbench": "workspace:*",
+    "@carbon/react": "^1.118.0"
   },
   "peerDependencies": {
     "react": "^18.2.0 || ^19.0.0",

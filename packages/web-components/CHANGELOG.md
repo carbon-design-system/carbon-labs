@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.205.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fweb-components%400.204.0...%40carbon-labs%2Fweb-components%400.205.0) (2026-11-12)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
 # [0.204.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fweb-components%400.203.0...%40carbon-labs%2Fweb-components%400.204.0) (2026-11-11)
 
 * fix(date-picker)!: register clabs- tags instead of cds- tags (#1476) ([fb14b2a](https://github.com/carbon-design-system/carbon-labs/commit/fb14b2ad5ffd390dc23dd8694c18fef3e5ba1456)), closes [#1476](https://github.com/carbon-design-system/carbon-labs/issues/1476)

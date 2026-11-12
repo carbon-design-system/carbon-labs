@@ -215,24 +215,29 @@ $loader-size: (
 
 /* Before the fill: from the start to the fill's start, less the knock. */
 .cds-progress-bar__base--start {
-  inset-inline: 0 calc((1 - var(--cds-progress-bar-l)) * 100% + var(--_knock));
+  /* stylelint-disable-next-line csstools/use-logical -- the mirrored track's shares are physical */
+  right: calc((1 - var(--cds-progress-bar-l)) * 100% + var(--_knock));
+  left: 0;
 }
 
 /* After the fill: from the fill's end, plus the knock, to the end. */
 .cds-progress-bar__base--end {
-  inset-inline: calc((1 - var(--cds-progress-bar-r)) * 100% + var(--_knock)) 0;
+  /* stylelint-disable-next-line csstools/use-logical -- the mirrored track's shares are physical */
+  right: 0;
+  left: calc((1 - var(--cds-progress-bar-r)) * 100% + var(--_knock));
 }
 
 /* The fill alone grows, down from the track's top (its top edge held with the base's): a whole px of
    growth stays on whole pixels, where a centred growth would put the line on half pixels. */
 .cds-progress-bar__bar {
+  /* stylelint-disable-next-line csstools/use-logical -- the mirrored track's shares are physical */
+  right: calc(var(--cds-progress-bar-r) * 100%);
+  left: calc(var(--cds-progress-bar-l) * 100%);
   overflow: hidden;
   border-radius: var(--_cap);
   background-color: var(--_bar);
   block-size: var(--_line);
   inset-block-start: 0;
-  inset-inline: calc(var(--cds-progress-bar-l) * 100%)
-    calc(var(--cds-progress-bar-r) * 100%);
   transition: background-color var(--cds-motion-duration-fast-02) linear;
 }
 
@@ -252,6 +257,8 @@ $loader-size: (
   --_band: min(100%, max(30%, 12px));
 
   position: absolute;
+  /* stylelint-disable-next-line csstools/use-logical -- the mirrored track's shares are physical */
+  left: calc(var(--cds-progress-bar-pulse) * (100% + var(--_band)));
   background-image: linear-gradient(
     to right,
     transparent,
@@ -260,9 +267,6 @@ $loader-size: (
   );
   inline-size: var(--_band);
   inset-block: 0;
-  inset-inline-start: calc(
-    var(--cds-progress-bar-pulse) * (100% + var(--_band))
-  );
   transform: translateX(-100%);
 }
 

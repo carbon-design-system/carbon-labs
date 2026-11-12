@@ -30,10 +30,11 @@
 /* Clear of the scroll soft edge, so the pill is never faded by it. */
 .cds-jump-to {
   position: absolute;
+  // Physical on purpose: a logical start with a physical translate puts it off-center in RTL.
+  /* stylelint-disable-next-line csstools/use-logical -- the centering translate is physical */
+  left: 50%;
   border-radius: 999px;
   inline-size: max-content;
-  // Physical on purpose: a logical start with a physical translate puts it off-centre in RTL.
-  inset-inline-start: 50%;
   isolation: isolate;
   pointer-events: auto;
   translate: -50% 0;
@@ -60,7 +61,8 @@
 .cast-floating:has(+ .cds-jump-to) {
   position: absolute;
   z-index: auto;
-  inset-inline-start: 50%;
+  /* stylelint-disable-next-line csstools/use-logical -- the centering translate is physical */
+  left: 50%;
   translate: -50% 0;
 }
 

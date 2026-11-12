@@ -47,7 +47,7 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/AppShell/components/app-shell.scss",
-      "line": 518,
+      "line": 519,
       "text": "surface-step — Surfaces stepped up in elevation: the outlined selector's lift, a workspace's content, a field on it. TBD"
     }
   ],
@@ -1031,7 +1031,7 @@
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/ProgressBar/components/progress-bar.scss",
-      "line": 422,
+      "line": 426,
       "text": "progress-bar-label-row — The status icon sits at the bar's end in every type, and a hidden label still keeps its row, so the bar never grows or shrinks as it finishes or fails. TBD"
     }
   ],
@@ -1389,7 +1389,7 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Tabs/components/Tabs.tsx",
-      "line": 163,
+      "line": 164,
       "text": "api: frame-prop — What a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour. TBD"
     },
     {
@@ -1401,13 +1401,13 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Tabs/components/tabs.scss",
-      "line": 184,
+      "line": 190,
       "text": "token: surface-rule — The quiet surface's hairline. replaces: `$border-subtle`. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Tabs/components/tabs.scss",
-      "line": 209,
+      "line": 215,
       "text": "token: hero-color — The hero tokens: brand colour for a line, a fill, a hover, an ink on a page and on a fill. replaces: `$border-interactive` / `$interactive`, `$button-primary`, `-hover`, `-active`, `$link-primary`, `$link-inverse`. TBD"
     },
     {

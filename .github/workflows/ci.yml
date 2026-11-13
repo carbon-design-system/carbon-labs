@@ -139,7 +139,7 @@ jobs:
         id: playwright
         run: echo "version=$(yarn workspace @carbon-labs/v12-scenes node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
       - name: Cache the scene tier's browser
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}-chromium

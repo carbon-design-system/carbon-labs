@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.27.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-workbench%400.26.0...%40carbon-labs%2Fv12-workbench%400.27.0) (2026-11-13)
+
+### Bug Fixes
+
+* **v12:** measure right-to-left places from the edge they run from ([#1518](https://github.com/carbon-design-system/carbon-labs/issues/1518)) ([39f13cf](https://github.com/carbon-design-system/carbon-labs/commit/39f13cf85f699af82e0be29e1749881dfbb79ca0))
+
+### Features
+
+* **v12-chat:** a dictation button that listens to a live level ([#1513](https://github.com/carbon-design-system/carbon-labs/issues/1513)) ([f9d78c0](https://github.com/carbon-design-system/carbon-labs/commit/f9d78c045261406b0d09d6f934a07a0b731531b0))
+
+
 # [0.26.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-workbench%400.25.0...%40carbon-labs%2Fv12-workbench%400.26.0) (2026-11-12)
 
 ### Bug Fixes

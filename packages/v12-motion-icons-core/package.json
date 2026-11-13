@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/motion-icons-core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - the motion icons' engine and every icon's spec, framework-free",

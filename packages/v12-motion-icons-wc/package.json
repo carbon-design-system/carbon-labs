@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/wc-motion-icons",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - the motion icons as custom elements (Lit), on the same engine",

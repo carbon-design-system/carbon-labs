@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-page-header%400.19.0...%40carbon-labs%2Freact-page-header%400.20.0) (2026-11-13)
+
+### Bug Fixes
+
+* **v12:** measure right-to-left places from the edge they run from ([#1518](https://github.com/carbon-design-system/carbon-labs/issues/1518)) ([39f13cf](https://github.com/carbon-design-system/carbon-labs/commit/39f13cf85f699af82e0be29e1749881dfbb79ca0))
+* **v12:** names, states and focus for assistive tech, with tests ([#1520](https://github.com/carbon-design-system/carbon-labs/issues/1520)) ([dd912f6](https://github.com/carbon-design-system/carbon-labs/commit/dd912f69556900ae344dd5e004b05e7549862c5e))
+
+
 # [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-page-header%400.18.0...%40carbon-labs%2Freact-page-header%400.19.0) (2026-11-12)
 
 **Note:** Version bump only for package @carbon-labs/react-page-header

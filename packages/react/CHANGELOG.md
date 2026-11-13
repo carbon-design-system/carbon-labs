@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.254.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.253.0...%40carbon-labs%2Freact%400.254.0) (2026-11-13)
+
+### Bug Fixes
+
+* **v12:** measure right-to-left places from the edge they run from ([#1518](https://github.com/carbon-design-system/carbon-labs/issues/1518)) ([39f13cf](https://github.com/carbon-design-system/carbon-labs/commit/39f13cf85f699af82e0be29e1749881dfbb79ca0))
+* **v12:** names, states and focus for assistive tech, with tests ([#1520](https://github.com/carbon-design-system/carbon-labs/issues/1520)) ([dd912f6](https://github.com/carbon-design-system/carbon-labs/commit/dd912f69556900ae344dd5e004b05e7549862c5e))
+
+### Features
+
+* **v12-charts:** the chart card on the lane's card ([#1515](https://github.com/carbon-design-system/carbon-labs/issues/1515)) ([7c54669](https://github.com/carbon-design-system/carbon-labs/commit/7c546694cb7e6061eb69bc54f21796ccd0daebec))
+* **v12-charts:** the chart skin and palette on v12 tokens ([#1514](https://github.com/carbon-design-system/carbon-labs/issues/1514)) ([0ba4246](https://github.com/carbon-design-system/carbon-labs/commit/0ba4246a8b93bfed88686f1580c9507724875c55))
+* **v12-chat:** a dictation button that listens to a live level ([#1513](https://github.com/carbon-design-system/carbon-labs/issues/1513)) ([f9d78c0](https://github.com/carbon-design-system/carbon-labs/commit/f9d78c045261406b0d09d6f934a07a0b731531b0))
+
+
 # [0.253.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.252.0...%40carbon-labs%2Freact%400.253.0) (2026-11-12)
 
 ### Bug Fixes

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-tabs%400.17.0...%40carbon-labs%2Freact-tabs%400.18.0) (2026-11-13)
+
+### Bug Fixes
+
+* **v12:** measure right-to-left places from the edge they run from ([#1518](https://github.com/carbon-design-system/carbon-labs/issues/1518)) ([39f13cf](https://github.com/carbon-design-system/carbon-labs/commit/39f13cf85f699af82e0be29e1749881dfbb79ca0))
+
+
 # [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-tabs%400.16.0...%40carbon-labs%2Freact-tabs%400.17.0) (2026-11-12)
 
 ### Bug Fixes

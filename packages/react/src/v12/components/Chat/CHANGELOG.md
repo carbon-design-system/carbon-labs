@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-chat%400.21.0...%40carbon-labs%2Freact-chat%400.22.0) (2026-11-13)
+
+### Features
+
+* **v12-chat:** a dictation button that listens to a live level ([#1513](https://github.com/carbon-design-system/carbon-labs/issues/1513)) ([f9d78c0](https://github.com/carbon-design-system/carbon-labs/commit/f9d78c045261406b0d09d6f934a07a0b731531b0))
+
+
 # [0.21.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-chat%400.20.0...%40carbon-labs%2Freact-chat%400.21.0) (2026-11-12)
 
 **Note:** Version bump only for package @carbon-labs/react-chat

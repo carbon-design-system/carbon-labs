@@ -56,24 +56,6 @@
   }
 }
 
-.ibm-automation-cds--side-nav__link-text {
-  &::part(title) {
-    inline-size: 100%;
-  }
-
-  .ibm-automation-cds--side-panel-nav-item__link {
-    display: flex;
-
-    .launch_icon {
-      margin-inline-start: auto;
-
-      svg {
-        block-size: 100%;
-      }
-    }
-  }
-}
-
 // the icon is slotted (light DOM of this component), so it is styled from here
 // rather than from inside the side nav link's shadow root
 .ibm-automation-cds--side-nav__link:not(
@@ -103,5 +85,23 @@
 
   > img {
     opacity: 1;
+  }
+}
+
+.ibm-automation-cds--side-nav__link-text {
+  &::part(title) {
+    inline-size: 100%;
+  }
+
+  .ibm-automation-cds--side-panel-nav-item__link {
+    display: flex;
+
+    .launch_icon {
+      margin-inline-start: auto;
+
+      svg {
+        block-size: 100%;
+      }
+    }
   }
 }

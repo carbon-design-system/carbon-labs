@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.207.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fweb-components%400.206.0...%40carbon-labs%2Fweb-components%400.207.0) (2026-11-16)
+
+### Bug Fixes
+
+* **global-header:** Change app switcher icon colours on hover ([#1521](https://github.com/carbon-design-system/carbon-labs/issues/1521)) ([da34337](https://github.com/carbon-design-system/carbon-labs/commit/da343376d7ee77fdf99aa434d73924438aac0076))
+
+
 # [0.206.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fweb-components%400.205.0...%40carbon-labs%2Fweb-components%400.206.0) (2026-11-12)
 
 ### Bug Fixes

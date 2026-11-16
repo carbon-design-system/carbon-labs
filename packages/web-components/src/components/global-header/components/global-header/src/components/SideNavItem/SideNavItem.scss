@@ -56,6 +56,38 @@
   }
 }
 
+// the icon is slotted (light DOM of this component), so it is styled from here
+// rather than from inside the side nav link's shadow root
+.ibm-automation-cds--side-nav__link:not(
+  .ibm-automation-cds--side-nav__link--current
+) {
+  > svg {
+    fill: var(--clabs-global-header-text-secondary);
+  }
+
+  // product icons are <img> elements and cannot be recoloured, so dim them
+  > img {
+    opacity: 0.7;
+  }
+}
+
+// needed as @carbon/web-components 2.21.0 does not handle the style change for hover
+.ibm-automation-cds--side-nav__link:hover {
+  background-color: var(--clabs-global-header-background-hover);
+
+  &::part(title) {
+    color: var(--clabs-global-header-text-color);
+  }
+
+  > svg {
+    fill: var(--clabs-global-header-text-color);
+  }
+
+  > img {
+    opacity: 1;
+  }
+}
+
 .ibm-automation-cds--side-nav__link-text {
   &::part(title) {
     inline-size: 100%;
@@ -71,14 +103,5 @@
         block-size: 100%;
       }
     }
-  }
-}
-
-// needed as @carbon/web-components 2.21.0 does not handle the style change for hover
-.ibm-automation-cds--side-nav__link:hover {
-  background-color: var(--clabs-global-header-background-hover);
-
-  &::part(title) {
-    color: var(--clabs-global-header-text-color);
   }
 }

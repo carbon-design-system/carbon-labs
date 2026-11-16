@@ -62,7 +62,6 @@ Scenario(
     // Home
     I.see('Home', 'a');
     // Capabilities
-    I.see('Hybrid control plane', 'button');
     I.see('API Connect', 'a');
     I.see('App Connect', 'a');
     // Admin

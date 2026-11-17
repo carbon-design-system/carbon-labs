@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.255.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.254.0...%40carbon-labs%2Freact%400.255.0) (2026-11-17)
+
+### Bug Fixes
+
+* **v12:** compile the v12 Storybook's sheets without a byte-order mark ([#1525](https://github.com/carbon-design-system/carbon-labs/issues/1525)) ([46f2773](https://github.com/carbon-design-system/carbon-labs/commit/46f277353a08c34f2b4205dd02ee0a01b650a104))
+
+
 # [0.254.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.253.0...%40carbon-labs%2Freact%400.254.0) (2026-11-13)
 
 ### Bug Fixes

@@ -149,6 +149,10 @@ const config = {
                 path.resolve(__dirname, '..', 'node_modules'),
                 path.resolve(__dirname, '..', '..', '..', 'node_modules'),
               ],
+              // Sass starts a compressed sheet that holds non-ASCII text with
+              // a byte-order mark. Once the sheets are joined into one file,
+              // a mark that lands mid-file makes the rule after it invalid.
+              ...(includeV12 && { charset: false }),
             },
             warnRuleAsWarning: true,
             sourceMap: true,

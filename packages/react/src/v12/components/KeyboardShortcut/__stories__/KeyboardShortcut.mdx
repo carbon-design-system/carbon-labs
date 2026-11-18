@@ -89,16 +89,17 @@ request's `User-Agent`.
 ## On surfaces
 
 - **In a tooltip.** Inside Carbon's high-contrast popover (`Tooltip`,
-  `DefinitionTooltip`, an `IconButton`'s label), keycaps take Carbon's inverse
-  family by themselves: `$background-inverse-hover` fill, `$border-inverse`
-  edge, `$text-inverse` label. `kind="plain"` inherits the popover's text
-  colour. Nothing to set.
+  `DefinitionTooltip`, an `IconButton`'s label), keycaps take a chip one
+  step past the popover's ground by themselves (the proposed
+  `keyboard-shortcut-keycap-inverse` fill, falling back to
+  `$background-inverse-hover`) and a `$text-inverse` label. `kind="plain"`
+  inherits the popover's text colour. Nothing to set.
 
 <Canvas of={KeyboardShortcutStories.InIconButtonTooltip} />
 
 - **On a Tile or any other layer.** A keycap's fill is the contextual `$layer`,
-  so directly on a `Tile` it is the tile's own colour and only its border draws
-  the key. Put the content in a `<Layer>` inside the tile, as Carbon does for
+  so directly on a `Tile` it is the tile's own colour and the key shape
+  disappears, leaving the legend. Put the content in a `<Layer>` inside the tile, as Carbon does for
   any control on a layer; or use `kind="plain"` where a keycap is not wanted.
 
 <Canvas of={KeyboardShortcutStories.OnTileWithLayer} />

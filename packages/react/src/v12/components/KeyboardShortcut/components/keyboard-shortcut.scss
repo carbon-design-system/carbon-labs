@@ -12,6 +12,7 @@
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/spacing' as *;
 @use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/utilities/custom-property';
 @use '@carbon/styles/scss/utilities/visually-hidden' as *;
 
 .#{$prefix}--keyboard-shortcut {
@@ -58,8 +59,8 @@
 
   display: inline-block;
   box-sizing: border-box;
-  border: 1px solid $border-subtle;
-  // v12 Carbon gives a small surface $border-radius-04 (MenuItem, Tooltip).
+  // No border: the key is its fill. v12 Carbon gives a small surface
+  // $border-radius-04 (MenuItem, Tooltip).
   border-radius: $border-radius-04;
   background-color: $layer;
   color: $text-secondary;
@@ -71,17 +72,17 @@
 }
 
 // Inside Carbon's high-contrast popover (Tooltip, DefinitionTooltip, IconButton's
-// label), the ground is $background-inverse, not the page's layer. The keycap
-// takes Carbon's inverse family instead, by each token's own description:
-// $background-inverse-hover is the step Carbon itself puts on an inverse
-// surface (the skeleton in this same popover, an inverse notification's
-// action), $border-inverse is "for borders on dark backgrounds or inverse
-// components", and $text-inverse is the popover's own text colour. Plain needs
-// nothing: it inherits the popover's $text-inverse.
+// label), the ground is $background-inverse, not the page's layer. The keycap is
+// a chip one step past that ground, darker in both polarities, and draws no
+// border. $text-inverse is the popover's own text colour. Plain needs nothing:
+// it inherits the popover's $text-inverse.
 .#{$prefix}--popover--high-contrast
   .#{$prefix}--keyboard-shortcut--keycap
   .#{$prefix}--keyboard-shortcut__key {
-  border-color: $border-inverse;
-  background-color: $background-inverse-hover;
+  // @carbon-proposal token: keyboard-shortcut-keycap-inverse — a keycap in a high-contrast popover, one step past the inverse ground and darker in both polarities; Carbon's inverse-hover is lighter than the ground in the light theme and only read as a key through a border. replaces: background-inverse-hover. TBD
+  background-color: custom-property.get-var(
+    'keyboard-shortcut-keycap-inverse',
+    $background-inverse-hover
+  );
   color: $text-inverse;
 }

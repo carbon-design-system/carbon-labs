@@ -23,7 +23,6 @@
 .automation-global-header__switcher-menu {
   display: inline-block;
   block-size: 47px;
-  color: $gray-40;
   list-style-type: none;
   min-inline-size: $spacing-12 * 2 !important;
 
@@ -86,7 +85,7 @@
     align-items: center;
     justify-content: space-between;
     block-size: 47px;
-    color: $gray-10;
+    color: var(--clabs-global-header-text-color);
     margin-inline-start: $spacing-05;
     pointer-events: none;
     @include type-style('heading-compact-01');

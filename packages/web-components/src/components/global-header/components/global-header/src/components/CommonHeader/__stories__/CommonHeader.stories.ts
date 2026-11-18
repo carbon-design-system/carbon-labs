@@ -561,6 +561,7 @@ const customThemeColors = {
   '--clabs-global-header-background-layer': 'khaki',
   '--clabs-global-header-link-color': 'green',
   '--clabs-global-header-link-hover': 'limegreen',
+  '--clabs-global-header-border-color': 'burlywood',
 };
 
 const defaultG100Colors = {
@@ -572,6 +573,7 @@ const defaultG100Colors = {
   '--clabs-global-header-background-layer': '#262626',
   '--clabs-global-header-link-color': '#78a9ff',
   '--clabs-global-header-link-hover': '#a6c8ff',
+  '--clabs-global-header-border-color': '#393939',
 };
 
 const setCustomTheme = () => {

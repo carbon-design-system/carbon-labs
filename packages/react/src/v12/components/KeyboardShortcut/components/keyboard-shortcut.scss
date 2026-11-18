@@ -69,6 +69,17 @@
   min-inline-size: $spacing-05;
   padding-inline: $spacing-02;
   text-align: center;
+
+  // Centre the caps, not the line box. A 12px Plex cap sits about 0.8px below
+  // the middle of its 16px line (4.6px above, 3.0px below), and a browser puts
+  // the baseline on a whole pixel, so it cannot be nudged into place. Trimming
+  // the box to the cap height and padding it to $spacing-05 centres the caps
+  // exactly, at the same 16px. Where `text-box` is unsupported the key keeps
+  // its line box, as before.
+  @supports (text-box: trim-both cap alphabetic) {
+    padding-block: calc((#{$spacing-05} - 1cap) / 2);
+    text-box: trim-both cap alphabetic;
+  }
 }
 
 // Inside Carbon's high-contrast popover (Tooltip, DefinitionTooltip, IconButton's

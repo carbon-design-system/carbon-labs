@@ -32,7 +32,6 @@ import {
   Pdf,
   Ppt,
   Txt,
-  Video,
   VideoFilled,
   Xls,
   Zip,
@@ -372,7 +371,6 @@ export const FileChip = forwardRef<HTMLDivElement, FileChipProps>(
     const secondLine = isError ? errorMessage : description;
     const [nameStart, nameEnd] = splitFileName(name);
     const FileIcon = renderIcon ?? iconForName(name);
-    const PlaceholderIcon = kind === 'video' ? Video : Image;
     const nameNode = (
       <span className={`${block}__name`}>
         <span className={`${block}__name-start`}>{nameStart}</span>
@@ -437,13 +435,14 @@ export const FileChip = forwardRef<HTMLDivElement, FileChipProps>(
                 alt=""
               />
             ) : (
-              <PlaceholderIcon
+              // The same glyph for every kind: the video badge below says "video".
+              <Image
                 aria-hidden="true"
                 size={16}
                 className={`${block}__thumbnail-placeholder`}
               />
             )}
-            {kind === 'video' && thumbnailSrc ? (
+            {kind === 'video' ? (
               <span className={`${block}__video-badge`} aria-hidden="true">
                 <VideoFilled
                   size={16}

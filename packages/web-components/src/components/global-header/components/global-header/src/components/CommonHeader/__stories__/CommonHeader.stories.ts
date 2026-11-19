@@ -552,43 +552,45 @@ export const Logo: Story = {
   `,
 };
 
+const customThemeColors = {
+  '--clabs-global-header-background-color': 'palegoldenrod',
+  '--clabs-global-header-background-hover': 'wheat',
+  '--clabs-global-header-text-color': 'olive',
+  '--clabs-global-header-icon-color': 'olive',
+  '--clabs-global-header-text-secondary': 'goldenrod',
+  '--clabs-global-header-background-layer': 'khaki',
+  '--clabs-global-header-link-color': 'green',
+  '--clabs-global-header-link-hover': 'limegreen',
+  '--clabs-global-header-border-color': 'burlywood',
+};
+
+const defaultG100Colors = {
+  '--clabs-global-header-background-color': '#161616',
+  '--clabs-global-header-background-hover': 'rgba(141, 141, 141, 0.16)',
+  '--clabs-global-header-text-color': '#f4f4f4',
+  '--clabs-global-header-icon-color': '#f4f4f4',
+  '--clabs-global-header-text-secondary': '#c6c6c6',
+  '--clabs-global-header-background-layer': '#262626',
+  '--clabs-global-header-link-color': '#78a9ff',
+  '--clabs-global-header-link-hover': '#a6c8ff',
+  '--clabs-global-header-border-color': '#393939',
+};
+
 const setCustomTheme = () => {
   const element = document.querySelector('clabs-global-header-apaas');
   if (element instanceof HTMLElement) {
-    element.style.setProperty(
-      '--clabs-global-header-background-color',
-      'palegoldenrod'
-    );
-    element.style.setProperty(
-      '--clabs-global-header-background-hover',
-      'burlywood'
-    );
-    element.style.setProperty('--clabs-global-header-text-color', 'olive');
-    element.style.setProperty(
-      '--clabs-global-header-text-secondary',
-      'goldenrod'
-    );
-    element.style.setProperty('--clabs-global-header-icon-color', 'olive');
+    Object.keys(customThemeColors).forEach((key) => {
+      element.style.setProperty(key, customThemeColors[key]);
+    });
   }
 };
 
 const setDefaultTheme = () => {
   const element = document.querySelector('clabs-global-header-apaas');
   if (element instanceof HTMLElement) {
-    element.style.setProperty(
-      '--clabs-global-header-background-color',
-      '#161616'
-    );
-    element.style.setProperty(
-      '--clabs-global-header-background-hover',
-      'rgba(141, 141, 141, 0.16)'
-    );
-    element.style.setProperty('--clabs-global-header-text-color', '#f4f4f4');
-    element.style.setProperty(
-      '--clabs-global-header-text-secondary',
-      '#c6c6c6'
-    );
-    element.style.setProperty('--clabs-global-header-icon-color', '#f4f4f4');
+    Object.keys(customThemeColors).forEach((key) => {
+      element.style.setProperty(key, defaultG100Colors[key]);
+    });
   }
 };
 
@@ -605,32 +607,22 @@ export const Theme: Story = {
       <br />
       <br />
       <p>Custom theme variables:</p>
+      <br />
       <ul>
-        <li>
-          <code>--clabs-global-header-background-color</code>&nbsp;&nbsp;
-          <div
-            style="display:inline-block; width:24px; height:24px; background-color:palegoldenrod;"></div>
-        </li>
-        <li>
-          <code>--clabs-global-header-background-hover</code>&nbsp;&nbsp;
-          <div
-            style="display:inline-block; width:24px; height:24px; background-color:burlywood;"></div>
-        </li>
-        <li>
-          <code>--clabs-global-header-text-color</code>&nbsp;&nbsp;
-          <div
-            style="display:inline-block; width:24px; height:24px; background-color:olive;"></div>
-        </li>
-        <li>
-          <code>--clabs-global-header-text-secondary</code>&nbsp;&nbsp;
-          <div
-            style="display:inline-block; width:24px; height:24px; background-color:goldenrod;"></div>
-        </li>
-        <li>
-          <code>--clabs-global-header-icon-color</code>&nbsp;&nbsp;
-          <div
-            style="display:inline-block; width:24px; height:24px; background-color:olive;"></div>
-        </li>
+        ${Object.keys(customThemeColors).map(
+          (key) => html`
+            <li>
+              <code
+                style="display:inline-block; min-width:380px; vertical-align:top; line-height:30px"
+                >${key}</code
+              >&nbsp;&nbsp;
+              <div
+                style="display:inline-block; width:24px; height:24px; background-color:${customThemeColors[
+                  key
+                ]}"></div>
+            </li>
+          `
+        )}
       </ul>
     </div>
   `,

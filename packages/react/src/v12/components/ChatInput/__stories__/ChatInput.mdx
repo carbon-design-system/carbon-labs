@@ -47,6 +47,9 @@ application.
 
 - **Two layouts.** `below` (the default) is a 48px pill with its actions in a
   row under it. `inside` puts every control in the box.
+- **Width.** It fills its container up to 682px: Carbon's 640 content column,
+  with the prompt's 24 inset and the send button's 16 on the other side, so the
+  text and the button's glyph sit on the column's edges.
 - **The box grows.** Past one row, or holding files, the pill becomes a box at
   `$border-radius-16`, with the send corner at 20 (an exploration, below). It
   grows a row at a time on Carbon's `disclosure` motion surface, to `maxRows`,
@@ -76,10 +79,11 @@ application.
 `+` (add to context) and Settings open Carbon's `Menu`, upward, because the
 composer sits at the foot of a view. They render **inverse**: dark on a light
 page, light on a dark one, through a nested `<Theme>`, read from where the
-composer sits. `menuTheme` sets it instead. Rows hover on Carbon's
-`$layer-hover`. A selected row keeps Carbon's checkmark and adds the blue-gray
-selected tint (a proposal, below). Model and agent mode are radio groups, with
-their group names shown.
+composer sits. `menuTheme` sets it instead. Rows hover, press and select on the
+blue-gray ladder (proposals, below), and a selected row keeps Carbon's
+checkmark. The panels run from 224 to 280 wide, and a longer label is cut with
+an ellipsis rather than widening them. Model and agent mode are radio groups,
+with their group names shown.
 
 The `/` command list is drawn like these menus, in the same inverse zone.
 

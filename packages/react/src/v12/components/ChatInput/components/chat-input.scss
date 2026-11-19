@@ -352,7 +352,11 @@ $block: '#{$prefix}--chat-input';
 }
 
 .#{$block}__command--active {
-  background-color: $layer-hover;
+  // @carbon-proposal token: chat-input-menu-selected — the listbox's active option takes the menus' blue-gray selected step, not a neutral. TBD
+  background-color: custom-property.get-var(
+    'chat-input-menu-selected',
+    $layer-selected
+  );
   color: $text-primary;
 }
 

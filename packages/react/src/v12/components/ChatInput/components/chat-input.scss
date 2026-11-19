@@ -352,12 +352,20 @@ $block: '#{$prefix}--chat-input';
 }
 
 .#{$block}__command--active {
-  // @carbon-proposal token: chat-input-menu-selected — the listbox's active option takes the menus' blue-gray selected step, not a neutral. TBD
+  // @carbon-proposal token: chat-input-menu-hover — the listbox's active option is a transient highlight, so it takes the menus' blue-gray hover step, not a neutral and not the selected step. TBD
   background-color: custom-property.get-var(
-    'chat-input-menu-selected',
-    $layer-selected
+    'chat-input-menu-hover',
+    $layer-hover
   );
   color: $text-primary;
+}
+
+.#{$block}__command--active:active {
+  // @carbon-proposal token: chat-input-menu-active — the press on a command row, one step past hover on the same blue-gray ladder. replaces: layer-active-01. TBD
+  background-color: custom-property.get-var(
+    'chat-input-menu-active',
+    $layer-active
+  );
 }
 
 .#{$block}__command-name {

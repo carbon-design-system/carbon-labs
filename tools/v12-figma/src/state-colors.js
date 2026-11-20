@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// The colours a browser mixes: every `color-mix()` in a row's styles, with
+// The colors a browser mixes: every `color-mix()` in a row's styles, with
 // the selector and property it sets and the state that implies. A design
-// file cannot evaluate `color-mix()`, so it needs the resolved colour per
+// file cannot evaluate `color-mix()`, so it needs the resolved color per
 // state and theme. Resolving it needs the cascade (custom properties,
 // `currentColor`, the theme), which only a browser render has: each value
 // is a placeholder, `{ pending: 'browser-render' }`, until a render writes
@@ -66,7 +66,7 @@ export function stateOf(property, selectors) {
 }
 
 /**
- * The declarations in a stylesheet whose value mixes a colour.
+ * The declarations in a stylesheet whose value mixes a color.
  *
  * @param {string} text The SCSS.
  * @returns {{ selectors: string[], property: string, expression: string, line: number }[]} The declarations.
@@ -78,7 +78,7 @@ export function colorMixesIn(text) {
   let start = -1;
   let line = 1;
   /**
-   * Ends a statement: records it when it mixes a colour.
+   * Ends a statement: records it when it mixes a color.
    */
   const flush = () => {
     const statement = buf.replace(/\s+/g, ' ').trim();
@@ -246,7 +246,7 @@ export function entryKey(row, e) {
 }
 
 /**
- * A row's mixed colours, each with a value per theme: resolved by a render,
+ * A row's mixed colors, each with a value per theme: resolved by a render,
  * or the placeholder.
  *
  * @param {string} root The repository's root.

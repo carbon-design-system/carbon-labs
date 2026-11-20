@@ -5,7 +5,7 @@
       "values": ["ghost", "inset", "flush", "floating", "line", "none"]
     },
     "variant": {
-      "why": "the colour treatment: the shared set, Button's own three, and Toggle's status",
+      "why": "the color treatment: the shared set, Button's own three, and Toggle's status",
       "values": [
         "inverse",
         "tonal",
@@ -90,13 +90,13 @@
   },
   "deprecated": {
     "light": {
-      "why": "Carbon v11 deprecates it in favour of Layer"
+      "why": "Carbon v11 deprecates it in favor of Layer"
     },
     "slug": {
-      "why": "Carbon v11 deprecates it in favour of decorator"
+      "why": "Carbon v11 deprecates it in favor of decorator"
     },
     "ariaLabel": {
-      "why": "Carbon v11 deprecates it in favour of aria-label"
+      "why": "Carbon v11 deprecates it in favor of aria-label"
     }
   }
 }

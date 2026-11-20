@@ -185,7 +185,7 @@ export const CONFIG = {
         {
           file: /^(src\/ink\.ts|test\/ink\.test\.ts)$/,
           match: /^1ms$/,
-          why: 'a 1ms fill transition, so the browser reports the fill colour: not a timing',
+          why: 'a 1ms fill transition, so the browser reports the fill color: not a timing',
         },
       ],
       vitest: {

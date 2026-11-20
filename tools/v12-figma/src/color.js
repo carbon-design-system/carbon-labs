@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// Colour values as the snapshot carries them: an sRGB hex and an alpha, and
+// Color values as the snapshot carries them: an sRGB hex and an alpha, and
 // for an OKLCH value its components and whether sRGB can show it. A design
-// file stores colour as sRGB floats, so the hex is what is compared; the
+// file stores color as sRGB floats, so the hex is what is compared; the
 // OKLCH value rides along.
 
 // How far outside [0, 1] a linear channel may be and still count as inside
@@ -37,7 +37,7 @@ function oklchToLinearSrgb(l, c, h) {
 }
 
 /**
- * Whether an OKLCH colour is inside sRGB.
+ * Whether an OKLCH color is inside sRGB.
  *
  * @param {[number, number, number]} lch OKLCH.
  * @returns {'srgb' | 'outside-srgb'} The gamut.
@@ -73,10 +73,10 @@ export function parseOklch(text) {
 }
 
 /**
- * A CSS colour that is static (`#rgb`, `#rrggbb`, `#rrggbbaa`, `rgb()`,
+ * A CSS color that is static (`#rgb`, `#rrggbb`, `#rrggbbaa`, `rgb()`,
  * `rgba()`) as a lower-case six-digit hex and an alpha.
  *
- * @param {string} text The colour.
+ * @param {string} text The color.
  * @returns {{ hex: string, alpha: number } | null} The value, or null.
  */
 export function parseColor(text) {

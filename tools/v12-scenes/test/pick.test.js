@@ -126,13 +126,22 @@ describe('pickUnits', () => {
     ]);
     const p = pickUnits([`${C}/Modal/index.ts`], lane, hosts);
     expect(p.units).toEqual(['components/Modal', 'scenes']);
-    expect(p.why).toContain('scenes: imports Modal');
-    // Util is not imported by the scenes; Button, its dependent, is picked
-    // one level up, but the scenes only for what they import directly.
-    expect(pickUnits([`${C}/Util/x.ts`], lane, hosts).units).toEqual([
-      'components/Button',
-      'components/Util',
-    ]);
+    expect(p.why).toContain('scenes: renders Modal');
+    // Util is not imported by the scenes, but Button, which they render,
+    // is built on it: the scenes are picked through it.
+    const u = pickUnits([`${C}/Util/x.ts`], lane, hosts);
+    expect(u.units).toEqual(['components/Button', 'components/Util', 'scenes']);
+    expect(u.why).toContain('scenes: renders Util');
+    // A component the scenes never reach does not pick them.
+    const other = path.join(root, C, 'Other');
+    fs.mkdirSync(other);
+    fs.writeFileSync(
+      path.join(other, 'package.json'),
+      JSON.stringify({ name: '@carbon-labs/react-other' })
+    );
+    expect(pickUnits([`${C}/Other/x.ts`], readLane(root), hosts).units).toEqual(
+      ['components/Other']
+    );
   });
 });
 

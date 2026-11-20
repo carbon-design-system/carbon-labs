@@ -114,8 +114,8 @@ export function readLane(root) {
  * (`components/<Folder>`) or another folder of the v12 Storybook (`catalog`,
  * `experiences`, `review`, `workbench`).
  *
- * A host folder (`readHosts`) is picked when a component it imports
- * changes.
+ * A host folder (`readHosts`) is picked when a component it imports, or
+ * one of theirs at any depth, changes.
  *
  * @param {string[]} files Changed paths, relative to the checkout.
  * @param {{ dir: string, name: string, deps: string[] }[]} lane From `readLane`.
@@ -166,16 +166,25 @@ export function pickUnits(files, lane, hosts = []) {
       }
     }
   }
+  const byName = new Map(lane.map((c) => [c.name, c]));
   for (const h of hosts) {
     if (others.has(h.unit)) {
       continue;
     }
+    // Every component the host's stories render: what they import, and
+    // what those import in turn.
+    const reach = new Set(h.deps);
+    for (const name of reach) {
+      for (const d of byName.get(name)?.deps ?? []) {
+        reach.add(d);
+      }
+    }
     const by = [...changed]
-      .filter((dir) => h.deps.includes(byDir.get(dir)?.name))
+      .filter((dir) => reach.has(byDir.get(dir)?.name))
       .sort();
     if (by.length) {
       others.add(h.unit);
-      hostWhy.set(h.unit, `imports ${by.join(', ')}`);
+      hostWhy.set(h.unit, `renders ${by.join(', ')}`);
     }
   }
   const units = [];

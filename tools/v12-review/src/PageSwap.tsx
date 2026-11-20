@@ -9,7 +9,8 @@
 // `playContentSwap`, its clocks by the distance the content travels). The
 // page shown stays, inert, until it is out, leaving from where it was read;
 // then the window goes back to the top, the new page mounts and comes in.
-// A change during the out keeps that out and brings in the latest page.
+// A change during the out keeps that out and brings in the latest page; a
+// change back to the page going out stops its out and keeps it.
 // Reduced motion: the swap lands at once.
 // What a page puts outside it (its floating settings button) learns that the
 // page is going out (`PageLeavingContext`).
@@ -39,6 +40,15 @@ export const PageLeavingContext = createContext(false);
 /** The swap's travel: up, as a page that comes after. */
 const SWAP = { axis: 'y', direction: 1 } as const;
 
+/** Sets a page's `inert`: a page kept from going out is the same element, so it is cleared. */
+function inertRef(inert: boolean) {
+  return (el: HTMLDivElement | null) => {
+    if (el) {
+      el.inert = inert;
+    }
+  };
+}
+
 export function PageSwap({
   id,
   children,
@@ -54,8 +64,12 @@ export function PageSwap({
     leaving: null,
     arriving: false,
   });
-  // A new page: the one shown leaves, as it was drawn; a change during an out keeps that out.
-  if (swap.id !== id) {
+  // A new page: the one shown leaves, as it was drawn; a change during an out
+  // keeps that out. Back to the page going out, its out stops and it stays:
+  // the same element, so never two pages of one id.
+  if (swap.id !== id && swap.leaving?.id === id) {
+    setSwap({ id, node: children, leaving: null, arriving: false });
+  } else if (swap.id !== id) {
     setSwap({
       id,
       node: children,
@@ -97,6 +111,10 @@ export function PageSwap({
     return () => {
       if (outAnimation) {
         outAnimation.onfinish = null;
+        // An out stopped before it ended: the page it held stays, as it was.
+        if (!landed) {
+          outAnimation.cancel();
+        }
       }
     };
   }, [leaving, reduced]);
@@ -118,17 +136,13 @@ export function PageSwap({
           key={leaving.id}
           className="v12r-swap__page"
           aria-hidden="true"
-          ref={(el) => {
-            if (el) {
-              el.inert = true;
-            }
-          }}>
+          ref={inertRef(true)}>
           <PageLeavingContext.Provider value>
             {leaving.node}
           </PageLeavingContext.Provider>
         </div>
       ) : null}
-      <div key={swap.id} className="v12r-swap__page">
+      <div key={swap.id} className="v12r-swap__page" ref={inertRef(false)}>
         <PageLeavingContext.Provider value={false}>
           {leaving ? null : swap.node}
         </PageLeavingContext.Provider>

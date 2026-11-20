@@ -5,12 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { Decorator } from '@storybook/react';
 import { addons, useGlobals } from 'storybook/preview-api';
 import { FollowKitMotion } from '@carbon-labs/react-icon-motion';
 import { KitDefaults } from '@carbon-labs/react-kit-defaults';
+import { WindowScroller } from '@carbon-labs/react-scroller';
 import {
   FeedbackMotion,
   MotionProvider,
@@ -40,6 +41,8 @@ import { motionReport } from './motion';
  *   and the reduced flag, and the kit's `KitDefaults`, the one path density
  *   and corners take (the default of each leaves a component's own).
  * - The clock, on the whole document (see `applyClock`).
+ * - The page's scroll in the kit's Scroller (`PageScroller`), so no story
+ *   scrolls on the native scrollbar.
  * - The Motion panel's data, sent over the channel.
  * - A theme not on the toolbar (a v11 one in an address from before) is
  *   written back as the theme it falls back to, so the toolbar shows it.
@@ -74,9 +77,68 @@ export const withWorkbench: Decorator = (Story, context) => {
   return (
     <WorkbenchFrame globals={globals}>
       <Story />
+      <PageScroller timeScale={timeScaleOf(globals.clock)} />
     </WorkbenchFrame>
   );
 };
+
+/** The page scroller's own class: another `WindowScroller` is any root without it. */
+export const PAGE_SCROLLER_CLASS = 'v12-workbench-page-scroller';
+
+/** The page scrollers mounted, first first: only the first draws (a docs page renders many stories). */
+const pageScrollers: symbol[] = [];
+const pageScrollerListeners = new Set<() => void>();
+
+/** Whether a `WindowScroller` other than the page scroller is mounted. */
+function otherWindowScroller(): boolean {
+  return (
+    typeof document !== 'undefined' &&
+    !!document.querySelector(
+      `.cds-scroller-window:not(.${PAGE_SCROLLER_CLASS})`
+    )
+  );
+}
+
+/**
+ * The story page's scroll on the kit's `WindowScroller`: every story gets it,
+ * so a story taller than its frame never shows the native scrollbar. A story
+ * that brings its own (a page shell's) is the one that shows: this one stands
+ * down while another is mounted, and of several stories on one page only the
+ * first draws, so the window never has two pills.
+ */
+export function PageScroller({ timeScale }: { timeScale?: number }) {
+  // Both start from what's on the page now, so the first commit already
+  // draws (or doesn't) and the page never paints a frame on the native
+  // scrollbar. Stories mounted in one commit all start first; the layout
+  // effect settles them on one before paint.
+  const [other, setOther] = useState(otherWindowScroller);
+  const [first, setFirst] = useState(() => pageScrollers.length === 0);
+  useLayoutEffect(() => {
+    const me = Symbol('page scroller');
+    const readFirst = () => setFirst(pageScrollers[0] === me);
+    pageScrollers.push(me);
+    pageScrollerListeners.add(readFirst);
+    pageScrollerListeners.forEach((l) => l());
+    const read = () => setOther(otherWindowScroller());
+    read();
+    const mo = new MutationObserver(read);
+    mo.observe(document.body, { childList: true });
+    return () => {
+      mo.disconnect();
+      pageScrollers.splice(pageScrollers.indexOf(me), 1);
+      pageScrollerListeners.delete(readFirst);
+      pageScrollerListeners.forEach((l) => l());
+    };
+  }, []);
+  if (!first) return null;
+  return (
+    <WindowScroller
+      className={PAGE_SCROLLER_CLASS}
+      disabled={other}
+      timeScale={timeScale}
+    />
+  );
+}
 
 /**
  * The picks applied to what it holds: on `<html>` (theme, direction, motion

@@ -16,11 +16,14 @@
 // The header and the nav stay dark (v12 dark); the theme pick, v12 light or
 // v12 dark, is the workspace's, and the page's, so what the stories portal to
 // the body follows it too.
-// Folded, the nav is a strip of its toggle and a search button: the filter's
-// field folds into the button, its magnifier moving to the button's place,
-// size and color on the fold's clock (`--cds-nav-fold`, review.scss).
+// The fold toggle sits below the nav, at the foot of its column. Folded, the
+// nav is a strip of a search button at its top and the toggle at its foot:
+// the filter's field folds into the button, its magnifier moving to the
+// button's place, size and color on the fold's clock (`--cds-nav-fold`,
+// review.scss).
 
 import React, {
+  memo,
   useEffect,
   useLayoutEffect,
   useMemo,
@@ -40,17 +43,18 @@ import {
   AsleepAwakeToggle,
   Carbon,
   Search,
-  SettingsAdjust,
+  Settings as Gear,
 } from '@carbon-labs/react-motion-icons';
-import { Popover, PopoverContent } from '@carbon-labs/react-popover';
 import { Link } from '@carbon-labs/react-link';
 import { WorkbenchFrame } from '@carbon-labs/v12-workbench';
 import type { WorkbenchGlobals } from '@carbon-labs/v12-workbench';
 import { entriesOf, groupsOf, hrefOf, usePicks, useRoute } from './model';
 import type { Entry, StoryFiles } from './model';
 import { Home } from './Home';
-import { ComponentPage } from './ComponentPage';
+import { ComponentPage, loadStories } from './ComponentPage';
 import { PageTop } from './PageTop';
+import { PageSwap } from './PageSwap';
+import { FloatingSettings, Settings } from './Settings';
 import { useMarkFavicon } from './favicon';
 import './review.scss';
 
@@ -67,20 +71,26 @@ export function ReviewApp({ stories }: ReviewAppProps) {
   const groups = useMemo(() => groupsOf(entries), [entries]);
   const route = useRoute();
   const [picks, setPicks] = usePicks();
+  // The filter's text, kept while the overlay is shut and across size classes; and whether the strip's search
+  // button asked for the field.
+  const filter = useRef<FilterMemory>({ query: '', field: null });
 
-  const entry =
-    route.page === 'component'
-      ? [...entries.values()].find((e) => e.slug === route.slug)
-      : undefined;
+  const bySlug = useMemo(
+    () => new Map([...entries.values()].map((e) => [e.slug, e])),
+    [entries]
+  );
+  const entry = route.page === 'component' ? bySlug.get(route.slug) : undefined;
+
+  // A page's stories load as the page change begins, while the page shown goes out.
+  useEffect(() => {
+    if (entry) {
+      loadStories(stories, entry.file).catch(() => {});
+    }
+  }, [entry, stories]);
 
   useEffect(() => {
     document.title = entry ? `${entry.title} · v12 review` : 'v12 review';
   }, [entry]);
-
-  // A new page starts at the top, before its header reads the scroll.
-  useLayoutEffect(() => {
-    window.scrollTo({ top: 0 });
-  }, [route.page, entry?.name]);
 
   return (
     <WorkbenchFrame globals={picks}>
@@ -91,7 +101,7 @@ export function ReviewApp({ stories }: ReviewAppProps) {
         mainTheme={picks.theme === 'v12-dark' ? 'dark' : 'light'}
         layout={LAYOUT}
         foldTo="hide"
-        foldToggle="header"
+        foldToggle="foot"
         navStrip={({ unfold }) => (
           <IconButton
             frame="ghost"
@@ -100,8 +110,11 @@ export function ReviewApp({ stories }: ReviewAppProps) {
             align="right"
             label="Filter pages"
             onClick={() => {
-              remembered.focus = true;
               unfold();
+              // The nav is in view once the unfold has rendered.
+              requestAnimationFrame(() =>
+                filter.current.field?.focus({ preventScroll: true })
+              );
             }}>
             <Search size={20} aria-hidden="true" />
           </IconButton>
@@ -110,37 +123,44 @@ export function ReviewApp({ stories }: ReviewAppProps) {
         header={<ReviewHeader picks={picks} onPicks={setPicks} />}
         nav={({ close }) => (
           <ReviewNav
+            memory={filter}
             groups={groups}
             current={entry?.name ?? (route.page === 'home' ? 'home' : '')}
             onEscape={close}
           />
         )}>
-        {route.page === 'home' ? (
-          <Home groups={groups} />
-        ) : entry ? (
-          <ComponentPage
-            key={entry.name}
-            entry={entry}
-            stories={stories}
-            picks={picks}
-            story={route.story}
-          />
-        ) : (
-          <div className="v12r-page">
-            <PageTop
-              title="Not found"
-              subtitle={
-                <>
-                  No component at this address.{' '}
-                  <Link inline href="#/">
-                    See them all
-                  </Link>
-                  .
-                </>
-              }
-            />
-          </div>
-        )}
+        {/* A page's floating settings button: the app's, beside the swap, so it doesn't move with the page. */}
+        <FloatingSettings theme={picks.theme}>
+          <PageSwap
+            id={route.page === 'home' ? 'home' : (entry?.name ?? 'not-found')}>
+            {route.page === 'home' ? (
+              <Home groups={groups} />
+            ) : entry ? (
+              <ComponentPage
+                key={entry.name}
+                entry={entry}
+                stories={stories}
+                picks={picks}
+                story={route.story}
+              />
+            ) : (
+              <div className="v12r-page">
+                <PageTop
+                  title="Not found"
+                  subtitle={
+                    <>
+                      No component at this address.{' '}
+                      <Link inline href="#/">
+                        See them all
+                      </Link>
+                      .
+                    </>
+                  }
+                />
+              </div>
+            )}
+          </PageSwap>
+        </FloatingSettings>
       </AppShell>
     </WorkbenchFrame>
   );
@@ -208,12 +228,8 @@ function ReviewHeader({
   picks: WorkbenchGlobals;
   onPicks: (next: Partial<WorkbenchGlobals>) => void;
 }) {
-  const [open, setOpen] = useState(false);
   const mark = useRef<HTMLSpanElement>(null);
   useMarkFavicon(mark);
-  // Each open mounts the switchers again: the selection measures its
-  // selected face's width as it mounts, and a closed popover has none.
-  const [opened, setOpened] = useState(0);
   return (
     <Header
       aria-label="v12 review"
@@ -229,60 +245,38 @@ function ReviewHeader({
       product="v12 review"
       actions={
         <>
-          <Popover
-            open={open}
+          <Settings
+            label="Density, corners, motion, clock and direction"
+            title="Settings"
+            detail="Every page"
             align="bottom-end"
-            variant="outlined"
-            onRequestClose={() => setOpen(false)}>
-            <IconButton
-              frame="ghost"
-              size="lg"
-              corners="full"
-              align="bottom-end"
-              label="Density, corners, motion, clock and direction"
-              aria-expanded={open}
-              onClick={() => {
-                if (!open) {
-                  setOpened((n) => n + 1);
-                }
-                setOpen((o) => !o);
-              }}>
-              <SettingsAdjust size={20} aria-hidden="true" />
-            </IconButton>
-            <PopoverContent>
-              <div
-                key={opened}
-                className="v12r-picks"
-                role="group"
-                aria-label="Picks">
-                {PICKS.map((p) => (
-                  <div key={p.key} className="v12r-pick">
-                    <span
-                      className="v12r-pick__label"
-                      id={`v12r-pick-${p.key}`}>
-                      {p.label}
-                    </span>
-                    <ContentSwitcher
-                      aria-labelledby={`v12r-pick-${p.key}`}
-                      size="sm"
-                      selectedIndex={Math.max(
-                        0,
-                        p.options.findIndex(([v]) => v === picks[p.key])
-                      )}
-                      onChange={({ index }) =>
-                        onPicks({
-                          [p.key]: p.options[index ?? 0][0],
-                        } as Partial<WorkbenchGlobals>)
-                      }>
-                      {p.options.map(([value, text]) => (
-                        <Switch key={value} name={value} text={text} />
-                      ))}
-                    </ContentSwitcher>
-                  </div>
-                ))}
+            tooltipAlign="bottom-end"
+            icon={<Gear size={20} aria-hidden="true" />}
+            className="v12r-settings--picks">
+            {PICKS.map((p) => (
+              <div key={p.key} className="v12r-pick">
+                <span className="v12r-pick__label" id={`v12r-pick-${p.key}`}>
+                  {p.label}
+                </span>
+                <ContentSwitcher
+                  aria-labelledby={`v12r-pick-${p.key}`}
+                  size="sm"
+                  selectedIndex={Math.max(
+                    0,
+                    p.options.findIndex(([v]) => v === picks[p.key])
+                  )}
+                  onChange={({ index }) =>
+                    onPicks({
+                      [p.key]: p.options[index ?? 0][0],
+                    } as Partial<WorkbenchGlobals>)
+                  }>
+                  {p.options.map(([value, text]) => (
+                    <Switch key={value} name={value} text={text} />
+                  ))}
+                </ContentSwitcher>
               </div>
-            </PopoverContent>
-          </Popover>
+            ))}
+          </Settings>
           <IconButton
             frame="ghost"
             size="lg"
@@ -312,40 +306,53 @@ function ReviewHeader({
 
 /* ── the side nav ───────────────────────────────────────────────────────── */
 
-/** The filter's text, kept while the overlay is shut, across size classes and folds; and whether the strip's
- *  search button asked for the field. */
-const remembered = { query: '', focus: false };
+/** The filter's text, and its field (the strip's search button focuses it). */
+interface FilterMemory {
+  query: string;
+  field: HTMLInputElement | null;
+}
 
 /**
  * The filter's fold: where its magnifier goes as the nav folds, so it lands on
- * the strip's search button, the button under the toggle and its size
- * (AppShell's strip). Written on the field as `--v12r-fold-dx`, `-dy` (px)
- * and `-scale`; review.scss moves the magnifier's icon by them times the
- * fold's progress. Measured from its slot, which doesn't move.
+ * the strip's search button, the button at the strip's top, in line with the
+ * toggle at its foot and its size (AppShell's strip). Written on the field as
+ * `--v12r-fold-dx`, `-dy` (px) and `-scale`; review.scss moves the
+ * magnifier's icon by them times the fold's progress. Measured from its slot,
+ * which doesn't move: not while the column folds (`data-folding`, nothing it
+ * measures moves) or is the strip (the field out of view), and again when
+ * that ends.
  */
 function useFilterFold(input: React.RefObject<HTMLInputElement | null>) {
   useLayoutEffect(() => {
     const search = input.current?.closest<HTMLElement>('.cds-search');
-    const col = search?.closest('.cds-app-shell__nav-col');
+    const col = search?.closest<HTMLElement>('.cds-app-shell__nav-col');
     const slot = search?.querySelector<HTMLElement>('.cds-search__magnifier');
     const icon = slot?.querySelector('svg');
-    const toggle = col?.querySelector<HTMLElement>(
-      ':scope > .cds-app-shell__nav-head .cds-app-shell__fold'
+    const foot = col?.querySelector<HTMLElement>(
+      ':scope > .cds-app-shell__nav-foot[data-fold-toggle]'
     );
+    const toggle = foot?.querySelector<HTMLElement>('.cds-app-shell__fold');
     const toggleIcon = toggle?.querySelector('svg');
-    if (!search || !slot || !icon || !toggle || !toggleIcon) return;
+    if (!search || !col || !slot || !icon || !foot || !toggle || !toggleIcon)
+      return;
     const place = () => {
+      if (col.hasAttribute('data-folding') || !search.offsetWidth) {
+        return;
+      }
       const s = slot.getBoundingClientRect();
       const t = toggle.getBoundingClientRect();
+      const c = col.getBoundingClientRect();
       const size = parseFloat(icon.getAttribute('width') ?? '') || 16;
       const pad = parseFloat(getComputedStyle(slot).paddingInlineStart) || 0;
       const rtl = getComputedStyle(slot).direction === 'rtl';
       // The icon's center, untransformed: its slot puts it `pad` in, centered down.
       const ox = rtl ? s.width - pad - size / 2 : pad + size / 2;
       const oy = s.height / 2;
-      // The strip's search button: under the toggle, its size, in line with it.
+      // The strip's search button: at its top, inset as the toggle is at the
+      // foot's start (the strip's head and the foot share that inset), its size.
+      const inset = parseFloat(getComputedStyle(foot).paddingInlineStart) || 0;
       const tx = t.left + t.width / 2;
-      const ty = t.top + t.height * 1.5;
+      const ty = c.top + inset + t.height / 2;
       const to = parseFloat(toggleIcon.getAttribute('width') ?? '') || size;
       search.style.setProperty('--v12r-fold-dx', `${tx - (s.left + ox)}px`);
       search.style.setProperty('--v12r-fold-dy', `${ty - (s.top + oy)}px`);
@@ -354,12 +361,14 @@ function useFilterFold(input: React.RefObject<HTMLInputElement | null>) {
     place();
     const ro = new ResizeObserver(place);
     ro.observe(search);
-    // A direction change moves both ends without resizing the field.
+    ro.observe(col);
+    // A direction change moves both ends without resizing the field; a fold's end lets it measure again.
     const mo = new MutationObserver(place);
     mo.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ['dir'],
     });
+    mo.observe(col, { attributes: true, attributeFilter: ['data-folding'] });
     return () => {
       ro.disconnect();
       mo.disconnect();
@@ -367,24 +376,32 @@ function useFilterFold(input: React.RefObject<HTMLInputElement | null>) {
   }, [input]);
 }
 
-function ReviewNav({
+/**
+ * The nav: drawn again only when what it shows changes (the shell renders on
+ * each fold; the nav stays as it was).
+ */
+const ReviewNav = memo(function ReviewNav({
+  memory,
   groups,
   current,
   onEscape,
 }: {
+  memory: React.MutableRefObject<FilterMemory>;
   groups: ReturnType<typeof groupsOf>;
   current: string;
   onEscape: () => void;
 }) {
-  const [query, setQuery] = useState(remembered.query);
+  const [query, setQuery] = useState(memory.current.query);
   const input = useRef<HTMLInputElement>(null);
   useFilterFold(input);
-  // Opened from the strip's search button: the field takes focus as the nav opens.
+  // The field, for the strip's search button.
   useEffect(() => {
-    if (!remembered.focus) return;
-    remembered.focus = false;
-    input.current?.focus({ preventScroll: true });
-  }, []);
+    const held = memory.current;
+    held.field = input.current;
+    return () => {
+      held.field = null;
+    };
+  }, [memory]);
   const link = (e: Entry) => (
     <SideNavLink
       key={e.name}
@@ -403,7 +420,7 @@ function ReviewNav({
         inputRef: input,
         value: query,
         onChange: (next: string) => {
-          remembered.query = next;
+          memory.current.query = next;
           setQuery(next);
         },
         onEscape,
@@ -418,4 +435,4 @@ function ReviewNav({
       ))}
     </SideNav>
   );
-}
+});

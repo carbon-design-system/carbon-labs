@@ -329,7 +329,7 @@ describe('marks', () => {
 });
 
 describe('the doc and the story', () => {
-  it('keeps the travelling sections and drops the rest', () => {
+  it('keeps the traveling sections and drops the rest', () => {
     const plan = planImport({ id: 'widget', from: source, ref: base, labs });
     const mdx = output(plan, '__stories__/Widget.mdx');
     expect(mdx).toContain('## Motion');

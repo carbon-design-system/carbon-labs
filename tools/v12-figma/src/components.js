@@ -8,7 +8,7 @@
 // The components snapshot: for each manifest row, its logical key and
 // mapping status, its stories, the props a component property would carry
 // (with their values in code order), its states and motion items from
-// `parameters.v12`, its departures, and the colours its styles mix per
+// `parameters.v12`, its departures, and the colors its styles mix per
 // state and theme.
 
 import fs from 'node:fs';

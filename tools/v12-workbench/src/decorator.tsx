@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import type { ReactNode } from 'react';
 import type { Decorator } from '@storybook/react';
 import { addons, useGlobals } from 'storybook/preview-api';
@@ -95,7 +95,10 @@ export function WorkbenchFrame({
 }) {
   const timeScale = timeScaleOf(globals.clock);
 
-  useEffect(() => {
+  // Before paint, so a story never paints a frame in the previous theme,
+  // direction or motion level (Applied writes the level), and a story's
+  // useEffect reads the picks already on <html>.
+  useLayoutEffect(() => {
     const html = document.documentElement;
     html.setAttribute('data-carbon-theme', globals.theme);
     html.setAttribute('dir', globals.dir);
@@ -127,7 +130,8 @@ function Applied({
   const systemReduces = usePrefersReducedMotion();
   const level = levelOf(globals.reducedMotion, systemReduces);
 
-  useEffect(() => {
+  // Before paint too, with the theme and direction (WorkbenchFrame).
+  useLayoutEffect(() => {
     document.documentElement.setAttribute('data-motion-level', level);
   }, [level]);
 

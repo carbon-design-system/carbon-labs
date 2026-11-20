@@ -845,6 +845,36 @@
       "file": "packages/react/src/v12/components/MegaButton/components/mega-button.scss",
       "line": 485,
       "text": "token: mega-button-tonal-text-disabled — its label, on that tint. replaces: text-disabled. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/proposals/README.md",
+      "line": 6,
+      "text": "`api: mega-button-kinds` — Carbon's `secondary` is the fill and its `tertiary` the outline; MegaButton swaps them on purpose (the outline reads better beside a neutral primary) and has two red kinds, `danger` and `danger--secondary`."
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/proposals/README.md",
+      "line": 9,
+      "text": "`api: mega-button-key-command` — a visible key command on a button, shown with KeyboardShortcut and announced through `aria-keyshortcuts`. Carbon's Button has none."
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/proposals/README.md",
+      "line": 12,
+      "text": "`api: mega-button-icon-position` — the one icon may lead or trail the label. Carbon's Button only trails it."
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/proposals/README.md",
+      "line": 14,
+      "text": "`api: mega-button-danger-icon-only` — the two danger kinds are allowed icon-only. Carbon's IconButton has no danger kinds."
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/MegaButton/proposals/README.md",
+      "line": 16,
+      "text": "`api: mega-button-hide-tooltip` — an icon-only button inside a group that shares one tooltip can leave out its own; the label still names the button through `aria-label`. Carbon's IconButton always draws its own tooltip."
     }
   ],
   "V12/Menu": [

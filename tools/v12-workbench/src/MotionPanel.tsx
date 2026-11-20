@@ -48,7 +48,7 @@ const Table = styled.table(({ theme }) => ({
 }));
 
 /**
- * The declared reduced behaviour as a sentence, with the clock it means.
+ * The declared reduced behavior as a sentence, with the clock it means.
  *
  * @param entry The motion item.
  * @param report Its report, for the reduced clock and the floor.
@@ -70,7 +70,7 @@ function reducedText(entry: MotionEntry, report: MotionReport): string {
 /**
  * The Motion panel: what a story declares in `parameters.v12`, each motion
  * item with its tokens and values (read from the seam in the preview) and
- * its reduced behaviour.
+ * its reduced behavior.
  */
 export function MotionPanel() {
   const params = useParameter<V12Parameters | undefined>('v12');
@@ -91,7 +91,7 @@ export function MotionPanel() {
         </>
         <>
           Declare <code>motion</code> (the items it uses), <code>reduced</code>{' '}
-          (each item's reduced behaviour) and <code>states</code> to see the
+          (each item's reduced behavior) and <code>states</code> to see the
           motion, its tokens and their values here.
         </>
       </Placeholder>

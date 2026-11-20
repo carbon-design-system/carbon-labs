@@ -35,7 +35,7 @@ export type {
   Corners,
   Density,
   Direction,
-  ReducedBehaviour,
+  ReducedBehavior,
   ReducedMotion,
   Theme,
   V12Parameters,

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.256.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.255.0...%40carbon-labs%2Freact%400.256.0) (2026-11-20)
+
+### Bug Fixes
+
+* **v12-file-chip:** mark every video chip with the video badge ([#1531](https://github.com/carbon-design-system/carbon-labs/issues/1531)) ([ef258a2](https://github.com/carbon-design-system/carbon-labs/commit/ef258a2c6e57aa2ddd0fea7f828f7d562bac5f0d))
+* **v12-keyboard-shortcut:** borderless keycap, centred caps, proposals ([#1528](https://github.com/carbon-design-system/carbon-labs/issues/1528)) ([c9d6a8f](https://github.com/carbon-design-system/carbon-labs/commit/c9d6a8f1e88ef99ece2eb83c36558d2f4ab81b4c)), closes [high-contrast](https://github.com/hi/issues/contrast)
+
+
 # [0.255.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.254.0...%40carbon-labs%2Freact%400.255.0) (2026-11-17)
 
 ### Bug Fixes

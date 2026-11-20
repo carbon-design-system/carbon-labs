@@ -10,7 +10,6 @@
 @use '@carbon/styles/scss/type' as *;
 @use '@carbon/styles/scss/colors' as *;
 @use '@carbon/styles/scss/spacing' as *;
-@use '@carbon/react/scss/theme' as *;
 
 cds-custom-header-global-action.mcsp-header-user-profile {
   display: flex;
@@ -75,7 +74,7 @@ cds-custom-header-global-action.mcsp-header-user-profile > div {
 
 .automation-global-header__divider::before {
   display: block;
-  background-color: $border-subtle;
+  background-color: var(--clabs-global-header-border-color);
   block-size: 2.5rem;
   content: '';
   inline-size: 0.0625rem;

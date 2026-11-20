@@ -8,14 +8,12 @@
  */
 
 @use '@carbon/styles/scss/type' as *;
-@use '@carbon/styles/scss/colors' as *;
 @use '@carbon/styles/scss/spacing' as *;
 @use '../../globals/styles/vars' as *;
 
 .automation-global-header__switcher {
   border: 0 !important;
   block-size: max-content;
-  color: $gray-40;
   inline-size: max-content;
   min-block-size: max-content;
 }
@@ -23,7 +21,6 @@
 .automation-global-header__switcher-menu {
   display: inline-block;
   block-size: 47px;
-  color: $gray-40;
   list-style-type: none;
   min-inline-size: $spacing-12 * 2 !important;
 
@@ -86,7 +83,7 @@
     align-items: center;
     justify-content: space-between;
     block-size: 47px;
-    color: $gray-10;
+    color: var(--clabs-global-header-text-color);
     margin-inline-start: $spacing-05;
     pointer-events: none;
     @include type-style('heading-compact-01');
@@ -119,5 +116,5 @@ cds-custom-header-menu::part(trigger) {
 }
 
 cds-custom-header-menu-item:nth-last-child(2) {
-  border-block-end: 1px solid $gray-80; /* Divider */
+  border-block-end: 1px solid var(--clabs-global-header-border-color); /* Divider */
 }

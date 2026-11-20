@@ -19,7 +19,7 @@
 
   &:not(:last-child)::after {
     position: absolute;
-    border-block-end: 1px solid $gray-80;
+    border-block-end: 1px solid var(--clabs-global-header-border-color);
     content: '';
     inline-size: 100%;
     inset-block-end: 0;
@@ -48,7 +48,7 @@
 }
 
 .automation-global-header__horizontal_section {
-  border: 0.25px solid $gray-80;
+  border: 0.25px solid var(--clabs-global-header-border-color);
   margin-inline: $spacing-03;
 }
 

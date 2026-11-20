@@ -11,7 +11,7 @@
 @use '@carbon/styles/scss/spacing' as layout;
 
 .automation-header__popover {
-  border: 1px solid colorToken.$gray-80;
+  border: 1px solid var(--clabs-global-header-border-color);
   background-color: var(--clabs-global-header-background-color);
   box-shadow: 0 2px 6px 0 rgb(0 0 0 / 30%);
   color: var(--clabs-global-header-text-color);

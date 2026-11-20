@@ -239,7 +239,7 @@ export function ComponentPage({
     noDocs && first ? `/story/${first}` : `/docs/${prefix}--overview`;
 
   // The docs page's sections, each at its own anchor. One named as a story
-  // is has no tab of its own (the story's tab reaches that part of the page,
+  // has no tab of its own (the story's tab reaches that part of the page,
   // and a tab list doesn't repeat a name), and its anchor takes `-docs` if it
   // would be the story's.
   const docs = useMemo(() => {
@@ -585,9 +585,11 @@ function Framed({
 /**
  * The first story's settings, from a button floating at the window's end
  * corner, so the story keeps its whole width and they stay in reach while the
- * page scrolls: the controls in two columns, Reset in the head.
+ * page scrolls: the controls in two columns, Reset in the head. Reset goes
+ * once nothing is changed, so focus moves to the panel's Close first, never
+ * dropped to the page with the panel open.
  */
-function StorySettings({
+export function StorySettings({
   title,
   controls,
   args,
@@ -612,7 +614,16 @@ function StorySettings({
       tooltipAlign="left"
       actions={
         changed ? (
-          <Button size="sm" frame="ghost" onClick={onReset}>
+          <Button
+            size="sm"
+            frame="ghost"
+            onClick={(e: React.MouseEvent<HTMLElement>) => {
+              e.currentTarget
+                .closest('.v12r-settings')
+                ?.querySelector<HTMLElement>('.v12r-settings__close')
+                ?.focus({ preventScroll: true });
+              onReset();
+            }}>
             Reset
           </Button>
         ) : null

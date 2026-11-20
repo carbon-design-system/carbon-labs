@@ -199,6 +199,7 @@ export function Settings({
             {actions}
             {floating ? (
               <IconButton
+                className="v12r-settings__close"
                 frame="ghost"
                 size="md"
                 corners="full"

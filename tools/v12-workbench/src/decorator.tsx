@@ -28,6 +28,7 @@ import {
 } from './constants';
 import { applyClock } from './clock';
 import { motionReport } from './motion';
+import { releasePageScroll } from './page-scroll';
 
 /**
  * Applies the toolbar to a story.
@@ -71,8 +72,15 @@ export const withWorkbench: Decorator = (Story, context) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [context.id, declared]);
 
+  // An app story brings its own page scroll: the preview's hold on the
+  // native scrollbar (page-scroll.ts) is let go before it paints.
+  const app = !!params?.app;
+  useLayoutEffect(() => {
+    if (app) releasePageScroll();
+  }, [app]);
+
   // An app story applies its own picks (WorkbenchFrame, from its own state).
-  if (params?.app) return <Story />;
+  if (app) return <Story />;
 
   return (
     <WorkbenchFrame globals={globals}>
@@ -121,6 +129,9 @@ export function PageScroller({ timeScale }: { timeScale?: number }) {
     pageScrollerListeners.forEach((l) => l());
     const read = () => setOther(otherWindowScroller());
     read();
+    // A window scroller is on the page now (this one's, drawn in this
+    // commit, or another's), and it hides the native scrollbar itself.
+    releasePageScroll();
     const mo = new MutationObserver(read);
     mo.observe(document.body, { childList: true });
     return () => {

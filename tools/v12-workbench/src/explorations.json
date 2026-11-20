@@ -1599,20 +1599,50 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/Tooltip/components/tooltip.scss",
-      "line": 154,
-      "text": "token: hero-color — The hero tokens: brand colour for a line, a fill, a hover, an ink on a page and on a fill. replaces: `$border-interactive` / `$interactive`, `$button-primary`, `-hover`, `-active`, `$link-primary`, `$link-inverse`. TBD"
+      "line": 155,
+      "text": "token: hero-fill — The hero fill: the brand colour for a filled selector, IBM blue by default. replaces: button-primary. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Tooltip/components/tooltip.scss",
+      "line": 160,
+      "text": "token: hero-fill-hover — The hero fill on hover, IBM blue's hover by default. replaces: button-primary-hover. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Tooltip/components/tooltip.scss",
+      "line": 166,
+      "text": "token: hero-on-fill — The ink on a hero fill, white by default. replaces: icon-on-color. TBD"
     },
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Tooltip/components/tooltip.scss",
-      "line": 164,
+      "line": 171,
       "text": "button-secondary-quiet — The secondary Button as a quiet fill one step off what it sits on, re-solved on raised surfaces. TBD"
     },
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/Tooltip/components/tooltip.scss",
-      "line": 189,
+      "line": 196,
       "text": "tertiary-neutral — The outlined Button in a neutral ink on light themes. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Tooltip/proposals/README.md",
+      "line": 6,
+      "text": "`api: button-axes` — `IconButton` splits Button's old kinds into `kind` (the role), `variant` (outlined, tonal) and `frame` (ghost, none), so each prop says one thing."
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Tooltip/proposals/README.md",
+      "line": 9,
+      "text": "`api: variant-prop` — the colour treatment is one `variant` prop (inverse, tonal, outlined, hero, neutral or filled), so colour is never said by a role or a structure."
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/Tooltip/proposals/README.md",
+      "line": 12,
+      "text": "`api: frame-prop` — what a component stands on is one `frame` prop (ghost, inset, flush, floating or line), so structure is never said by a kind or a colour."
     }
   ],
   "V12/TreeView": [

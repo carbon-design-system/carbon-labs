@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.113.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fwc-global-header%400.112.0...%40carbon-labs%2Fwc-global-header%400.113.0) (2026-11-19)
+
+### Features
+
+* **global-header:** more theming ([#1526](https://github.com/carbon-design-system/carbon-labs/issues/1526)) ([4ecb6b6](https://github.com/carbon-design-system/carbon-labs/commit/4ecb6b6f14122ea0a7bf9e2f50d63cdef2e64c0c))
+
+
 # [0.112.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fwc-global-header%400.111.0...%40carbon-labs%2Fwc-global-header%400.112.0) (2026-11-16)
 
 ### Bug Fixes

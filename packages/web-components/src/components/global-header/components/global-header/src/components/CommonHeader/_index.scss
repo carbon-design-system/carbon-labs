@@ -19,6 +19,10 @@
   --cds-text-primary: var(--clabs-global-header-text-color);
   --cds-text-secondary: var(--clabs-global-header-text-secondary);
   --cds-icon-primary: var(--clabs-global-header-icon-color);
+  --cds-layer: var(--clabs-global-header-background-layer);
+  --cds-link-primary: var(--clabs-global-header-link-color);
+  --cds-link-primary-hover: var(--clabs-global-header-link-hover);
+  --cds-border-subtle: var(--clabs-global-header-border-color);
 }
 
 .#{automation.$namespace-prefix}__header-name {

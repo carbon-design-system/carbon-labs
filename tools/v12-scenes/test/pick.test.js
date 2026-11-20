@@ -10,7 +10,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { pickUnits, planOf, readLane, unitOf } from '../src/pick.js';
+import { pickUnits, planOf, readHosts, readLane, unitOf } from '../src/pick.js';
 import { lightnessOf, storyPath } from '../src/story.js';
 
 const C = 'packages/react/src/v12/components';
@@ -106,6 +106,34 @@ describe('pickUnits', () => {
       pickUnits(['packages/web-components/src/x.ts', 'README.md'], lane)
     ).toEqual({ all: false, why: [], units: [] });
   });
+
+  it('picks the scene stories when a component they import changes', () => {
+    const root = fixture();
+    const dir = path.join(root, 'packages/react/src/v12/scenes/__stories__');
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(
+      path.join(dir, 'subjects.tsx'),
+      "import { Modal } from '@carbon-labs/react-modal';\n" +
+        "import '@carbon-labs/react-button/scss/button.scss';\n" +
+        "import { x } from '@carbon/layout';\n"
+    );
+    const hosts = readHosts(root);
+    expect(hosts).toEqual([
+      {
+        unit: 'scenes',
+        deps: ['@carbon-labs/react-button', '@carbon-labs/react-modal'],
+      },
+    ]);
+    const p = pickUnits([`${C}/Modal/index.ts`], lane, hosts);
+    expect(p.units).toEqual(['components/Modal', 'scenes']);
+    expect(p.why).toContain('scenes: imports Modal');
+    // Util is not imported by the scenes; Button, its dependent, is picked
+    // one level up, but the scenes only for what they import directly.
+    expect(pickUnits([`${C}/Util/x.ts`], lane, hosts).units).toEqual([
+      'components/Button',
+      'components/Util',
+    ]);
+  });
 });
 
 describe('planOf', () => {
@@ -196,5 +224,16 @@ describe('the lane today', () => {
     const button = lane.find((c) => c.dir === 'Button');
     expect(button.name).toBe('@carbon-labs/react-button');
     expect(button.deps).toContain('@carbon-labs/react-util');
+  });
+
+  it('reads the scene stories’ component imports', () => {
+    const root = fileURLToPath(new URL('../../..', import.meta.url));
+    const [scenes] = readHosts(root);
+    expect(scenes.unit).toBe('scenes');
+    const names = new Set(readLane(root).map((c) => c.name));
+    expect(scenes.deps).toContain('@carbon-labs/react-side-panel');
+    for (const d of scenes.deps) {
+      expect(names.has(d), d).toBe(true);
+    }
   });
 });

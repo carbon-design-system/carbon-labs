@@ -45,7 +45,7 @@ import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { pickUnits, planOf, readLane } from '../src/pick.js';
+import { pickUnits, planOf, readHosts, readLane } from '../src/pick.js';
 import { serve } from '../src/serve.js';
 import { componentsOf, forComponents, SCENARIOS } from '../src/scenarios.js';
 import { readIndex, rotate, touched, writeIndex } from '../src/rotate.js';
@@ -106,7 +106,7 @@ if (behaviors) {
 
 const files = flag('all') ? null : changedFiles();
 const pick = files
-  ? pickUnits(files, readLane(labs))
+  ? pickUnits(files, readLane(labs), readHosts(labs))
   : { all: true, why: ['everything: --all or no diff'], units: [] };
 const rows = planOf(index, pick);
 const stories = rows.reduce((n, r) => n + r.stories.length, 0);
@@ -179,7 +179,9 @@ async function runBehaviorTier() {
   if (n > 0) {
     const turn = rotate(all, n, readIndex(rotation));
     const files = changedFiles();
-    const pick = files ? pickUnits(files, readLane(labs)) : null;
+    const pick = files
+      ? pickUnits(files, readLane(labs), readHosts(labs))
+      : null;
     const changed = touched(pick, all);
     components = [
       ...new Set([...(components ?? []), ...turn.picked, ...changed]),

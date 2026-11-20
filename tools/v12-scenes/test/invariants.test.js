@@ -328,15 +328,41 @@ describe('noLongFrames', () => {
       { start: 20, duration: 140, blocking: 90 },
       // A frame stretched by a loaded machine, with nothing blocking.
       { start: 5, duration: 300, blocking: 0 },
-      { start: 30, duration: 120, blocking: 40 },
+      { start: 30, duration: 160, blocking: 40 },
     ];
-    const v = noLongFrames(run, { maxMs: 50 });
+    const v = noLongFrames(run, { maxMs: 120 });
     expect(v).toEqual([
       {
         invariant: 'noLongFrames',
         frame: 2,
         detail: '90ms blocking in a 140ms frame',
       },
+    ]);
+  });
+
+  it('holds the bar a frame’s length set: 70ms past the 50ms a task may take', () => {
+    const run = runOf([{}, {}, {}]);
+    const at = (blocking) => {
+      run.longFrames = [{ start: 20, duration: 400, blocking }];
+      return noLongFrames(run, { maxMs: 120 }).length;
+    };
+    expect(at(70)).toBe(0);
+    expect(at(70.5)).toBe(1);
+    // A single 160ms task: 110ms blocking.
+    expect(at(110)).toBe(1);
+  });
+
+  it('leaves out a frame that ended before the run began', () => {
+    const run = runOf([{}, {}, {}]);
+    for (const x of run.samples) {
+      x.at += 1000;
+    }
+    run.longFrames = [
+      { start: 400, duration: 600, blocking: 550 },
+      { start: 990, duration: 200, blocking: 150 },
+    ];
+    expect(noLongFrames(run, { maxMs: 120 }).map((v) => v.detail)).toEqual([
+      '150ms blocking in a 200ms frame',
     ]);
   });
 
@@ -386,6 +412,26 @@ describe('reducedPath', () => {
     const v = reducedPath(run(f), { el: 'panel', clockMs: 150 });
     expect(v).toHaveLength(1);
     expect(v[0].detail).toContain('reduced clock 150ms');
+  });
+
+  it('does not count a documented delay with no change as motion', () => {
+    // Shown for 9 frames (150ms at 16.7ms), then gone in one frame: a
+    // tooltip's leave delay, then its exit at once.
+    const f = [
+      ...Array(9).fill(box(10, 10, 40, 20)),
+      box(10, 10, 40, 20, 0),
+      box(10, 10, 40, 20, 0),
+    ];
+    const r = run(f);
+    r.fullClocks = { open: 150 };
+    // Without the delay, the wait reads as a 150ms change on a 75ms clock.
+    expect(reducedPath(r, { el: 'panel' })[0].detail).toContain(
+      'reduced clock 75ms'
+    );
+    expect(reducedPath(r, { el: 'panel', delayMs: 120 })).toEqual([]);
+    // Past the delay, the wait counts again.
+    const late = run([...Array(30).fill(box(10, 10, 40, 20)), null]);
+    expect(reducedPath(late, { el: 'panel', delayMs: 120 })).toHaveLength(1);
   });
 });
 

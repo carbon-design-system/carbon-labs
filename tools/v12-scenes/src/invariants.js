@@ -530,19 +530,27 @@ export function wholePixels(run, o) {
   return out;
 }
 
+/** The part of each long task the browser does not count as blocking, ms. */
+export const LONG_TASK_MS = 50;
+
 /**
- * No long frames: no frame the browser reports whose blocking work is over
+ * No long frames: no frame the browser reports whose work runs over
  * `maxMs`, and, where it reports no frames at all, no gap between frames
  * over it.
  *
- * A frame is judged by its blocking time (the part of its long tasks past
- * 50ms), not its length: on a loaded machine every frame stretches though
- * the page holds nothing up, and a frame with no blocking work is the
- * machine's, not the component's. Where the browser gives no blocking time
- * (long tasks, not long animation frames), a task's length is its blocking.
+ * A frame is judged by its blocking time, not its length: on a loaded
+ * machine every frame stretches though the page holds nothing up, and a
+ * frame with no blocking work is the machine's, not the component's. The
+ * browser counts only the part of each long task past 50ms as blocking, so
+ * a frame fails when its blocking time and those 50ms come to more than
+ * `maxMs`: with `maxMs: 120`, a 120ms task (70ms blocking) passes and a
+ * longer one fails, the bar a frame's length set. A frame that ended before
+ * the first sample (the story's load) is not judged. Where the browser gives
+ * no blocking time (long tasks, not long animation frames), a task's length
+ * is judged.
  *
  * @param {object} run The run.
- * @param {{ maxMs?: number }} o The most blocking work a frame may hold, ms.
+ * @param {{ maxMs?: number }} o The longest work a frame may hold, ms.
  * @returns {object[]} Violations.
  */
 export function noLongFrames(run, o = {}) {
@@ -550,9 +558,19 @@ export function noLongFrames(run, o = {}) {
   const s = run.samples;
   const out = [];
   if (run.longFrames) {
+    const begun = s[0]?.at ?? -Infinity;
     for (const f of run.longFrames) {
+      // A frame that ended before the first sample is the story's load,
+      // not the run's.
+      if (f.start + f.duration <= begun) {
+        continue;
+      }
       const blocking = f.blocking ?? f.duration;
-      if (blocking > maxMs) {
+      const over =
+        f.blocking == null
+          ? f.duration > maxMs
+          : f.blocking > 0 && f.blocking + LONG_TASK_MS > maxMs;
+      if (over) {
         const i = s.findIndex((x) => x.at >= f.start);
         out.push({
           invariant: 'noLongFrames',
@@ -609,14 +627,20 @@ const DEFAULT_REDUCED_MS = 250;
  * clock is `clockMs`, or half the same action's clock in the full-motion
  * run (`run.fullClocks`), or 250ms when that is not known.
  *
+ * `delayMs` is a documented wait before the change (a tooltip's leave
+ * delay): a wait with no change on screen is not motion, so the time before
+ * the first change, up to `delayMs`, is not counted against the clock, in
+ * the reduced run or in the full clock it is taken from.
+ *
  * @param {object} run The run.
- * @param {{ el: string, clockMs?: number, eps?: number,
- *   actions?: string[] }} o The box, the reduced clock, the change that
- *   counts (px), and the actions to check (default all).
+ * @param {{ el: string, clockMs?: number, delayMs?: number, eps?: number,
+ *   actions?: string[] }} o The box, the reduced clock, the documented
+ *   delay, the change that counts (px), and the actions to check (default
+ *   all).
  * @returns {object[]} Violations.
  */
 export function reducedPath(run, o) {
-  const { el, eps = 0.5 } = o;
+  const { el, eps = 0.5, delayMs = 0 } = o;
   const s = run.samples;
   const out = [];
   const all = run.marks ?? [];
@@ -625,13 +649,15 @@ export function reducedPath(run, o) {
       return;
     }
     const next = all[k + 1]?.frame ?? s.length;
-    const full = run.fullClocks?.[m.name];
+    const fullClock = run.fullClocks?.[m.name];
+    const full = fullClock == null ? null : Math.max(0, fullClock - delayMs);
     // A full clock under two frames is a change the full run did not show
     // on this box: the default holds.
     const clockMs =
       o.clockMs ??
       (full != null && full > 34 ? full * REDUCED_CLOCK : DEFAULT_REDUCED_MS);
     let moved = 0;
+    let firstChange = null;
     let lastChange = null;
     for (let i = m.frame + 1; i < next; i++) {
       const a = s[i - 1].el[el];
@@ -645,6 +671,7 @@ export function reducedPath(run, o) {
         moved++;
       }
       if (geo || fade) {
+        firstChange ??= i;
         lastChange = i;
       }
     }
@@ -656,13 +683,15 @@ export function reducedPath(run, o) {
       });
     }
     if (lastChange != null) {
-      const took = s[lastChange].t - s[m.frame].t;
+      // The documented wait: the frames before the first change, up to it.
+      const waited = Math.min(delayMs, s[firstChange - 1].t - s[m.frame].t);
+      const took = s[lastChange].t - s[m.frame].t - waited;
       const frame = Math.max(...s.slice(1).map((x) => x.dt ?? 16.7), 16.7);
       if (took > clockMs + 2 * Math.min(frame, 34)) {
         out.push({
           invariant: 'reducedPath',
           frame: lastChange,
-          detail: `${el} still changing ${round(took, 0)}ms after ${m.name} (reduced clock ${round(clockMs, 0)}ms)`,
+          detail: `${el} still changing ${round(took, 0)}ms after ${m.name}${waited ? ` and its ${round(waited, 0)}ms delay` : ''} (reduced clock ${round(clockMs, 0)}ms)`,
         });
       }
     }

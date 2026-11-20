@@ -495,16 +495,9 @@ const tooltip = [
       ['wholePixels', { el: 'tip' }],
       ['noLongFrames', { maxMs: 120 }],
     ],
-    reducedChecks: [
-      [
-        'reducedPath',
-        {
-          el: 'tip',
-          known:
-            'under reduced motion the tip still takes the full clock to fade out on leave, not half of it',
-        },
-      ],
-    ],
+    // The tip leaves after its documented leave delay (120ms, fast-02), at
+    // once under reduced motion: the wait is not motion.
+    reducedChecks: [['reducedPath', { el: 'tip', delayMs: 120 }]],
   },
 ];
 

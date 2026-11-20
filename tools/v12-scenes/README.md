@@ -93,7 +93,11 @@ Add an entry to `src/scenarios.js`:
   `end`. Any check takes `from` and `until` (action names). Every run also
   checks that each tracked name was found in some frame (`tracked`), since the
   invariants skip the frames a box is missing from. `noLongFrames` judges a
-  frame's blocking work, not its length, so a loaded machine does not fail it.
+  frame's blocking work plus the 50ms each long task may take, not its length,
+  so a loaded machine does not fail it, and leaves out frames that ended before
+  the run began (the story's load). `reducedPath` takes `delayMs`, a documented
+  wait before a change (a tooltip's leave delay), which is not counted as
+  motion.
 - **Known**: a behavior the lane does not have yet carries `known` (on the
   scenario, or on one check), in words that name the behavior. Its runs report
   `known` until they pass; then take the mark off. `known` covers only the

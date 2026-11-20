@@ -4707,7 +4707,8 @@
       "reduced": {},
       "departures": [
         "proposal: api: menu-item-shortcut-node",
-        "proposal: mixin: keycap-slashed-zero"
+        "proposal: mixin: keycap-slashed-zero",
+        "proposal: token: keyboard-shortcut-keycap-inverse"
       ],
       "stateColors": []
     },

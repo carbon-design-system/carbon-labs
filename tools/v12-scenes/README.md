@@ -90,9 +90,14 @@ Add an entry to `src/scenarios.js`:
 - **Invariants** (`src/invariants.js`, pure, unit-tested): `gapHolds`,
   `continuous`, `nothingAbove`, `notCollapsed`, `arriveTogether`, `staysInside`,
   `wholePixels`, `noLongFrames`, `reducedPath`, `still`. Edges take `start` and
-  `end`. Any check takes `from` and `until` (action names).
+  `end`. Any check takes `from` and `until` (action names). Every run also
+  checks that each tracked name was found in some frame (`tracked`), since the
+  invariants skip the frames a box is missing from. `noLongFrames` judges a
+  frame's blocking work, not its length, so a loaded machine does not fail it.
 - **Known**: a behavior the lane does not have yet carries `known` (on the
   scenario, or on one check), in words that name the behavior. Its runs report
-  `known` until they pass; then take the mark off.
+  `known` until they pass; then take the mark off. `known` covers only the
+  rules: a run that did not run, did not load clean, did not settle or did not
+  find a tracked element fails.
 - A new subject goes in the scene stories' `subjects.tsx`, rendering from the
   scene's state.

@@ -12,7 +12,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 /**
- * The next `n` components in turn, from `index`, wrapping round.
+ * The next `n` components in turn, from `index`, wrapping around.
  *
  * @param {string[]} components Every component with scenarios, sorted.
  * @param {number} n How many.

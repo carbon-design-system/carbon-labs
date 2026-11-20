@@ -21,6 +21,7 @@ import {
   settleFrame,
   staysInside,
   still,
+  tracked,
   wholePixels,
 } from '../src/invariants.js';
 
@@ -321,17 +322,28 @@ describe('wholePixels', () => {
 });
 
 describe('noLongFrames', () => {
-  it('reads the browser’s long frames when it reports them', () => {
+  it('judges the browser’s long frames by their blocking work', () => {
     const run = runOf([{}, {}, {}]);
-    run.longFrames = [{ start: 20, duration: 80, blocking: 30 }];
+    run.longFrames = [
+      { start: 20, duration: 140, blocking: 90 },
+      // A frame stretched by a loaded machine, with nothing blocking.
+      { start: 5, duration: 300, blocking: 0 },
+      { start: 30, duration: 120, blocking: 40 },
+    ];
     const v = noLongFrames(run, { maxMs: 50 });
     expect(v).toEqual([
       {
         invariant: 'noLongFrames',
         frame: 2,
-        detail: 'a 80ms frame (30ms blocking)',
+        detail: '90ms blocking in a 140ms frame',
       },
     ]);
+  });
+
+  it('takes a long task’s length as its blocking', () => {
+    const run = runOf([{}, {}, {}]);
+    run.longFrames = [{ start: 20, duration: 80, blocking: null }];
+    expect(noLongFrames(run, { maxMs: 50 })).toHaveLength(1);
   });
 
   it('falls back to the gaps between frames', () => {
@@ -464,5 +476,23 @@ describe('reducedPath, paired with the full run', () => {
     expect(reducedPath(r, { el: 'panel' })).toEqual([]);
     r.fullClocks = { open: 200 };
     expect(reducedPath(r, { el: 'panel' })).toHaveLength(1);
+  });
+});
+
+describe('tracked', () => {
+  it('fails a tracked name no frame found', () => {
+    const run = runOf([{ a: box(0, 0, 10, 10) }, { a: null }]);
+    expect(tracked(run, ['a', 'gone'])).toEqual([
+      {
+        invariant: 'tracked',
+        frame: -1,
+        detail: 'gone matched nothing in any frame',
+      },
+    ]);
+  });
+
+  it('counts a box that is there but hidden as found', () => {
+    const run = runOf([{ a: box(0, 0, 10, 10, 0) }]);
+    expect(tracked(run, ['a'])).toEqual([]);
   });
 });

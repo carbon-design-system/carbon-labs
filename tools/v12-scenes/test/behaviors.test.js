@@ -9,16 +9,16 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { argsParam, runName, runsOf } from '../src/behaviors.js';
+import { argsParam, runName, runsOf, statusOf } from '../src/behaviors.js';
 import { frameNear, sampleFor } from '../src/frames.js';
 import { readIndex, rotate, touched, writeIndex } from '../src/rotate.js';
 import { componentsOf, forComponents, SCENARIOS } from '../src/scenarios.js';
-import { INVARIANTS } from '../src/invariants.js';
+import { check, INVARIANTS, tracked } from '../src/invariants.js';
 
 describe('rotate', () => {
   const all = ['Accordion', 'Modal', 'SidePanel', 'Tabs', 'Toggle'];
 
-  it('takes the next few in turn and wraps round', () => {
+  it('takes the next few in turn and wraps around', () => {
     expect(rotate(all, 2, 0)).toEqual({
       picked: ['Accordion', 'Modal'],
       next: 2,
@@ -149,5 +149,54 @@ describe('compositor frames and samples', () => {
 
   it('finds the frame nearest a sample', () => {
     expect(frameNear([{ wall: 90 }, { wall: 131 }], { wall: 133 })).toBe(1);
+  });
+});
+
+describe('a run’s status', () => {
+  const rule = { invariant: 'gapHolds', frame: 3, detail: 'off' };
+
+  it('passes with no violations and fails an open one', () => {
+    expect(statusOf([])).toBe('pass');
+    expect(statusOf([rule])).toBe('fail');
+    expect(statusOf([{ ...rule, known: 'a behavior' }])).toBe('known');
+    expect(statusOf([rule], 'a behavior')).toBe('known');
+  });
+
+  it('never lets known cover the harness', () => {
+    for (const invariant of ['runs', 'loadsClean', 'settles', 'tracked']) {
+      const v = { invariant, frame: -1, detail: 'x' };
+      expect(statusOf([v], 'a behavior'), invariant).toBe('fail');
+      expect(statusOf([rule, v], 'a behavior'), invariant).toBe('fail');
+    }
+  });
+
+  it('fails a scenario whose selector matches nothing, known or not', () => {
+    // Every frame lacks the tracked box: each rule skips it and finds
+    // nothing, so only the tracking check can fail the run.
+    const run = {
+      dir: 'ltr',
+      dpr: 2,
+      marks: [{ name: 'open', frame: 0, end: 2 }],
+      longFrames: [],
+      samples: [0, 1, 2].map((i) => ({
+        t: i * 16.7,
+        at: i * 16.7,
+        dt: 16.7,
+        scroll: { x: 0, y: 0 },
+        el: { marker: null, list: null },
+      })),
+    };
+    const checks = [
+      ['staysInside', { el: 'marker', container: 'list' }],
+      ['continuous', { el: 'marker', edge: 'start', maxStep: 'auto' }],
+      ['wholePixels', { el: 'marker' }],
+    ];
+    const violations = [
+      ...check(run, checks),
+      ...tracked(run, ['marker', 'list']),
+    ];
+    expect(violations.map((v) => v.invariant)).toEqual(['tracked', 'tracked']);
+    expect(statusOf(violations)).toBe('fail');
+    expect(statusOf(violations, 'a behavior')).toBe('fail');
   });
 });

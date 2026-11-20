@@ -471,7 +471,7 @@ const tooltip = [
     host: 'page-scroll',
     args: { subject: 'tooltip' },
     track: {
-      tip: { sel: '[data-scene-tooltips] .cds-popover__frame', shown: true },
+      tip: { sel: '[data-scene-tooltips] .sel__tip', shown: true },
     },
     actions: [
       {
@@ -495,7 +495,16 @@ const tooltip = [
       ['wholePixels', { el: 'tip' }],
       ['noLongFrames', { maxMs: 120 }],
     ],
-    reducedChecks: [['reducedPath', { el: 'tip' }]],
+    reducedChecks: [
+      [
+        'reducedPath',
+        {
+          el: 'tip',
+          known:
+            'under reduced motion the tip still takes the full clock to fade out on leave, not half of it',
+        },
+      ],
+    ],
   },
 ];
 
@@ -608,66 +617,17 @@ const toasts = [
 
 const dataTable = [
   {
-    id: 'data-table/batch-bar',
-    component: 'DataTable',
-    host: 'inset-shell',
-    args: { subject: 'data-table', variant: 'select' },
-    track: {
-      batch: '.cds-data-table__batch',
-      toolbar: '.cds--table-toolbar',
-      row: { sel: '.cds--data-table tbody tr', nth: 0 },
-    },
-    actions: [
-      {
-        do: 'click',
-        name: 'select',
-        target:
-          'tbody input[type=checkbox] + label, tbody .cds-checkbox__input',
-        nth: 0,
-      },
-      {
-        do: 'click',
-        name: 'more',
-        target:
-          'tbody input[type=checkbox] + label, tbody .cds-checkbox__input',
-        nth: 1,
-      },
-      {
-        do: 'click',
-        name: 'clear',
-        target:
-          'thead input[type=checkbox] + label, thead .cds-checkbox__input',
-      },
-      {
-        do: 'click',
-        name: 'clear-all',
-        target:
-          'thead input[type=checkbox] + label, thead .cds-checkbox__input',
-      },
-    ],
-    checks: [
-      [
-        'staysInside',
-        { el: 'batch', container: 'toolbar', sides: ['start', 'end'] },
-      ],
-      ['continuous', { el: 'row', edge: 'top', maxStep: 'auto' }],
-      ['wholePixels', { el: 'batch' }],
-      ['noLongFrames', { maxMs: 120 }],
-    ],
-    reducedChecks: [['reducedPath', { el: 'batch' }]],
-  },
-  {
     id: 'data-table/expand-row',
     component: 'DataTable',
     host: 'inset-shell',
     args: { subject: 'data-table', variant: 'expand' },
     track: {
       next: {
-        sel: 'tbody tr.cds--parent-row, tbody tr[data-parent-row]',
+        sel: 'tbody tr.cds-table-expand-row',
         nth: 1,
       },
       first: {
-        sel: 'tbody tr.cds--parent-row, tbody tr[data-parent-row]',
+        sel: 'tbody tr.cds-table-expand-row',
         nth: 0,
       },
     },

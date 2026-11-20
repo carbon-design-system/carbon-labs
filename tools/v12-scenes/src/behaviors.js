@@ -14,7 +14,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { installSampler } from './sampler.js';
-import { check } from './invariants.js';
+import { check, tracked } from './invariants.js';
 import {
   contactSheet,
   frameNear,
@@ -461,6 +461,7 @@ export async function runOne(browser, base, r, o) {
       ? (scenario.reducedChecks ?? scenario.checks)
       : scenario.checks;
     row.violations = check(run, checks);
+    row.violations.push(...tracked(run, Object.keys(scenario.track ?? {})));
     for (const e of errors) {
       row.violations.push({ invariant: 'loadsClean', frame: -1, detail: e });
     }
@@ -481,8 +482,7 @@ export async function runOne(browser, base, r, o) {
   }
   row.ms = Date.now() - started;
   if (row.violations.length) {
-    const open = row.violations.some((v) => !v.known);
-    row.status = scenario.known || !open ? 'known' : 'fail';
+    row.status = statusOf(row.violations, scenario.known);
     if (row.status === 'fail' || o.knownEvidence) {
       row.evidence = await writeEvidence(scratch ?? (await context.newPage()), {
         r,
@@ -496,6 +496,35 @@ export async function runOne(browser, base, r, o) {
   row.violations = trim(row.violations);
   await context.close();
   return { row, clocks };
+}
+
+/**
+ * The violations of the harness, not of a rule: the run did not run, the
+ * story did not load clean, an action did not settle, or a tracked element
+ * was never found. `known` never covers them.
+ */
+export const HARNESS = new Set(['runs', 'loadsClean', 'settles', 'tracked']);
+
+/**
+ * A run's status from its violations: `fail` for any harness violation;
+ * otherwise `known` when the scenario is known or every violation is,
+ * else `fail`; `pass` when there are none.
+ *
+ * @param {{ invariant: string, known?: string }[]} violations The run's.
+ * @param {string} [known] The scenario's `known`, if any.
+ * @returns {'pass' | 'fail' | 'known'} The status.
+ */
+export function statusOf(violations, known) {
+  if (!violations.length) {
+    return 'pass';
+  }
+  if (violations.some((v) => HARNESS.has(v.invariant))) {
+    return 'fail';
+  }
+  if (known) {
+    return 'known';
+  }
+  return violations.some((v) => !v.known) ? 'fail' : 'known';
 }
 
 /** Each action's clock in a run: from its mark to its end, ms. */

@@ -531,11 +531,18 @@ export function wholePixels(run, o) {
 }
 
 /**
- * No long frames: none the browser reports over `maxMs`, and, where it
- * reports none, no gap between frames over it.
+ * No long frames: no frame the browser reports whose blocking work is over
+ * `maxMs`, and, where it reports no frames at all, no gap between frames
+ * over it.
+ *
+ * A frame is judged by its blocking time (the part of its long tasks past
+ * 50ms), not its length: on a loaded machine every frame stretches though
+ * the page holds nothing up, and a frame with no blocking work is the
+ * machine's, not the component's. Where the browser gives no blocking time
+ * (long tasks, not long animation frames), a task's length is its blocking.
  *
  * @param {object} run The run.
- * @param {{ maxMs?: number }} o The longest frame allowed.
+ * @param {{ maxMs?: number }} o The most blocking work a frame may hold, ms.
  * @returns {object[]} Violations.
  */
 export function noLongFrames(run, o = {}) {
@@ -544,12 +551,13 @@ export function noLongFrames(run, o = {}) {
   const out = [];
   if (run.longFrames) {
     for (const f of run.longFrames) {
-      if (f.duration > maxMs) {
+      const blocking = f.blocking ?? f.duration;
+      if (blocking > maxMs) {
         const i = s.findIndex((x) => x.at >= f.start);
         out.push({
           invariant: 'noLongFrames',
           frame: i < 0 ? s.length - 1 : i,
-          detail: `a ${round(f.duration, 0)}ms frame${f.blocking != null ? ` (${round(f.blocking, 0)}ms blocking)` : ''}`,
+          detail: `${round(blocking, 0)}ms blocking in a ${round(f.duration, 0)}ms frame`,
         });
       }
     }
@@ -565,6 +573,25 @@ export function noLongFrames(run, o = {}) {
     }
   });
   return out;
+}
+
+/**
+ * Every tracked element is found in at least one frame. Each invariant
+ * skips the frames a box is missing from, so a selector that matches
+ * nothing would let every check pass on no boxes.
+ *
+ * @param {object} run The run.
+ * @param {string[]} names The tracked names (the scenario's `track` keys).
+ * @returns {object[]} Violations, at frame -1.
+ */
+export function tracked(run, names) {
+  return names
+    .filter((n) => !run.samples.some((x) => x.el?.[n]))
+    .map((n) => ({
+      invariant: 'tracked',
+      frame: -1,
+      detail: `${n} matched nothing in any frame`,
+    }));
 }
 
 const GEOMETRY = ['left', 'top', 'width', 'height'];

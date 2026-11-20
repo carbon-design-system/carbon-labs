@@ -116,6 +116,23 @@ describe('FileChip', () => {
     expect(container.querySelector('img')).toHaveAttribute('alt', '');
   });
 
+  it('marks every video chip as a video, with a thumbnail or without', () => {
+    const { container, rerender } = render(
+      <FileChip name="clip.mp4" kind="video" />
+    );
+    expect(
+      container.querySelector('.cds--file-chip__video-badge')
+    ).not.toBeNull();
+
+    rerender(<FileChip name="clip.mp4" kind="video" thumbnailSrc="clip.jpg" />);
+    expect(
+      container.querySelector('.cds--file-chip__video-badge')
+    ).not.toBeNull();
+
+    rerender(<FileChip name="photo.jpg" kind="image" />);
+    expect(container.querySelector('.cds--file-chip__video-badge')).toBeNull();
+  });
+
   it('explains an error in words, and names a media chip in error', () => {
     const { container } = render(
       <FileChip

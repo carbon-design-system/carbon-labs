@@ -37,6 +37,9 @@ The package installs the following organized snippet files:
 - **carbon-spacing.code-snippets** - Spacing tokens
   ($spacing-01 through
   $spacing-13)
+- **carbon-border-radius.code-snippets** - Border radius tokens
+  ($border-radius-00 through $border-radius-max; Carbon v12, or v11 with feature
+  flags)
 - **carbon-typography.code-snippets** - Typography styles (@include type-style)
 - **carbon-motion.code-snippets** - Duration tokens and motion mixins
 - **carbon-theme.code-snippets** - Theme-related snippets

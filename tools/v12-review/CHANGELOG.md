@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.29.0...%40carbon-labs%2Fv12-review%400.30.0) (2026-11-21)
+
+### Features
+
+* **v12-review:** settings panels, a page swap and section glides ([#1537](https://github.com/carbon-design-system/carbon-labs/issues/1537)) ([9339ea2](https://github.com/carbon-design-system/carbon-labs/commit/9339ea2a6f9dc0e1a408d859458444a5f5021dd9))
+
+
 # [0.29.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.28.0...%40carbon-labs%2Fv12-review%400.29.0) (2026-11-21)
 
 **Note:** Version bump only for package @carbon-labs/v12-review

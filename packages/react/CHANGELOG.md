@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.258.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.257.0...%40carbon-labs%2Freact%400.258.0) (2026-11-21)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
 # [0.257.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.256.0...%40carbon-labs%2Freact%400.257.0) (2026-11-21)
 
 ### Bug Fixes

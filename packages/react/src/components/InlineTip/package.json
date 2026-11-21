@@ -39,10 +39,8 @@
     "postinstall": "ibmtelemetry --config=telemetry.yml",
     "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 2ab0cb7e-a17c-4cb0-929f-8145a6ed3630 --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
   },
-  "devDependencies": {
-    "@carbon-labs/utilities": "0.28.0"
-  },
   "dependencies": {
+    "@carbon-labs/utilities": "0.28.0",
     "@ibm/telemetry-js": "^1.10.2"
   }
 }

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.257.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.256.0...%40carbon-labs%2Freact%400.257.0) (2026-11-21)
+
+### Bug Fixes
+
+* **v12-mega-button:** add the proposals README the ledger reads ([#1529](https://github.com/carbon-design-system/carbon-labs/issues/1529)) ([bc7c9de](https://github.com/carbon-design-system/carbon-labs/commit/bc7c9de4b38830fef737d7a22cb2b0487f506f55))
+
+
 # [0.256.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.255.0...%40carbon-labs%2Freact%400.256.0) (2026-11-20)
 
 ### Bug Fixes

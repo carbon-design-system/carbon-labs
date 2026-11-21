@@ -31,6 +31,7 @@ interface ResizerProps {
   className?: string;
   children?: React.ReactNode;
   thickness?: number;
+  tabIndex?: number;
 
   // Any other additional props
   [key: string]: any;
@@ -55,6 +56,7 @@ export const Resizer = forwardRef<HTMLDivElement, ResizerProps>(
       className,
       children,
       thickness = 4,
+      tabIndex = 0,
       ...rest
     },
     forwardedRef
@@ -324,7 +326,7 @@ export const Resizer = forwardRef<HTMLDivElement, ResizerProps>(
         ref={ref as React.RefObject<HTMLDivElement>}
         role="separator"
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-        tabIndex={0}
+        tabIndex={tabIndex}
         aria-orientation={orientation}
         aria-live="assertive"
         onMouseDown={handleMouseDown}

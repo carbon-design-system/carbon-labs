@@ -957,7 +957,7 @@
       "id": "chat-input-background",
       "axis": "color",
       "status": "proposal",
-      "what": "In dark themes the chat input takes the card's own fill with its rule until the v12 themes land, then the shell's, so a FileChip steps up from it.",
+      "what": "In the v12 dark theme the chat input takes the shell, `$layer-03`, one step below the page, so a FileChip steps up from it; in light it is Carbon's `$chat-prompt-background`.",
       "replaces": "`$layer-01`",
       "appliesTo": [
         {

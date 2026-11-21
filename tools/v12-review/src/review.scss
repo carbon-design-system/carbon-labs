@@ -8,7 +8,9 @@
 // The review app's own parts. The shell, the nav and the controls are the
 // components'; this is the page's type, its cards, its stages and tables,
 // all on the theme's tokens.
+@use '@carbon/react/scss/spacing' as *;
 @use '@carbon/react/scss/type';
+@use '@carbon/styles/scss/utilities/visually-hidden' as *;
 
 .v12r-shell {
   background: var(--cds-background);
@@ -23,24 +25,26 @@
   color: var(--cds-icon-secondary);
 }
 
-.v12r-picks {
-  display: grid;
-  box-sizing: border-box;
-  padding: 16px;
-  gap: 16px;
-  inline-size: 320px;
-}
-
 .v12r-pick {
   display: grid;
   gap: 8px;
 }
 
 .v12r-pick__label {
+  @include type.type-style('label-01');
+
   color: var(--cds-text-secondary);
-  font-size: var(--cds-label-01-font-size, 0.75rem);
-  letter-spacing: var(--cds-label-01-letter-spacing, 0.32px);
-  line-height: var(--cds-label-01-line-height, 1.3333);
+}
+
+// A page change (PageSwap.tsx): the page going out and the one coming in
+// share one place, so the out happens where it was read.
+.v12r-swap {
+  display: grid;
+}
+
+.v12r-swap__page {
+  grid-area: 1 / 1;
+  min-inline-size: 0;
 }
 
 // A page: its header (the kit's PageHeader, its title in line with the
@@ -93,17 +97,18 @@
     margin-block-end: 8px;
   }
 
-  h4 {
+  h3 {
     @include type.type-style('heading-compact-01');
 
     margin: 16px 0 8px;
   }
 
   code {
+    @include type.font-family('mono');
+
     padding: 0 4px;
     border-radius: 4px;
-    background: var(--cds-layer-01);
-    font-family: 'IBM Plex Mono', monospace;
+    background: var(--cds-surface-code, var(--cds-surface));
     font-size: 0.875em;
   }
 }
@@ -112,10 +117,23 @@
   color: var(--cds-text-secondary);
 }
 
+// The stories' slots while they load (ComponentPage.tsx): the skeleton
+// blocks at a section's title and stage, the words for a screen reader only.
+.v12r-loading__stage {
+  block-size: 160px;
+  inline-size: 100%;
+  margin-block-start: 8px;
+}
+
+.v12r-loading__text {
+  @include visually-hidden;
+}
+
 .v12r-count {
+  @include type.type-style('body-compact-01');
+
   margin: 12px 0 0;
   color: var(--cds-text-secondary);
-  font-size: 14px;
 }
 
 .v12r-home-search {
@@ -129,16 +147,16 @@
 }
 
 .v12r-category__title {
+  @include type.type-style('heading-03');
+
   margin: 0 0 4px;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 28px;
 }
 
 .v12r-category__summary {
+  @include type.type-style('body-compact-01');
+
   margin: 0 0 16px;
   color: var(--cds-text-secondary);
-  font-size: 14px;
 }
 
 .v12r-cards {
@@ -165,19 +183,18 @@
 }
 
 .v12r-card__title {
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 22px;
+  @include type.type-style('heading-compact-02');
 }
 
 .v12r-card__summary {
+  @include type.type-style('body-01');
+
   flex: 1;
   color: var(--cds-text-secondary);
-  font-size: 14px;
-  line-height: 20px;
 
   code {
-    font-family: 'IBM Plex Mono', monospace;
+    @include type.font-family('mono');
+
     font-size: 0.875em;
   }
 }
@@ -190,10 +207,13 @@
 
 // ── a component's page ──
 // A section reached from a tab lands below the collapsed page header (the
-// workspace's top, 64, its row and tabs, 88) with room to spare.
+// workspace's top: the shell's bar and gutter; then the header's row and
+// tabs, 88) with room to spare.
 .v12r-section {
   margin-block-start: 48px;
-  scroll-margin-block-start: 168px;
+  scroll-margin-block-start: calc(
+    var(--cds-app-header-height, 48px) + #{$spacing-05} + 104px
+  );
 }
 
 .v12r-section__head {
@@ -204,10 +224,9 @@
 }
 
 .v12r-section__title {
+  @include type.type-style('heading-03');
+
   margin: 0 0 8px;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 28px;
 }
 
 .v12r-section__links {
@@ -217,58 +236,118 @@
 }
 
 .v12r-section__text {
+  @include type.type-style('body-01');
+
   color: var(--cds-text-secondary);
-  font-size: 14px;
-  line-height: 20px;
 }
 
-.v12r-story__bar {
-  display: flex;
-  gap: 8px;
-  margin-block-end: 8px;
-}
-
-.v12r-story__body {
-  display: grid;
-  gap: 16px;
-  grid-template-columns: minmax(0, 1fr);
-}
-
-.v12r-story--settings .v12r-story__body {
-  grid-template-columns: minmax(0, 1fr) 272px;
-}
-
-// A story's stage: what it fixes to the screen stays inside (the transform
-// makes the stage its containing block), and a tall one scrolls.
+// A story's stage: what it fixes to the screen stays inside (layout
+// containment makes the stage its containing block, with no layer of its
+// own), and a tall one scrolls.
 .v12r-stage {
   position: relative;
   box-sizing: border-box;
+  // A story's fixed parts stay in its place on the page.
+  contain: layout;
   min-block-size: 80px;
   padding-block: 16px;
-  // A story's fixed and portalled parts stay in its place on the page.
-  transform: translateZ(0);
 }
 
 .v12r-stage--full {
   padding: 0;
 }
 
+// The settings (Settings.tsx), the header's and a story's: a panel in the
+// kit's anchored Popover, on its floating surface (fill, hairline, corners),
+// a head over the controls, which scroll in the kit's Scroller.
 .v12r-settings {
-  border-radius: 8px;
-  background: var(--cds-layer-01);
-  max-block-size: 720px;
+  display: grid;
+  box-sizing: border-box;
+  grid-template-rows: auto minmax(0, 1fr);
+  inline-size: min(400px, calc(100vw - 32px));
+  max-block-size: min(60vh, 520px);
 }
 
-// The settings scroll in the kit's Scroller (its viewport), as every
-// scrolling area in the app does.
+.v12r-settings--picks {
+  inline-size: min(320px, calc(100vw - 32px));
+  max-block-size: calc(100vh - 80px);
+}
+
+.v12r-settings__head {
+  display: flex;
+  align-items: center;
+  border-block-end: 1px solid var(--cds-surface-divider);
+  gap: 4px;
+  min-block-size: 40px;
+  padding-block: 4px;
+  padding-inline: 16px 4px;
+}
+
+.v12r-settings__title {
+  @include type.type-style('heading-compact-01');
+}
+
+.v12r-settings__detail {
+  @include type.type-style('label-01');
+
+  overflow: hidden;
+  flex: 1;
+  color: var(--cds-text-secondary);
+  min-inline-size: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.v12r-settings__scroll {
+  min-block-size: 0;
+}
+
 .v12r-settings__body {
   display: grid;
   box-sizing: border-box;
   align-content: start;
-  padding: 16px;
-  gap: 16px;
+  padding: 12px 16px 16px;
+  gap: 12px 16px;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
 }
 
+.v12r-settings--picks .v12r-settings__body {
+  gap: 16px;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+// A story's settings button: floating at the window's end corner, inside
+// the workspace's, on the floating surface the panel opens on (its fill and
+// hairline on a frame under the button), with the floating surfaces' cast
+// shadow under the frame (Settings.tsx: the kit's `attachFloatingCastShadow`,
+// in place). The app's, beside the page swap, so a page change doesn't
+// carry it; it snaps in and out as a whole, shadow and all.
+.v12r-fab {
+  position: fixed;
+  z-index: 8000;
+  display: inline-flex;
+  border-radius: 50%;
+  inset-block-end: 32px;
+  inset-inline-end: 32px;
+  // The shadow and the frame stack under the button, inside it.
+  isolation: isolate;
+
+  > .cast-floating > .cast-floating__frame {
+    border-radius: inherit;
+  }
+}
+
+.v12r-fab__frame {
+  position: absolute;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--cds-surface);
+  box-shadow: inset 0 0 0 1px var(--cds-surface-divider);
+  inset: 0;
+}
+
+// A framed story: the window's height, less the shell's bar and gutter and
+// the story's title and room (136), never under 560px.
 .v12r-frame {
   display: block;
   overflow: hidden;
@@ -276,15 +355,20 @@
   border: 0;
   border-radius: 8px;
   background: var(--cds-background);
+  block-size: max(
+    560px,
+    calc(100vh - var(--cds-app-header-height, 48px) - #{$spacing-05} - 136px)
+  );
   inline-size: 100%;
 }
 
 .v12r-frame--idle {
   display: grid;
   padding: 16px;
-  background: var(--cds-layer-01);
+  @include type.type-style('label-01');
+
+  background: var(--cds-surface);
   color: var(--cds-text-secondary);
-  font-size: 12px;
   gap: 8px;
   justify-items: center;
   place-content: center;
@@ -301,15 +385,16 @@
   inline-size: 100%;
 
   caption {
+    @include type.type-style('label-01');
+
     color: var(--cds-text-secondary);
-    font-size: 12px;
     padding-block-end: 8px;
     text-align: start;
   }
 
   th {
     padding: 8px 12px;
-    background: var(--cds-layer-01);
+    background: var(--cds-surface);
     color: var(--cds-text-secondary);
     font-weight: 400;
     text-align: start;
@@ -317,12 +402,13 @@
 
   td {
     padding: 10px 12px;
-    border-block-end: 1px solid var(--cds-border-subtle-01);
+    border-block-end: 1px solid var(--cds-surface-rule);
     vertical-align: top;
   }
 
   code {
-    font-family: 'IBM Plex Mono', monospace;
+    @include type.font-family('mono');
+
     font-size: 0.875em;
   }
 }
@@ -338,8 +424,9 @@
 }
 
 .v12r-required {
+  @include type.type-style('label-01');
+
   color: var(--cds-text-error);
-  font-size: 12px;
 }
 
 // The filter's fold (ReviewApp.tsx, `useFilterFold`): as the nav folds, the

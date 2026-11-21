@@ -28,6 +28,8 @@
     "@carbon-labs/react-app-shell": "workspace:*",
     "@carbon-labs/react-button": "workspace:*",
     "@carbon-labs/react-content-switcher": "workspace:*",
+    "@carbon-labs/react-feedback": "workspace:*",
+    "@carbon-labs/react-jump-to": "workspace:*",
     "@carbon-labs/react-link": "workspace:*",
     "@carbon-labs/react-motion-icons": "workspace:*",
     "@carbon-labs/react-number-input": "workspace:*",
@@ -43,6 +45,7 @@
     "@carbon-labs/react-tile": "workspace:*",
     "@carbon-labs/react-toggle": "workspace:*",
     "@carbon-labs/react-tooltip": "workspace:*",
+    "@carbon-labs/v12-motion": "workspace:*",
     "@carbon-labs/v12-workbench": "workspace:*",
     "@carbon/react": "^1.118.0"
   },

@@ -37,6 +37,10 @@ program
     '--group <name>',
     'Storybook sidebar group for the component (default: "Components" or config.storybookGroup)'
   )
+  .option(
+    '--v12',
+    'Scaffold into the v12 lane (src/v12/components) with the cds prefix, for components that target @carbon/react'
+  )
   .option('--path <path>', 'Carbon Labs repo path (default: current directory)')
   .option(
     '--with-git',

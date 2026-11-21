@@ -13,6 +13,11 @@ import { log, runStep } from '../utils/logger.js';
 import { validateComponentName, applyNameCasing } from '../utils/names.js';
 import { loadConfig, mergeOptions } from '../utils/config.js';
 import {
+  getComponentsDir,
+  getStorybookScript,
+  validateLane,
+} from '../utils/lane.js';
+import {
   checkGitHubAuth,
   getOctokit,
   getGitHubUser,
@@ -182,6 +187,14 @@ export async function newCommand(componentName, options) {
     process.exit(1);
   }
 
+  const v12 = merged.v12;
+  try {
+    validateLane({ v12, type: componentType });
+  } catch (err) {
+    log.error(err.message);
+    process.exit(1);
+  }
+
   const branchName = getBranchName(componentName);
 
   if (options.withGit) {
@@ -209,19 +222,24 @@ export async function newCommand(componentName, options) {
   const packageDir = join(localPath, PACKAGE_DIR[componentType]);
   const packageRelativeDir = PACKAGE_DIR[componentType];
   const casedName = applyNameCasing(componentName, componentType);
-  log.info(`Component: ${casedName}  (type: ${componentType})`);
+  log.info(
+    `Component: ${casedName}  (type: ${componentType}${v12 ? ', lane: v12' : ''})`
+  );
+
+  const generateArgs = ['generate', casedName, ...(v12 ? ['--v12'] : [])];
 
   await runStep(
-    `yarn generate ${casedName} in ${PACKAGE_DIR[componentType]}`,
+    `yarn ${generateArgs.join(' ')} in ${PACKAGE_DIR[componentType]}`,
     () =>
-      execa('yarn', ['generate', casedName], {
+      execa('yarn', generateArgs, {
         cwd: packageDir,
         stdio: 'inherit',
       }),
     { dryRun: isDryRun }
   );
 
-  const componentPath = join(packageDir, 'src', 'components', casedName);
+  const componentPath = join(packageDir, getComponentsDir({ v12 }), casedName);
+  const storybookScript = getStorybookScript({ v12 });
 
   await runStep(
     `Validating generated package.json for ${casedName}`,
@@ -241,6 +259,10 @@ export async function newCommand(componentName, options) {
 
   if (merged.owners?.length) {
     scaffoldArgs.push('--owners', merged.owners.join(','));
+  }
+
+  if (v12) {
+    scaffoldArgs.push('--v12');
   }
 
   await runStep(
@@ -270,7 +292,7 @@ export async function newCommand(componentName, options) {
 
   if (options.storybook !== false && !isDryRun) {
     try {
-      const storybookProc = execa('yarn', ['storybook'], {
+      const storybookProc = execa('yarn', [storybookScript], {
         cwd: packageDir,
         stdio: 'ignore',
         detached: true,
@@ -279,11 +301,11 @@ export async function newCommand(componentName, options) {
       log.info('Storybook starting in background...');
     } catch {
       log.warn(
-        'Failed to start Storybook automatically. Run `yarn storybook` manually.'
+        `Failed to start Storybook automatically. Run \`yarn ${storybookScript}\` manually.`
       );
     }
   } else if (options.storybook !== false && isDryRun) {
-    log.info('[dry-run] Would spawn: yarn storybook');
+    log.info(`[dry-run] Would spawn: yarn ${storybookScript}`);
   }
 
   log.blank();
@@ -292,7 +314,10 @@ export async function newCommand(componentName, options) {
   console.log('  Component folder : ' + componentPath);
   console.log('  Storybook path   : ' + packageRelativeDir);
   console.log(
-    '  Storybook command: cd ' + packageRelativeDir + ' && yarn storybook'
+    '  Storybook command: cd ' +
+      packageRelativeDir +
+      ' && yarn ' +
+      storybookScript
   );
   if (options.withGit) {
     console.log('  Branch           : ' + branchName);
@@ -310,7 +335,9 @@ export async function newCommand(componentName, options) {
       '    2. Iterate on your component.\n' +
       '    3. Preview in Storybook with: cd ' +
       packageRelativeDir +
-      ' && yarn storybook\n' +
+      ' && yarn ' +
+      storybookScript +
+      '\n' +
       (options.withGit
         ? '    4. Push: git push -u origin ' + branchName + '\n'
         : '    4. Commit and push from your current branch.\n')

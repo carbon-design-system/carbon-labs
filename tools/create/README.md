@@ -68,6 +68,8 @@ create-carbon-labs <component-name> [options]
 Options:
   --type <type>       Component type: "react" or "web-component"  [default: react]
   --owners <handles>  Comma-separated GitHub handles, e.g. @user1,@user2
+  --group <name>      Storybook sidebar group                     [default: Components]
+  --v12               Scaffold into the v12 lane (React only)
   --path <path>       Carbon Labs repo path                       [default: cwd]
   --with-git          Opt into fork setup, clone/update, branch, and commit
   --no-storybook      Skip spawning Storybook
@@ -85,6 +87,9 @@ npx @carbon-labs/create@latest DataTableFilter
 # Web Component
 npx @carbon-labs/create@latest data-table-filter --type web-component
 
+# React component in the v12 lane, targeting @carbon/react
+npx @carbon-labs/create@latest DataTableFilter --v12
+
 # With explicit owners
 npx @carbon-labs/create@latest MyWidget --owners @ajcase,@kenny-handle
 
@@ -97,6 +102,25 @@ npx @carbon-labs/create@latest MyWidget --dry-run
 # Custom local path
 npx @carbon-labs/create@latest MyWidget --path ~/projects/carbon-labs
 ```
+
+## The v12 lane
+
+`--v12` scaffolds a React component into
+`packages/react/src/v12/components/<Name>/` for components that target
+`@carbon/react`:
+
+- class names use Carbon's `cds` prefix, from `usePrefix` in `@carbon/react` and
+  `$prefix` in `@carbon/styles/scss/config`
+- styles use `@carbon/styles` only
+- the story is titled `V12/<Name>` (`--group <name>` nests it as
+  `V12/<name>/<Name>`)
+- the test is `__tests__/<Name>.test.tsx`
+- `package.json` sets `labs.status` to `draft` and declares `@carbon/react` and
+  `@carbon/styles` as peer dependencies
+
+Storybook starts with `yarn storybook:v12`. `--v12` does not take
+`--type web-component`: web components are ported in Carbon after the React
+preview.
 
 ## Config file
 

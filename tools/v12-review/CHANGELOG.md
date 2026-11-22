@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.31.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.30.0...%40carbon-labs%2Fv12-review%400.31.0) (2026-11-22)
+
+**Note:** Version bump only for package @carbon-labs/v12-review
+
+
+
+
+
 # [0.30.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-review%400.29.0...%40carbon-labs%2Fv12-review%400.30.0) (2026-11-21)
 
 ### Features

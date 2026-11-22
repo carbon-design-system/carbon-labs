@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-workbench%400.29.0...%40carbon-labs%2Fv12-workbench%400.30.0) (2026-11-22)
+
+### Features
+
+* **v12-workbench:** scroll every story page on the kit's scroller ([#1538](https://github.com/carbon-design-system/carbon-labs/issues/1538)) ([1bb4dfa](https://github.com/carbon-design-system/carbon-labs/commit/1bb4dfaed16aa296408ebeacfaa7457658af77bb))
+
+
 # [0.29.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-workbench%400.28.0...%40carbon-labs%2Fv12-workbench%400.29.0) (2026-11-21)
 
 ### Bug Fixes

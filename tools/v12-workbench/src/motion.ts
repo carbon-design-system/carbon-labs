@@ -13,7 +13,7 @@ import {
   reducedClock,
 } from '@carbon-labs/v12-motion';
 import { BASE_DURATIONS, BASE_EASINGS, REGISTRY } from './baseline';
-import type { ReducedBehaviour, V12Parameters } from './constants';
+import type { ReducedBehavior, V12Parameters } from './constants';
 
 /** One line of the Motion panel: a token or a pattern parameter. */
 export interface MotionRow {
@@ -25,8 +25,8 @@ export interface MotionRow {
 /** One motion item a story declares, described from the seam. */
 export interface MotionEntry {
   item: string;
-  /** The story's declared reduced behaviour, or null when it declares none. */
-  reduced: ReducedBehaviour | null;
+  /** The story's declared reduced behavior, or null when it declares none. */
+  reduced: ReducedBehavior | null;
   rows: MotionRow[];
 }
 
@@ -122,12 +122,12 @@ function registryTokens(item: string) {
  * carbon-motion's registry.
  *
  * @param item The name a story declares.
- * @param reduced The story's declared reduced behaviour for it.
+ * @param reduced The story's declared reduced behavior for it.
  * @returns The entry.
  */
 export function describeMotion(
   item: string,
-  reduced?: ReducedBehaviour
+  reduced?: ReducedBehavior
 ): MotionEntry {
   const rows: MotionRow[] = [];
   if (item in SEAM_CONSTANTS) flatten('', SEAM_CONSTANTS[item], rows);

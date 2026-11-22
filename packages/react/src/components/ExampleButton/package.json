@@ -36,7 +36,7 @@
     "build": "node ../../../tasks/build.js",
     "clean": "rimraf es lib scss"
   },
-  "devDependencies": {
+  "dependencies": {
     "@carbon-labs/utilities": "0.28.0"
   }
 }

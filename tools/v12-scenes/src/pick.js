@@ -31,6 +31,48 @@ const EVERYTHING = [
 const TOOL_UNITS = { 'tools/v12-review/': 'review' };
 
 /**
+ * Folders of the v12 Storybook whose stories host components: a change to
+ * a component they import picks them too.
+ */
+const HOST_UNITS = ['scenes'];
+
+/**
+ * The host folders and the component packages their stories import, read
+ * from the import statements of their source files.
+ *
+ * @param {string} root The carbon-labs checkout.
+ * @returns {{ unit: string, deps: string[] }[]} Each host folder that exists.
+ */
+export function readHosts(root) {
+  const out = [];
+  for (const unit of HOST_UNITS) {
+    const base = path.join(root, 'packages/react/src/v12', unit);
+    if (!fs.existsSync(base)) {
+      continue;
+    }
+    const deps = new Set();
+    const walk = (dir) => {
+      for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+        const file = path.join(dir, e.name);
+        if (e.isDirectory()) {
+          walk(file);
+        } else if (/\.(js|jsx|ts|tsx)$/.test(e.name)) {
+          const text = fs.readFileSync(file, 'utf8');
+          for (const m of text.matchAll(
+            /(?:from|import)\s*['"](@carbon-labs\/react-[^/'"]+)/g
+          )) {
+            deps.add(m[1]);
+          }
+        }
+      }
+    };
+    walk(base);
+    out.push({ unit, deps: [...deps].sort() });
+  }
+  return out;
+}
+
+/**
  * The lane's component folders, each with its package name and the workspace
  * packages it declares (dependencies, peer and development dependencies: a
  * story may import any of them).
@@ -72,12 +114,16 @@ export function readLane(root) {
  * (`components/<Folder>`) or another folder of the v12 Storybook (`catalog`,
  * `experiences`, `review`, `workbench`).
  *
+ * A host folder (`readHosts`) is picked when a component it imports, or
+ * one of theirs at any depth, changes.
+ *
  * @param {string[]} files Changed paths, relative to the checkout.
  * @param {{ dir: string, name: string, deps: string[] }[]} lane From `readLane`.
+ * @param {{ unit: string, deps: string[] }[]} [hosts] From `readHosts`.
  * @returns {{ all: boolean, why: string[], units: string[] }} What to run, and
  *   for each unit or for everything the reason it was picked.
  */
-export function pickUnits(files, lane) {
+export function pickUnits(files, lane, hosts = []) {
   const why = [];
   const everything = files.filter((f) => EVERYTHING.some((re) => re.test(f)));
   if (everything.length) {
@@ -104,6 +150,7 @@ export function pickUnits(files, lane) {
     }
   }
   const byDir = new Map(lane.map((c) => [c.dir, c]));
+  const hostWhy = new Map();
   const picked = new Map();
   for (const dir of changed) {
     picked.set(dir, 'changed');
@@ -119,6 +166,27 @@ export function pickUnits(files, lane) {
       }
     }
   }
+  const byName = new Map(lane.map((c) => [c.name, c]));
+  for (const h of hosts) {
+    if (others.has(h.unit)) {
+      continue;
+    }
+    // Every component the host's stories render: what they import, and
+    // what those import in turn.
+    const reach = new Set(h.deps);
+    for (const name of reach) {
+      for (const d of byName.get(name)?.deps ?? []) {
+        reach.add(d);
+      }
+    }
+    const by = [...changed]
+      .filter((dir) => reach.has(byDir.get(dir)?.name))
+      .sort();
+    if (by.length) {
+      others.add(h.unit);
+      hostWhy.set(h.unit, `renders ${by.join(', ')}`);
+    }
+  }
   const units = [];
   for (const [dir, reason] of [...picked].sort()) {
     units.push(`components/${dir}`);
@@ -126,7 +194,7 @@ export function pickUnits(files, lane) {
   }
   for (const o of [...others].sort()) {
     units.push(o);
-    why.push(`${o}: changed`);
+    why.push(`${o}: ${hostWhy.get(o) ?? 'changed'}`);
   }
   return { all: false, why, units };
 }

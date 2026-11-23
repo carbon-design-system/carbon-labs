@@ -117,7 +117,7 @@ describe('a prop', () => {
   });
 });
 
-describe('a mixed colour', () => {
+describe('a mixed color', () => {
   it('is found with its selector, through interpolation and comments', () => {
     const found = colorMixesIn(
       `// a color-mix( in a comment\n.#{$b}--x {\n  &:active { --fill: color-mix(in srgb, #{$ink} 8%, transparent); }\n  color: red;\n}\n`
@@ -139,8 +139,8 @@ describe('a mixed colour', () => {
   });
 });
 
-describe('colour values', () => {
-  it('parses OKLCH and static colours', () => {
+describe('color values', () => {
+  it('parses OKLCH and static colors', () => {
     expect(parseOklch('oklch(45% 0.27 262deg / 50%)')).toEqual({
       oklch: [0.45, 0.27, 262],
       alpha: 0.5,

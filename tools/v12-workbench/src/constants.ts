@@ -116,14 +116,14 @@ export function levelOf(
 }
 
 /** What a story declares a motion item does under reduced motion. */
-export type ReducedBehaviour = 'shorter-clock' | 'at-once' | 'full';
+export type ReducedBehavior = 'shorter-clock' | 'at-once' | 'full';
 
 /** What a story declares in `parameters.v12`. */
 export interface V12Parameters {
   /** The motion items the component uses, by the name the seam gives them. */
   motion?: string[];
-  /** Each item's reduced-motion behaviour. */
-  reduced?: Record<string, ReducedBehaviour>;
+  /** Each item's reduced-motion behavior. */
+  reduced?: Record<string, ReducedBehavior>;
   /** The states the component has, for the matrix. */
   states?: string[];
   /** A whole app (the review app): it applies its own picks, and the decorators stand down. */

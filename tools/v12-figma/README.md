@@ -19,7 +19,7 @@ yarn v12:figma snapshot --check            # writes nothing; exits 1 when one is
 ```
 
 CI runs `--check`. After a change to a theme, a proposal, a story's `argTypes`
-or `parameters.v12`, a docs page, a mixed colour, the manifest or the
+or `parameters.v12`, a docs page, a mixed color, the manifest or the
 carbon-motion version, run `yarn v12:figma snapshot` and commit the files.
 
 ## The snapshots
@@ -37,7 +37,7 @@ or path outside the repository, so the same tree always writes the same bytes.
     the same token in `white`, `g10`, `g90` and `g100`, from `@carbon/themes`,
     where Carbon has the token.
   - `v12 / Proposals`: each component's `proposals/tokens.json`. A value is an
-    alias (`{ "alias": "--cds-layer-01" }`), a colour (the hex fallback, the
+    alias (`{ "alias": "--cds-layer-01" }`), a color (the hex fallback, the
     OKLCH value and its gamut), or a dimension in px. White's value also serves
     `v12-light`, and g100's `v12-dark`, as in `proposals.scss`.
   - `v12 / Explorations`: the explorations with one numeric value.
@@ -48,11 +48,11 @@ or path outside the repository, so the same tree always writes the same bytes.
   component property would carry (`VARIANT` with its values in code order,
   `BOOLEAN`, `TEXT`, `INSTANCE_SWAP`, `SLOT`), the props that never become one,
   the states and motion items from `parameters.v12`, its departures, and its
-  mixed colours (below). A prop in the shared vocabulary, or in the row's
+  mixed colors (below). A prop in the shared vocabulary, or in the row's
   `figma.props`, is marked `surface`.
 - **`motion.code.json`**: every carbon-motion token with its status (from
   `docs/v12/motion-contract.md`) and value at 1x; the seam's exports; and per
-  row, its motion items with the tokens each owns, its reduced behaviour and the
+  row, its motion items with the tokens each owns, its reduced behavior and the
   seam names it imports.
 - **`docs.code.json`**: per row with a docs page, its summary and first
   sentence, the description a library component starts with.
@@ -61,13 +61,13 @@ The stories are read without running them: option lists are followed through
 imports to their constants. A list that cannot be read that way is kept as
 `"values": null` with the source it came from, never guessed.
 
-## Mixed colours
+## Mixed colors
 
-Many hover and press colours are mixed in the browser with `color-mix()`, mostly
+Many hover and press colors are mixed in the browser with `color-mix()`, mostly
 in sRGB, a few in OKLCH or OKLab. A design file cannot evaluate that, and the
 result depends on the cascade (custom properties, `currentColor`, the theme). So
-each mixed colour is listed with its file, selector, property, state, colour
-space and expression, and a value per theme that is a placeholder,
+each mixed color is listed with its file, selector, property, state, color space
+and expression, and a value per theme that is a placeholder,
 `{ "pending": "browser-render" }`, until a browser render fills it.
 
 A render writes `figma-sync/state-colors.resolved.json`:
@@ -117,4 +117,4 @@ field names a private id map uses. A contrast ratio (`4.5:1`) is not an id.
   types: a prop no story names is not listed.
 - The density and shape collections are named as modes only; their values are
   not read yet.
-- Nothing fills the mixed colours yet: every value is pending.
+- Nothing fills the mixed colors yet: every value is pending.

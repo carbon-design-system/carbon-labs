@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-history-rail%400.9.0...%40carbon-labs%2Freact-history-rail%400.10.0) (2026-11-21)
+
+**Note:** Version bump only for package @carbon-labs/react-history-rail
+
+
+
+
+
+# [0.9.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-history-rail%400.8.0...%40carbon-labs%2Freact-history-rail%400.9.0) (2026-11-20)
+
+**Note:** Version bump only for package @carbon-labs/react-history-rail
+
+
+
+
+
 # [0.8.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-history-rail%400.7.0...%40carbon-labs%2Freact-history-rail%400.8.0) (2026-11-11)
 
 **Note:** Version bump only for package @carbon-labs/react-history-rail

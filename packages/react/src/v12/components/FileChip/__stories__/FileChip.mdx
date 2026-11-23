@@ -47,11 +47,11 @@ that is not a file.
 
 - **Kinds.** `file` shows Carbon's glyph for its extension (`Pdf`, `Doc`, `Txt`,
   `Csv`, `Zip`, `Xls`, `Ppt`, `Json`, else `Document`). `image` and `video` show
-  a thumbnail, without the name unless `showName` is set. A video's thumbnail
-  carries Carbon's `VideoFilled` at 12 on a 16px round `$overlay` backing: a
-  type marker, not a play button, since the chip body does nothing. The 12px
-  size is a proposal (see below); on stock Carbon it is 16. The kind follows
-  `mimeType` unless `kind` is given.
+  a thumbnail, without the name unless `showName` is set. Every video chip, with
+  a thumbnail or without one, carries Carbon's `VideoFilled` at 12 on a 16px
+  round `$overlay` backing: a type marker, not a play button, since the chip
+  body does nothing. The 12px size is a proposal (see below); on stock Carbon it
+  is 16. The kind follows `mimeType` unless `kind` is given.
 - **Status.** `uploading` shows Carbon's small `Loading`. `error` shows
   `ErrorFilled`, and the second line says why, so a failure is never told by
   colour alone; a media chip in error also shows its name. `complete` shows

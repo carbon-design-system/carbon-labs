@@ -11,11 +11,16 @@
 // The motion tokens every v12 stylesheet reads (`var(--cds-motion-*)`), from
 // the seam, on every v12 story.
 import '@carbon-labs/v12-motion/tokens.css';
+import { addons } from 'storybook/preview-api';
 import { withWorkbench } from './decorator';
-import { quietCancelledAnimationWaits } from './animation-wait';
+import { quietCanceledAnimationWaits } from './animation-wait';
+import { holdPageScroll } from './page-scroll';
 
 if (typeof window !== 'undefined') {
-  quietCancelledAnimationWaits();
+  quietCanceledAnimationWaits();
+  // The native page scrollbar stays hidden from the first frame until the
+  // page scroller takes over (page-scroll.ts).
+  holdPageScroll(addons.getChannel());
 }
 
 export { globalTypes, initialGlobals } from './globals';

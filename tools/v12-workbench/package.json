@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/v12-workbench",
-  "version": "0.27.0",
+  "version": "0.30.0",
   "private": true,
   "type": "module",
   "description": "Carbon Labs - the v12 workbench, a Storybook add-on for reviewing components and their motion",
@@ -36,6 +36,7 @@
   "dependencies": {
     "@carbon-labs/react-icon-motion": "workspace:*",
     "@carbon-labs/react-kit-defaults": "workspace:*",
+    "@carbon-labs/react-scroller": "workspace:*",
     "@carbon-labs/v12-motion": "workspace:*"
   },
   "peerDependencies": {

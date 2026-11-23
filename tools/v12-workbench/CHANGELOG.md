@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-workbench%400.29.0...%40carbon-labs%2Fv12-workbench%400.30.0) (2026-11-22)
+
+### Features
+
+* **v12-workbench:** scroll every story page on the kit's scroller ([#1538](https://github.com/carbon-design-system/carbon-labs/issues/1538)) ([1bb4dfa](https://github.com/carbon-design-system/carbon-labs/commit/1bb4dfaed16aa296408ebeacfaa7457658af77bb))
+
+
+# [0.29.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-workbench%400.28.0...%40carbon-labs%2Fv12-workbench%400.29.0) (2026-11-21)
+
+### Bug Fixes
+
+* **v12-mega-button:** add the proposals README the ledger reads ([#1529](https://github.com/carbon-design-system/carbon-labs/issues/1529)) ([bc7c9de](https://github.com/carbon-design-system/carbon-labs/commit/bc7c9de4b38830fef737d7a22cb2b0487f506f55))
+
+
+# [0.28.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-workbench%400.27.0...%40carbon-labs%2Fv12-workbench%400.28.0) (2026-11-20)
+
+### Bug Fixes
+
+* **v12-keyboard-shortcut:** borderless keycap, centred caps, proposals ([#1528](https://github.com/carbon-design-system/carbon-labs/issues/1528)) ([c9d6a8f](https://github.com/carbon-design-system/carbon-labs/commit/c9d6a8f1e88ef99ece2eb83c36558d2f4ab81b4c)), closes [high-contrast](https://github.com/hi/issues/contrast)
+
+
 # [0.27.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-workbench%400.26.0...%40carbon-labs%2Fv12-workbench%400.27.0) (2026-11-13)
 
 ### Bug Fixes

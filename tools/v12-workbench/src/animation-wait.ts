@@ -20,7 +20,7 @@ export const CANCEL_WINDOW = 100;
  *
  * @param reason the rejection's reason
  * @param now the time now (ms)
- * @param lastCancel when a running animation was last cancelled (ms)
+ * @param lastCancel when a running animation was last canceled (ms)
  */
 export function isCancelAbort(
   reason: unknown,
@@ -40,7 +40,7 @@ export function isCancelAbort(
  *
  * @param win the preview's window
  */
-export function quietCancelledAnimationWaits(win: Window = window): void {
+export function quietCanceledAnimationWaits(win: Window = window): void {
   const proto = (win as Window & { Animation?: typeof Animation }).Animation
     ?.prototype;
   const flag = win as Window & { __v12CancelQuiet?: boolean };

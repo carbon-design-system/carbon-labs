@@ -1,9 +1,9 @@
 {
   "name": "@carbon-labs/v12-scenes",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
-  "description": "Carbon Labs - the v12 scene tier: the built v12 Storybook's stories in a browser, for the components a change touches",
+  "description": "Carbon Labs - the v12 scene tiers: the built v12 Storybook's stories in a browser, for the components a change touches, and components driven in realistic hosts against the house motion rules",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

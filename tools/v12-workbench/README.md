@@ -23,6 +23,18 @@ Six globals, drawn by Storybook's toolbar and applied by the add-on's decorator.
 Theme and direction are the lane's own globals; in the v12 build the lane's
 preview leaves them to this add-on.
 
+## Page scroll
+
+Every story's page scrolls on the kit's `WindowScroller`, mounted by the
+decorator (`PageScroller`), so no story shows the native scrollbar. A story that
+brings its own (a page shell's) is the one that shows: the decorator's stands
+down while another is mounted.
+
+A docs page paints its text before its first story mounts, so the preview hides
+the native scrollbar from its first frame (`src/page-scroll.ts`) until a page
+scroller takes over. It lets go at once for an app story, a story that fails or
+is missing, or a docs page with no stories, and after three seconds at most.
+
 ## Motion panel
 
 Reads a story's `parameters.v12`:

@@ -37,7 +37,7 @@ export function Home({ groups }: { groups: ReturnType<typeof groupsOf> }) {
     <div className="v12r-page">
       <PageTop
         title="Components"
-        subtitle="Every v12 component by category, each with its examples, its settings, its motion and its props. The picks in the header apply to all of them."
+        subtitle="Every v12 component by category, each with its examples, its settings, its motion and its props. The settings in the header apply to all of them."
       />
       <div className="v12r-page__body">
         <div className="v12r-home-search">

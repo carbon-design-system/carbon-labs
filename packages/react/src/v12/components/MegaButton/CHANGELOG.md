@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-mega-button%400.7.0...%40carbon-labs%2Freact-mega-button%400.8.0) (2026-11-21)
+
+### Bug Fixes
+
+* **v12-mega-button:** add the proposals README the ledger reads ([#1529](https://github.com/carbon-design-system/carbon-labs/issues/1529)) ([bc7c9de](https://github.com/carbon-design-system/carbon-labs/commit/bc7c9de4b38830fef737d7a22cb2b0487f506f55))
+
+
+# [0.7.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-mega-button%400.6.0...%40carbon-labs%2Freact-mega-button%400.7.0) (2026-11-20)
+
+**Note:** Version bump only for package @carbon-labs/react-mega-button
+
+
+
+
+
 # [0.6.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact-mega-button%400.5.0...%40carbon-labs%2Freact-mega-button%400.6.0) (2026-11-11)
 
 **Note:** Version bump only for package @carbon-labs/react-mega-button

@@ -1299,6 +1299,10 @@
       "replaces": "`$button-primary-hover`",
       "appliesTo": [
         {
+          "in": "FileChip",
+          "uses": ["'mega-button-primary-hover'"]
+        },
+        {
           "in": "MegaButton",
           "uses": ["'mega-button-primary-hover'"]
         }

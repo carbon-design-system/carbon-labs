@@ -75,6 +75,18 @@ that is not a file.
 
 <Canvas of={FileChipStories.Matrix} />
 
+## Dragging
+
+`status="dragging"` is the chip a person carries in from outside the page. It is
+one line (the file glyph and the name) on the blue that responds, lifted with
+Carbon's `box-shadow`, with no border, thumbnail, remove or status. Tilt it
+toward where it is going with `--cds-file-chip-tilt`: `8deg` from the left,
+`-8deg` from the right, none from above. The blue is MegaButton's proposed
+primary hover (`mega-button-primary-hover`), read through `get-var` over
+`$button-primary-hover`.
+
+<Canvas of={FileChipStories.Dragging} />
+
 ## Explorations
 
 - **`radius-field` (6dp).** FileChip's corner, and its thumbnail at the radius

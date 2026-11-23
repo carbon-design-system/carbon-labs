@@ -47,6 +47,7 @@ export const fileChipStatuses = [
   'uploading',
   'error',
   'complete',
+  'dragging',
 ] as const;
 
 export type FileChipStatus = (typeof fileChipStatuses)[number];
@@ -200,7 +201,10 @@ export interface FileChipProps extends Omit<
 
   /**
    * The upload state. `complete` is momentary: the check holds for
-   * `successDelay`, fades, and the chip returns to idle.
+   * `successDelay`, fades, and the chip returns to idle. `dragging` is not an
+   * upload state: it is the chip a person carries in from outside the page,
+   * one line on the blue that responds, with no thumbnail, remove or status.
+   * Tilt it with the `--cds-file-chip-tilt` custom property.
    */
   status?: FileChipStatus;
 
@@ -255,7 +259,10 @@ export const FileChip = forwardRef<HTMLDivElement, FileChipProps>(
     const prefix = usePrefix();
     const block = `${prefix}--file-chip`;
     const kind = kindProp ?? kindFromMimeType(mimeType);
-    const isMedia = kind !== 'file';
+    const isDragging = status === 'dragging';
+    // A file carried in from the system has a name and a glyph, never a
+    // thumbnail.
+    const isMedia = kind !== 'file' && !isDragging;
     const isError = status === 'error';
     const descriptions = {
       ...defaultStatusDescriptions,
@@ -418,8 +425,9 @@ export const FileChip = forwardRef<HTMLDivElement, FileChipProps>(
         aria-label={name}
         className={cx(
           block,
-          `${block}--${kind}`,
+          `${block}--${isDragging ? 'file' : kind}`,
           {
+            [`${block}--dragging`]: isDragging,
             [`${block}--error`]: isError,
             [`${block}--leaving`]: isLeaving,
           },
@@ -487,23 +495,25 @@ export const FileChip = forwardRef<HTMLDivElement, FileChipProps>(
             ) : null}
           </span>
         ) : null}
-        <span className={`${block}__trailing`}>
-          {statusNode}
-          {/* The v12 lane's own button: its ghost icon-only form is Carbon's
-              IconButton contract, and it carries the same states as every
-              other button in the v12 work. */}
-          <MegaButton
-            kind="ghost"
-            size="xs"
-            hasIconOnly
-            renderIcon={Close}
-            tooltipAlignment="top"
-            className={`${block}__remove`}
-            disabled={isLeaving}
-            onClick={handleRemove}>
-            {removeLabel ?? `Remove ${name}`}
-          </MegaButton>
-        </span>
+        {isDragging ? null : (
+          <span className={`${block}__trailing`}>
+            {statusNode}
+            {/* The v12 lane's own button: its ghost icon-only form is Carbon's
+                IconButton contract, and it carries the same states as every
+                other button in the v12 work. */}
+            <MegaButton
+              kind="ghost"
+              size="xs"
+              hasIconOnly
+              renderIcon={Close}
+              tooltipAlignment="top"
+              className={`${block}__remove`}
+              disabled={isLeaving}
+              onClick={handleRemove}>
+              {removeLabel ?? `Remove ${name}`}
+            </MegaButton>
+          </span>
+        )}
       </div>
     );
   }

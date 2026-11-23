@@ -16,6 +16,26 @@ import {
 } from '../components/FileChip';
 
 describe('FileChip', () => {
+  it('drags as one line: a glyph and a name, with no remove, status or thumbnail', () => {
+    render(
+      <FileChip
+        name="Photo.jpg"
+        mimeType="image/jpeg"
+        status="dragging"
+        thumbnailSrc="x.png"
+      />
+    );
+    const chip = screen.getByRole('group', { name: 'Photo.jpg' });
+    expect(chip).toHaveClass(
+      'cds--file-chip--dragging',
+      'cds--file-chip--file'
+    );
+    expect(chip).toHaveTextContent('Photo.jpg');
+    expect(screen.queryByRole('button')).toBeNull();
+    expect(chip.querySelector('img')).toBeNull();
+    expect(chip.querySelector('.cds--file-chip__file-icon')).not.toBeNull();
+  });
+
   it('is a group named by the full file name, with the cds prefix and its kind', () => {
     render(<FileChip name="Filename.pdf" className="custom" />);
     const chip = screen.getByRole('group', { name: 'Filename.pdf' });

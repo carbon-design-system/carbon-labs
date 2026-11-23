@@ -39,3 +39,18 @@
   flex-wrap: wrap;
   gap: $spacing-03;
 }
+
+.file-chip-story__dragging {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 3rem 1rem;
+}
+
+.file-chip-story__tilt--left {
+  --cds-file-chip-tilt: 8deg;
+}
+
+.file-chip-story__tilt--right {
+  --cds-file-chip-tilt: -8deg;
+}

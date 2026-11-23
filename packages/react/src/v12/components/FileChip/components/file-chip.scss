@@ -43,15 +43,15 @@ $-inset: $spacing-01;
   display: inline-flex;
   box-sizing: border-box;
   align-items: center;
+  border: 1px solid $border-subtle;
   // @carbon-explore radius-field — FileChip only: the chip reads as a small surface you can touch, not a label. Tags stay undecided. TBD
   border-radius: explore.$explore-radius-field;
   animation: #{$prefix}--file-chip-enter $duration-moderate-02
     motion(entrance, productive);
-  // The chip sits in the chat input: white in light, the shell ($layer-03 in
-  // v12) in dark. One lighter step above it is $layer-01 in light and $layer-02
-  // in dark, and no single Carbon token is both.
-  // @carbon-proposal token: file-chip-background — no Carbon token is one step lighter than the chat input in both themes ($layer-01 vanishes on the v12 dark shell). TBD
-  background-color: custom-property.get-var('file-chip-background', $layer-01);
+  // The chip is a surface on the chat input (white in light, the shell in
+  // dark): the default surface, held by a subtle hairline. Both are Carbon
+  // tokens, so it steps off the input in either theme with nothing proposed.
+  background-color: $background;
   block-size: $-height;
   color: $text-primary;
   // The chip is not editable text: no I-beam over the name. Remove keeps

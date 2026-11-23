@@ -264,6 +264,9 @@ export const ChatInput = forwardRef<HTMLDivElement, ChatInputProps>(
       'none'
     );
     const pointerDown = useRef(false);
+    // Focus is on the microphone while it stands in the send slot. It must not
+    // swap to the arrow under the finger that just reached it.
+    const [micFocused, setMicFocused] = useState(false);
     // The surface a trigger's press found open. Pressing a trigger blurs its
     // open menu, which closes it before the click arrives; without this the
     // click would open it again.
@@ -403,6 +406,33 @@ export const ChatInput = forwardRef<HTMLDivElement, ChatInputProps>(
     const hasSettingsMenu =
       models.length > 0 || modes.length > 0 || settings.length > 0;
 
+    // Empty and at rest, the microphone is the main action: one press starts
+    // speaking, and clicking in or typing turns it into the send arrow, with
+    // the microphone moving to the action row. It is Ghost, never filled.
+    const voiceLeads =
+      Boolean(onSpeechToggle) &&
+      !busy &&
+      !canSend &&
+      (focusMode === 'none' || micFocused || speechActive);
+
+    const voice = onSpeechToggle ? (
+      <MegaButton
+        kind="ghost"
+        size="sm"
+        hasIconOnly
+        renderIcon={Microphone}
+        hideTooltip={!voiceLeads || actionsPlacement === 'inside'}
+        tooltipAlignment="top"
+        className={voiceLeads ? `${block}__send` : undefined}
+        disabled={disabled}
+        isSelected={speechActive}
+        onFocus={() => setMicFocused(voiceLeads)}
+        onBlur={() => setMicFocused(false)}
+        onClick={() => onSpeechToggle(!speechActive)}>
+        Voice input
+      </MegaButton>
+    ) : null;
+
     const actions = (
       <>
         {hasContextMenu ? (
@@ -441,23 +471,13 @@ export const ChatInput = forwardRef<HTMLDivElement, ChatInputProps>(
             Settings
           </MegaButton>
         ) : null}
-        {onSpeechToggle ? (
-          <MegaButton
-            kind="ghost"
-            size="sm"
-            hasIconOnly
-            renderIcon={Microphone}
-            hideTooltip
-            disabled={disabled}
-            isSelected={speechActive}
-            onClick={() => onSpeechToggle(!speechActive)}>
-            Voice input
-          </MegaButton>
-        ) : null}
+        {onSpeechToggle && !voiceLeads ? voice : null}
       </>
     );
 
-    const send = busy ? (
+    const send = voiceLeads ? (
+      voice
+    ) : busy ? (
       <MegaButton
         kind="primary"
         size="sm"

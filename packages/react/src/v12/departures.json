@@ -1188,19 +1188,6 @@
       ]
     },
     {
-      "id": "file-chip-background",
-      "axis": "color",
-      "status": "proposal",
-      "what": "A chip takes a fill one step lighter than the chat input in both themes, where `$layer-01` vanishes on the v12 dark shell.",
-      "replaces": "`$layer-01`",
-      "appliesTo": [
-        {
-          "in": "FileChip",
-          "uses": ["'file-chip-background'"]
-        }
-      ]
-    },
-    {
       "id": "file-chip-video-icon-size",
       "axis": "space",
       "status": "proposal",

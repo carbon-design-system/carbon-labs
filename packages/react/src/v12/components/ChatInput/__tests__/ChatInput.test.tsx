@@ -133,7 +133,13 @@ describe('ChatInput', () => {
   });
 
   it('puts the actions inside the box for the inside layout', () => {
-    render(<ChatInput actionsPlacement="inside" onSpeechToggle={jest.fn()} />);
+    render(
+      <ChatInput
+        actionsPlacement="inside"
+        onSpeechToggle={jest.fn()}
+        defaultValue="Hello"
+      />
+    );
     const group = screen.getByRole('group', { name: 'Chat input actions' });
     expect(box()).toContainElement(group);
     expect(group).toContainElement(
@@ -163,9 +169,37 @@ describe('ChatInput', () => {
     );
   });
 
+  it('leads with the microphone while empty, and hands over to send on focus', async () => {
+    render(<ChatInput onAddFile={jest.fn()} onSpeechToggle={jest.fn()} />);
+    const group = screen.getByRole('group', { name: 'Chat input actions' });
+    const voice = () => screen.getByRole('button', { name: 'Voice input' });
+    // Empty and at rest: the microphone is in the send slot, not the actions,
+    // and there is no send arrow.
+    expect(group).not.toContainElement(voice());
+    expect(screen.queryByRole('button', { name: 'Send' })).toBeNull();
+
+    // Clicking in turns the slot to the (disabled) arrow; the microphone moves
+    // to the actions row.
+    await userEvent.click(prompt());
+    expect(screen.getByRole('button', { name: 'Send' })).toBeDisabled();
+    expect(group).toContainElement(voice());
+  });
+
+  it('keeps the microphone in the send slot while it holds focus', async () => {
+    render(<ChatInput onSpeechToggle={jest.fn()} />);
+    screen.getByRole('button', { name: 'Voice input' }).focus();
+    expect(screen.getByRole('button', { name: 'Voice input' })).toHaveFocus();
+    expect(screen.queryByRole('button', { name: 'Send' })).toBeNull();
+  });
+
   it('shares one tooltip across the actions, moving it without a second delay', async () => {
+    // With text, the microphone sits in the actions row with the rest.
     const { container } = render(
-      <ChatInput onAddFile={jest.fn()} onSpeechToggle={jest.fn()} />
+      <ChatInput
+        onAddFile={jest.fn()}
+        onSpeechToggle={jest.fn()}
+        defaultValue="Hello"
+      />
     );
     const add = screen.getByRole('button', { name: 'Add context' });
     const voice = screen.getByRole('button', { name: 'Voice input' });

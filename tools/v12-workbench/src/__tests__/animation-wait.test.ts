@@ -10,7 +10,7 @@ import { CANCEL_WINDOW, isCancelAbort } from '../animation-wait';
 
 const abort = () => new DOMException('aborted', 'AbortError');
 
-describe('the cancelled animation guard', () => {
+describe('the canceled animation guard', () => {
   it('takes an AbortError right after a cancel', () => {
     expect(isCancelAbort(abort(), 1000, 1000 - CANCEL_WINDOW)).toBe(true);
   });

@@ -314,7 +314,7 @@ function kebab(s) {
 
 /**
  * The story's `parameters.v12` as far as the doc tells it: the motion
- * patterns from the Motion table, and each one's reduced behaviour when one
+ * patterns from the Motion table, and each one's reduced behavior when one
  * clause of the reduced-motion text names it alone.
  *
  * @param {{ heading: string, body: string }[]} sections The doc's sections.
@@ -341,7 +341,7 @@ export function motionParams(sections) {
   }
   const reduced = {};
   if (!reducedText) {
-    todo.push('reduced: the doc states no reduced-motion behaviour');
+    todo.push('reduced: the doc states no reduced-motion behavior');
   }
   const clauses = reducedText
     .split(/[;.]\s*/)

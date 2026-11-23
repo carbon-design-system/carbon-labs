@@ -14,7 +14,7 @@ import { ROOT } from '../src/config.js';
 import { runSnapshot } from '../src/snapshot.js';
 
 // A small lane: one component with a story file, a docs page, a proposal
-// and a mixed colour, and the real lane's installed packages.
+// and a mixed color, and the real lane's installed packages.
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'v12-figma-'));
 const COMPONENT = 'packages/react/src/v12/components/Widget';
 
@@ -238,7 +238,7 @@ describe('the snapshots', () => {
     expect(styles.figma).toEqual({ status: 'code-only' });
   });
 
-  it('carries each mixed colour with a placeholder per theme until a render resolves it', () => {
+  it('carries each mixed color with a placeholder per theme until a render resolves it', () => {
     const { items, stateColors } = read('components');
     const colors = items.find((i) => i.id === 'widget').stateColors;
     expect(

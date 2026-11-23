@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-scenes%400.4.0...%40carbon-labs%2Fv12-scenes%400.5.0) (2026-11-22)
+
+### Features
+
+* **v12-scenes:** add a behavior tier that checks every frame ([#1539](https://github.com/carbon-design-system/carbon-labs/issues/1539)) ([9b9c237](https://github.com/carbon-design-system/carbon-labs/commit/9b9c237d32212914dbfe9df32fdadee4c233a86a))
+
+
 # [0.4.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Fv12-scenes%400.3.0...%40carbon-labs%2Fv12-scenes%400.4.0) (2026-11-12)
 
 **Note:** Version bump only for package @carbon-labs/v12-scenes

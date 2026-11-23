@@ -1227,6 +1227,19 @@
       ]
     },
     {
+      "id": "keyboard-shortcut-keycap-inverse",
+      "axis": "color",
+      "status": "proposal",
+      "what": "A keycap in a high-contrast popover is a chip one step past the inverse ground, darker in both polarities, and draws no border.",
+      "replaces": "`$background-inverse-hover`, which is lighter than the ground in the light theme and only read as a key through a border",
+      "appliesTo": [
+        {
+          "in": "KeyboardShortcut",
+          "uses": ["'keyboard-shortcut-keycap-inverse'"]
+        }
+      ]
+    },
+    {
       "id": "mega-button-kinds",
       "axis": "api",
       "status": "proposal",

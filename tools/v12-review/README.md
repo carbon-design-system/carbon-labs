@@ -6,8 +6,11 @@ settings, its motion and its props. One set of picks (theme, density, corners,
 reduced motion, clock, direction) applies to everything. The themes are v12
 light (the default) and v12 dark; the header and the side nav stay v12 dark, and
 the theme pick is the workspace's. A v11 theme kept from before is read as the
-v12 theme of its side. The side nav folds to a strip of its toggle and a search
-button, the filter's field folding into the button.
+v12 theme of its side. The picks open from the header's settings button, and a
+page's story settings from a button floating at the window's end corner, both in
+the kit's anchored Popover. The side nav's fold toggle sits below it, at the
+foot of its column; folded, the nav is a strip of a search button at its top and
+the toggle at its foot, the filter's field folding into the button.
 
 It's built from the v12 components themselves (AppShell, Header, SideNav,
 PageHeader, Tabs, Link, Search, Popover, the form controls) and driven by their
@@ -53,5 +56,6 @@ and `TurnStatus.mdx`).
 
 A component whose stories open over a page or fill one (`FRAMED` in
 `src/categories.ts`) runs each story in a frame of its own, two at a time; the
-rest run in the page, each in a stage that holds what it fixes to the screen.
-The categories are shared with the catalog story.
+rest run in the page, each in a stage that holds what it fixes to the screen and
+runs it as a page, as Storybook does, not in the app's inset workspace. The
+categories are shared with the catalog story.

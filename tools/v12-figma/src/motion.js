@@ -9,7 +9,7 @@
 // seam's exports and each token's status, from the motion contract; each
 // token's value at 1x, from carbon-motion's registry at the version the lane
 // installs; and per row, its motion items (with the registry tokens each
-// owns, as the workbench's Motion panel finds them), reduced behaviour and
+// owns, as the workbench's Motion panel finds them), reduced behavior and
 // states from `parameters.v12`, and the seam names it imports.
 
 import fs from 'node:fs';

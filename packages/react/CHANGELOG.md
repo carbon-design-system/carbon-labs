@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.259.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.258.0...%40carbon-labs%2Freact%400.259.0) (2026-11-22)
+
+### Features
+
+* **v12-scenes:** add a behavior tier that checks every frame ([#1539](https://github.com/carbon-design-system/carbon-labs/issues/1539)) ([9b9c237](https://github.com/carbon-design-system/carbon-labs/commit/9b9c237d32212914dbfe9df32fdadee4c233a86a))
+
+
+# [0.258.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.257.0...%40carbon-labs%2Freact%400.258.0) (2026-11-21)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.257.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.256.0...%40carbon-labs%2Freact%400.257.0) (2026-11-21)
+
+### Bug Fixes
+
+* **v12-mega-button:** add the proposals README the ledger reads ([#1529](https://github.com/carbon-design-system/carbon-labs/issues/1529)) ([bc7c9de](https://github.com/carbon-design-system/carbon-labs/commit/bc7c9de4b38830fef737d7a22cb2b0487f506f55))
+
+
+# [0.256.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.255.0...%40carbon-labs%2Freact%400.256.0) (2026-11-20)
+
+### Bug Fixes
+
+* **v12-file-chip:** mark every video chip with the video badge ([#1531](https://github.com/carbon-design-system/carbon-labs/issues/1531)) ([ef258a2](https://github.com/carbon-design-system/carbon-labs/commit/ef258a2c6e57aa2ddd0fea7f828f7d562bac5f0d))
+* **v12-keyboard-shortcut:** borderless keycap, centred caps, proposals ([#1528](https://github.com/carbon-design-system/carbon-labs/issues/1528)) ([c9d6a8f](https://github.com/carbon-design-system/carbon-labs/commit/c9d6a8f1e88ef99ece2eb83c36558d2f4ab81b4c)), closes [high-contrast](https://github.com/hi/issues/contrast)
+
+
 # [0.255.0](https://github.com/carbon-design-system/carbon-labs/compare/%40carbon-labs%2Freact%400.254.0...%40carbon-labs%2Freact%400.255.0) (2026-11-17)
 
 ### Bug Fixes

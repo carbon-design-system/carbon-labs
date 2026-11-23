@@ -9,7 +9,7 @@
 // lists, `###` headings, tables, and inline bold, italics, code and links. A
 // quote reads as its own text. Anything else stays as text.
 
-import React, { Fragment } from 'react';
+import React, { Fragment, memo } from 'react';
 import type { ReactNode } from 'react';
 import { Link } from '@carbon-labs/react-link';
 import { Scroller } from '@carbon-labs/react-scroller';
@@ -126,9 +126,9 @@ export function inline(text: string): ReactNode[] {
 }
 
 /** A Markdown text, drawn. */
-export function Markdown({ text }: { text: string }) {
+export const Markdown = memo(function Markdown({ text }: { text: string }) {
   return <Blocks items={blocks(text)} />;
-}
+});
 
 /** A text's blocks, drawn. */
 export function Blocks({ items }: { items: Block[] }) {
@@ -138,7 +138,7 @@ export function Blocks({ items }: { items: Block[] }) {
         b.kind === 'p' ? (
           <p key={i}>{inline(b.text)}</p>
         ) : b.kind === 'h' ? (
-          <h4 key={i}>{inline(b.text)}</h4>
+          <h3 key={i}>{inline(b.text)}</h3>
         ) : b.kind === 'table' ? (
           <Scroller key={i} axis="x" className="v12r-table-wrap">
             <table className="v12r-table">

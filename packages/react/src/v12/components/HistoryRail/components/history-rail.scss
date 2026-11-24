@@ -154,11 +154,8 @@ $-push: math.div($-pitch-reached - $-pitch, 2);
 // The one the pointer is nearest, or the keyboard is on. It grows in place,
 // so no mark slides under a pointer that is already in flight.
 .#{$mark}--highlighted {
-  // @carbon-proposal token: mega-button-interactive-text — the blue a person acts with on a neutral ground, the one MegaButton proposes; read here so the mark being reached for is the same blue as a hover. Solved from the brand curve (oklch 0.454 0.2742 262.72, #0043CF in sRGB) because blue/60 reads 4.20:1 on layer-03. replaces: link-primary. TBD
-  background-color: custom-property.get-var(
-    'mega-button-interactive-text',
-    $link-primary
-  );
+  // @carbon-proposal token: brand-text — the blue a person acts with on a neutral ground, the brand family's foreground; read here so the mark being reached for is the same blue as a hover. Solved from the brand curve (oklch 0.454 0.2742 262.72, #0043CF in sRGB) because blue/60 reads 4.20:1 on layer-03. replaces: link-primary. TBD
+  background-color: custom-property.get-var('brand-text', $link-primary);
   block-size: $-dot-large;
   inline-size: $-dot-large;
 }

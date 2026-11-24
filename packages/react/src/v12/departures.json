@@ -1418,6 +1418,10 @@
         {
           "in": "MegaButton",
           "uses": ["'mega-button-interactive-text'"]
+        },
+        {
+          "in": "ReasoningTrace",
+          "uses": ["'mega-button-interactive-text'"]
         }
       ]
     },

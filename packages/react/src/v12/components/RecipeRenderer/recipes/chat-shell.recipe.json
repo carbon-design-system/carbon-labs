@@ -235,12 +235,18 @@
                                     "fill": "scroll",
                                     "children": [
                                       {
-                                        "component": "@carbon-labs/react-system-message:SystemMessage",
+                                        "component": "@carbon-labs/react-chat-thread:ChatSection",
                                         "props": {
-                                          "text": "Today",
-                                          "variant": "divider",
                                           "id": "divider-iteration-12"
-                                        }
+                                        },
+                                        "children": [
+                                          {
+                                            "component": "@carbon-labs/react-system-message:SystemMessage",
+                                            "props": {
+                                              "text": "Today"
+                                            }
+                                          }
+                                        ]
                                       },
                                       {
                                         "component": "@carbon-labs/react-chat-thread:ChatMessage",

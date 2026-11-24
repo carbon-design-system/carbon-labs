@@ -10,6 +10,7 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Copy, Renew, ThumbsUp } from '@carbon/icons-react';
 import { ChatThread } from '../components/ChatThread';
+import { ChatSection } from '../components/ChatSection';
 import { ChatMessage, ChatMessageAction } from '../components/ChatMessage';
 
 function thread(children: React.ReactNode, props = {}) {
@@ -178,5 +179,55 @@ describe('ChatMessage', () => {
       </ChatMessage>
     );
     expect(ref.current).toBeInstanceOf(HTMLLIElement);
+  });
+});
+
+describe('ChatSection', () => {
+  it('puts a rule either side of whatever notice it holds', () => {
+    const { container } = render(
+      <ChatSection>
+        <span>Conversation compacted</span>
+      </ChatSection>
+    );
+    const section = container.firstElementChild as HTMLElement;
+    expect(section).toHaveClass('cds--chat-section');
+    expect(section.querySelectorAll('hr.cds--rule')).toHaveLength(2);
+    expect(section.children[1]).toHaveTextContent('Conversation compacted');
+  });
+
+  it('hides its rules from assistive technology, so only the notice is read', () => {
+    render(
+      <ChatSection>
+        <span>Today</span>
+      </ChatSection>
+    );
+    expect(screen.queryByRole('separator')).toBeNull();
+    expect(screen.getByText('Today')).toBeInTheDocument();
+  });
+
+  it('draws no text of its own', () => {
+    const { container } = render(<ChatSection />);
+    expect(container.textContent).toBe('');
+  });
+
+  it('is not a turn: the thread gives it a list item of its own', () => {
+    render(
+      <ChatThread label="Conversation">
+        <ChatSection>
+          <span>Today</span>
+        </ChatSection>
+        <ChatMessage from="user">Hello</ChatMessage>
+      </ChatThread>
+    );
+    const list = screen.getByRole('list', { name: 'Conversation' });
+    expect(within(list).getAllByRole('listitem')).toHaveLength(2);
+    expect(screen.getByText('Today').closest('li')).not.toBeNull();
+  });
+
+  it('forwards a ref and a class name', () => {
+    const ref = React.createRef<HTMLDivElement>();
+    render(<ChatSection ref={ref} className="custom" />);
+    expect(ref.current).toHaveClass('cds--chat-section');
+    expect(ref.current).toHaveClass('custom');
   });
 });

@@ -16,6 +16,7 @@
 
 $block: '#{$prefix}--chat-thread';
 $message: '#{$prefix}--chat-message';
+$section: '#{$prefix}--chat-section';
 
 // ---- the thread --------------------------------------------------------------
 
@@ -127,4 +128,25 @@ $message: '#{$prefix}--chat-message';
   .#{$message}__footer {
     transition: none;
   }
+}
+
+// ---- a section ---------------------------------------------------------------
+
+// A boundary: a rule, the notice, a rule. The notice takes the width it needs
+// and the rules share the rest, so a long notice leaves short rules and a short
+// one long ones. The gap is the notice's breathing room from its rules.
+.#{$section} {
+  display: flex;
+  align-items: center;
+  gap: $spacing-04;
+}
+
+.#{$section}__rule {
+  flex: 1 1 0;
+  min-inline-size: $spacing-03;
+}
+
+.#{$section}__content {
+  flex: 0 1 auto;
+  min-inline-size: 0;
 }

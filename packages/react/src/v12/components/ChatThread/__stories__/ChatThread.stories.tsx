@@ -10,6 +10,7 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { Copy, Edit, Renew, ThumbsDown, ThumbsUp } from '@carbon/icons-react';
 import { ChatThread } from '../components/ChatThread';
 import { ChatMessage, ChatMessageAction } from '../components/ChatMessage';
+import { ChatSection } from '../components/ChatSection';
 import {
   ReasoningTrace,
   ReasoningStep,
@@ -210,6 +211,34 @@ export const Conversation: Story = {
           <ReasoningStep label="Compared three devices" />
         </ReasoningTrace>
         <p>Yes — the latency budget holds, with 6ms to spare on the oldest.</p>
+      </ChatMessage>
+    </ChatThread>
+  ),
+};
+
+/**
+ * A boundary in the transcript: a Rule either side of a notice. The section
+ * draws the rules and nothing else, so the notice can say a date, a
+ * compaction or a deletion; the thread gives it a list item of its own.
+ */
+export const Sections: Story = {
+  render: (args) => (
+    <ChatThread {...args}>
+      <ChatMessage from="user">Summarise the latency work so far.</ChatMessage>
+      <ChatMessage from="assistant">
+        Three regressions, all in the cache warm-up path.
+      </ChatMessage>
+      <ChatSection>
+        <span className="chat-thread-story__notice">Today</span>
+      </ChatSection>
+      <ChatMessage from="user">Try the second one again.</ChatMessage>
+      <ChatSection>
+        <span className="chat-thread-story__notice">
+          Conversation compacted — 42 messages summarized
+        </span>
+      </ChatSection>
+      <ChatMessage from="assistant">
+        Starting from the summary. What would you like to look at?
       </ChatMessage>
     </ChatThread>
   ),

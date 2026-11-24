@@ -1,0 +1,67 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as RuleStories from './Rule.stories';
+
+<Meta isTemplate />
+
+# Rule
+
+- **Initiative owner(s):** @ryanmellody
+- **Status:** Draft
+- **Target library:** @carbon/react
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Component API](#component-api)
+- [Getting started](#getting-started)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+A conversation needs a hairline between a day, a session or a compaction and the
+turns around it, and that line should not be a part of the notice that names it,
+so the notice can say anything. Carbon has no standalone divider component: its
+Menu, Switcher and SideNav dividers are each a 1px `$border-subtle` rule. `Rule`
+is that rule and nothing more; the nearest neighbour is the Menu divider.
+
+<Canvas of={RuleStories.Default} />
+
+## Component API
+
+<ArgTypes of={RuleStories.Default} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-rule
+```
+
+### JS (via import)
+
+```javascript
+import { Rule } from '@carbon-labs/react-rule/es/index';
+
+function App() {
+  return <Rule />;
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-rule/scss/rule';
+```

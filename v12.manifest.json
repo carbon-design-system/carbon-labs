@@ -1069,6 +1069,21 @@
       }
     },
     {
+      "id": "labs/rule",
+      "kind": "component",
+      "path": "packages/react/src/v12/components/Rule",
+      "labsStatus": "draft",
+      "publishable": false,
+      "motion": [],
+      "source": {
+        "repo": "carbon-labs"
+      },
+      "figma": {
+        "key": "v12/labs/rule",
+        "status": "unmapped"
+      }
+    },
+    {
       "id": "labs/recipe-renderer",
       "kind": "component",
       "path": "packages/react/src/v12/components/RecipeRenderer",

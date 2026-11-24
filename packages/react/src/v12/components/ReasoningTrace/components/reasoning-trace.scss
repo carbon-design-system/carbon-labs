@@ -252,11 +252,8 @@ $-reach: calc(#{$spacing-02} + #{$spacing-01});
 // The square the dots turn into as one passes along them. It is the blue a
 // person acts with, the same one the history rail's reached mark carries, so
 // the animation and the rail agree.
-// @carbon-proposal token: mega-button-interactive-text — the blue a person acts with on a neutral ground, the one MegaButton proposes and the history rail's reached mark reads; solved from the brand curve (oklch 0.454 0.2742 262.72, #0043CF in sRGB). replaces: link-primary-hover. TBD
-$-square: custom-property.get-var(
-  'mega-button-interactive-text',
-  $link-primary-hover
-);
+// @carbon-proposal token: brand-text — the blue a person acts with on a neutral ground, the brand family's foreground, which the history rail's reached mark reads; solved from the brand curve (oklch 0.454 0.2742 262.72, #0043CF in sRGB). replaces: link-primary-hover. TBD
+$-square: custom-property.get-var('brand-text', $link-primary-hover);
 
 .#{$thinking} {
   display: inline-flex;

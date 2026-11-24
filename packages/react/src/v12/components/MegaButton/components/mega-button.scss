@@ -329,11 +329,8 @@ $-clip-pressed: inset(1px round #{$-clip-radius});
 .#{$block}--tertiary,
 .#{$block}--ghost {
   --#{$block}-fg: #{$text-primary};
-  // @carbon-proposal token: mega-button-interactive-text — the blue a neutral button turns when acted on, solved per theme on the tint under it. replaces: link-primary. TBD
-  --#{$block}-fg-hover: #{custom-property.get-var(
-      'mega-button-interactive-text',
-      $link-primary
-    )};
+  // @carbon-proposal token: brand-text — the blue a neutral button turns when acted on, the brand family's foreground, solved per theme on the tint under it. replaces: link-primary. TBD
+  --#{$block}-fg-hover: #{custom-property.get-var('brand-text', $link-primary)};
   --#{$block}-fg-active: var(--#{$block}-fg-hover);
   // @carbon-proposal token: mega-button-selected-fill — Carbon has no button selected tint; the v12 blue-gray at the surface's selected step. replaces: background-selected. TBD
   --#{$block}-bg-selected: #{custom-property.get-var(

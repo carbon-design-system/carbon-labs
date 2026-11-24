@@ -6,7 +6,9 @@
  */
 
 // Carbon foundations only: a labs v12 component consumes @carbon/styles and
-// never mirrors it. Every value here is a Carbon token; nothing is proposed.
+// never mirrors it. Every value here is a Carbon token except one, the blue of
+// the mark being reached for, which is read through get-var under a
+// carbon-proposal callout with Carbon's own link-primary as the fallback.
 @use 'sass:math';
 @use '@carbon/styles/scss/config' as *;
 @use '@carbon/styles/scss/theme' as *;
@@ -15,6 +17,7 @@
 @use '@carbon/styles/scss/motion' as *;
 @use '@carbon/styles/scss/border-radius' as *;
 @use '@carbon/styles/scss/utilities/focus-outline' as *;
+@use '@carbon/styles/scss/utilities/custom-property';
 
 $block: '#{$prefix}--history-rail';
 $mark: '#{$prefix}--history-marker';
@@ -151,7 +154,11 @@ $-push: math.div($-pitch-reached - $-pitch, 2);
 // The one the pointer is nearest, or the keyboard is on. It grows in place,
 // so no mark slides under a pointer that is already in flight.
 .#{$mark}--highlighted {
-  background-color: $link-primary;
+  // @carbon-proposal token: mega-button-interactive-text — the blue a person acts with on a neutral ground, the one MegaButton proposes; read here so the mark being reached for is the same blue as a hover. Solved from the brand curve (oklch 0.454 0.2742 262.72, #0043CF in sRGB) because blue/60 reads 4.20:1 on layer-03. replaces: link-primary. TBD
+  background-color: custom-property.get-var(
+    'mega-button-interactive-text',
+    $link-primary
+  );
   block-size: $-dot-large;
   inline-size: $-dot-large;
 }

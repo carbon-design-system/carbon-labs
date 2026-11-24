@@ -1416,6 +1416,10 @@
       "replaces": "`$link-primary`",
       "appliesTo": [
         {
+          "in": "HistoryRail",
+          "uses": ["'mega-button-interactive-text'"]
+        },
+        {
           "in": "MegaButton",
           "uses": ["'mega-button-interactive-text'"]
         }

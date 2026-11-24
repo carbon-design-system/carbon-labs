@@ -68,13 +68,13 @@ $message: '#{$prefix}--chat-message';
 
 // The user's words sit in a bubble, at most three quarters of the measure so a
 // long question still reads as one side of an exchange. The corner nearest the
-// speaker is square. The layer is the contextual one, so on a raised card the
-// bubble is one rung above it: white with a rule on the light card.
+// speaker is square. The bubble is the surface-dark step, layer-03, with no
+// rule: #EAEBEE on the light page and #0C0D0F on the dark, so it reads as a
+// recess in the page, not a card on it.
 .#{$message}--user .#{$message}__content {
   padding: $spacing-04 $spacing-05;
-  border: 1px solid $border-subtle;
   border-radius: $border-radius-08;
-  background-color: $layer;
+  background-color: $layer-03;
   border-end-end-radius: 0;
   max-inline-size: 75%;
   overflow-wrap: anywhere;

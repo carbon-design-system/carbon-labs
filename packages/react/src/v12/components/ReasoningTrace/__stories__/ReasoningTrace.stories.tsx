@@ -13,61 +13,95 @@ import {
 } from '../components/ReasoningTrace';
 import { ReasoningStep } from '../components/ReasoningStep';
 import { ThinkingIndicator } from '../components/ThinkingIndicator';
+import { Theme } from '@carbon/react';
 import { CodeSnippet, InlineCode } from '@carbon-labs/react-code-snippet-alt';
 import '../components/reasoning-trace.scss';
 import '../../CodeSnippetAlt/components/code-snippet.scss';
 import '../../MegaButton/components/mega-button.scss';
 import './ReasoningTrace.stories.scss';
 import codeProposals from '../../CodeSnippetAlt/proposals/tokens.json';
+import ownProposals from '../proposals/tokens.json';
 import mdx from './ReasoningTrace.mdx';
 
 // The proposals keep a value per Carbon theme; the page is on a v12 one.
 type CarbonTheme = 'white' | 'g10' | 'g90' | 'g100';
-type Theme = 'v12-light' | 'v12-dark';
+type StoryTheme = 'v12-light' | 'v12-dark';
 type TokenFile = Record<string, Record<string, unknown>>;
 
 // Each v12 theme reads the proposals' values for the Carbon theme it is
 // built on.
-const proposalTheme: Record<Theme, CarbonTheme> = {
+const proposalTheme: Record<StoryTheme, CarbonTheme> = {
   'v12-light': 'white',
   'v12-dark': 'g100',
 };
 
 /**
- * One theme's proposed values (CodeSnippet's syntax colours, for the code a
- * trace holds), as the custom properties the stylesheets read through get-var.
+ * One theme's proposed values as the custom properties the stylesheets read
+ * through get-var, in the order the law's generator writes them: the sRGB
+ * fallback first, then the OKLCH master only on a display that is both able to
+ * read it and wide-gamut. A value with no master (an alias, a hex) is written
+ * once.
  *
- * @param {TokenFile} file A proposals/tokens.json.
+ * @param {string} scope The class the declarations are scoped to.
+ * @param {TokenFile[]} files The proposals/tokens.json files to read.
  * @param {CarbonTheme} theme The Carbon theme.
- * @returns {string} The declarations.
+ * @returns {string} The CSS.
  */
-function declarations(file: TokenFile, theme: CarbonTheme): string {
-  return Object.entries(file)
-    .filter(([group]) => !group.startsWith('$'))
-    .flatMap(([group, tokens]) =>
-      Object.entries(tokens).map(([role, token]) => {
-        const themes = (
-          token as {
-            $extensions: { 'carbon.themes': Record<CarbonTheme, string> };
+function proposalCss(
+  scope: string,
+  files: TokenFile[],
+  theme: CarbonTheme
+): string {
+  const base: string[] = [];
+  const wide: string[] = [];
+  files.forEach((file) =>
+    Object.entries(file)
+      .filter(([group]) => !group.startsWith('$'))
+      .forEach(([group, tokens]) =>
+        Object.entries(tokens).forEach(([role, token]) => {
+          const extensions = (
+            token as {
+              $extensions: {
+                'carbon.themes': Record<CarbonTheme, string>;
+                'com.ibm.harness.fallback'?: Record<CarbonTheme, string>;
+              };
+            }
+          ).$extensions;
+          const name = `--cds-${group}-${role}`;
+          const value = extensions['carbon.themes'][theme].replace(
+            /^\{(.+)\}$/,
+            'var(--cds-$1)'
+          );
+          const fallback = extensions['com.ibm.harness.fallback']?.[theme];
+          if (value.startsWith('oklch(') && fallback) {
+            base.push(`${name}: ${fallback};`);
+            wide.push(`${name}: ${value};`);
+          } else {
+            base.push(`${name}: ${value};`);
           }
-        ).$extensions['carbon.themes'];
-        const value = themes[theme].replace(/^\{(.+)\}$/, 'var(--cds-$1)');
-        return `--cds-${group}-${role}: ${value};`;
-      })
-    )
-    .join(' ');
+        })
+      )
+  );
+  return `.${scope} { ${base.join(' ')} }${
+    wide.length
+      ? ` @supports (color: oklch(0 0 0)) { @media (color-gamut: p3) { .${scope} { ${wide.join(' ')} } } }`
+      : ''
+  }`;
 }
 
 const withPage: Decorator = (Story, context) => {
-  const theme: Theme =
+  const theme: StoryTheme =
     context.globals.theme === 'v12-dark' ? 'v12-dark' : 'v12-light';
   const scope = 'reasoning-trace-story-proposals';
   return (
     <div className={`reasoning-trace-story__page ${scope}`}>
-      <style>{`.${scope} { ${declarations(
-        codeProposals as unknown as TokenFile,
-        proposalTheme[theme]
-      )} }`}</style>
+      <style>
+        {proposalCss(
+          scope,
+          [codeProposals, ownProposals] as unknown as TokenFile[],
+          proposalTheme[theme]
+        )}
+      </style>
       <Story />
     </div>
   );
@@ -258,6 +292,36 @@ function LiveTrace() {
     </ReasoningTrace>
   );
 }
+
+/**
+ * The animation in light and dark, side by side: the dots are `$interactive`
+ * and the square is the proposed interactive blue, each on its theme's step.
+ */
+export const Themes: Story = {
+  render: () => (
+    <div className="reasoning-trace-story__themes">
+      {(['white', 'g100'] as const).map((carbonTheme) => {
+        const scope = `reasoning-trace-story__panel--${carbonTheme}`;
+        return (
+          <Theme
+            key={carbonTheme}
+            theme={carbonTheme}
+            className={`reasoning-trace-story__panel ${scope}`}>
+            <style>
+              {proposalCss(
+                scope,
+                [ownProposals] as unknown as TokenFile[],
+                carbonTheme
+              )}
+            </style>
+            <ThinkingIndicator />
+            <span>Thinking</span>
+          </Theme>
+        );
+      })}
+    </div>
+  ),
+};
 
 export const Live: Story = {
   render: () => <LiveTrace />,

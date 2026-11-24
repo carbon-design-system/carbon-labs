@@ -1409,15 +1409,15 @@
       ]
     },
     {
-      "id": "mega-button-interactive-text",
+      "id": "brand-text",
       "axis": "color",
       "status": "proposal",
-      "what": "The blue a neutral button turns when acted on is solved per theme on the tint under it.",
+      "what": "The blue foreground of the brand family, for text, icons and marks on a neutral ground when the person acts, is solved per theme.",
       "replaces": "`$link-primary`",
       "appliesTo": [
         {
           "in": "MegaButton",
-          "uses": ["'mega-button-interactive-text'"]
+          "uses": ["'brand-text'"]
         }
       ]
     },

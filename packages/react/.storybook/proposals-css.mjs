@@ -105,6 +105,16 @@ export function proposalsCss(components) {
         const value = values[theme];
         if (value != null && value !== values[base]) {
           declare(theme, name, value, fallback[theme]);
+          // The base theme's OKLCH value is written again in `@supports`,
+          // whose base rule also lists this theme's selectors: a plain value
+          // is written there too, after it, or the base's would win.
+          const baseValue = values[base];
+          if (baseValue?.startsWith('oklch') && !value.startsWith('oklch')) {
+            const css = value
+              .replace(/^\{(.+)\}$/, 'var(--cds-$1)')
+              .toLowerCase();
+            oklch[theme].push(`    --cds-${name}: ${css};`);
+          }
         }
       }
       return;

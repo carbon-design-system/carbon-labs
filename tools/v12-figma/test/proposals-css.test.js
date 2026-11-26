@@ -20,7 +20,7 @@ const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'v12-proposals-css-'));
  * Writes a component's proposals/tokens.json.
  *
  * @param {string} folder The component's folder.
- * @param {object} tokens The tokens.
+ * @param {object} body The tokens.
  */
 const tokens = (folder, body) => {
   const dir = path.join(tmp, folder, 'proposals');
@@ -114,6 +114,42 @@ describe('the proposals preview CSS', () => {
     expect(css.slice(css.indexOf('@supports'))).toContain(
       "  [data-carbon-theme='v12-dark'],\n  .cds--v12-dark {\n    --cds-widget-shell: oklch(0.18 0.004 262);\n  }"
     );
+  });
+
+  it('keeps a v12 theme’s plain value over its Carbon theme’s OKLCH one', () => {
+    tokens('Widget', {
+      widget: {
+        shell: {
+          $type: 'color',
+          $extensions: {
+            'carbon.themes': {
+              white: '{layer-02}',
+              g100: 'oklch(0.3 0.01 262)',
+              'v12-dark': '{layer-03}',
+            },
+            'com.ibm.harness.fallback': { g100: '#2E2F31' },
+          },
+        },
+      },
+    });
+    const css = proposalsCss(tmp);
+    expect(declarations(css, "[data-carbon-theme='g100']")).toEqual([
+      '--cds-widget-shell: #2e2f31;',
+    ]);
+    expect(declarations(css, "[data-carbon-theme='v12-dark']")).toEqual([
+      '--cds-widget-shell: var(--cds-layer-03);',
+    ]);
+    // In @supports the g100 rule, which also lists v12 dark's selectors,
+    // writes the OKLCH value; v12 dark's own rule follows it with its value.
+    const supports = css.slice(css.indexOf('@supports'));
+    const g100 = supports.indexOf(
+      "  [data-carbon-theme='g100'],\n  .cds--g100,\n  [data-carbon-theme='v12-dark'],\n  .cds--v12-dark {\n    --cds-widget-shell: oklch(0.3 0.01 262);\n  }"
+    );
+    const own = supports.indexOf(
+      "  [data-carbon-theme='v12-dark'],\n  .cds--v12-dark {\n    --cds-widget-shell: var(--cds-layer-03);\n  }"
+    );
+    expect(g100).toBeGreaterThan(-1);
+    expect(own).toBeGreaterThan(g100);
   });
 
   it('writes the committed file', () => {

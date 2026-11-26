@@ -29,6 +29,13 @@ $block: '#{$prefix}--chat-input';
   display: flex;
   flex-direction: column;
   gap: $spacing-02;
+  // Carbon's content column is 640. The text sits 24 in from the box's edge
+  // and the send button's glyph 16 in from the other (8 padding, 8 inside the
+  // 32 button), so 640 + 24 + 8 + 8 puts both on the column's edges; the
+  // 2 is the hairline either side.
+  max-inline-size: calc(
+    40rem + #{$spacing-06} + #{$spacing-03} + #{$spacing-03} + 2px
+  );
 }
 
 // ---- the box ---------------------------------------------------------------
@@ -41,7 +48,7 @@ $block: '#{$prefix}--chat-input';
   // 24 is a full pill at 48, and unlike $border-radius-max it interpolates:
   // the corners ease to 16 as the box grows instead of snapping at the end.
   border-radius: $border-radius-24;
-  // @carbon-proposal token: chat-input-background — in dark, the card's own fill with its rule until the v12 themes land (carbon-labs#1417); then the shell, so FileChip steps up from it. TBD
+  // @carbon-proposal token: chat-input-background — in v12 dark, the shell ($layer-03) so FileChip steps up from it; Carbon's chat-prompt-background in light. TBD
   background-color: custom-property.get-var(
     'chat-input-background',
     $chat-prompt-background
@@ -200,6 +207,13 @@ $block: '#{$prefix}--chat-input';
 }
 
 // ---- menus: Carbon's Menu, inverse ----------------------------------------
+// Carbon's Menu runs from 160 to 288. These three read as one family: no
+// narrower than 224, no wider than 280, and a longer label is cut with an
+// ellipsis (Carbon's own `__label` rule) rather than widening the panel.
+.#{$block}__menu.#{$prefix}--menu {
+  max-inline-size: 17.5rem;
+  min-inline-size: 14rem;
+}
 
 // The <Theme> that hosts a menu takes no space; it only re-themes.
 .#{$block}__menu-host {
@@ -338,8 +352,20 @@ $block: '#{$prefix}--chat-input';
 }
 
 .#{$block}__command--active {
-  background-color: $layer-hover;
+  // @carbon-proposal token: chat-input-menu-hover — the listbox's active option is a transient highlight, so it takes the menus' blue-gray hover step, not a neutral and not the selected step. TBD
+  background-color: custom-property.get-var(
+    'chat-input-menu-hover',
+    $layer-hover
+  );
   color: $text-primary;
+}
+
+.#{$block}__command--active:active {
+  // @carbon-proposal token: chat-input-menu-active — the press on a command row, one step past hover on the same blue-gray ladder. replaces: layer-active-01. TBD
+  background-color: custom-property.get-var(
+    'chat-input-menu-active',
+    $layer-active
+  );
 }
 
 .#{$block}__command-name {

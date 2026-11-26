@@ -155,38 +155,50 @@
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
-      "line": 44,
-      "text": "token: chat-input-background — in dark, the card's own fill with its rule until the v12 themes land (carbon-labs#1417); then the shell, so FileChip steps up from it. TBD"
+      "line": 51,
+      "text": "token: chat-input-background — in v12 dark, the shell ($layer-03) so FileChip steps up from it; Carbon's chat-prompt-background in light. TBD"
     },
     {
       "kind": "explore",
       "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
-      "line": 82,
+      "line": 89,
       "text": "composer-corner — the send corner of the grown box reads concentric with the 32px send control. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
-      "line": 255,
+      "line": 269,
       "text": "token: chat-input-menu-hover — Carbon's menu hover is a neutral, not a step on the selected ladder. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
-      "line": 265,
+      "line": 279,
       "text": "token: chat-input-menu-selected — Carbon's Menu has no selected tint; the checkmark stays. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
-      "line": 270,
+      "line": 284,
       "text": "token: chat-input-menu-selected-text — the brand label solved on the selected tint. TBD"
     },
     {
       "kind": "proposal",
       "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
-      "line": 281,
+      "line": 295,
       "text": "token: chat-input-menu-active — Carbon's menu press is a neutral, not a step on the selected ladder. replaces: layer-active-01. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
+      "line": 355,
+      "text": "token: chat-input-menu-hover — the listbox's active option is a transient highlight, so it takes the menus' blue-gray hover step, not a neutral and not the selected step. TBD"
+    },
+    {
+      "kind": "proposal",
+      "file": "packages/react/src/v12/components/ChatInput/components/chat-input.scss",
+      "line": 364,
+      "text": "token: chat-input-menu-active — the press on a command row, one step past hover on the same blue-gray ladder. replaces: layer-active-01. TBD"
     }
   ],
   "V12/ChatPanels": [

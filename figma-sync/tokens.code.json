@@ -1878,13 +1878,13 @@
           "alias": "--cds-layer-01"
         },
         "g100": {
-          "alias": "--cds-layer-01"
+          "alias": "--cds-layer-03"
         },
         "v12-light": {
           "alias": "--cds-chat-prompt-background"
         },
         "v12-dark": {
-          "alias": "--cds-layer-01"
+          "alias": "--cds-layer-03"
         }
       },
       "scopes": [

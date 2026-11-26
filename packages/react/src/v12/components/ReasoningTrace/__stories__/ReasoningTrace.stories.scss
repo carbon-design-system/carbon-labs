@@ -34,3 +34,22 @@
   margin: 0;
   color: $text-primary;
 }
+
+// Light and dark side by side: each panel is a Carbon Theme, so its tokens
+// are its own.
+.reasoning-trace-story__themes {
+  display: grid;
+  gap: $spacing-05;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.reasoning-trace-story__panel {
+  @include type-style('body-compact-01');
+
+  display: flex;
+  align-items: center;
+  padding: $spacing-07;
+  background-color: $background;
+  color: $text-secondary;
+  gap: $spacing-03;
+}

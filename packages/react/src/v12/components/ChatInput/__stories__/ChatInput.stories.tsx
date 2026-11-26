@@ -25,16 +25,21 @@ import proposals from '../proposals/tokens.json';
 import fileChipProposals from '../../FileChip/proposals/tokens.json';
 import mdx from './ChatInput.mdx';
 
-// The proposals keep a value per Carbon theme; the page is on a v12 one.
+// The proposals keep a value per Carbon theme, and may give a v12 theme its
+// own; the page is on a v12 one.
 type CarbonTheme = 'white' | 'g10' | 'g90' | 'g100';
 type Theme = 'v12-light' | 'v12-dark';
 type TokenFile = Record<string, Record<string, unknown>>;
 
-// Each v12 theme reads the proposals' values for the Carbon theme it is
-// built on.
-const proposalTheme: Record<Theme, CarbonTheme> = {
-  'v12-light': 'white',
-  'v12-dark': 'g100',
+// A v12 theme reads its own value where a token has one, and else the value
+// for the Carbon theme it is built on, as proposals.scss does.
+const sources: Record<CarbonTheme | Theme, string[]> = {
+  white: ['white'],
+  g10: ['g10'],
+  g90: ['g90'],
+  g100: ['g100'],
+  'v12-light': ['v12-light', 'white'],
+  'v12-dark': ['v12-dark', 'g100'],
 };
 
 /**
@@ -42,21 +47,25 @@ const proposalTheme: Record<Theme, CarbonTheme> = {
  * through get-var. A DTCG alias, `{layer-03}`, is Carbon's own token.
  *
  * @param {TokenFile} file A proposals/tokens.json.
- * @param {CarbonTheme} theme The Carbon theme.
+ * @param {CarbonTheme | Theme} theme The theme.
  * @returns {string} The declarations.
  */
-function declarations(file: TokenFile, theme: CarbonTheme): string {
+function declarations(file: TokenFile, theme: CarbonTheme | Theme): string {
   return Object.entries(file)
     .filter(([group]) => !group.startsWith('$'))
     .flatMap(([group, tokens]) =>
-      Object.entries(tokens).map(([role, token]) => {
+      Object.entries(tokens).flatMap(([role, token]) => {
         const themes = (
           token as {
-            $extensions: { 'carbon.themes': Record<CarbonTheme, string> };
+            $extensions: { 'carbon.themes': Record<string, string> };
           }
         ).$extensions['carbon.themes'];
-        const value = themes[theme].replace(/^\{(.+)\}$/, 'var(--cds-$1)');
-        return `--cds-${group}-${role}: ${value};`;
+        const key = sources[theme].find((t) => themes[t] != null);
+        if (key === undefined) {
+          return [];
+        }
+        const value = themes[key].replace(/^\{(.+)\}$/, 'var(--cds-$1)');
+        return [`--cds-${group}-${role}: ${value};`];
       })
     )
     .join(' ');
@@ -74,22 +83,13 @@ function declarations(file: TokenFile, theme: CarbonTheme): string {
  */
 function proposedValues(theme: Theme, scope: string): string {
   const files = [proposals, fileChipProposals] as unknown as TokenFile[];
-  const page = files.map((file) => declarations(file, proposalTheme[theme]));
+  const page = files.map((file) => declarations(file, theme));
   // The menus' zones: Carbon's (ChatInput's menus are a Carbon `Theme`), and
-  // the v12 themes', each with the values of the theme it is built on.
-  const zones = (
-    [
-      ['white', 'white'],
-      ['g10', 'g10'],
-      ['g90', 'g90'],
-      ['g100', 'g100'],
-      ['v12-light', 'white'],
-      ['v12-dark', 'g100'],
-    ] as [string, CarbonTheme][]
-  ).map(
-    ([zone, values]) =>
+  // the v12 themes'.
+  const zones = (Object.keys(sources) as (CarbonTheme | Theme)[]).map(
+    (zone) =>
       `.${scope} .cds--${zone} { ${files
-        .map((file) => declarations(file, values))
+        .map((file) => declarations(file, zone))
         .join(' ')} }`
   );
   return [`.${scope} { ${page.join(' ')} }`, ...zones].join('\n');

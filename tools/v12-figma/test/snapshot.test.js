@@ -152,6 +152,18 @@ beforeAll(async () => {
           'com.ibm.harness.fallback': { white: '#0043CF', g100: '#0F62FE' },
         },
       },
+      // A v12 theme's own value, and one that falls back.
+      shell: {
+        $type: 'color',
+        $description: 'A shell.',
+        $extensions: {
+          'carbon.themes': {
+            white: '{layer-02}',
+            g100: '{layer-01}',
+            'v12-dark': '{layer-03}',
+          },
+        },
+      },
     },
   });
   write(
@@ -321,6 +333,15 @@ describe('the snapshots', () => {
     expect(fill.values.g10).toEqual({ alias: '--cds-layer-01' });
     expect(fill.values.g90).toEqual({ hex: '#abcdef', alpha: 1 });
     expect(fill.gamut).toBe('outside-srgb');
+    // A v12 theme without a value of its own takes its Carbon theme's.
+    expect(fill.values['v12-dark']).toEqual(fill.values.g100);
+    const shell = tokens.find((t) => t.css === '--cds-widget-shell');
+    expect(shell.values).toEqual({
+      white: { alias: '--cds-layer-02' },
+      g100: { alias: '--cds-layer-01' },
+      'v12-light': { alias: '--cds-layer-02' },
+      'v12-dark': { alias: '--cds-layer-03' },
+    });
     const radius = tokens.find((t) => t.name === 'explore/radius-field');
     expect(radius.values.full).toEqual({ number: 6, unit: 'px' });
     expect(tokens.some((t) => t.name === 'explore/elevated')).toBe(false);

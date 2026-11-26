@@ -38,8 +38,9 @@ or path outside the repository, so the same tree always writes the same bytes.
     where Carbon has the token.
   - `v12 / Proposals`: each component's `proposals/tokens.json`. A value is an
     alias (`{ "alias": "--cds-layer-01" }`), a color (the hex fallback, the
-    OKLCH value and its gamut), or a dimension in px. White's value also serves
-    `v12-light`, and g100's `v12-dark`, as in `proposals.scss`.
+    OKLCH value and its gamut), or a dimension in px. A token's `v12-light` or
+    `v12-dark` value serves that mode; without one, white's value serves
+    `v12-light` and g100's `v12-dark`, as in `proposals.scss`.
   - `v12 / Explorations`: the explorations with one numeric value.
   - `v12 / Motion`: carbon-motion's durations, easings, distances, scales and
     stagger steps, at the version the lane installs.

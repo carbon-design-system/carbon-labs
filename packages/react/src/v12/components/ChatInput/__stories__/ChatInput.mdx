@@ -47,9 +47,12 @@ application.
 
 - **Two layouts.** `below` (the default) is a 48px pill with its actions in a
   row under it. `inside` puts every control in the box.
-- **Width.** It fills its container up to 682px: Carbon's 640 content column,
-  with the prompt's 24 inset and the send button's 16 on the other side, so the
-  text and the button's glyph sit on the column's edges.
+- **Width.** It fills its container, with no cap of its own. Set
+  `--cds-chat-input-max-inline-size` on it or an ancestor to cap it. In a chat
+  column, `682px` puts the text and the send button's glyph on the edges of
+  Carbon's 640 content column: the prompt's 24 inset on one side, the send
+  button's 16 on the other and the 1px hairline either side. The stories set
+  `682px`.
 - **The box grows.** Past one row, or holding files, the pill becomes a box at
   `$border-radius-16`, with the send corner at 20 (an exploration, below). It
   grows a row at a time on Carbon's `disclosure` motion surface, to `maxRows`,

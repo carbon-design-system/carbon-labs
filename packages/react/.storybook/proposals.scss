@@ -160,7 +160,7 @@
 .cds--g100,
 [data-carbon-theme='v12-dark'],
 .cds--v12-dark {
-  --cds-chat-input-background: var(--cds-layer-03);
+  --cds-chat-input-background: var(--cds-layer-01);
   --cds-chat-input-menu-hover: #252931;
   --cds-chat-input-menu-selected: #2e333b;
   --cds-chat-input-menu-selected-text: #629bff;
@@ -205,6 +205,11 @@
   --cds-session-switcher-menu-selected-text: #629bff;
   --cds-session-switcher-menu-active: #393d46;
   --cds-system-message-icon-alert: #cea400;
+}
+
+[data-carbon-theme='v12-dark'],
+.cds--v12-dark {
+  --cds-chat-input-background: var(--cds-layer-03);
 }
 
 @supports (color: oklch(0 0 0)) {

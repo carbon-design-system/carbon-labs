@@ -1878,7 +1878,7 @@
           "alias": "--cds-layer-01"
         },
         "g100": {
-          "alias": "--cds-layer-03"
+          "alias": "--cds-layer-01"
         },
         "v12-light": {
           "alias": "--cds-chat-prompt-background"

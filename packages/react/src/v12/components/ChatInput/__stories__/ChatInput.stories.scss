@@ -13,6 +13,14 @@
 // The foot of a conversation: the page, with room above for the menus and
 // the command list to open into.
 .chat-input-story__page {
+  // The composer in Carbon's 640 content column. The text sits 24 in from the
+  // box's edge and the send button's glyph 16 in from the other (8 padding, 8
+  // inside the 32 button), so 640 + 24 + 8 + 8 puts both on the column's
+  // edges; the 2 is the hairline either side: 682.
+  --cds-chat-input-max-inline-size: calc(
+    40rem + #{$spacing-06} + #{$spacing-03} + #{$spacing-03} + 2px
+  );
+
   display: flex;
   box-sizing: border-box;
   flex-direction: column;

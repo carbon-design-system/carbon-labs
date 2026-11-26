@@ -1,0 +1,99 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TimeDisplayStories from './TimeDisplay.stories';
+
+<Meta isTemplate />
+
+# TimeDisplay
+
+- **Initiative owner(s):** FILL THIS LINE
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Getting started](#getting-started)
+- [Modes](#modes)
+- [Formats](#formats)
+- [Component API](#component-api)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+**Time Display** provides an explicit, accessible, Carbon-aligned way to show
+elapsed time, remaining time, or a fixed duration using configurable units,
+structured display formats, and subtle productive-motion digit transitions.
+
+It is intended for **duration-based time** — not wall-clock date/time display.
+
+<Canvas of={TimeDisplayStories.CountUp} />
+
+## Getting started
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-time-display
+```
+
+### JS (via import)
+
+```javascript
+import { TimeDisplay } from '@carbon-labs/react-time-display/es/index';
+
+function App() {
+  const jobStart = new Date(Date.now() - 3665000);
+  return (
+    <TimeDisplay
+      mode="count-up"
+      startTime={jobStart}
+      label="Job elapsed time"
+    />
+  );
+}
+```
+
+### SCSS
+
+In your styles file import:
+
+```scss
+@use '@carbon/react';
+@use '@carbon-labs/react-time-display/scss/time-display';
+```
+
+## Modes
+
+### Count-up — elapsed time
+
+<Canvas of={TimeDisplayStories.CountUp} />
+
+### Count-down — remaining time
+
+<Canvas of={TimeDisplayStories.CountDown} />
+
+### Duration — fixed value
+
+<Canvas of={TimeDisplayStories.Duration} />
+
+## Formats
+
+Four display formats are available. The same `12:34:56` value shown in all four:
+
+<Canvas of={TimeDisplayStories.AllFormats} />
+
+| Format | Description |
+|---|---|
+| `split` | Large numeric values with unit labels below. Default. |
+| `boxed` | Each unit in a flat Carbon-style box with a label below. |
+| `colon` | Compact `HH:MM:SS` timer style. |
+| `inline` | Dense inline text, e.g. `12 hr 34 min 56 sec`. |
+
+## Component API
+
+<ArgTypes />

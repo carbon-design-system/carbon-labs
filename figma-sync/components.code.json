@@ -12354,9 +12354,7 @@
         "proposal: api: button-axes",
         "proposal: api: frame-prop",
         "proposal: api: variant-prop",
-        "proposal: token: hero-fill",
-        "proposal: token: hero-fill-hover",
-        "proposal: token: hero-on-fill"
+        "proposal: token: hero-color"
       ],
       "stateColors": [
         {

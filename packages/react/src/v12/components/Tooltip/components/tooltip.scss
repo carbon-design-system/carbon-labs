@@ -152,18 +152,16 @@
    fallback. */
 /* Primary follows the kit's brand, as Button's does (button.scss). */
 .cds-icon-btn--primary {
-  // @carbon-proposal token: hero-fill — The hero fill: the brand colour for a filled selector, IBM blue by default. replaces: button-primary. TBD
+  // @carbon-proposal token: hero-color — The hero tokens give the brand color for a line, a fill and its hover and press, and an ink on a page and on a fill; with no brand set, each is its Carbon token. replaces: `$border-interactive`, `$interactive`, `$button-primary` and its hover and active, `$link-primary`, `$link-inverse`. TBD
   --rollover-rest: #{custom-property.get-var(
       'hero-fill',
       button-tokens.$button-primary
     )};
-  // @carbon-proposal token: hero-fill-hover — The hero fill on hover, IBM blue's hover by default. replaces: button-primary-hover. TBD
   --rollover-hover: #{custom-property.get-var(
       'hero-fill-hover',
       button-tokens.$button-primary-hover
     )};
 
-  // @carbon-proposal token: hero-on-fill — The ink on a hero fill, white by default. replaces: icon-on-color. TBD
   color: custom-property.get-var('hero-on-fill', theme.$icon-on-color);
 }
 

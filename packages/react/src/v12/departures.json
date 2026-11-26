@@ -280,45 +280,10 @@
         {
           "in": "Tabs",
           "uses": ["var(--cds-hero"]
-        }
-      ]
-    },
-    {
-      "id": "hero-fill",
-      "axis": "color",
-      "status": "proposal",
-      "what": "IconButton's primary kind fills with the hero fill, the brand colour for a filled selector (IBM blue with no brand set).",
-      "replaces": "`$button-primary`",
-      "appliesTo": [
+        },
         {
           "in": "Tooltip",
           "uses": ["'hero-fill'"]
-        }
-      ]
-    },
-    {
-      "id": "hero-fill-hover",
-      "axis": "color",
-      "status": "proposal",
-      "what": "IconButton's primary kind hovers on the hero fill's hover.",
-      "replaces": "`$button-primary-hover`",
-      "appliesTo": [
-        {
-          "in": "Tooltip",
-          "uses": ["'hero-fill-hover'"]
-        }
-      ]
-    },
-    {
-      "id": "hero-on-fill",
-      "axis": "color",
-      "status": "proposal",
-      "what": "IconButton's primary kind draws its icon in the ink of a hero fill (white with no brand set).",
-      "replaces": "`$icon-on-color`",
-      "appliesTo": [
-        {
-          "in": "Tooltip",
-          "uses": ["'hero-on-fill'"]
         }
       ]
     },

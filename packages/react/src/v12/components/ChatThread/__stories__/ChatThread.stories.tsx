@@ -6,7 +6,7 @@
  */
 
 import React, { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import type { Decorator, Meta, StoryObj } from '@storybook/react-webpack5';
 import { Copy, Edit, Renew, ThumbsDown, ThumbsUp } from '@carbon/icons-react';
 import { ChatThread } from '../components/ChatThread';
 import { ChatMessage, ChatMessageAction } from '../components/ChatMessage';
@@ -21,7 +21,67 @@ import '../../MegaButton/components/mega-button.scss';
 import '../../ReasoningTrace/components/reasoning-trace.scss';
 import '../../CodeSnippetAlt/components/code-snippet.scss';
 import './ChatThread.stories.scss';
+import ownProposals from '../proposals/tokens.json';
 import mdx from './ChatThread.mdx';
+
+// The proposals keep a value per Carbon theme; the page is on a v12 one.
+type CarbonTheme = 'white' | 'g10' | 'g90' | 'g100';
+type StoryTheme = 'v12-light' | 'v12-dark';
+type TokenFile = Record<string, Record<string, unknown>>;
+
+const proposalTheme: Record<StoryTheme, CarbonTheme> = {
+  'v12-light': 'white',
+  'v12-dark': 'g100',
+};
+
+/**
+ * One theme's proposed values as the custom properties the stylesheet reads
+ * through get-var. A value that names a Carbon token is that token's custom
+ * property.
+ *
+ * @param {string} scope The class the declarations are scoped to.
+ * @param {TokenFile} file The proposals/tokens.json to read.
+ * @param {CarbonTheme} theme The Carbon theme.
+ * @returns {string} The CSS.
+ */
+function proposalCss(
+  scope: string,
+  file: TokenFile,
+  theme: CarbonTheme
+): string {
+  const declarations = Object.entries(file)
+    .filter(([group]) => !group.startsWith('$'))
+    .flatMap(([group, tokens]) =>
+      Object.entries(tokens).map(([role, token]) => {
+        const themes = (
+          token as {
+            $extensions: { 'carbon.themes': Record<CarbonTheme, string> };
+          }
+        ).$extensions['carbon.themes'];
+        const value = themes[theme].replace(/^\{(.+)\}$/, 'var(--cds-$1)');
+        return `--cds-${group}-${role}: ${value};`;
+      })
+    );
+  return `.${scope} { ${declarations.join(' ')} }`;
+}
+
+const withProposals: Decorator = (Story, context) => {
+  const theme: StoryTheme =
+    context.globals.theme === 'v12-dark' ? 'v12-dark' : 'v12-light';
+  const scope = 'chat-thread-story-proposals';
+  return (
+    <div className={`chat-thread-story__pane ${scope}`}>
+      <style>
+        {proposalCss(
+          scope,
+          ownProposals as unknown as TokenFile,
+          proposalTheme[theme]
+        )}
+      </style>
+      <Story />
+    </div>
+  );
+};
 
 const meta: Meta<typeof ChatThread> = {
   title: 'V12/ChatThread',
@@ -45,13 +105,7 @@ const meta: Meta<typeof ChatThread> = {
     density: 'balanced',
     label: 'Conversation with the assistant',
   },
-  decorators: [
-    (Story) => (
-      <div className="chat-thread-story__pane">
-        <Story />
-      </div>
-    ),
-  ],
+  decorators: [withProposals],
 };
 
 export default meta;

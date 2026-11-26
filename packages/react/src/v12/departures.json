@@ -1080,6 +1080,19 @@
       ]
     },
     {
+      "id": "chat-thread-user-bubble",
+      "axis": "color",
+      "status": "proposal",
+      "what": "The user's bubble is the surface-dark step in light and one step up the ladder in dark, so it sits lighter than the page there.",
+      "replaces": "`$layer-03`",
+      "appliesTo": [
+        {
+          "in": "ChatThread",
+          "uses": ["'chat-thread-user-bubble'"]
+        }
+      ]
+    },
+    {
       "id": "chats-panel-shell-chat-hover",
       "axis": "color",
       "status": "proposal",

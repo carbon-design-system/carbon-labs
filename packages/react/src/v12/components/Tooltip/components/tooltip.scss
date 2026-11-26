@@ -7,6 +7,8 @@
 
 @use '@carbon/react/scss/theme';
 @use '@carbon/react/scss/type' as *;
+@use '@carbon/styles/scss/components/button/tokens' as button-tokens;
+@use '@carbon/styles/scss/utilities/custom-property';
 @use '@carbon-labs/v12-styles/scss/rollover' as *;
 @use '@carbon-labs/v12-styles/scss/tertiary';
 @use '@carbon-labs/v12-styles/scss/anchor-inset';
@@ -150,28 +152,33 @@
    fallback. */
 /* Primary follows the kit's brand, as Button's does (button.scss). */
 .cds-icon-btn--primary {
-  --rollover-rest: var(--cds-hero-fill, var(--cds-button-primary, #0f62fe));
-  // @carbon-proposal token: hero-color — The hero tokens: brand colour for a line, a fill, a hover, an ink on a page and on a fill. replaces: `$border-interactive` / `$interactive`, `$button-primary`, `-hover`, `-active`, `$link-primary`, `$link-inverse`. TBD
-  --rollover-hover: var(
-    --cds-hero-fill-hover,
-    var(--cds-button-primary-hover, #0050e6)
-  );
+  // @carbon-proposal token: hero-fill — The hero fill: the brand colour for a filled selector, IBM blue by default. replaces: button-primary. TBD
+  --rollover-rest: #{custom-property.get-var(
+      'hero-fill',
+      button-tokens.$button-primary
+    )};
+  // @carbon-proposal token: hero-fill-hover — The hero fill on hover, IBM blue's hover by default. replaces: button-primary-hover. TBD
+  --rollover-hover: #{custom-property.get-var(
+      'hero-fill-hover',
+      button-tokens.$button-primary-hover
+    )};
 
-  color: var(--cds-hero-on-fill, #{theme.$icon-on-color});
+  // @carbon-proposal token: hero-on-fill — The ink on a hero fill, white by default. replaces: icon-on-color. TBD
+  color: custom-property.get-var('hero-on-fill', theme.$icon-on-color);
 }
 
 .cds-icon-btn--secondary {
   // @carbon-explore button-secondary-quiet — The secondary Button as a quiet fill one step off what it sits on, re-solved on raised surfaces. TBD
-  --rollover-rest: var(--cds-button-secondary, #393939);
-  --rollover-hover: var(--cds-button-secondary-hover, #474747);
+  --rollover-rest: #{button-tokens.$button-secondary};
+  --rollover-hover: #{button-tokens.$button-secondary-hover};
 
   color: theme.$icon-on-color;
 }
 
 /* The icon-only Button's danger kinds: v11's danger tokens, the same rollover. */
 .cds-icon-btn--danger {
-  --rollover-rest: var(--cds-button-danger-primary, #da1e28);
-  --rollover-hover: var(--cds-button-danger-hover, #b81921);
+  --rollover-rest: #{button-tokens.$button-danger-primary};
+  --rollover-hover: #{button-tokens.$button-danger-hover};
 
   color: theme.$icon-on-color;
 }
@@ -193,11 +200,11 @@
 .cds-icon-btn--danger--tertiary {
   --rollover-stroke: var(--rollover-tone);
 
-  @include rollover-tone(var(--cds-button-danger-secondary, #da1e28));
+  @include rollover-tone(button-tokens.$button-danger-secondary);
 }
 
 .cds-icon-btn--danger--ghost {
-  @include rollover-tone(var(--cds-button-danger-secondary, #da1e28));
+  @include rollover-tone(button-tokens.$button-danger-secondary);
 }
 
 /* The plain ghost's icon is `icon-primary`, a neutral: its hover stays the
@@ -263,14 +270,14 @@
   &.cds-icon-btn--primary,
   &.cds-icon-btn--secondary,
   &.cds-icon-btn--danger {
-    --rollover-rest: var(--cds-button-disabled, #c6c6c6);
+    --rollover-rest: #{button-tokens.$button-disabled};
 
     color: theme.$icon-on-color-disabled;
   }
 
   &.cds-icon-btn--tertiary,
   &.cds-icon-btn--danger--tertiary {
-    --rollover-stroke: var(--cds-button-disabled, #c6c6c6);
+    --rollover-stroke: #{button-tokens.$button-disabled};
 
     color: theme.$icon-disabled;
   }
@@ -317,8 +324,8 @@
   font: inherit;
   letter-spacing: inherit;
   text-shadow:
-    0 0 1px var(--cds-layer, var(--cds-background, #ffffff)),
-    0 0 2px var(--cds-layer, var(--cds-background, #ffffff));
+    0 0 1px var(--cds-layer, #{theme.$background}),
+    0 0 2px var(--cds-layer, #{theme.$background});
   white-space: nowrap;
 
   &::after {

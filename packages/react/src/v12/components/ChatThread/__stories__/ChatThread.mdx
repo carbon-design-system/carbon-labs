@@ -61,6 +61,16 @@ name.
 
 <Canvas of={ChatThreadStories.Default} />
 
+## Sections
+
+`ChatSection` is a boundary in the transcript: a
+[`Rule`](?path=/docs/v12-rule--docs) either side of a notice. It draws the rules
+and no text, so the notice (usually a `SystemMessage`) can say a date, a model
+change, a compaction or a deletion without the rule being part of it. The thread
+gives it a list item of its own.
+
+<Canvas of={ChatThreadStories.Sections} />
+
 ## Component API
 
 <ArgTypes of={ChatThreadStories.Default} />

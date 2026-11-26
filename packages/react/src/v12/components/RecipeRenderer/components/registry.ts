@@ -64,7 +64,12 @@ import {
   Toggle,
   UnorderedList,
 } from '@carbon/react';
-import { ChatThread, ChatMessage } from '@carbon-labs/react-chat-thread';
+import {
+  ChatThread,
+  ChatMessage,
+  ChatSection,
+} from '@carbon-labs/react-chat-thread';
+import { Rule } from '@carbon-labs/react-rule';
 import { ChatInput } from '@carbon-labs/react-chat-input';
 import {
   ReasoningTrace,
@@ -95,6 +100,7 @@ import {
 // reach into a sibling folder: every v12 component is its own npm package, so a
 // relative path would break this package's build.
 import '@carbon-labs/react-chat-thread/scss/chat-thread.scss';
+import '@carbon-labs/react-rule/scss/rule.scss';
 import '@carbon-labs/react-chat-input/scss/chat-input.scss';
 import '@carbon-labs/react-reasoning-trace/scss/reasoning-trace.scss';
 import '@carbon-labs/react-history-rail/scss/history-rail.scss';
@@ -174,6 +180,8 @@ export const registry: Record<string, ElementType> = {
   '@carbon/react:UnorderedList': UnorderedList,
   '@carbon-labs/react-chat-thread:ChatThread': ChatThread,
   '@carbon-labs/react-chat-thread:ChatMessage': ChatMessage,
+  '@carbon-labs/react-chat-thread:ChatSection': ChatSection,
+  '@carbon-labs/react-rule:Rule': Rule,
   '@carbon-labs/react-chat-input:ChatInput': ChatInput,
   '@carbon-labs/react-reasoning-trace:ReasoningTrace': ReasoningTrace,
   '@carbon-labs/react-reasoning-trace:ReasoningStep': ReasoningStep,

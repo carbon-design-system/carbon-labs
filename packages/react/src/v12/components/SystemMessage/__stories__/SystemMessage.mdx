@@ -30,7 +30,7 @@ import * as SystemMessageStories from './SystemMessage.stories';
 {/* carbon-labs-create:problem-statement */}
 
 > **Problem statement:** A transcript needs to say what happened _to_ the
-> conversation — the model changed, the context was cleared, a new day began —
+> conversation — the model changed, the context was cleared, a day began —
 > without that reading as something either party said. Carbon has no such
 > object: `InlineNotification` is the nearest and is a different thing, with a
 > container, a kind and a dismiss affordance that a transcript notice should not
@@ -58,11 +58,12 @@ which is what keeps it legible in greyscale and to a reader (ACC-4).
 
 ## Boundaries
 
-`variant="divider"` draws the text between two hairlines — a day boundary, a
-session break. **It carries no severity**, and passing one does nothing: a
-boundary is not something that went wrong.
+There is no divider variant. `SystemMessage` is the words only, so they can be a
+date, a model change, a compaction or a deletion; a boundary is a `ChatSection`,
+which puts a [`Rule`](?path=/docs/v12-rule--docs) either side of the notice. The
+rule and the words change independently.
 
-<Canvas of={SystemMessageStories.Divider} />
+<Canvas of={SystemMessageStories.InASection} />
 
 ## In a thread
 

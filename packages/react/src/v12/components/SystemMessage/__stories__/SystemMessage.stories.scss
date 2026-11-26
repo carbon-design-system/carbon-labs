@@ -10,11 +10,17 @@
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/spacing' as *;
 
-.sb-system-message-thread {
+.sb-system-message-thread,
+.sb-system-message-sections {
   box-sizing: border-box;
   padding: $spacing-07;
   background-color: $background;
   max-inline-size: 35rem;
+}
+
+.sb-system-message-sections {
+  display: grid;
+  gap: $spacing-05;
 }
 
 // Story-only: the proposed warning ink, so the Storybook shows the decision
@@ -23,6 +29,9 @@
 // $support-warning, which is what a consumer gets until Carbon adopts the
 // token — and which is about 1.7:1, the gap the proposal exists to close.
 // The values are proposals/tokens.json's; they are not declared here as law.
+// In the order the law's generator writes them: the sRGB fallback first, then
+// the OKLCH master the token is computed in, only on a display that can read it
+// and is wide-gamut.
 [data-carbon-theme='v12-light'],
 .cds--v12-light {
   --cds-system-message-icon-alert: #836700;
@@ -32,3 +41,19 @@
 .cds--v12-dark {
   --cds-system-message-icon-alert: #cea400;
 }
+
+/* stylelint-disable lightness-notation, hue-degree-notation */
+@supports (color: oklch(0 0 0)) {
+  @media (color-gamut: p3) {
+    [data-carbon-theme='v12-light'],
+    .cds--v12-light {
+      --cds-system-message-icon-alert: oklch(0.5277 0.1245 90);
+    }
+
+    [data-carbon-theme='v12-dark'],
+    .cds--v12-dark {
+      --cds-system-message-icon-alert: oklch(0.7356 0.1736 90);
+    }
+  }
+}
+/* stylelint-enable lightness-notation, hue-degree-notation */

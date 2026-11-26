@@ -8,7 +8,11 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { SystemMessage } from '../components/SystemMessage';
-import { ChatThread, ChatMessage } from '@carbon-labs/react-chat-thread';
+import {
+  ChatThread,
+  ChatMessage,
+  ChatSection,
+} from '@carbon-labs/react-chat-thread';
 import '../components/system-message.scss';
 // Story-only: the conversation the notice sits in brings its own styles.
 import '../../ChatThread/components/chat-thread.scss';
@@ -29,10 +33,8 @@ const meta: Meta<typeof SystemMessage> = {
     severity: {
       control: 'radio',
       options: ['status', 'alert'],
-      description: 'Ignored when variant is "divider": a boundary has none.',
     },
     text: { control: 'text' },
-    variant: { control: 'radio', options: ['default', 'divider'] },
   },
 };
 
@@ -47,7 +49,6 @@ export const Default: Story = {
   args: {
     text: 'Model changed to Granite 3.1',
     severity: 'status',
-    variant: 'default',
   },
 };
 
@@ -59,18 +60,27 @@ export const Alert: Story = {
   args: {
     text: 'Conversation cleared — 14 messages removed',
     severity: 'alert',
-    variant: 'default',
   },
 };
 
 /**
- * A boundary in the transcript. It carries no severity.
+ * The words say whatever the notice is: a date, a model change, a compaction, a
+ * deletion. A boundary is a `ChatSection`, which puts a Rule either side.
  */
-export const Divider: Story = {
-  args: {
-    text: 'Today',
-    variant: 'divider',
-  },
+export const InASection: Story = {
+  render: () => (
+    <div className="sb-system-message-sections">
+      <ChatSection>
+        <SystemMessage text="Today" />
+      </ChatSection>
+      <ChatSection>
+        <SystemMessage text="Conversation compacted — 42 messages summarized" />
+      </ChatSection>
+      <ChatSection>
+        <SystemMessage text="Message deleted" />
+      </ChatSection>
+    </div>
+  ),
 };
 
 /**
@@ -87,7 +97,9 @@ export const InAThread: Story = {
         <ChatMessage from="assistant" timestamp="13:31">
           Three regressions, all in the cache warm-up path.
         </ChatMessage>
-        <SystemMessage variant="divider" text="Today" />
+        <ChatSection>
+          <SystemMessage text="Today" />
+        </ChatSection>
         <SystemMessage text="Model changed to Granite 3.1" />
         <ChatMessage from="user" timestamp="09:02">
           Try the second one again.

@@ -30,3 +30,11 @@
   margin: 0;
   color: $text-primary;
 }
+
+// A notice's words, as a SystemMessage draws them, so a section reads as it
+// does in a thread without the story needing that package.
+.chat-thread-story__notice {
+  @include type-style('label-01');
+
+  color: $text-secondary;
+}

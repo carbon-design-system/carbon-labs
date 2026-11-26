@@ -7,11 +7,13 @@
 
 export { ChatThread } from './components/ChatThread';
 export { ChatMessage, ChatMessageAction } from './components/ChatMessage';
+export { ChatSection } from './components/ChatSection';
 export type {
   ChatThreadProps,
   ChatThreadAlign,
   ChatThreadDensity,
 } from './components/ChatThread';
+export type { ChatSectionProps } from './components/ChatSection';
 export type {
   ChatMessageProps,
   ChatMessageRole,

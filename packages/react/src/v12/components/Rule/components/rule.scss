@@ -1,0 +1,24 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon foundations only: a labs v12 component consumes @carbon/styles and
+// never mirrors it. Every value here is a Carbon token; nothing is proposed.
+@use '@carbon/styles/scss/config' as *;
+@use '@carbon/styles/scss/theme' as *;
+
+// The same line Carbon's Menu divider draws: 1px, the contextual
+// border-subtle, the width of its container. The reset takes the browser's
+// own hr border and margins away. A hairline carries no information of its
+// own, so it is exempt from the non-text floor the way every divider is.
+.#{$prefix}--rule {
+  display: block;
+  border: 0;
+  margin: 0;
+  background-color: $border-subtle;
+  block-size: 1px;
+  inline-size: 100%;
+}

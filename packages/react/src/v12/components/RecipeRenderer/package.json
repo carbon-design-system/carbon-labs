@@ -56,6 +56,7 @@
     "@carbon-labs/react-history-rail": "workspace:*",
     "@carbon-labs/react-mega-button": "workspace:*",
     "@carbon-labs/react-reasoning-trace": "workspace:*",
+    "@carbon-labs/react-rule": "workspace:*",
     "@carbon-labs/react-session-switcher": "workspace:*",
     "@carbon-labs/react-system-message": "workspace:*",
     "classnames": "^2.3.2",

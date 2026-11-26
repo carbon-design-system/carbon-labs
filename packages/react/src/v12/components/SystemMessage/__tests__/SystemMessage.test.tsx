@@ -71,29 +71,11 @@ describe('SystemMessage', () => {
     );
   });
 
-  it('draws a boundary between two rules, hidden from the reader', () => {
-    const { container } = render(
-      <SystemMessage variant="divider" text="Today" />
-    );
-    const rules = container.querySelectorAll('.cds--system-message__rule');
-    expect(rules).toHaveLength(2);
-    rules.forEach((rule) => {
-      expect(rule).toHaveAttribute('aria-hidden', 'true');
-    });
+  it('is the words only: a boundary is a ChatSection, not a variant of this', () => {
+    const { container } = render(<SystemMessage text="Today" />);
+    // no rule is drawn here, so the text can say anything without one
+    expect(container.querySelector('hr, [class*="rule"]')).toBeNull();
     expect(screen.getByText('Today')).toBeInTheDocument();
-  });
-
-  it('gives a boundary no severity, however it is asked for', () => {
-    const { container } = render(
-      <SystemMessage variant="divider" severity="alert" text="Today" />
-    );
-    // a boundary is not something that went wrong: no glyph, no alert ink,
-    // and it does not interrupt
-    expect(container.querySelector('svg')).toBeNull();
-    expect(container.firstElementChild).not.toHaveClass(
-      'cds--system-message--alert'
-    );
-    expect(container.firstElementChild).toHaveAttribute('role', 'status');
   });
 
   it('takes its text as a string, not as markup', () => {

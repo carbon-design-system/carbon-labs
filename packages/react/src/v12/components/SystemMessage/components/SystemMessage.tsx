@@ -34,31 +34,24 @@ export interface SystemMessageProps extends Omit<
    * party said.
    */
   text: string;
-
-  /**
-   * `divider` draws the text between two rules — a boundary in the
-   * transcript, such as a date. It carries no severity: a boundary is not
-   * something that went wrong.
-   */
-  variant?: 'default' | 'divider';
 }
 
 /**
  * Marks something that happened *to* the conversation — a model change, a
- * cleared context, a day boundary — without implying either party said it.
- * The companion to HistoryRail: the rail is the whole history at a glance,
- * and this is the same event in its place in the flow.
+ * cleared context, a compaction, a day — without implying either party said
+ * it. The companion to HistoryRail: the rail is the whole history at a glance,
+ * and this is the same event in its place in the flow. It is the words only: a
+ * boundary is a `ChatSection`, a Rule either side of one of these, so the text
+ * can say anything without the rule being part of it.
  */
 export const SystemMessage = forwardRef<HTMLDivElement, SystemMessageProps>(
   function SystemMessage(
-    { className, severity = 'status', text, variant = 'default', ...rest },
+    { className, severity = 'status', text, ...rest },
     ref
   ) {
     const prefix = usePrefix();
     const block = `${prefix}--system-message`;
-    // A boundary has no severity, so the alert ink and glyph are not reachable
-    // from the divider variant at all, rather than drawn and ignored.
-    const alert = variant === 'default' && severity === 'alert';
+    const alert = severity === 'alert';
 
     return (
       <div
@@ -68,23 +61,12 @@ export const SystemMessage = forwardRef<HTMLDivElement, SystemMessageProps>(
         // waits its turn.
         role={alert ? 'alert' : 'status'}
         aria-live={alert ? 'assertive' : 'polite'}
-        className={cx(
-          block,
-          `${block}--${variant}`,
-          { [`${block}--alert`]: alert },
-          className
-        )}
+        className={cx(block, { [`${block}--alert`]: alert }, className)}
         {...rest}>
-        {variant === 'divider' ? (
-          <span className={`${block}__rule`} aria-hidden="true" />
-        ) : null}
         {alert ? (
           <WarningFilled size={16} className={`${block}__icon`} />
         ) : null}
         <span className={`${block}__text`}>{text}</span>
-        {variant === 'divider' ? (
-          <span className={`${block}__rule`} aria-hidden="true" />
-        ) : null}
       </div>
     );
   }
@@ -112,11 +94,4 @@ SystemMessage.propTypes = {
    * party said.
    */
   text: PropTypes.string.isRequired,
-
-  /**
-   * `divider` draws the text between two rules — a boundary in the
-   * transcript, such as a date. It carries no severity: a boundary is not
-   * something that went wrong.
-   */
-  variant: PropTypes.oneOf(['default', 'divider'] as const),
 } as React.WeakValidationMap<SystemMessageProps>;

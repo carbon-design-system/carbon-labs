@@ -16,6 +16,8 @@ stylesheets.
 
 - **Spacing Tokens** - Quick access to all Carbon spacing tokens ($spacing-01
   through $spacing-13)
+- **Border Radius Tokens** - Carbon border radius tokens ($border-radius-00
+  through $border-radius-max), available in Carbon v12 or v11 with feature flags
 - **Typography Styles** - Type style mixins for consistent typography
 - **Motion Tokens** - Duration tokens and motion mixins
 - **Theme Tokens** - Theme-related snippets
@@ -38,6 +40,17 @@ Type `$spa` or `$spacing` to see all spacing tokens:
 $spacing-01  // 0.125rem (2px)
 $spacing-05  // 1rem (16px)
 $spacing-10  // 4rem (64px)
+```
+
+#### Border Radius
+
+Type `$border-radius` to see all border radius tokens. These tokens are
+available in Carbon v12, or v11 with feature flags:
+
+```scss
+$border-radius-00   // 0
+$border-radius-04   // 0.25rem (4px)
+$border-radius-max  // 999999px
 ```
 
 #### Typography
@@ -104,6 +117,11 @@ $block-class: 'component-name';
 
 - All spacing tokens ($spacing-01 through $spacing-13)
 - Includes pixel and rem values in descriptions
+
+### Border Radius
+
+- All border radius tokens ($border-radius-00 through $border-radius-max)
+- Descriptions identify them as Carbon v12, or v11 with feature flags
 
 ### Typography
 

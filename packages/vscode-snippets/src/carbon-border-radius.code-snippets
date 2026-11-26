@@ -1,0 +1,52 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * WARNING: installed by @carbon-labs/vscode-snippets - local updates will be lost on package install
+ */
+{
+  "$border-radius-00 (0)": {
+    "scope": "scss",
+    "prefix": "$border-radius-00",
+    "body": "$$border-radius-00",
+    "description": "Carbon border radius token (v12, or v11 with feature flags)"
+  },
+  "$border-radius-02 (0.125rem 2px)": {
+    "scope": "scss",
+    "prefix": "$border-radius-02",
+    "body": "$$border-radius-02",
+    "description": "Carbon border radius token (v12, or v11 with feature flags)"
+  },
+  "$border-radius-04 (0.25rem 4px)": {
+    "scope": "scss",
+    "prefix": "$border-radius-04",
+    "body": "$$border-radius-04",
+    "description": "Carbon border radius token (v12, or v11 with feature flags)"
+  },
+  "$border-radius-08 (0.5rem 8px)": {
+    "scope": "scss",
+    "prefix": "$border-radius-08",
+    "body": "$$border-radius-08",
+    "description": "Carbon border radius token (v12, or v11 with feature flags)"
+  },
+  "$border-radius-16 (1rem 16px)": {
+    "scope": "scss",
+    "prefix": "$border-radius-16",
+    "body": "$$border-radius-16",
+    "description": "Carbon border radius token (v12, or v11 with feature flags)"
+  },
+  "$border-radius-24 (1.5rem 24px)": {
+    "scope": "scss",
+    "prefix": "$border-radius-24",
+    "body": "$$border-radius-24",
+    "description": "Carbon border radius token (v12, or v11 with feature flags)"
+  },
+  "$border-radius-max (999999px)": {
+    "scope": "scss",
+    "prefix": "$border-radius-max",
+    "body": "$$border-radius-max",
+    "description": "Carbon border radius token (v12, or v11 with feature flags)"
+  }
+}

@@ -100,6 +100,13 @@ describe('Resizer', () => {
       );
       expect(getByRole('separator')).toHaveClass('custom-class');
     });
+
+    it('should allow overriding tabIndex', () => {
+      const { getByRole } = render(
+        <Resizer orientation="vertical" tabIndex={-1} />
+      );
+      expect(getByRole('separator')).toHaveAttribute('tabindex', '-1');
+    });
   });
 
   describe('mouse events', () => {

@@ -19,7 +19,7 @@ import { gamutOf, parseColor, parseOklch } from './color.js';
 import {
   COLLECTIONS,
   CONTEXT_MODES,
-  PROPOSAL_MODES,
+  PROPOSAL_SOURCES,
   SOURCES,
   THEME_MODES,
   V12_THEMES,
@@ -244,18 +244,16 @@ function proposalTokens(root) {
       const fallback = node.$extensions?.['com.ibm.harness.fallback'] ?? {};
       const css = trail.join('-');
       const values = {};
-      for (const [theme, modes] of Object.entries(PROPOSAL_MODES)) {
-        if (themes[theme] == null) {
+      for (const [mode, sources] of Object.entries(PROPOSAL_SOURCES)) {
+        const theme = sources.find((t) => themes[t] != null);
+        if (theme === undefined) {
           continue;
         }
-        const value = proposalValue(
+        values[mode] = proposalValue(
           node.$type,
           String(themes[theme]),
           fallback[theme]
         );
-        for (const mode of modes) {
-          values[mode] = value;
-        }
       }
       const ordered = Object.fromEntries(
         THEME_MODES.filter((m) => values[m]).map((m) => [m, values[m]])

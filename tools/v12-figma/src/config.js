@@ -55,15 +55,18 @@ export const THEME_MODES = [
 export const V12_THEMES = { light: 'v12-light', dark: 'v12-dark' };
 
 /**
- * A proposal's value per theme serves these modes too, as
- * `proposals.scss` lays them out: white's also v12-light's, g100's also
- * v12-dark's.
+ * Where each mode's proposal value comes from, in order, as
+ * `proposals.scss` lays them out: a v12 theme takes its own value
+ * (`carbon.themes["v12-dark"]`) when the token has one, and else the value
+ * of the Carbon theme it is built on (v12-light white's, v12-dark g100's).
  */
-export const PROPOSAL_MODES = {
-  white: ['white', 'v12-light'],
+export const PROPOSAL_SOURCES = {
+  white: ['white'],
   g10: ['g10'],
   g90: ['g90'],
-  g100: ['g100', 'v12-dark'],
+  g100: ['g100'],
+  'v12-light': ['v12-light', 'white'],
+  'v12-dark': ['v12-dark', 'g100'],
 };
 
 /** Subtree defaults in code, variable modes in a design file. */

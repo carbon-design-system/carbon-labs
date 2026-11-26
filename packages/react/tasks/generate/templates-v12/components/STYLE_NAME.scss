@@ -1,0 +1,21 @@
+/**
+ * Copyright IBM Corp. FULL_YEAR
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Consume @carbon/styles; never copy a Carbon value. `$prefix` comes from
+// Carbon's config, so it is `cds`, the same as @carbon/react.
+@use '@carbon/styles/scss/config' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+
+.#{$prefix}--STYLE_NAME {
+  @include type-style('body-compact-01');
+
+  padding: $spacing-05;
+  background-color: $layer;
+  color: $text-primary;
+}

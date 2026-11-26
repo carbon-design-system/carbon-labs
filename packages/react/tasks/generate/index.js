@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corp. 2024
+ * Copyright IBM Corp. 2024, 2026
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -22,12 +22,17 @@ const argv = yargs(hideBin(process.argv)).argv;
 
 const name = argv._[0];
 
+// `--v12` scaffolds into the v12 lane, `src/v12/components`, from the v12
+// templates: the `cds` prefix from `@carbon/react`, a `V12/` story title and
+// no StackBlitz example.
+const v12 = Boolean(argv.v12);
+
 // If no component name is given in args throw an error
 if (!name) {
   console.error(
     `${chalk.red(
       'Error:'
-    )} No component name given. e.g. yarn generate TestComponent`
+    )} No component name given. e.g. yarn generate TestComponent [--v12]`
   );
   process.exit(1);
 }
@@ -51,7 +56,10 @@ const compile = (template) =>
     template
   );
 
-const templatesPath = join(__dirname, 'templates');
+const templatesPath = join(__dirname, v12 ? 'templates-v12' : 'templates');
+const componentsPath = v12
+  ? join('src', 'v12', 'components')
+  : join('src', 'components');
 sync(resolve(templatesPath, '**/*')).forEach((template) => {
   if (fs.lstatSync(template).isDirectory()) {
     return; // do nothing for a folder
@@ -75,7 +83,7 @@ sync(resolve(templatesPath, '**/*')).forEach((template) => {
       compiledPath.substr('example/'.length)
     );
   } else {
-    path = join('src', 'components', substitutions.DISPLAY_NAME, compiledPath);
+    path = join(componentsPath, substitutions.DISPLAY_NAME, compiledPath);
   }
 
   const data = compile(fs.readFileSync(template, 'utf8'));

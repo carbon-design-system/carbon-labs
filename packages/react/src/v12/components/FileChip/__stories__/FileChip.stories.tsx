@@ -151,18 +151,44 @@ export const Matrix: Story = {
   render: () => (
     <div className="file-chip-story__matrix">
       {fileChipKinds.map((kind) =>
-        fileChipStatuses.map((status) => (
-          <FileChip
-            key={`${kind}-${status}`}
-            kind={kind}
-            status={status}
-            name={names[kind]}
-            errorMessage="Upload failed"
-            thumbnailSrc={thumbnail}
-            successDelay={Infinity}
-          />
-        ))
+        // Dragging carries a name and a glyph, never a thumbnail: file only.
+        fileChipStatuses
+          .filter((status) => status !== 'dragging' || kind === 'file')
+          .map((status) => (
+            <FileChip
+              key={`${kind}-${status}`}
+              kind={kind}
+              status={status}
+              name={names[kind]}
+              errorMessage="Upload failed"
+              thumbnailSrc={thumbnail}
+              successDelay={Infinity}
+            />
+          ))
       )}
+    </div>
+  ),
+};
+
+/**
+ * A file carried in from outside the page, over a drop zone. One line on the
+ * blue that responds, lifted with Carbon's shadow. The consumer sets the tilt
+ * toward where it is going: 8deg from the left, -8deg from the right, none
+ * from above.
+ */
+export const Dragging: Story = {
+  render: () => (
+    <div className="file-chip-story__dragging">
+      {[
+        ['project-design.jpg', 'left'],
+        ['brief.pdf', 'above'],
+        ['Q3-metrics.csv', 'right'],
+      ].map(([name, from]) => (
+        // The tilt is inherited, so a wrapper class sets it.
+        <div key={name} className={`file-chip-story__tilt--${from}`}>
+          <FileChip name={name} status="dragging" />
+        </div>
+      ))}
     </div>
   ),
 };
